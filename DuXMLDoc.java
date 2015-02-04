@@ -1,40 +1,40 @@
-import java.io.IOException;
-import java.io.StringReader;
-
-import javax.xml.stream.events.Namespace;
-
+import org.jdom.Document;  
+import org.jdom.Element;  
+import org.jdom.JDOMException;  
+import org.jdom.Namespace;  
+import org.jdom.input.SAXBuilder;  
 import org.xml.sax.InputSource;
 
 public class DuXMLDoc {
 	public List xmlElements(String xmlDoc) {
-		// ´´½¨Ò»¸öĞÂµÄ×Ö·û´®
+		// åˆ›å»ºä¸€ä¸ªæ–°çš„å­—ç¬¦ä¸²
 		StringReader read = new StringReader(xmlDoc);
-		// ´´½¨ĞÂµÄÊäÈëÔ´SAX ½âÎöÆ÷½«Ê¹ÓÃ InputSource ¶ÔÏóÀ´È·¶¨ÈçºÎ¶ÁÈ¡ XML ÊäÈë
+		// åˆ›å»ºæ–°çš„è¾“å…¥æºSAX è§£æå™¨å°†ä½¿ç”¨ InputSource å¯¹è±¡æ¥ç¡®å®šå¦‚ä½•è¯»å– XML è¾“å…¥
 		InputSource source = new InputSource(read);
-		// ´´½¨Ò»¸öĞÂµÄSAXBuilder
+		// åˆ›å»ºä¸€ä¸ªæ–°çš„SAXBuilder
 		SAXBuilder sb = new SAXBuilder();
 		try {
-			// Í¨¹ıÊäÈëÔ´¹¹ÔìÒ»¸öDocument
+			// é€šè¿‡è¾“å…¥æºæ„é€ ä¸€ä¸ªDocument
 			Document doc = sb.build(source);
-			// È¡µÄ¸ùÔªËØ
+			// å–çš„æ ¹å…ƒç´ 
 			Element root = doc.getRootElement();
-			System.out.println(root.getName());// Êä³ö¸ùÔªËØµÄÃû³Æ£¨²âÊÔ£©
-			// µÃµ½¸ùÔªËØËùÓĞ×ÓÔªËØµÄ¼¯ºÏ
+			System.out.println(root.getName());// è¾“å‡ºæ ¹å…ƒç´ çš„åç§°ï¼ˆæµ‹è¯•ï¼‰
+			// å¾—åˆ°æ ¹å…ƒç´ æ‰€æœ‰å­å…ƒç´ çš„é›†åˆ
 			List jiedian = root.getChildren();
-			// »ñµÃXMLÖĞµÄÃüÃû¿Õ¼ä£¨XMLÖĞÎ´¶¨Òå¿É²»Ğ´£©
+			// è·å¾—XMLä¸­çš„å‘½åç©ºé—´ï¼ˆXMLä¸­æœªå®šä¹‰å¯ä¸å†™ï¼‰
 			Namespace ns = root.getNamespace();
 			Element et = null;
 			for (int i = 0; i < jiedian.size(); i++) {
-				et = (Element) jiedian.get(i);// Ñ­»·ÒÀ´ÎµÃµ½×ÓÔªËØ
+				et = (Element) jiedian.get(i);// å¾ªç¯ä¾æ¬¡å¾—åˆ°å­å…ƒç´ 
 				/**//*
-					 * ÎŞÃüÃû¿Õ¼ä¶¨ÒåÊ± et.getChild("users_id").getText();
+					 * æ— å‘½åç©ºé—´å®šä¹‰æ—¶ et.getChild("users_id").getText();
 					 * et.getChild("users_address",ns).getText()
 					 */
 				System.out.println(et.getChild("users_id", ns).getText());
 				System.out.println(et.getChild("users_address", ns).getText());
 			}
 			/**//*
-				 * ÈçÒªÈ¡<row>ÏÂµÄ×ÓÔªËØµÄÃû³Æ
+				 * å¦‚è¦å–<row>ä¸‹çš„å­å…ƒç´ çš„åç§°
 				 */
 			et = (Element) jiedian.get(0);
 			List zjiedian = et.getChildren();
@@ -43,10 +43,10 @@ public class DuXMLDoc {
 				System.out.println(xet.getName());
 			}
 		} catch (JDOMException e) {
-			// TODO ×Ô¶¯Éú³É catch ¿é
+			// TODO è‡ªåŠ¨ç”Ÿæˆ catch å—
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO ×Ô¶¯Éú³É catch ¿é
+			// TODO è‡ªåŠ¨ç”Ÿæˆ catch å—
 			e.printStackTrace();
 		}
 		return null;
@@ -59,11 +59,11 @@ public class DuXMLDoc {
 				+ "<row resultcount=\"1\">" + "<users_id>1001     </users_id>"
 				+ "<users_name>wangwei   </users_name>"
 				+ "<users_group>80        </users_group>"
-				+ "<users_address>1001ºÅ   </users_address>" + "</row>"
+				+ "<users_address>1001å·   </users_address>" + "</row>"
 				+ "<row resultcount=\"1\">" + "<users_id>1002     </users_id>"
 				+ "<users_name>wangwei   </users_name>"
 				+ "<users_group>80        </users_group>"
-				+ "<users_address>1002ºÅ   </users_address>" + "</row>"
+				+ "<users_address>1002å·   </users_address>" + "</row>"
 				+ "</Result>";
 		doc.xmlElements(xml);
 	}
