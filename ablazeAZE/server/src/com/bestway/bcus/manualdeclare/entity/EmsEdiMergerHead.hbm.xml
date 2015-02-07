@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcus.manualdeclare.entity.EmsEdiMergerHead" table="emsedimergerhead">
+		<cache usage="read-write"/> 
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="copEmsNo" length="225"/>
+		<property name="emsNo" length="225"/>
+		<property name="modifyTimes"/>
+		<property name="declareType" length="225"/>
+		<property name="declareState" length="225"/>
+		<property name="sancEmsNo" length="225"/>
+		<property name="emsApprNo" length="225"/>
+		<property name="emsType" length="225"/>
+		<property name="tradeCode" length="225"/>
+		<property name="tradeName" length="225"/>
+		<property name="machCode" length="225"/>
+		<property name="machName" length="225"/>
+		<property name="tel" length="225"/>
+		<property name="address" length="225"/>
+		<property name="beginDate"/>
+		<property name="endDate"/>
+		<property name="declareErType" length="225"/>
+		<property name="investAmount"/>
+		<property name="machAbility"/>
+		<property name="maxTurnMoney"/>
+		<property name="inputEr" length="225"/>
+		<property name="inputDate" />
+		<property name="newApprDate"/>
+		<property name="changeApprDate"/>
+		<property name="declareDate" />
+		<property name="declareTime" />
+		<property name="note" length="225"/>
+		<property name="historyState" />
+		<property name="modifyMark" length="225"/>	
+	    <property name="ownerType" length="225"/>	
+		<property name="area" length="225"/>
+		<property name="checkMark" length="225"/>
+		<property name="exeMark" length="225"/>
+		<many-to-one lazy="false"      name="company" column="coid" class="com.bestway.bcus.system.entity.Company" index="esemgerhe_company"/>
+</class>
+
+</hibernate-mapping>
+<!-- parsed in 0ms -->

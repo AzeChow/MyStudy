@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<class lazy="false"  name="com.bestway.bls.entity.BlsInOutStockBillDetail" table="blsInOutStockBillDetail">
+		<cache usage="read-write"/> 
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<many-to-one lazy="false"    name="bsb" column="bsb" 
+			class="com.bestway.bls.entity.BlsInOutStockBill"/>
+		<many-to-one lazy="false"    name="originCountry" column="originCountry" 
+		    class="com.bestway.bcus.custombase.entity.countrycode.Country"/>
+	    <many-to-one lazy="false"    name="partNo" column="partNo" 
+	    	class="com.bestway.common.materialbase.entity.Materiel"/>
+		<property name="detailQty" />
+		<property name="unitPrice" />
+		<many-to-one lazy="false"    name="curr" column="curr" 
+	    	class="com.bestway.bcus.custombase.entity.parametercode.Curr"/>
+    	<many-to-one lazy="false"    name="unit" column="unit" 
+    	class="com.bestway.common.materialbase.entity.CalUnit"/>
+    	<property name="totalPrice" />
+    	<property name="spec" />
+    	<property name="warehouseName" />
+		<property name="grossWeight" />
+		<property name="netWeight" />
+		<property name="isEffective" />
+		<property name="isStockBill" />
+		<property name="packCount" />
+		<property name="seqNum" />
+		<property name="seqNo" />
+		<property name="entryID" />
+		<property name="entryGNo" />
+		<property name="remarks1" />
+		<property name="remarks2" />
+		<property name="inBillNo" />
+		<property name="inBillGoodNo" />
+		<property name="nowDetailQty" />
+		<property name="emsNo" />
+		<many-to-one lazy="false" name="company" column="coid"
+			class="com.bestway.bcus.system.entity.Company" />
+	</class>
+</hibernate-mapping>

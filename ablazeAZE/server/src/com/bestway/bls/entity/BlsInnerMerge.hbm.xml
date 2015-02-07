@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bls.entity.BlsInnerMerge" table="blsInnerMerge">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>		
+	
+		<many-to-one lazy="false"    name="materiel" column="materielid" 
+			class="com.bestway.common.materialbase.entity.Materiel" index="blsInnerMerge_materiel"/>	
+		<!--  <property name="materielType"/>	-->
+		<property name="unitConvert"/>	
+		<many-to-one lazy="false"  name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" index="blsInnerMerge_coid"/>	
+		<many-to-one lazy="false"   name="blsTenInnerMerge" column="blsTenInnerMerge" 
+			class="com.bestway.bls.entity.BlsTenInnerMerge" index="blsInnerMerge_tenMerge"/>
+	</class>
+</hibernate-mapping>
+

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="eportmsg.xsl"?>
+<!--Element message: 此元素内所有内容及属性描述一个报文的定义及从数据库的获取途径。-->
+<message version="1.0" type="MaterielApply">
+	<description>物料申报报文定义及获取方法描述</description>
+	<section-flag>PTS_DATA</section-flag>
+	<sub-section>
+		<description>签名信息</description>
+		<file-name>PtsSignFormat.xml</file-name>
+	</sub-section>
+	<sub-section>
+		<description>物料表头信息</description>
+		<file-name>MaterielHeadFormat.xml</file-name>
+	</sub-section>
+	<section multiple="false" required="true">
+		<description>物料表体</description>
+		<section-flag>PTS_ENT_LIST</section-flag>
+		<section multiple="false" required="true">
+			<description>企业物料归并前料件表体</description>
+			<section-flag>PTS_ENT_LIST_IMG</section-flag>
+			<section multiple="false" required="true">
+				<description>企业物料归并前料件</description>
+				<section-flag>PTS_ENT_IMG</section-flag>
+				<data-id>MaterialImgApplyId</data-id>
+				<sub-fields>
+					<description>成品/料件字段信息</description>
+					<file-name>MaterielFieldFormat.xml</file-name>
+				</sub-fields>
+			</section>
+		</section>
+		<section multiple="false" required="true">
+			<description>企业物料归并前成品表体</description>
+			<section-flag>PTS_ENT_LIST_EXG</section-flag>
+			<section multiple="false" required="true">
+				<description>企业物料归并前成品</description>
+				<section-flag>PTS_ENT_EXG</section-flag>
+				<data-id>MaterialExgApplyId</data-id>
+				<sub-fields>
+					<description>成品/料件字段信息</description>
+					<file-name>MaterielFieldFormat.xml</file-name>
+				</sub-fields>
+			</section>
+		</section>
+	</section>
+</message>

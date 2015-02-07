@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class  lazy="false"  name="com.bestway.owp.entity.OwpBomVersion" table="owpbomversion">
+		<cache usage="read-write"/> 
+        <id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+	    </id>
+		<!--<many-to-one lazy="false"      name="master" column="masterId" 
+			class="com.bestway.common.materialbase.entity.EnterpriseBomMaster"/>-->
+		<many-to-one lazy="false"  name="parent" column="parent" 
+			class="com.bestway.owp.entity.OwpBomMaster"/>
+		<property name="notes"/>
+		<property name="version"/>	
+		<many-to-one lazy="false"  name="company" column="companyId" 
+			class="com.bestway.bcus.system.entity.Company" index="ebomv_coid"/>
+    </class>
+
+</hibernate-mapping>
+<!-- parsed in 0ms -->

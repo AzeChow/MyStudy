@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcus.checkcancel.entity.CancelOwnerImgAvgPrice" table="cancelOwnerImgAvgPrice">
+		<cache usage="read-write"/> 
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="emsSeqNum"/>
+		<property name="beginDate"/>
+		<property name="endDate"/>
+		<property name="cancelTimes"/>
+		<property name="commAmount"/>
+		<property name="dollarTotalPrice"/>
+		<property name="avgPrice"/>
+		<property name="beginLeaveNum"/>
+		<property name="beginLeaveMoney"/>
+		<property name="leftOverImgNum"/>
+		<property name="leftOverImgMoney"/>
+		<property name="useNum"/>
+        <property name="useMoney"/>
+		<property name="impNumTotal" />
+		<property name="impMoneyTotal" />
+		<property name="useNumTotal" />
+		<property name="useMoneyTotal" />
+		<property name="leaveNum" />
+		<property name="leaveMoney" />
+		 <many-to-one lazy="false"      name="cancelHead" column="cancelHead"
+			class="com.bestway.bcus.checkcancel.entity.CancelOwnerHead"/>
+		<many-to-one lazy="false"      name="company" column="coid" class="com.bestway.bcus.system.entity.Company" index="cancelcusimgbefore_company"/>
+	</class>
+
+</hibernate-mapping>
+<!-- parsed in 0ms -->
+
+		

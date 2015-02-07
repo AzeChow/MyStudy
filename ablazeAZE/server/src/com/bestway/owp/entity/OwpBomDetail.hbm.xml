@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class  lazy="false"  name="com.bestway.owp.entity.OwpBomDetail" table="owpBomDetail">
+		<cache usage="read-write"/> 
+        <id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+	    </id>
+	    <many-to-one lazy="false"  name="version" column="version" 
+			class="com.bestway.owp.entity.OwpBomVersion"/>
+		<property name="compentNo" index="bommanage_compentno"/>
+		<property name="unitUsed" />
+		<property name="unitWare" />
+		<property name="ware" />
+		<property name="compentName"/>
+		<property name="compentSpec"/>
+		<property name="notes"/>
+		<many-to-one lazy="false" column="coid" name="company" class="com.bestway.bcus.system.entity.Company" index="bommanage_coid"/>
+    </class>
+
+</hibernate-mapping>

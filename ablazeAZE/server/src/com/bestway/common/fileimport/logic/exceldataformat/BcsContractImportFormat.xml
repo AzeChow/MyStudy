@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fileformat>
+	<sheetformat class="com.bestway.bcs.contract.entity.Contract" 
+		sheetindex="1" multi-row="false" desc="通关手册-表头">
+		<field column="2" row="3" key="true" desc="内部编号">copEmsNo</field>
+		<field column="4" row="3" >emsNo</field>
+		<field column="6" row="3" valueMap="进料加工=R/来料加工=U">emsType</field>
+		<field column="2" row="4" refProperty="name">declareCustoms</field>
+		<field column="4" row="4" refProperty="name">redDep</field>
+		<field column="4" row="7" refProperty="name">tradeCountry</field>
+		<field column="6" row="4" refProperty="name">receiveArea</field>
+		<field column="2" row="5" >tradeCode</field>
+		<field column="3" row="5" >tradeName</field>
+		<field column="6" row="5" >machCode</field>
+		<field column="7" row="5" >machName</field>
+		<field column="2" row="6" >outTradeCo</field>
+		<field column="4" row="6" ></field>
+		<field column="6" row="6" refProperty="name">trade</field>
+		<field column="2" row="7" refProperty="name">levyKind</field>
+		<field column="4" row="7" ></field>
+		<field column="6" row="7" refProperty="name">transac</field>
+		<field column="2" row="8"></field>
+		<field column="4" row="8">agreementNo</field>
+		<field column="6" row="8">permitNo</field>
+		<field column="2" row="9">emsApprNo</field>
+		<field column="4" row="9">impContractNo</field>
+		<field column="6" row="9">expContractNo</field>
+		<field column="2" row="10">imgAmount</field>
+		<field column="4" row="10" refProperty="name">curr</field>
+		<field column="6" row="10">exgAmount</field>
+		<field column="2" row="11" refProperty="name">curr</field>
+		<field column="4" row="11" refProperty="name">machiningType</field>
+		<field column="6" row="11" refProperty="name">payMode</field>
+		<field column="2" row="12">endDate</field>
+		<field column="4" row="12" refProperty="name" value-seperate="/">iePort1/iePort2/iePort3/iePort4/iePort5</field>
+		<field column="6" row="12">materielItemCount</field>
+		<field column="2" row="13"></field>
+		<field column="4" row="13">productItemCount</field>
+		<field column="6" row="13"></field>
+		<field column="2" row="14" valueMap="不变=0/修改=1/新增=3/删除=2">modifyMark</field>
+		<field column="4" row="14" valueMap="以经营单位为管理对象=0/以加工单位为管理对象=1">manageObject</field>
+		<field column="6" row="14">saveDate</field>
+		<field column="2" row="15">declareDate</field>
+		<field column="4" row="15" valueMap="备案=1/出口前=2/报核前=3">equipMode</field>
+		<field column="6" row="15">memo</field>
+		<field column="2" row="16" valueMap="纸质台帐=0/中国银行=1/工商银行=2">bankModel</field>
+	</sheetformat>
+	<sheetformat class="com.bestway.bcs.contract.entity.ContractImg" 
+		sheetindex="2" multi-row="true" beginRow="3" desc="通关手册-料件">
+		<field column="1" key="true">seqNum</field>
+		<field column="2">credenceNo</field>
+		<field column="3+4" refProperty="code">complex</field>
+		<field column="5">name</field>
+		<field column="6">spec</field>
+		<field column="7" valueMap="主料=true">isMainImg</field>
+		<field column="8" refProperty="name">unit</field>
+		<field column="10">amount</field>
+		<field column="11">declarePrice</field>
+		<field column="12">totalPrice</field>
+		<field column="14" refProperty="name">country</field>
+		<field column="15">legalUnitGene</field>
+		<field column="16" refProperty="name">levyMode</field>
+		<field column="17" valueMap="不变=0/修改=1/新增=3/删除=2">modifyMark</field>
+		<field column="18">note</field>
+		<field>contract</field>
+	</sheetformat>
+	<sheetformat class="com.bestway.bcs.contract.entity.ContractExg" 
+		sheetindex="3" multi-row="true" beginRow="3" desc="通关手册-成品">
+		<field column="1" key="true">seqNum</field>
+		<field column="2">credenceNo</field>
+		<field column="3+4" refProperty="code">complex</field>
+		<field column="5">name</field>
+		<field column="6">spec</field>
+		<field column="7" refProperty="name">unit</field>
+		<field column="9">exportAmount</field>
+		<field column="10">unitPrice</field>
+		<field column="11">totalPrice</field>
+		<field column="13" refProperty="name">country</field>
+		<field column="14">legalUnitGene</field>
+		<field column="15" refProperty="name">levyMode</field>
+		<field column="16" valueMap="不变=0/修改=1/新增=3/删除=2">modifyMark</field>
+		<field column="17" valueMap="企业申报=2/企业不申报=1/已核定=9">dutyRate</field>
+		<field column="18">note</field>
+		<field>contract</field>
+	</sheetformat>
+	<sheetformat class="com.bestway.bcs.contract.entity.ContractBom" 
+		sheetindex="4" multi-row="true" beginRow="3" desc="通关手册-单耗">
+		<field column="1" key="true">contractExg</field>
+		<field column="5" key="true" var="contractImg:com.bestway.bcs.contract.entity.ContractImg">contractImgSeqNum</field>		
+		<field value="contractImg.complex">complex</field>
+		<field value="contractImg.declarePrice">declarePrice</field>
+		<field value="contractImg.country">country</field>
+		<field value="contractImg.isMainImg">isMainImg</field>
+		<field column="6">name</field>
+		<field column="7">spec</field>
+		<field column="8" refProperty="name">unit</field>
+		<field column="9">unitWaste</field>
+		<field column="10">waste</field>
+		<field column="11" valueMap="不变=0/修改=1/新增=3/删除=2">modifyMark</field>
+		<field column="12">nonMnlRatio</field>
+		<field column="13">note</field>
+	</sheetformat>
+</fileformat>

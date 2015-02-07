@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class 
+		name="com.bestway.common.transferfactory.entity.MakeCustomsEnvelopRequest" 
+		table="makecustomsenveloprequest">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<many-to-one lazy="false"      name="company" column="companyId" 
+			class="com.bestway.bcus.system.entity.Company" index="makesmelquest_company"/>
+		<many-to-one lazy="false"      name="cerCommodityInfo" class = 
+			"com.bestway.common.transferfactory.entity.CustomsEnvelopRequestCommodityInfo"/>
+		<many-to-one lazy="false"      name="tfCommodityInfo" 
+			class="com.bestway.common.transferfactory.entity.TransferFactoryCommodityInfo"/>
+	</class>
+</hibernate-mapping>

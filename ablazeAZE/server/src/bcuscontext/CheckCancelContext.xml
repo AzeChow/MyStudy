@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!--==================DAO Beans====================-->
+	<bean id="checkCancelDao" 
+		class="com.bestway.bcus.checkcancel.dao.CheckCancelDao">	
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>
+	<bean id="emsAnalyDao" 
+		class="com.bestway.bcus.checkcancel.dao.EmsAnalyDao">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>
+	<bean id="commonCodeDao" 
+		class="com.bestway.bcus.innermerge.dao.CommonBaseCodeDao">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>	
+	<bean id="emsEdiTrDao" 
+		class="com.bestway.bcus.manualdeclare.dao.EmsEdiTrDao">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>	
+	<!--==================Logic Beans====================-->
+	<bean id="checkCancelLogic" 
+		class="com.bestway.bcus.checkcancel.logic.CheckCancelLogic">
+		<property name="checkCancelDao">
+			<ref bean="checkCancelDao"/>
+		</property>
+		<property name="commonBaseCodeDao">
+			<ref bean="commonCodeDao"/>
+		</property>
+		<property name="emsEdiTrDao"><ref bean="emsEdiTrDao"/></property>
+	</bean>
+	<bean id="emsAnalyLogic" 
+		class="com.bestway.bcus.checkcancel.logic.EmsAnalyLogic">
+		<property name="emsAnalyDao">
+			<ref bean="emsAnalyDao"/>
+		</property>
+		<property name="checkCancelDao">
+			<ref bean="checkCancelDao"/>
+		</property>
+		<property name="emsEdiTrDao"><ref bean="emsEdiTrDao"/></property>
+	</bean>
+	
+
+	<!--==================Action Bean====================-->
+	<bean id="checkCancelAction" 
+		class="com.bestway.bcus.checkcancel.action.CheckCancelActionImpl">
+		<property name="checkCancelDao">
+			<ref bean="checkCancelDao"/>
+		</property>		
+        <property name="emsAnalyLogic">
+			<ref bean="emsAnalyLogic"/>
+		</property>	
+		<property name="checkCancelLogic">
+			<ref bean="checkCancelLogic"/>
+		</property>	
+		<property name="emsAnalyDao">
+			<ref bean="emsAnalyDao"/>
+		</property>	
+	</bean>
+
+</beans>

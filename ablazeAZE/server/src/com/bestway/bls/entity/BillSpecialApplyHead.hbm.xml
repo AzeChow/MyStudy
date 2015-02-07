@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+   
+<hibernate-mapping>
+  <class lazy="false" name="com.bestway.bls.entity.BillSpecialApplyHead" 
+		table="billspecialapplyhead">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+		  <generator class="uuid.hex"></generator>
+		</id>
+		<property name="tradeCo"></property>
+		<property name="tradeName"></property>
+		<property name="billNo"></property>
+		<property name="applyType"></property>
+		<property name="applyDate"></property>
+		<property name="applyPerson"></property>
+		<property name="writeDate"></property>
+		<property name="writePerson"></property>
+		<property name="declareState"></property>
+		<property name="applyReason"></property>
+		<property name="note"></property>
+		<many-to-one lazy="false" name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company"/>		
+  </class>
+</hibernate-mapping>

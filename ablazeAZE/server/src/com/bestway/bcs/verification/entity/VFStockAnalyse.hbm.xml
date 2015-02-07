@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class lazy="false" name="com.bestway.bcs.verification.entity.VFStockAnalyse"
+		table="vfstockanalyse">
+		<cache usage="read-write" />
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex" />
+		</id>
+		<property name="serialNumber" />
+		<property name="mergerNo" />
+		<property name="hsName" />
+		<property name="hsSpec" />
+		<property name="hsUnit" />
+		<property name="stockAmountImg" not-null="true"/>
+		<property name="stockAmountExg" not-null="true"/>
+		<property name="stockAmountProcessImg" not-null="true"/>
+		<property name="stockAmountOutSend" not-null="true"/>
+		<property name="stockAmountOutFactory" not-null="true"/>
+		<property name="stockAmountBuy" not-null="true"/>
+		<property name="stockAmountTraveling" not-null="true"/>
+		<property name="stockAmountTravelingExg" not-null="true"/>
+		<property name="stockTotalAmount" not-null="true"/>
+		<property name="stockAmountSemiExgHadStore" not-null="true"/>
+		<property name="stockAmountBad" not-null="true"/>
+		<property name="stockAmountFinishing" not-null="true"/>
+		<many-to-one lazy="false" name="section" column="section"
+			class="com.bestway.bcs.verification.entity.VFSection" index="vfstockanalyse_section"/>
+		<many-to-one lazy="false" name="company" column="company"
+			class="com.bestway.bcus.system.entity.Company" index="vfstockanalyse_company" />
+	</class>
+</hibernate-mapping>
+	<!-- parsed in 0ms -->

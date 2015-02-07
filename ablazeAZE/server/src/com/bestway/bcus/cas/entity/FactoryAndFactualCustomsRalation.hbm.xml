@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcus.cas.entity.FactoryAndFactualCustomsRalation" table="ffRalation">
+		<cache usage="read-write"/> 
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="unitConvert"/>
+		<property name="remark"/>
+		<many-to-one lazy="false"  name="materiel" column="materiel" 
+			class="com.bestway.common.materialbase.entity.Materiel"/>
+		<many-to-one lazy="false"  name="statCusNameRelationHsn" column="statCusNameRelationHsn" 
+			class="com.bestway.bcus.cas.entity.StatCusNameRelationHsn"/>
+		<many-to-one lazy="false"  name="company" column="coid" class="com.bestway.bcus.system.entity.Company" index="factoRalation_company"/>
+		<many-to-one lazy="false"  name="scmCoc" column="scmCoc" 
+			class="com.bestway.common.materialbase.entity.ScmCoc"/>
+			<property name="createDate"/>
+	</class>
+</hibernate-mapping>

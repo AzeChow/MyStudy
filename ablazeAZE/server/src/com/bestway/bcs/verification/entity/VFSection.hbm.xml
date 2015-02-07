@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class lazy="false" name="com.bestway.bcs.verification.entity.VFSection"
+		table="vfsection">
+		<cache usage="read-write" />
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex" />
+		</id>
+		<property name="verificationNo" />
+		<property name="isImportHs" />
+		<property name="endDate" />
+		<property name="createDate" />
+		<property name="modifyDate" />
+		<property name="createPeople" />
+		<property name="modifyPeople" />
+		<property name="memo" />
+		<property name="isExist" />
+		<property name="buyIsCount" />
+		<many-to-one lazy="false" name="company" column="company"
+			class="com.bestway.bcus.system.entity.Company" index="vfsection_company" />
+	</class>
+</hibernate-mapping>
+	<!-- parsed in 0ms -->

@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class lazy="false" name="com.bestway.bls.entity.BlsParameterSet" 
+		table="blsparameterset">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="remoteHostAddress"/>
+		<property name="remoteHostPort"/>
+		<property name="idCard"/>
+		<property name="pwd"/>
+		<property name="seqNo"/>
+		<property name="isInnerUse"/>
+		<property name="hpServiceUrl"/>
+		
+		<property name="isAutoDeclare"/>
+		<property name="isAutoProcess"/>
+		
+		<property name="impBeginTime"/>
+		<property name="impEndTime"/>
+		<property name="impEverydayFrequencyType"/>
+		<property name="impEverydayFrequency"/>
+		<property name="impWeeklyFrequency"/>		
+		
+		<property name="expBeginTime"/>
+		<property name="expEndTime"/>
+		<property name="expEverydayFrequencyType"/>
+		<property name="expEverydayFrequency"/>
+		<property name="expWeeklyFrequency"/>
+		
+		<property name="cobBeginTime"/>
+		<property name="cobEndTime"/>
+		<property name="cobEverydayFrequencyType"/>
+		<property name="cobEverydayFrequency"/>
+		<property name="cobWeeklyFrequency"/>
+		<property name="emsNO"/>
+		<many-to-one lazy="false" name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company"/>
+	</class>
+</hibernate-mapping>

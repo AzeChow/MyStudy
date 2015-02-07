@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	
+	<!--==================DAO Beans====================-->
+	<bean id="dbimportDao" 
+		class="com.bestway.bcus.dbimport.dao.DbimportDao">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>
+	
+	
+	<bean id="dbconnectDao" 
+		class="com.bestway.bcus.dbimport.dao.DbconnectDao">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>
+	<bean id="dbCasDao" 
+		class="com.bestway.bcus.dbimport.dao.DbCasDao">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>
+	<bean id="dbmanualDeclareDao" 
+		class="com.bestway.bcus.dbimport.dao.DbManualDeclareDao">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>
+	<bean id="dbCustomDao" 
+		class="com.bestway.bcus.dbimport.dao.DbCustomDao">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>
+	<!--==================Logic Beans====================-->	
+	<bean id="dbCasLogic" class="com.bestway.bcus.dbimport.logic.DbCasLogic">
+		<property name="dbCasDao">
+			<ref bean="dbCasDao"/>
+		</property>
+		<property name="casDao">
+			<ref bean="casDao"/>
+		</property>
+	</bean>
+	
+	
+	
+	<!--==================Action Bean====================-->
+	<bean id="dbimportAction" 
+		class="com.bestway.bcus.dbimport.action.DbimportImplAction">
+		<property name="dbimportDao">
+			<ref bean="dbimportDao"/>
+		</property>	
+		<property name="dbconnectDao">
+			<ref bean="dbconnectDao"/>
+		</property>	
+		<property name="dbmanualDeclareDao">
+			<ref bean="dbmanualDeclareDao"/>
+		</property>	
+		<property name="dbCustomDao">
+			<ref bean="dbCustomDao"/>
+		</property>
+		<property name="dbCasDao">
+			<ref bean="dbCasDao"/>
+		</property>		
+		<property name="dbCasLogic">
+			<ref bean="dbCasLogic"/>
+		</property>	
+				
+	</bean>
+
+</beans>

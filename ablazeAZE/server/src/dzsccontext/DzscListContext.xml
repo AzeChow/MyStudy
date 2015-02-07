@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!--==================DAO Beans====================-->
+	<bean id="dzscListDao" class="com.bestway.dzsc.customslist.dao.DzscListDao">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>
+	<!--==================Logic Beans====================-->
+	<bean id="dzscListLogic" class="com.bestway.dzsc.customslist.logic.DzscListLogic">
+		<property name="dzscDao"><ref bean="dzscDao"/></property>
+		<property name="dzscListDao"><ref bean="dzscListDao"/></property>
+		<property name="createDirDao"><ref bean="createDirDao"/></property>
+		<property name="dzscContractExeDao"><ref bean="dzscContractExeDao"/></property>
+		<property name="encDao"><ref bean="encDao"/></property>
+		<property name="dzscMessageLogic"><ref bean="dzscMessageLogic"/></property>
+		<property name="fptManageLogic"><ref bean="fptManageLogic"/></property>	
+	</bean>
+	<!--==================Action Bean====================-->
+	<bean id="dzscListAction" 
+		class="com.bestway.dzsc.customslist.action.DzscListActionImpl">
+		<property name="dzscListDao">
+			<ref bean="dzscListDao"/>
+		</property>
+		<property name="dzscListLogic">
+			<ref bean="dzscListLogic"/>
+		</property>
+	</bean>
+</beans>

@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class  lazy="false"  name="com.bestway.fixasset.entity.Agreement" table="agreement">
+		<cache usage="read-write"/> 
+        <id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+	    </id>
+		<property name="declareState"/>
+		<property name="emsNo"/>
+		<property name="sancEmsNo"/>
+		<property name="tradeCode"/>
+		<property name="tradeName"/>
+		<property name="machCode"/>
+		<property name="machName"/>
+		
+		<property name="beginDate"/>
+		<property name="endDate"/>
+		<property name="approveDate"/>
+		<property name="linkMan"/>
+		<property name="linkTel"/>
+		<property name="totalMoney"/>
+		<property name="changeRemainMoney"/>
+		<many-to-one lazy="false"  name="levyKind" column="levyKind" 
+			class="com.bestway.bcus.custombase.entity.parametercode.LevyKind"/>
+
+		<property name="address"/>
+		<many-to-one lazy="false"  name="curr" column="currency" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Curr"/>
+		<property name="registeredMoney"/>
+		<property name="investMoney"/>
+		<property name="workingRange"/>
+		<property name="changedTimes"/>
+		
+		<many-to-one lazy="false" name="company" class="com.bestway.bcus.system.entity.Company">
+			<column name="coid" index="fecavbill_2"/>	
+		</many-to-one>
+    </class>
+
+</hibernate-mapping>

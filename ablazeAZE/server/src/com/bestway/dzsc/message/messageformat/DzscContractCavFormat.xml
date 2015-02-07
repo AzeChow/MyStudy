@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="eportmsg.xsl"?>
+<!--Element message: 此元素内所有内容及属性描述一个报文的定义及从数据库的获取途径。-->
+<message version="1.0" type="DzscContractCav">
+	<description>数据报核报文定义及获取方法描述</description>
+	<section-flag>PTS_DATA</section-flag>
+	<sub-section>
+		<description>签名信息</description>
+		<file-name>PtsSignFormat.xml</file-name>
+	</sub-section>	
+	<section multiple="false" required="true">
+		<description>数据报核表头</description>
+		<section-flag>PTS_DCR_HEAD</section-flag>
+		<data-id>DzscContractCav</data-id>
+		<field nullable="false" signNo="1">
+			<description>帐册编号</description>
+			<field-name>emsNo</field-name>
+			<format>X(12)</format>
+			<field-flag>EMS_NO</field-flag>
+		</field>
+		<field nullable="false" signNo="2">
+			<description>报核次数</description>
+			<field-name>declareTimes</field-name>
+			<format>Z(8)9</format>
+			<field-flag>DCR_TIMES</field-flag>
+		</field>
+		<field nullable="false" signNo="3">
+			<description>报核类型</description>
+			<field-name>declareType</field-name>
+			<format>X(1)</format>
+			<field-flag>DCR_TYPE</field-flag>
+		</field>
+		<field nullable="true">
+			<description>报核开始日期</description>
+			<field-name>beginDate</field-name>
+			<format>Z(8)</format>
+			<field-flag>BEGIN_DATE</field-flag>
+		</field>
+		<field nullable="true">
+			<description>报核截至日期</description>
+			<field-name>endDate</field-name>
+			<format>Z(8)</format>
+			<field-flag>END_DATE</field-flag>
+		</field>
+		<field nullable="false" signNo="4">
+			<description>料件进口总金额</description>
+			<field-name>impAmount</field-name>
+			<format>Z(12)9.9(5)</format>
+			<field-flag>DECL_IN_AMT</field-flag>
+		</field>
+		<field nullable="false" signNo="5">
+			<description>成品出口总金额</description>
+			<field-name>expAmount</field-name>
+			<format>Z(12)9.9(5)</format>
+			<field-flag>DECL_EX_AMT</field-flag>
+		</field>
+		<field nullable="false" signNo="6">
+			<description>进口报关单总份数</description>
+			<field-name>impCDCount</field-name>
+			<format>Z(8)9</format>
+			<field-flag>I_DEC_QTY</field-flag>
+		</field>
+		<field nullable="false" signNo="7">
+			<description>出口报关单总份数</description>
+			<field-name>expCDCount</field-name>
+			<format>Z(8)9</format>
+			<field-flag>E_DEC_QTY</field-flag>
+		</field>
+		<field nullable="false" signNo="8">
+			<description>报核料件总项数</description>
+			<field-name>imgCount</field-name>
+			<format>Z(8)9</format>
+			<field-flag>IMG_NUM</field-flag>
+		</field>
+		<field nullable="false" signNo="9">
+			<description>报核成品总项数</description>
+			<field-name>exgCount</field-name>
+			<format>Z(8)9</format>
+			<field-flag>EXG_NUM</field-flag>
+		</field>
+		<field nullable="true">
+			<description>报核边角料总项数</description>
+			<field-name></field-name>
+			<format>Z(8)9</format>
+			<field-flag>IMR_NUM</field-flag>
+		</field>
+		<field nullable="true">
+			<description>报核残次品总项数</description>
+			<field-name></field-name>
+			<format>Z(8)9</format>
+			<field-flag>EXR_NUM</field-flag>
+		</field>
+		<field nullable="false" signNo="10">
+			<description>录入日期</description>
+			<field-name>createDate</field-name>
+			<format>Z(8)</format>
+			<field-flag>INPUT_DATE</field-flag>
+		</field>
+		<field nullable="false" signNo="11">
+			<description>录入员代号</description>
+			<field-name>inputER</field-name>
+			<format>9(4)</format>
+			<field-flag>INPUT_ER</field-flag>
+		</field>
+		<field nullable="false" signNo="12">
+			<description>报核申报日期</description>
+			<field-name>declareDate</field-name>
+			<format>Z(8)</format>
+			<field-flag>DCR_DATE</field-flag>
+		</field>
+		<field nullable="true">
+			<description>报核申报时间</description>
+			<field-name>declareDate</field-name>
+			<format>Z(8)</format>
+			<field-flag>DCR_TIME</field-flag>
+		</field>
+		<field nullable="true">
+			<description>备用标志1</description>
+			<field-name></field-name>
+			<format>X(1)</format>
+			<field-flag>NOTE_1</field-flag>
+		</field>
+		<field nullable="true">
+			<description>备用金额</description>
+			<field-name></field-name>
+			<format>Z(12)9.9(5)</format>
+			<field-flag>NOTE_AMOUNT</field-flag>
+		</field>
+		<field nullable="true">
+			<description>备用数量</description>
+			<field-name></field-name>
+			<format>Z(12)9.9(5)</format>
+			<field-flag>NOTE_QTY</field-flag>
+		</field>
+		<field nullable="true">
+			<description>备注</description>
+			<field-name></field-name>
+			<format>X(30)</format>
+			<field-flag>NOTE</field-flag>
+		</field>
+	</section>
+	
+	<section multiple="false" required="true">
+		<description>数据报核表体</description>
+		<section-flag>PTS_DCR_LIST</section-flag>
+		
+		<section multiple="false" required="true">
+			<description>数据报核报关单表体</description>
+			<section-flag>PTS_DCR_LIST_DEC</section-flag>
+				<section multiple="false" required="true">
+					<description>数据报核报关单记录</description>
+					<section-flag>PTS_DCR_DEC</section-flag>
+					<data-id>DzscCustomsDeclarationCav</data-id>
+					<field nullable="false" signNo="1">
+						<description>报关单号</description>
+						<field-name>customsDeclarationCode</field-name>
+						<format>X(18)</format>
+						<field-flag>I_E_DEC_NO</field-flag>
+					</field>
+					<field nullable="false" signNo="2">
+						<description>报关地海关代码</description>
+						<field-name>declarationCustoms.code</field-name>
+						<format>9(4)</format>
+						<field-flag>CUSTOM_MASTER</field-flag>
+					</field>
+					<field nullable="false" signNo="3">
+						<description>进出口标志</description>
+						<field-name>customsImpExpType</field-name>
+						<format>X(1)</format>
+						<field-flag>I_E_FLAG</field-flag>
+					</field>
+					<field nullable="false" signNo="4">
+						<description>申报日期</description>
+						<field-name>declarationDate</field-name>
+						<format>Z(8)</format>
+						<field-flag>DECLARE_DATE</field-flag>
+					</field>
+					<field nullable="false" signNo="5">
+						<description>进出日期</description>
+						<field-name>impExpDate</field-name>
+						<format>Z(8)</format>
+						<field-flag>I_E_DATE</field-flag>
+					</field>
+					<field nullable="false" signNo="6">
+						<description>核扣/通关方式</description>
+						<field-name>deduc.code</field-name>
+						<format>X(2)</format>
+						<field-flag>DU_CODE</field-flag>
+					</field>
+					<field nullable="true">
+						<description>审核标志</description>
+						<field-name></field-name>
+						<format>X(1)</format>
+						<field-flag>ENT_MARK</field-flag>
+					</field>
+					<field nullable="true">
+						<description>备注</description>
+						<field-name></field-name>
+						<format>X(10)</format>
+						<field-flag>NOTE</field-flag>
+					</field>
+				</section>
+		</section>
+		
+		<section multiple="false" required="true">
+			<description>数据报核料件表体</description>
+			<section-flag>PTS_DCR_LIST_IMG</section-flag>
+				<section multiple="false" required="true">
+					<description>数据报核料件记录</description>
+					<section-flag>PTS_DCR_IMG</section-flag>
+					<data-id>DzscContractImgCav</data-id>
+					<field nullable="false" signNo="1">
+						<description>料件序号</description>
+						<field-name>seqNum</field-name>
+						<format>Z(9)</format>
+						<field-flag>G_NO</field-flag>
+					</field>
+					<field nullable="true">
+						<description>料件料号</description>
+						<field-name></field-name>
+						<format>X(30)</format>
+						<field-flag>COP_G_NO</field-flag>
+					</field>
+					<field nullable="false" signNo="2">
+						<description>报核数量类型</description>
+						<field-name>qtyType</field-name>
+						<format>X(2)</format>
+						<field-flag>QTY_TYPE</field-flag>
+					</field>
+					<field nullable="false" signNo="3">
+						<description>数量</description>
+						<field-name>amount</field-name>
+						<format>Z(12)9.9(5)</format>
+						<field-flag>QTY</field-flag>
+					</field>
+				</section>
+		</section>
+		
+		<section multiple="false" required="true">
+			<description>数据报核成品表体</description>
+			<section-flag>PTS_DCR_LIST_EXG</section-flag>
+				<section multiple="false" required="true">
+					<description>数据报核成品记录</description>
+					<section-flag>PTS_DCR_EXG</section-flag>
+					<data-id>DzscContractExgCav</data-id>
+					<field nullable="false" signNo="1">
+						<description>成品序号</description>
+						<field-name>seqNum</field-name>
+						<format>Z(9)</format>
+						<field-flag>G_NO</field-flag>
+					</field>
+					<field nullable="true">
+						<description>成品料号</description>
+						<field-name></field-name>
+						<format>X(30)</format>
+						<field-flag>COP_G_NO</field-flag>
+					</field>
+					<field nullable="false" signNo="2">
+						<description>报核数量类型</description>
+						<field-name>qtyType</field-name>
+						<format>X(2)</format>
+						<field-flag>QTY_TYPE</field-flag>
+					</field>
+					<field nullable="false" signNo="3">
+						<description>数量</description>
+						<field-name>amount</field-name>
+						<format>Z(12)9.9(5)</format>
+						<field-flag>QTY</field-flag>
+					</field>
+				</section>
+		</section>
+		
+		<section multiple="false" required="true">
+			<description>数据报核单损耗表体</description>
+			<section-flag>PTS_DCR_LIST_CM</section-flag>
+				<section multiple="false" required="true">
+					<description>数据报核单损耗记录</description>
+					<section-flag>PTS_DCR_CM</section-flag>
+					<data-id>DzscContractBomCav</data-id>
+					<field nullable="false" signNo="1">
+						<description>成品序号</description>
+						<field-name>seqProductNum</field-name>
+						<format>Z(9)</format>
+						<field-flag>EXG_NO</field-flag>
+					</field>
+					<field nullable="false">
+						<description>成品版本</description>
+						<field-name>bomVersion</field-name>
+						<format>Z(8)9</format>
+						<field-flag>EXG_VERSION</field-flag>
+					</field>
+					<field nullable="false" signNo="2">
+						<description>料件序号</description>
+						<field-name>seqMaterialNum</field-name>
+						<format>Z(9)</format>
+						<field-flag>IMG_NO</field-flag>
+					</field>
+					<field nullable="false" signNo="3">
+						<description>单耗</description>
+						<field-name>unitWaste</field-name>
+						<format>Z(8)9.9(9)</format>
+						<field-flag>DEC_CM</field-flag>
+					</field>
+					<field nullable="false" signNo="4">
+						<description>损耗率%</description>
+						<field-name>waste</field-name>
+						<format>Z(3)9.9(5)</format>
+						<field-flag>DEC_DM</field-flag>
+					</field>
+					<field nullable="false" signNo="5">
+						<description>修改标志</description>
+						<field-name>customsModifyMark</field-name>
+						<format>X(1)</format>
+						<field-flag>MODIFY_MARK</field-flag>
+					</field>
+					<field nullable="true">
+						<description>备注</description>
+						<field-name></field-name>
+						<format>X(10)</format>
+						<field-flag>NOTE</field-flag>
+					</field>
+					<field nullable="false">
+						<description>非保税料件比例</description>
+						<field-name>nonMnlRatio</field-name>
+						<format>Z(3)9.9(5)</format>
+						<field-flag>NON_MNL_RATIO</field-flag>
+					</field>
+					<field nullable="true">
+			<description>保留字段</description>
+			<field-name></field-name>
+			<format>Z(12)9.9(5)</format>
+			<field-flag>VALUE_ADD_FIELD</field-flag>
+		</field>
+<field nullable="true">
+			<description>保留字段</description>
+			<field-name></field-name>
+			<format>X(8)</format>
+			<field-flag>CHAR_ADD_FIELD</field-flag>
+		</field>
+				</section>
+		</section>
+	</section>
+</message>

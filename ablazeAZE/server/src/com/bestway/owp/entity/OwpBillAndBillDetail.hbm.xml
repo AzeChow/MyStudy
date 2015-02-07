@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class  lazy="false"  name="com.bestway.owp.entity.OwpBillAndBillDetail"
+      table="owpbillandbilldetail">
+		<cache usage="read-write"/> 
+        <id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+	    </id>
+	    
+	    <property name="bill" />
+	    
+	    <property name="billTypeCode" />
+	    
+	    <property name="produceType" />
+			
+		<many-to-one lazy="false" column="owpbillrecvitemid" name="owpBillRecvItem" 
+			class="com.bestway.owp.entity.OwpBillRecvItem" />
+			
+		<many-to-one lazy="false" column="owpbillsenditemid" name="owpBillSendItem" 
+			class="com.bestway.owp.entity.OwpBillSendItem" />
+			
+		<many-to-one lazy="false"      name="company" column="coid" 
+		 	class="com.bestway.bcus.system.entity.Company" index="owpapphead_coid"/>
+			
+		<property name="isOut" />
+		
+    </class>
+
+</hibernate-mapping>

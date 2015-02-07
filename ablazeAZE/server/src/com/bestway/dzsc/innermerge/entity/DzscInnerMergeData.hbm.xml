@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class  lazy="false"  name="com.bestway.dzsc.innermerge.entity.DzscInnerMergeData" table="dzscinnermerge">
+		<cache usage="read-write"/> 
+        <id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+	    </id>
+		<many-to-one lazy="false" fetch="join" name="dzscTenInnerMerge" 
+			column="dzscTenInnerMerge" 
+			class="com.bestway.dzsc.innermerge.entity.DzscTenInnerMerge" 
+			index="dzscinnermerge_ten"/>
+		<property name="imrType">
+			<column name="imrType" length="10" />		
+		</property>
+		<many-to-one lazy="false"  fetch="join"  name="materiel" column="materielid" 
+			class="com.bestway.common.materialbase.entity.Materiel" index="dzscinnermerge_materiel"/>	
+				
+		<!--<property name="tenSeqNum"/>
+		<many-to-one lazy="false"  fetch="join"  name="tenComplex" class="com.bestway.bcus.custombase.entity.hscode.Complex">
+			<column name="tenComplexId"/>
+		</many-to-one>
+        <property name="tenPtName"/>
+		<property name="tenPtSpec"/>
+		<many-to-one lazy="false"  fetch="join"  name="tenUnit" column="tenUnit" class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<property name="fourSeqNum"/>
+		<property name="fourPtName" length="225"/>
+		<property name="fourPtSpec" length="225"/>
+		<many-to-one lazy="false"  fetch="join"  name="fourUnit" column="fourUnit" class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<property name="fourComplex" />-->
+		
+		
+		<property name="stateMark" />
+		<property name="beforeModifyMark" />
+		<property name="isChange" />
+		<property name="unitConvert" />
+		<many-to-one lazy="false" name="company" class="com.bestway.bcus.system.entity.Company">
+			<column name="coid" index="dzscinnermerge_coid"/>	
+		</many-to-one>
+    </class>
+
+</hibernate-mapping>

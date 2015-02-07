@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcs.contract.entity.ContractExg" 
+		table="contractexg">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<many-to-one lazy="false"    name="contract" column="contract" 
+			class="com.bestway.bcs.contract.entity.Contract"/>
+		<property name="exportAmount" />
+		<property name="unitPrice" />
+		<property name="totalPrice" />
+		<property name="processTotalPrice" />
+		<!--<many-to-one lazy="false"    name="legalUnit" column="legalUnit" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>-->
+		<property name="credenceNo" />
+		<property name="legalAmount" />
+		<property name="secondAmount" />
+		<property name="legalUnitGene" />
+		<property name="legalUnit2Gene" />
+		<!--<many-to-one lazy="false"    name="secondUnit" column="secondUnit" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>-->
+			
+		<property name="materialFee" />
+		<many-to-one lazy="false"    name="country" column="country" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Country"/>
+		<property name="processUnitPrice" />
+		<property name="unitGrossWeight" />
+		<property name="unitNetWeight" />
+		<property name="seqNum"/>
+		<many-to-one lazy="false"    name="complex" column="complex" 
+			class="com.bestway.bcus.custombase.entity.hscode.Complex" index="contractexg_complex"/>
+		<many-to-one lazy="false"    name="levyMode" column="levyMode" 
+			class="com.bestway.bcus.custombase.entity.parametercode.LevyMode"/>
+		<property name="name" />
+		<property name="spec" />
+		<many-to-one lazy="false"    name="unit" column="unit" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<property name="declarePrice"/>
+		<property name="note"/>
+		<property name="mannerNote"/>
+		<property name="dutyRate"/>
+		<many-to-one lazy="false"    name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" index="contractexg_coid"/>
+		<!--<property name="declareState"/>-->
+		<property name="createDate" />
+		<property name="modifyDate" />
+		<property name="modifyMark" />
+		<property name="isForbid" />
+	</class>
+</hibernate-mapping>
+<!-- parsed in 0ms -->

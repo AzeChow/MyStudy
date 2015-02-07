@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+	<!--==================DAO Beans====================-->
+	<bean id="outsourceDao" class="com.bestway.common.outsource.dao.OutsourceDao">
+		<property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+	<!--==================Logic Beans====================-->
+	<bean id="outsourceLogic" class="com.bestway.common.outsource.logic.OutsourceLogic">
+		<property name="outsourceDao"><ref local="outsourceDao"/></property>		
+	</bean>
+	<!--==================Action Bean====================-->
+	<bean id="outsourceAction" 
+		class="com.bestway.common.outsource.action.OutsourceActionImpl">
+		<property name="outsourceDao"><ref local="outsourceDao"/></property>
+		<property name="outsourceLogic"><ref local="outsourceLogic"/></property>
+	</bean>
+	
+
+	
+	<!--==================Other Beans====================-->
+	<!--erp bill center check authority control-->				
+	<bean id="outsourceAuthority" 
+		class="com.bestway.common.outsource.authority.OutsourceAuthorityImpl"/>
+	
+</beans>

@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class  lazy="false"  name="com.bestway.fecav.entity.ImpCustomsDeclaration" table="impcustomsdecl">
+		<cache usage="read-write"/> 
+        <id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+	    </id>
+		<property name="signInNo"/>	
+		<property name="customsDeclarationId"/>	
+		<property name="customsDeclarationCode"/>
+		<property name="contractNo"/>
+		<property name="emsNo"/>
+		<property name="totalMoney"/>
+		<property name="strikeMoney"/>
+		<property name="remainMoney"/>
+		<property name="whiteBillNo"/>
+		<property name="declareDate"/>
+		<property name="memo"/>
+		<property name="preCustomsDeclarationCode"/>
+		<property name="tradeMode"/>
+		<property name="canStrike"/>
+		<many-to-one lazy="false"  name="curr" column="currency" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Curr"/>		
+		<many-to-one lazy="false" name="company" class="com.bestway.bcus.system.entity.Company">
+			<column name="coid" index="strikeimport_1"/>	
+		</many-to-one>
+    </class>
+</hibernate-mapping>

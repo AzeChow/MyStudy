@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcs.contractexe.entity.BcsCustomsDeclarationContainer" 
+		table="bcscustomsdeclarationcontainer">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<many-to-one lazy="false"      name="baseCustomsDeclaration" column="customsDeclaration" 
+			class="com.bestway.bcs.contractexe.entity.BcsCustomsDeclaration"/>
+		<property name="containerCode" />
+		<many-to-one lazy="false"      name="srtJzx" column="srtJzx" 
+			class="com.bestway.bcus.custombase.entity.parametercode.SrtJzx"/>
+		<many-to-one lazy="false"      name="srttj" column="srttj" 
+			class="com.bestway.bcus.custombase.entity.parametercode.SrtTj"/>
+		<many-to-one lazy="false"      name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company"/>
+	</class>
+</hibernate-mapping>
+<!-- parsed in 0ms -->

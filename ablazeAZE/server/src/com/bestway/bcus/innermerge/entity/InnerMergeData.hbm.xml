@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcus.innermerge.entity.InnerMergeData" 
+		table="innermergedata">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="imrType" length="10"/>
+		<many-to-one lazy="false"      name="materiel" column="materielid" 
+			class="com.bestway.common.materialbase.entity.Materiel"/>
+		<many-to-one lazy="false"      name="hsBeforeLegalUnit" column="beforelegalunit" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<many-to-one lazy="false"      name="hsBeforeEnterpriseUnit" 
+			column="beforeenterpriseunit2" 	class="com.bestway.common.materialbase.entity.CalUnit"/>
+		<property name="hsAfterTenMemoNo" />
+		<many-to-one lazy="false"      name="hsAfterComplex" column="compliexid" 
+			class="com.bestway.bcus.custombase.entity.hscode.Complex" index="index_complex"/>
+		<property name="hsAfterMaterielTenName" />
+		<property name="hsAfterMaterielTenSpec" />
+		<many-to-one lazy="false"      name="hsAfterMemoUnit" column="memounitid" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<many-to-one lazy="false"      name="hsAfterLegalUnit" column="afterlegalunitid" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<many-to-one lazy="false"      name="hsAfterSecondLegalUnit" 
+			column="aftersecondlegalunitid" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<property name="hsFourNo" />
+		<property name="hsFourMaterielName" />
+		<property name="hsFourCode" />
+		<many-to-one lazy="false"      name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" index="innermergedata_company"/>
+		<property name="emsSerialNo" />
+		<property name="isPutOnRecord" />
+		<property name="isExistMerger"/>
+		<property name="importTimer" column="immportDate"/>		
+		<property name="updateDate"/>
+		
+		<property name="fristUnitRatio"/>
+		<property name="secondUnitRatio"/>	
+			
+		<property name="forbidDate"/>	
+		<property name="forbidUser"/>	
+		<property name="revertDate"/>	
+		<property name="revertUser"/>	
+		<property name="isForbid"/>	
+		<property name="weigthUnitGene"/>	
+		<property name="isMainImg"/>	
+	</class>
+
+</hibernate-mapping>
+<!-- parsed in 0ms -->

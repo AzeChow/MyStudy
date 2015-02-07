@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcus.checkcancel.entity.EmsBgExgBg" table="emsbgexgbg">
+		<cache usage="read-write"/> 
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<many-to-one lazy="false"      name="head" column="head" class="com.bestway.bcus.checkcancel.entity.EmsAnalyHead"/>
+		<many-to-one lazy="false"      name="exg" column="exg" class="com.bestway.bcus.checkcancel.entity.EmsBgExg"/>
+		<property name = "emsNo"/>
+		<property name = "seqNum"/>
+		<property name = "name"/>
+		<property name = "spec"/>
+		<property name = "unitWare"/>
+		<property name = "ware"/>
+		<property name = "totalWare"/>
+		<many-to-one lazy="false"      name="unit" column="unit" class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<many-to-one lazy="false"      name="company" column="coid" class="com.bestway.bcus.system.entity.Company" index="emsbgexgbg_company"/>
+	</class>
+
+</hibernate-mapping>
+<!-- parsed in 0ms -->
+
+		

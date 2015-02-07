@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<!--==================DAO Beans====================-->
+	<bean id="financialDao" 
+		class="com.bestway.bcus.financial.dao.FinancialDao">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>
+	
+	<!--==================Logic Beans====================-->
+	<bean id="financialLogic" 
+		class="com.bestway.bcus.financial.logic.FinancialLogic" init-method="init">
+		<property name="financialDao">
+			<ref bean="financialDao"/>
+		</property>
+		<property name="genMonthlyProductionAndSalesLogic">
+			<ref bean="genMonthlyProductionAndSalesLogic"/>
+		</property>
+		<property name="genProductConsumptionLogic">
+			<ref bean="genProductConsumptionLogic"/>
+		</property>
+		<property name="genMaterialAccountLogic">
+			<ref bean="genMaterialAccountLogic"/>
+		</property>
+		<property name="genCostSummaryReportLogic">
+			<ref bean="genCostSummaryReportLogic"/>
+		</property>
+		<property name="genProductAccountLogic">
+			<ref bean="genProductAccountLogic"/>
+		</property>
+	</bean>
+	<bean id="genMonthlyProductionAndSalesLogic" 
+		class="com.bestway.bcus.financial.logic.GenMonthlyProductionAndSalesLogic" init-method="init">
+		<property name="financialDao">
+			<ref bean="financialDao"/>
+		</property>
+	</bean>	
+	<bean id="genProductConsumptionLogic" 
+		class="com.bestway.bcus.financial.logic.GenProductConsumptionLogic" init-method="init">
+		<property name="financialDao">
+			<ref bean="financialDao"/>
+		</property>
+	</bean>	
+	<bean id="genMaterialAccountLogic" 
+		class="com.bestway.bcus.financial.logic.GenMaterialAccountLogic" init-method="init">
+		<property name="financialDao">
+			<ref bean="financialDao"/>
+		</property>
+	</bean>	
+	<bean id="genCostSummaryReportLogic" 
+		class="com.bestway.bcus.financial.logic.GenCostSummaryReportLogic" init-method="init">
+		<property name="financialDao">
+			<ref bean="financialDao"/>
+		</property>
+	</bean>	
+	<bean id="genProductAccountLogic" 
+		class="com.bestway.bcus.financial.logic.GenProductAccountLogic" init-method="init">
+		<property name="financialDao">
+			<ref bean="financialDao"/>
+		</property>
+	</bean>	
+	<!--==================Action Bean====================-->
+	<bean id="financialAction" 
+		class="com.bestway.bcus.financial.action.FinancialActionImpl">
+		<property name="financialLogic">
+			<ref bean="financialLogic"/>
+		</property>
+	</bean>
+</beans>

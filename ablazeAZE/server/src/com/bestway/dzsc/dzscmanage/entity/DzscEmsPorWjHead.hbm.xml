@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.dzsc.dzscmanage.entity.DzscEmsPorWjHead" table="dzscemsporwjhead">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>			
+		<property name="seqNum" />
+		<property name="emsType" />
+		<property name="copTrNo" />
+		<property name="declareState" />
+		<many-to-one lazy="false"      name="customNo" column="customNo" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Customs"/>
+		<many-to-one lazy="false"      name="redDep" column="redDep" 
+			class="com.bestway.bcus.custombase.entity.depcode.RedDep" />
+		<property name="emsNo" />
+		<many-to-one lazy="false"      name="iePort1" column="iePort1" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Customs"/>
+		<property name="beginDate"/>
+		<property name="endDate"/>	
+		<property name="deferDate"/>
+		<property name="destroyDate"/>
+		<property name="tradeCode" />
+		<property name="tradeName" />
+		<property name="machCode" />
+		<property name="machName" />
+		<many-to-one lazy="false"      name="trade" column="trade" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Trade"/>
+		<many-to-one lazy="false"      name="tradeCountry" column="tradeCountry" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Country"/>
+		<property name="enterpriseAddress"/>
+		<property name="linkMan"/>
+		<property name="contactTel"/>
+		<many-to-one lazy="false"      name="levyKind" column="levyKind" 
+			class="com.bestway.bcus.custombase.entity.parametercode.LevyKind"/>
+		<property name="outTradeCo" />
+		<property name="sancEmsNo" />
+		<property name="agreementNo"/>
+		<property name="ieContractNo"/>
+		<property name="imContractNo"/>
+		<property name="imgAmount"/>
+		<property name="exgAmount"/>
+		<many-to-one lazy="false"      name="curr" column="currId" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Curr"/>
+		<property name="wardshipFee"/>
+		<property name="wardshipRate"/>
+		<many-to-one lazy="false"      name="transac" column="transac" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Transac"/>
+		<many-to-one lazy="false"      name="iePort2" column="iePort2" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Customs"/>
+		<many-to-one lazy="false"      name="iePort3" column="iePort3" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Customs"/>
+		<many-to-one lazy="false"      name="iePort4" column="iePort4" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Customs"/>
+		<many-to-one lazy="false"      name="iePort5" column="iePort5" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Customs"/>
+		<many-to-one lazy="false"      name="iePort6" column="iePort6" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Customs"/>
+		<many-to-one lazy="false"      name="iePort7" column="iePort7" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Customs"/>
+		<many-to-one lazy="false"      name="iePort8" column="iePort8" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Customs"/>
+		<many-to-one lazy="false"      name="iePort9" column="iePort9" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Customs"/>
+		<many-to-one lazy="false"      name="iePort10" column="iePort10" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Customs"/>	
+		<property name="approver"/>
+		<property name="approveDate"/>
+		<many-to-one lazy="false"      name="payMode" column="payMode" 
+			class="com.bestway.bcus.custombase.entity.parametercode.PayMode"/>
+		<many-to-one lazy="false"      name="machiningType" column="machiningType" 
+			class="com.bestway.bcus.custombase.entity.basecode.MachiningType"/>
+		<property name="emsApprNo" />	
+		<property name="note" />
+		<property name="handler"/>
+		<property name="floatRate"/>
+		<property name="inSaleRate"/>
+		<property name="contractItemCount"/>
+		<property name="emphasisFlag"/>
+		<property name="changeDate"/>
+		<property name="saveDate"/>
+		<property name="materielItemCount"/>	
+		<property name="machineCount"/>
+		<property name="productItemCount"/>
+		<many-to-one lazy="false"      name="receiveArea" column="receiveArea" 
+			class="com.bestway.bcus.custombase.entity.countrycode.District"/>	
+		<many-to-one lazy="false"      name="investMode" column="investMode" 
+			class="com.bestway.bcus.custombase.entity.basecode.InvestMode"/>
+		<many-to-one lazy="false"      name="fetchInMode" column="fetchInMode" 
+			class="com.bestway.bcus.custombase.entity.parametercode.FetchInMode"/>	
+		<property name="inputER"/>		
+		<property name="lastEmsNo"/>	
+		<property name="corrEmsNo"/>			
+		<property name="manageObject"/>	
+		<property name="limitFlag"/>	
+		<property name="declareDate"/>
+		<property name="dzscManageType"/>
+		<property name="modifyMark"/>		
+		<property name="isImportFromQP"/>
+		<many-to-one lazy="false"      name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" index="dzscemsporwjhead_coid"/>
+	</class>
+</hibernate-mapping>
+<!-- parsed in 0ms -->

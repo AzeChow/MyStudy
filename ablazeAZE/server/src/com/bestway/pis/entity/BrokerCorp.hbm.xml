@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class lazy="false" name="com.bestway.pis.entity.BrokerCorp"
+		table="brokerborp">
+		<cache usage="read-write" />
+		<id name="id" column="id">
+			<generator class="uuid.hex" />
+		</id>
+
+		<many-to-one lazy="false" name="pisEspServer" column="pisespserver"
+			class="com.bestway.pis.entity.PisEspServer" />
+		<property name="isBcgsStop" />
+		<property name="syncState" />
+		<property name="email" />
+		<property name="branchName" />
+		<property name="corpType" />
+		<property name="corporate" />
+		<property name="orgaCode" />
+		<property name="orgaName" />
+		<property name="addrees" />
+		<property name="tel" />
+		<property name="regisCapital" />
+		<property name="foundedDate" />
+		<property name="linkMan" />
+		<property name="phoneNumber" />
+		<property name="mainBusiness" />
+		<property name="introduction" />
+		<property name="logo" />
+		<property name="license" />
+		<many-to-one lazy="false" name="customs" column="customs"
+			class="com.bestway.bcus.custombase.entity.countrycode.Customs" />
+		<property name="corpUrl" />
+		<property name="isTry" />
+		<property name="tryEndDate" />
+		<property name="isStoped" />
+		<property name="stopReason" />
+		<property name="stopDate" />
+		<many-to-one lazy="false" name="company" column="company"
+			class="com.bestway.bcus.system.entity.Company" index="brokerborp_company" />
+	</class>
+
+</hibernate-mapping>
+<!-- parsed in 0ms -->

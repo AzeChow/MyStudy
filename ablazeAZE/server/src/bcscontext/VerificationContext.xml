@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!--==================DAO Beans====================-->
+	<bean id="vfContractAnalyseDao" class="com.bestway.bcs.verification.dao.VFContractAnalyseDao">
+    	<property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+	<bean id="vfFactoryAnalyseDao" class="com.bestway.bcs.verification.dao.VFFactoryAnalyseDao">
+    	<property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+	<bean id="vfTransferAnalyseDao" class="com.bestway.bcs.verification.dao.VFTransferAnalyseDao">
+    	<property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+	<bean id="vfVerificationDao" class="com.bestway.bcs.verification.dao.VFVerificationDao">
+    	<property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+	
+	<!--==================Logic Beans====================-->
+	<bean id="vfContractAnalyseLogic" class="com.bestway.bcs.verification.logic.VFContractAnalyseLogic">
+		<property name="vfContractAnalyseDao"><ref bean="vfContractAnalyseDao"/></property>
+		<property name="vfVerificationDao"><ref bean="vfVerificationDao"/></property>
+	</bean>
+	<bean id="vfFactoryAnalyseLogic" class="com.bestway.bcs.verification.logic.VFFactoryAnalyseLogic">
+		<property name="vfFactoryAnalyseDao"><ref bean="vfFactoryAnalyseDao"/></property>
+		<property name="vfVerificationDao"><ref bean="vfVerificationDao"/></property>
+	</bean>
+	<bean id="vfTransferAnalyseLogic" class="com.bestway.bcs.verification.logic.VFTransferAnalyseLogic">
+		<property name="vfTransferAnalyseDao"><ref bean="vfTransferAnalyseDao"/></property>
+		<property name="vfVerificationDao"><ref bean="vfVerificationDao"/></property>
+	</bean>
+	<bean id="vfVerificationLogic" class="com.bestway.bcs.verification.logic.VFVerificationLogic">
+		<property name="vfVerificationDao"><ref bean="vfVerificationDao"/></property>
+	</bean>
+	<!--==================Action Bean====================-->
+	<bean id="vfVerificationAction" class="com.bestway.bcs.verification.action.VFVerificationActionImpl">
+		<property name="vfContractAnalyseLogic"><ref bean="vfContractAnalyseLogic"/></property>
+		<property name="vfFactoryAnalyseLogic"><ref bean="vfFactoryAnalyseLogic"/></property>
+		<property name="vfTransferAnalyseLogic"><ref bean="vfTransferAnalyseLogic"/></property>
+		<property name="vfVerificationLogic"><ref bean="vfVerificationLogic"/></property>
+	</bean>
+	<!-- =================Authority Bean -->
+	<bean id="vfVerificationAuthority" class="com.bestway.bcs.verification.action.VFVerificationAuthorityImpl" />
+</beans>

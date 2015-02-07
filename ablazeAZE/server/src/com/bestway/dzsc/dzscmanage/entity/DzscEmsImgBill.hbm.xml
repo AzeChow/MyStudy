@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.dzsc.dzscmanage.entity.DzscEmsImgBill" table="dzscemsimgbill">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="seqNum" index="dzscemsimgbillSeqnum"/>
+		<property name="tenSeqNum" />		
+		<many-to-one lazy="false"    name="complex" column="complex" 
+			class="com.bestway.bcus.custombase.entity.hscode.Complex" index="dzscimgbillcomplex"/>
+		<property name="name" />
+		<property name="spec" />
+		<property name="price" />
+		<property name="amount"/>
+		<property name="money"/>
+		<property name="note"/>
+		<property name="modifyMark" index="dzscimgbillmodifymark"/>
+		<property name="dutyRatio"/>
+		<property name="detailNote"/>
+		<many-to-one lazy="false"      name="unit" column="unit" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<many-to-one lazy="false"      name="levyMode" column="levyMode" 
+			class="com.bestway.bcus.custombase.entity.parametercode.LevyMode"/>		
+		<property name="unitWeight" />	
+		<property name="weight" />	
+		<property name="legalUnitGene" />
+		<property name="legalUnit2Gene" />
+		<property name="weigthUnitGene" />
+		<property name="dutyRate"/>
+		<property name="wjSeqNum"/>
+		<property name="isForbid" />
+		<many-to-one lazy="false"      name="country" column="country" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Country"/>
+		<many-to-one lazy="false"      name="dzscEmsPorHead" column="dzscEmsPorHead" 
+			class="com.bestway.dzsc.dzscmanage.entity.DzscEmsPorHead"
+			index="dzscimgbillhead"/>	
+		<many-to-one lazy="false"      name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" index="dzscemsimgbill_coid"/>
+	</class>
+</hibernate-mapping>
+<!-- parsed in 0ms -->

@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcus.financial.entity.ProductConsumption" 
+		table="productconsumption">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<many-to-one lazy="false" name="company" column="companyId" 
+			class="com.bestway.bcus.system.entity.Company" index="expbaortreestb_company"/>
+		<many-to-one lazy="false" name="hsUnit" column="hsUnitId"
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>		
+		<many-to-one lazy="false" name="ljUnit" column="ljUnitId"
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<property name="accountDate"/>
+		<property name="hsName" />
+		<property name="hsSpec"/>
+		<property name="ljName" />
+		<property name="ljSpec"/>
+		<property name="unitWaste"/>
+		<property name="waste"/>
+		<property name="alterRate"/>
+		<property name="changeUnitWaste"/>
+		<property name="thisProduction"/>
+		<property name="ljNeedQuantity"/>
+		<property name="ljPrice"/>
+	</class>
+</hibernate-mapping>

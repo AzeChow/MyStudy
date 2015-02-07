@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message version="1.0" type="FptAppIn">
+	<description>结转申请表报文定义及获取方法描述</description>
+	<section-flag>FPT_DATA</section-flag>
+	<sub-section>
+		<description>签名信息</description>
+		<file-name>FptAppSignFormat.xml</file-name>
+	</sub-section>
+	<section multiple="false" required="true">
+		<description>转入结转申请表表头</description>
+		<section-flag>FPT_APP_IN_HEAD</section-flag>
+		<data-id>FptAppHead</data-id>
+		<field nullable="false">
+			<description>电子口岸统一编号</description>
+			<field-name>seqNo</field-name>
+			<format>X(18)</format>
+			<field-flag>SEQ_NO</field-flag>
+		</field>
+
+		<field nullable="false">
+			<description>企业代码</description>
+			<field-name>inTradeCode</field-name>
+			<format>X(10)</format>
+			<field-flag>TRADE_CODE</field-flag>
+		</field>
+		<field nullable="false">
+			<description>转入企业内部编号</description>
+			<field-name>inCopAppNo</field-name>
+			<format>X(20)</format>
+			<field-flag>COP_APP_NO</field-flag>
+		</field>
+		<field nullable="false">
+			<description>转入地海关</description>
+			<field-name>inCustoms.code</field-name>
+			<format>X(4)</format>
+			<field-flag>MAST_CUST</field-flag>
+		</field>
+		<field nullable="false">
+			<description>转入申报企业9位组织机构代码</description>
+			<field-name>inAgentCode</field-name>
+			<format>X(10)</format>
+			<field-flag>AGENT_CODE</field-flag>
+		</field>
+		<field nullable="false">
+			<description>转入申报企业组织机构名称</description>
+			<field-name>inAgentName</field-name>
+			<format>X(30)</format>
+			<field-flag>AGENT_NAME</field-flag>
+		</field>
+		<field nullable="true">
+			<description>转入企业法人/联系电话</description>
+			<field-name>inCorp</field-name>
+			<format>X(32)</format>
+			<field-flag>CORP</field-flag>
+		</field>
+		<field nullable="true">
+			<description>转入申报人/联系电话</description>
+			<field-name>inDecl</field-name>
+			<format>X(320)</format>
+			<field-flag>DECL</field-flag>
+		</field>
+		<field nullable="false">
+			<description>转入企业批准证编号</description>
+			<field-name>inLiceNo</field-name>
+			<format>X(20)</format>
+			<field-flag>LICE_NO</field-flag>
+		</field>
+		<field nullable="false">
+			<description>转入申报日期</description>
+			<field-name>inDate</field-name>
+			<format>Z(8)</format>
+			<field-flag>D_DATE</field-flag>
+		</field>
+		<field nullable="true">
+			<description>转入企业备注</description>
+			<field-name>inNote</field-name>
+			<format>X(50)</format>
+			<field-flag>NOTE</field-flag>
+		</field>
+		<field nullable="false">
+			<description>申报类型</description>
+			<field-name>delcareType</field-name>
+			<format>X(1)</format>
+			<field-flag>DECLARE_TYPE</field-flag>
+		</field>
+		<field nullable="true">
+			<description>申请表有效期</description>
+			<field-name>endDate</field-name>
+			<format>Z(8)</format>
+			<field-flag>END_DATE</field-flag>
+		</field>
+		<field nullable="false">
+			<description>转入方手册号</description>
+			<field-name>inEmsNo</field-name>
+			<format>X(12)</format>
+			<field-flag>IN_EMS_NO</field-flag>
+		</field>
+	</section>
+	<section multiple="false">
+		<description>结转申请表表体</description>
+		<section-flag>FPT_APP_LIST</section-flag>
+		<sub-section>
+			<description>结转申请表表体明细</description>
+			<file-name>FptAppItemFormat.xml</file-name>
+		</sub-section>
+	</section>
+</message>

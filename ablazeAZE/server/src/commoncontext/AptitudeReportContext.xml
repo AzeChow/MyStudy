@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+	<!--==================DAO Beans====================-->
+	<bean id="aptitudeReportDao" class="com.bestway.common.aptitudereport.dao.AptitudeReportDao">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>
+	<!--==================Logic Beans====================-->
+	<bean id="aptitudeReportLogic" class="com.bestway.common.aptitudereport.logic.AptitudeReportLogic">
+		<property name="aptitudeReportDao">
+			<ref bean="aptitudeReportDao"/>
+		</property>
+	</bean>
+
+	<!--==================Action Bean====================-->
+	<bean id="aptitudeReportAction" 
+		class="com.bestway.common.aptitudereport.action.AptitudeReportActionImpl">
+		<property name="aptitudeReportDao">
+			<ref bean="aptitudeReportDao"/>
+		</property>
+		<property name="aptitudeReportLogic">
+			<ref bean="aptitudeReportLogic"/>
+		</property>
+	</bean>
+	
+	<!--==================Other Beans====================-->
+</beans>

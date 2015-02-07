@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcs.contractcav.entity.BcsCustomsDeclarationCav" table="bcscdcav">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<many-to-one lazy="false"      name="contractCav" column="contractCav" 
+			class="com.bestway.bcs.contractcav.entity.ContractCav"/>
+		<property name="impExpFlag" />
+		<property name="impExpType" />
+		<property name="customsDeclarationCode" />
+		<property name="impExpDate" />
+		<property name="declarationDate" />
+		<property name="isCustoms"/>
+		<property name="modifyMark"/>
+		<many-to-one lazy="false"      name="declarationCustoms" column="declarationCustoms" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Customs"/>
+		<many-to-one lazy="false"      name="deduc" column="deduc" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Deduc"/>
+		<many-to-one lazy="false"      name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" index="dzsccdcav_coid"/>
+	</class>
+</hibernate-mapping>
+<!-- parsed in 0ms -->

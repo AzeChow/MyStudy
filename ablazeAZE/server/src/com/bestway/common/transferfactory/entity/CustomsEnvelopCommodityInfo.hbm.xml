@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class lazy="false" 
+		name="com.bestway.common.transferfactory.entity.CustomsEnvelopCommodityInfo" 
+		table="customsenvelopcommodityinfo">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="emsNo" />
+		<property name="seqNum" />
+		<many-to-one lazy="false"      name="complex" column="complex" 
+			class="com.bestway.bcus.custombase.entity.hscode.Complex"/>
+		<property name="ptName" />
+		<property name="ptSpec" />
+		
+		<many-to-one lazy="false"      name="unit" column="unitid" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<many-to-one lazy="false"      name="curr" column="currid" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Curr"/>
+			
+		<many-to-one lazy="false"      name="customsEnvelopBill" column="customsEnvelopBillId" 
+			class="com.bestway.common.transferfactory.entity.CustomsEnvelopBill"/>
+		<property name="transferQuantity" />				
+		<property name="ownerQuantity" />
+		<property name="unitPrice" />
+		<property name="oppositeQuantity" />
+		<many-to-one lazy="false"      name="oppositeUnit" column="oppositeUnitId" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<property name="oppositeComplexCode" />
+		<property name="oppositeName" />
+		<property name="oppositeSpec" />
+		<property name="oppositeEmsSerialNo" />
+		<property name="oppositeEmsNo" />
+		<property name="ceseqNum" />
+		<property name="createDate" column="createrDate" />
+		<property name="modifyDate" column="modifyDate" />
+		<many-to-one lazy="false"      name="company" column="companyId" 
+			class="com.bestway.bcus.system.entity.Company" index="customencomdityin_company"/>
+		<!--<property name="isPutOnRecord" />-->
+	</class>
+</hibernate-mapping>

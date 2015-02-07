@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class lazy="false" name="com.bestway.bcus.cas.entity.MonthStorage" 
+		table="monthStorage">
+		<!--<cache usage="read-write"/>-->
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>		
+		<property name="materielType"/>
+		<property name="month"/>
+		<property name="ptPart"/>	
+		<property name="ptName"/>
+		<property name="ptSpec"/>		
+		<property name="ptAmount"/>
+		<property name="netWeight"/>
+		<many-to-one lazy="false" name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" 
+			index="monthStorage_company"/>
+	</class>
+</hibernate-mapping>
+		

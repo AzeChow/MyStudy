@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!--==================DAO Beans====================-->
+	<bean id="dzscMessageDao" 
+		class="com.bestway.dzsc.message.dao.DzscMessageDao">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>	
+	<!--==================Logic Beans====================-->
+	<bean id="dzscMessageLogic" class="com.bestway.dzsc.message.logic.DzscMessageLogic">
+		<property name="baseCodeDao"><ref bean="baseCodeDao"/></property>
+		<property name="cspMessageDao"><ref bean="dzscMessageDao"/></property>	
+	</bean>
+	<!--<bean id="customBillLogic" class="com.bestway.dzsc.message.logic.ExportReceiptCustomLogic">
+		<property name="emsEdiTrDao"><ref bean="emsEdiTrDao"/></property>
+		<property name="exportMessageLogic"><ref local="exportMessageLogic"/></property>
+		<property name="encDao"><ref bean="encDao"/></property>
+		<property name="encLogic"><ref bean="encLogic"/></property>
+	</bean>-->
+	<!--==================Action Bean====================-->
+	<bean id="dzscMessageAction" class="com.bestway.dzsc.message.action.DzscMessageActionImpl">
+		<property name="cspMessageLogic"><ref bean="dzscMessageLogic"/></property>
+		<property name="cspMessageDao"><ref bean="dzscMessageDao"/></property>
+	</bean>
+</beans>

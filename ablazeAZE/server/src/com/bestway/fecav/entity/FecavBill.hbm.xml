@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class  lazy="false"  name="com.bestway.fecav.entity.FecavBill" table="fecavbill">
+		<cache usage="read-write"/> 
+        <id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+	    </id>
+		<many-to-one lazy="false"  name="fecavBillStrike" column="fecavbillstrike" 
+			class="com.bestway.fecav.entity.FecavBillStrike"/>
+		<property name="code"/>
+		<property name="customsDeclarationId"/>
+		<property name="customsDeclarationCode"/>
+		<property name="exportDate"/>
+		<property name="declareDate"/>
+		<property name="contractNo"/>
+		<property name="emsNo"/>
+		<many-to-one lazy="false"  name="curr" column="currency" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Curr"/>
+		<property name="totalPrice"/>
+		
+		<property name="brikeMoney"/>
+		<property name="remainMoney"/>
+				
+		<property name="isPrintWhite"/>
+		<property name="isPrintYellow"/>
+		
+		<property name="outerObtain"/>
+		<property name="outerObtainDate"/>
+		<property name="outerOperator"/>
+		<property name="outerOperatorDate"/>
+		
+		<property name="innerObtain"/>
+		<property name="innerObtainDate"/>
+		<property name="innerOperator"/>
+		<property name="innerOperatorDate"/>
+		
+		
+		<property name="handInBillMan"/>
+		<property name="handInBillDate"/>
+		<property name="debentureSignInMan"/>
+		<property name="debentureSignInDate"/>
+	
+		<property name="usedMan"/>
+		<property name="usedDate"/>	
+			
+		<property name="blankOutMan"/>
+		<property name="blankOutDate"/>	
+			
+		<property name="billState"/>
+		
+		<property name="isBlankOut"/>
+		<property name="blankOutReason"/>
+	    <property name="checkoutdate"/>
+		
+		<property name="converUSDMoney"/>
+		
+		<many-to-one lazy="false" name="impExpCIQ" class="com.bestway.bcus.custombase.entity.countrycode.Customs">
+			<column name="customs" />	
+		</many-to-one>
+		<many-to-one lazy="false" name="company" class="com.bestway.bcus.system.entity.Company">
+			<column name="coid" index="fecavbill_2"/>	
+		</many-to-one>
+    </class>
+
+</hibernate-mapping>

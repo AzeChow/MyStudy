@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class lazy="false" 
+		name="com.bestway.bls.entity.CollateBindDetailList" 
+		table="BlsCollBindList">
+	    <cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<many-to-one lazy="false" name="collateBindDetail" column="cbdId" 
+			class="com.bestway.bls.entity.CollateBindDetail"/>
+		
+		<property name="gno" />
+		<property name="note"/>
+		<property name="tradeCode"/>
+		<property name="gcount"/>
+		<property name="formId"/>	
+					
+		<property name="createDate"/>
+		<property name="modifyDate"/>
+		
+		<many-to-one lazy="false" name="unit" column="unit" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		
+		<many-to-one lazy="false" name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" 
+			index="_company"/>		
+	</class>
+</hibernate-mapping>
+<!-- parsed in 0ms -->
+
+		

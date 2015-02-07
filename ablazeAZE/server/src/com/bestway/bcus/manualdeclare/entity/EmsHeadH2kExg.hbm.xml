@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcus.manualdeclare.entity.EmsHeadH2kExg" table="emsheadh2kexg">
+		<cache usage="read-write"/> 
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="seqNum" index="emsh2kexg_seqnum"/>
+		<many-to-one lazy="false"      name="complex" column="complex" class="com.bestway.bcus.custombase.entity.hscode.Complex" index="emsheadh2kexg_complex"/>
+		<property name="name" length="255"/>
+		<property name="spec" length="255"/>
+		<many-to-one lazy="false"      name="unit" column="unit" class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<!--<many-to-one lazy="false"      name="legalUnit" column="legalUnit" class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>-->
+		<property name="legalUnitGene" />	
+		<!--<many-to-one lazy="false"      name="legalUnit2" column="legalUnit2" class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>-->
+		<property name="legalUnit2Gene" />
+		<property name="weigthUnitGene" />
+		<many-to-one lazy="false"      name="curr" column="curr" class="com.bestway.bcus.custombase.entity.parametercode.Curr"/>
+		<many-to-one lazy="false"      name="levyMode" column="levyMode" class="com.bestway.bcus.custombase.entity.parametercode.LevyMode"/>
+		<property name="note" length="255"/>
+		<property name="declarePrice"/>
+		<property name="declarePriceMo"/>
+		<property name="qty"/>
+		<property name="modifyMark" length="225"/>
+		<property name="modifyTimes"/>		
+		<property name="maxApprSpace"/>
+		<!--<property name="firstQty"/>-->
+		<property name="unitGrossWeight"/>
+		<property name="unitNetWeight"/>
+		<property name="factoryPrice"/>
+		<property name="beginDate"/> 
+		<property name="endDate"/>
+		<property name="changeDate"/>
+		<property name="sendState"/>
+		<many-to-one lazy="false"      name="emsHeadH2k" column="emsHeadH2k" 
+			class="com.bestway.bcus.manualdeclare.entity.EmsHeadH2k"/>
+		<many-to-one lazy="false"      name="company" column="coid" class="com.bestway.bcus.system.entity.Company" index="emsheadh2kexg_company"/>
+	</class>
+
+</hibernate-mapping>
+<!-- parsed in 0ms -->

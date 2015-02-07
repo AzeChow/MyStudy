@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcs.contractcav.entity.ContractCav" table="contractcav">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="contractNo"/>
+		<property name="emsNo" />
+		<property name="beginDate"/>
+		<property name="endDate"/>
+		<property name="emsApprNo"/>
+		<property name="impAmount" />
+		<property name="expAmount" />
+		<property name="processTotalPrice" />
+		<property name="impCDCount" />
+		<property name="expCDCount" />
+		<property name="imgCount" />
+		<property name="exgCount" />
+		<property name="internalSale" />
+		<property name="internalSaleTax" />
+		<property name="impDeviceGross" />
+		<property name="internalSaleWarrant" />
+		<property name="internalSaleTaxBill" />
+		<property name="remainMoney" />
+		<property name="remainEmsNo" />
+		<property name="cautionMoney" />
+		<property name="isSusceptivity" />
+		<property name="isLimit" />
+		<property name="totalPages" />
+		<property name="valueAddedRate" />
+		<property name="isCustoms" />
+		<property name="copEmsNo" />
+		<property name="declareState" />
+		<property name="declareType" />
+		<property name="declareDate" />
+		<property name="declareTimes" />
+		<property name="createDate" />
+		<property name="inputER" />
+		<property name="modifyDate" />		
+<!--		<many-to-one lazy="false"      name="createUser" column="createUser" 
+			class="com.bestway.common.authority.entity.AclUser"/>-->
+		<many-to-one lazy="false"      name="curr" column="currId" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Curr"/>
+		<many-to-one lazy="false"      name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" index="contractbomcav_coid"/>
+	</class>
+</hibernate-mapping>
+<!-- parsed in 0ms -->

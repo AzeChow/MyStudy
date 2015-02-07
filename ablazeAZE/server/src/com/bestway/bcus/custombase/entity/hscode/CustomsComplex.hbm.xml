@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class  lazy="false"  name="com.bestway.bcus.custombase.entity.hscode.CustomsComplex" table="customscomplex">
+		<cache usage="read-write"/> 
+       	<id name="code" length="10">
+			<generator class="assigned"/>
+		</id>
+        <property name="name" />
+        <property name="note" />	
+		<many-to-one lazy="false"      name="firstUnit" column="firstUnit" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+			
+		<many-to-one lazy="false"      name="secondUnit" column="secondUnit" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+			<property name="ccontrol" length="10"/>
+			
+		<property name="lowrate" length="10"/>	
+		<property name="highrate" length="10"/>	
+		<!--<property name="regrate" length="10"/>	
+		<property name="outrate" length="10"/>
+		<property name="taxrate" length="10"/>	<-->
+		
+		<property name="regRate" length="10"/>
+		<property name="outRate" length="10"/>
+		<property name="taxRate" length="10"/>
+		<property name="isOut"/>	
+    </class>
+
+</hibernate-mapping>
+<!-- parsed in 0ms -->

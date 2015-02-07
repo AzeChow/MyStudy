@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<!--==================DAO Beans====================-->
+	<bean id="dataImportDao" 
+		class="com.bestway.bcus.dataimport.dao.DataImportDao">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>
+	
+	<bean id="dbimportDao" 
+		class="com.bestway.bcus.dbimport.dao.DbimportDao">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>
+	<!--==================Logic Beans====================-->
+	<bean id="dataBackupLogic" 
+		class="com.bestway.bcus.dataimport.logic.DataBackupLogic">
+		<property name="dataSource"><ref bean="dataSource"/></property>
+		<property name="dataImportDao">
+			<ref bean="dataImportDao"/>
+		</property>		
+		
+	</bean>
+	
+	
+	
+	
+	<!--==================Logic Beans====================-->	
+	
+	<bean id="dataImportLogic" 
+		class="com.bestway.bcus.dataimport.logic.DataImportLogic" ><!--init-method="excuteStartTxt"-->
+		<property name="dataSource"><ref bean="dataSource"/></property>
+		<property name="dataImportDao">
+			<ref bean="dataImportDao"/>
+		</property>			
+		<property name="toolsLogic"><ref bean="toolsLogic"/></property>	
+	</bean>
+	
+	
+	<bean id="dataSuperImportLogic" 
+		class="com.bestway.bcus.dataimport.logic.DataSuperImportLogic">
+		<property name="dataImportDao">
+			<ref bean="dataImportDao"/>
+		</property>				
+	</bean>
+	
+	
+	
+	
+	
+	<bean id="dataDBAutoImportLogic" 
+		class="com.bestway.bcus.dataimport.logic.DataDBAutoImportLogic" init-method="initThreadList">
+		<property name="dataImportDao">
+			<ref bean="dataImportDao"/>
+		</property>
+		<property name="baseCodeDao">
+			<ref bean="baseCodeDao"/>
+		</property>
+		<property name="dataImportLogic">
+			<ref bean="dataImportLogic"/>
+		</property>
+		<property name="toolsLogic"><ref bean="toolsLogic"/></property>
+	</bean>
+	
+	
+	
+	
+	<!--===============Logic Beans========================-->
+	<bean id="dbBcsLogic" class="com.bestway.bcus.dbimport.logic.DbBcsLogic">
+		<property name="dbimportDao">
+			<ref bean="dbimportDao"/>
+		</property>
+	</bean>
+	
+
+	<!--==================Action Bean====================-->
+	<bean id="dataImportAction" 
+		class="com.bestway.bcus.dataimport.action.DataImportActionImpl">
+		<property name="dataImportDao">
+			<ref bean="dataImportDao"/>
+		</property>		
+        <property name="dataImportLogic">
+			<ref bean="dataImportLogic"/>
+		</property>	
+		<property name="dataBackupLogic">
+			<ref bean="dataBackupLogic"/>
+		</property>		
+		<property name="dbBcsLogic">
+			<ref bean="dbBcsLogic"/>
+	    </property>	
+		<property name="dataDBAutoImportLogic">
+			<ref bean="dataDBAutoImportLogic"/>
+	    </property>	
+		<property name="dataSuperImportLogic">
+			<ref bean="dataSuperImportLogic"/>
+	    </property>	
+				
+	</bean>	
+	
+	
+</beans>

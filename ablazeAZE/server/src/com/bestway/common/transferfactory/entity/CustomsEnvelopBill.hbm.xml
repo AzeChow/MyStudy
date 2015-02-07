@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.common.transferfactory.entity.CustomsEnvelopBill" table="customsenvelopbill">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="customsEnvelopBillNo" />
+		<property name="purchaseAndSaleContractNo" />
+		<property name="projectType" />
+		<property name="emsNo" />
+		<many-to-one lazy="false"      name="customs" column="customs" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Customs"/>
+		<many-to-one lazy="false"      name="transCompany" column="transcoid" 
+			class="com.bestway.bcus.system.entity.Company" index="custvelopbill_transcoid"/>
+		<property name="isImpExpGoods" />
+		<property name="beginAvailability" />
+		<property name="isAvailability" />		
+		<property name="endAvailability"/>
+		<many-to-one lazy="false"      name="scmCoc" column="scmCocId" 
+			class="com.bestway.common.materialbase.entity.ScmCoc"/>		
+		<property name="isEndCase" />
+		<property name="endCaseDate"/>
+		<property column="applyToCustomsBillNo" name="carryForwardApplyToCustomsBillNo" length="4000"/>
+		<property name="memo" length="200"/>
+		<property name="codeNo"/>
+		<property name="createDate" column="createrDate" />
+		<property name="modifyDate" column="modifyDate" />
+		<many-to-one lazy="false"      name="company" column="companyId" 
+			class="com.bestway.bcus.system.entity.Company" index="customsvelopbill_company"/>
+		
+	</class>
+</hibernate-mapping>

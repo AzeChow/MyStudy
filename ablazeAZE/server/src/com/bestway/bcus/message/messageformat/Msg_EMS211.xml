@@ -1,0 +1,866 @@
+<?xml version="1.0" encoding="GB2312"?>
+<?xml-stylesheet type="text/xsl" href="eportmsg.xsl"?>
+<!-- File:          Msg_EMS211.xml  -->
+<!-- Author:        Hu Jun'an       -->
+<!-- Create date:   2003-06-5       -->
+<!--Element message: 此元素内所有内容及属性描述一个报文的定义及从数据库的获取途径。-->
+<message version="1.0" type="EMS211">
+<!--报文类型：经营范围备案-->
+    <description>EMS211报文定义及获取方法描述</description>
+    <!--Element database: 提供数据库连接信息。-->
+    <database>
+        <db-user>offline_ems</db-user>
+        <db-password>dbwork</db-password>
+        <data-source>ems3db</data-source>
+    </database>
+ 
+    <!--Default value: multiple=false required=false -->
+    <section multiple="false" required="true">
+        <description>经营范围表头</description>
+        <section-flag>&lt;EMS_EDI_TR_HEAD     &gt;</section-flag>
+		<class>com.bestway.bcus.manualdeclare.entity.EmsEdiTrHead</class>
+        <field nullable="true">
+            <description>帐册编号</description>
+            <field-name>emsNo</field-name>
+            <format>X(12)</format>
+            <CustomWriteFlag>1</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>变更次数</description>
+            <field-name>modifyTimesMark</field-name>
+            <format>9(9)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>预申报帐册编号</description>
+            <field-name>preEmsNo</field-name>
+            <format>X(12)</format>
+            <CustomWriteFlag>1</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>企业内部编号</description>
+            <field-name>copEmsNo</field-name>
+            <format>X(20)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>1</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>经营单位代码</description>
+            <field-name>tradeCode</field-name>
+            <format>X(10)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>经营单位名称</description>
+            <field-name>tradeName</field-name>
+            <format>X(30)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>仓库编号</description>
+            <field-name>houseNo</field-name>
+            <format>X(12)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>收货单位代码</description>
+            <field-name>ownerCode</field-name>
+            <format>X(10)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>收货单位名称</description>
+            <field-name>ownerName</field-name>
+            <format>X(30)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>企业性质</description>
+            <field-name>ownerType.code</field-name>
+            <format>X</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>申请单位类型</description>
+            <field-name>declareErType</field-name>
+            <format>X(1)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>申请单位代码</description>
+            <field-name>declareCode</field-name>
+            <format>X(10)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>申请单位名称</description>
+            <field-name>declareName</field-name>
+            <format>X(30)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>地区代码</description>
+            <field-name>area.code</field-name>
+            <format>Z(5)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>联系地址</description>
+            <field-name>address</field-name>
+            <format>X(30)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>电话号码</description>
+            <field-name>phone</field-name>
+            <format>X(20)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>帐册类型</description>
+            <field-name>emsType</field-name>
+            <format>X(1)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>申报类型</description>
+            <field-name>declareType</field-name>
+            <format>X(1)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>投资方式</description>
+            <field-name>investMode</field-name>
+            <format>X(1)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>贸易方式</description>
+            <field-name>tradeMode</field-name>
+            <format>9(4)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>开始有效期</description>
+            <field-name>beginDate</field-name>
+            <format>YYYYMMDD</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>结束有效期</description>
+            <field-name>endDate</field-name>
+            <format>YYYYMMDD</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>进口总金额</description>
+            <field-name>imgAmount</field-name>
+            <format>Z(12)9.9(5)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>出口总金额</description>
+            <field-name>exgAmount</field-name>
+            <format>Z(12)9.9(5)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>进口总重量</description>
+            <field-name>imgWeight</field-name>
+            <format>Z(12)9.9(5)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>出口总重量</description>
+            <field-name>exgWeight</field-name>
+            <format>Z(12)9.9(5)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>进口货物项数</description>
+            <field-name>imgItems</field-name>
+            <format>Z(8)9</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>出口货物项数</description>
+            <field-name>exgItems</field-name>
+            <format>Z(8)9</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>批准证编号</description>
+            <field-name>emsApprNo</field-name>
+            <format>X(20)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>许可证编号</description>
+            <field-name>LicenseNo</field-name>
+            <format>X(20)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>对应上本帐册号</description>
+            <field-name>lastEmsNo</field-name>
+            <format>X(12)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>对应其它帐册号</description>
+            <field-name>corrEmsNo</field-name>
+            <format>X(12)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>合同号</description>
+            <field-name>contro</field-name>
+            <format>X(20)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>身份识别号</description>
+            <field-name>idCard</field-name>
+            <format>X(20)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>身份识别密码</description>
+            <field-name>idCardPwd</field-name>
+            <format>X(20)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>备用标志1</description>
+            <field-name>note1</field-name>
+            <format>X(10)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>备用标志2</description>
+            <field-name>note2</field-name>
+            <format>X(10)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>投资金额</description>
+            <field-name>investAmount</field-name>
+            <format>Z(12)9.9(5)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>备用金额</description>
+            <field-name>noteAmount</field-name>
+            <format>Z(12)9.9(5)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>备用数量</description>
+            <field-name>noteQty</field-name>
+            <format>Z(12)9.9(5)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>备注</description>
+            <field-name>note</field-name>
+            <format>X(50)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>录入日期</description>
+            <field-name>inputDate</field-name>
+            <format>YYYYMMDD</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>录入员代号</description>
+            <field-name>inputEr</field-name>
+            <format>9(4)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>申报日期</description>
+            <field-name>declareDate</field-name>
+            <format>YYYYMMDD</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>申报时间</description>
+            <field-name>declareTime</field-name>
+            <format>Z(8)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>其它部门审批标志</description>
+            <field-name>emsApprMark</field-name>
+            <format>X(10)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>其它单证标志</description>
+            <field-name>emsCertify</field-name>
+            <format>X(10)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>生产能力</description>
+            <field-name>productRatio</field-name>
+            <format>Z(12)9.9(5)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>修改标志1</description>
+            <field-name>modifyMark</field-name>
+            <format>X(1)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+    </section>
+ 
+    <section multiple="true" required="false">
+        <description>成品经营范围</description>
+        <section-flag>&lt;EMS_EDI_TR_EXG      &gt;</section-flag>
+		<class>com.bestway.bcus.manualdeclare.entity.EmsEdiTrExg</class>
+        <query>
+            <query-statement>
+                select
+                    ''                      ,   /*  1.  帐册编号                */
+                    Mod_num             ,   /*  2.  变更次数               */
+                    G_no                ,   /*  3.  帐册料件序号            */
+                    Cop_g_no            ,   /*  4.  货号                    */
+                    Code_t_s            ,   /*  5.  商品编码及附加商品编码    */
+                    Class_mark          ,   /*  6.  归类标志                */
+                    G_name              ,   /*  7.  商品名称                */
+                    G_model             ,   /*  8.  商品规格型号            */
+                    Unit                ,   /*  9.  申报计量单位            */
+                    Unit_1              ,   /*  10. 法定计量单位            */
+                    Unit_2              ,   /*  11. 法定第二单位            */
+                    Country_code        ,   /*  12. 产销国(地区)            */
+                    Source_mark         ,   /*  13. 来源标志                */
+                    Dec_price           ,   /*  14. 企业申报单价            */
+                    Curr                ,   /*  15. 币制                    */
+                    Dec_price_rmb       ,   /*  16. 申报单价人民币          */
+                    Factor_1            ,   /*  17. 法定计量单位比例因子    */
+                    Factor_2            ,   /*  18. 第二法定计量单位比例因子*/
+                    Factor_wt           ,   /*  19. 重量比例因子            */
+                    Factor_rate         ,   /*  20. 比例因子浮动比率        */
+                    Qty                 ,   /*  21. 申报进口数量            */
+                    Max_qty             ,   /*  22. 批准最大余量            */
+                    First_qty           ,   /*  23. 初始库存数量            */
+                    I_e_type           ,   /*  24. 进/出口方式             */
+                    Use_type           ,   /*  25. 用途代码                */
+                    Note_1             ,   /*  26. 备用标志1               */
+                    Note_2             ,   /*  27. 备用标志2               */
+                    Note               ,   /*  28. 备注                    */
+                    Modify_mark            /*  29. 修改标志                */
+                from
+                    PRE_EMS3_TR_EXG
+                where
+                    trim(cop_ems_no) = ?cop_ems_no and
+                    Trade_code = ?trade_code  and
+                    Modify_mark != '0'
+            </query-statement>
+        </query>
+        <field nullable="true">
+            <description>帐册编号</description>
+            <field-name>emsEdiTrHead.emsNo</field-name>
+            <format>X(12)</format>
+            <CustomWriteFlag>1</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>变更次数</description>
+            <field-name>modifyTimesMark</field-name>
+            <format>Z(8)9</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>帐册料件序号</description>
+            <field-name>ptNo</field-name>
+            <format>Z(8)9</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>1</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>货号</description>
+            <field-name>copGNo</field-name>
+            <format>X(30)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>商品编码及附加商品编码</description>
+            <field-name>complex</field-name>
+            <format>X(16)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>归类标志</description>
+            <field-name>classMark</field-name>
+            <format>X(1)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>商品名称</description>
+            <field-name>name</field-name>
+            <format>X(50)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>商品规格型号</description>
+            <field-name>gModel</field-name>
+            <format>X(50)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>申报计量单位</description>
+            <field-name>unit</field-name>
+            <format>9(3)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>法定计量单位</description>
+            <field-name>unit1</field-name>
+            <format>9(3)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>法定第二单位</description>
+            <field-name>unit2</field-name>
+            <format>9(3)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+
+            <description>产销国(地区)</description>
+            <field-name>countryCode</field-name>
+            <format>9(3)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>来源标志</description>
+            <field-name>sourceMark</field-name>
+            <format>X(1)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>企业申报单价</description>
+            <field-name>decPrice</field-name>
+            <format>Z(12)9.9(5)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>币制</description>
+            <field-name>emsEdiTrHead.curr.code</field-name>
+            <format>9(3)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>申报单价人民币</description>
+            <field-name>decPriceRmb</field-name>
+            <format>Z(12)9.9(5)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>法定计量单位比例因子</description>
+            <field-name>factor1</field-name>
+            <format>Z(8)9.9(9)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>第二法定计量单位比例因子</description>
+            <field-name>factor2</field-name>
+            <format>Z(8)9.9(9)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>重量比例因子</description>
+            <field-name>factorWt</field-name>
+            <format>Z(8)9.9(9)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>比例因子浮动比率</description>
+            <field-name>factorRate</field-name>
+            <format>Z(3)9.9(5)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>申报进口数量</description>
+            <field-name>qty</field-name>
+            <format>Z(12)9.9(5)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>批准最大余量</description>
+            <field-name>maxQty</field-name>
+            <format>Z(12)9.9(5)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>初始库存数量</description>
+            <field-name>firstQty</field-name>
+            <format>Z(12)9.9(5)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>进/出口方式</description>
+            <field-name>iEType</field-name>
+            <format>X(1)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>用途代码</description>
+            <field-name>useType</field-name>
+            <format>Z(8)9</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+
+            <description>备用标志1</description>
+            <field-name>note1</field-name>
+            <format>X(1)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>备用标志2</description>
+            <field-name>note2</field-name>
+            <format>X(1)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>备注</description>
+            <field-name>note</field-name>
+            <format>X(10)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>修改标志</description>
+            <field-name>modifyMark</field-name>
+            <format>X(1)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+    </section>
+ 
+    <section multiple="true" required="false">
+        <description>料件经营范围</description>
+        <section-flag>&lt;EMS_EDI_TR_IMG      &gt;</section-flag>
+		<class>com.bestway.bcus.manualdeclare.entity.EmsEdiTrImg</class>
+        <query>
+            <query-statement>
+                select
+                    ''              ,   /*  1.  帐册编号                */
+                    Mod_num             ,   /*  2.  变更次数               */
+                    G_no                ,   /*  3.  帐册料件序号            */
+                    Cop_g_no           ,   /*  4.  货号                    */
+                    Code_t_s            ,   /*  5.  商品编码及附加商品编码    */
+                    Class_mark          ,   /*  6.  归类标志                */
+                    G_name              ,   /*  7.  商品名称                */
+                    G_model             ,   /*  8.  商品规格型号            */
+                    Unit                ,   /*  9.  申报计量单位            */
+                    Unit_1              ,   /*  10. 法定计量单位            */
+                    Unit_2              ,   /*  11. 法定第二单位            */
+                    Country_code        ,   /*  12. 产销国(地区)            */
+                    Source_mark         ,   /*  13. 来源标志                */
+                    Dec_price           ,   /*  14. 企业申报单价            */
+                    Curr                ,   /*  15. 币制                    */
+                    Dec_price_rmb       ,   /*  16. 申报单价人民币          */
+                    Factor_1            ,   /*  17. 法定计量单位比例因子    */
+                    Factor_2            ,   /*  18. 第二法定计量单位比例因子*/
+                    Factor_wt           ,   /*  19. 重量比例因子            */
+                    Factor_rate         ,   /*  20. 比例因子浮动比率        */
+                    Qty                 ,   /*  21. 申报进口数量            */
+                    Max_qty             ,   /*  22. 批准最大余量            */
+                    First_qty           ,   /*  23. 初始库存数量            */
+                    I_e_type           ,   /*  24. 进/出口方式             */
+                    Use_type           ,   /*  25. 用途代码                */
+                    Note_1             ,   /*  26. 备用标志1               */
+                    Note_2             ,   /*  27. 备用标志2               */
+                    Note               ,   /*  28. 备注                    */
+                    Modify_mark            /*  29. 修改标志                */
+                from
+                    PRE_EMS3_TR_IMG
+                where
+                    trim(cop_ems_no) = ?cop_ems_no and
+                    Trade_code = ?trade_code  and
+                    Modify_mark != '0'
+            </query-statement>
+        </query>
+        <field nullable="true">
+            <description>帐册编号</description>
+            <field-name>emsEdiTrHead.emsNo</field-name>
+            <format>X(12)</format>
+            <CustomWriteFlag>1</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>变更次数</description>
+            <field-name>modifyTimesMark</field-name>
+            <format>Z(8)9</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>帐册料件序号</description>
+            <field-name>ptNo</field-name>
+            <format>Z(8)9</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>1</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>货号</description>
+            <field-name>copGNo</field-name>
+            <format>X(30)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>商品编码及附加商品编码</description>
+            <field-name>complex</field-name>
+            <format>X(16)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>归类标志</description>
+            <field-name>classMark</field-name>
+            <format>X(1)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>商品名称</description>
+            <field-name>name</field-name>
+            <format>X(50)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>商品规格型号</description>
+            <field-name>gModel</field-name>
+            <format>X(50)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>申报计量单位</description>
+            <field-name>unit</field-name>
+            <format>9(3)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>法定计量单位</description>
+            <field-name>unit1</field-name>
+            <format>9(3)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>法定第二单位</description>
+            <field-name>unit2</field-name>
+            <format>9(3)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>产销国(地区)</description>
+            <field-name>countryCode</field-name>
+            <format>9(3)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>来源标志</description>
+            <field-name>sourceMark</field-name>
+            <format>X(1)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>企业申报单价</description>
+            <field-name>decPrice</field-name>
+            <format>Z(12)9.9(5)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>币制</description>
+            <field-name>emsEdiTrHead.curr.code</field-name>
+            <format>9(3)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>申报单价人民币</description>
+            <field-name>decPriceRmb</field-name>
+            <format>Z(12)9.9(5)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>法定计量单位比例因子</description>
+            <field-name>factor1</field-name>
+            <format>Z(8)9.9(9)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>第二法定计量单位比例因子</description>
+            <field-name>factor2</field-name>
+            <format>Z(8)9.9(9)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>重量比例因子</description>
+            <field-name>factorWt</field-name>
+            <format>Z(8)9.9(9)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>比例因子浮动比率</description>
+            <field-name>factorRate</field-name>
+            <format>Z(3)9.9(5)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>申报进口数量</description>
+            <field-name>qty</field-name>
+            <format>Z(12)9.9(5)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>批准最大余量</description>
+            <field-name>maxQty</field-name>
+            <format>Z(12)9.9(5)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>初始库存数量</description>
+            <field-name>firstQty</field-name>
+            <format>Z(12)9.9(5)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>进/出口方式</description>
+            <field-name>iEType</field-name>
+            <format>X(1)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>用途代码</description>
+            <field-name>useType</field-name>
+            <format>Z(8)9</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>备用标志1</description>
+            <field-name>note1</field-name>
+            <format>X(1)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>备用标志2</description>
+            <field-name>note2</field-name>
+            <format>X(1)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>备注</description>
+            <field-name>note</field-name>
+            <format>X(10)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>修改标志</description>
+            <field-name>modifyMark</field-name>
+            <format>X(1)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+    </section>
+</message>

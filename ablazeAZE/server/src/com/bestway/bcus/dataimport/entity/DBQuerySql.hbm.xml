@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcus.dataimport.entity.DBQuerySql" table="dbquerysql">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		
+		<property name="name" length="225"/>
+		<property name="sqlStr1" column ="sqlStr" length="225"/>
+		<property name="sqlStr2" length="225"/>
+		<property name="sqlStr3" length="225"/>
+		<property name="sqlStr4" length="225"/>
+		<property name="sqlStr5" length="225"/>
+		<property name="sqlStr6" length="225"/>
+		<property name="sqlStr7" length="225"/>
+		<property name="sqlStr8" length="225"/>
+		<property name="sqlStr9" length="225"/>
+		<property name="sqlStr10" length="225"/>
+		<many-to-one lazy="false"      name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" index="dbquerysql_company"/>
+	</class>
+
+</hibernate-mapping>

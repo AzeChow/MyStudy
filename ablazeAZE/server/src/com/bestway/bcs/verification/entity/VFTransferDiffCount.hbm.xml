@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class lazy="false" name="com.bestway.bcs.verification.entity.VFTransferDiffCount"
+		table="vftransferdiffcount">
+		<cache usage="read-write" />
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex" />
+		</id>
+		<property name="serialNumber" />
+		<many-to-one lazy="false" name="section" column="section"
+			class="com.bestway.bcs.verification.entity.VFSection" index="vftransferdiffcount_section"/>
+		<property name="mergerNo" />
+		<property name="hsName" />
+		<property name="hsSpec" />
+		<property name="hsUnit" />
+		<property name="convertUnTransHadSendNum" not-null="true"/>
+		<property name="convertUnSendHadTransNum" not-null="true"/>
+		<property name="convertUnTransHadReceiveNum" not-null="true"/>
+		<property name="convertUnReceiveHadTransNum" not-null="true"/>
+		<property name="diffAmount" />
+		<many-to-one lazy="false" name="company" column="company"
+			class="com.bestway.bcus.system.entity.Company" index="vftransferdiffcount_company" />
+	</class>
+</hibernate-mapping>
+	<!-- parsed in 0ms -->

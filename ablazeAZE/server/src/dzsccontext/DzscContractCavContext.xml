@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!--==================DAO Beans====================-->
+	<bean id="dzscContractCavDao" class="com.bestway.dzsc.checkcancel.dao.DzscContractCavDao">
+              <property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+	<!--==================Logic Beans====================-->
+	<bean id="dzscContractCavLogic" class="com.bestway.dzsc.checkcancel.logic.DzscContractCavLogic">
+              <property name="contractCavDao"><ref bean="dzscContractCavDao"/></property>
+			  <property name="dzscDao"><ref bean="dzscDao"/></property>
+			  <property name="dzscMessageLogic"><ref bean="dzscMessageLogic"/></property>
+			  <property name="toolsLogic"><ref bean="toolsLogic"/></property>
+	</bean>
+
+	<!--==================Action Bean====================-->
+	<bean id="dzscContractCavAction" class="com.bestway.dzsc.checkcancel.action.DzscContractCavActionImpl">
+              <property name="contractCavDao"><ref bean="dzscContractCavDao"/></property>
+			  <property name="contractCavLogic"><ref bean="dzscContractCavLogic"/></property>
+	</bean>
+
+</beans>

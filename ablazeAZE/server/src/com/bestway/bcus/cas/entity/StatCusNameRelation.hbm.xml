@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcus.cas.entity.StatCusNameRelation" table="statcusnamerelation">
+		<cache usage="read-write"/> 
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="seqNum"/>
+		<property name="cusName"/>
+		<property name="cusSpec"/>
+		<property name="materielType"/>
+		<many-to-one lazy="false"  name="complex" column="complex" 
+			class="com.bestway.bcus.custombase.entity.hscode.Complex" index="statsnaelati_complex"/>
+		<many-to-one lazy="false"  name="cusUnit" column="unitCode" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<many-to-one lazy="false"  name="company" column="coid" class="com.bestway.bcus.system.entity.Company" index="statsnaelati_company"/>
+	</class>
+</hibernate-mapping>

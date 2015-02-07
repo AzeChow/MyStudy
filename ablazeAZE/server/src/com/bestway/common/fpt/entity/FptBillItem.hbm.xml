@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class 
+		name="com.bestway.common.fpt.entity.FptBillItem" 
+		table="fptbillitem">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<many-to-one lazy="false"      name="fptBillHead" column="fptBillHead" 
+			class="com.bestway.common.fpt.entity.FptBillHead"/>
+		<property name="billSort" />
+		<property name="listNo" />
+		<property name="outNo" />
+		<property name="inEmsNo" />
+		<property name="copGNo" />
+		<property name="copGName" />
+		<property name="copGModel" />
+		<property name="appGNo" />
+		<property name="trGno" />
+		<many-to-one lazy="false"      name="complex" column="complex" 
+			class="com.bestway.bcus.custombase.entity.hscode.Complex"/>
+		<property name="commName" />
+		<property name="commSpec" />
+		<many-to-one lazy="false"      name="tradeUnit" column="tradeUnit" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<property name="tradeQty" />
+		<many-to-one lazy="false"      name="unit" column="unitid" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<property name="qty" />
+		<property name="note" />
+		<many-to-one lazy="false" name="ptUnit" column="ptUnitId" 
+			class="com.bestway.common.materialbase.entity.CalUnit" />
+		<property name="ptAmount" />
+		<property name="isCustomsDeclaration"/>
+		<many-to-one lazy="false"      name="company" column="companyId" 
+			class="com.bestway.bcus.system.entity.Company" index="trnsfectormotyif_company"/>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcus.cas.bill.entity.BillInit" table="BillInit">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="year" length="4"/>
+		<property name="typeCode"/>
+		<property name="ptAmount"/>
+		<property name="ptNo"/>
+		
+		<property name="hsNo"/>
+		<property name="hsName"/>
+		<property name="hsSpec"/>
+		
+		<many-to-one lazy="false" name="hsUnit" column="hsUnitId" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+			
+		<property name="hsAmount"/>
+		<property name="note"/>
+		
+		<property name="wareSetCode"/>
+		<property name="version"/>
+		<many-to-one lazy="false"      name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" index="imgorguseinfo_company"/>
+	</class>
+</hibernate-mapping>
+		

@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.dzsc.dzscmanage.entity.DzscEmsBomBill" table="dzscemsbombill">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="imgSeqNum" index="dzscbombillimgseqnum"/>
+		<many-to-one lazy="false"    name="complex" column="complex" 
+			class="com.bestway.bcus.custombase.entity.hscode.Complex" index="dzscbombillcomplex"/>
+		<property name="name" />
+		<property name="spec" />
+		<property name="price" />
+		<property name="amount"/>
+		<property name="money"/>
+		<property name="unitWare"/>
+		<property name="ware"/>
+		<property name="unitDosage"/>
+		<property name="nonMnlRatio"/>
+		<property name="modifyMark" index="dzscbombillmodifymark"/>
+		<many-to-one lazy="false"      name="unit" column="unit" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>	
+		<property name="unitWeight" />	
+		<property name="isMainImg" />	
+		<many-to-one lazy="false"      name="country" column="country" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Country"/>
+		<many-to-one lazy="false"      name="dzscEmsExgBill" column="dzscEmsExgBill" 
+			class="com.bestway.dzsc.dzscmanage.entity.DzscEmsExgBill"
+			index="dzscbombillexgbill"/>	
+		<many-to-one lazy="false"      name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" index="dzscemsbombill_coid"/>
+	</class>
+</hibernate-mapping>
+<!-- parsed in 0ms -->

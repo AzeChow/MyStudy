@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="eportmsg.xsl"?>
+<!--Element message: 此元素内所有内容及属性描述一个报文的定义及从数据库的获取途径。-->
+<message version="1.0" type="DzscEmsPorFasApply">
+	<description>分册报文定义及获取方法描述</description>
+	<section-flag>PTS_DATA</section-flag>
+	<sub-section>
+		<description>签名信息</description>
+		<file-name>PtsSignFormat.xml</file-name>
+	</sub-section>
+	
+	<section multiple="false" required="true">
+		<description>分册表头</description>
+		<section-flag>PTS_FAS_HEAD</section-flag>
+		<data-id>DzscFasHead</data-id>
+		<field nullable="false" signNo="1">
+			<description>电子手册编号</description>
+			<field-name>emsNo</field-name>
+			<format>X(12)</format>
+			<field-flag>EMS_NO</field-flag>
+		</field>
+		<field nullable="true" signNo="3">
+			<description>分册编号</description>
+			<field-name>fasEmsNo</field-name>
+			<format>X(12)</format>
+			<field-flag>FAS_NO</field-flag>
+		</field>
+		<field nullable="false" signNo="9">
+			<description>分册口岸</description>
+			<field-name>customsIePort1</field-name>
+			<format>9(4)</format>
+			<field-flag>I_E_PORT</field-flag>
+		</field>
+		<field nullable="false" signNo="11">
+			<description>该分册的期限</description>
+			<field-name>limitDate</field-name>
+			<format>Z(8)</format>
+			<field-flag>LIMIT_DATE</field-flag>
+		</field>
+		<field nullable="false" signNo="2">
+			<description>企业内部编号</description>
+			<field-name>copEmsNo</field-name>
+			<format>X(20)</format>
+			<field-flag>COP_EMS_NO</field-flag>
+		</field>
+		<field nullable="false" signNo="4">
+			<description>经营单位</description>
+			<field-name>tradeCode</field-name>
+			<format>X(10)</format>
+			<field-flag>TRADE_CO</field-flag>
+		</field>
+		<field nullable="false" signNo="5">
+			<description>经营单位名称</description>
+			<field-name>tradeName</field-name>
+			<format>X(30)</format>
+			<field-flag>TRADE_NAME</field-flag>
+		</field>
+		<field nullable="false" signNo="6">
+			<description>加工单位</description>
+			<field-name>machCode</field-name>
+			<format>X(10)</format>
+			<field-flag>OWNER_CODE</field-flag>
+		</field>
+		<field nullable="false" signNo="7">
+			<description>加工单位名称</description>
+			<field-name>machName</field-name>
+			<format>X(30)</format>
+			<field-flag>OWNER_NAME</field-flag>
+		</field>
+		<field nullable="false">
+			<description>申报单位代码</description>
+			<field-name>machCode</field-name>
+			<format>X(10)</format>
+			<field-flag>DECLARE_CODE</field-flag>
+		</field>
+		<field nullable="false" signNo="10">
+			<description>录入日期</description>
+			<field-name>inputDate</field-name>
+			<format>Z(8)</format>
+			<field-flag>INPUT_DATE</field-flag>
+		</field>
+		<field nullable="false">
+			<description>录入员代号</description>
+			<field-name>inputEr</field-name>
+			<format>Z(4)</format>
+			<field-flag>INPUT_ER</field-flag>
+		</field>
+		<field nullable="false">
+			<description>申报日期</description>
+			<field-name>declareDate</field-name>
+			<format>Z(8)</format>
+			<field-flag>DECLARE_DATE</field-flag>
+		</field>
+		<field nullable="false">
+			<description>申报时间</description>
+			<field-name>declareTime</field-name>
+			<format>Z(8)</format>
+			<field-flag>DECLARE_TIME</field-flag>
+		</field>
+		<field nullable="false">
+			<description>申报类型</description>
+			<field-name>declareType</field-name>
+			<format>X(1)</format>
+			<field-flag>DECLARE_TYPE</field-flag>
+		</field>
+		<field nullable="false" signNo="8">
+			<description>分册类型</description>
+			<field-name>declareMark.code</field-name>
+			<format>X(1)</format>
+			<field-flag>FASCICLE_TYPE</field-flag>
+		</field>
+		<field nullable="false" signNo="12">
+			<description>进口原料项数</description>
+			<field-name>materielItemCount</field-name>
+			<format>Z(9)</format>
+			<field-flag>IMG_ITEMS</field-flag>
+		</field>
+		<field nullable="false" signNo="13">
+			<description>出口原料项数</description>
+			<field-name>productItemCount</field-name>
+			<format>Z(9)</format>
+			<field-flag>EXG_ITEMS</field-flag>
+		</field>
+		<field nullable="true">
+			<description>备用标志1</description>
+			<field-name></field-name>
+			<format>X(1)</format>
+			<field-flag>NOTE_1</field-flag>
+		</field>
+		<field nullable="true">
+			<description>备用标志2</description>
+			<field-name></field-name>
+			<format>X(1)</format>
+			<field-flag>NOTE_2</field-flag>
+		</field>
+		<field nullable="true">
+			<description>备用金额</description>
+			<field-name></field-name>
+			<format>Z(12)9.9(5)</format>
+			<field-flag>NOTE_AMOUNT</field-flag>
+		</field>
+		<field nullable="true">
+			<description>备用数量</description>
+			<field-name></field-name>
+			<format>Z(12)9.9(5)</format>
+			<field-flag>NOTE_QTY</field-flag>
+		</field>
+		<field nullable="true" signNo="15">
+			<description>备注</description>
+			<field-name>note</field-name>
+			<format>X(10)</format>
+			<field-flag>NOTE</field-flag>
+		</field>
+		<field nullable="false" signNo="14">
+			<description>修改标志</description>
+			<field-name>customsModifyMark</field-name>
+			<format>X(1)</format>
+			<field-flag>MODIFY_MARK</field-flag>
+		</field>
+	</section>
+</message>

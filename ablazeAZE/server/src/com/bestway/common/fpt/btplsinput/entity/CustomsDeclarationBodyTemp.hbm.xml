@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class lazy="false"
+		name="com.bestway.common.fpt.btplsinput.entity.CustomsDeclarationBodyTemp"
+		table="CustomsDeclarationBodyTemp">
+		<cache usage="read-write" />
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex" />
+		</id>
+		<!--
+			报关单表头ID
+		-->
+		<many-to-one lazy="false"      name="customsDeclarationHeadTemp" column="customsDeclarationHeadTemp" 
+			class="com.bestway.common.fpt.btplsinput.entity.CustomsDeclarationHeadTemp"/>
+		<!--
+			备案序号
+		-->
+		<property name="commSerialNo" />
+		<!--
+			商品流水号
+		-->
+		<property name="seqNo" />
+		<!--
+			商品编码
+		-->
+		<property name="complex" />
+		<!--
+			商品名称
+		-->
+		<property name="commName" />
+		<!--
+			商品规格
+		-->
+		<property name="commSpec" />
+		<!--
+			商品数量
+		-->
+		<property name="commAmount" />
+		<!--
+			商品单价
+		-->
+		<property name="commUnitPrice" />
+		<!--
+			商品总价
+		-->
+		<property name="commTotalPrice" />
+		<!--
+			单位
+		-->
+		<property name="unit" />
+		<!--
+			法定单位
+		-->
+		<property name="legalUnit" />
+		<!--
+			第二法定单位
+		-->
+		<property name="secondLegalUnit" />
+		<!--
+			第一法定数量
+		-->
+		<property name="firstAmount" />
+		<!--
+			第二法定数量
+		-->
+		<property name="secondAmount" />
+		<!--
+			原产国
+		-->
+		<property name="country" />
+		<!--
+			用途
+		-->
+		<property name="uses" />
+		<!--
+			减免方式
+		-->
+		<property name="levyMode" />
+		<!--
+			毛重
+		-->
+		<property name="grossWeight" />
+		<!--
+			净重
+		-->
+		<property name="netWeight" />
+	</class>
+</hibernate-mapping>
+<!-- parsed in 0ms -->

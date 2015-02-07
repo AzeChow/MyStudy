@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class  lazy="false"  name="com.bestway.bcus.system.entity.SysCode" table="syscode">
+		<cache usage="read-write"/> 
+       	<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="entityClassName" length="100"/>
+       	<property name="maxLength" length="4"/>
+       	<property name="prefix" length="20"/>
+       	<property name="yearLength" length="4"/>		
+       	<property name="monthLength" length="4"/>
+       	<property name="dayLength" length="4"/>
+       	<property name="seq" length="4"/>
+		<property name="currDate"/>
+    </class>
+
+</hibernate-mapping>
+<!-- parsed in 0ms -->

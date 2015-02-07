@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class lazy="false"  name="com.bestway.bcus.message.entity.DecSupplementList" table="decSupplementList">
+		<cache usage="read-write"/> 
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="baseCustomsDeclarationCommInfo" not-null="true"/>
+		<property name="gno" not-null="true" />
+		<property name="supType" not-null="true"/>
+		<property name="brandCN" length="50"/>
+		<property name="brandEN" length="100"/>
+		<property name="buyer"/>
+		<property name="buyerContact" />
+		<property name="buyerAddr" />
+		<property name="buyerTel" length="20"/>
+		<property name="seller" />								
+		<property name="sellerContact" />
+		<property name="sellerAddr" />
+		<property name="sellerTel" length="20"/>
+		<property name="factory" />
+		<property name="factoryContact" />
+		<property name="factoryAddr" />
+		<property name="factoryTel" />
+		<property name="contrNo"  length="20"/>
+		<property name="contrDate" length="8"/>
+		<property name="invoiceNo" />
+		<property name="invoiceDate" length="8"/>
+		<property name="i_BabRel" length="20"/>
+		<property name="i_PriceEffect" length="1"/>								
+		<property name="i_PriceClose" length="8"/>
+		<property name="i_OtherLimited" length="1"/>
+		<property name="i_OtherEffect"  length="50"/>
+		<property name="i_Note1" />
+		<property name="i_IsUsefee" length="1"/>
+		<property name="i_IsProfit" />
+		<many-to-one lazy="false" name="curr" column="curr" class="com.bestway.bcus.custombase.entity.parametercode.Curr"/>
+		<property name="i_Note2" />
+		<property name="invoicePrice" />
+		<property name="invoiceAmount"/>
+		<property name="invoiceNote" />
+		<property name="goodsPrice" />
+		<property name="goodsAmount" />
+		<property name="goodsNote" />								
+		<property name="i_CommissionPrice" />
+		<property name="i_CommissionAmount" />
+		<property name="i_CommissionNote" />
+		<property name="i_ContainerPrice" />
+		<property name="i_ContainerAmount" />
+		<property name="i_ContainerNote" />
+		<property name="i_PackPrice" />
+		<property name="i_PackAmount" />
+		<property name="i_PackNote" />
+		<property name="i_PartPrice"/>
+		<property name="i_PartAmount" />
+		<property name="i_PartNote" />
+		<property name="i_ToolPrice" />
+		<property name="i_ToolAmount" />								
+		<property name="i_ToolNote" />
+		<property name="i_LossPrice" />
+		<property name="i_LossAmount" />
+		<property name="i_LossNote" />
+		<property name="i_DesignPrice" />
+		<property name="i_DesignAmount" />
+		<property name="i_DesignNote" />
+		<property name="i_UsefeePrice" />
+		<property name="i_UsefeeAmount" />
+		<property name="i_UsefeeNote" />
+		<property name="i_ProfitPrice" />
+		<property name="i_ProfitAmount" />
+		<property name="i_ProfitNote" />
+		<property name="i_FeePrice"/>
+		<property name="i_FeeAmount" />
+		<property name="i_FeeNote" />
+		<property name="i_OtherPrice" />
+		<property name="i_OtherAmount" />								
+		<property name="i_OtherNote" />
+		<property name="i_InsurPrice" />
+		<property name="i_InsurAmount" />
+		<property name="i_InsurNote" />
+		<property name="e_IsDutyDel" length="1" />
+		<property name="gnameOther" />
+		<property name="codeTsOther" length="10"/>
+		<property name="isClassDecision" length="1"/>
+		<property name="decisionNo" length="30"/>
+		<property name="codeTsDecision" length="10"/>
+		<many-to-one lazy="false" name="decisionCus" column="decisionCus" class="com.bestway.bcus.custombase.entity.countrycode.Customs"/>
+		<property name="isSampleTest"  length="1"/>
+		<property name="goptions" length="32"/>
+		<many-to-one lazy="false" name="trafMode" column="trafMode" class="com.bestway.bcus.custombase.entity.parametercode.Transf"/>
+		<property name="isDirectTraf"  length="1"/>
+		<many-to-one lazy="false" name="originCountry" column="originCountry" class="com.bestway.bcus.custombase.entity.countrycode.Country"/>
+		<many-to-one lazy="false" name="destPort" column="destPort" class="com.bestway.bcus.custombase.entity.countrycode.PreDock"/>
+		<many-to-one lazy="false" name="declPort" column="declPort" class="com.bestway.bcus.custombase.entity.countrycode.PreDock"/>
+		<property name="billNo"/>
+		<many-to-one lazy="false" name="transitCountry" column="transitCountry" class="com.bestway.bcus.custombase.entity.countrycode.Country"/>
+		<property name="originMark" />
+		<many-to-one lazy="false" name="certCountry" column="certCountry" class="com.bestway.bcus.custombase.entity.countrycode.Country"/>
+		<property name="certNo" />								
+		<property name="certStandard"/>
+		<property name="otherNote" />
+		<property name="isSecret"  />
+		<property name="agentType" />
+		<property name="declAddr" />
+		<property name="declPost" length="10"/>
+	    <property name="declTel" length="20"/>
+	    <property name="operType"/>
+		<property name="icCardId"/>
+		<property name="clientSeqNo"/>
+		<property name="signDate"/>
+		<property name="signInfo"/>
+		<property name="isSend" not-null="true"/>
+		<property name="isCheck" not-null="true"/>
+		<property name="inputDate"/>
+		<property name="sendDate"/>
+	</class>
+</hibernate-mapping>
+<!-- parsed in 0ms -->

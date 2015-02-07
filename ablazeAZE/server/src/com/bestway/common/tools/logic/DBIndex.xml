@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DBIndex>
+	<!--物流基础资料部分索引-->
+	<index>create index scmcoicode on scmcoi(code)</index>
+	<index>create index scmcoicoiProperty on scmcoi(coiProperty)</index>
+	
+	<index>create index enterprisematerialptNo on enterprisematerial(ptNo)</index>
+	<index>create index materielptNo on materiel(ptNo)</index>
+	<index>create index materielsort on materiel(sort)</index>
+	<index>create index materieltenCode on materiel(tenCode)</index>
+	<index>create index materielcompany on materiel(coid)</index>
+	
+	<index>create index bommanageparentNo on bommanage(parentNo)</index>
+	<index>create index bommanagecompentNo on bommanage(compentNo)</index>
+	<index>create index bommanageversionNo on bommanage(versionNo)</index>
+	<index>create index bommanagechildVersionNo on bommanage(childVersionNo)</index>
+	
+	<index>create index materialbommastermateriel on materialbommaster(materiel)</index>
+	<index>create index materialbomversionmasterId on materialbomversion(masterId)</index>
+	<index>create index materialbomversionversion on materialbomversion(version)</index>
+	<index>create index materialbomdetailmateriel on materialbomdetail(materiel)</index>
+	<index>create index materialbomdetailversionId on materialbomdetail(versionId)</index>
+	
+	<!--电子化手册报关单部分索引-->
+	<index>create index bcsBgdEmshead on bcscustomsdeclaration(emsHeadH2k)</index>
+	<index>create index bcsBgdImpExpFlag on bcscustomsdeclaration(impExpFlag)</index>
+	<index>create index bcsBgdImpExpType on bcscustomsdeclaration(impExpType)</index>
+	<index>create index bcsBgdDeclarDate on bcscustomsdeclaration(declarationDate)</index>
+	
+	<!--电子化手册报关单部分索引-->
+	<index>create index bcsBgdHead on bcscustomsdeclarationcomminfo(customsDeclaration)</index>
+	<index>create index bcsBgdCommSeqNo on bcscustomsdeclarationcomminfo(commSerialNo)</index>
+	<index>create index bcsBgdBodyComplex on bcscustomsdeclarationcomminfo(complex)</index>
+	<!--电子化手册合同部分索引-->
+	<index>create index bcsEmsPorHeadEmsNo on contract(emsNo)</index>
+	<index>create index bcsEmsPorHdDeclStat on contract(declareState)</index>
+	<index>create index contractimgSeqnum on contractimg(seqNum)</index>
+	<index>create index contractimgcomplex on contractimg(complex)</index>
+	<index>create index contractimghead on contractimg(contract)</index>
+	<index>create index contractimgmodifymark on contractimg(modifyMark)</index>
+	<index>create index contractImg_credenceNo on contractImg(credenceNo)</index>
+	<index>create index contractexgSeqnum on contractexg(seqNum)</index>
+	<index>create index contractexgcomplex on contractexg(complex)</index>
+	<index>create index contractexghead on contractexg(contract)</index>
+	<index>create index contractexgmodifymark on contractexg(modifyMark)</index>
+	<index>create index contractbomimgseqnum on contractbom(seqNum)</index>
+	<index>create index contractbomcomplex on contractbom(complex)</index>
+	<index>create index contractbommodifymark on contractbom(modifyMark)</index>
+	<index>create index contractbomexgbill on contractbom(contractexg)</index>
+	<!--电子手册部分索引-->
+	<index>create index dzscBgdEmshead on dzsccustomsdeclaration(emsHeadH2k)</index>
+	<index>create index dzscBgdImpExpFlag on dzsccustomsdeclaration(impExpFlag)</index>
+	<index>create index dzscBgdImpExpType on dzsccustomsdeclaration(impExpType)</index>
+	<index>create index dzscBgdDeclarDate on dzsccustomsdeclaration(declarationDate)</index>
+	<index>create index dzscBgdEffective on dzsccustomsdeclaration(effective)</index>
+
+	<index>create index dzscBgdHead on dzsccustomcomminfo(customsDeclaration)</index>
+	<index>create index dzscBgdCommSeqNo on dzsccustomcomminfo(commSerialNo)</index>
+	<index>create index dzscBgdBodyComplex on dzsccustomcomminfo(complex)</index>
+	
+	<index>create index dzscEmsPorHeadEmsNo on dzscemsporhead(emsNo)</index>
+	<index>create index dzscEmsPorHdDeclStat on dzscemsporhead(declareState)</index>
+	
+	<index>create index dzscemsimgbillSeqnum on dzscemsimgbill(seqNum)</index>
+	<index>create index dzscimgbillcomplex on dzscemsimgbill(complex)</index>
+	<index>create index dzscimgbillhead on dzscemsimgbill(dzscEmsPorHead)</index>
+	<index>create index dzscimgbillmodifymark on dzscemsimgbill(modifyMark)</index>
+	
+	<index>create index dzscemsexgbillSeqnum on dzscemsexgbill(seqNum)</index>
+	<index>create index dzscexgbillcomplex on dzscemsexgbill(complex)</index>
+	<index>create index dzscexgbillhead on dzscemsexgbill(dzscEmsPorHead)</index>
+	<index>create index dzscexgbillmodifymark on dzscemsexgbill(modifyMark)</index>
+	
+	<index>create index dzscbombillimgseqnum on dzscemsbombill(imgSeqNum)</index>
+	<index>create index dzscbombillcomplex on dzscemsbombill(complex)</index>
+	<index>create index dzscbombillmodifymark on dzscemsbombill(modifyMark)</index>
+	<index>create index dzscbombillexgbill on dzscemsbombill(dzscEmsExgBill)</index>
+	
+	<index>create index dictporImg_seqNum on dictporImg(seqNum)</index>
+	<!--电子账册内部归并部分索引-->
+	<index>create index innermergedataimrtype on innermergedata(imrType)</index>
+	<index>create index innermergedatamateriel on innermergedata(materielid)</index>
+	<index>create index innermergedatatenno on innermergedata(hsAfterTenMemoNo)</index>
+	<index>create index innermergedatacomplex on innermergedata(compliexid)</index>
+	<!--电子账册经营范围部分索引-->
+	<index>create index EmsEdiTrHeadCopEmsNo on EmsEdiTrHead(copEmsNo)</index>
+	<index>create index EmsEdiTrHeademsNo on EmsEdiTrHead(emsNo)</index>
+	<index>create index EmsEdiTrHeaddeclareState on EmsEdiTrHead(declareState)</index>
+	<index>create index EmsEdiTrExgEmsEdiTrHead on EmsEdiTrExg(emsEdiTrHead)</index>
+	<index>create index EmsEdiTrExgptNo on EmsEdiTrExg(ptNo)</index>
+	<index>create index EmsEdiTrExgcomplex on EmsEdiTrExg(complex)</index>
+	<index>create index EmsEdiTrExgmodifyMark on EmsEdiTrExg(modifyMark)</index>
+	
+	<index>create index EmsEdiTrImgemsEdiTrHead on EmsEdiTrImg(emsEdiTrHead)</index>
+	<index>create index EmsEdiTrImgptNo on EmsEdiTrImg(ptNo)</index>
+	<index>create index EmsEdiTrImgcomplex on EmsEdiTrImg(complex)</index>
+	<index>create index EmsEdiTrImgmodifyMark on EmsEdiTrImg(modifyMark)</index>
+	
+	<!--电子账册归并关系部分索引-->
+	<index>create index EmsEdiMergerHeadCopEmsNo on EmsEdiMergerHead(copEmsNo)</index>
+	<index>create index EmsEdiMergerHeademsNo on EmsEdiMergerHead(emsNo)</index>
+	<index>create index EmsEdiMerHeadDState on EmsEdiMergerHead(declareState)</index>
+	
+	<index>create index EmsEdiMExgAfterHead on EmsEdiMergerExgAfter(emsEdiMergerHead)</index>
+	<index>create index EmsEdiMExgAfterseqNum on EmsEdiMergerExgAfter(seqNum)</index>
+	<index>create index EmsEdiMExgBeforeAfter on EmsEdiMergerExgBefore(afterId)</index>
+	<index>create index EmsEdiMExgBeforeseqNum on EmsEdiMergerExgBefore(seqNum)</index>
+	<index>create index EmsEdiMExgBeforeptNo on EmsEdiMergerExgBefore(ptNo)</index>
+	<index>create index EmsEdiMExgBeforeMMark on EmsEdiMergerExgBefore(modifyMark)</index>
+	
+	<index>create index EmsEdiMImgAfterHead on EmsEdiMergerImgAfter(emsEdiMergerHead)</index>
+	<index>create index EmsEdiMImgAfterseqNum on EmsEdiMergerImgAfter(seqNum)</index>
+	<index>create index EmsEdiMImgAfterMMark on EmsEdiMergerImgAfter(modifyMark)</index>
+	<index>create index EmsEdiMImgBeforeAfter on EmsEdiMergerImgBefore(afterId)</index>
+	<index>create index EmsEdiMImgBeforeseqNum on EmsEdiMergerImgBefore(seqNum)</index>
+	<index>create index EmsEdiMImgBeforeptNo on EmsEdiMergerImgBefore(ptNo)</index>
+	<index>create index EmsEdiMImgBeforeMMark on EmsEdiMergerImgBefore(modifyMark)</index>
+	
+	<index>create index EmsEdiMVersionBefore on EmsEdiMergerVersion(emsEdiMergerBefore)</index>
+	<index>create index EmsEdiMVersionversion on EmsEdiMergerVersion(version)</index>
+	
+	<index>create index EmsEdiMergerExgBomVersion on EmsEdiMergerExgBom(emsEdiMergerVersion)</index>
+	<index>create index EmsEdiMergerExgBomptNo on EmsEdiMergerExgBom(ptNo)</index>
+	
+	<!--电子账册帐册索引-->
+	<index>create index EmsHeadH2kcopEmsNo on EmsHeadH2k(copEmsNo)</index>
+	<index>create index EmsHeadH2kemsNo on EmsHeadH2k(emsNo)</index>
+	<index>create index EmsHeadH2kdeclareState on EmsHeadH2k(declareState)</index>
+	
+	<index>create index EmsHeadH2kExgemsHeadH2k on EmsHeadH2kExg(emsHeadH2k)</index>
+	<index>create index EmsHeadH2kExgseqNum on EmsHeadH2kExg(seqNum)</index>
+	<index>create index EmsHeadH2kExgcomplex on EmsHeadH2kExg(complex)</index>
+	<index>create index EmsHeadH2kExgmodifyMark on EmsHeadH2kExg(modifyMark)</index>
+	
+	<index>create index EmsHeadH2kImgcomplex on EmsHeadH2kImg(complex)</index>
+	<index>create index EmsHeadH2kImgseqNum on EmsHeadH2kImg(seqNum)</index>
+	<index>create index EmsHeadH2kImgcomplex on EmsHeadH2kImg(complex)</index>
+	<index>create index EmsHeadH2kImgmodifyMark on EmsHeadH2kImg(modifyMark)</index>
+	
+	<index>create index EmsHeadH2kVersionExg on EmsHeadH2kVersion(emsHeadH2kExg)</index>
+	<index>create index EmsHeadH2kVersionV on EmsHeadH2kVersion(version)</index>
+	
+	<index>create index EmsHeadH2kBomeVersion on EmsHeadH2kBom(emsHeadH2kVersion)</index>
+	<index>create index EmsHeadH2kBomSendState on EmsHeadH2kBom(sendState)</index>
+	<index>create index EmsHeadH2kBomSeqNum on EmsHeadH2kBom(seqNum)</index>
+	<!--电子账册报关单索引-->
+	<index>create index bcusBgdEmshead on customsdeclaration(emsHeadH2k)</index>
+	<index>create index bcusBgdImpExpFlag on customsdeclaration(impExpFlag)</index>
+	<index>create index bcusBgdImpExpType on customsdeclaration(impExpType)</index>
+	<index>create index bcusBgdImpExpDate on customsdeclaration(impExpDate)</index>
+	<index>create index bcusBgdDeclarDate on customsdeclaration(declarationDate)</index>
+	<index>create index bcusBgdEffective on customsdeclaration(effective)</index>
+	
+	<index>create index bcusBgdHead on customsdeclarationcomminfo(customsDeclaration)</index>
+	<index>create index bcusBgdCommSeqNo on customsdeclarationcomminfo(commSerialNo)</index>
+	<index>create index bcusBgdBodyComplex on customsdeclarationcomminfo(complex)</index>
+	
+	<!--电子账册核销索引-->
+	<index>create index cancelownerunitwearhead on cancelownerunitwear(cancelHead)</index>
+	<index>create index cancelcusunitwearhead on cancelcusunitwear(cancelHead)</index>
+	<index>create index cancelcustomsdeclarcustomNo on cancelcustomsdeclara(customNo)</index>
+	<index>create index cancelcustomsoutporttype on cancelcustomsdeclara(inoutporttype)</index>
+	<index>create index canceldeclarinoutportflat on cancelcustomsdeclara(inoutportflat)</index>
+	
+	<!--保税物流进出仓管理索引-->
+	<index>create index blsstockbillbillNo on blsinoutstockbill(billNo)</index>
+	<index>create index blsstockbillioflag on blsinoutstockbill(ioFlag)</index>
+	<index>create index blsstockbillcomplex on blsinoutstockbill(complex)</index>
+	<index>create index blsstockbilldetailbsb on blsinoutstockbilldetail(bsb)</index>
+	<index>create index blsstockbilldetailcomplex on blsinoutstockbilldetail(complex)</index>
+	
+	<!--保税物流仓单管理索引-->
+	<index>create index storagebillbillno on storagebill(billNo)</index>
+	<index>create index storagebillioflag on storagebill(ioFlag)</index>
+	<index>create index storagebillcomplex on storagebill(complex)</index>
+	<index>create index storagebillwarehousecode on storagebill(wareHouseCode)</index>
+	<index>create index storagebillafterstoragenill on storagebillafter(storageBill)</index>
+	<index>create index storagebillaftercomplex on storagebillafter(complex)</index>
+	
+	<index>create index beforestoragebillafter on storagebillbefore(storageBillAfter)</index>
+	<index>create index billbeforecomplex on storagebillbefore(complex)</index>
+	
+	<index>create index deliverydeliveryno on delivery(deliveryNo)</index>
+	<index>create index deliveryinout on delivery(inOut)</index>
+	<index>create index deliverycomplex on delivery(complex)</index>
+	<!--保税物流货到管理索引-->
+	<index>create index entrancemessagecomplex on entrancemessage(complex)</index>
+	<index>create index entrancemessageioflag on entrancemessage(ioFlag)</index>
+	<index>create index entrancemessagecomplex on entrancemessage(complex)</index>
+	
+	<!--单据中心索引-->
+		<!--  实际报关资料 -->
+	<index>create index StatCusNameRelationHsncomplex on statcusnamerelationhsn(complex)</index>
+	<index>create index StatCusNameRelationHsncusName on statcusnamerelationhsn(cusName)</index>
+	<index>create index StatCusNameRelationHsncusSpec on statcusnamerelationhsn(cusSpec)</index>
+	<index>create index StatCusNameRelationHsncusUnit on statcusnamerelationhsn(unitCode)</index>
+	<index>create index StatCusNameRelationHsnemsNo on statcusnamerelationhsn(emsNo)</index>
+	<index>create index RelationHsnmaterielType on statcusnamerelationhsn(materielType)</index>
+	
+		<!-- 对应关系 -->
+	<index>create index CustomsRalationmateriel on ffRalation(materiel)</index>
+	<index>create index CustomsRalationstatHsn on ffRalation(statCusNameRelationHsn)</index>
+	<index>create index CustomsRalationunitConvert on ffRalation(unitConvert)</index>
+	
+	     <!-- 单据类型 -->
+	<index>create index BillTypebillType on BillType(billType)</index>
+	<index>create index BillTypecode on BillType(code)</index>
+	    
+	    <!-- 料件 -->
+	<index>create index BillMasterMaterielbillType on BillMasterMateriel(billTypeId)</index>
+	<index>create index BillMasterMaterielbillNo on BillMasterMateriel(billNo)</index>
+	<index>create index BillMasterMaterielisValid on BillMasterMateriel(isValid)</index>
+	<index>create index BillMasterMaterielvalidDate on BillMasterMateriel(validDate)</index>
+	<index>create index BillMasterMaterielscmCoc on BillMasterMateriel(scmCoc)</index>
+	
+	<index>create index BillDetailMaterielbillMaster on BillDetailMateriel(billMasterId)</index>
+	<index>create index BillDetailMaterielptPart on BillDetailMateriel(ptPart)</index>	
+	<index>create index BillDetailMaterielcomplex on BillDetailMateriel(complexid)</index>
+	
+	    <!-- 成品 -->
+	<index>create index BillMasterProductbillType on BillMasterProduct(billTypeId)</index>
+	<index>create index BillMasterProductbillNo on BillMasterProduct(billNo)</index>
+	<index>create index BillMasterProductisValid on BillMasterProduct(isValid)</index>
+	<index>create index BillMasterProductvalidDate on BillMasterProduct(validDate)</index>
+	<index>create index BillMasterProductscmCoc on BillMasterProduct(scmCoc)</index>
+	
+	<index>create index BillDetailProductbillMaster on BillDetailProduct(billMasterId)</index>
+	<index>create index BillDetailProductptPart on BillDetailProduct(ptPart)</index>
+	
+	<index>create index BillDetailProductcomplex on BillDetailProduct(complexid)</index>
+	
+		     <!-- 半成品 -->
+	<index>create index BillMasterHalfProductbillType on BillMasterHalfProduct(billTypeId)</index>
+	<index>create index BillMasterHalfProductbillNo on BillMasterHalfProduct(billNo)</index>
+	<index>create index BillMasterHalfProductisValid on BillMasterHalfProduct(isValid)</index>
+	<index>create index BillMasterHalfProductvalidDate on BillMasterHalfProduct(validDate)</index>
+	<index>create index BillMasterHalfProductscmCoc on BillMasterHalfProduct(scmCoc)</index>
+	
+	<index>create index HalfProductbillMaster on BillDetailHalfProduct(billMasterId)</index>
+	<index>create index HalfProductptPart on BillDetailHalfProduct(ptPart)</index>
+	
+	<index>create index BillDetailHalfProductcomplex on BillDetailHalfProduct(complexid)</index>
+
+			  <!-- 边角料 -->
+	<index>create index LeftoverMaterielbillType on BMLMateriel(billTypeId)</index>
+	<index>create index LeftoverMaterielbillNo on BMLMateriel(billNo)</index>
+	<index>create index LeftoverMaterielisValid on BMLMateriel(isValid)</index>
+	<index>create index LeftoverMaterielvalidDate on BMLMateriel(validDate)</index>
+	<index>create index LeftoverMaterielscmCoc on BMLMateriel(scmCoc)</index>
+	
+	<index>create index LeftoverMaterielbillMaster on BDLMateriel(billMasterId)</index>
+	<index>create index LeftoverMaterielptPart on BDLMateriel(ptPart)</index>
+	
+	<index>create index LeftoverMaterielcomplex on BDLMateriel(complexid)</index>
+	
+			  <!-- 残次品 -->
+	<index>create index RemainProductbillType on BillMasterRemainProduct(billTypeId)</index>
+	<index>create index RemainProductbillNo on BillMasterRemainProduct(billNo)</index>
+	<index>create index RemainProductisValid on BillMasterRemainProduct(isValid)</index>
+	<index>create index RemainProductvalidDate on BillMasterRemainProduct(validDate)</index>
+	<index>create index RemainProductscmCoc on BillMasterRemainProduct(scmCoc)</index>
+	
+	<index>create index RemainProductbillMaster on BillDetailRemainProduct(billMasterId)</index>
+	<index>create index RemainProductptPart on BillDetailRemainProduct(ptPart)</index>
+	
+	<index>create index RemainProductcomplex on BillDetailRemainProduct(complexid)</index>
+	
+			  <!-- 设备 -->
+	<index>create index BillMasterFixturebillType on BillMasterFixture(billTypeId)</index>
+	<index>create index BillMasterFixturebillNo on BillMasterFixture(billNo)</index>
+	<index>create index BillMasterFixtureisValid on BillMasterFixture(isValid)</index>
+	<index>create index BillMasterFixturevalidDate on BillMasterFixture(validDate)</index>
+	<index>create index BillMasterFixturescmCoc on BillMasterFixture(scmCoc)</index>
+	
+	<index>create index BillDetailFixturebillMaster on BillDetailFixture(billMasterId)</index>
+	<index>create index BillDetailFixtureptPart on BillDetailFixture(ptPart)</index>
+	
+	<index>create index BillDetailFixturecomplex on BillDetailFixture(complexid)</index>
+	
+	<!--海关帐索引-->
+	  	 <!-- 盘点表CheckBalance -->
+	<index>create index CheckBalanceljCpMark on CheckBalance(ljCpMark)</index>
+	<index>create index CheckBalancekcType on CheckBalance(kcType)</index>
+	<index>create index CheckBalancecheckDate on CheckBalance(checkDate)</index>
+	<index>create index CheckBalanceptNo on CheckBalance(ptNo)</index>
+
+	
+		<!-- 盘点折料表CheckBalanceConvertMateriel -->
+	<index>create index CheckfatherCheckBalance on CheckBalanceConvertMateriel(fatherCheckId)</index>
+	<index>create index CheckConvertMaterielljCpMark on CheckBalanceConvertMateriel(ljCpMark)</index>
+	<index>create index CheckConvertMaterielkcType on CheckBalanceConvertMateriel(kcType)</index>
+	<index>create index CheckConvertMaterielcheckDate on CheckBalanceConvertMateriel(checkDate)</index>
+	<!--<index>create index CheckBalanceConvertMaterielptNo on CheckBalanceConvertMateriel(ptNo)</index>
+	<index>create index CheckBalanceConvertMaterielwareSet on CheckBalanceConvertMateriel(wareSet)</index>-->
+
+						
+</DBIndex>

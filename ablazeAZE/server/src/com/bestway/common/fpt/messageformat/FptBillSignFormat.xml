@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="eportmsg.xsl"?>
+<!--Element message: 此元素内所有内容及属性描述一个报文的定义及从数据库的获取途径。-->
+<message version="1.0">
+	<section multiple="false" required="true">
+		<description>签名信息</description>
+		<section-flag>FPT_BILL_SIGN</section-flag>
+		<data-id>FptBillSign</data-id>
+		<field nullable="true">
+			<description>电子口岸统一编号</description>
+			<field-name>seqNo</field-name>
+			<format>X(18)</format>
+			<field-flag>SEQ_NO</field-flag>
+		</field>
+		<field nullable="false">
+			<description>申请表编号</description>
+			<field-name>appNo</field-name>
+			<format>X(12)</format>
+			<field-flag>APP_NO</field-flag>
+		</field>
+		<field nullable="false">
+			<description>单据类型标志</description>
+			<field-name>sysType</field-name>
+			<format>X</format>
+			<field-flag>SYS_TYPE</field-flag>
+		</field>
+		<field nullable="false">
+			<description>企业内部编号</description>
+			<field-name>copNo</field-name>
+			<format>X(20)</format>
+			<field-flag>COP_BILL_NO</field-flag>
+		</field>
+		<field nullable="false">
+			<description>转入转出标记</description>
+			<field-name>inOutFlag</field-name>
+			<format>X</format>
+			<field-flag>BILL_SORT</field-flag>
+		</field>
+		<field nullable="false">
+			<description>签名者IC编号#</description>
+			<field-name>idCard</field-name>
+			<format>X(16)</format>
+			<field-flag>ICCARD_ID</field-flag>
+		</field>
+		<field nullable="true">
+			<description>签名者姓名#</description>
+			<field-name>icCardName</field-name>
+			<format>X(20)</format>
+			<field-flag>ICCARD_NAME</field-flag>
+		</field>
+		<field nullable="true">
+			<description>签名者单位统一编号#</description>
+			<field-name>icCardUnitCode</field-name>
+			<format>X(18)</format>
+			<field-flag>ICCARD_UNIT_CODE</field-flag>
+		</field>
+		<field nullable="true">
+			<description>签名者单位名称#</description>
+			<field-name>icCardUnitName</field-name>
+			<format>X(100)</format>
+			<field-flag>ICCARD_UNIT_NAME</field-flag>
+		</field>
+		<field nullable="false">
+			<description>签名证书号#</description>
+			<field-name>certSeqNo</field-name>
+			<format>X(20)</format>
+			<field-flag>CERT_SEQ_NO</field-flag>
+		</field>
+		<field nullable="false">
+			<description>数字签名#</description>
+			<field-name>sign</field-name>
+			<format>X(380)</format>
+			<field-flag>SIGN</field-flag>
+		</field>
+		<field nullable="false">
+			<description>签名日期#</description>
+			<field-name>signDate</field-name>
+			<format>Z(14)</format>
+			<field-flag>SIGN_DATE</field-flag>
+		</field>
+		<field nullable="true">
+			<description>备注</description>
+			<field-name>note</field-name>
+			<format>X(255)</format>
+			<field-flag>NOTE</field-flag>
+		</field>
+	</section>
+</message>

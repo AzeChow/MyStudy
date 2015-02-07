@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="eportmsg.xsl"?>
+<!--Element message: 此元素内所有内容及属性描述一个报文的定义及从数据库的获取途径。-->
+<message version="1.0">
+	<section multiple="false" required="true">
+		<description>外发加工登记表表体外发商品明细</description>
+		<section-flag>FPT2_BILL_ITEM</section-flag>
+		<data-id>OwpBillSendItem</data-id>
+		<field nullable="false" signNo="1">
+			<description>序号</description>
+			<field-name>listNo</field-name>
+			<format>Z(8)9</format>
+			<field-flag>LIST_NO</field-flag>
+		</field>
+		<field nullable="true" signNo="2">
+			<description>申表请序号</description>
+			<field-name>appGNo</field-name>
+			<format>Z(8)9</format>
+			<field-flag>APP_G_NO</field-flag>
+		</field>
+		<field nullable="false" signNo="3">
+			<description>商品编码</description>
+			<field-name>complex.code</field-name>
+			<format>X(10)</format>
+			<field-flag>CODE_T_S</field-flag>
+		</field>
+		<field nullable="false" signNo="4">
+			<description>商品名称</description>
+			<field-name>hsName</field-name>
+			<format>X(50)</format>
+			<field-flag>G_NAME</field-flag>
+		</field>
+		<field nullable="true" signNo="5">
+			<description>规格型号</description>
+			<field-name>hsSpec</field-name>
+			<format>X(50)</format>
+			<field-flag>G_MODEL</field-flag>
+		</field>
+
+		<field nullable="false" signNo="6">
+			<description>计量单位</description>
+			<field-name>hsUnit.name</field-name>
+			<format>X(3)</format>
+			<field-flag>UNIT</field-flag>
+		</field>
+		<field nullable="false" signNo="7">
+			<description>申报数量</description>
+			<field-name>qty</field-name>
+			<format>Z(12)9.9(5)</format>
+			<field-flag>QTY</field-flag>
+		</field>
+		<field nullable="true" signNo="8">
+			<description>备注</description>
+			<field-name>note</field-name>
+			<format>X(50)</format>
+			<field-flag>NOTE</field-flag>
+		</field>
+	</section>
+</message>

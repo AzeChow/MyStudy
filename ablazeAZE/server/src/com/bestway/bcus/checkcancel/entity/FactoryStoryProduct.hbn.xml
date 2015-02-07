@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class lazy="false" 
+		name="com.bestway.bcus.checkcancel.entity.FactoryStoryProduct" 
+		table="factorystoryproduct">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="ptNo"/>
+		<property name="ptName"/>
+		<property name="ptSpec"/>
+		<property name="quantity"/>
+		<property name="units"/>
+		<property name="unitPrice"/>
+		<property name="isInnerMeger"/>
+		<property name="amountPrice"/>
+		<property name="grossWeight"/>
+		<property name="netWeight"/>
+		<many-to-one lazy="false" name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" 
+			index="factorycheimgresult_codmpany"/>
+	</class>
+
+</hibernate-mapping>
+<!-- parsed in 0ms -->
+
+		

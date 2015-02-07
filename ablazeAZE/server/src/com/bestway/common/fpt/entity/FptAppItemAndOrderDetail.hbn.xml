@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class 
+		name="com.bestway.common.fpt.entity.FptAppItemAndOrderDetail" 
+		table="fptAppItemAndOrderDetail">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="fptAppItemId" />
+		<property name="orderDetail" />
+		<property name="amount" />
+		<property name="tradeData" />
+		<many-to-one lazy="false" name="company" column="companyId" 
+			class="com.bestway.bcus.system.entity.Company" 
+			index="FptAppItemAndOrderDetail_company"/>
+	</class>
+</hibernate-mapping>

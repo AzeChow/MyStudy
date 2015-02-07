@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcus.message.entity.CustomReceiptMessage" table="customReceiptMessage">
+		<cache usage="read-write"/> 
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="tcsTaskId" />
+		<property name="projectType" />
+		<property name="tradeCode" />
+		<property name="seqNo" />
+		<property name="emsNo"/>
+		<property name="returnType" />
+		<property name="returnDate" />
+		<property name="returnUser" />
+		<property name="fileName" />								
+		<property name="uniteCode" />
+		<property name="customs" />
+		<property name="ylrh" />
+		<property name="success" />
+		<property name="noticeDate" />
+		<property name="eportLocationCode" />
+		<property name="corporationName" />
+		<property name="entrydeclarantNo" />
+		<property name="corporationCustomsCode"/>
+		<property name="cyNo" />
+		<property name="warehouseNo" />
+		<property name="importExportDate" />
+		<property name="packages" />								
+		<property name="billOfLadingNo" />
+		<property name="meansOfTransportMode" />
+		<property name="meansOfTransportId" />
+		<property name="netWeight" />
+		<property name="grossWeight" />
+		<property name="declareDate" />
+		<many-to-one lazy="false"      name="company" column="coid" class="com.bestway.bcus.system.entity.Company" index="messagequery_company"/>
+	</class>
+
+</hibernate-mapping>
+<!-- parsed in 0ms -->

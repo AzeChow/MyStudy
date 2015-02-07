@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcus.dbimport.entity.DBDataConnect" table="dbdataconnect">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="flat" length="10"/>
+		<property name="url" length="225"/>
+		<property name="userName" length="225"/>
+		<property name="password" length="225"/>
+		<property name="serverName" length="225"/>
+		<property name="dataName" length="225"/>
+		<property name="driverClassName" length="225"/>
+		<many-to-one lazy="false"      name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" index="dbdataconnect_company"/>
+	</class>
+
+</hibernate-mapping>

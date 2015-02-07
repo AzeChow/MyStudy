@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+<beans>
+	<!--==================DAO Beans====================-->
+	<bean id="invoiceDao" 
+		class="com.bestway.invoice.dao.InvoiceDao">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>
+	
+	<!--==================Logic Beans====================-->
+	<bean id="invoiceLogic" 
+		class="com.bestway.invoice.logic.InvoiceLogic">
+		<property name="invoiceDao">
+			<ref bean="invoiceDao"/>
+		</property>
+		<property name="bcusDao">
+			<ref bean="encDao"/>
+		</property>
+		<property name="bcsDao">
+			<ref bean="contractExeDao"/>
+		</property>
+	</bean>	
+	
+
+	<!--==================Action Bean====================-->
+	<bean id="invoiceAction" 
+		class="com.bestway.invoice.action.InvoiceActionImpl">
+		<property name="invoiceDao">
+			<ref bean="invoiceDao"/>
+		</property>		
+        <property name="invoiceLogic">
+			<ref bean="invoiceLogic"/>
+		</property>		
+	</bean>
+	
+	
+</beans>

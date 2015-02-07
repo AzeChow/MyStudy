@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class lazy="false" name="com.bestway.bcus.checkstock.entity.ECSSection" table="ecssection">
+		<cache usage="read-write" />
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex" />
+		</id>
+		<property name="verificationNo" />
+		<property name="beginDate" />
+		<property name="endDate" />
+		<property name="createDate" />
+		<property name="modifyDate" />
+		<property name="createPeople" />
+		<property name="modifyPeople" />
+		
+		<property name="stockImportIsHs" />
+		<property name="transImportIsHs" />
+		<property name="priceFromType" />
+		<property name="buyIsCount" />
+		
+		<property name="memo" />
+		<property name="isExist" />
+		<many-to-one lazy="false" name="company" column="company" 
+		    class="com.bestway.bcus.system.entity.Company" index="ecssection_company" />
+		<many-to-one lazy="false" name="cancelOwnerHead"  column="cancelOwnerHead" 		    
+		    class="com.bestway.bcus.checkcancel.entity.CancelOwnerHead" index="cancelOwnerHead_cancelOwnerHead"/>
+	</class>
+</hibernate-mapping>

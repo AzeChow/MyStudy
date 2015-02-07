@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcus.manualdeclare.entity.EmsHeadH2k" table="emsheadh2k">
+		<cache usage="read-write"/> 
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="emsType" length="225"/>
+		<property name="preEmsNo" length="225"/>
+		<property name="declareState" length="225"/>
+		<property name="declareType" length="225"/>
+		<property name="copEmsNo" length="225"/>
+		<property name="emsNo" length="225"/>
+		<property name="sancEmsNo" length="225"/>
+		<property name="tradeCode" length="225"/>
+		<property name="tradeName" length="225"/>
+		<property name="machCode" length="225"/>
+		<property name="machName" length="225"/>
+		<property name="declareErType" length="225"/>
+		<property name="machAbility"/>
+		<property name="maxTurnMoney"/>
+		<property name="modifyMark" length="225"/>
+		<property name="modifyTimes"/>
+		<property name="tel" length="225"/>
+		<property name="address" length="225"/>
+		<property name="beginDate"/>
+		<property name="endDate"/>
+		<property name="iePort" length="225"/>
+		<property name="outTradeCo" length="225"/>
+		<many-to-one lazy="false"      name="levyKind" column="levyKind" class="com.bestway.bcus.custombase.entity.parametercode.LevyKind"/>
+		<many-to-one lazy="false"      name="payMode" column="payMode" class="com.bestway.bcus.custombase.entity.parametercode.PayMode"/>
+		<many-to-one lazy="false"      name="machiningType" column="machiningType" class="com.bestway.bcus.custombase.entity.basecode.MachiningType"/>
+		<property name="inputEr" length="225"/>
+		<property name="inputDate" />
+		<property name="emsApprNo" length="225"/>
+		<property name="declareDate" />
+		<property name="declareTime"/>
+		<property name="newApprDate"/>
+		<property name="changeApprDate"/>
+		<property name="note" length="255"/>
+        <property name="historyState" />
+		<property name="ownerType" length="225"/>
+		<property name="area" length="225"/>		
+		<property name="investAmount"/>	
+		<property name="checkMark" length="225"/>
+		<property name="exeMark" length="225"/>
+		<property name="imgItems" length="225"/>
+		<property name="exgItems" length="225"/>
+		<property name="imgAmount"/>
+		<property name="exgAmount"/>
+		<property name="imgWeight"/>
+		<property name="exgWeight"/>
+		<many-to-one lazy="false"      name="company" column="coid" class="com.bestway.bcus.system.entity.Company" index="emsheadh2k_company"/>
+	</class>
+
+</hibernate-mapping>
+<!-- parsed in 0ms -->

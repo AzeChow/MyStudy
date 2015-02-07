@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class lazy="false" name="com.bestway.bls.entity.Delivery" table="delivery">
+		<cache usage="read-write" />
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex" />
+		</id>
+		<property name="operType"></property>
+		<property name="deliveryNo"></property>
+		<property name="vehicleLicense"></property>
+		<property name="carrierCode"></property>
+		<property name="carrierName"></property>
+		<property name="billCount"></property>
+		<property name="schedularArrivalDate"></property>
+		<property name="packNo"></property>
+		<property name="grossWeight"></property>
+		<property name="netWeight"></property>
+		<property name="containerNo1"></property>
+		<property name="containerNo2"></property>
+		<property name="sealNo1"></property>
+		<property name="sealNo2"></property>
+		<property name="modifyMark"></property>
+		<property name="messTimeStamp"></property>
+		<property name="declareState"></property>
+		<property name="effective"></property>
+			<property name="inOut"></property>
+		<many-to-one lazy="false" name="tradeCo" 
+			class="com.bestway.bcus.custombase.entity.basecode.Brief" />
+		<many-to-one lazy="false" name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" />
+	</class>
+</hibernate-mapping>

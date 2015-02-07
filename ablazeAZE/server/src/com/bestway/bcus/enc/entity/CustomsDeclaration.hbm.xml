@@ -1,0 +1,164 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcus.enc.entity.CustomsDeclaration" 
+		table="customsdeclaration">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+<!--		<many-to-one lazy="false"      name="emsHeadH2k" column="emsHeadH2k" 
+			class="com.bestway.bcus.manualdeclare.entity.EmsHeadH2k"/>-->
+		<property name="emsHeadH2k" />
+		<property name="tradeCode" />
+		<property name="tradeName" />
+		<property name="machCode" />
+		<property name="machName" />		
+		<property name="impExpFlag" />
+		<property name="impExpType" />
+		<property name="billListId" />
+		<property name="effective" />
+		<property name="cancel" />
+		<property name="confirmTransferCIQ" />
+		<property name="preCustomsDeclarationCode" />
+		<property name="unificationCode" />
+		<many-to-one lazy="false"      name="customs" column="customs" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Customs"/>
+		<property name="customsDeclarationCode" />
+		<property name="impExpDate" />
+		<property name="declarationDate" />
+		<many-to-one lazy="false"      name="transferMode" column="transferMode" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Transf"/>
+		<property name="conveyance" />
+		<property name="billOfLading" />
+		<many-to-one lazy="false"      name="tradeMode" column="tradeMode" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Trade"/>
+		<many-to-one lazy="false"      name="levyKind" column="levyKind" 
+			class="com.bestway.bcus.custombase.entity.parametercode.LevyKind"/>
+		<property name="perTax" />
+		<property name="license" />
+		<many-to-one lazy="false"      name="countryOfLoadingOrUnloading" 
+			column="countryOfLoadingOrUnloading" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Country"/>
+		<many-to-one lazy="false"      name="domesticDestinationOrSource" 
+			column="domesticDestinationOrSource" 
+			class="com.bestway.bcus.custombase.entity.countrycode.District"/>
+		<many-to-one lazy="false"      name="portOfLoadingOrUnloading" 
+			column="portOfLoadingOrUnloading" 
+			class="com.bestway.bcus.custombase.entity.countrycode.PortLin"/>
+		<property name="authorizeFile" />
+		<property name="contract" />
+		<many-to-one lazy="false"      name="transac" column="transac" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Transac"/>
+		<property name="freightageType" />
+		<property name="freightage" />
+		<property name="insuranceType" />
+		<property name="insurance" />
+		<property name="incidentalExpensesType" />
+		<property name="incidentalExpenses" />
+		<property name="commodityNum" />
+		<many-to-one lazy="false"      name="wrapType" column="wrapType" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Wrap"/>
+		<property name="grossWeight" />
+		<property name="netWeight" />
+		<property name="containerNum" />
+		<property name="attachedBill" />
+		<property name="allContainerNum0" column="allContainerNum" />
+		<property name="allContainerNum1" column="allContainerNum1"/>
+		<property name="allContainerNum2" column="allContainerNum2"/>
+		<many-to-one lazy="false"      name="uses" column="uses" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Uses"/>
+		<many-to-one lazy="false"      name="declarationCompany" column="declareCompany" 
+			class="com.bestway.bcus.system.entity.Company"/>
+		<many-to-one lazy="false"      name="currency" column="currency" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Curr"/>
+		<many-to-one lazy="false"      name="feeCurr" column="feeCurr" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Curr"/>
+		<many-to-one lazy="false"      name="insurCurr" column="insurCurr" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Curr"/>
+		<many-to-one lazy="false"      name="otherCurr" column="otherCurr" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Curr"/>	
+		<property name="exchangeRate" />
+		<many-to-one lazy="false"      name="creater" column="creater" 
+			class="com.bestway.common.authority.entity.AclUser"/>
+		<many-to-one lazy="false"      name="customer" column="customer" 
+			class="com.bestway.common.materialbase.entity.ScmCoc"/>
+		<many-to-one lazy="false"      name="declarationCustoms" column="declarationCustoms" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Customs"/>
+		<many-to-one lazy="false"      name="predock" column="predock" 
+			class="com.bestway.bcus.custombase.entity.countrycode.PreDock"/>
+		<many-to-one lazy="false"      name="balanceMode" column="balanceMode" 
+			class="com.bestway.bcus.custombase.entity.parametercode.BalanceMode"/>
+		<property name="memos" />
+		<property name="certificateCode"/>
+		<property name="customser" />
+		<property name="telephone" />
+		<property name="barCode" />
+		<property name="serialNumber" />
+		<property name="overseasConveyanceCode" />
+		<property name="overseasConveyanceName" />
+		<property name="overseasConveyanceFlights" />
+		<property name="overseasConveyanceBillOfLading" />
+		<many-to-one lazy="false"      name="domesticTransferMode" column="domesticTransferMode" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Transf"/>
+		<property name="domesticConveyanceCode" />
+		<property name="domesticConveyanceName" />
+		<property name="domesticConveyanceFlights" />
+		<property name="customsDeclarationCodeinHouse"/>
+		<property name="isNoBumf" />
+		<property name="bondedWarehouse" />		
+		<property name="isCheck" />
+		<property name="isSend"/>
+		<property name="isEmsCav"/>
+		<property name="tempPreCode"/>
+		<property name="invoiceCode"/>
+		<property name="customsEnvelopBillNo"/>
+		<property name="extendField1"/>
+		<property name="extendField2"/>
+		<property name="extendField3" length="20"/>
+		<property name="extendIntgerField3"/>
+		<many-to-one lazy="false"      name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" index="custoarati_company"/>
+		<many-to-one lazy="false"      name="manufacturer" column="manufacturer" 
+			class="com.bestway.bcus.custombase.entity.basecode.Brief"/>
+		<property name="fixType"/>
+		<property name="effectiveDate"/>
+		<property name="effectiveMan"/>
+		<property name="createDate" column="createrDate" />
+		<property name="modifyDate" column="modifyDate" />
+		<property name="createPeople"/>
+		<property name="modifyPeople"/>
+		<property name="relativeId"/>
+		<property name="relativeManualNo"/>
+		
+		<property name="tcsTaskId"/>
+		<property name="tcsResultTime"/>
+		<property name="tcsResultMessage"/>
+		<property name="tcsEntryType"/>
+		<property name="tcsEdiId"/>
+		<property name="tcsType"/>
+		<property name="tcsNote"/>
+		<property name="tcsSendTime"/>
+		
+		<property name="supplmentType"/>
+		<property name="operType"/>
+		<property name="voyageNo"/>
+		<property name="espTaskId"/>
+		
+		
+		<property name="btplsKey"/>
+		<property name="declaraCustomsBroker"/>
+		<many-to-one lazy="false"      name="brokerCorp" column="brokerCorp" 
+			class="com.bestway.pis.entity.BrokerCorp"/>
+		<!--<set name="allContainer" cascade="all">
+			<cache usage="read-write"/>
+			<key column="customsDeclaration"/>
+			<one-to-many 
+				class="com.bestway.bcus.enc.entity.CustomsDeclarationContainer"/>
+		</set>-->
+	</class>
+</hibernate-mapping>
+<!-- parsed in 0ms -->

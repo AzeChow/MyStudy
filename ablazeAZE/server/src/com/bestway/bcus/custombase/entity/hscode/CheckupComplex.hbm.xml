@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class lazy="false" 
+		name="com.bestway.bcus.custombase.entity.hscode.CheckupComplex" 
+		table="CheckupComplex">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="impExpFlag" />
+		<many-to-one lazy="false" name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" 
+			index="CheckupComplexany"/>
+		<many-to-one lazy="false" name="complex" column="complex" 
+			class="com.bestway.bcus.custombase.entity.hscode.Complex" 
+			index="CheckupCompl_complex"/>
+	</class>
+
+</hibernate-mapping>
+<!-- parsed in 0ms -->
+
+		

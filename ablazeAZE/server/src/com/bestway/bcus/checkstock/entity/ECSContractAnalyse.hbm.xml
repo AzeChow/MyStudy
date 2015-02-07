@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class lazy="false" name="com.bestway.bcus.checkstock.entity.ECSContractAnalyse"
+		table="ecscontractAnalyse">
+		<cache usage="read-write" />
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex" />
+		</id>
+		<property name="serialNumber" />
+		<property name="emsNo" />
+		<property name="seqNum" />
+		<property name="commName" />
+		<property name="commSpec" />
+		<property name="unit" />
+		<property name="importAmount" not-null="true"/>
+		<property name="wasteAmount" not-null="true"/>
+		<property name="resultAmount" not-null="true"/>
+		<many-to-one lazy="false" name="section" column="section"
+			class="com.bestway.bcus.checkstock.entity.ECSSection" index="ecscontractAnalyse_section"/>
+		<many-to-one lazy="false" name="company" column="company"
+			class="com.bestway.bcus.system.entity.Company" index="ecscontractAnalyse_company" />
+	</class>
+</hibernate-mapping>
+	<!-- parsed in 0ms -->

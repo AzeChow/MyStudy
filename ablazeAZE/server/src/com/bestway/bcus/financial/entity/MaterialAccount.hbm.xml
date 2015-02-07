@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcus.financial.entity.MaterialAccount" 
+		table="materialaccount">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<many-to-one lazy="false" name="company" column="companyId" 
+			class="com.bestway.bcus.system.entity.Company" index="expbaortreestb_company"/>
+		<many-to-one lazy="false" name="hsUnit" column="hsUnitId"
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<property name="accountDate"/>
+		<property name="hsName" />
+		<property name="hsSpec"/>
+		<property name="previousCount"/>
+		<property name="previousAmount"/>
+		<property name="thisInCount"/>
+		<property name="thisInAmount"/>
+		<property name="thisOutCount"/>
+		<property name="thisOutAmount"/>
+		<property name="balanceCount"/>
+		<property name="balanceAmount"/>
+	</class>
+</hibernate-mapping>

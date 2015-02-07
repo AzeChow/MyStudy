@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcs.contract.entity.Contract" table="contract">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="copEmsNo" />
+		<property name="declareState" />
+		<property name="emsType" />
+		<property name="emsNo" />
+		<property name="sancEmsNo" />
+		<property name="tradeCode" />
+		<property name="tradeName" />
+		<property name="machCode" />
+		<property name="machName" />
+		<property name="beginDate"/>
+		<property name="endDate"/>
+		<property name="outTradeCo" />
+		<many-to-one lazy="false"      name="levyKind" column="levyKind" 
+			class="com.bestway.bcus.custombase.entity.parametercode.LevyKind" />
+		<many-to-one lazy="false"      name="payMode" column="payMode" 
+			class="com.bestway.bcus.custombase.entity.parametercode.PayMode" />
+		<many-to-one lazy="false"      name="machiningType" column="machiningType" 
+			class="com.bestway.bcus.custombase.entity.basecode.MachiningType" />
+		<property name="newApprDate"/>
+		<property name="changeApprDate"/>
+		<property name="emsApprNo" />
+		<many-to-one lazy="false"      name="declareCustoms" column="declareCustoms" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Customs" />
+		<many-to-one lazy="false"      name="redDep" column="redDep" 
+			class="com.bestway.bcus.custombase.entity.depcode.RedDep" />
+		<many-to-one lazy="false"      name="trade" column="trade" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Trade"/>
+		<many-to-one lazy="false"      name="tradeCountry" column="tradeCountry" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Country"/>
+		<property name="deferDate"/>
+		<property name="enterpriseAddress"/>
+		<property name="destroyDate"/>
+		<property name="linkMan"/>
+		<property name="outLinkManager"/>
+		<property name="contactTel"/>
+		<property name="agreementNo"/>
+		<property name="impContractNo"/>
+		<property name="expContractNo"/>
+		<property name="imgAmount"/>
+		<property name="exgAmount"/>
+		<property name="countScale"/>
+		<many-to-one lazy="false"      name="curr" column="currId" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Curr"/>
+		<property name="wardshipFee"/>
+		<property name="wardshipRate"/>
+		<many-to-one lazy="false"      name="transac" column="transac" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Transac"/>
+		<many-to-one lazy="false"      name="iePort1" column="iePort1" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Customs"/>
+		<many-to-one lazy="false"      name="iePort2" column="iePort2" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Customs"/>
+		<many-to-one lazy="false"      name="iePort3" column="iePort3" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Customs"/>
+		<many-to-one lazy="false"      name="iePort4" column="iePort4" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Customs"/>
+		<many-to-one lazy="false"      name="iePort5" column="iePort5" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Customs"/>
+		<property name="approver"/>
+		<property name="approveDate"/>
+		<property name="permitNo"/>
+		<property name="inputER"/>	
+		<property name="memo"/>
+		<property name="isCancel"/>		
+		
+		<property name="handler"/>
+		<property name="floatRate"/>
+		<property name="inSaleRate"/>
+		<property name="contractItemCount"/>
+		<property name="emphasisFlag"/>
+		<property name="changeDate"/>
+		<property name="saveDate"/>
+		<property name="materielItemCount"/>	
+		<property name="machineCount"/>
+		<property name="productItemCount"/>
+		<property name="manageObject" />
+		<property name="corrEmsNo" />
+		<property name="createDate" />
+		<property name="modifyDate" />
+		<property name="modifyMark" />
+		<property name="isContractEms" />
+		<property name="limitFlag" />
+		<property name="equipMode"/>
+		<property name="wjComputerNo"/>
+		<property name="isImportFromQP"/>
+		<property name="bankModel"/>
+		<many-to-one lazy="false"      name="receiveArea" column="receiveArea" 
+			class="com.bestway.bcus.custombase.entity.countrycode.District"/>	
+		<many-to-one lazy="false"      name="investMode" column="investMode" 
+			class="com.bestway.bcus.custombase.entity.basecode.InvestMode"/>
+		<many-to-one lazy="false"      name="fetchInMode" column="fetchInMode" 
+			class="com.bestway.bcus.custombase.entity.parametercode.FetchInMode"/>	
+		<!--<many-to-one lazy="false"      name="aclUser" column="aclUser" 
+			class="com.bestway.common.authority.entity.AclUser"/>-->
+		<many-to-one lazy="false"      name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" index="contract_coid"/>
+	</class>
+</hibernate-mapping>
+<!-- parsed in 0ms -->

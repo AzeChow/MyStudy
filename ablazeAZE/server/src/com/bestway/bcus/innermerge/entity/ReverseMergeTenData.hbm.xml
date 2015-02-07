@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcus.innermerge.entity.ReverseMergeTenData" 
+		table="reversemergetendata">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<many-to-one lazy="false"      name="reverseMergeFourData" column="reversemergefourdata" 
+			class="com.bestway.bcus.innermerge.entity.ReverseMergeFourData"/>
+		<property name="hsAfterTenMemoNo" />
+		<many-to-one lazy="false"      name="hsAfterComplex" column="compliexid" 
+			class="com.bestway.bcus.custombase.entity.hscode.Complex" index="reveseetenda_company"/>
+		<property name="hsAfterMaterielTenName" />
+		<property name="hsAfterMaterielTenSpec" />
+		<many-to-one lazy="false"      name="hsAfterMemoUnit" column="memounitid" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<many-to-one lazy="false"      name="hsAfterLegalUnit" column="afterlegalunitid" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<many-to-one lazy="false"      name="hsAfterSecondLegalUnit" 
+			column="aftersecondlegalunitid" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<many-to-one lazy="false"      name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" index="reveseetenda_company"/>
+	</class>
+</hibernate-mapping>
+<!-- parsed in 0ms -->

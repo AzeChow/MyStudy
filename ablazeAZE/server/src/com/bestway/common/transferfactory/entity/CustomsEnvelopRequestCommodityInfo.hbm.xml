@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class 
+		name="com.bestway.common.transferfactory.entity.CustomsEnvelopRequestCommodityInfo" 
+		table="cercommodityinfo">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<many-to-one lazy="false"      name="materiel" column="materielId" 
+			class="com.bestway.common.materialbase.entity.Materiel" index="index_Materiel"/>
+		<many-to-one lazy="false"      name="customsEnvelopRequestBill" column="cERBillId" 
+			class="com.bestway.common.transferfactory.entity.CustomsEnvelopRequestBill"/>
+		<property name="requestQuantity" />
+		<property name="unitPrice" />
+		<property name="memo" />
+		<property name="isPutOnRecord" />
+		<property name="isTranCustomsEnvelop" />
+		<many-to-one lazy="false"      name="company" column="companyId" 
+			class="com.bestway.bcus.system.entity.Company" index="cercommodityinfo_company"/>
+	</class>
+</hibernate-mapping>

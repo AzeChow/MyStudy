@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!--==================DAO Beans====================-->
+	<bean id="commonCodeDao" 
+		class="com.bestway.bcus.innermerge.dao.CommonBaseCodeDao">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>	
+	<!--==================Logic Beans====================-->
+	<bean id="commonCodeLogic" 
+		class="com.bestway.bcus.innermerge.logic.CommonBaseCodeLogic">
+		<property name="commonBaseCodeDao">
+			<ref bean="commonCodeDao"/>
+		</property>
+		<property name="hsCodeDao">
+			<ref bean="hsCodeDao"/>
+		</property>
+		<property name="paramerterCodeDao">
+			<ref bean="parameterCodeDao"/>
+		</property>
+		<property name="materialManageDao">
+			<ref bean="materialManageDao"/>
+		</property>
+		<property name="emsEdiTrDao"><ref bean="emsEdiTrDao"/></property>
+	</bean>
+	<!--==================Action Bean====================-->
+	<bean id="commonCodeAction" 
+		class="com.bestway.bcus.innermerge.action.CommonBaseCodeActionImpl">
+		<property name="commonBaseCodeDao">
+			<ref bean="commonCodeDao"/>
+		</property>		
+			<property name="commonBaseCodeLogic">
+				<ref bean="commonCodeLogic"/>
+			</property>
+	</bean>
+</beans>

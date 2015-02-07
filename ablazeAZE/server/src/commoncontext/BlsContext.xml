@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+	<!--==================DAO Beans====================-->
+	<bean id="blsMessageDao" class="com.bestway.bls.dao.BlsMessageDao">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="blsInnerMergeDao" class="com.bestway.bls.dao.BlsInnerMergeDao">
+              <property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+	<bean id="entranceMessageDao" class="com.bestway.bls.dao.EntranceMessageDao">
+		<property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+	<bean id="blsInOutStockBillDao" class="com.bestway.bls.dao.BlsInOutStockBillDao">
+		<property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+	<bean id="blsCheckCancelDao" class="com.bestway.bls.dao.BlsCheckCancelDao">
+		<property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+	<!--==================Logic Beans====================-->
+	<bean id="blsMessageLogic" class="com.bestway.bls.logic.BlsMessageLogic">
+		<property name="blsMessageDao"><ref local="blsMessageDao" /></property>
+	</bean>
+	<bean id="blsInnerMergeLogic" class="com.bestway.bls.logic.BlsInnerMergeLogic">
+              <property name="blsInnerMergeDao"><ref bean="blsInnerMergeDao"/></property>
+              <property name="materialManageDao"><ref bean="materialManageDao"/></property>
+	</bean>	
+	<bean id="blsImportFromOther" class="com.bestway.bls.logic.BlsImportFromOther">
+              <property name="materialManageDao"><ref bean="materialManageDao"/></property>
+			  <property name="blsInnerMergeDao"><ref bean="blsInnerMergeDao"/></property>
+			  <property name="hsCodeDao"><ref bean="hsCodeDao"/></property>
+			  <property name="paramerterCodeDao"><ref bean="parameterCodeDao"/></property>
+	</bean>
+	<bean id="entranceMessageLogic" class="com.bestway.bls.logic.EntranceMessageLogic">
+	    <property name="entranceMessageDao"><ref local="entranceMessageDao"/></property>
+	    <property name="blsMessageLogic"><ref local="blsMessageLogic" /></property>
+	</bean>
+	<bean id="blsInOutStockBillLogic" class="com.bestway.bls.logic.BlsInOutStockBillLogic">
+	    <property name="blsInOutStockBillDao"><ref local="blsInOutStockBillDao"/></property>
+	</bean>
+	<bean id="blsCheckCancelLogic" class="com.bestway.bls.logic.BlsCheckCancelLogic">
+		<property name="blsCheckCancelDao"><ref local="blsCheckCancelDao"/></property>
+		<property name="blsMessageLogic"><ref local="blsMessageLogic" /></property>
+	</bean>	
+	<bean id="scheduleSingleLogic" class="com.bestway.bls.schedule.ScheduleSingleLogic">
+		<property name="blsMessageDao"><ref local="blsMessageDao" /></property>
+		<property name="blsMessageLogic"><ref local="blsMessageLogic" /></property>
+		<property name="storageBillLogic"><ref local="storageBillLogic" /></property>
+		<property name="storageBillDao"><ref local="storageBillDao" /></property>
+		<property name="entranceMessageDao"><ref local="entranceMessageDao" /></property>
+		<property name="entranceMessageLogic"><ref local="entranceMessageLogic" /></property>
+		<property name="blsCheckCancelDao"><ref local="blsCheckCancelDao" /></property>
+		<property name="blsCheckCancelLogic"><ref local="blsCheckCancelLogic" /></property>
+	</bean>
+	<bean id="scheduleLogic" class="com.bestway.bls.schedule.ScheduleLogic">
+		<property name="blsMessageDao"><ref local="blsMessageDao" /></property>
+		<property name="storageBillDao"><ref local="storageBillDao" /></property>
+		<property name="entranceMessageDao"><ref local="entranceMessageDao" /></property>
+		<property name="blsCheckCancelDao"><ref local="blsCheckCancelDao" /></property>
+		<property name="scheduleSingleLogic"><ref local="scheduleSingleLogic" /></property>
+	</bean>
+	<bean id="autoDeclareJobLogic" class="com.bestway.bls.schedule.AutoDeclareJobLogic" init-method="init">
+		<property name="companyDao"><ref bean="companyDao" /></property>
+		<property name="scheduleLogic"><ref local="scheduleLogic" /></property>
+	</bean>
+	
+	<!--==================Action Bean====================-->
+	<bean id="blsMessageAction" class="com.bestway.bls.action.BlsMessageActionImpl">
+		<property name="blsMessageDao"><ref local="blsMessageDao" /></property>
+		<property name="blsMessageLogic"><ref local="blsMessageLogic" /></property>
+		<property name="autoDeclareJobLogic"><ref bean="autoDeclareJobLogic" /></property>
+	</bean>
+	<bean id="blsInnerMergeAction" class="com.bestway.bls.action.BlsInnerMergeActionImpl">
+		<property name="blsInnerMergeDao"><ref local="blsInnerMergeDao"/></property>		
+		<property name="blsInnerMergeLogic"><ref local="blsInnerMergeLogic"/></property>	
+		<property name="blsImportFromOther"><ref bean="blsImportFromOther"/></property>
+	</bean>
+	<bean id="entranceMessageAction" 
+		class="com.bestway.bls.action.EntranceMessageActionImpl">
+		<property name="entranceMessageDao"><ref local="entranceMessageDao"/></property>
+		<property name="entranceMessageLogic"><ref local="entranceMessageLogic"/></property>
+	</bean>
+	<bean id="blsInOutStockBillAction" 
+		class="com.bestway.bls.action.BlsInOutStockBillActionImpl">
+		<property name="blsInOutStockBillDao"><ref local="blsInOutStockBillDao"/></property>
+		<property name="blsInOutStockBillLogic"><ref local="blsInOutStockBillLogic"/></property>
+	</bean>
+	
+	<bean id="blsCheckCancelAction" class="com.bestway.bls.action.BlsCheckCancelActionImpl">
+		<property name="blsCheckCancelLogic"><ref local="blsCheckCancelLogic"/></property>
+		<property name="blsCheckCancelDao"><ref local="blsCheckCancelDao"/></property>
+	</bean>
+	
+	<!--==================Other Beans====================-->
+
+
+	<!--==================DAO Beans====================-->
+	<bean id="storageBillDao" class="com.bestway.bls.dao.StorageBillDao">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<!--==================Logic Beans====================-->
+	<bean id="storageBillLogic" class="com.bestway.bls.logic.StorageBillLogic">
+		<property name="storageBillDao">
+			<ref local="storageBillDao" />
+		</property>
+		<property name="blsMessageLogic">
+			<ref local="blsMessageLogic" />
+		</property>
+	</bean>
+	<!--==================Action Bean====================-->
+	<bean id="storageBillAction" class="com.bestway.bls.action.StorageBillActionImp">
+		<property name="storageBillDao">
+			<ref local="storageBillDao" />
+		</property>
+		<property name="storageBillLogic">
+			<ref local="storageBillLogic" />
+		</property>
+	</bean>
+	<!--==================Other Beans====================-->
+	
+	<!--==================DAO Beans====================-->
+	<bean id="billSpecialApplyDao" class="com.bestway.bls.dao.BillSpecialApplyDao">
+	    <property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
+	<!--==================Logic Beans====================-->
+	<bean id="billSpecialApplyLogic" class="com.bestway.bls.logic.BillSpecialApplyLogic">
+	    <property name="billSpecialApplyDao">
+	       <ref local="billSpecialApplyDao"/>
+	    </property>
+	    <property name="storageBillDao">
+	      <ref local="storageBillDao"/>
+	    </property>
+	    <property name="blsMessageLogic">
+			<ref local="blsMessageLogic" />
+		</property>
+	</bean>
+	<!--==================Action Bean====================-->
+	<bean id="billSpecialApplyAction" class="com.bestway.bls.action.BillSpecialApplyActionImpl">
+	     <property name="billSpecialApplyDao">
+	       <ref local="billSpecialApplyDao"/>
+	    </property>
+	     <property name="billSpecialApplyLogic">
+	       <ref local="billSpecialApplyLogic"/>
+	    </property>
+	</bean>
+	
+	<!--==================DAO Beans====================-->
+	<bean id="materielImportApplyDao" class="com.bestway.bls.dao.MaterielImportApplyDao">
+	    <property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
+	<!--==================Logic Beans====================-->
+	<bean id="materielImportApplyLogic" class="com.bestway.bls.logic.MaterielImportApplyLogic">
+	    <property name="materielImportApplyDao">
+	       <ref local="materielImportApplyDao"/>
+	    </property>	
+	    <property name="blsMessageLogic">
+			<ref local="blsMessageLogic" />
+		</property>  
+	</bean>
+	<!--==================Action Bean====================-->
+	<bean id="materielImportApplyAction" class="com.bestway.bls.action.MaterielImportApplyActionImpl">
+	     <property name="materielImportApplyDao">
+	       <ref local="materielImportApplyDao"/>
+	    </property>
+	     <property name="materielImportApplyLogic">
+	       <ref local="materielImportApplyLogic"/>
+	    </property>	    
+	</bean>
+</beans>

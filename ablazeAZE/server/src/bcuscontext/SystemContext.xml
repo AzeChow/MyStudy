@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!--==================DAO Beans====================-->
+    <bean id="companyDao" class="com.bestway.bcus.system.dao.CompanyDao">
+		<property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+    <bean id="sysCodeDao" class="com.bestway.bcus.system.dao.SysCodeDao">
+		<property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+	<bean id="createDirDao" class="com.bestway.bcus.system.dao.CreateDirDao">
+		<property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+	<bean id="renderDataColumnDao" class="com.bestway.bcus.system.dao.RenderDataColumnDao">
+		<property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+	<bean id="tcsParametersDao" class="com.bestway.bcus.system.dao.TcsParametersDao">
+		<property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+	
+	<!--==================Logic Beans====================-->
+	<bean id="generateCodeLogic" class="com.bestway.bcus.system.logic.GenerateCodeLogic">
+		<property name="sysCodeDao"><ref bean="sysCodeDao"/></property>
+	</bean>
+    <bean id="initSysCodeLogic" class="com.bestway.bcus.system.logic.InitSysCodeLogic"
+		init-method = "init">
+		<property name="sysCodeDao"><ref bean="sysCodeDao"/></property>
+	</bean>
+	<bean id="createDirLogic" class="com.bestway.bcus.system.logic.CreateDirLogic">
+		<property name="createDirDao"><ref bean="createDirDao"/></property>
+		<property name="companyDao"><ref bean="companyDao"/></property>
+	</bean>
+	<bean id="renderDataColumnLogic" class="com.bestway.bcus.system.logic.RenderDataColumnLogic" init-method="init">
+		<property name="renderDataColumnDao"><ref bean="renderDataColumnDao"/></property>
+	</bean>
+	<bean id="tcsParametersLogic" class="com.bestway.bcus.system.logic.TcsParametersLogic" >
+		<property name="tcsParametersDao"><ref bean="tcsParametersDao"/></property>
+	</bean>
+	
+	<bean id="jarFileStoreLogic" class="com.bestway.bcus.system.logic.JarFileStoreLogic"/>
+	<bean id="javaIMELogic" class="com.bestway.bcus.system.logic.JAVAIMELogic"/>
+	
+	
+	<!--<bean id="jbucsUpgradeLogic" class="com.bestway.bcus.system.logic.JbucsUpgradeLogic">
+	</bean>-->
+	
+	<!--==================Action Bean====================-->
+    <bean id="systemAction" class="com.bestway.bcus.system.action.SystemActionImpl">
+		<property name="companyDao"><ref bean="companyDao"/></property>
+		<property name="sysCodeDao"><ref bean="sysCodeDao"/></property>		
+		<property name="generateCodeLogic"><ref bean="generateCodeLogic"/></property>
+		<property name="createDirLogic"><ref bean="createDirLogic"/></property>
+		<property name="authorityLogic"><ref bean="authorityLogic"/></property>
+		<property name="renderDataColumnLogic"><ref bean="renderDataColumnLogic"/></property>
+		<property name="jarFileStoreLogic"><ref bean="jarFileStoreLogic"/></property>	
+		<property name="javaIMELogic"><ref bean="javaIMELogic"/></property>	
+	</bean>
+	<!--==================Action Bean====================-->
+	<bean id="contractSystemAction" class="com.bestway.bcus.system.action.ContractSystemActionImpl">
+		<property name="companyDao"><ref bean="companyDao"/></property>
+		<property name="createDirLogic"><ref bean="createDirLogic"/></property>	
+	</bean>
+	<!-- -->
+	<bean id="tcsParametersAction" class="com.bestway.bcus.system.action.TcsParametersActionImpl">
+		<property name="tcsParametersLogic"><ref bean="tcsParametersLogic"/></property>
+	</bean> 
+</beans>

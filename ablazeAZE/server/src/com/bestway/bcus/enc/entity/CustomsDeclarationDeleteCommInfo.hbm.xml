@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcus.enc.entity.CustomsDeclarationDeleteCommInfo" 
+		table="customsdeclarationdcomminfo">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<many-to-one lazy="false"      name="baseCustomsDeclaration" column="customsDeclaration" 
+			class="com.bestway.bcus.enc.entity.CustomsDeclarationDelete"/>
+		<property name="serialNumber" />
+		<property name="commSerialNo" />
+		<many-to-one lazy="false"      name="complex" column="complex" 
+			class="com.bestway.bcus.custombase.entity.hscode.Complex" index="cuscomd_company"/>
+		<!--		<property name="commCode" />-->
+		<property name="commName" />
+		<property name="commSpec" />
+		<property name="commAmount" />
+		<property name="unitWeight" />
+		<property name="commUnitPrice" />
+		<property name="commTotalPrice" />
+		<property name="firstAmount" />
+		<property name="secondAmount" />
+		<many-to-one lazy="false"      name="unit" column="unit" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<many-to-one lazy="false"      name="legalUnit" column="legalUnit" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<many-to-one lazy="false"      name="secondLegalUnit" column="secondLegalUnit" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<many-to-one lazy="false"      name="country" column="country" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Country"/>
+		<many-to-one lazy="false"      name="uses" column="uses" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Uses"/>
+		<many-to-one lazy="false"      name="levyMode" column="levyMode" 
+			class="com.bestway.bcus.custombase.entity.parametercode.LevyMode"/>
+		<property name="grossWeight" />
+		<property name="netWeight" />
+		<property name="pieces" />
+		<property name="version" />
+		<property name="materielNo" />
+		<property name="addType"/>
+		<property name="dollarTotalPrice"/>
+		<many-to-one lazy="false"      name="projectDept" column="projectDept" 
+			class="com.bestway.common.materialbase.entity.ProjectDept"/>
+		<many-to-one lazy="false"      name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" index="cuscomd_company"/>
+	</class>
+</hibernate-mapping>
+<!-- parsed in 0ms -->

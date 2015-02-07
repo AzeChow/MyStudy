@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class 
+		name="com.bestway.dzsc.contractexe.entity.MakeDzscCustomsDeclaration" 
+		table="makeDzscCustomsDeclaration">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<many-to-one lazy="false"      name="company" column="companyId" 
+			class="com.bestway.bcus.system.entity.Company" index="index_coid"/>
+		<many-to-one lazy="false"      name="dzscCustomsDeclarationCommInfo" class = 
+			"com.bestway.dzsc.contractexe.entity.DzscCustomsDeclarationCommInfo"/>		
+		<many-to-one lazy="false"      name="impExpCommodityInfo" 
+			class="com.bestway.bcus.enc.entity.ImpExpCommodityInfo"/>		
+	</class>
+</hibernate-mapping>

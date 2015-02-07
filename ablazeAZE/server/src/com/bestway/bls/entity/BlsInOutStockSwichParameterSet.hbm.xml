@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class lazy="false"
+		name="com.bestway.bls.entity.BlsInOutStockSwichParameterSet" table="BlsInOutStockSwichParameterSet">
+		<cache usage="read-write" />
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex" />
+		</id>
+		<property name="ioFlag" />
+		<property name="billType" />
+		<property name="emsNo" />
+		<many-to-one lazy="false" name="company" column="coid"
+			class="com.bestway.bcus.system.entity.Company" />
+		<many-to-one lazy="false" name="declarationCustoms"
+			column="declarationCustoms" class="com.bestway.bcus.custombase.entity.countrycode.Customs" />
+		<many-to-one lazy="false" name="wrapType" column="wrapType"
+			class="com.bestway.bcus.custombase.entity.parametercode.Wrap" />
+		<many-to-one lazy="false" name="customs" column="customs"
+			class="com.bestway.bcus.custombase.entity.countrycode.Customs" />
+	</class>
+</hibernate-mapping>

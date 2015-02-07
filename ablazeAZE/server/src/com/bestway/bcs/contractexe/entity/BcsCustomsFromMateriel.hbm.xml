@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcs.contractexe.entity.BcsCustomsFromMateriel" 
+		table="bcscustomsfrommateriel">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<many-to-one lazy="false"  name="materiel" column="materielid" 
+			class="com.bestway.common.materialbase.entity.Materiel"/>	
+		
+		<property name="infoid"/>
+		<property name="ptNum"/>
+		<property name="sumBoxNum"/>
+		<property name="boxNum"/>
+		<property name="sumNetWeight"/>
+		<property name="sumGrossWeight"/>
+		<property name="sjNetWeight"/>
+		<property name="sjGrossWeight"/>
+		
+		<many-to-one lazy="false"  name="bcsimgbill" column="bcsimgbill" 
+			class="com.bestway.bcs.contract.entity.ContractImg"/>		
+        
+		<many-to-one lazy="false"  name="bcsexgbill" column="bcsexgbill" 
+			class="com.bestway.bcs.contract.entity.ContractExg"/>		
+
+		<many-to-one lazy="false"  name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company"/>
+
+		
+	</class>
+</hibernate-mapping>
+<!-- parsed in 0ms -->

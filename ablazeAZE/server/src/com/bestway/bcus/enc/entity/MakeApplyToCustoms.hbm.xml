@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class 
+		name="com.bestway.bcus.enc.entity.MakeApplyToCustoms" 
+		table="makeapplytocustoms">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<many-to-one lazy="false"      name="company" column="companyId" 
+			class="com.bestway.bcus.system.entity.Company" index="makeaplyutocus_company"/>
+		<many-to-one lazy="false"      name="atcMergeBeforeComInfo" class = 
+			"com.bestway.bcus.enc.entity.AtcMergeBeforeComInfo" index="makeaplyutocus_beforeComInfo"/>		
+		<many-to-one lazy="false"      name="impExpCommodityInfo" 
+			class="com.bestway.bcus.enc.entity.ImpExpCommodityInfo" index="makeaplyutocus_impExpInfo"/>		
+	</class>
+</hibernate-mapping>

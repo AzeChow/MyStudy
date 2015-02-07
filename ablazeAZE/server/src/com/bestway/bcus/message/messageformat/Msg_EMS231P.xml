@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="GB2312"?>
+<?xml-stylesheet type="text/xsl" href="eportmsg.xsl"?>
+<!-- File:          Msg_EMS231.xml  -->
+<!-- Author:        Hu Jun'an       -->
+<!-- Create date:   2003-06-11      -->
+<!--Element message: 此元素内所有内容及属性描述一个报文的定义及从数据库的获取途径。-->
+<message version="1.0" type="EMS231">
+<!--报文类型：电子账册报核（不包括单损耗）-->
+    <description>EMS231报文定义及获取方法描述</description>
+    <!--Element database: 提供数据库连接信息。-->
+    <database>
+        <db-user>offline_ems</db-user>
+        <db-password>dbwork</db-password>
+        <data-source>ems3db</data-source>
+    </database>
+ 
+    <!--Default value: multiple=false required=false -->
+    <section multiple="false" required="true">
+        <description>电子帐册报核表头</description>
+        <section-flag>&lt;EMS_EDI_DCR_HEAD    &gt;</section-flag>
+        <query>
+            <query-param>
+                <param-name>COP_EMS_NO</param-name>
+                <type>CHAR</type>
+                <value>DCR0009</value>
+            </query-param>
+            <query-param>
+                <param-name>TRADE_CODE</param-name>
+                <type>CHAR</type>
+                <value>1101989004</value>
+            </query-param>
+            <query-param>
+                <param-name>DCR_TIMES</param-name>
+                <type>NUMBER</type>
+                <value>1</value>
+            </query-param>
+            <query-statement>
+                select
+                    Ems_no        ,  /*1.       帐册编号        */
+                    dcr_times     ,  /*2.       报核次数        */
+                    Dcr_type      ,  /*3.       报核类型        */
+                    Begin_date    ,  /*4.       报核开始日期    */
+                    End_date      ,  /*5.       报核截至日期    */
+                    Entry_I_num   ,  /*6.       进口报关单总份数*/
+                    Entry_e_num   ,  /*7.       出口报关单总份数*/
+                    Img_num       ,  /*8.       报核料件总项数  */
+                    Exg_num       ,  /*9.       报核成品总项数  */
+                    Imr_num       ,  /*10.      报核边角料总项数*/
+                    Exr_num       ,  /*11.      报核残次品总项数*/
+                    Iccard_id     ,  /*12.      身份识别号      */
+                    Id_card_pwd   ,  /*13.      身份识别密码    */
+                    Input_date    ,  /*14.      录入日期        */
+                    Input_er      ,  /*15.      录入员代号      */
+                    Dcr_date      ,  /*16.      报核申报日期    */
+                    '00000000'    ,  /*17.      报核申报时间    */
+                    Ems_appr_mark ,  /*18.      其它部门审批标志*/
+                    '          '  ,  /*19.      其它单证标志    */
+                    Note_1        ,  /*20.      备用标志1       */
+                    Note_amount   ,  /*21.      备用金额        */
+                    Note_qty      ,  /*22.      备用数量        */
+                    note             /*23.      备注            */
+                 from
+                    PRE_EMS3_DCR_HEAD
+                where
+                    trim(COP_EMS_NO) = ?COP_EMS_NO AND
+                    TRADE_CODE = ?TRADE_CODE AND
+                    DCR_TIMES = ?DCR_TIMES
+            </query-statement>
+        </query>
+        <field nullable="true">
+            <description>帐册编号</description>
+            <field-name>emsno</field-name>
+            <format>X(12)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>报核次数</description>
+            <field-name>dcrTimes</field-name>
+            <format>Z(8)9</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>报核类型</description>
+            <field-name>dcrType</field-name>
+            <format>X(1)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>报核开始日期</description>
+            <field-name>beginDate</field-name>
+            <format>YYYYMMDD</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>报核截至日期</description>
+            <field-name>endDate</field-name>
+            <format>YYYYMMDD</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>进口报关单总份数</description>
+            <field-name>entryINum</field-name>
+            <format>Z(8)9</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>出口报关单总份数</description>
+            <field-name>entryENum</field-name>
+            <format>Z(8)9</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>报核料件总项数</description>
+            <field-name>imgNum</field-name>
+            <format>Z(8)9</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>报核成品总项数</description>
+            <field-name>exgNum</field-name>
+            <format>Z(8)9</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>报核边角料总项数</description>
+            <field-name>imrNum</field-name>
+            <format>Z(8)9</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>报核残次品总项数</description>
+            <field-name>exrNum</field-name>
+            <format>Z(8)9</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>身份识别号</description>
+            <field-name>idCard</field-name>
+            <format>X(20)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>身份识别密码</description>
+            <field-name>idCardPwd</field-name>
+            <format>X(20)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>录入日期</description>
+            <field-name>inputDate</field-name>
+            <format>YYYYMMDD</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>录入员代号</description>
+            <field-name>inputEr</field-name>
+            <format>9(4)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>报核申报日期</description>
+            <field-name>dcrDate</field-name>
+            <format>YYYYMMDD</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>报核申报时间</description>
+            <field-name>dcrTime</field-name>
+            <format>Z(8)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>其它部门审批标志</description>
+            <field-name>emsApprMark</field-name>
+            <format>X(10)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>其它单证标志</description>
+            <field-name>emsCertify</field-name>
+            <format>X(10)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>备用标志1</description>
+            <field-name>note1</field-name>
+            <format>X(1)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>备用金额</description>
+            <field-name>noteAmount</field-name>
+            <format>Z(12)9.9(5)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>备用数量</description>
+            <field-name>noteQty</field-name>
+            <format>Z(12)9.9(5)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>备注</description>
+            <field-name>note</field-name>
+            <format>X(30)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+    </section>
+ 
+    <section multiple="true" required="false">
+        <description>电子帐册报核报关单号</description>
+        <section-flag>&lt;EMS_EDI_DCR_ENT     &gt;</section-flag>
+        <query>
+            <query-statement>
+                select
+                    A.Ems_No          , /*1.        帐册编号      */
+                    B.Dcr_times       , /*2.        报核次数      */
+                    SUBSTRB(TO_CHAR(B.Entry_id),10)        , /*3.       报关单号      */
+                    B.Master_customs  , /*4.        报关地海关代码*/
+                    B.I_e_flag        , /*5.        进出口标志    */
+                    B.Items_num       , /*6.        商品项数      */
+                    B.Declare_date    , /*7.        申报日期      */
+                    B.I_e_date        , /*8.        进出日期      */
+                    B.Du_code         , /*9.        核扣/通关方式 */
+                    B.Ent_mark        , /*10.       审核标志      */
+                    B.Note            , /*11.       备注          */
+                    B.Modify_mark       /*12.       修改标志      */
+                from
+                    PRE_EMS3_DCR_HEAD A, PRE_EMS3_DCR_ENT B
+                where
+                    A.cop_ems_no = B.cop_ems_no and
+                    A.trade_code = B.trade_code and
+                    A.Dcr_times = B.Dcr_times and
+                    trim(B.cop_ems_no) = ?cop_ems_no and
+                    B.trade_code = ?trade_code and
+                    B.DCR_TIMES = ?DCR_TIMES
+            </query-statement>
+        </query>
+        <field nullable="true">
+            <description>帐册编号</description>
+            <field-name>emsNo</field-name>
+            <format>X(12)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>报核次数</description>
+            <field-name>dcrTimes</field-name>
+            <format>Z(8)9</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>报关单号</description>
+            <field-name>entryId</field-name>
+            <format>9(8)9</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>报关地海关代码</description>
+            <field-name>masterCustoms</field-name>
+            <format>9(4)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>进出口标志</description>
+            <field-name>I_e_flag</field-name>
+            <format>X(1)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>商品项数</description>
+            <field-name>itemsNum</field-name>
+            <format>Z(8)9</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>申报日期</description>
+            <field-name>declareDate</field-name>
+            <format>YYYYMMDD</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>进出日期</description>
+            <field-name>iEDate</field-name>
+            <format>YYYYMMDD</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>核扣/通关方式</description>
+            <field-name>duCode</field-name>
+            <format>X(2)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>审核标志</description>
+            <field-name>entMark</field-name>
+            <format>X(1)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>备注</description>
+            <field-name>note</field-name>
+            <format>X(10)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>修改标志</description>
+            <field-name>modifyMark</field-name>
+            <format>X(1)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+    </section>
+</message>

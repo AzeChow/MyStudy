@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!--==================DAO Beans====================-->
+	<bean id="dzscDao" class="com.bestway.dzsc.dzscmanage.dao.DzscDao">
+		<property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+	<!--==================Logic Beans====================-->
+	<bean id="dzscLogic" class="com.bestway.dzsc.dzscmanage.logic.DzscLogic">
+		<property name="dzscDao"><ref bean="dzscDao"/></property>
+		<property name="dzscInnerMergeDao"><ref bean="dzscInnerMergeDao"/></property>
+		<property name="materialApplyDao"><ref bean="materialApplyDao"/></property>
+		<property name="dzscContractCavDao"><ref bean="dzscContractCavDao"/></property>
+		<property name="dzscMessageLogic"><ref bean="dzscMessageLogic"/></property>
+		<property name="toolsLogic"><ref bean="toolsLogic"/></property>
+	</bean>
+	<bean id="dzscImportQPDataLogic" class="com.bestway.dzsc.dzscmanage.logic.DzscImportQPDataLogic">
+		<property name="dzscDao"><ref bean="dzscDao"/></property>		
+	</bean>
+	<!--<bean id="dzscHandInnerLogic" 
+		class="com.bestway.dzsc.dzscmanage.logic.DzscHandInnerLogic">
+		<property name="dzscDao">
+			<ref bean="dzscDao"/>
+		</property>
+	</bean>-->
+	<!--==================Action Bean====================-->
+	<bean id="dzscAction" 
+		class="com.bestway.dzsc.dzscmanage.action.DzscActionImpl">
+		<property name="dzscDao"><ref bean="dzscDao"/></property>
+		<property name="dzscLogic"><ref bean="dzscLogic"/></property>
+		<property name="dzscImportQPDataLogic"><ref bean="dzscImportQPDataLogic"/></property>
+		<!--<property name="dzscHandInnerLogic">
+			<ref bean="dzscHandInnerLogic"/>
+		</property>-->
+	</bean>
+</beans>

@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class lazy="false" 
+		name="com.bestway.bcus.cas.invoice.entity.InvoiceAndBillCorresponding" 
+		table="invoiceAndBillCorresponding">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="invoiceInfokey"/>
+		<property name="billDetailkey"/>
+		<property name="billNo"/>
+		<property name="invoiceNum"/>
+		<property name="billDetailNum"/>
+		<property name="cusName"/>
+		<property name="cusSpce"/>
+		<property name="invoicePrice"/>
+		<property name="invoiceWeight"/>
+		<property name="billWeight"/>
+		<property name="emsNo"/>
+		<property name="typeCode"/>
+		<many-to-one lazy="false" name="cusUnit" column="cusUnit" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit" />		
+		<many-to-one lazy="false" name="customer" column="customer" 
+			class="com.bestway.common.materialbase.entity.ScmCoc" />
+		<many-to-one lazy="false" name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" 
+			index="fgsortinfo_company"/>
+		
+	</class>
+</hibernate-mapping>
+		

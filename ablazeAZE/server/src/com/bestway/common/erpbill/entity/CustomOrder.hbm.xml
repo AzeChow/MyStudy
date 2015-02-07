@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class lazy="false" 
+		name="com.bestway.common.erpbill.entity.CustomOrder" 
+		table="customorder">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="billCode" />
+		<property name="orderDate" />
+		<many-to-one lazy="false" name="customer" column="customerid" 
+			class="com.bestway.common.materialbase.entity.ScmCoc"/>
+		<many-to-one lazy="false" name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company"/>
+			
+		<property name="ifok"/>
+		<property name="ordertype"/>
+		<property name="importcount"/>
+		<property name="ifzc"/>
+		<property name="customType"/>
+		<property name="rateSource"/>
+		<property name="isChangeToContract"/>
+		<property name="notChangeToContract"/>
+		<property name="contractCount"/>
+		<!-- <property name="copEmsNo" /> -->
+		
+		<many-to-one lazy="false" name="customparames" column="parames" 
+			class="com.bestway.common.erpbill.entity.Customparames"/>
+		
+	</class>
+
+</hibernate-mapping>
+<!-- parsed in 0ms -->
+
+		

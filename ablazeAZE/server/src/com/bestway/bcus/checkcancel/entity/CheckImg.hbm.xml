@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcus.checkcancel.entity.CheckImg" table="checkimg">
+		<cache usage="read-write"/> 
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="seqNum" length="10"/>
+        <property name="ptNo"/>
+		<property name="name"/>
+		<property name="spec"/>
+		<many-to-one lazy="false"      name="complex" column="complex" class="com.bestway.bcus.custombase.entity.hscode.Complex" index="checkhead_complex"/>
+		<many-to-one lazy="false"      name="unit" column="unit" class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<property name="turnInNoReport"/>
+		<property name="materByWay"/>	
+		<property name="materStock"/>	
+		<property name="depose"/>	
+		<property name="onlines"/>	
+		<property name="overMater"/>		
+		<property name="thisMaterInWare"/>	
+		<property name="materGet"/>	
+		<property name="thisMaterCancel"/>	
+		<property name="thisThrow"/>	
+		<property name="passExgUse"/>	
+		<property name="otherConvert"/>	
+		<property name="materReuse"/>	
+		<property name="materExitChange"/>	
+		<property name="halfExgConvert"/>	
+	    <property name="thisThrowRemainExg"/>
+		<many-to-one lazy="false"      name="company" column="coid" class="com.bestway.bcus.system.entity.Company" index="checkhead_company"/>
+	    <many-to-one lazy="false"      name="checkHead" column="checkHead" class="com.bestway.bcus.checkcancel.entity.CheckHead"/>
+	</class>
+</hibernate-mapping>
+<!-- parsed in 0ms -->
+
+		

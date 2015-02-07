@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="eportmsg.xsl"?>
+<!--Element message: 此元素内所有内容及属性描述一个报文的定义及从数据库的获取途径。-->
+<message version="1.0" type="DzscCheckHeadApply">
+	<description>中期核查报文定义及获取方法描述</description>
+	<section-flag>PTS_DATA</section-flag>
+	<sub-section>
+		<description>签名信息</description>
+		<file-name>PtsSignFormat.xml</file-name>
+	</sub-section>
+	
+	<section multiple="false" required="true">
+		<description>中期核查表头</description>
+		<section-flag>PTS_COL_HEAD</section-flag>
+		<data-id>DzscCheckHead</data-id>
+		<field nullable="false" signNo="3">
+			<description>对应归并关系企业内部编号</description>
+			<field-name>copEmsNo</field-name>
+			<format>X(20)</format>
+			<field-flag>COP_EMS_NO</field-flag>
+		</field>
+		<field nullable="true" signNo="2">
+			<description>电子帐册号(电子手册)</description>
+			<field-name>emsNo</field-name>
+			<format>X(12)</format>
+			<field-flag>EMS_NO</field-flag>
+		</field>
+		<field nullable="false" signNo="1">
+			<description>核查范围</description>
+			<field-name>colRange</field-name>
+			<format>X(1)</format>
+			<field-flag>COL_RANGE</field-flag>
+		</field>
+		<field nullable="false" signNo="4">
+			<description>企业代码</description>
+			<field-name>customsCopCode</field-name>
+			<format>X(10)</format>
+			<field-flag>TRADE_CODE</field-flag>
+		</field>
+		<field nullable="false" signNo="5">
+			<description>企业名称</description>
+			<field-name>customsCopName</field-name>
+			<format>X(30)</format>
+			<field-flag>TRADE_NAME</field-flag>
+		</field>
+		<field nullable="false" signNo="8">
+			<description>核查期数</description>
+			<field-name>colShdulTime</field-name>
+			<format>Z(4)9</format>
+			<field-flag>COL_SHDUL_TIME</field-flag>
+		</field>
+		<field nullable="false" signNo="9">
+			<description>库存截止日期</description>
+			<field-name>ctockData</field-name>
+			<format>Z(8)</format>
+			<field-flag>STOCK_DATE</field-flag>
+		</field>
+		<field nullable="false" signNo="7">
+			<description>申报日期时间</description>
+			<field-name>declareDate</field-name>
+			<format>Z(8)</format>
+			<field-flag>DECLARE_DATE</field-flag>
+		</field>
+		<field nullable="false" signNo="6">
+			<description>申报类型</description>
+			<field-name>flagHG</field-name>
+			<format>X(1)</format>
+			<field-flag>FLAG_HG</field-flag>
+		</field>
+	</section>
+	
+	<section multiple="false" required="true">
+		<description>中期核查表体</description>
+		<section-flag>PTS_COL_LIST</section-flag>
+		
+		<section multiple="false" required="true">
+			<description>中期核查料件表体</description>
+			<section-flag>PTS_COL_LIST_IMG</section-flag>
+				<section multiple="false" required="true">
+					<description>中期核查料件记录</description>
+					<section-flag>PTS_COL_IMG</section-flag>
+					<data-id>DzscCheckImg</data-id>
+					<field nullable="false" signNo="1">
+						<description>料号</description>
+						<field-name>ptNum</field-name>
+						<format>X(30)</format>
+						<field-flag>COP_G_NO</field-flag>
+					</field>
+					<field nullable="false" signNo="2">
+						<description>核查数量类型</description>
+						<field-name>qtyType</field-name>
+						<format>X(2)</format>
+						<field-flag>QTY_TYPE</field-flag>
+					</field>
+					<field nullable="false" signNo="3">
+						<description>数量</description>
+						<field-name>amount</field-name>
+						<format>Z(12)9.9(5)</format>
+						<field-flag>QTY</field-flag>
+					</field>
+				</section>
+		</section>
+		
+		<section multiple="false" required="true">
+			<description>中期核查成品表体</description>
+			<section-flag>PTS_COL_LIST_EXG</section-flag>
+				<section multiple="false" required="true">
+					<description>中期核查成品记录</description>
+					<section-flag>PTS_COL_EXG</section-flag>
+					<data-id></data-id>
+					<field nullable="false" signNo="1">
+						<description>料号</description>
+						<field-name></field-name>
+						<format>X(30)</format>
+						<field-flag>COP_G_NO</field-flag>
+					</field>
+					<field nullable="false" signNo="2">
+						<description>核查数量类型</description>
+						<field-name></field-name>
+						<format>X(2)</format>
+						<field-flag>QTY_TYPE</field-flag>
+					</field>
+					<field nullable="false" signNo="3">
+						<description>数量</description>
+						<field-name></field-name>
+						<format>Z(12)9.9(5)</format>
+						<field-flag>QTY</field-flag>
+					</field>
+				</section>
+		</section>
+		
+	</section>
+</message>

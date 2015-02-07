@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class lazy="false" name="com.bestway.bcs.contract.entity.BcsParameterSet"
+		table="bcsparameterset">
+		<cache usage="read-write" />
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex" />
+		</id>
+		<property name="isTotalMoney" />
+		<property name="sendDir" />
+		<property name="recvDir" />
+		<property name="finallyDir" />
+		<property name="logDir" />
+
+		<property name="readFromCard" />
+		<property name="seqNo" />
+		<property name="pwd" />
+		<property name="idCard" />
+		<property name="loadQPDataXmlDir" />
+		<property name="isContractEms" />
+		<property name="putOnRecords" />
+		<property name="priceBit" />
+		<property name="countBit" />
+		<property name="moneyBit" />
+
+		<property name="isControlLength" />
+		<property name="bytesLength" />
+		<property name="exportfpfont" />
+		<property name="pageLeft" />
+		<property name="pageRight" />
+		<property name="pageTop" />
+		<property name="pageBottom" />
+		
+		<property name="createDate" />
+		<property name="modifyDate" />
+		<property name="manageType" />
+		<!--
+		<property name="remoteSignData" />
+		<property name="remoteDxpMail" />
+		<property name="port9097IsOpen" />
+		-->
+		<property name="checkIsComputeReturn" />
+
+		<property name="remoteHostAddress" />
+		<property name="remoteHostPort" />
+		<property name="remoteHostICPwd" />
+		<property name="reportDecimalLength" />
+		<property name="reportDecimalLengthUnitWaste" />
+		<property name="wasteAmount" />
+		<property name="totalAmount" />
+		<property name="updateContractExgWriteBackBomImg" column="updateExgWrBackBomImg" />
+		<property name="updateContractImgWriteBackBomExg" column="updateImgWrBackBomExg" />
+		<property name="updateContractBomWriteBackImg" column="updateBomWrBackImg" />
+		<property name="updateContractBomWriteBackExg" column="updateBomWrBackExg" />
+		<many-to-one lazy="false" name="company" column="coid"
+			class="com.bestway.bcus.system.entity.Company" index="bcsparameterset_coid" />
+	</class>
+</hibernate-mapping>

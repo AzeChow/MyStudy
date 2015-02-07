@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcus.checkcancel.entity.CancelCusExgResult" table="cancelexgresult">
+		<cache usage="read-write"/> 
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="emsSeqNum" length="20"/>
+		<property name="name"/>
+		<property name="spec"/>
+		<property name="useSumNum"/>
+		<property name="useSumPrice"/>
+        <property name="useSumWeight"/>
+		<property name="innerUseSumNum"/>
+		<property name="innerUseSumPrice"/>
+		<property name="leftOverImgNum"/>
+		<property name="leftOverImgSumPrice"/>
+		<property name="leftOverImgSumWeight"/>
+		<property name="factLeaveNum"/>
+		<property name="factLeaveSumPrice"/>
+		<property name="factLeaveSumWeight"/>
+		<property name="note" length="225"/>
+		<property name="unit"/>
+		<property name="resultNum"/>
+        <many-to-one lazy="false"      name="cancelHead" column="cancelHead"
+			class="com.bestway.bcus.checkcancel.entity.CancelCusHead"/>
+		<many-to-one lazy="false"      name="company" column="coid" class="com.bestway.bcus.system.entity.Company" index="cancelcusexgresult_company"/>
+	</class>
+
+</hibernate-mapping>
+<!-- parsed in 0ms -->
+
+		

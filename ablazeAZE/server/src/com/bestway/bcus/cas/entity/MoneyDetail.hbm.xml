@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcus.cas.entity.MoneyDetail" table="moneydetail">
+		<cache usage="read-write"/> 
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<many-to-one lazy="false"      name="moneyMaster" column="moneyMaster" class="com.bestway.bcus.cas.entity.MoneyMaster"/>
+		<property name="item1" length="100"/>
+		<property name="times1" length="10"/>
+		<property name="money1"/>
+		
+		<property name="item2" length="100"/>
+		<property name="times2" length="10"/>
+		<property name="money2"/>
+		
+		<property name="item3" length="100"/>
+		<property name="times3" length="10"/>
+		<property name="money3"/>
+		<many-to-one lazy="false"      name="company" column="coid" class="com.bestway.bcus.system.entity.Company" index="moneydetail_company"/>
+	</class>
+</hibernate-mapping>
+<!-- parsed in 0ms -->
+
+		

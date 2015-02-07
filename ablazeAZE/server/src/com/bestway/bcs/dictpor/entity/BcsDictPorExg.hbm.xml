@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class lazy="false" name="com.bestway.bcs.dictpor.entity.BcsDictPorExg" 
+		table="dictporExg">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<many-to-one lazy="false" name="dictPorHead" column="dictporHead" 
+			class="com.bestway.bcs.dictpor.entity.BcsDictPorHead"/>
+		<property name="seqNum"/>
+		<property name="innerMergeSeqNum"/>
+		<many-to-one lazy="false" name="complex" column="complex" 
+			class="com.bestway.bcus.custombase.entity.hscode.Complex" 
+			index="creexg_complex"/>
+		<property name="commName"/>
+		<property name="commSpec"/>
+		<!--	<property name="firstRate"/>
+		<property name="secondRate"/>
+		<property name="unitWeight"/>-->
+		<property name="unitPrice"/>
+		<!--<property name="wear"/>
+		<property name="type"/>
+		<property name="machPrice"/>-->
+		<property name="modifyMark"/>
+		<property name="memo"/>
+		<property name="wjCode"/>
+		<many-to-one lazy="false" name="comUnit" column="comUnit" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<many-to-one lazy="false" name="curr" column="curr" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Curr"/>
+		<!--<many-to-one lazy="false"      name="country" 
+			column="country" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Country"/>-->
+		<!--<property name="legalAmount"/>
+		<property name="secondLegalAmount"/>-->
+		<many-to-one lazy="false" name="company" column="coid" 
+			index="creexg_coid" 
+			class="com.bestway.bcus.system.entity.Company"/>
+	</class>
+
+</hibernate-mapping>
+<!-- parsed in 0ms -->

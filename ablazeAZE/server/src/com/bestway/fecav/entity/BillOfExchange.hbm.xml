@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class  lazy="false"  name="com.bestway.fecav.entity.BillOfExchange" table="billofexchange">
+		<cache usage="read-write"/> 
+        <id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+	    </id>
+		<property name="code"/>
+		<property name="endDate"/>
+		<property name="bank"/>
+		<property name="bankAccounts"/>
+		<many-to-one lazy="false"  name="curr" column="currency" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Curr"/>	
+		<property name="exchangeRate"/>
+		<property name="exchangeMoney"/>		
+		<property name="canStrikeMoney"/>
+		<property name="operator"/>
+		<property name="operateDate"/>
+		<many-to-one lazy="false" name="company" class="com.bestway.bcus.system.entity.Company">
+			<column name="coid" index="billofexchange_1"/>	
+		</many-to-one>
+    </class>
+
+</hibernate-mapping>

@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="eportmsg.xsl"?>
+	<!--Element message: 此元素内所有内容及属性描述一个报文的定义及从数据库的获取途径。-->
+<message version="1.0" type="BcsDictPor">
+	<description>备案资料库备案表头报文定义及获取方法描述</description>
+	<section-flag>PTS_DATA</section-flag>
+	<sub-section>
+		<description>签名信息</description>
+		<file-name>BcsPtsSignFormat.xml</file-name>
+	</sub-section>
+	<section multiple="false" required="true">
+		<description>备案资料库备案表头表头</description>
+		<section-flag>PTS_TR_HEAD</section-flag>
+		<data-id>BcsDictPorHeadData</data-id>
+		<field nullable="true">
+			<description>备案资料库编号</description>
+			<field-name>dictPorEmsNo</field-name>
+			<format>X(12)</format>
+			<field-flag>TR_NO</field-flag>
+		</field>
+		<field nullable="false" signNo="1">
+			<description>企业内部编号</description>
+			<field-name>copEmsNo</field-name>
+			<format>X(20)</format>
+			<field-flag>COP_TR_NO</field-flag>
+		</field>
+		<field nullable="false" signNo="5">
+			<description>经营单位代码</description>
+			<field-name>tradeCode</field-name>
+			<format>X(10)</format>
+			<field-flag>TRADE_CODE</field-flag>
+		</field>
+		<field nullable="false" signNo="6">
+			<description>经营单位名称</description>
+			<field-name>tradeName</field-name>
+			<format>X(30)</format>
+			<field-flag>TRADE_NAME</field-flag>
+		</field>
+		<field nullable="true">
+			<description>仓库编号</description>
+			<field-name></field-name>
+			<format>X(12)</format>
+			<field-flag>HOUSE_NO</field-flag>
+		</field>
+		<field nullable="false" signNo="7">
+			<description>加工单位代码</description>
+			<field-name>machCode</field-name>
+			<format>X(10)</format>
+			<field-flag>OWNER_CODE</field-flag>
+		</field>
+		<field nullable="false" signNo="8">
+			<description>加工单位名称</description>
+			<field-name>machName</field-name>
+			<format>X(30)</format>
+			<field-flag>OWNER_NAME</field-flag>
+		</field>
+		<field nullable="true">
+			<description>企业性质</description>
+			<field-name></field-name>
+			<format>X</format>
+			<field-flag>OWNER_TYPE</field-flag>
+		</field>
+		<field nullable="false">
+			<description>申请单位代码</description>
+			<field-name>declareCode</field-name>
+			<format>X(10)</format>
+			<field-flag>DECLARE_CODE</field-flag>
+		</field>
+		<field nullable="true">
+			<description>申请单位名称</description>
+			<field-name>declareName</field-name>
+			<format>X(30)</format>
+			<field-flag>DECLARE_NAME</field-flag>
+		</field>
+		<field nullable="false" signNo="4">
+			<description>地区代码</description>
+			<field-name>receiveArea.code</field-name>
+			<format>Z(5)</format>
+			<field-flag>DISTRICT_CODE</field-flag>
+		</field>
+		<field nullable="true">
+			<description>联系地址</description>
+			<field-name></field-name>
+			<format>X(30)</format>
+			<field-flag>ADDRESS</field-flag>
+		</field>
+		<field nullable="true">
+			<description>电话号码</description>
+			<field-name></field-name>
+			<format>X(20)</format>
+			<field-flag>PHONE</field-flag>
+		</field>
+		<field nullable="false" signNo="2">
+			<description>帐册类型</description>
+			<field-name>emsType</field-name>
+			<format>X(1)</format>
+			<field-flag>EMS_TYPE</field-flag>
+		</field>
+		<field nullable="true">
+			<description>投资方式</description>
+			<field-name></field-name>
+			<format>X(1)</format>
+			<field-flag>INVEST_MODE</field-flag>
+		</field>
+		<field nullable="false" signNo="11">
+			<description>贸易方式</description>
+			<field-name>trade.code</field-name>
+			<format>9(4)</format>
+			<field-flag>TRADE_MODE</field-flag>
+		</field>
+		<field nullable="true">
+			<description>开始有效期</description>
+			<field-name>beginDate</field-name>
+			<format>Z(8)</format>
+			<field-flag>BEGIN_DATE</field-flag>
+		</field>
+		<field nullable="true" signNo="27">
+			<description>结束有效期</description>
+			<field-name>endDate</field-name>
+			<format>Z(8)</format>
+			<field-flag>END_DATE</field-flag>
+		</field>
+		<field nullable="true" signNo="21">
+			<description>进口总金额</description>
+			<field-name></field-name>
+			<format>Z(12)9.9(5)</format>
+			<field-flag>IMG_AMOUNT</field-flag>
+		</field>
+		<field nullable="true" signNo="23">
+			<description>出口总金额</description>
+			<field-name></field-name>
+			<format>Z(12)9.9(5)</format>
+			<field-flag>EXG_AMOUNT</field-flag>
+		</field>
+		<field nullable="true">
+			<description>进口总重量</description>
+			<field-name></field-name>
+			<format>Z(12)9.9(5)</format>
+			<field-flag>IMG_WEIGHT</field-flag>
+		</field>
+		<field nullable="true">
+			<description>出口总重量</description>
+			<field-name></field-name>
+			<format>Z(12)9.9(5)</format>
+			<field-flag>EXG_WEIGHT</field-flag>
+		</field>
+		<field nullable="true">
+			<description>进口货物项数</description>
+			<field-name></field-name>
+			<format>Z(8)9</format>
+			<field-flag>IMG_ITEMS</field-flag>
+		</field>
+		<field nullable="true">
+			<description>出口货物项数</description>
+			<field-name></field-name>
+			<format>Z(8)9</format>
+			<field-flag>EXG_ITEMS</field-flag>
+		</field>
+		<field nullable="true" signNo="18">
+			<description>批准文号</description>
+			<field-name></field-name>
+			<format>X(20)</format>
+			<field-flag>EMS_APPR_NO</field-flag>
+		</field>
+		<field nullable="true" signNo="17">
+			<description>许可证号</description>
+			<field-name></field-name>
+			<format>X(20)</format>
+			<field-flag>LICENSE_NO</field-flag>
+		</field>
+		<field nullable="true">
+			<description>对应上本帐册号</description>
+			<field-name></field-name>
+			<format>X(12)</format>
+			<field-flag>LAST_EMS_NO</field-flag>
+		</field>
+		<field nullable="true">
+			<description>对应其它帐册号</description>
+			<field-name></field-name>
+			<format>X(12)</format>
+			<field-flag>CORR_EMS_NO</field-flag>
+		</field>
+		<field nullable="true" signNo="19">
+			<description>进口合同号</description>
+			<field-name></field-name>
+			<format>X(20)</format>
+			<field-flag>CONTR_IN</field-flag>
+		</field>
+		<field nullable="true">
+			<description>备用标志1</description>
+			<field-name></field-name>
+			<format>X(10)</format>
+			<field-flag>NOTE_1</field-flag>
+		</field>
+		<field nullable="true">
+			<description>备用标志2</description>
+			<field-name></field-name>
+			<format>X(10)</format>
+			<field-flag>NOTE_2</field-flag>
+		</field>
+		<field nullable="true">
+			<description>投资金额</description>
+			<field-name></field-name>
+			<format>Z(12)9.9(5)</format>
+			<field-flag>INVEST_AMOUNT</field-flag>
+		</field>
+		<field nullable="true">
+			<description>备用金额</description>
+			<field-name></field-name>
+			<format>Z(12)9.9(5)</format>
+			<field-flag>NOTE_AMOUNT</field-flag>
+		</field>
+		<field nullable="true">
+			<description>备用数量</description>
+			<field-name></field-name>
+			<format>Z(12)9.9(5)</format>
+			<field-flag>NOTE_QTY</field-flag>
+		</field>
+		<field nullable="true" signNo="35">
+			<description>备注</description>
+			<field-name>memo</field-name>
+			<format>X(50)</format>
+			<field-flag>NOTE</field-flag>
+		</field>
+		<field nullable="false" signNo="33">
+			<description>录入日期</description>
+			<field-name>createDate</field-name>
+			<format>Z(8)</format>
+			<field-flag>INPUT_DATE</field-flag>
+		</field>
+		<field nullable="false">
+			<description>录入员代号</description>
+			<field-name>inputER</field-name>
+			<format>9(4)</format>
+			<field-flag>INPUT_ER</field-flag>
+		</field>
+		<field nullable="false" signNo="34">
+			<description>申报日期</description>
+			<field-name>declareDate</field-name>
+			<format>Z(8)</format>
+			<field-flag>DECLARE_DATE</field-flag>
+		</field>
+		<field nullable="false">
+			<description>申报时间</description>
+			<field-name>declareDate</field-name>
+			<format>Z(8)</format>
+			<field-flag>DECLARE_TIME</field-flag>
+		</field>
+		<field nullable="false">
+			<description>生产能力</description>
+			<field-name>productRatio</field-name>
+			<format>Z(12)9.9(5)</format>
+			<field-flag>PRODUCT_RATIO</field-flag>
+		</field>
+		<field nullable="true">
+			<description>仓库体积</description>
+			<field-name></field-name>
+			<format>Z(12)9.9(5)</format>
+			<field-flag>STORE_VOL</field-flag>
+		</field>
+		<field nullable="true">
+			<description>仓库面积</description>
+			<field-name></field-name>
+			<format>Z(12)9.9(5)</format>
+			<field-flag>STORE_AREA</field-flag>
+		</field>
+		<field nullable="true" signNo="28">
+			<description>进出口岸</description>
+			<field-name></field-name>
+			<format>X(255)</format>
+			<field-flag>I_E_PORT</field-flag>
+		</field>
+		<field nullable="true" signNo="9">
+			<description>外商公司</description>
+			<field-name></field-name>
+			<format>X(255)</format>
+			<field-flag>FOREIGN_CO_NAME</field-flag>
+		</field>
+		<field nullable="true" signNo="16">
+			<description>协议号</description>
+			<field-name></field-name>
+			<format>X(32)</format>
+			<field-flag>AGREE_NO</field-flag>
+		</field>
+		<field nullable="false" signNo="12">
+			<description>征免性质</description>
+			<field-name>levyKind.code</field-name>
+			<format>X(4)</format>
+			<field-flag>CUT_MODE</field-flag>
+		</field>
+		<field nullable="true" signNo="26">
+			<description>保税方式</description>
+			<field-name></field-name>
+			<format>X(1)</format>
+			<field-flag>PAY_MODE</field-flag>
+		</field>
+		<field nullable="false" signNo="25">
+			<description>加工种类</description>
+			<field-name>machiningType.code</field-name>
+			<format>X(2)</format>
+			<field-flag>PRODUCE_TYPE</field-flag>
+		</field>
+		<field nullable="true" signNo="20">
+			<description>出口合同号</description>
+			<field-name></field-name>
+			<format>X(32)</format>
+			<field-flag>CONTR_OUT</field-flag>
+		</field>
+		<field nullable="true">
+			<description>备案进口总值</description>
+			<field-name></field-name>
+			<format>Z(12)9.9(5)</format>
+			<field-flag>APPR_IMG_AMT</field-flag>
+		</field>
+		<field nullable="true">
+			<description>备案出口总值</description>
+			<field-name></field-name>
+			<format>Z(12)9.9(5)</format>
+			<field-flag>APPR_EXG_AMT</field-flag>
+		</field>
+		<field nullable="true" signNo="10">
+			<description>外商经理人</description>
+			<field-name></field-name>
+			<format>X(32)</format>
+			<field-flag>FOREIGN_MGR</field-flag>
+		</field>
+		<field nullable="true" signNo="14">
+			<description>成交方式</description>
+			<field-name></field-name>
+			<format>X(1)</format>
+			<field-flag>TRANS_MODE</field-flag>
+		</field>
+		<field nullable="true" signNo="13">
+			<description>起抵地</description>
+			<field-name></field-name>
+			<format>X(3)</format>
+			<field-flag>TRADE_COUNTRY</field-flag>
+		</field>
+		<field nullable="true">
+			<description>引进方式</description>
+			<field-name></field-name>
+			<format>X(1)</format>
+			<field-flag>EQUIP_MODE</field-flag>
+		</field>
+		<field nullable="true" signNo="15">
+			<description>内销比率</description>
+			<field-name></field-name>
+			<format>Z(12)9.9(5)</format>
+			<field-flag>IN_RATIO</field-flag>
+		</field>
+		<field nullable="false" signNo="24">
+			<description>出口币制</description>
+			<field-name>curr.code</field-name>
+			<format>X(3)</format>
+			<field-flag>EX_CURR</field-flag>
+		</field>
+		<field nullable="false" signNo="22">
+			<description>进口币制</description>
+			<field-name>curr.code</field-name>
+			<format>X(3)</format>
+			<field-flag>IM_CURR</field-flag>
+		</field>
+		<field nullable="false" signNo="31">
+			<description>修改标志</description>
+			<field-name>modifyMark</field-name>
+			<format>X(1)</format>
+			<field-flag>MODIFY_MARK</field-flag>
+		</field>
+		<field nullable="false" signNo="29">
+			<description>主管海关</description>
+			<field-name>declareCustoms.code</field-name>
+			<format>X(4)</format>
+			<field-flag>MASTER_CUSTOMS</field-flag>
+		</field>
+		<field nullable="false" signNo="30">
+			<description>主管外经贸部门</description>
+			<field-name>redDep.code</field-name>
+			<format>X(6)</format>
+			<field-flag>MASTER_FTC</field-flag>
+		</field>
+		<field nullable="false" signNo="32">
+			<description>管理对象</description>
+			<field-name>manageObject</field-name>
+			<format>X(1)</format>
+			<field-flag>MANAGE_OBJECT</field-flag>
+		</field>
+		<field nullable="true">
+			<description>限制类标志</description>
+			<field-name>limitFlag</field-name>
+			<format>X(1)</format>
+			<field-flag>LIMIT_FLAG</field-flag>
+		</field>
+
+		<field nullable="true">
+			<description>保留字段</description>
+			<field-name></field-name>
+			<format>Z(12)9.9(5)</format>
+			<field-flag>VALUE_ADD_FIELD1</field-flag>
+		</field>
+		<field nullable="true">
+			<description>保留字段</description>
+			<field-name></field-name>
+			<format>Z(12)9.9(5)</format>
+			<field-flag>VALUE_ADD_FIELD2</field-flag>
+		</field>
+
+		<field nullable="true">
+			<description>保留字段</description>
+			<field-name></field-name>
+			<format>X(8)</format>
+			<field-flag>CHAR_ADD_FIELD1</field-flag>
+		</field>
+		<field nullable="true">
+			<description>保留字段</description>
+			<field-name></field-name>
+			<format>X(32)</format>
+			<field-flag>CHAR_ADD_FIELD2</field-flag>
+		</field>
+		<field nullable="true">
+			<description>保留字段</description>
+			<field-name></field-name>
+			<format>Z(8)</format>
+			<field-flag>DATE_ADD_FIELD</field-flag>
+		</field>
+
+	</section>
+
+	<section multiple="false" required="true">
+		<description>备案资料库备案表体</description>
+		<section-flag>PTS_TR_LIST</section-flag>
+
+		<section multiple="false" required="true">
+			<description>备案资料库备案料件表体</description>
+			<section-flag>PTS_TR_LIST_IMG</section-flag>
+			<section multiple="false" required="true">
+				<description>备案资料库备案料件</description>
+				<section-flag>PTS_TR_IMG</section-flag>
+				<data-id>BcsDictPorImgData</data-id>
+				<sub-fields>
+					<description>备案资料库备案料件</description>
+					<file-name>BcsDictPorDetailFieldFormat.xml
+					</file-name>
+				</sub-fields>
+			</section>
+		</section>
+
+		<section multiple="false" required="true">
+			<description>备案资料库备案成品表体</description>
+			<section-flag>PTS_TR_LIST_EXG</section-flag>
+			<section multiple="false" required="true">
+				<description>备案资料库备案成品</description>
+				<section-flag>PTS_TR_EXG</section-flag>
+				<data-id>BcsDictPorExgData</data-id>
+				<sub-fields>
+					<description>备案资料库备案成品</description>
+					<file-name>BcsDictPorDetailFieldFormat.xml
+					</file-name>
+				</sub-fields>
+			</section>
+		</section>
+
+	</section>
+</message>

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class  lazy="false"  name="com.bestway.common.materialbase.entity.WareSet" table="wareset">
+		<cache usage="read-write"/> 
+        <id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+	    </id>
+       	<property name="code" length="10"/>
+        <property name="name" length="100"/>
+		<property name="wareaddr" length="100"/>
+		<property name="waretel" length="20"/>
+		<property name="warefax" length="20"/>
+		<property name="wareemail" length="20"/>
+		
+		<property name="wareProperty" />
+		
+		<many-to-one lazy="false"      name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" index="wareset_company"/>
+    </class>
+</hibernate-mapping>
+<!-- parsed in 0ms -->

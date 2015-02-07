@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="eportmsg.xsl"?>
+<!--Element message: 此元素内所有内容及属性描述一个报文的定义及从数据库的获取途径。-->
+<message version="1.0" type="ReturnReceipt">
+	<description>回执报文定义及获取方法描述</description>
+	<section-flag>FPT2_DATA</section-flag>
+	<section multiple="false" required="true">
+		<description>处理结果</description>
+		<section-flag>FPT2_RESULT</section-flag>
+		<data-id>OwpResult</data-id>
+		<field nullable="true">
+			<description>统一编号</description>
+			<field-name>seqNo</field-name>
+			<format>X(18)</format>
+			<field-flag>SEQ_NO</field-flag>
+		</field>
+		<field nullable="true">
+			<description>海关编号</description>
+			<field-name>emsNo</field-name>
+			<format>X(18)</format>
+			<field-flag>BILL_NO</field-flag>
+		</field>
+		<field nullable="false">
+			<description>企业内部编号</description>
+			<field-name>copEmsNo</field-name>
+			<format>X(20)</format>
+			<field-flag>COP_NO</field-flag>
+		</field>
+		<field nullable="false">
+			<description>企业代码</description>
+			<field-name>tradeCode</field-name>
+			<format>X(10)</format>
+			<field-flag>TRADE_CODE</field-flag>
+		</field>
+		<field nullable="false">
+			<description>回执类型</description>
+			<field-name>applType</field-name>
+			<format>X(1)</format>
+			<field-flag>RET_TYPE</field-flag>
+		</field>
+		<field nullable="false">
+			<description>转入转出标志</description>
+			<field-name>inOutFlag</field-name>
+			<format>X(1)</format>
+			<field-flag>SORT_FLAG</field-flag>
+		</field>
+		<field nullable="false">
+			<description>序号</description>
+			<field-name>retNo</field-name>
+			<format>Z(8)9</format>
+			<field-flag>RET_NO</field-flag>
+		</field>
+		<field nullable="false">
+			<description>状态标志</description>
+			<field-name>chkMark</field-name>
+			<format>X(1)</format>
+			<field-flag>CHK_STATUS</field-flag>
+		</field>
+		<field nullable="false">
+			<description>通知时间</description>
+			<field-name>noticeDate</field-name>
+			<format>Z(14)</format>
+			<field-flag>NOTICE_DATE</field-flag>
+		</field>
+		<field nullable="true">
+			<description>备注</description>
+			<field-name>note</field-name>
+			<format>X(255)</format>
+			<field-flag>NOTE</field-flag>
+		</field>
+	</section>
+	<section multiple="false" required="true">
+		<description>处理结果文字信息记录列表</description>
+		<section-flag>FPT2_RESULT_LIST</section-flag>
+		<field nullable="true">
+			<description>备注</description>
+			<field-name></field-name>
+			<format>X(255)</format>
+			<field-flag>RET_CONTENT</field-flag>
+		</field>
+	</section>
+</message>

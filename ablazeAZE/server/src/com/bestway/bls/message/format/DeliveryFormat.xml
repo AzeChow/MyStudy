@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section version="1.0" type="Delivery">
+	<description>车次信息</description>
+	<section-flag>Delivery</section-flag>
+	<section-attribute>xmlns="un:epz"</section-attribute>
+	<query>
+		<entity-class>com.bestway.bls.entity.Delivery
+		</entity-class>
+		<query-fields>
+			<query-field>id</query-field>
+		</query-fields>
+	</query>
+	<next-layer-query-values>
+		<query-value next-layer-field-name="delivery.id"
+			value-type="FIELD_VALUE">id
+		</query-value>
+		<!--
+			<query-value field-name="id" value-type="CONSTANT">1122</query-value>
+		-->
+	</next-layer-query-values>
+	<field nullable="false" signNo="1">
+		<description>企业编码</description>
+		<field-name>tradeCo.code</field-name>
+		<field-flag>TradeCo</field-flag>
+	</field>
+	<field nullable="false" signNo="2">
+		<description>业务类型</description>
+		<field-name>operType</field-name>
+		<field-flag>OperType</field-flag>
+	</field>
+	<field nullable="false" signNo="3">
+		<description>车次号</description>
+		<field-name>deliveryNo</field-name>
+		<field-flag>DeliveryNo</field-flag>
+	</field>
+	<field nullable="true" signNo="3">
+		<description>车牌号</description>
+		<field-name>vehicleLicense</field-name>
+		<field-flag>VehicleLicense</field-flag>
+	</field>
+	<field nullable="true" signNo="3">
+		<description>承运单位编号</description>
+		<field-name>carrierCode</field-name>
+		<field-flag>CarrierCode</field-flag>
+	</field>
+	<field nullable="true" signNo="3">
+		<description>承运单位名称</description>
+		<field-name>carrierName</field-name>
+		<field-flag>CarrierName</field-flag>
+	</field>
+	<field nullable="false" signNo="3">
+		<description>仓单数</description>
+		<field-name>billCount</field-name>
+		<field-flag>BillCount</field-flag>
+	</field>
+	<field nullable="false" signNo="3">
+		<description>预计到达日期</description>
+		<field-name>schedularArrivalDate</field-name>
+		<field-flag>SchedularArrivalDate</field-flag>
+	</field>
+	<field nullable="false" signNo="3">
+		<description>该车载货物件数</description>
+		<field-name>packNo</field-name>
+		<field-flag>PackCount</field-flag>
+	</field>
+	<field nullable="true" signNo="3">
+		<description>第1个集装箱号</description>
+		<field-name>containerNo1</field-name>
+		<field-flag>ContainerNo1</field-flag>
+	</field>
+	<field nullable="true" signNo="3">
+		<description>第2个集装箱号</description>
+		<field-name>containerNo2</field-name>
+		<field-flag>ContainerNo2</field-flag>
+	</field>
+	<field nullable="true" signNo="3">
+		<description>第1关锁号</description>
+		<field-name>sealNo1</field-name>
+		<field-flag>SealNo1</field-flag>
+	</field>
+	<field nullable="true" signNo="3">
+		<description>第2关锁号</description>
+		<field-name>sealNo2</field-name>
+		<field-flag>SealNo2</field-flag>
+	</field>
+	<field nullable="false" signNo="3">
+		<description>修改标志</description>
+		<field-name>modifyMark</field-name>
+		<field-flag>ModifyMark</field-flag>
+	</field>
+	<field nullable="false" signNo="3">
+		<description>报文发送时间</description>
+		<field-name>messTimeStamp</field-name>
+		<field-flag>MessTimeStamp</field-flag>
+	</field>
+	<section>
+		<description>仓单信息集合</description>
+		<section-flag>Bills</section-flag>
+		<section>
+			<description>仓单表头</description>
+			<section-flag>bill</section-flag>
+			<query>
+				<entity-class>com.bestway.bls.entity.StorageBill
+				</entity-class>
+				<query-fields>
+					<query-field>delivery.id</query-field>
+				</query-fields>
+			</query>
+			<next-layer-query-values>
+				<query-value next-layer-field-name="storageBill.id"
+					value-type="FIELD_VALUE">id
+				</query-value>
+			</next-layer-query-values>
+			<field nullable="true" signNo="1">
+				<description>仓单号</description>
+				<field-name>billNo</field-name>
+				<field-flag>BillNo</field-flag>
+			</field>
+			<field nullable="true" signNo="2">
+				<description>仓库编码</description>
+				<field-name>wareHouseCode.code</field-name>
+				<field-flag>WareHouseCode</field-flag>
+			</field>
+			<field nullable="true" signNo="3">
+				<description>帐册编号</description>
+				<field-name>emsNo</field-name>
+				<field-flag>EmsNo</field-flag>
+			</field>
+			<field nullable="false" signNo="3">
+				<description>仓单类型</description>
+				<field-name>billType</field-name>
+				<field-flag>BillType</field-flag>
+			</field>
+			<field nullable="false" signNo="3">
+				<description>海关代码</description>
+				<field-name>customsCode.code</field-name>
+				<field-flag>CustomsCode</field-flag>
+			</field>
+			<field nullable="false" signNo="3">
+				<description>仓单有效期</description>
+				<field-name>validDate</field-name>
+				<field-flag>ValidDate</field-flag>
+				<format>yyyy-MM-dd</format>
+			</field>
+			<field nullable="true" signNo="3">
+				<description>进出仓标志</description>
+				<field-name>ioFlag</field-name>
+				<field-flag>IOFlag</field-flag>
+			</field>
+			<field nullable="true" signNo="3">
+				<description>订单号</description>
+				<field-name>orderNo</field-name>
+				<field-flag>OrderNo</field-flag>
+			</field>
+			<field nullable="true" signNo="3">
+				<description>计划编号</description>
+				<field-name>planNo</field-name>
+				<field-flag>PlanNo</field-flag>
+			</field>
+			<field nullable="true" signNo="3">
+				<description>该仓单对应的件数</description>
+				<field-name>packCount</field-name>
+				<field-flag>PackCount</field-flag>
+			</field>
+			<field nullable="true" signNo="3">
+				<description>包装种类</description>
+				<field-name>wrap.name</field-name>
+				<field-flag>WrapType</field-flag>
+			</field>
+			<field nullable="true" signNo="3">
+				<description>供货商编码</description>
+				<field-name>supplierCd.code</field-name>
+				<field-flag>SupplierCd</field-flag>
+			</field>
+			<field nullable="true" signNo="3">
+				<description>供货方企业编码</description>
+				<field-name>supplierCd.brief.code</field-name>
+				<field-flag>CorrOwnerCode</field-flag>
+			</field>
+			<field nullable="false" signNo="3">
+				<description>毛重</description>
+				<field-name>grossWeight</field-name>
+				<field-flag>GrossWeight</field-flag>
+			</field>
+			<field nullable="false" signNo="3">
+				<description>净重</description>
+				<field-name>netWeight</field-name>
+				<field-flag>NetWeight</field-flag>
+			</field>
+			<field nullable="true" signNo="3">
+				<description>电子帐册或手册号</description>
+				<field-name>manualNo</field-name>
+				<field-flag>ManualNo</field-flag>
+			</field>
+			<field nullable="false" signNo="3">
+				<description>仓单表体数量</description>
+				<field-name>itemsCount</field-name>
+				<field-flag>ItemsCount</field-flag>
+			</field>
+			<field nullable="true" signNo="3">
+				<description>进出口岸</description>
+				<field-name>iePort.code</field-name>
+				<field-flag>IEPort</field-flag>
+			</field>
+			<field nullable="true" signNo="3">
+				<description>转出方名称</description>
+				<field-name>outName</field-name>
+				<field-flag>OutName</field-flag>
+			</field>
+			<field nullable="true" signNo="3">
+				<description>转入方名称</description>
+				<field-name>inName</field-name>
+				<field-flag>InName</field-flag>
+			</field>
+			<section>
+				<description>仓单归并后商品集合</description>
+				<section-flag>BillLists</section-flag>
+				<section>
+					<description>仓单归并后商品信息</description>
+					<section-flag>billList</section-flag>
+					<query>
+						<entity-class>com.bestway.bls.entity.StorageBillAfter
+						</entity-class>
+						<query-fields>
+							<query-field>storageBill.id</query-field>
+						</query-fields>
+					</query>
+					<next-layer-query-values>
+						<query-value next-layer-field-name="storageBillAfter.id"
+							value-type="FIELD_VALUE">id
+						</query-value>
+					</next-layer-query-values>
+					<field nullable="true" signNo="1">
+						<description>载货清单</description>
+						<field-name>tafName</field-name>
+						<field-flag>TafName</field-flag>
+					</field>
+					<field nullable="false" signNo="1">
+						<description>表体序号</description>
+						<field-name>seqNo</field-name>
+						<field-flag>GNo</field-flag>
+					</field>
+					<field nullable="true" signNo="1">
+						<description>基本号</description>
+						<field-name>copGNo</field-name>
+						<field-flag>CopGNo</field-flag>
+					</field>
+					<field nullable="true" signNo="1">
+						<description>商品编码</description>
+						<field-name>codeTS.code</field-name>
+						<field-flag>CodeTS</field-flag>
+					</field>
+					<field nullable="true" signNo="1">
+						<description>商品名称</description>
+						<field-name>name</field-name>
+						<field-flag>GName</field-flag>
+					</field>
+					<field nullable="true" signNo="1">
+						<description>商品规格</description>
+						<field-name>model</field-name>
+						<field-flag>GModel</field-flag>
+					</field>
+					<field nullable="true" signNo="1">
+						<description>法定第一数量</description>
+						<field-name>qty1</field-name>
+						<field-flag>Qty1</field-flag>
+					</field>
+					<field nullable="true" signNo="1">
+						<description>法定第二数量</description>
+						<field-name>qty2</field-name>
+						<field-flag>Qty2</field-flag>
+					</field>
+					<field nullable="true" signNo="1">
+						<description>申报单位编码</description>
+						<field-name>unit.code</field-name>
+						<field-flag>GUnit</field-flag>
+					</field>
+					<field nullable="true" signNo="1">
+						<description>法定第一单位</description>
+						<field-name>codeTS.firstUnit.code</field-name>
+						<field-flag>GUnit1</field-flag>
+					</field>
+					<field nullable="true" signNo="1">
+						<description>法定第二单位</description>
+						<field-name>codeTS.secondUnit.code</field-name>
+						<field-flag>GUnit2</field-flag>
+					</field>
+					<field nullable="true" signNo="1">
+						<description>申报数量</description>
+						<field-name>qty</field-name>
+						<field-flag>Qty</field-flag>
+					</field>
+					<field nullable="true" signNo="1">
+						<description>申报单价</description>
+						<field-name>unitPrice</field-name>
+						<field-flag>UnitPrice</field-flag>
+					</field>
+					<field nullable="true" signNo="1">
+						<description>申报总价</description>
+						<field-name>totalP</field-name>
+						<field-flag>TotalPrice</field-flag>
+					</field>
+					<field nullable="true" signNo="1">
+						<description>币制</description>
+						<field-name>curr.code</field-name>
+						<field-flag>Curr</field-flag>
+					</field>
+					<field nullable="false" signNo="1">
+						<description>在电子帐册中的商品序号</description>
+						<field-name>contrItem</field-name>
+						<field-flag>ContrItem</field-flag>
+					</field>
+					<field nullable="true" signNo="1">
+						<description>原产国</description>
+						<field-name>originCountry.code</field-name>
+						<field-flag>OriginCountry</field-flag>
+					</field>
+					<field nullable="true" signNo="1">
+						<description>贸易方式</description>
+						<field-name>tradeModel.code</field-name>
+						<field-flag>TradeMode</field-flag>
+					</field>
+					<field nullable="true" signNo="1">
+						<description>成交方式</description>
+						<field-name>transModel.code</field-name>
+						<field-flag>TransMode</field-flag>
+					</field>
+					<field nullable="false" signNo="1">
+						<description>报关单申报时间</description>
+						<field-name>apprTime</field-name>
+						<field-flag>ApprTime</field-flag>
+					</field>
+					<field nullable="true" signNo="1">
+						<description>报关单号</description>
+						<field-name>entryID</field-name>
+						<field-flag>EntryID</field-flag>
+					</field>
+					<field nullable="true" signNo="1">
+						<description>在报关单中的商品序号</description>
+						<field-name>entryGNo</field-name>
+						<field-flag>EntryGNo</field-flag>
+					</field>
+					<field nullable="true" signNo="1">
+						<description>该出仓单对应的入仓单号</description>
+						<field-name>corrBillNo</field-name>
+						<field-flag>CorrBillNo</field-flag>
+					</field>
+					<field nullable="true" signNo="1">
+						<description>该出仓单商品项对应入仓单中的商品项号</description>
+						<field-name>corrBillGNo</field-name>
+						<field-flag>CorrBillGNo</field-flag>
+					</field>
+					<section>
+						<description>仓单原始清单集合</description>
+						<section-flag>BillDetailLists</section-flag>
+						<section>
+							<description>仓单原始清单信息</description>
+							<section-flag>billDetailList</section-flag>
+							<query>
+								<entity-class>com.bestway.bls.entity.StorageBillBefore
+								</entity-class>
+								<query-fields>
+									<query-field>storageBillAfter.id
+									</query-field>
+								</query-fields>
+							</query>
+							<field nullable="false" signNo="1">
+								<description>企业内部货号</description>
+								<field-name>partNo.ptNo</field-name>
+								<field-flag>PartNo</field-flag>
+							</field>
+							<field nullable="true" signNo="1">
+								<description>送货传票</description>
+								<field-name>subpoenaNo</field-name>
+								<field-flag>SubpoenaNo</field-flag>
+							</field>
+							<field nullable="true" signNo="1">
+								<description>内部英文名称</description>
+								<field-name>partNameE</field-name>
+								<field-flag>PartNameE</field-flag>
+							</field>
+							<field nullable="true" signNo="1">
+								<description>内部中文名称</description>
+								<field-name>partNameC</field-name>
+								<field-flag>PartNameC</field-flag>
+							</field>
+							<field nullable="true" signNo="1">
+								<description>颜色</description>
+								<field-name>clor</field-name>
+								<field-flag>Color</field-flag>
+							</field>
+							<field nullable="false" signNo="1">
+								<description>数量</description>
+								<field-name>detailQty</field-name>
+								<field-flag>DetailQty</field-flag>
+							</field>
+						</section>
+					</section>
+				</section>
+			</section>
+		</section>
+	</section>
+</section>

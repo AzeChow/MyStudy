@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.common.fpt.entity.FptAppHead" table="fptAppHead">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<many-to-one lazy="false"      name="scmCoc" column="scmCocId" 
+			class="com.bestway.common.materialbase.entity.ScmCoc"/>
+		<property name="inOutFlag"/>
+		<property name="appNo"/>
+		<property name="seqNo"/>
+		<property name="appClass"/>
+		<property name="contrNo"/>
+		<property name="outTradeCode"/>
+		<property name="outTradeName"/>
+		<many-to-one lazy="false"      name="outDistrict" column="outDistrictId" 
+			class="com.bestway.bcus.custombase.entity.countrycode.District" index="outDistrictId_index"/>
+		<property name="inTradeCode"/>
+		<property name="inTradeName"/>
+		<many-to-one lazy="false"      name="inDistrict" column="inDistrictId" 
+			class="com.bestway.bcus.custombase.entity.countrycode.District" index="inDistrict_index"/>
+		<many-to-one lazy="false"      name="outCustoms" column="outCustomsId" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Customs" index="outCustoms_index"/>
+		<property name="emsNo"/>
+		<property name="outCopAppNo"/>
+		<property name="outLiceNo"/>
+		<property name="outTradeCode2"/>
+		<property name="outTradeName2"/>
+		<property name="outDate"/>
+		<property name="outAgentCode"/>
+		<property name="outAgentName"/>
+		<property name="conveyDay"/>
+		<property name="conveySpa"/>
+		<property name="outCorp"/>
+		<property name="outDecl"/>
+		<property name="outNote"/>
+		
+		<property name="inEmsNo"/>
+		<property name="endDate"/>
+		<property name="inCopAppNo"/>
+		<many-to-one lazy="false"      name="inCustoms" column="inCustomsId" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Customs" index="inCustoms_index"/>
+		<property name="inAgentCode"/>
+		<property name="inAgentName"/>
+		<property name="inCorp"/>
+		<property name="inDecl"/>
+		<property name="inNote"/>
+		<property name="inLiceNo"/>
+		<property name="inDate"/>
+		<property name="inTradeCode2"/>
+		<property name="inTradeName2"/>
+		
+		<property name="declareState"/>
+		<property name="modifyMarkState"/>
+		<property name="delcareType"/>
+		<property name="oppositeEmsDate"/>
+		<property name="saleContractNo"/>
+		<property name="isCollated"/>
+		<many-to-one lazy="false"      name="aclUser" column="aclUserId" 
+			class="com.bestway.common.authority.entity.AclUser" />
+		<property name="projectType" />		
+		<many-to-one lazy="false"      name="company" column="companyId" 
+			class="com.bestway.bcus.system.entity.Company" index="customneopqustbill_company"/>
+		<property name="marke"/>
+		<property name="modifyDate"/>
+		<property name="modifyPeople"/>
+		
+	</class>
+</hibernate-mapping>

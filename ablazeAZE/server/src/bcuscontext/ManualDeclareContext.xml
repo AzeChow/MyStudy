@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!--==================DAO Beans====================-->
+	<bean id="emsEdiTrDao" 
+		class="com.bestway.bcus.manualdeclare.dao.EmsEdiTrDao">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>
+	
+	<!--==================Logic Beans====================-->
+	<bean id="emsEdiTrLogic" 
+		class="com.bestway.bcus.manualdeclare.logic.EmsEdiTrLogic">
+		<property name="emsEdiTrDao">
+			<ref bean="emsEdiTrDao"/>
+		</property>
+	</bean>
+	
+	<bean id="reportLogic"
+		class="com.bestway.bcus.manualdeclare.logic.ReportLogic">
+		<property name="emsEdiTrDao">
+			<ref bean="emsEdiTrDao"/>
+		</property>
+	</bean>
+
+    <bean id="dealEmsHistoryLogic"
+		class="com.bestway.bcus.manualdeclare.logic.DealEmsHistoryLogic">
+        <property name="dataSource"><ref bean="dataSource"/></property>
+		<property name="emsEdiTrDao">
+			<ref bean="emsEdiTrDao"/>
+		</property>
+	</bean>
+	
+	<!--==================Action Bean====================-->
+	<bean id="manualDeclareAction" 
+		class="com.bestway.bcus.manualdeclare.action.ManualDeclareActionImpl">
+		<property name="emsEdiTrDao">
+			<ref bean="emsEdiTrDao"/>
+		</property>
+        <property name="emsEdiTrLogic">
+			<ref bean="emsEdiTrLogic"/>
+		</property>
+        <property name="reportLogic">
+			<ref bean="reportLogic"/>
+		</property>		
+		<property name="dealEmsHistoryLogic">
+			<ref bean="dealEmsHistoryLogic"/>
+		</property>			
+	</bean>
+</beans>

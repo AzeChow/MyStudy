@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcus.cas.entity.ImgOrgUseInfoCustom" table="ImgOrgcustom">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="year" length="4"/>
+		<property name="customName"/>
+		<property name="ptName" length="80"/>
+		<property name="ptSpec" length="80"/>
+		<property name="ptUnitName" length="20"/>
+		
+		<property name="f1"/>
+		<property name="f2"/>
+		<property name="f3"/>
+		<property name="f4"/>
+		<property name="f5"/>
+		<property name="f6"/>
+		<property name="f7"/>
+		<property name="f8"/>
+		<property name="f9"/>
+		<property name="f10"/>
+		<!--<property name="f11"/>来源合计-->
+		<property name="f12"/>
+		<property name="f13"/>
+		<property name="f14"/>
+		<property name="f15"/>
+		<property name="f16"/>
+		<property name="f17"/>
+		<property name="f18"/>
+		<property name="f19"/>
+		<property name="f20"/>
+		<property name="f21"/>
+<!--		<property name="f22"/>
+		<property name="f23"/>-->
+		<property name="f24"/>
+		<property name="f25"/>
+		<property name="f26"/>
+		<property name="f27" length="255"/>
+		<property name="money"/>
+		<property name="noCustomMoney"></property>
+		<many-to-one lazy="false"      name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" index="ImgOrgcustom_company"/>
+	</class>
+</hibernate-mapping>
+		

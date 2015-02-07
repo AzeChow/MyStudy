@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!--==================DAO Beans====================-->
+	<bean id="materialApplyDao" class="com.bestway.dzsc.materialapply.dao.MaterialApplyDao">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>
+	<!--==================Logic Beans====================-->
+	<bean id="materialApplyLogic" class="com.bestway.dzsc.materialapply.logic.MaterialApplyLogic">
+		<property name="materialApplyDao">
+			<ref bean="materialApplyDao"/>
+		</property>
+		<property name="materialManageDao">
+			<ref bean="materialManageDao"/>
+		</property>
+		<property name="dzscMessageLogic"><ref bean="dzscMessageLogic"/></property>
+	</bean>
+	<!--==================Action Bean====================-->
+	<bean id="materialApplyAction" 
+		class="com.bestway.dzsc.materialapply.action.MaterialApplyActionImpl">
+		<property name="materialApplyDao">
+			<ref bean="materialApplyDao"/>
+		</property>
+		<property name="materialApplyLogic">
+			<ref bean="materialApplyLogic"/>
+		</property>
+	</bean>
+</beans>

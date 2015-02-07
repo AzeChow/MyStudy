@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcus.enc.entity.ApplyToCustomsBillList" 
+		table="applytocustomsbilllist">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="impExpType" />
+		<property name="impExpFlag" />
+		<property name="listState" />
+<!--		<many-to-one lazy="false"      name="emsHeadH2k" column="emsHeadH2k" 
+			class="com.bestway.bcus.manualdeclare.entity.EmsHeadH2k"/>-->
+		<property name="emsHeadH2k" />
+		<property name="tradeCode" />
+		<property name="tradeName" />
+		<property name="listNo" />
+		<property name="materialNum" />
+		<property name="listDeclareDate" />
+		<property name="customsDeclarationDate" />
+		<property name="customsDeclarationCode" />
+		<property name="createdDate" />
+		<property name="customsEnvelopBillNo" />
+		<property name="catNo"/>
+		<many-to-one lazy="false"      name="createdUser" column="createdUser" 
+			class="com.bestway.common.authority.entity.AclUser"/>
+		<many-to-one lazy="false"      name="impExpCIQ" column="impExpCIQ" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Customs"/>
+		<many-to-one lazy="false"      name="declareCIQ" column="declareCIQ" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Customs"/>
+		<property name="materielProductFlag" />
+		<many-to-one lazy="false"      name="transportMode" column="transportMode" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Transf"/>
+		<many-to-one lazy="false"      name="tradeMode" column="tradeMode" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Trade"/>
+		<many-to-one lazy="false"      name="createdCompany" column="createdCompany" 
+			class="com.bestway.bcus.custombase.entity.basecode.Brief"/>
+		<property name="memos" />
+		<many-to-one lazy="false"      name="scmCoc" column="scmCoc"
+			 class="com.bestway.common.materialbase.entity.ScmCoc"/>			 
+	    <many-to-one lazy="false"      name="declarationCompany" column="declaraCompany" 
+			class="com.bestway.bcus.system.entity.Company" index="apytotosbilll_declaraCompany"/>
+		<many-to-one lazy="false"      name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" index="apytotosbilll_company"/>
+		<property name="listUniteNo"/>
+		<property name="listQpBillNo"/>
+		<property name="effectstate"/>
+	</class>
+</hibernate-mapping>
+<!-- parsed in 0ms -->

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcus.manualdeclare.entity.EmsEdiMergerVersion" table="emsedimergerversion">
+		<cache usage="read-write"/> 
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+			<many-to-one lazy="false"      name="emsEdiMergerBefore" column="emsEdiMergerBefore" 
+				class="com.bestway.bcus.manualdeclare.entity.EmsEdiMergerExgBefore"/>
+		<property name="version" index="emsversion_version"/>
+		<property name="name" length="225"/>
+		<property name="unitWeight" />
+		<property name="cmpVersion" />
+		<many-to-one lazy="false"      name="company" column="coid" class="com.bestway.bcus.system.entity.Company" index="emsedimergeesi_company"/>
+	</class>
+
+</hibernate-mapping>
+<!-- parsed in 0ms -->

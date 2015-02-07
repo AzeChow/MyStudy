@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.common.message.entity.CspReceiptResult" table="cspreceiptresult">
+		<cache usage="read-write"/> 
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="tradeCode" length="10"/>
+		<property name="copEmsNo" length="20"/>
+		<property name="seqNo" length="18"/>
+		<property name="colDcrTime" />
+		<property name="emsNo" length="12"/>
+		<property name="applType" length="1"/>
+		<property name="declareType" length="1"/>
+		<property name="chkMark" length="1"/>
+		<property name="noticeDate"/>
+		<property name="noticeTime"/>								
+		<property name="note" length="255"/>
+		<property name="userName" length="20"/>		
+		<property name="fileName" />
+		<property name="sendFileName" />
+		<many-to-one lazy="false"      name="company" column="coid" class="com.bestway.bcus.system.entity.Company" index="receiptresult_company"/>
+	</class>
+
+</hibernate-mapping>
+<!-- parsed in 0ms -->

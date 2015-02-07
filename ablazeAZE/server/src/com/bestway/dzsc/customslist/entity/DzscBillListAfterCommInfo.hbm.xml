@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.dzsc.customslist.entity.DzscBillListAfterCommInfo"	
+		table="dzscbilllistafter">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<many-to-one lazy="false"      name="billList" column="billList" 
+			class="com.bestway.dzsc.customslist.entity.DzscCustomsBillList" index="index_billlist"/>
+		<property name="emsSerialNo" />
+		<many-to-one lazy="false"      name="complex" column="complex" 
+			class="com.bestway.bcus.custombase.entity.hscode.Complex" index="dzscafter_complex"/>
+		<property name="complexName" />
+		<property name="complexSpec" />
+		<property name="declaredAmount" />
+		<property name="legalAmount" />
+		<property name="secondLegalAmount" />
+		<property name="grossWeight" />
+		<property name="netWeight" />
+		<many-to-one lazy="false"      name="unit" column="unit" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<!--<many-to-one lazy="false"      name="legalUnit" column="legalUnit" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<many-to-one lazy="false"      name="secondLegalUnit" column="secondLegalUnit" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>-->
+		<property name="memos" />
+		<many-to-one lazy="false"      name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" index="dzscafter_coid"/>
+	</class>
+</hibernate-mapping>
+<!-- parsed in 0ms -->

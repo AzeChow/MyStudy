@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcus.manualdeclare.entity.EmsEdiMergerExgBom" table="emsedimergerExgbom">
+		<cache usage="read-write"/> 
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="ptNo" length="225" index="emsexgbom_ptno"/>
+		<many-to-one lazy="false"      name="complex" column="complex" class="com.bestway.bcus.custombase.entity.hscode.Complex" index="iemedimgerExgb_complex"/>
+		<property name="name" length="225"/>
+		<property name="spec" length="225"/>
+		<property name="changeDate"/>
+		<many-to-one lazy="false"      name="unit" column="unit" class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<property name="unitWaste"/>
+		<property name="waste"/>
+		<property name="machinKind" length="225"/>
+		<property name="beginDate"/>
+		<property name="endDate"/>
+		<property name="modifyMark" length="225"/>
+		<property name="modifyTimes"/>	
+		<property name="note" length="255"/>	
+		<property name="sendState"/>
+		<property name="modifyAgjUnitWaste"/>
+		<property name="modifyAgjWaste"/>
+		<property name="unitWasteDifferences"/>
+		<property name="isBackup"/>
+		<!--<many-to-one lazy="false"      name="emsEdiMergerImgBefore" column="emsEdiMergerImgBefore" 
+			class="com.bestway.bcus.manualdeclare.entity.EmsEdiMergerImgBefore"/>-->	
+        <many-to-one lazy="false"      name="emsEdiMergerVersion" column="emsEdiMergerVersion" 
+			class="com.bestway.bcus.manualdeclare.entity.EmsEdiMergerVersion"/>			
+		<many-to-one lazy="false"      name="company" column="coid" class="com.bestway.bcus.system.entity.Company" index="iemedimgerExgb_company"/>
+	</class>
+
+</hibernate-mapping>
+<!-- parsed in 0ms -->

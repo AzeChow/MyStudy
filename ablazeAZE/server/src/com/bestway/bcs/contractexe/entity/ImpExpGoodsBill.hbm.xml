@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcs.contractexe.entity.ImpExpGoodsBill" 
+		table="impexpgoodsbill">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="contractNo"/>
+		<property name="seqNum"/>
+		<property name="num"/>
+		<property name="krNo"/>
+		<property name="catNo"/>
+		<property name="customsNo"/>
+		<property name="importDate"/>
+		<property name="isTcustoms"/>
+		<property name="country"/>
+		<property name="isLj"/>
+		<property name="serialNumber"/>
+		<property name="commodityNum"/>
+		<property name="wrapType"/>
+		<property name="grossWeight"/>
+		<property name="netWeight"/>
+		<property name="tradeMode"/>
+		<property name="memo1"/>
+		<property name="memo2"/>
+		<property name="customs"/>
+		<property name="portLoad"/>
+		<property name="authorizeFile"/>
+		<property name="containerNum"/>
+		<property name="conveyance"/>
+		<property name="transferMode"/>
+		<property name="domeConveyance"/>
+		<property name="countryOfLoadingOrUnloading"/>
+		<property name="declarationCustoms"/>
+		
+		
+		
+		<many-to-one lazy="false"      name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" index="impexpgoodsbill_coid"/>
+	</class>
+</hibernate-mapping>
+<!-- parsed in 0ms -->

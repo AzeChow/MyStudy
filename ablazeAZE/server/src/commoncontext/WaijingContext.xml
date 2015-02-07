@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+	<!--==================DAO Beans====================-->
+	<bean id="wjszDao" class="com.bestway.waijing.dao.WjszDao">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<!--==================Logic Beans====================-->
+	<!--==================Action Bean====================-->
+	<bean id="wjszAction" class="com.bestway.waijing.action.WjszActionImpl">
+		<property name="wjszDao">
+			<ref local="wjszDao" />
+		</property>
+	</bean>
+	<!--==================Other Beans====================-->
+</beans>

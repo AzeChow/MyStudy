@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.dzsc.dzscmanage.entity.DzscEmsPorMaterialExg" table="dzscemspormaterialexg">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="modifyMark" />
+		<many-to-one lazy="false"      name="dzscEmsPorHead" column="dzscEmsPorHead" 
+			class="com.bestway.dzsc.dzscmanage.entity.DzscEmsPorHead"/>	
+		<many-to-one lazy="false"      name="materiel" column="materiel" 
+			class="com.bestway.common.materialbase.entity.Materiel"/>	
+		<many-to-one lazy="false"      name="dzscEmsExgBill" column="dzscEmsExgBill" 
+			class="com.bestway.dzsc.dzscmanage.entity.DzscEmsExgBill"/>	
+		<many-to-one lazy="false"      name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" index="dzscemsexgbill_coid"/>
+	</class>
+</hibernate-mapping>
+<!-- parsed in 0ms -->

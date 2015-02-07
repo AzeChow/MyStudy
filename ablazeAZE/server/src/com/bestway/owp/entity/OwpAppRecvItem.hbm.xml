@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class  lazy="false"  name="com.bestway.owp.entity.OwpAppRecvItem" table="owpAppRecvItem">
+		<cache usage="read-write"/> 
+        <id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+	    </id>
+	    
+	    <many-to-one lazy="false" name="head" column="owpappheadid" 
+			class="com.bestway.owp.entity.OwpAppHead" />
+	    
+		<property name="seqNum"/>
+		
+		<many-to-one lazy="false"  name="complex" column="tenCode" 
+			class="com.bestway.bcus.custombase.entity.hscode.Complex" />
+		
+		
+		<property name="hsName" />
+		<property name="hsSpec" />
+		
+		<many-to-one lazy="false"  name="hsUnit" column="hsUnit" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		
+		
+		<property name="qty" />
+		
+		<property name="note"/>
+				
+		<property name="modifyMark"/>
+		
+		<property name="trNo"/>
+		
+		<many-to-one lazy="false"      name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" index="owprecvitem_coid"/>
+		
+    </class>
+
+</hibernate-mapping>

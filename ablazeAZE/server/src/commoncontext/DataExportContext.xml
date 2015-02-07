@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<!--==================DAO Beans====================-->
+	<bean id="dbExportDao" 
+		class="com.bestway.common.dataexport.dao.DBExportDao">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>
+	
+	<bean id="textExportDao" 
+		class="com.bestway.common.dataexport.dao.TextExportDao">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>
+	
+	<!--==================Logic Beans====================-->
+	<bean id="dbAutoExportLogic" 
+		class="com.bestway.common.dataexport.logic.DBAutoExportLogic" init-method="init">
+		<property name="dbExportDao">
+			<ref bean="dbExportDao"/>
+		</property>	
+		<property name="dbImportExportLogic">
+			<ref bean="dbImportExportLogic"/>
+		</property>	
+	</bean>
+	
+	
+	<bean id="dbImportExportLogic" 
+		class="com.bestway.common.dataexport.logic.DBImportExportLogic">
+		<property name="dbExportDao">
+			<ref bean="dbExportDao"/>
+		</property>	
+	</bean>	
+	
+	<bean id="dbExportLogic" 
+		class="com.bestway.common.dataexport.logic.DBExportLogic">
+		<property name="dbExportDao">
+			<ref bean="dbExportDao"/>
+		</property>	
+		<property name="dbImportExportLogic">
+			<ref bean="dbImportExportLogic"/>
+		</property>
+	</bean>
+	
+	
+	
+	<bean id="textExportLogic" 
+		class="com.bestway.common.dataexport.logic.TextExportLogic">
+		<property name="textExportDao">
+			<ref bean="textExportDao"/>
+		</property>	
+	</bean>
+	
+	<bean id="textImportExportLogic" 
+		class="com.bestway.common.dataexport.logic.TextImportExportLogic">
+		<property name="dbExportDao">
+			<ref bean="dbExportDao"/>
+		</property>
+		<property name="textExportDao">
+			<ref bean="textExportDao"/>
+		</property>		
+	</bean>	
+	
+	<!--==================Action Bean====================-->
+	<bean id="dataExportAction" 
+		class="com.bestway.common.dataexport.action.DataExportActionImpl">
+		<property name="dbExportDao">
+			<ref bean="dbExportDao"/>
+		</property>		
+        <property name="textExportDao">
+			<ref bean="textExportDao"/>
+		</property>	
+		<property name="dbExportLogic">
+			<ref bean="dbExportLogic"/>
+		</property>
+		<property name="dbImportExportLogic">
+			<ref bean="dbImportExportLogic"/>
+	    </property>			
+		<property name="textExportLogic">
+			<ref bean="textExportLogic"/>
+	    </property>	
+		<property name="dbAutoExportLogic">
+			<ref bean="dbAutoExportLogic"/>
+	    </property>
+		<property name="textImportExportLogic">
+			<ref bean="textImportExportLogic"/>
+	    </property>					
+	</bean>
+		
+   	<!--==================Other Beans====================-->	
+	
+</beans>

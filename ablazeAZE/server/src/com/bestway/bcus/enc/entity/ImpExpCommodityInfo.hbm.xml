@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcus.enc.entity.ImpExpCommodityInfo" 
+		table="impexpcommodityinfo">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<many-to-one lazy="false"      name="materiel" column="materielId" 
+			class="com.bestway.common.materialbase.entity.Materiel"/>
+		<many-to-one lazy="false"      name="impExpRequestBill" column="impExpRequestBillId" 
+			class="com.bestway.bcus.enc.entity.ImpExpRequestBill"/>
+		<many-to-one lazy="false"      name="country" column="countryId" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Country"/>
+		<many-to-one lazy="false"      name="currency" column="currencyId" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Curr"/>
+		<many-to-one lazy="false"      name="wrapType" column="wrapId" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Wrap"/>
+		<property name="seqNum" />
+		<property name="afterName" />	
+		<property name="afterSpec" />	
+		<property name="afterUnit" />	
+		<property name="unitPrice" />
+		<property name="piece" />	
+		<property name="boxNo" />		
+		<property name="grossWeight" />
+		<property name="invgrossWeight" />
+		<property name="quantity"/>
+		<property name="netWeight"/>
+		<property name="invnetWeight"/>
+		<property name="amountPrice"/>
+		<property name="workUsd" />
+		<property name="version" />
+		<property name="cmpVersion" />
+		<property name="makeBillNo" />
+		<property name="bulks" />
+		<property name="isPutOnRecord" />
+		<property name="totalnetweight"/>
+		<property name="totalgrossWeight"/>
+		<property name="ptNo"/>
+		<property name="isTransferCustomsBill" />
+		<property name="extendMemo"/>
+		<property name="extendMemo1"/>
+		<property name="extendMemo2"/>
+		<property name="complexcode"/>
+		<property name="totalBoxNum"/>
+		<property name="startBoxNo"/>
+		<property name="endBoxNo"/>
+		<property name="indEventweight"/>
+		<property name="customerOtherName"/>
+		<property name="unitconvert"/>
+		<property name="commAmount"/>
+		<property name="kcPtNo"/>
+		<property name="kcfactoryKind"/>
+		<many-to-one lazy="false"      name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" index="imexpmdityin_company"/>
+	</class>
+
+</hibernate-mapping>

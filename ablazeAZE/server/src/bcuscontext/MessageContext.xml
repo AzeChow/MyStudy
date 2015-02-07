@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!--==================DAO Beans====================-->
+	<bean id="receiptResultDao" 
+		class="com.bestway.bcus.message.dao.ReceiptResultDao">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>
+	<bean id="messageQueryDao" 
+		class="com.bestway.bcus.message.dao.MessageQueryDao">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>	
+	<bean id="encDao" 
+		class="com.bestway.bcus.enc.dao.EncDao">
+        <property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+	<bean id="emsEdiTrDao" 
+		class="com.bestway.bcus.manualdeclare.dao.EmsEdiTrDao">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>
+	<!--==================Logic Beans====================-->
+	<bean id="exportMessageLogic" class="com.bestway.bcus.message.logic.ExportMessageLogic">
+		<property name="emsEdiTrDao"><ref bean="emsEdiTrDao"/></property>
+		<property name="checkCancelDao"><ref bean="checkCancelDao"/></property>			
+		<property name="messageQueryDao"><ref bean="messageQueryDao"/></property>	
+		<property name="encDao"><ref bean="encDao"/></property>
+	</bean>
+	<bean id="processMessageLogic" class="com.bestway.bcus.message.logic.ProcessMessageLogic">
+		<property name="emsEdiTrDao"><ref bean="emsEdiTrDao"/></property>
+		<property name="receiptResultDao"><ref local="receiptResultDao"/></property>
+		<property name="exportMessageLogic"><ref local="exportMessageLogic"/></property>
+	</bean>
+	<bean id="customBillLogic" class="com.bestway.bcus.message.logic.ExportReceiptCustomLogic">
+		<property name="emsEdiTrDao"><ref bean="emsEdiTrDao"/></property>
+		<property name="exportMessageLogic"><ref local="exportMessageLogic"/></property>
+		<property name="encDao"><ref bean="encDao"/></property>
+		<property name="encLogic"><ref bean="encLogic"/></property>
+	</bean>
+	<bean id="tcsMessageLogic" class="com.bestway.bcus.message.logic.TCSMessageLogic">
+		<property name="encDao"><ref bean="encDao"/></property>
+		<property name="tcsParametersDao"><ref bean="tcsParametersDao"/></property>
+		<property name="messageQueryDao"><ref bean="messageQueryDao"/></property>
+	</bean>
+	<!--==================Action Bean====================-->
+	<bean id="messageAction" class="com.bestway.bcus.message.action.MessageActionImpl">
+		<property name="exportMessageLogic"><ref bean="exportMessageLogic"/></property>
+		<property name="processMessageLogic"><ref bean="processMessageLogic"/></property>
+		<property name="receiptResultDao"><ref local="receiptResultDao"/></property>
+		<property name="messageQueryDao"><ref bean="messageQueryDao"/></property>
+		<property name="customBillLogic"><ref local="customBillLogic"/></property>
+		<property name="tcsMessageLogic"><ref local="tcsMessageLogic"/></property>			
+	</bean>
+</beans>

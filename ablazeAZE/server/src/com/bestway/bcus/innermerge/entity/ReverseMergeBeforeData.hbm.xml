@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcus.innermerge.entity.ReverseMergeBeforeData" 
+		table="reversemergebeforedata">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<many-to-one lazy="false"      name="reverseMergeTenData" column="reversemergetendata" 
+			class="com.bestway.bcus.innermerge.entity.ReverseMergeTenData"/>
+		<many-to-one lazy="false"      name="materiel" column="materielid" 
+			class="com.bestway.common.materialbase.entity.Materiel"/>
+		<many-to-one lazy="false"      name="hsBeforeLegalUnit" column="beforelegalunit" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<many-to-one lazy="false"      name="hsBeforeEnterpriseUnit" 
+			column="beforeenterpriseunit" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<property name="innerMergeDataId" />
+		<property name="concatFlag" />
+		<many-to-one lazy="false"      name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" index="reversrgebforeda_company"/>
+	</class>
+</hibernate-mapping>
+<!-- parsed in 0ms -->

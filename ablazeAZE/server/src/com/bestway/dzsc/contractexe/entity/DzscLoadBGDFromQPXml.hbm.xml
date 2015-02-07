@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.dzsc.contractexe.entity.DzscLoadBGDFromQPXml" 
+		table="dzscloadbgdfromqpxml">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="fileName"/>
+		<property name="date" column="loadDate" />
+		<property name="impExpFlag"  />		
+		<property name="customsDeclarationCode"  />	
+		<property name="serialNumber"  />	
+		<property name="createDate"  />	
+		<many-to-one lazy="false"      name="company" column="companyId" 
+			class="com.bestway.bcus.system.entity.Company"/>		
+	</class>
+</hibernate-mapping>

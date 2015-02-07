@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!--==================DAO Beans====================-->
+	<bean id="contractDao" class="com.bestway.bcs.contract.dao.ContractDao">
+              <property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+	<!--==================Logic Beans====================-->
+	<bean id="contractLogic" class="com.bestway.bcs.contract.logic.ContractLogic">
+              <property name="contractDao"><ref bean="contractDao"/></property>
+			  <property name="bcsMessageLogic"><ref bean="bcsMessageLogic"/></property>
+			  <property name="importDataFromExcel"><ref bean="importDataFromExcel"/></property>
+	</bean>
+	<bean id="receiveContractLogic" class="com.bestway.bcs.contract.logic.ReceiveContractLogic">
+              <property name="contractDao"><ref bean="contractDao"/></property>
+			  <property name="parameterCodeDao"><ref bean="parameterCodeDao"/></property>
+			  <property name="countryCodeDao"><ref bean="countryCodeDao"/></property>
+			  <property name="baseCodeDao"><ref bean="baseCodeDao"/></property>
+			  <property name="hsCodeDao"><ref bean="hsCodeDao"/></property>
+	</bean>
+	<bean id="bcsImportQPDataLogic" class="com.bestway.bcs.contract.logic.BcsImportQPDataLogic">
+              <property name="contractDao"><ref bean="contractDao"/></property>
+			  <property name="bcsDictPorDao"><ref bean="bcsDictPorDao"/></property>
+	</bean>
+	<!--==================Action Bean====================-->
+	<bean id="contractAction" class="com.bestway.bcs.contract.action.ContractActionImpl">
+              <property name="contractDao"><ref bean="contractDao"/></property>
+			  <property name="contractLogic"><ref bean="contractLogic"/></property>
+			  <property name="receiveContractLogic"><ref bean="receiveContractLogic"/></property>
+			  <property name="bcsImportQPDataLogic"><ref bean="bcsImportQPDataLogic"/></property>
+	</bean>
+	
+
+
+</beans>

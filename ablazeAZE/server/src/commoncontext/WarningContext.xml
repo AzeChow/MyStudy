@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+<beans>
+	<!--==================DAO Beans====================-->
+	<bean id="warningDao" class="com.bestway.common.warning.dao.WarningDao">
+		<property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+
+	<!--==================Logic Beans====================init-method="initMapping"-->
+	<bean id="warningLogic" class="com.bestway.common.warning.logic.WarningLogic" init-method="init">		
+	</bean>
+	
+	<bean id="warningJobLogic" class="com.bestway.common.warning.logic.WarningJobLogic" init-method="init">
+		<property name="warningDao"><ref bean="warningDao"/></property>
+		<property name="companyDao"><ref bean="companyDao"/></property>
+		<property name="aclUserDao"><ref bean="aclUserDao"/></property>
+		<property name="dzscDao"><ref bean="dzscDao"/></property>
+		<property name="emsEdiTrDao"><ref bean="emsEdiTrDao"/></property>	
+		<property name="checkCancelDao"><ref bean="checkCancelDao"/></property>			
+		<property name="fptManageDao"><ref bean="fptManageDao"/></property>	
+		<property name="contractDao"><ref bean="contractDao"/></property>
+		<property name="fixtureContractDao"><ref bean="fixtureContractDao"/></property>
+		<property name="contractCavDao"><ref bean="contractCavDao"/></property>
+	</bean>
+	<bean id="planTaskJobLogic" class="com.bestway.common.warning.logic.PlanTaskJobLogic" init-method="init">
+		<property name="warningDao"><ref bean="warningDao"/></property>
+		<property name="companyDao"><ref bean="companyDao"/></property>
+		<property name="aclUserDao"><ref bean="aclUserDao"/></property>
+	</bean>
+	
+	
+	<!--==================Action Bean====================-->
+	<bean id="warningAction" class="com.bestway.common.warning.action.WarningActionImpl">
+		<property name="warningDao"><ref bean="warningDao"/></property>
+		<property name="warningLogic"><ref bean="warningLogic"/></property>		
+		<property name="warningJobLogic"><ref bean="warningJobLogic"/></property>
+		<property name="planTaskJobLogic"><ref bean="planTaskJobLogic"/></property>
+	</bean>
+	
+	
+	
+	
+	<!--==================Other Beans====================-->		
+
+</beans>

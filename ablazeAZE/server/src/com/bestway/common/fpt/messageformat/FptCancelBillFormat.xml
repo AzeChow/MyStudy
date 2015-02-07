@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="eportmsg.xsl"?>
+<!--Element message: 此元素内所有内容及属性描述一个报文的定义及从数据库的获取途径。-->
+<message version="1.0" type="FptCancel">
+	<description>撤消报文定义及获取方法描述</description>
+	<section-flag>FPT_DATA</section-flag>
+	<sub-section>
+		<description>签名信息</description>
+		<file-name>FptCancelBillSignFormat.xml</file-name>
+	</sub-section>
+	<section multiple="false" required="true">
+		<description>撤消申请表头</description>
+		<section-flag>FPT_CANCEL_BILL_HEAD</section-flag>
+		<data-id>FptCancelBillHead</data-id>
+		<field nullable="false">
+			<description>电子口岸统一编号</description>
+			<field-name>seqNo</field-name>
+			<format>X(18)</format>
+			<field-flag>SEQ_NO</field-flag>
+		</field>
+		<field nullable="false">
+			<description>企业编号</description>
+			<field-name>tradeCode</field-name>
+			<format>X(10)</format>
+			<field-flag>TRADE_CODE</field-flag>
+		</field>
+		<field nullable="false">
+			<description>撤消类型</description>
+			<field-name>canelSort</field-name>
+			<format>X</format>
+			<field-flag>CANCEL_SORT</field-flag>
+		</field>
+		<field nullable="false">
+			<description>备注</description>
+			<field-name>note</field-name>
+			<format>X(128)</format>
+			<field-flag>NOTES</field-flag>
+		</field>
+	</section>
+</message>

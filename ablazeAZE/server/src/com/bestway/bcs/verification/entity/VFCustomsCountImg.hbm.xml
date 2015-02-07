@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class lazy="false" name="com.bestway.bcs.verification.entity.VFCustomsCountImg"
+		table="vfcustomscountimg">
+		<cache usage="read-write" />
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex" />
+		</id>
+		<property name="serialNumber" />
+		<property name="seqNum" />
+		<property name="declarationDate" />
+		<property name="commName" />
+		<property name="commSpec" />
+		<property name="unit" />
+		<property name="emsNo" />
+		<property name="companyName" />
+		<property name="mergerNo" />
+		<property name="impTotalAmont" />
+		<property name="impTotalMoney" />
+		<property name="impPrice" />
+		<property name="remainForwordAmount" />
+		<many-to-one lazy="false" name="section" column="section"
+			class="com.bestway.bcs.verification.entity.VFSection" index="vfcustomscountimg_section"/>
+		<many-to-one lazy="false" name="company" column="company"
+			class="com.bestway.bcus.system.entity.Company" index="vfcustomscountimg_company" />
+	</class>
+</hibernate-mapping>
+	<!-- parsed in 0ms -->

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+<beans>
+	<!--==================DAO Beans====================-->
+	<bean id="toolsDao" class="com.bestway.common.tools.dao.ToolsDao">
+		<property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+
+	<!--==================Logic Beans====================-->
+	<bean id="toolsLogic" class="com.bestway.common.tools.logic.ToolsLogic" init-method="initMapping">
+		<property name="toolsDao"><ref bean="toolsDao"/></property>
+		<property name="dataSource"><ref bean="dataSource"/></property>
+		<property name="dialectClass"><value>${hibernate.dialect}</value></property>
+	</bean>
+	
+	<bean id="pluginLogic" class="com.bestway.common.tools.logic.PluginLogic" init-method="init">
+		<property name="toolsDao"><ref bean="toolsDao"/></property>	
+	</bean>
+	
+	<bean id="reportFileLogic" class="com.bestway.common.tools.logic.ReportFileLogic">
+	</bean>
+	
+	<bean id="pluginClientLogic" class="com.bestway.common.tools.logic.PluginClientLogic" init-method="init">
+		<property name="toolsDao"><ref bean="toolsDao"/></property>
+	</bean>
+	
+	<bean id="pluginClientReportLogic" class="com.bestway.common.tools.logic.PluginClientReportLogic" init-method="init">
+		<property name="toolsDao"><ref bean="toolsDao"/></property>
+		<property name="toolsLogic"><ref bean="toolsLogic"/></property>
+	</bean>
+	
+	<bean id="importDataFromExcel" class="com.bestway.common.fileimport.logic.ImportDataFromExcel">
+		<property name="baseDao"><ref bean="baseCodeDao"/></property>
+	</bean>
+	
+	<bean id="updateOldData" class="com.bestway.bcus.system.logic.UpdateOldData" init-method = "init">
+				<property name="tableOwner"><value>${jdbc.tableOwner}</value></property>
+				<property name="dataSource"><ref bean="dataSource"/></property>
+	</bean>	
+	<!--==================Action Bean====================-->
+	<bean id="toolsAction" class="com.bestway.common.tools.action.ToolsActionImpl">
+		<property name="toolsDao"><ref bean="toolsDao"/></property>
+		<property name="toolsLogic"><ref bean="toolsLogic"/></property>
+		<property name="pluginLogic"><ref bean="pluginLogic"/></property>
+		<property name="reportFileLogic"><ref bean="reportFileLogic"/></property>
+		<property name="pluginClientLogic"><ref bean="pluginClientLogic"/></property>
+		<property name="pluginClientReportLogic"><ref bean="pluginClientReportLogic"/></property>
+	</bean>
+	
+	
+	<!--==================Other Beans====================-->		
+
+</beans>

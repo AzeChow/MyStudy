@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class  lazy="false"  name="com.bestway.owp.entity.OwpAppHead" table="owpapphead">
+		<cache usage="read-write"/> 
+        <id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+	    </id>
+	    
+		<property name="seqNum" />
+		<property name="appNo"/>
+		<property name="seqNo" />
+		
+		<property name="declareState" />
+		<property name="modifyMark" />
+		
+		<property name="appClass" />
+		<property name="copAppNo" />
+		
+		<many-to-one lazy="false" column="mastcustId" name="mastCust" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Customs" />
+		
+		<property name="emsType"/>
+		<property name="emsNo"/>
+		<property name="tradeCode"/>
+		<property name="tradeName"/>
+		<property name="agentCode"/>
+		<property name="agentName"/>
+		<property name="corp"/>
+		<property name="decl"/>
+		<property name="contrNo"/>
+		<property name="conveyDay"/>
+		<property name="appDate"/>
+		<property name="note"/>
+		
+		<many-to-one lazy="false" column="inMastcustId" name="inMastCust" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Customs" />
+		
+		<property name="inTradeCode"/>
+		<property name="inTradeName"/>
+		<property name="inCorp"/>
+		
+		<many-to-one lazy="false" column="inDistrictId" name="inDistrict" 
+			class="com.bestway.bcus.custombase.entity.countrycode.District" />
+			
+		<property name="declareType"/>
+		
+		<many-to-one lazy="false"      name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" index="owpapphead_coid"/>
+			
+		<property name="createPeople"/>
+		<property name="createDate"/>
+		<property name="inputMan"/>
+		<property name="inputDate"/>
+		
+    </class>
+
+</hibernate-mapping>

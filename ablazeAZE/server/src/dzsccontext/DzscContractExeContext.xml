@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!--==================DAO Beans====================-->
+	<bean id="dzscContractExeDao" 
+		class="com.bestway.dzsc.contractexe.dao.DzscContractExeDao">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+		<property name="projectType">
+			<value>3</value>
+		</property>
+	</bean>
+	<bean id="dzscImpExpRequestDao" 
+		class="com.bestway.dzsc.contractexe.dao.DzscImpExpRequestDao">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>		
+	</bean>
+	
+	<!--==================Logic Beans====================-->	
+	<bean id="dzscContractExeLogic" 
+		class="com.bestway.dzsc.contractexe.logic.DzscContractExeLogic">
+		<property name="baseEncDao">
+			<ref bean="dzscContractExeDao"/>
+		</property>
+		<property name="invoiceDao">
+			<ref bean="invoiceDao"/>
+		</property>
+		<property name="fecavDao">
+			<ref bean="fecavDao"/>
+		</property>
+		<property name="dzscDao">
+			<ref bean="dzscDao"/>
+		</property>
+		<property name="dzscListDao">
+			<ref bean="dzscListDao"/>
+		</property>
+		<property name="transferFactoryManageDao">
+			<ref bean="transferFactoryManageDao"/>
+		</property>
+	</bean>
+	<bean id="dzscImpExpRequestLogic" 
+		class="com.bestway.dzsc.contractexe.logic.DzscImpExpRequestLogic">
+		<property name="dzscImpExpRequestDao">
+			<ref bean="dzscImpExpRequestDao"/>
+		</property>		
+		<property name="dzscDao">
+			<ref bean="dzscDao"/>
+		</property>	
+		<property name="dzscEncDao">
+			<ref bean="dzscContractExeDao"/>
+		</property>	
+		<property name="dzscEncLogic">
+			<ref bean="dzscContractExeLogic"/>
+		</property>			
+		
+	</bean>
+	<!--==================Action Bean====================-->
+	<bean id="dzscContractExeAction" 
+		class="com.bestway.dzsc.contractexe.action.DzscContractExeActionImpl">
+		<property name="baseEncDao">
+			<ref bean="dzscContractExeDao"/>
+		</property>
+		<property name="baseEncLogic">
+			<ref bean="dzscContractExeLogic"/>
+		</property>
+		<property name="dzscContractExeDao">
+			<ref bean="dzscContractExeDao"/>
+		</property>
+		<property name="dzscImpExpRequestLogic">
+			<ref bean="dzscImpExpRequestLogic"/>
+		</property>
+		<property name="dzscImpExpRequestDao">
+			<ref bean="dzscImpExpRequestDao"/>
+		</property>
+		<property name="dzscContractExeLogic">
+			<ref bean="dzscContractExeLogic"/>
+		</property>
+	</bean>
+
+</beans>

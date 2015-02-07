@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section version="1.0" type="Freightage">
+	<description>保税物料进口申请</description>
+	<section-flag>MaterielImportApply</section-flag>
+	<section-attribute>xmlns="un:epz"</section-attribute>
+	<query>
+		<entity-class>com.bestway.bls.entity.MaterielImportApply
+		</entity-class>
+		<query-fields>
+			<query-field>id</query-field>
+		</query-fields>
+	</query>
+	<next-layer-query-values>
+		<query-value next-layer-field-name="materielImportApply.id"
+			value-type="FIELD_VALUE">id
+		</query-value>
+	</next-layer-query-values>
+	<field nullable="false" signNo="1">
+		<description>仓库编号</description>
+		<field-name>warehouseCode.code</field-name>
+		<field-flag>WarehouseCode</field-flag>
+	</field>
+	<field nullable="false" signNo="2">
+		<description>申请原因</description>
+		<field-name>applyReason</field-name>
+		<field-flag>ApplyReason</field-flag>
+	</field>
+	<field nullable="true" signNo="3">
+		<description>备注</description>
+		<field-name>applyReason</field-name>
+		<field-flag>ApplyReason</field-flag>
+	</field>
+	<section>
+		<description>保税物料进口申请商品集合</description>
+		<section-flag>GoodsLists</section-flag>
+		<section>
+			<description>保税物料进口申请商品（表体）</description>
+			<section-flag>GoodsList</section-flag>
+			<query>
+				<entity-class>com.bestway.bls.entity.GoodsList
+				</entity-class>
+				<query-fields>
+					<query-field>materielImportApply.id</query-field>
+				</query-fields>
+			</query>		
+			<field nullable="false" signNo="1">
+				<description>海关商品编码</description>
+				<field-name>codeTS.code</field-name>
+				<field-flag>CodeTS</field-flag>
+			</field>
+		</section>
+	</section>
+</section>
+

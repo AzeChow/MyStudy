@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="GB2312"?>
+<?xml-stylesheet type="text/xsl" href="eportmsg.xsl"?>
+<!-- File:          Msg_EMS230.xml  -->
+<!-- Author:        Hu Jun'an       -->
+<!-- Create date:   2003-06-11      -->
+<!--Element message: 此元素内所有内容及属性描述一个报文的定义及从数据库的获取途径。-->
+<message version="1.0" type="EMS230">
+<!--报文类型：电子帐册联网核查-->
+    <description>EMS230报文定义及获取方法描述</description>
+    <!--Element database: 提供数据库连接信息。-->
+    <database>
+        <db-user>offline_ems</db-user>
+        <db-password>dbwork</db-password>
+        <data-source>ems3db</data-source>
+    </database>
+ 
+    <!--Default value: multiple=false required=false -->
+    <section multiple="false" required="true">
+        <description>中期核查表头</description>
+        <section-flag>&lt;EMS_EDI_COL_HEAD    &gt;</section-flag>
+        <class>com.bestway.bcus.checkcancel.entity.CheckHead</class>
+        <field nullable="true">
+            <description>电子帐册号</description>
+            <field-name>emsNo</field-name>
+            <format>X(12)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>1</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>经营单位名称</description>
+            <field-name>tradeName</field-name>
+            <format>X(30)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>经营单位代码</description>
+            <field-name>tradeCode</field-name>
+            <format>X(10)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>1</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>加工单位名称</description>
+            <field-name>machName</field-name>
+            <format>X(30)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>加工单位代码</description>
+            <field-name>machCode</field-name>
+            <format>X(10)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>1</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>本期起始日期</description>
+            <field-name>head.beginDate</field-name>
+            <format>YYYYMMDDHHMMSS</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>1</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>海关提取时间</description>
+            <field-name>timeHg</field-name>
+            <format>YYYYMMDD</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>海关提取标志</description>
+            <field-name>flagHg</field-name>
+            <format>X(1)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>主管海关代码</description>
+            <field-name>masterCustoms.code</field-name>
+            <format>X(6)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+    </section>
+ 
+    <section multiple="true" required="false">
+        <description>联网核查成品表</description>
+        <section-flag>&lt;EMS_EDI_COL_EXG     &gt;</section-flag>
+        <class>com.bestway.bcus.checkcancel.entity.CheckExg</class>
+        <field nullable="true">
+            <description>电子帐册号</description>
+            <field-name>checkHead.emsNo</field-name>
+            <format>X(12)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>1</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>序号</description>
+            <field-name>seqNum</field-name>
+            <format>Z(8)9</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>1</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>成品号/货号</description>
+            <field-name>ptNo</field-name>
+            <format>X(30)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>成品版本</description>
+            <field-name>version</field-name>
+            <format>X(15)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>成品名称</description>
+            <field-name>name</field-name>
+            <format>X(30)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>商品编号</description>
+            <field-name>complex.code</field-name>
+            <format>X(10)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>规格型号</description>
+            <field-name>spec</field-name>
+            <format>X(30)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>备案计量单位</description>
+            <field-name>unit.code</field-name>
+            <format>X(3)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>成品库存数量</description>
+            <field-name>materStock</field-name>
+            <format>Z(12)9.9(5)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>成品在途数量</description>
+            <field-name>materByWay</field-name>
+            <format>Z(12)9.9(5)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>成品转出未报数量</description>
+            <field-name>turnOutNoReport</field-name>
+            <format>Z(12)9.9(5)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>成品入库数量</description>
+            <field-name>materInWare</field-name>
+            <format>Z(12)9.9(5)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>本期成品出库数量</description>
+            <field-name>thisMaterOutWare</field-name>
+            <format>Z(12)9.9(5)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>本期成品内销数量</description>
+            <field-name>thisMaterCancel</field-name>
+            <format>Z(12)9.9(5)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>本期成品放弃数量</description>
+            <field-name>thisThrow</field-name>
+            <format>Z(12)9.9(5)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>成品退换</description>
+            <field-name>materExitChange</field-name>
+            <format>Z(12)9.9(5)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>半成品数量</description>
+            <field-name>halfExg</field-name>
+            <format>Z(12)9.9(5)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>废品数量</description>
+            <field-name>depose</field-name>
+            <format>Z(12)9.9(5)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>残次品数量</description>
+            <field-name>otherExg</field-name>
+            <format>Z(12)9.9(5)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>本期起始日期</description>
+            <field-name>checkHead.head.beginDate</field-name>
+            <format>YYYYMMDDHHMMSS</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+    </section>
+ 
+    <section multiple="true" required="false">
+        <description>联网核查料件表</description>
+        <section-flag>&lt;EMS_EDI_COL_IMG     &gt;</section-flag>
+        <class>com.bestway.bcus.checkcancel.entity.CheckImg</class>
+        <field nullable="true">
+            <description>电子帐册号</description>
+            <field-name>checkHead.emsNo</field-name>
+            <format>X(12)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>1</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>序号</description>
+            <field-name>seqNum</field-name>
+            <format>Z(8)9</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>1</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>料号/货号</description>
+            <field-name>ptNo</field-name>
+            <format>X(30)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>料件名称</description>
+            <field-name>name</field-name>
+            <format>X(30)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>商品编码</description>
+            <field-name>complex.code</field-name>
+            <format>X(10)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>规格型号</description>
+            <field-name>spec</field-name>
+            <format>X(30)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>备案计量单位</description>
+            <field-name>unit.code</field-name>
+            <format>X(3)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>转进未报数量</description>
+            <field-name>turnInNoReport</field-name>
+            <format>Z(12)9.9(5)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>原料在途数量</description>
+            <field-name>materByWay</field-name>
+            <format>Z(12)9.9(5)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>原料库存数量</description>
+            <field-name>materStock</field-name>
+            <format>Z(12)9.9(5)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>废料数量</description>
+            <field-name>depose</field-name>
+            <format>Z(12)9.9(5)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>在线数量</description>
+            <field-name>onlines</field-name>
+            <format>Z(12)9.9(5)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>边角料数量</description>
+            <field-name>overMater</field-name>
+            <format>Z(12)9.9(5)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>本期原料入库数量</description>
+            <field-name>thisMaterInWare</field-name>
+            <format>Z(12)9.9(5)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>原料领料数量</description>
+            <field-name>materGet</field-name>
+            <format>Z(12)9.9(5)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>本期原料内销数量</description>
+            <field-name>thisMaterCancel</field-name>
+            <format>Z(12)9.9(5)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>本期放弃料件数量</description>
+            <field-name>thisThrow</field-name>
+            <format>Z(12)9.9(5)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>合格成品耗用数量</description>
+            <field-name>passExgUse</field-name>
+            <format>Z(12)9.9(5)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>废品,残次品折料数量</description>
+            <field-name>otherConvert</field-name>
+            <format>Z(12)9.9(5)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>本期放弃残次品折料</description>
+            <field-name>thisThrowRemainExg</field-name>
+            <format>Z(12)9.9(5)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>原料退换</description>
+            <field-name>materExitChange</field-name>
+            <format>Z(12)9.9(5)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>半成品折料数量</description>
+            <field-name>halfExgConvert</field-name>
+            <format>Z(12)9.9(5)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>原料复出</description>
+            <field-name>materReuse</field-name>
+            <format>Z(12)9.9(5)</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>本期起始日期</description>
+            <field-name>checkHead.head.beginDate</field-name>
+            <format>YYYYMMDDHHMMSS</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+    </section>
+</message>

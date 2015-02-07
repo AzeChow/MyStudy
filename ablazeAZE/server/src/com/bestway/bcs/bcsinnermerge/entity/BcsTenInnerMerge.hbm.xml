@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class  lazy="false"  name="com.bestway.bcs.bcsinnermerge.entity.BcsTenInnerMerge" table="bcsTenInnerMerge">
+		<!-- <cache usage="read-write"/> --> 
+       <id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>		
+		<many-to-one lazy="false"      name="complex" column="complex" 
+			class="com.bestway.bcus.custombase.entity.hscode.Complex" index="bcsTenInner_complex"/>
+        <property name="name"/>
+		<property name="spec"/>       
+		
+		<property name="seqNum"/>
+		<property name="firstRate"/>
+		<property name="secondRate"/>
+		<property name="unitWeight"/>
+		<property name="price"/>
+		<property name="wear"/>
+		<property name="isMainImg"/>
+		<property name="machPrice"/>
+		<many-to-one lazy="false"      name="comUnit" column="comUnit" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>	
+		<property name="scmCoi"/>
+		<many-to-one lazy="false"      name="curr" column="curr" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Curr"/>
+		<many-to-one lazy="false"      name="country" 
+			column="country" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Country"/>
+		<property name="legalAmount"/>
+		<property name="secondLegalAmount"/>
+		<many-to-one lazy="false"      name="company" column="coid" index="bcsTenInner_coid"
+			class="com.bestway.bcus.system.entity.Company"/>			
+    </class>
+
+</hibernate-mapping>
+<!-- parsed in 0ms -->

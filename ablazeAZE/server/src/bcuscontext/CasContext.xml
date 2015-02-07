@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!--==================DAO Beans====================-->
+	<bean id="casDao" class="com.bestway.bcus.cas.dao.CasDao">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="casCheckDao" class="com.bestway.bcus.cas.dao.CasCheckDao">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="casBillDao" class="com.bestway.bcus.cas.dao.CasBillDao">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="casParameterSetDao" class="com.bestway.bcus.cas.dao.CasParameterSetDao">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="casSpecificontrolDao" class="com.bestway.bcus.cas.dao.CasSpecificontrolDao">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+
+	<bean id="casLeftoverMaterielDao" class="com.bestway.bcus.cas.dao.CasLeftoverMaterielDao">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="casTransferFactoryDao" class="com.bestway.bcus.cas.dao.CasTransferFactoryDao">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="emsEdiTrDao" class="com.bestway.bcus.manualdeclare.dao.EmsEdiTrDao">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="hsCodeDao" class="com.bestway.bcus.custombase.dao.HsCodeDao">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+	<!--==================Logic Beans====================-->
+	<bean id="casLogic" class="com.bestway.bcus.cas.logic.CasLogic">
+		<property name="casDao">
+			<ref bean="casDao" />
+		</property>
+		<property name="materialManageDao">
+			<ref bean="materialManageDao" />
+		</property>
+	</bean>
+	<bean id="casCheckLogic" class="com.bestway.bcus.cas.logic.CasCheckLogic">
+		<property name="casDao">
+			<ref bean="casDao" />
+		</property>
+		<property name="materialManageDao">
+			<ref bean="materialManageDao" />
+		</property>
+		<property name="casCheckDao">
+			<ref bean="casCheckDao" />
+		</property>
+	</bean>
+	<bean id="casParameterSetLogic" class="com.bestway.bcus.cas.logic.CasParameterSetLogic"
+		init-method="findWriteAccountYear">
+		<property name="casParameterSetDao">
+			<ref bean="casParameterSetDao" />
+		</property>
+	</bean>
+	<bean id="makeCorrespondenceLogic" class="com.bestway.bcus.cas.logic.MakeCorrespondenceLogic">
+		<property name="casDao">
+			<ref bean="casDao" />
+		</property>
+		<property name="bcsInnerMergeDao">
+			<ref bean="bcsInnerMergeDao" />
+		</property>
+		<property name="bcusInnerMergeDao">
+			<ref bean="commonCodeDao" />
+		</property>
+		<property name="emsEdiTrDao">
+			<ref bean="emsEdiTrDao" />
+		</property>
+	</bean>
+
+	<bean id="casLeftoverMaterielLogic2" class="com.bestway.bcus.cas.logic.CasLeftoverMaterielLogic2">
+		<property name="casLeftoverMaterielDao">
+			<ref bean="casLeftoverMaterielDao" />
+		</property>
+		<property name="casDao">
+			<ref bean="casDao" />
+		</property>
+		<property name="materialManageDao">
+			<ref bean="materialManageDao" />
+		</property>
+	</bean>
+	<bean id="imgOrgUseInfoLogic" class="com.bestway.bcus.cas.logic.ImgOrgUseInfoLogic">
+		<property name="casDao">
+			<ref bean="casDao" />
+		</property>
+		<property name="commonBaseCodeDao">
+			<ref bean="commonCodeDao" />
+		</property>
+		<property name="materialManageDao">
+			<ref bean="materialManageDao" />
+		</property>
+		<property name="casLeftoverMaterielLogic2">
+			<ref bean="casLeftoverMaterielLogic2" />
+		</property>
+	</bean>
+
+
+	<bean id="exgExportInfoLogic" class="com.bestway.bcus.cas.logic.ExgExportInfoLogic">
+		<property name="casDao">
+			<ref bean="casDao" />
+		</property>
+		<property name="commonBaseCodeDao">
+			<ref bean="commonCodeDao" />
+		</property>
+	</bean>
+	<bean id="transferInfoLogic" class="com.bestway.bcus.cas.logic.TransferInfoLogic">
+		<property name="casDao">
+			<ref bean="casDao" />
+		</property>
+		<property name="casTransferFactoryDao">
+			<ref bean="casTransferFactoryDao" />
+		</property>
+	</bean>
+	<bean id="casSpecificontrolLogic" class="com.bestway.bcus.cas.logic.CasSpecificontrolLogic">
+		<property name="casSpecificontrolDao">
+			<ref bean="casSpecificontrolDao" />
+		</property>
+		<property name="casBillDao">
+			<ref bean="casBillDao" />
+		</property>
+		<property name="casDao">
+			<ref bean="casDao" />
+		</property>
+	</bean>
+	<bean id="casBillLogic" class="com.bestway.bcus.cas.logic.CasBillLogic">
+		<!--init-method="tempSave"-->
+		<property name="casBillDao">
+			<ref bean="casBillDao" />
+		</property>
+		<property name="casDao">
+			<ref bean="casDao" />
+		</property>
+		<property name="emsEdiTrDao">
+			<ref bean="emsEdiTrDao" />
+		</property>
+
+		<property name="materialManageDao">
+			<ref bean="materialManageDao" />
+		</property>
+
+		<property name="hsCodeDao">
+			<ref bean="hsCodeDao" />
+		</property>
+
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<bean id="fixingThingLogic" class="com.bestway.bcus.cas.logic.FixingThingLogic">
+		<property name="casDao">
+			<ref bean="casDao" />
+		</property>
+	</bean>
+
+	<bean id="casLeftoverMaterielLogic" class="com.bestway.bcus.cas.logic.CasLeftoverMaterielLogic">
+		<property name="casLeftoverMaterielDao">
+			<ref bean="casLeftoverMaterielDao" />
+		</property>
+		<property name="casDao">
+			<ref bean="casDao" />
+		</property>
+		<property name="materialManageDao">
+			<ref bean="materialManageDao" />
+		</property>
+	</bean>
+
+
+
+	<bean id="balanceInfoLogic" class="com.bestway.bcus.cas.logic.BalanceInfoLogic">
+		<property name="casLeftoverMaterielDao">
+			<ref bean="casLeftoverMaterielDao" />
+		</property>
+		<property name="casDao">
+			<ref bean="casDao" />
+		</property>
+		<property name="materialManageDao">
+			<ref bean="materialManageDao" />
+		</property>
+		<!--
+			<property name="imgOrgUseInfoLogic"> <ref bean="imgOrgUseInfoLogic"/>
+			</property>
+		-->
+	</bean>
+
+	<bean id="balanceInfoLogic2" class="com.bestway.bcus.cas.logic.BalanceInfoLogic2">
+		<property name="casLeftoverMaterielDao">
+			<ref bean="casLeftoverMaterielDao" />
+		</property>
+		<property name="balanceInfoLogic">
+			<ref bean="balanceInfoLogic" />
+		</property>
+	</bean>
+
+
+	<bean id="imgOrgUseMiddleInfoLogic" class="com.bestway.bcus.cas.logic.ImgOrgUseMiddleInfoLogic">
+		<property name="casDao">
+			<ref bean="casDao" />
+		</property>
+		<property name="commonBaseCodeDao">
+			<ref bean="commonCodeDao" />
+		</property>
+		<property name="materialManageDao">
+			<ref bean="materialManageDao" />
+		</property>
+	</bean>
+
+
+
+	<!--==================Action Bean====================-->
+	<bean id="casAction" class="com.bestway.bcus.cas.action.CasActionImpl">
+		<property name="casDao">
+			<ref bean="casDao" />
+		</property>
+		<property name="casParameterSetDao">
+			<ref bean="casParameterSetDao" />
+		</property>
+		<property name="casLogic">
+			<ref bean="casLogic" />
+		</property>
+		<property name="imgOrgUseInfoLogic">
+			<ref bean="imgOrgUseInfoLogic" />
+		</property>
+		<property name="exgExportInfoLogic">
+			<ref bean="exgExportInfoLogic" />
+		</property>
+		<property name="casSpecificontrolDao">
+			<ref bean="casSpecificontrolDao" />
+		</property>
+		<property name="casSpecificontrolLogic">
+			<ref bean="casSpecificontrolLogic" />
+		</property>
+		<property name="transferInfoLogic">
+			<ref bean="transferInfoLogic" />
+		</property>
+		<property name="casBillDao">
+			<ref bean="casBillDao" />
+		</property>
+		<property name="casBillLogic">
+			<ref bean="casBillLogic" />
+		</property>
+		<property name="makeCorrespondenceLogic">
+			<ref bean="makeCorrespondenceLogic" />
+		</property>
+		<property name="casParameterSetLogic">
+			<ref bean="casParameterSetLogic" />
+		</property>
+		<property name="fixingThingLogic">
+			<ref bean="fixingThingLogic" />
+		</property>
+
+		<property name="casLeftoverMaterielLogic">
+			<ref bean="casLeftoverMaterielLogic" />
+		</property>
+		<property name="casLeftoverMaterielDao">
+			<ref bean="casLeftoverMaterielDao" />
+		</property>
+		<property name="balanceInfoLogic">
+			<ref bean="balanceInfoLogic" />
+		</property>
+		<property name="balanceInfoLogic2">
+			<ref bean="balanceInfoLogic2" />
+		</property>
+		<property name="imgOrgUseMiddleInfoLogic">
+			<ref bean="imgOrgUseMiddleInfoLogic" />
+		</property>
+	</bean>
+	<bean id="casCheckAction" class="com.bestway.bcus.cas.action.CasCheckActionImpl">
+		<property name="casDao">
+			<ref bean="casDao" />
+		</property>
+		<property name="casCheckLogic">
+			<ref bean="casCheckLogic" />
+		</property>
+	</bean>
+	<!--==================Other Beans====================-->
+
+	<!--cas parameter control check authority control-->
+	<bean id="casParameterAction" class="com.bestway.bcus.cas.authority.CasParameterActionImpl" />
+
+	<!--cas specif control check authority control-->
+	<bean id="casSpecifControlAction"
+		class="com.bestway.bcus.cas.authority.CasSpecifControlActionImpl" />
+
+	<!--factory report check authority control-->
+	<bean id="casFactoryReportAction"
+		class="com.bestway.bcus.cas.authority.CasFactoryReportActionImpl" />
+	<!--custom report check authority control-->
+	<bean id="casCustomReportAction"
+		class="com.bestway.bcus.cas.authority.CasCustomReportActionImpl" />
+	<!--finance report check authority control-->
+	<bean id="casFinanceReportAction"
+		class="com.bestway.bcus.cas.authority.CasFinanceReportActionImpl" />
+
+	<!--other report check authority control-->
+	<bean id="casOtherReportAction" 
+	    class="com.bestway.bcus.cas.authority.CasOtherReportActionImpl" />
+	<!--other report check authority control-->
+	<bean id="casBalanceReportAction" 
+	    class="com.bestway.bcus.cas.authority.CasBalanceReportActionImpl" />
+
+</beans>

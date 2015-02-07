@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class lazy="false"
+		name="com.bestway.owp.entity.OwpParameterSet" 
+		table="owpparameterset">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>				
+		<property name="projectType" />
+		<property name="sendDir" />
+		<property name="recvDir" />
+		<property name="finallyDir"/>
+		<property name="logDir" />		
+		
+		<property name="readFromCard" />
+		<property name="seqNo" />
+		<property name="pwd" />
+		<property name="idCard"/>
+		<property name="remoteHostAddress" />
+		<property name="remoteHostPort" />
+		<!--  
+		<property name="remoteSignData" />
+		<property name="remoteDxpMail" />
+		<property name="port9097IsOpen" />
+		-->
+		<many-to-one lazy="false" name="company" column="companyId" 
+			class="com.bestway.bcus.system.entity.Company" 
+			index="transparameterset_company"/>
+	</class>
+</hibernate-mapping>

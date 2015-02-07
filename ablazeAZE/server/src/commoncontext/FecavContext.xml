@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+<beans>
+	<!--==================DAO Beans====================-->
+	<bean id="fecavDao" 
+		class="com.bestway.fecav.dao.FecavDao">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>
+	
+	<!--==================Logic Beans====================-->
+	<bean id="fecavLogic" 
+		class="com.bestway.fecav.logic.FecavLogic">
+		<property name="fecavDao">
+			<ref bean="fecavDao"/>
+		</property>
+	</bean>	
+	
+
+	<!--==================Action Bean====================-->
+	<bean id="fecavAction" 
+		class="com.bestway.fecav.action.FecavActionImpl">
+		<property name="fecavDao">
+			<ref bean="fecavDao"/>
+		</property>		
+        <property name="fecavLogic">
+			<ref bean="fecavLogic"/>
+		</property>	
+		<property name="fptManageLogic">
+			<ref bean="fptManageLogic"/>
+		</property>	
+	</bean>
+	
+	
+</beans>

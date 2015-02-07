@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class lazy="false"
+		name="com.bestway.common.transferfactory.entity.TransferFactoryInitBill"
+		table="transferfactoryinitbill">
+		<cache usage="read-write" />
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex" />
+		</id>
+		<property name="envelopNo" />
+		<property name="transferFactoryInitBillCode" />
+		<property name="effectiveDate" />
+		<property name="isEffective" />
+		<property name="itemCount" />
+		<many-to-one lazy="false" name="scmCoc" column="scmCocId"
+			class="com.bestway.common.materialbase.entity.ScmCoc" />
+		<many-to-one lazy="false" name="wareSet" column="wareSetId"
+			class="com.bestway.common.materialbase.entity.WareSet" />
+		<property name="buildDate" />
+		<property name="buildCompanyCode" />
+		<property name="buildCompanyName" />
+		<property name="memo" length="200" />
+		<many-to-one lazy="false" name="company" column="companyId"
+			class="com.bestway.bcus.system.entity.Company" index="transraconitbl_company" />
+		<!--<property name="impExpFlag" />-->
+		<property name="isImpExpFlag" />
+		<many-to-one lazy="false" name="aclUser" column="aclUserId"
+			class="com.bestway.common.authority.entity.AclUser" />
+	</class>
+</hibernate-mapping>

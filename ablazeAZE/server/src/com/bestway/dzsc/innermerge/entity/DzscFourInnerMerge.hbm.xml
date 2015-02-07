@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class  lazy="false"  name="com.bestway.dzsc.innermerge.entity.DzscFourInnerMerge" table="dzscfourinnermerge">
+		<cache usage="read-write"/> 
+        <id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+	    </id>
+		<property name="fourSeqNum"/>
+		<property name="fourPtName" length="225"/>
+		<property name="fourPtSpec" length="225"/>
+		<many-to-one lazy="false"  fetch="join"  name="fourUnit" column="fourUnit" class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<property name="fourComplex" />
+		<many-to-one lazy="false" name="company" class="com.bestway.bcus.system.entity.Company">
+			<column name="coid" index="dzscinnermerge_coid"/>	
+		</many-to-one>
+    </class>
+
+</hibernate-mapping>

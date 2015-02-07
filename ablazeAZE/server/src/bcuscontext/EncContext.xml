@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!--==================DAO Beans====================-->
+	<bean id="encDao" class="com.bestway.bcus.enc.dao.EncDao">
+              <property name="sessionFactory"><ref bean="sessionFactory"/></property>
+			  <property name="projectType"><value>0</value></property>
+	</bean>
+	<!--==================Logic Beans====================-->
+	<bean id="encLogic" class="com.bestway.bcus.enc.logic.EncLogic">
+		<property name="baseEncDao"><ref local="encDao"/></property>
+		<property name="emsEdiTrDao"><ref bean="emsEdiTrDao"/></property>
+		<property name="baseCodeDao"><ref bean="baseCodeDao"/></property>
+		<property name="dataSource"><ref bean="dataSource"/></property>
+		<property name="fptManageLogic"><ref bean="fptManageLogic"/></property>		
+		<property name="fptManageDao"><ref bean="fptManageDao"/></property>		
+		<property name="commonCodeDao">
+			<ref bean="commonCodeDao"/>
+		</property>
+		<property name="casDao">
+			<ref bean="casDao"/>
+		</property>
+		<property name="createDirDao">
+			<ref bean="createDirDao"/>
+		</property>
+		<property name="invoiceDao">
+			<ref bean="invoiceDao"/>
+		</property>
+		<property name="fecavDao">
+			<ref bean="fecavDao"/>
+		</property>
+		<property name="sysCodeDao">
+			<ref bean="sysCodeDao"/>
+		</property>
+		<property name="encDao">
+			<ref bean="encDao"></ref>
+		</property>
+		<property name="transferFactoryManageDao">
+			<ref bean="transferFactoryManageDao"/>
+		</property>
+	</bean>
+
+    <bean id="encBcusLogic" class="com.bestway.bcus.enc.logic.EncBcusLogic">
+		<property name="encDao"><ref local="encDao"/></property>
+		<property name="fptManageDao"><ref bean="fptManageDao"/></property>	
+		<property name="sysCodeDao">
+			<ref bean="sysCodeDao"/>
+		</property>
+	</bean>	
+	<bean id="encImportLogic" class="com.bestway.customs.common.logic.EncImportLogic">
+		<property name="baseEncDao"><ref bean="baseEncDao"/></property>	
+	</bean>
+	<bean id="baseEncDao" class="com.bestway.customs.common.dao.BaseEncDao">
+		<property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+	<!--==================Action Bean====================-->
+	<bean id="encAction" class="com.bestway.bcus.enc.action.EncActionImpl">
+		<property name="baseEncDao"><ref local="encDao"/></property>
+		<property name="baseEncLogic"><ref local="encLogic"/></property>
+		<property name="encBcusLogic"><ref local="encBcusLogic"/></property>
+		<property name="encImportLogic"><ref local="encImportLogic"/></property>
+	</bean>
+	
+</beans>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!--==================DAO Beans====================-->
+	<bean id="contractExeDao" class="com.bestway.bcs.contractexe.dao.ContractExeDao">
+              <property name="sessionFactory"><ref bean="sessionFactory"/></property>
+			  <property name="projectType"><value>1</value></property>
+	</bean>
+	<bean id="bcsImpExpRequestDao" 
+		class="com.bestway.bcs.contractexe.dao.BcsImpExpRequestDao">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>		
+	</bean>
+	<!--==================Logic Beans====================-->
+	<bean id="contractExeLogic" class="com.bestway.bcs.contractexe.logic.ContractExeLogic">
+        <property name="baseEncDao"><ref bean="contractExeDao"/></property>
+		<property name="contractDao"><ref bean="contractDao"/></property>
+		<property name="contractCavDao"><ref bean="contractCavDao"/></property>
+		<property name="invoiceDao">
+			<ref bean="invoiceDao"/>
+		</property>
+		<property name="fecavDao">
+			<ref bean="fecavDao"/>
+		</property>
+		<property name="transferFactoryManageDao">
+			<ref bean="transferFactoryManageDao"/>
+		</property>
+	</bean>
+	<bean id="bcsImpExpRequestLogic" 
+		class="com.bestway.bcs.contractexe.logic.BcsImpExpRequestLogic">
+		<property name="bcsContractDao">
+			<ref bean="contractDao"/>
+		</property>
+		<property name="contractCavDao">
+			<ref bean="contractCavDao"/>
+		</property>
+		<property name="bcsImpExpRequestDao">
+			<ref bean="bcsImpExpRequestDao"/>
+		</property>
+		
+		<property name="bcsEncDao">
+			<ref bean="contractExeDao"/>
+		</property>
+		
+		<property name="bcsEncLogic">
+			<ref bean="contractExeLogic"/>
+		</property>
+		<property name="bcsInnerMergeDao">
+			<ref bean="bcsInnerMergeDao"/>
+		</property>
+		<property name="contractStatLogic">
+			<ref bean="contractStatLogic"/> 
+		</property>
+		
+		<property name="companyDao">
+			<ref bean="companyDao"/> 
+		</property>
+	</bean>
+	<!--==================Action Bean====================-->
+	<bean id="contractExeAction" class="com.bestway.bcs.contractexe.action.ContractExeActionImpl">
+              <property name="baseEncDao"><ref bean="contractExeDao"/></property>
+			  <property name="baseEncLogic"><ref bean="contractExeLogic"/></property>			  
+			  <property name="bcsImpExpRequestDao"><ref bean="bcsImpExpRequestDao"/></property>
+			  <property name="bcsImpExpRequestLogic"><ref bean="bcsImpExpRequestLogic"/></property>
+			  <property name="contractExeLogic"><ref bean="contractExeLogic"/></property>
+			  <property name="contractExeDao"><ref bean="contractExeDao"/></property>
+			  <property name="encImportLogic"><ref bean="encImportLogic"/></property>
+	</bean>
+
+
+</beans>

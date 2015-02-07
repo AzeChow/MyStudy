@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="eportmsg.xsl"?>
+<!--Element message: 此元素内所有内容及属性描述一个报文的定义及从数据库的获取途径。-->
+<message version="1.0" type="MaterielApply">
+	<description>内销汇总报文定义及获取方法描述</description>
+	<section-flag>PTS_DATA</section-flag>
+	<sub-section>
+		<description>签名信息</description>
+		<file-name>PtsSignFormat.xml</file-name>
+	</sub-section>
+	
+		<section multiple="false" required="true">
+			<description>内销汇总表体</description>
+			<section-flag>PTS_IS_GATHER_LIST</section-flag>
+				<section multiple="false" required="true">
+					<description>内销汇总表体记录</description>
+					<section-flag>PTS_IS_GATHER</section-flag>
+					<data-id></data-id>
+					<field nullable="false" signNo="1">
+						<description>帐册编号</description>
+						<field-name></field-name>
+						<format>X(12)</format>
+						<field-flag>EMS_NO</field-flag>
+					</field>
+					<field nullable="false" signNo="2">
+						<description>货号</description>
+						<field-name></field-name>
+						<format>X(30)</format>
+						<field-flag>COP_G_NO</field-flag>
+					</field>
+					<field nullable="false" signNo="3">
+						<description>送货日期</description>
+						<field-name></field-name>
+						<format>Z(8)</format>
+						<field-flag>DELI_DATE</field-flag>
+					</field>
+					<field nullable="false" signNo="4">
+						<description>数量</description>
+						<field-name></field-name>
+						<format>Z(12)9.9(5)</format>
+						<field-flag>QTY</field-flag>
+					</field>
+					<field nullable="false" signNo="5">
+						<description>单价</description>
+						<field-name></field-name>
+						<format>Z(12)9.9(5)</format>
+						<field-flag>UNIT_PRICE</field-flag>
+					</field>
+					<field nullable="false" signNo="6">
+						<description>币制</description>
+						<field-name></field-name>
+						<format>X(3)</format>
+						<field-flag>CURR</field-flag>
+					</field>
+					<field nullable="false" signNo="7">
+						<description>是否报关标志</description>
+						<field-name></field-name>
+						<format>X(1)</format>
+						<field-flag>DEC_MARK</field-flag>
+					</field>
+					<field nullable="true" signNo="8">
+						<description>备用字段1</description>
+						<field-name></field-name>
+						<format>X(50)</format>
+						<field-flag>NOTE_1</field-flag>
+					</field>
+					<field nullable="true" signNo="9">
+						<description>备用字段2</description>
+						<field-name></field-name>
+						<format>X(50)</format>
+						<field-flag>NOTE_2</field-flag>
+					</field>
+					<field nullable="true" signNo="10">
+						<description>备用字段3</description>
+						<field-name></field-name>
+						<format>X(50)</format>
+						<field-flag>NOTE_3</field-flag>
+					</field>
+				</section>
+	</section>
+</message>

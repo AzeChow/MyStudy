@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+	<!--==================DAO Beans====================-->
+	<bean id="fptManageDao" class="com.bestway.common.fpt.dao.FptManageDao">
+		<property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+	<bean id="fptMessageDao" class="com.bestway.common.fpt.dao.FptMessageDao">
+		<property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+	<bean id="btplsDownloadDao" class="com.bestway.common.fpt.btplsinput.dao.BtplsDownloadDao">
+		<property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+	<!--==================Logic Beans====================-->
+	<bean id="fptMessageLogic" class="com.bestway.common.fpt.logic.FptMessageLogic">
+	    <property name="cspMessageDao"><ref local="fptMessageDao"/></property>
+	    <property name="baseCodeDao"><ref bean="baseCodeDao"/></property>
+	</bean>
+	<bean id="fptManageLogic" class="com.bestway.common.fpt.logic.FptManageLogic">
+		<property name="fptManageDao"><ref local="fptManageDao"/></property>
+		<property name="emsEdiTrDao"><ref bean="emsEdiTrDao"/></property>
+		<property name="encDao"><ref bean="encDao"/></property>
+		<property name="casDao"><ref bean="casDao"/></property>	
+		<property name="contractDao"><ref bean="contractDao"/></property>	
+		<property name="dzscDao"><ref bean="dzscDao"/></property>	
+		<property name="commonCodeDao"><ref bean="commonCodeDao"/></property>	
+		<property name="fptMessageLogic"><ref bean="fptMessageLogic"/></property>
+		<property name="contractExeLogic"><ref bean="contractExeLogic"/></property>
+		<property name="dzscContractExeLogic"><ref bean="dzscContractExeLogic"/></property>	
+		<property name="bcsImpExpRequestDao"><ref bean="bcsImpExpRequestDao"/></property>
+		<property name="baseCodeDao"><ref bean="baseCodeDao"/></property>
+		<property name="countryCodeDao"><ref bean="countryCodeDao"/></property>
+	</bean>
+	<bean id="fptQueryLogic" class="com.bestway.common.fpt.logic.FptQueryLogic">
+	    <property name="fptManageDao"><ref local="fptManageDao"/></property>
+	</bean>
+	<bean id="fptQpLogic" class="com.bestway.common.fpt.logic.FptQpLogic">
+	    <property name="fptManageDao"><ref local="fptManageDao"/></property>
+	</bean>
+	<bean id="btplsDownloadLogic" class="com.bestway.common.fpt.btplsinput.logic.BtplsDownloadLogic">
+		<property name="btplsDownloadDao"><ref local="btplsDownloadDao"/></property>
+	</bean>
+	
+	
+	<!--==================Action Bean====================-->
+	<bean id="fptManageAction" 
+		class="com.bestway.common.fpt.action.FptManageActionImpl">
+		<property name="fptManageDao"><ref local="fptManageDao"/></property>
+		<property name="fptManageLogic"><ref local="fptManageLogic"/></property>
+		<property name="fptQueryLogic"><ref local="fptQueryLogic"/></property>
+		<property name="fptQpLogic"><ref local="fptQpLogic"/></property>
+	</bean>
+	<bean id="fptMessageAction" 
+		class="com.bestway.common.fpt.action.FptMessageActionImpl">
+		<property name="cspMessageDao"><ref local="fptMessageDao"/></property>
+		<property name="cspMessageLogic"><ref local="fptMessageLogic"/></property>
+	</bean>
+	<bean id="btplsDownloadParaAction" 
+		class="com.bestway.common.fpt.btplsinput.action.BtplsDownloadParaActionImpl">
+		<property name="btplsDownloadDao"><ref local="btplsDownloadDao"/></property>
+	</bean>
+	<bean id="btplsDownloadAction" 
+		class="com.bestway.common.fpt.btplsinput.action.BtplsDownloadActionImpl">
+		<property name="btplsDownloadLogic"><ref local="btplsDownloadLogic"/></property>
+	</bean>
+	<!--==================Other Beans====================-->
+</beans>

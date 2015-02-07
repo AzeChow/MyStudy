@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.common.erpbill.entity.CustomOrderImg" 
+		table="customOrderImg">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<many-to-one lazy="false"    name="customOrder" column="customOrderid" 
+			class="com.bestway.common.erpbill.entity.CustomOrder" index="customOrder_img"/>
+<!--		<many-to-one lazy="false"    name="customOrderDetail" column="customOrderDetailid" 
+			class="com.bestway.common.erpbill.entity.CustomOrderDetail" index="customOrderDetail_exg"/>-->
+		<property name="seqNum"/>
+		<many-to-one lazy="false"      name="complex" column="complex" 
+			class="com.bestway.bcus.custombase.entity.hscode.Complex" index="contractImg_complex"/>
+		<property name="name" />
+		<property name="spec" />
+		<many-to-one lazy="false"      name="unit" column="unit" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<property name="declarePrice"/>
+		<property name="note"/>
+		<property name="credenceNo" />
+		<property name="amount" />
+		<property name="wasteAmount" />
+		<property name="unitPrice" />
+		<property name="totalPrice" />
+		<property name="legalTotalAmount" />
+		<property name="legalAmount" />
+		<property name="secondAmount" />
+		<!--<many-to-one lazy="false"    name="secondUnit" column="secondUnit" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<many-to-one lazy="false"      name="legalUnit" column="legalUnit" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>-->
+		<property name="unitWeight" />
+		<property name="totalWeight"/>
+		<property name="isMainImg" />
+		<!--<property name="declareState" />-->		
+		<many-to-one lazy="false"      name="levyMode" column="levyMode" 
+			class="com.bestway.bcus.custombase.entity.parametercode.LevyMode"/>
+		<many-to-one lazy="false"      name="country" column="country" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Country"/>
+		<many-to-one lazy="false"      name="curr" column="curr" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Curr"/>
+		<property name="isApplyToCustoms"/>
+		<property name="detailNote"/>
+		<property name="createDate" />
+		<property name="modifyDate" />
+		<property name="modifyMark" />
+		<property name="transNum" />
+		<property name="contractNum" />
+		<property name="notTransNum" />
+		<property name="notContractNum" />
+		<many-to-one lazy="false"      name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" index="contractImg_coid"/>
+	</class>
+</hibernate-mapping>
+<!-- parsed in 0ms -->

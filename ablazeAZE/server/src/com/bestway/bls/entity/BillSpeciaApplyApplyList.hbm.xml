@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class lazy="false" name="com.bestway.bls.entity.BillSpecialApplyApplyList" 
+		table="billspecialapplyapplylist">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="seqNo"></property>	
+		<property name="qtName"></property>	
+		<property name="qtModel"></property>	
+		<property name="qtCode"></property>	
+		<property name="qtUnit"></property>		
+		<property name="qtTy"></property>
+		<many-to-one lazy="false" name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company"/>
+		<many-to-one lazy="false" name="billSpecialApplyHead"
+			class="com.bestway.bls.entity.BillSpecialApplyHead"/>	    
+  </class>
+</hibernate-mapping>

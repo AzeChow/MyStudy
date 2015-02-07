@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class lazy="false" 
+		name="com.bestway.dzsc.customslist.entity.DzscBillListBeforeCommInfo" 
+		table="dzscbilllistbefore">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="no" />
+		<many-to-one lazy="false" name="afterComInfo" column="afterComInfo" 
+			class="com.bestway.dzsc.customslist.entity.DzscBillListAfterCommInfo" 
+			index="index_after"/>
+		<!--<property name="emsSerialNo" />-->
+		<many-to-one lazy="false" name="materiel" column="materiel" 
+			class="com.bestway.common.materialbase.entity.Materiel" 
+			index="dzscbefore_materiel"/>
+		<property name="declaredPrice" />
+		<property name="declaredAmount" />
+		<property name="legalAmount" />
+		<property name="secondLegalAmount" />
+		<property name="totalPrice" />
+		<property name="grossWeight" />
+		<property name="netWeight" />
+		<property name="isAutoCreate" />
+		<property name="bomVersion" />
+		<property name="memos" />
+		<many-to-one lazy="false" name="salesCountry" column="salesCountry" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Country"/>
+		<many-to-one lazy="false" name="usesCode" column="usesCode" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Uses"/>
+		<many-to-one lazy="false" name="currency" column="currency" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Curr"/>
+		<many-to-one lazy="false" name="levyMode" column="levyMode" 
+			class="com.bestway.bcus.custombase.entity.parametercode.LevyMode"/>
+		<many-to-one lazy="false" name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" 
+			index="dzscbefore_coid"/>
+	</class>
+</hibernate-mapping>
+<!-- parsed in 0ms -->

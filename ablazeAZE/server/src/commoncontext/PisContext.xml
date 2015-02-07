@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<bean id="pisDao" class="com.bestway.pis.dao.PisDao">
+        <property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+	
+	<bean id="pisLogic" class="com.bestway.pis.logic.PisLogic">
+		<property name="pisDao"><ref bean="pisDao"/></property>
+	</bean>	
+	
+	<bean id="pisAction" class="com.bestway.pis.action.PisActionImp">
+		<property name="pisLogic"><ref local="pisLogic"/></property>
+	</bean>
+	
+	<!-- =================Authority Bean -->
+	<bean id="PisVerificationAuthority" class="com.bestway.pis.action.PisVerificationAuthorityImpl" />
+</beans>

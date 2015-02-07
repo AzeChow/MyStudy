@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class lazy="false" 
+		name="com.bestway.bcus.cas.invoice.entity.CasInvoiceInfo" 
+		table="casInvoiceInfo">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="cuName"/>
+		<property name="cuSpec"/>
+		<property name="amount"/>
+		<property name="price"/>
+		<property name="seqNum"/>
+		<property name="cancelEmsSeqNum"/>
+		<property name="impost"/>
+		<property name="allMoney"/>
+		<property name="projectType"/>
+		<property name="totalMoney"/>
+		<property name="totalWeight"/>
+		<property name="canceled"/>
+		<property name="toBillsAll"/>
+		<property name="toBillNum"/>
+		<property name="canceledNum"/>
+		<many-to-one lazy="false" name="unit" column="unit" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit" />
+		<many-to-one lazy="false" name="casInvoice" column="casInvoice" 
+			class="com.bestway.bcus.cas.invoice.entity.CasInvoice" />
+		<many-to-one lazy="false" name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" 
+			index="fgsortinfo_company"/>
+		<many-to-one lazy="false" name="complex" column="complex" 
+			class="com.bestway.bcus.custombase.entity.hscode.Complex" />
+	</class>
+</hibernate-mapping>
+		

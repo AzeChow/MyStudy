@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+<beans>
+	<!--==================DAO Beans====================-->
+	<bean id="fixtureContractDao" class="com.bestway.fixtureonorder.dao.FixtureContractDao">
+		<property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+	
+	<!--==================Logic Beans====================-->
+	<bean id="fixtureContractLogic" class="com.bestway.fixtureonorder.logic.FixtureContractLogic">
+		<property name="fixtureContractDao"><ref bean="fixtureContractDao"/></property>
+	</bean>	
+	
+
+	<!--==================Action Bean====================-->
+	<bean id="fixtureContractAction" class="com.bestway.fixtureonorder.action.FixtureContractActionImpl">
+		<property name="fixtureContractLogic"><ref bean="fixtureContractLogic"/></property>	
+		<property name="fixtureContractDao"><ref bean="fixtureContractDao"/></property>		
+	</bean>
+	
+	<!--==================Action Bean====================-->
+	<bean id="checkFixAuthorityAction" class="com.bestway.fixtureonorder.action.CheckFixAuthorityActionImpl">
+	</bean>
+	
+	
+</beans>

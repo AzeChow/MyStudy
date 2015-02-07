@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class lazy="false" name="com.bestway.bcus.system.entity.BcusParameterSet" 
+		table="bcusparameterset">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="sendDir" />
+		<property name="recvDir" />
+		<property name="finallyDir"/>
+		<property name="logDir" />
+		
+		<property name="readFromCard" />
+		<property name="seqNo" />
+		<property name="pwd" />
+		<property name="idCard"/>
+		
+		<property name="createDate" />
+		<property name="modifyDate" />
+		<!--
+		<property name="remoteSignData" />
+		<property name="remoteDxpMail" />
+		<property name="port9097IsOpen" />		
+		-->
+		<property name="remoteHostAddress" />	
+		<property name="remoteHostPort" />	
+		<property name="remoteHostICPwd" />
+		<many-to-one lazy="false" name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" 
+			index="bcusparameterset_coid"/>
+	</class>
+</hibernate-mapping>

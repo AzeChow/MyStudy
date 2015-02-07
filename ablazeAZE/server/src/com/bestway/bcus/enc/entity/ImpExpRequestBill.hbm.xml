@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcus.enc.entity.ImpExpRequestBill" 
+		table="impexprequestbill">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="billType" length="10"/>
+		<property name="billNo" />
+		<property name="beginAvailability"/>
+		<property name="isAvailability"/>
+		<property name="isCustomsBill"/>
+		<property name="itemCount"/>		
+		<property name="materielProductFlag"/>
+		<property name="conveyance"/>
+		<property name="imputDate"/>	
+		<property name="toCustomCount"/>
+		<property name="allBillNo"/>
+		<property name="containerCode"/>
+		<property name="invoiceNo"/>
+		<property name="contractNo"/>
+		<property name="catNo"/>
+		<property name="transferMode"/>
+		<property name="harbour"/>
+		<many-to-one lazy="false"      name="transfMode" column="transfMode" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Transf"/>
+		<property name="memos" length ="2000"/>
+		<many-to-one lazy="false"      name="wrap" column="wrap" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Wrap" />
+		<many-to-one lazy="false"      name="company" column="companyId" 
+			class="com.bestway.bcus.system.entity.Company" index="impxpreqestbi_company"/>
+		<many-to-one lazy="false"      name="wareSet" column="wareSetId" 
+			class="com.bestway.common.materialbase.entity.WareSet"/>
+		<many-to-one lazy="false"      name="iePort" column="iePort" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Customs"/>
+		<many-to-one lazy="false"      name="scmCoc" column="scmCocId" 
+			class="com.bestway.common.materialbase.entity.ScmCoc"/>
+		<many-to-one lazy="false"      name="transac" column="transacId" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Transac"/>
+		<!--<set name="impExpCommodityInfo" inverse="true" cascade="delete" lazy="true">
+			<cache usage="read-write"/>			
+			<key column="impExpRequestBillId"/>
+			<one-to-many class="com.bestway.bcus.enc.entity.ImpExpCommodityInfo"/>
+		</set>-->
+		
+	</class>
+
+</hibernate-mapping>

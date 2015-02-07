@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section version="1.0" type="Collatebind">
+	<description>核销捆绑关系</description>
+	<section-flag>BindCollection</section-flag>
+	<section-attribute>xmlns="un:epz"</section-attribute>
+	<section>
+		<section-flag>Binds</section-flag>
+		<section>
+			<section-flag>bind</section-flag>
+			<query>
+				<entity-class>com.bestway.bls.entity.CollateBind
+				</entity-class>
+				<query-fields>
+					<query-field>id</query-field>
+				</query-fields>
+			</query>
+			<next-layer-query-values>
+				<query-value next-layer-field-name="collateBind.id"
+					value-type="FIELD_VALUE">id
+		    	</query-value>
+				<!--
+					<query-value field-name="id"
+					value-type="CONSTANT">1122</query-value>
+				-->
+			</next-layer-query-values>
+			<field nullable="false" signNo="1">
+				<description>单证编号</description>
+				<field-name>formID</field-name>
+				<field-flag>FormID</field-flag>
+			</field>
+			<field nullable="false" signNo="2">
+				<description>海关注册编码</description>
+				<field-name>brief.code</field-name>
+				<field-flag>TradeCo</field-flag>
+			</field>
+			<field nullable="false" signNo="3">
+				<description>单证类型</description>
+				<field-name>formType</field-name>
+				<field-flag>FormType</field-flag>
+			</field>
+			<field nullable="false" signNo="3">
+				<description>核销单证类型</description>
+				<field-name>collateFormType</field-name>
+				<field-flag>CollateFormType</field-flag>
+			</field>
+			<section>
+				<description>单证项集合</description>
+				<section-flag>FormItems</section-flag>
+				<section>
+					<description>核销捆绑关系货物项信息（表体）</description>
+					<section-flag>formItem</section-flag>
+					<query>
+						<entity-class>com.bestway.bls.entity.CollateBindDetail
+						</entity-class>
+						<query-fields>
+							<query-field>collateBind.id</query-field>
+						</query-fields>
+					</query>
+					<next-layer-query-values>
+						<query-value next-layer-field-name="collateBindDetail.id"
+							value-type="FIELD_VALUE">id
+				</query-value>
+					</next-layer-query-values>
+					<field nullable="false" signNo="1">
+						<description>序号</description>
+						<field-name>gno</field-name>
+						<field-flag>GNo</field-flag>
+					</field>
+					<section>
+						<description>核对项集合</description>
+						<section-flag>CollateItems</section-flag>
+						<section>
+							<description>核销捆绑关系核销项信息</description>
+							<section-flag>collateItem</section-flag>
+							<query>
+								<entity-class>com.bestway.bls.entity.CollateBindDetailList
+								</entity-class>
+								<query-fields>
+									<query-field>collateBindDetail.id
+									</query-field>
+								</query-fields>
+							</query>
+							<field nullable="false" signNo="1">
+								<description>企业编码</description>
+								<field-name>tradeCode</field-name>
+								<field-flag>TradeCo</field-flag>
+							</field>
+							<field nullable="false" signNo="1">
+								<description>单证编号</description>
+								<field-name>formId</field-name>
+								<field-flag>FormID</field-flag>
+							</field>
+							<field nullable="false" signNo="1">
+								<description>货物序号</description>
+								<field-name>gno</field-name>
+								<field-flag>GNo</field-flag>
+							</field>
+							<field nullable="false" signNo="1">
+								<description>数量</description>
+								<field-name>gcount</field-name>
+								<field-flag>GCount</field-flag>
+							</field>
+							<field nullable="false" signNo="1">
+								<description>核扣单位</description>
+								<field-name>unit.code</field-name>
+								<field-flag>Unit</field-flag>
+							</field>
+						</section>
+					</section>
+				</section>
+			</section>
+		</section>
+	</section>
+</section>
+

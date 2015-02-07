@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<class lazy="false"  name="com.bestway.bls.entity.EntranceMessage" table="entranceMessage">
+		<cache usage="read-write"/> 
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<many-to-one lazy="false" name="tradeCo"
+			class="com.bestway.bcus.custombase.entity.basecode.Brief" />
+		<property name="operType" />
+		<property name="deliveryNo" />
+		<property name="ioFlag" />
+		<property name="vehicleLicense" />
+		<property name="carrierCode" />
+		<property name="carrierName" />
+		<property name="billCount" />
+		<property name="grossWeight"/>
+		<property name="netWeight" />
+		<property name="containerNo1" />
+		<property name="containerNo2" />
+		<property name="sealNo1" />
+		<property name="sealNo2" />
+		<property name="declareState" />	
+		<many-to-one lazy="false" name="company" column="coid"
+			class="com.bestway.bcus.system.entity.Company" />	
+	</class>
+</hibernate-mapping>

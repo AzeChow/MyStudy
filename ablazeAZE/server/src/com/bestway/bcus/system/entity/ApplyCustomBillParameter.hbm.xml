@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class lazy="false" 
+		name="com.bestway.bcus.system.entity.ApplyCustomBillParameter" 
+		table="acbparameter">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<many-to-one lazy="false" name="curr" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Curr"/>
+		<many-to-one lazy="false" name="levyMode" column="LevyMode"
+			class="com.bestway.bcus.custombase.entity.parametercode.LevyMode"/>
+		<many-to-one lazy="false" name="country" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Country"/>
+		<many-to-one lazy="false" name="uses" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Uses"/>
+		<many-to-one lazy="false" name="company" column="companyId" 
+			class="com.bestway.bcus.system.entity.Company" 
+			index="acbparameter_company"/>
+	</class>
+
+</hibernate-mapping>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!--==================DAO Beans====================-->
+	<bean id="contractCavDao" class="com.bestway.bcs.contractcav.dao.ContractCavDao">
+              <property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+	<!--==================Logic Beans====================-->
+	<bean id="contractCavLogic" class="com.bestway.bcs.contractcav.logic.ContractCavLogic">
+              <property name="contractCavDao"><ref bean="contractCavDao"/></property>
+			  <property name="contractDao"><ref bean="contractDao"/></property>
+			  <property name="bcsMessageLogic"><ref bean="bcsMessageLogic"/></property>
+	</bean>
+
+	<!--==================Action Bean====================-->
+	<bean id="contractCavAction" class="com.bestway.bcs.contractcav.action.ContractCavActionImpl">
+              <property name="contractCavDao"><ref bean="contractCavDao"/></property>
+			  <property name="contractCavLogic"><ref bean="contractCavLogic"/></property>
+	</bean>
+	
+
+
+</beans>

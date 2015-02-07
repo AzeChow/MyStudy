@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message version="1.0" type="OwpApp">
+	<description>外发加工申请表报文定义及获取方法描述</description>
+	<section-flag>FPT2_DATA</section-flag>
+	<sub-section>
+		<description>签名信息</description>
+		<file-name>OwpAppSignFormat.xml</file-name>
+	</sub-section>
+	<section multiple="false" required="true">
+		<description>外发加工申请表表头</description>
+		<section-flag>FPT2_APP_OUT_HEAD</section-flag>
+		<data-id>OwpAppHead</data-id>
+		
+		<field nullable="true" signNo="1">
+			<description>申请表编号</description>
+			<field-name>appNo</field-name>
+			<format>X(12)</format>
+			<field-flag>APP_NO</field-flag>
+		</field>
+		<field nullable="true" signNo="2">
+			<description>电子口岸统一编号</description>
+			<field-name>seqNo</field-name>
+			<format>X(18)</format>
+			<field-flag>SEQ_NO</field-flag>
+		</field>
+		<field nullable="false" signNo="2">
+			<description>企业代码</description>
+			<field-name>inTradeCode</field-name>
+			<format>X(10)</format>
+			<field-flag>TRADE_CODE</field-flag>
+		</field>
+		<field nullable="false" signNo="3">
+			<description>申请表类型</description>
+			<field-name>appClass</field-name>
+			<format>X</format>
+			<field-flag>APP_CLASS</field-flag>
+		</field>
+		<field nullable="false" signNo="4">
+			<description>转出企业内部编号</description>
+			<field-name>copAppNo</field-name>
+			<format>X(20)</format>
+			<field-flag>COP_APP_NO</field-flag>
+		</field>
+		<field nullable="false" signNo="5">
+			<description>委托方海关</description>
+			<field-name>mastCust</field-name>
+			<format>X(4)</format>
+			<field-flag>MAST_CUST</field-flag>
+		</field>
+		<field nullable="false" signNo="6">
+			<description>委托方手册/账册编号</description>
+			<field-name>emsNo</field-name>
+			<format>X(12)</format>
+			<field-flag>EMS_NO</field-flag>
+		</field>
+		<field nullable="false" signNo="7">
+			<description>委托方企业代码</description>
+			<field-name>tradeCode</field-name>
+			<format>X(10)</format>
+			<field-flag>TRADE_CODE</field-flag>
+		</field>
+		<field nullable="false" signNo="8">
+			<description>委托方企业名称</description>
+			<field-name>tradeName</field-name>
+			<format>X(30)</format>
+			<field-flag>TRADE_NAME</field-flag>
+		</field>
+		<field nullable="true" signNo="9">
+			<description>委托方企业9位组织机构代码</description>
+			<field-name>agentCode</field-name>
+			<format>X(10)</format>
+			<field-flag>AGENT_CODE</field-flag>
+		</field>
+		<field nullable="true" signNo="10">
+			<description>委托方申报企业组织机构名称</description>
+			<field-name>agentName</field-name>
+			<format>Z(30)</format>
+			<field-flag>AGENT_NAME</field-flag>
+		</field>
+		<field nullable="true" signNo="11">
+			<description>委托企业联系人/联系电话</description>
+			<field-name>corp</field-name>
+			<format>X(32)</format>
+			<field-flag>CORP</field-flag>
+		</field>
+		<field nullable="true" signNo="12">
+			<description>委托申报人/联系电话</description>
+			<field-name>decl</field-name>
+			<format>X(32)</format>
+			<field-flag>DECL</field-flag>
+		</field>
+		<field nullable="true" signNo="13">
+			<description>委托加工合同号</description>
+			<field-name>contrNo</field-name>
+			<format>X(32)</format>
+			<field-flag>CONTR_NO</field-flag>
+		</field>
+		<field nullable="false" signNo="14">
+			<description>加工期限</description>
+			<field-name>conveyDay</field-name>
+			<format>Z(12)9.9(5)</format>
+			<field-flag>CONVEY_DAY</field-flag>
+		</field>
+		<field nullable="true" signNo="15">
+			<description>委托申报日期</description>
+			<field-name>appDate</field-name>
+			<format>Z(8)</format>
+			<field-flag>D_DATE</field-flag>
+		</field>
+		<field nullable="true" signNo="16">
+			<description>备注</description>
+			<field-name>note</field-name>
+			<format>X(50)</format>
+			<field-flag>NOTE</field-flag>
+		</field>
+		<field nullable="true" signNo="17">
+			<description>承揽方海关</description>
+			<field-name>inMastCust</field-name>
+			<format>X(4)</format>
+			<field-flag>IN_MAST_CUST</field-flag>
+		</field>
+		<field nullable="true" signNo="18">
+			<description>承揽企业代码</description>
+			<field-name>inTradeCode</field-name>
+			<format>X(10)</format>
+			<field-flag>IN_TRADE_CODE</field-flag>
+		</field>
+		<field nullable="false" signNo="19">
+			<description>承揽企业名称</description>
+			<field-name>inTradeName</field-name>
+			<format>X(30)</format>
+			<field-flag>IN_TRADE_NAME</field-flag>
+		</field>
+		<field nullable="true" signNo="20">
+			<description>承揽方联系电话</description>
+			<field-name>inCorp</field-name>
+			<format>X(32)</format>
+			<field-flag>IN_CORP</field-flag>
+		</field>
+		<field nullable="false" signNo="21">
+			<description>承揽方地区代码（目的地）</description>
+			<field-name>inDistrict</field-name>
+			<format>X(5)</format>
+			<field-flag>IN_DIST_CODE</field-flag>
+		</field>
+		<field nullable="false" signNo="22">
+			<description>申报类型</description>
+			<field-name>declareType</field-name>
+			<format>X(1)</format>
+			<field-flag>DECLARE_TYPE</field-flag>
+		</field>
+	</section>
+	<section multiple="false" required="true">
+		<description>申请表表体发货部分</description>
+		<section-flag>FPT2_APP_OUT_LIST</section-flag>
+		<sub-section>
+			<description>外发申请表外发货物</description>
+			<file-name>OwpAppSendItemFormat.xml</file-name>
+		</sub-section>
+	</section>
+	<section multiple="false" required="true">
+		<description>申请表表体收货部分</description>
+		<section-flag>FPT2_APP_IN_LIST</section-flag>
+		<sub-section>
+			<description>外发加工申请表表体收货明细</description>
+			<file-name>OwpAppRecvItemFormat.xml</file-name>
+		</sub-section>
+	</section>
+</message>

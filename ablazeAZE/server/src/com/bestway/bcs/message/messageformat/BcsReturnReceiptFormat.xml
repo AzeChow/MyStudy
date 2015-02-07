@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="eportmsg.xsl"?>
+<!--Element message: 此元素内所有内容及属性描述一个报文的定义及从数据库的获取途径。-->
+<message version="1.0" type="ReturnReceipt">
+	<description>回执报文定义及获取方法描述</description>
+	<section-flag>PTS_DATA</section-flag>
+	<sub-section>
+		<description>签名信息</description>
+		<file-name>BcsPtsSignFormat.xml</file-name>
+	</sub-section>
+	
+	<section multiple="false" required="true">
+		<description>处理结果</description>
+		<section-flag>PTS_RESULT</section-flag>
+		<data-id>BcsPtsResult</data-id>
+		<field nullable="false">
+			<description>企业编码</description>
+			<field-name>tradeCode</field-name>
+			<format>X(10)</format>
+			<field-flag>TRADE_CODE</field-flag>
+		</field>
+		<field nullable="false">
+			<description>企业内部编号</description>
+			<field-name>copEmsNo</field-name>
+			<format>X(20)</format>
+			<field-flag>COP_EMS_NO</field-flag>
+		</field>
+		<field nullable="false">
+			<description>核查/报核次数</description>
+			<field-name>colDcrTime</field-name>
+			<format>Z(8)9</format>
+			<field-flag>COL_DCR_TIME</field-flag>
+		</field>
+		<field nullable="true">
+			<description>数据中心统一编号</description>
+			<field-name>seqNo</field-name>
+			<format>9(18)</format>
+			<field-flag>SEQ_NO</field-flag>
+		</field>
+		<field nullable="true">
+			<description>海关帐册/分册编号</description>
+			<field-name>emsNo</field-name>
+			<format>X(12)</format>
+			<field-flag>EMS_NO</field-flag>
+		</field>
+		<field nullable="false">
+			<description>数据类型</description>
+			<field-name>applType</field-name>
+			<format>X</format>
+			<field-flag>APPL_TYPE</field-flag>
+		</field>
+		<field nullable="false">
+			<description>申报类型</description>
+			<field-name>declareType</field-name>
+			<format>X</format>
+			<field-flag>DECLARE_TYPE</field-flag>
+		</field>
+		<field nullable="false">
+			<description>处理结果</description>
+			<field-name>chkMark</field-name>
+			<format>X</format>
+			<field-flag>CHK_MARK</field-flag>
+		</field>
+		<field nullable="false">
+			<description>通知日期</description>
+			<field-name>noticeDate</field-name>
+			<format>Z(8)</format>
+			<field-flag>NOTICE_DATE</field-flag>
+		</field>
+		<field nullable="false">
+			<description>通知时间</description>
+			<field-name>noticeTime</field-name>
+			<format>Z(8)</format>
+			<field-flag>NOTICE_TIME</field-flag>
+		</field>
+		<field nullable="true">
+			<description>备注</description>
+			<field-name></field-name>
+			<format>X(254)</format>
+			<field-flag>NOTE</field-flag>
+		</field>
+	</section>
+	
+	<section multiple="false" required="true">
+		<description>处理结果文字信息记录列表</description>
+		<section-flag>PTS_RESULT_LIST</section-flag>		
+		<section multiple="false" required="true">
+			<description>处理结果文字信息记录明细</description>
+			<section-flag>PTS_RESULT_LIST_DETAIL</section-flag>
+				<section multiple="false" required="true">
+					<description>处理结果文字</description>
+					<section-flag>RESULT_INFO</section-flag>
+					<data-id>BcsResultIno</data-id>
+					<field nullable="false">
+						<description>处理结果文字信息</description>
+						<field-name></field-name>
+						<format>X(70)</format>
+						<field-flag>RESULT_INFO</field-flag>
+					</field>
+				</section>
+		</section>		
+	</section>	
+	<section multiple="false" required="true">
+		<description>合同备案回执生成通关备案表头信息</description>
+		<section-flag>TR_EDI_HEAD_EML</section-flag>
+		<data-id>BcsPtsResult</data-id>
+		<field nullable="false">
+			<description>对应其它帐册号</description>
+			<field-name>corrEmsNo</field-name>
+			<format>X(12)</format>
+			<field-flag>CORR_EMS_NO</field-flag>
+		</field>		
+	</section>
+</message>

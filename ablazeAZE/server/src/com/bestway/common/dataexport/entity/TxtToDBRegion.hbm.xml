@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.common.dataexport.entity.TxtToDBRegion" 
+		table="TxtToDBRegion">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+	
+		<property name="regionName" />
+		<property name="srcFilePath"/>	
+		<property name="fileType"/>	
+		<property name="destTableName"/>	
+		<property name="importRowNumber"/>
+		<property name="note" />
+		<property name="gbkToBig5Flag" length="1"/>
+		<property name="importDataMode"/>
+		<property name="encoding"/>		
+		
+		<many-to-one lazy="false"      name="destJDBCDataSource" column="destJDBCDataSource"
+			 class="com.bestway.common.dataexport.entity.JDBCDataSource"/>
+		<many-to-one lazy="false"      name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" />
+	</class>
+
+</hibernate-mapping>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section version="1.0" type="Freightage">
+	<description>仓单特殊申请</description>
+	<section-flag>BillSpecialApply</section-flag>
+	<section-attribute>xmlns="un:epz"</section-attribute>
+	<query>
+		<entity-class>com.bestway.bls.entity.BillSpecialApplyHead
+		</entity-class>
+		<query-fields>
+			<query-field>id</query-field>
+		</query-fields>
+	</query>
+	<next-layer-query-values>
+		<query-value next-layer-field-name="billSpecialApplyHead.id"
+			value-type="FIELD_VALUE">id
+		</query-value>
+	</next-layer-query-values>
+	<field nullable="false" signNo="1">
+		<description>企业编码</description>
+		<field-name>tradeCo</field-name>
+		<field-flag>TradeCo</field-flag>
+	</field>
+	<field nullable="false" signNo="2">
+		<description>仓单号</description>
+		<field-name>billNo</field-name>
+		<field-flag>BillNo</field-flag>
+	</field>
+	<field nullable="false" signNo="3">
+		<description>特殊申请类型</description>
+		<field-name>applyType</field-name>
+		<field-flag>ApplyType</field-flag>
+	</field>
+	<field nullable="false" signNo="3">
+		<description>申请原因</description>
+		<field-name>applyReason</field-name>
+		<field-flag>ApplyReason</field-flag>
+	</field>
+	<field nullable="true" signNo="3">
+		<description>备注</description>
+		<field-name>note</field-name>
+		<field-flag>Note</field-flag>
+	</field>
+	<section>
+		<description>特殊申请商品集合</description>
+		<section-flag>ApplyLists</section-flag>
+		<section>
+			<description>仓单特殊申请（表体）</description>
+			<section-flag>ApplyList</section-flag>
+			<query>
+				<entity-class>com.bestway.bls.entity.BillSpecialApplyApplyList
+				</entity-class>
+				<query-fields>
+					<query-field>billSpecialApplyHead.id</query-field>
+				</query-fields>
+			</query>		
+			<field nullable="false" signNo="1">
+				<description>商品项号</description>
+				<field-name>seqNo</field-name>
+				<field-flag>GNo</field-flag>
+			</field>
+			<field nullable="false" signNo="1">
+				<description>数量</description>
+				<field-name>qtTy</field-name>
+				<field-flag>Qty</field-flag>
+			</field>
+		</section>
+	</section>
+</section>
+

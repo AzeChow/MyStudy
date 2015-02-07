@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcus.innermerge.entity.CustomInnerMergeCondition" 
+		table="custominnermergecondition">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="materielType" length="10"/>
+		<property name="conMaterielCode" length="10"/>
+		<property name="conMaterielName" />
+		<property name="conMaterielSpec" />
+		<property name="conLowestPrice" />
+		<property name="conPriceUpExceed" />
+		<many-to-one lazy="false"      name="afterComplex" column="afterComplex" 
+			class="com.bestway.bcus.custombase.entity.hscode.Complex" index="custommgcndn_complex"/>
+		<property name="afterMaterielName" />
+		<many-to-one lazy="false"      name="afterLegalUnit" column="afterLegalUnit" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<many-to-one lazy="false"      name="afterMemoUnit" column="afterMemoUnit" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<many-to-one lazy="false"      name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" index="custommgcndn_company"/>
+	</class>
+
+</hibernate-mapping>
+<!-- parsed in 0ms -->

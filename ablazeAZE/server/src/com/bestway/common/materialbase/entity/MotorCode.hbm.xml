@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class lazy="false" name="com.bestway.common.materialbase.entity.MotorCode"
+		table="motorcode">
+		<cache usage="read-write" />
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex" />
+		</id>
+		<property name="code" />
+		<property name="name" />
+		<property name="homeCard" />
+		<property name="hongkongCard" />
+		<property name="complex" />
+		<property name="icCard" />
+		<property name="customsPort" />
+		<property name="trafficUnit" />
+		<property name="trafficUnitAdd" />
+		<property name="trafficUnitTel" />
+		<property name="sealNumbers" />
+		<property name="passWord" />
+		<property name="containerSpec" />
+		<many-to-one lazy="false" name="company" column="coid"
+			class="com.bestway.bcus.system.entity.Company" index="motorcode_company" />
+	</class>
+
+</hibernate-mapping>
+	<!-- parsed in 0ms -->

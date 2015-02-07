@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcs.dictpor.entity.BcsDictPorHead" table="bcsdictporhead">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>			
+		<property name="seqNum" />
+		<property name="copEmsNo" />
+		<property name="dictPorEmsNo" />
+		<property name="declareState" />
+		<property name="declareDate" />
+		<many-to-one lazy="false"      name="declareCustoms" column="declareCustoms" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Customs"/>
+		<many-to-one lazy="false"      name="redDep" column="redDep" 
+			class="com.bestway.bcus.custombase.entity.depcode.RedDep" />
+		<property name="tradeCode" />
+		<property name="tradeName" />
+		<property name="machCode" />
+		<property name="machName" />
+		<property name="productRatio"/>		
+		<property name="manageObject"/>	
+		<property name="beginDate"/>	
+		<property name="endDate"/>	
+		<property name="memo"/>	
+		<property name="inputER"/>	
+		<property name="modifyMark"/>		
+		<property name="createDate"/>	
+		<property name="bankModel"/>		
+		<many-to-one lazy="false"  name="levyKind" column="levyKind" 
+			class="com.bestway.bcus.custombase.entity.parametercode.LevyKind"/>		
+		<many-to-one lazy="false"      name="receiveArea" column="receiveArea" 
+			class="com.bestway.bcus.custombase.entity.countrycode.District"/>	
+		<many-to-one lazy="false"      name="curr" column="currId" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Curr"/>
+		<many-to-one lazy="false"      name="trade" column="trade" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Trade"/>
+		<many-to-one lazy="false"      name="machiningType" column="machiningType" 
+			class="com.bestway.bcus.custombase.entity.basecode.MachiningType"/>
+		<property name="imgRangeSpec1"/>
+		<property name="imgRangeSpec2"/>
+		<property name="imgRangeSpec3"/>
+		<property name="imgRangeSpec4"/>
+		<property name="imgRangeSpec5"/>
+		
+		<property name="exgRangeSpec1"/>
+		<property name="exgRangeSpec2"/>
+		<property name="exgRangeSpec3"/>
+		<property name="exgRangeSpec4"/>
+		<property name="exgRangeSpec5"/>
+		
+		<property name="limitFlag"/>
+		
+		<many-to-one lazy="false"      name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" index="dzscemsporwjhead_coid"/>
+	</class>
+</hibernate-mapping>
+<!-- parsed in 0ms -->

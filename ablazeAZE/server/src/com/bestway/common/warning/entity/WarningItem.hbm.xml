@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.common.warning.entity.WarningItem" table="WarningItem">
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="itemName"/>
+		<property name="warningItemFlag"/>	
+		<property name="excuteKind" />		
+		<property name="excuteday" />	
+		<property name="excutetime" />	
+		<property name="amount"/>
+		<property name="note" />	
+		
+		<many-to-one lazy="false"      name="company" column="companyId" 
+			class="com.bestway.bcus.system.entity.Company" index="WarningItem_company"/>
+		
+	</class>
+</hibernate-mapping>

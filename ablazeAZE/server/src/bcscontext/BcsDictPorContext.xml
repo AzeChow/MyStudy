@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!--==================DAO Beans====================-->
+	<bean id="bcsDictPorDao" class="com.bestway.bcs.dictpor.dao.BcsDictPorDao">
+              <property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+	<!--==================Logic Beans====================-->
+	<bean id="bcsDictPorLogic" class="com.bestway.bcs.dictpor.logic.BcsDictPorLogic">
+              <property name="bcsDictPorDao"><ref bean="bcsDictPorDao"/></property>
+              <property name="bcsInnerMergeDao"><ref bean="bcsInnerMergeDao"/></property>
+			  <property name="bcsMessageLogic"><ref bean="bcsMessageLogic"/></property>
+			  <property name="importDataFromExcel"><ref bean="importDataFromExcel"/></property>
+	</bean>	
+	<!--==================Action Bean====================-->
+	<bean id="bcsDictPorAction" class="com.bestway.bcs.dictpor.action.BcsDictPorActionImpl">
+		<property name="bcsDictPorDao"><ref local="bcsDictPorDao"/></property>		
+		<property name="bcsDictPorLogic"><ref local="bcsDictPorLogic"/></property>	
+	</bean>
+</beans>

@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class  lazy="false"  name="com.bestway.owp.entity.OwpBillSendHead" table="owpbillsendhead">
+		<cache usage="read-write"/> 
+        <id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+	    </id>
+	    <property name="seqNum" />
+		<property name="billNo" />
+		<property name="seqNo"/>
+		<property name="appNo" />
+		<property name="copBillNo" />
+		<property name="emsNo" />
+		<property name="outTradeCode"/>
+		<property name="outTradeName"/>
+		<property name="inTradeCode"/>
+		<property name="inTradeName"/>
+		<property name="isDeclaEm"/>
+		<property name="collectDate"/>
+		<property name="note"/>
+		<property name="creater"/>
+		<property name="declareState"/>
+		<property name="modifyMark"/>
+		<property name="createrDate"/>
+		<property name="cancelMark"/>
+		<property name="cancelReason"/>
+		<property name="isInsertByApp"/>
+		<many-to-one lazy="false"      name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" />
+		
+    </class>
+
+</hibernate-mapping>

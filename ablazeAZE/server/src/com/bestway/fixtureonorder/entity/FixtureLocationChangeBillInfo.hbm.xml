@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class  lazy="false"  name="com.bestway.fixtureonorder.entity.FixtureLocationChangeBillInfo" table="fixturechangebill">
+		<cache usage="read-write"/> 		
+        <id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+	    </id>
+		<property name="customsDeclarationCode"/>
+		<property name="impExpDate"/>
+		<many-to-one lazy="false"  name="complex" column="complex" 
+			class="com.bestway.bcus.custombase.entity.hscode.Complex"/>
+		<property name="commName"/>
+		<property name="commSpec"/>
+		<property name="amount"/>
+		<property name="locationAmount"/>
+		<property name="agreementNo"/>
+		<property name="emsNo"/>
+		<property name="customsBillSeqNo"/>
+		<property name="customsDeclaItemNo"/>
+		<property name="billCode"/>
+		<property name="handMan"/>
+		<property name="changeDate"/>
+		<property name="changeType"/>
+		<property name="fixKind"/>
+		<many-to-one lazy="false"  name="oldLocation" column="oldLocation" 
+			class="com.bestway.fixtureonorder.entity.FixtureLocation"/>
+		<many-to-one lazy="false"  name="newLocation" column="newLocation" 
+			class="com.bestway.fixtureonorder.entity.FixtureLocation"/>	
+		<many-to-one lazy="false" name="company" class="com.bestway.bcus.system.entity.Company">
+			<column name="coid" index="fecavbill_2"/>	
+		</many-to-one>
+    </class>
+</hibernate-mapping>

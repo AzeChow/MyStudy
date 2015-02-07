@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class lazy="false" name="com.bestway.bcus.checkstock.entity.ECSCustomsCountExg"
+		table="ecscustomscountexg">
+		<cache usage="read-write" />
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex" />
+		</id>
+		<property name="emsNo" />
+		<property name="seqNum" />
+		<property name="version" />
+		<property name="commName" />
+		<property name="commSpec" />
+		<property name="unit" />
+		<property name="directExportAmount" not-null="true" />
+		<property name="transferExportAmount" not-null="true" />
+		<property name="backFactoryReworkAmount" not-null="true" />
+		<property name="reworkExportAmount" not-null="true" />
+		<property name="totalExportAmount" not-null="true" />
+		<many-to-one lazy="false" name="section" column="section"
+			class="com.bestway.bcus.checkstock.entity.ECSSection" index="ecscustomscountexg_section"/>
+		<many-to-one lazy="false" name="company" column="company"
+			class="com.bestway.bcus.system.entity.Company" index="ecscustomscountexg_company" />
+	</class>
+</hibernate-mapping>
+	<!-- parsed in 0ms -->

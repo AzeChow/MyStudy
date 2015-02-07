@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.common.dataexport.entity.JDBCTask" 
+		table="JDBCTask">	
+		<cache usage="read-write"/>	
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+					 
+	    <property name="taskname" />
+		<property name="executekind"/>
+		<property name="excuteday" length="10"/>	
+		<property name="excutetime" length = "10"/>
+		<property name="note"/>	
+		<property name="isParentTask"/>
+		<property name="isExecute"/>		
+		<property name="importDataMode"/>
+		<many-to-one lazy="false"      name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" />
+	</class>
+
+</hibernate-mapping>

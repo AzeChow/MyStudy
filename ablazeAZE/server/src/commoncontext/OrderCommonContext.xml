@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+<beans>
+	<!--==================DAO Beans====================-->
+	<bean id="orderCommonDao" class="com.bestway.common.erpbill.dao.OrderCommonDao">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>
+	<!--==================Logic Beans====================-->
+	<bean id="orderCommonLogic" class="com.bestway.common.erpbill.logic.OrderCommonLogic">
+		<property name="orderCommonDao">
+			<ref bean="orderCommonDao"/>
+		</property>
+		<property name="erpBillDao">
+			<ref bean="erpBillDao"/>
+		</property>
+		<property name="contractDao">
+			<ref bean="contractDao"/>
+		</property>
+		<property name="dzscDao">
+			<ref bean="dzscDao"/>
+		</property>
+		<property name="parameterCodeDao">
+			<ref bean="parameterCodeDao"/>
+		</property>
+
+	</bean>
+
+	<!--==================Action Bean====================-->
+	<bean id="orderCommonAction" 
+		class="com.bestway.common.erpbill.action.OrderCommonActionImpl">
+		<property name="erpBillDao">
+			<ref bean="erpBillDao"/>
+		</property>
+		<property name="erpBillLogic">
+			<ref bean="erpBillLogic"/>
+		</property>
+		
+		<property name="materialManageDao">
+			<ref bean="materialManageDao"/>
+		</property>
+		<property name="materialManageLogic">
+			<ref bean="materialManageLogic"/>
+		</property>
+		
+		<property name="contractDao">
+			<ref bean="contractDao"/>
+		</property>
+		<property name="contractLogic">
+			<ref bean="contractLogic"/>
+		</property>
+		
+		<property name="dzscDao">
+			<ref bean="dzscDao"/>
+		</property>
+		<property name="dzscLogic">
+			<ref bean="dzscLogic"/>
+		</property>
+		
+		<property name="orderCommonDao">
+			<ref bean="orderCommonDao"/>
+		</property>
+		<property name="orderCommonLogic">
+			<ref bean="orderCommonLogic"/>
+		</property>
+	</bean>
+	
+	<!--==================Other Beans====================-->
+</beans>

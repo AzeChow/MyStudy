@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class 
+		name="com.bestway.common.fpt.entity.FptBillHead" 
+		table="fptbillhead">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="projectType"/>
+		<property name="sysType"/>
+		<property name="billSort"/>
+		<property name="billNo"/>
+		<property name="seqNo"/>
+		<property name="appNo"/>
+		<property name="outEmsNo"/>
+		<property name="issueCopBillNo"/>
+		<property name="receiveCopBillNo"/>
+		<property name="issueTradeCod"/>
+		<property name="receiveTradeCod"/>
+		<property name="issueTradeName"/>
+		<property name="receiveTradeName"/>
+		<property name="issueDate"/>
+		<property name="receiveDate"/>
+		<property name="issueIsDeclaEm"/>
+		<property name="receiveIsDeclaEm"/>
+		<property name="issueIsDeclaDate"/>
+		<property name="receiveIsDeclaDate"/>
+		<property name="issueAgentCode"/>
+		<property name="receiveAgentCode"/>
+		<property name="issueAgentName"/>
+		<property name="receiveAgentName"/>
+		<property name="issueNote"/>
+		<property name="receiveNote"/>
+		<property name="contractNoIn"/>
+		<property name="serialNumber"/>
+		<property name="transportToolType"/>
+		<property name="transportToolNumber"/>
+		<many-to-one lazy="false"      name="customer" column="customer" 
+			class="com.bestway.common.materialbase.entity.ScmCoc"/>
+		<property name="appState"/>
+		<many-to-one lazy="false"      name="aclUser" column="aclUserId" 
+			class="com.bestway.common.authority.entity.AclUser"/>
+		<property name="createDate"/>
+		<property name="makeCustomsDeclarationCode" />
+		<property name="isCustomsDeclaration"/>
+		<many-to-one lazy="false"      name="company" column="companyId" 
+			class="com.bestway.bcus.system.entity.Company" index="transfrfcoryil_company"/>		
+	</class>
+</hibernate-mapping>

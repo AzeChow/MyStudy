@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class  lazy="false"  name="com.bestway.dzsc.materialapply.entity.MaterialHistory" table="materialhistory">
+		<cache usage="read-write"/> 
+        <id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+	    </id>
+		<property name="customMaterialId" length="225"/>
+		<many-to-one lazy="false"      name="scmCoi" column="sort" class="com.bestway.common.materialbase.entity.ScmCoi"/>
+		<property name="ptNo" length="225"/>
+		<many-to-one lazy="false"      name="complex" column="tenCode" class="com.bestway.bcus.custombase.entity.hscode.Complex"/>
+		<property name="factoryName" length="225"/>
+		<property name="factorySpec" length="225"/>
+<!--		<property name="ptName" length="225"/>
+		<property name="ptSpec" length="225"/>-->
+		<property name="ptDeSpec" length="225"/>
+		<many-to-one lazy="false"      name="calUnit" column="ptUnit" class="com.bestway.common.materialbase.entity.CalUnit"/>
+		<property name="ptPrice"/>
+		<property name="ptNetWeight"/>
+		<many-to-one lazy="false"      name="calWeightUnit" column="ptWeightUnit" class="com.bestway.common.materialbase.entity.CalUnit"/>
+		<property name="ptOutWeight" />
+		<property name="ptVersion" length="10"/>
+		<property name="ptEnglishName" length="100"/>
+		<property name="ptEnglishSpec" length="225"/>
+		<many-to-one lazy="false"      name="scmCoc" column="scmCocCode" class="com.bestway.common.materialbase.entity.ScmCoc"/>
+		<many-to-one lazy="false"      name="sysArea" column="countryCode" class="com.bestway.common.materialbase.entity.SysArea"/>
+		<many-to-one lazy="false"      name="taxation" column="taxationCode" class="com.bestway.common.materialbase.entity.ShareCode"/>
+		<property name="proBonded" length="10"/>
+		<property name="equalPtno" length="20"/>	
+		<many-to-one lazy="false"      name="ptUnit" column="customUnit" class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<property name="unitConvert" />	
+		<property name="scrapCode" length="225"/>
+		<property name="scrapWeight" />
+		<property name="keyHardware" />
+		<property name="cknetWeight"/>
+		<property name="ckoutWeight"/>
+		<property name="amount"/>
+		<many-to-one lazy="false" name="wrap" column="wrap" class="com.bestway.bcus.custombase.entity.parametercode.Wrap"/>
+		<property name="materialSource" length="225"/>
+		<many-to-one lazy="false" name="company" column="coid" class="com.bestway.bcus.system.entity.Company"/>
+		<property name="stateMark" />
+    </class>
+
+</hibernate-mapping>
+<!-- parsed in 0ms -->
+<!--country 指对象，countryCode 定义字段-->

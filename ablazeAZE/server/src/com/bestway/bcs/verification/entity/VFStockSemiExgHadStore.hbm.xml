@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class lazy="false" name="com.bestway.bcs.verification.entity.VFStockSemiExgHadStore"
+		table="vfstocksemiexghadstore">
+		<cache usage="read-write" />
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex" />
+		</id>
+		<property name="serialNumber" />
+		<property name="ptNo" />
+		<property name="ptName" />
+		<property name="ptSpec" />
+		<property name="ptUnit" />
+		<property name="storeAmount" />
+		<property name="version" />
+		<property name="warehouse" />
+		<property name="memo" />
+		<many-to-one lazy="false" name="section" column="section"
+			class="com.bestway.bcs.verification.entity.VFSection" index="vfstocksemiexghadstore_section"/>
+		<many-to-one lazy="false" name="company" column="company"
+			class="com.bestway.bcus.system.entity.Company" index="vfstocksemiexghadstore_company" />
+	</class>
+</hibernate-mapping>
+	<!-- parsed in 0ms -->

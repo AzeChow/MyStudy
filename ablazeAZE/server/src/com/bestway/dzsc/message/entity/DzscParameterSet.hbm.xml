@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.dzsc.message.entity.DzscParameterSet" table="dzscmessagedirset">
+		<cache usage="read-write"/> 
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="sendDir" />
+		<property name="recvDir" />
+		<property name="finallyDir"/>
+		<property name="logDir" />
+		
+		<property name="readFromCard" />
+		<property name="seqNo" />
+		<property name="pwd" />
+		<property name="idCard"/>
+		<property name="loadQPDataXmlDir"/>
+		<property name="manageType"/>
+		<property name="remoteHostAddress" />
+		<property name="remoteHostPort" />
+		<property name="remoteHostICPwd" />
+		<!--  
+		<property name="remoteSignData" />
+		<property name="remoteDxpMail" />
+		<property name="port9097IsOpen" />
+		-->
+		<property name="isPrintToolCode" />
+		<property name="isPrintNo" />
+		
+		<property name="priceBit"/>
+		<property name="countBit"/>
+		<property name="moneyBit"/>
+		
+		<property name="unitWaste"/>
+		<property name="waste"/>
+		<property name="totalAmount"/>
+		
+		<!--<property name="dzscManageType"/>-->
+		<property name="updateEmsBomWriteBackExg" />
+		<property name="updateEmsExgBomWriteBackImg" />
+		<property name="reportDecimalLength" />
+		<property name="updateEmsImgWriteBackExg" />
+		<many-to-one lazy="false"      name="company" column="coid" class="com.bestway.bcus.system.entity.Company" index="messagequery_company"/>
+	</class>
+
+</hibernate-mapping>
+<!-- parsed in 0ms -->

@@ -1,0 +1,1473 @@
+<?xml version="1.0" encoding="GB2312"?>
+<?xml-stylesheet type="text/xsl" href="eportmsg.xsl"?>
+<!-- File:          Msg_MNL201.xml  -->
+<!-- Author:        Zhang Jianqiang -->
+<!-- Create date:   2003-04-15      -->
+<!-- Modify date:   2003-04-20      -->
+<!--Element message: 此元素内所有内容及属性描述一个报文的定义及从数据库的获取途径。-->
+<message version="1.0" type="MNL201">
+    <description>MNL201报文定义及获取方法描述</description>
+    <!--Element database: 提供数据库连接信息。-->
+    <database>
+        <db-user>offline_mnl</db-user>
+        <db-password>dbwork</db-password>
+        <data-source>mnldb</data-source>
+    </database>
+    <!--Element section: 提供报文中每一节的定义。-->
+    <section multiple="false" required="true">
+        <description>签名信息</description>
+        <section-flag>&lt;FORM_SIGN           &gt;</section-flag>
+        <!--Element query: 提供一个SQL查询。-->
+        <query>
+            <!--Element query-param: 一个SQL语句中需要数据的参数。-->
+            <query-param>
+                <!--Element param-name: 参数名。-->
+                <param-name>HOST_ID</param-name>
+                <!--Element type: 数据库中字段类型。-->
+                <type>CHAR</type>
+                <!--Element format: 参数格式。（在<field>标记中对应于报文字段格式。）-->
+                <format>X18</format>
+                <value>000000000000000036</value>
+            </query-param>
+            <query-param>
+                <!--Element param-name: 参数名。-->
+                <param-name>TEMP_SYSTEM_ID</param-name>
+                <!--Element type: 数据库中字段类型。-->
+                <type>CHAR</type>
+                <!--Element format: 参数格式。（在<field>标记中对应于报文字段格式。）-->
+                <format>X18</format>
+                <value>C00000000000000719</value>
+            </query-param>
+            <query-param>
+                <param-name>ALT_NUM</param-name>
+                <type>INTEGER</type>
+                <format>Z4</format>
+                <value>1</value>
+            </query-param>
+            <query-param>
+                <param-name>MOD_NUM</param-name>
+                <type>INTEGER</type>
+                <format>Z4</format>
+                <value>0</value>
+            </query-param>
+            <!--Element statement: SQL语句正文。-->
+            <query-statement>
+                select
+                    A.OPER_TYPE,
+                    A.TEMP_SYSTEM_ID,
+                    (select
+                        NVL(C.PRE_MANUAL_NO,' ')
+                    from
+                        CUR_CONTRACT_HEAD C
+                    where
+                        C.SYSTEM_ID = B.TEMP_SYSTEM_ID
+                    ),
+                    NVL(A.MANUAL_NO,' '),
+                    ?HOST_ID,
+                    B.ICCARD_ID,
+                    B.SEND_SIGN,
+                    TO_CHAR(B.SEND_DATE,'YYYYMMDD'),
+                    B.CERT_SEQ_NO,
+                    A.UNIT_CO
+                from
+                    MNL_STAT A, MNL_MQDB B
+                where
+                    A.TEMP_SYSTEM_ID= B.TEMP_SYSTEM_ID  and
+                    A.ALT_NUM       = B.ALT_NUM         and
+                    A.MOD_NUM       = B.MOD_NUM         and
+                    A.OPER_TYPE     = B.OPER_TYPE       and
+                    B.TEMP_SYSTEM_ID= ?temp_system_id       and
+                    B.ALT_NUM       = ?alt_num          and
+                    B.MOD_NUM       = ?mod_num          and
+                    B.RET_NO        = 0
+            </query-statement>
+        </query>
+ 
+        <!--Element field: 节中字段的定义。-->
+        <field>
+            <description>申报类型</description>
+            <field-name>aPPLTYPE</field-name>
+            <type>CHAR</type>
+            <format>X2</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="false">
+            <description>(报关行)统一编号</description>
+            <field-name>tEMPSYSTEMID</field-name>
+            <type>CHAR</type>
+            <format>X18</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="false">
+            <description>手册预录入编号</description>
+            <field-name>pREMANUALNO</field-name>
+            <type>CHAR</type>
+            <format>X12</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field nullable="true">
+            <description>海关手册编号</description>
+            <field-name>mANUALNO</field-name>
+            <type>CHAR</type>
+            <format>X12</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>报关行HOST_ID</description>
+            <field-name>hOSTID</field-name>
+            <type>CHAR</type>
+            <format>X18</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>IC卡ID号</description>
+            <field-name>iCCARDID</field-name>
+            <type>CHAR</type>
+            <format>X18</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>签名内容</description>
+            <field-name>sIGN</field-name>
+            <type>CHAR</type>
+            <format>X200</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field check="true">
+            <description>签名日期</description>
+            <field-name>sIGNDATE</field-name>
+            <type>DATE</type>
+            <format>TYYYYMMDD</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>认证号</description>
+            <field-name>cERTSEQNO</field-name>
+            <type>CHAR</type>
+            <format>X18</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>单位代码</description>
+            <field-name>uNITCODE</field-name>
+            <type>CHAR</type>
+            <format>X15</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+    </section>
+ 
+    <!--Default value: multiple=false required=false -->
+    <section multiple="false" required="true">
+        <description>手册表头</description>
+        <section-flag>&lt;CONTRACT_HEAD       &gt;</section-flag>
+        <query>
+            <query-param>
+                <param-name>SYSTEM_ID</param-name>
+                <type>CHAR</type>
+                <format>X18</format>
+                <value>C00000000000000719</value>
+            </query-param>
+            <query-statement>
+                select
+                    SUBSTRB(PRE_MANUAL_NO,1,12)         ,       /* 01 : 企业手册预录入号   */
+                    SUBSTRB(MANUAL_NO,1,12)             ,       /* 02 : 企业手册编号       */
+                    SUBSTRB(TRADE_CO,1,10)              ,       /* 03 : 经营单位编号       */
+                    TRADE_NAME                          ,       /* 04 : 经营单位名称       */
+                    SUBSTRB(DISTRICT_CODE,1,5)          ,       /* 05 : 生产单位地区代码   */
+                    SUBSTRB(OWNER_CODE,1,10)            ,       /* 06 : 生产单位编号       */
+                    OWNER_NAME                          ,       /* 07 : 生产单位名称       */
+                    FOREIGN_CO                          ,       /* 08 : 外商公司名称       */
+                    FOREIGN_MGR                         ,       /* 09 : 外商经理人         */
+                    TRADE_MODE                          ,       /* 10 : 监管方式           */
+                    SUBSTRB(CUT_MODE,1,3)               ,       /* 11 : 征免性质           */
+                    TRADE_COUNTRY                       ,       /* 12 : 贸易国             */
+                    SUBSTRB(PORT_1,1,4)                 ,       /* 13 : 进出口岸之一       */
+                    SUBSTRB(PORT_2,1,4)                 ,       /* 14 : 进出口岸之二       */
+                    SUBSTRB(PORT_3,1,4)                 ,       /* 15 : 进出口岸之三       */
+                    SUBSTRB(PORT_4,1,4)                 ,       /* 16 : 进出口岸之四       */
+                    SUBSTRB(PORT_5,1,4)                 ,       /* 17 : 进出口岸之五       */
+                    AGREE_NO                            ,       /* 18 : 协议号             */
+                    LICENSE_NO                          ,       /* 19 : 许可证编号         */
+                    APPR_NO                             ,       /* 20 : 手册批件号         */
+                    CONTR_IN                            ,       /* 21 : 进口合同号         */
+                    CONTR_OUT                           ,       /* 22 : 出口合同号         */
+                    EQUIP_MODE                          ,       /* 23 : 设备引进方式       */
+                    TRANS_MODE                          ,       /* 24 : 成交方式           */
+                    PAY_MODE                            ,       /* 25 : 保税方式           */
+                    SUBSTRB(INVEST_MODE,1,1)            ,       /* 26 : 投资方式           */
+                    EX_SOURCE                           ,       /* 27 : 外汇来源           */
+                    SUBSTRB(PRODUCT_TYPE,1,2)           ,       /* 28 : 加工品种分类       */
+                    RATIO_RANGE                         ,       /* 29 : 进／出口浮动比率   */
+                    IN_RATIO                            ,       /* 30 : 内销比率           */
+                    INVEST_AMT                          ,       /* 31 : 投资额             */
+                    INVEST_CURR                         ,       /* 32 : 投资额币制         */
+                    APPR_DEV_AMT                        ,       /* 33 : 已批准设备总金额   */
+                    IN_AMT                              ,       /* 34 : 进口总金额         */
+                    IN_CURR                             ,       /* 35 : 进口总金额币制     */
+                    EX_AMT                              ,       /* 36 : 出口总金额         */
+                    EX_CURR                             ,       /* 37 : 出口总金额币制     */
+                    IN_PNT                              ,       /* 38 : 进口原料项数       */
+                    EX_PNT                              ,       /* 39 : 出口原料项数       */
+                    TR_PNT                              ,       /* 40 : 调拨原料项数       */
+                    DE_PNT                              ,       /* 41 : 进口设备项数       */
+                    CONTR_SEQNO                         ,       /* 42 : 手册续本总数       */
+                    TRANS_COUNT                         ,       /* 43 : 调拨单数           */
+                    TO_CHAR(I_DATE,'YYYYMMDD')          ,       /* 44 : 进口期限           */
+                    TO_CHAR(E_DATE,'YYYYMMDD')          ,       /* 45 : 出口期限           */
+                    TO_CHAR(LIMIT_DATE,'YYYYMMDD')      ,       /* 46 : 变更日期           */
+                    TYPE_ER                             ,       /* 47 : 输入员代号         */
+                    TO_CHAR(TYPE_DATE,'YYYYMMDD')       ,       /* 48 : 输入日期           */
+                    FACT_IN_AMT                         ,       /* 49 : 实际进口总金额     */
+                    FACT_EX_AMT                         ,       /* 50 : 实际出口总金额     */
+                    EXE_MARK                            ,       /* 51 : 合同执行标志       */
+                    DECL_FLAG                           ,       /* 52 : 三级审批标志       */
+                    SUPV_MARK                           ,       /* 53 : 重点合同标志       */
+                    IM_COUNT                            ,       /* 54 : 进口报关单份数     */
+                    EX_COUNT                            ,       /* 55 : 出口报关单份数     */
+                    CHK_ER                              ,       /* 56 : 审批关员代码       */
+                    TO_CHAR(APPR_DATE,'YYYYMMDD')       ,       /* 57 : 海关审批日期       */
+                    RECHK_ER                            ,       /* 58 : 核发关员代码       */
+                    CLEAR_ER                            ,       /* 59 : 核销人员代号       */
+                    TO_CHAR(CLEAR_APPL_DATE,'YYYYMMDD') ,       /* 60 : 核销申请日期       */
+                    TO_CHAR(CLEAR_DATE,'YYYYMMDD')      ,       /* 61 : 核销日期           */
+                    CLOSE_ER                            ,       /* 62 : 结案人员代号       */
+                    TO_CHAR(CLOSE_DATE,'YYYYMMDD')      ,       /* 63 : 结案日期           */
+                    EXAM_MARK                           ,       /* 64 : 查验标记           */
+                    CLEAR_MARK                          ,       /* 65 : 核销情况标记       */
+                    CLOSE_MARK                          ,       /* 66 : 结案情况标记       */
+                    TAX_TYPE                            ,       /* 67 : 代征税分类         */
+                    RECOVER_DUTY                        ,       /* 68 : 补关税             */
+                    RECOVER_TAX                         ,       /* 69 : 补代征税           */
+                    RECOVER_REG                         ,       /* 70 : 补调节税           */
+                    DEFER_DUTY                          ,       /* 71 : 待征关税           */
+                    DEFER_TAX                           ,       /* 72 : 待征代征税         */
+                    DEFER_REG                           ,       /* 73 : 待征调节税         */
+                    FINE_AMT                            ,       /* 74 : 罚款金额           */
+                    REAL_DUTY                           ,       /* 75 : 实际免关税额       */
+                    REAL_TAX                            ,       /* 76 : 实际免代征税       */
+                    REAL_REG                            ,       /* 77 : 实际免调节税       */
+                    SEQ_NO                              ,       /* 78 : 档案号             */
+                    VER_NO                              ,       /* 79 : 核销归档号         */
+                    VER_ER                              ,       /* 80 : 核销归档人员编号   */
+                    CUSTOMS_CODE                        ,       /* 81 : 主管海关编号       */
+                    SERVICE_FEE_RATE                    ,       /* 82 : 监管手续费费率     */
+                    PRE_SERV_AMT                        ,       /* 83 : 预收手续费额       */
+                    FACT_SERV_AMT                       ,       /* 84 : 实收手续费额       */
+                    NOTE_S                                      /* 85 : 备注               */
+                from
+                    TMP_CONTRACT_HEAD
+                where
+                    SYSTEM_ID = ?SYSTEM_ID
+            </query-statement>
+        </query>
+        <field>
+            <description>企业手册预录入号</description>
+            <field-name>pREMANUALNO</field-name>
+            <type>CHAR</type>
+            <format>X12</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>企业手册编号</description>
+            <field-name>mANUALNO</field-name>
+            <type>CHAR</type>
+            <format>X12</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>经营单位编号</description>
+            <field-name>tRADECO</field-name>
+            <type>CHAR</type>
+            <format>X10</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>经营单位名称</description>
+            <field-name>tRADENAME</field-name>
+            <type>CHAR</type>
+            <format>X70</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>生产单位地区代码</description>
+            <field-name>dISTRICTCODE</field-name>
+            <type>CHAR</type>
+            <format>X5</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>生产单位编号</description>
+            <field-name>OWNER_CODE</field-name>
+            <type>CHAR</type>
+            <format>X10</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>生产单位名称</description>
+            <field-name>oWNERNAME</field-name>
+            <type>CHAR</type>
+            <format>X70</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>外商公司名称</description>
+            <field-name>FOREIGN_CO</field-name>
+            <type>CHAR</type>
+            <format>X70</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>外商经理人</description>
+            <field-name>FOREIGNMGR</field-name>
+            <type>CHAR</type>
+            <format>X32</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>监管方式</description>
+            <field-name>tRAD_MODE</field-name>
+            <type>CHAR</type>
+            <format>X4</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>征免性质</description>
+            <field-name>cUTMODE</field-name>
+            <type>CHAR</type>
+            <format>X3</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>贸易国</description>
+            <field-name>tRADECOUNTRY</field-name>
+            <type>CHAR</type>
+            <format>X3</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>进出口岸之一</description>
+            <field-name>pORT1</field-name>
+            <type>CHAR</type>
+            <format>X4</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>进出口岸之二</description>
+            <field-name>pORT2</field-name>
+            <type>CHAR</type>
+            <format>X4</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>进出口岸之三</description>
+            <field-name>pORT3</field-name>
+            <type>CHAR</type>
+            <format>X4</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>进出口岸之四</description>
+            <field-name>pORT4</field-name>
+            <type>CHAR</type>
+            <format>X4</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>进出口岸之五</description>
+            <field-name>pORT5</field-name>
+            <type>CHAR</type>
+            <format>X4</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>协议号</description>
+            <field-name>aGREENO</field-name>
+            <type>CHAR</type>
+            <format>X32</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>许可证编号</description>
+            <field-name>lICENSENO</field-name>
+            <type>CHAR</type>
+            <format>X32</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>手册批件号</description>
+            <field-name>aPPRNO</field-name>
+            <type>CHAR</type>
+            <format>X32</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>进口合同号</description>
+            <field-name>cONTRIN</field-name>
+            <type>CHAR</type>
+            <format>X32</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>出口合同号</description>
+            <field-name>cONTROUT</field-name>
+            <type>CHAR</type>
+            <format>X32</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>设备引进方式</description>
+            <field-name>eQUIPMODE</field-name>
+            <type>CHAR</type>
+            <format>X1</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>成交方式</description>
+            <field-name>tRANSMODE</field-name>
+            <type>CHAR</type>
+            <format>X1</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>保税方式</description>
+            <field-name>pAYMODE</field-name>
+            <type>CHAR</type>
+            <format>X1</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>投资方式</description>
+            <field-name>iNVESTMODE</field-name>
+            <type>CHAR</type>
+            <format>X1</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>外汇来源</description>
+            <field-name>eXSOURCE</field-name>
+            <type>CHAR</type>
+            <format>X4</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>加工品种分类</description>
+            <field-name>pRODUCTTYPE</field-name>
+            <type>CHAR</type>
+            <format>X2</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>进／出口浮动比率</description>
+            <field-name>rATIORANGE</field-name>
+            <type>NUMBER</type>
+            <format>X21</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>内销比率</description>
+            <field-name>iNRATIO</field-name>
+            <type>NUMBER</type>
+            <format>X21</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>投资额</description>
+            <field-name>iNVESTAMT</field-name>
+            <type>NUMBER</type>
+            <format>X21</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>投资额币制</description>
+            <field-name>iNVESTCURR</field-name>
+            <type>CHAR</type>
+            <format>X3</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>已批准设备总金额</description>
+            <field-name>aPPRDEVAMT</field-name>
+            <type>NUMBER</type>
+            <format>X21</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>进口总金额</description>
+            <field-name>iNAMT</field-name>
+            <type>NUMBER</type>
+            <format>X21</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>进口总金额币制</description>
+            <field-name>iNCURR</field-name>
+            <type>CHAR</type>
+            <format>X3</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>出口总金额</description>
+            <field-name>eXAMT</field-name>
+            <type>NUMBER</type>
+            <format>X21</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>出口总金额币制</description>
+            <field-name>eXCURR</field-name>
+            <type>CHAR</type>
+            <format>X3</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>进口原料项数</description>
+            <field-name>iNPNT</field-name>
+            <type>INTEGER</type>
+            <format>X9</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>出口原料项数</description>
+            <field-name>eXPNT</field-name>
+            <type>INTEGER</type>
+            <format>X9</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>调拨原料项数</description>
+            <field-name>tRPNT</field-name>
+            <type>INTEGER</type>
+            <format>X9</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>进口设备项数</description>
+            <field-name>dEPNT</field-name>
+            <type>INTEGER</type>
+            <format>X9</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>手册续本总数</description>
+            <field-name>cONTRSEQNO</field-name>
+            <type>INTEGER</type>
+            <format>X9</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>调拨单数</description>
+            <field-name>tRANSCOUNT</field-name>
+            <type>INTEGER</type>
+            <format>X9</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field check="true">
+            <description>进口期限</description>
+            <field-name>iDATE</field-name>
+            <type>DATE</type>
+            <format>TYYYYMMDD</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field check="true">
+            <description>出口期限</description>
+            <field-name>eDATE</field-name>
+            <type>DATE</type>
+            <format>TYYYYMMDD</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field check="true">
+            <description>变更日期</description>
+            <field-name>LIMIT_DATE</field-name>
+            <type>DATE</type>
+            <format>TYYYYMMDD</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>输入员代号</description>
+            <field-name>tYPEER</field-name>
+            <type>CHAR</type>
+            <format>X8</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field check="true">
+            <description>输入日期</description>
+            <field-name>tYPEDATE</field-name>
+            <type>DATE</type>
+            <format>TYYYYMMDD</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>实际进口总金额</description>
+            <field-name>fACTINAMT</field-name>
+            <type>NUMBER</type>
+            <format>X21</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>实际出口总金额</description>
+            <field-name>fACTEXAMT</field-name>
+            <type>NUMBER</type>
+            <format>X21</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>合同执行标志</description>
+            <field-name>eXEMARK</field-name>
+            <type>CHAR</type>
+            <format>X1</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>三级审批标志</description>
+            <field-name>dECLFLAG</field-name>
+            <type>CHAR</type>
+            <format>X1</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>重点合同标志</description>
+            <field-name>sUPVMARK</field-name>
+            <type>CHAR</type>
+            <format>X10</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>进口报关单份数</description>
+            <field-name>iMCOUNT</field-name>
+            <type>INTEGER</type>
+            <format>X20</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>出口报关单份数</description>
+            <field-name>eXCOUNT</field-name>
+            <type>INTEGER</type>
+            <format>X20</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>审批关员代码</description>
+            <field-name>cHKER</field-name>
+            <type>CHAR</type>
+            <format>X8</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field check="true">
+            <description>海关审批日期</description>
+            <field-name>aPPRDATE</field-name>
+            <type>DATE</type>
+            <format>TYYYYMMDD</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>核发关员代码</description>
+            <field-name>rECHKER</field-name>
+            <type>CHAR</type>
+            <format>X8</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>核销人员代号</description>
+            <field-name>cLEARER</field-name>
+            <type>CHAR</type>
+            <format>X8</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field check="true">
+            <description>核销申请日期</description>
+            <field-name>cLEARAPPLDATE</field-name>
+            <type>DATE</type>
+            <format>TYYYYMMDD</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field check="true">
+            <description>核销日期</description>
+            <field-name>cLEARDATE</field-name>
+            <type>DATE</type>
+            <format>TYYYYMMDD</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>结案人员代号</description>
+            <field-name>cLOSEER</field-name>
+            <type>CHAR</type>
+            <format>X8</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field check="true">
+            <description>结案日期</description>
+            <field-name>cLOSEDATE</field-name>
+            <type>DATE</type>
+            <format>TYYYYMMDD</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>查验标记</description>
+            <field-name>eXAMMARK</field-name>
+            <type>CHAR</type>
+            <format>X10</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>核销情况标记</description>
+            <field-name>cLEARMARK</field-name>
+            <type>CHAR</type>
+            <format>X10</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>结案情况标记</description>
+            <field-name>cLOSEMARK</field-name>
+            <type>CHAR</type>
+            <format>X1</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>代征税分类</description>
+            <field-name>tAXTYPE</field-name>
+            <type>CHAR</type>
+            <format>X1</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>补关税</description>
+            <field-name>rECOVERDUTY</field-name>
+            <type>NUMBER</type>
+            <format>X21</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>补代征税</description>
+            <field-name>rECOVERTAX</field-name>
+            <type>NUMBER</type>
+            <format>X21</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>补调节税</description>
+            <field-name>rECOVERREG</field-name>
+            <type>NUMBER</type>
+            <format>X21</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>待征关税</description>
+            <field-name>dEFERDUTY</field-name>
+            <type>NUMBER</type>
+            <format>X21</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>待征代征税</description>
+            <field-name>dEFERTAX</field-name>
+            <type>NUMBER</type>
+            <format>X21</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>待征调节税</description>
+            <field-name>dEFERREG</field-name>
+            <type>NUMBER</type>
+            <format>X21</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>罚款金额</description>
+            <field-name>fINEAMT</field-name>
+            <type>NUMBER</type>
+            <format>X21</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>实际免关税额</description>
+            <field-name>rEALDUTY</field-name>
+            <type>NUMBER</type>
+            <format>X21</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>实际免代征税</description>
+            <field-name>rEALTAX</field-name>
+            <type>NUMBER</type>
+            <format>X21</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>实际免调节税</description>
+            <field-name>rEALREG</field-name>
+            <type>NUMBER</type>
+            <format>X21</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>档案号</description>
+            <field-name>sEQNO</field-name>
+            <type>CHAR</type>
+            <format>X18</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>核销归档号</description>
+            <field-name>VER_NO</field-name>
+            <type>CHAR</type>
+            <format>X18</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>核销归档人员编号</description>
+            <field-name>vERER</field-name>
+            <type>CHAR</type>
+            <format>X8</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>主管海关编号</description>
+            <field-name>cUSTOMSCODE</field-name>
+            <type>CHAR</type>
+            <format>X4</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>监管手续费费率</description>
+            <field-name>sERVICEFEERATE</field-name>
+            <type>NUMBER</type>
+            <format>X21</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>预收手续费额</description>
+            <field-name>pRESERVAMT</field-name>
+            <type>NUMBER</type>
+            <format>X21</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>实收手续费额</description>
+            <field-name>fACTSERVAMT</field-name>
+            <type>NUMBER</type>
+            <format>X21</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>备注</description>
+            <field-name>nOTES</field-name>
+            <type>CHAR</type>
+            <format>X255</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+    </section>
+ 
+    <section multiple="true" required="false">
+        <description>手册料件</description>
+        <section-flag>&lt;IM_CONTRACT_LIST    &gt;</section-flag>
+        <query>
+            <query-param>
+                <param-name>SYSTEM_ID</param-name>
+                <type>CHAR</type>
+                <format>X18</format>
+                <value>C00000000000000719</value>
+            </query-param>
+            <query-statement>
+                select
+                    MANUAL_NO                           ,   /* 01 : 手册编号               */
+                    CONTR_ITEM                          ,   /* 02 : 货物序号               */
+                    CODE_T||SUBSTRB(NVL(CODE_S,'00'),1,2),  /* 03 : 税则号                 */
+                    CLASS_MARK                          ,   /* 04 : 归类标志               */
+                    G_NAME                              ,   /* 05 : 商品名称               */
+                    G_MODEL                             ,   /* 06 : 规格、型号             */
+                    ORIGIN_CONSUME                      ,   /* 07 : 产消国                 */
+                    DUTY_MODE                           ,   /* 08 : 征减免税方式           */
+                    DUTY_RATIO                          ,   /* 09 : 进口征税比率           */
+                    LOCAL_CONTR                         ,   /* 10 : 购销合同号             */
+                    APPR_AMT                            ,   /* 11 : 允许进出口金额         */
+                    FACT_AMT                            ,   /* 12 : 实际进口金额           */
+                    UNIT_PRICE                          ,   /* 13 : 单价                   */
+                    APPR_QTY                            ,   /* 14 : 允许进出口料、件数量   */
+                    FACT_QTY                            ,   /* 15 : 实际进口数量           */
+                    TRANSFER_QTY                        ,   /* 16 : 上手册转入数量         */
+                    UNIT_1                              ,   /* 17 : 计量单位代码           */
+                    CONSUME_NOTE                        ,   /* 18 : 单耗说明               */
+                    EX_NO                               ,   /* 19 : 对应出口成品序号       */
+                    IM_MODE                             ,   /* 20 : 进口方式               */
+                    WORK_PAY                            ,   /* 21 : 加工费                 */
+                    CURR_WORK                               /* 22 : 加工费币制             */
+                from
+                    TMP_IM_CONTRACT_LIST
+                where
+                    SYSTEM_ID = ?SYSTEM_ID
+            </query-statement>
+        </query>
+        <field>
+            <description>手册编号</description>
+            <field-name>mANUALNO</field-name>
+            <type>CHAR</type>
+            <format>X12</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>货物序号</description>
+            <field-name>cONTRITEM</field-name>
+            <type>INTEGER</type>
+            <format>N9</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>税则号</description>
+            <field-name>cODETS</field-name>
+            <type>CHAR</type>
+            <format>X10</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>归类标志</description>
+            <field-name>cLASSMARK</field-name>
+            <type>CHAR</type>
+            <format>X</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>商品名称</description>
+            <field-name>gNAME</field-name>
+            <type>CHAR</type>
+            <format>X50</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>规格、型号</description>
+            <field-name>gMODEL</field-name>
+            <type>CHAR</type>
+            <format>X50</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>产消国</description>
+            <field-name>ORIGIN_CONSUME</field-name>
+            <type>CHAR</type>
+            <format>X3</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>征减免税方式</description>
+            <field-name>dUTYMODE</field-name>
+            <type>CHAR</type>
+            <format>X</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>进口征税比率</description>
+            <field-name>dUTYRATIO</field-name>
+            <type>NUMBER</type>
+            <format>+N12.N7</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>购销合同号</description>
+            <field-name>lOCALCONTR</field-name>
+            <type>CHAR</type>
+            <format>X32</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>允许进出口金额</description>
+            <field-name>aPPRAMT</field-name>
+            <type>NUMBER</type>
+            <format>+N17.N2</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>实际进口金额</description>
+            <field-name>fACTAMT</field-name>
+            <type>NUMBER</type>
+            <format>+N17.N2</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>单价</description>
+            <field-name>uNITPRICE</field-name>
+            <type>NUMBER</type>
+            <format>+N15.N4</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>允许进出口料件数量</description>
+            <field-name>aPPRQTY</field-name>
+            <type>NUMBER</type>
+            <format>N14.N5</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>实际进口数量</description>
+            <field-name>fACTQTY</field-name>
+            <type>NUMBER</type>
+            <format>N14.N5</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>上手册转入数量</description>
+            <field-name>tRANSFERQTY</field-name>
+            <type>NUMBER</type>
+            <format>N14.N5</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>计量单位代码</description>
+            <field-name>uNIT1</field-name>
+            <type>CHAR</type>
+            <format>X3</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>单耗说明</description>
+            <field-name>cONSUMENOTE</field-name>
+            <type>CHAR</type>
+            <format>X255</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>对应出口成品序号</description>
+            <field-name>eXNO</field-name>
+            <type>INTEGER</type>
+            <format>N9</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>进口方式</description>
+            <field-name>iMMODE</field-name>
+            <type>CHAR</type>
+            <format>X</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>加工费</description>
+            <field-name>WORK_PAY</field-name>
+            <type>NUMBER</type>
+            <format>+N17.N2</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>加工费币制</description>
+            <field-name>cURRWORK</field-name>
+            <type>CHAR</type>
+            <format>X3</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+    </section>
+ 
+    <section multiple="true" required="false">
+        <description>手册成品</description>
+        <section-flag>&lt;EX_CONTRACT_LIST    &gt;</section-flag>
+        <query>
+            <query-param>
+                <param-name>SYSTEM_ID</param-name>
+                <type>CHAR</type>
+                <format>X18</format>
+                <value>C00000000000000719</value>
+            </query-param>
+            <query-statement>
+                select
+                    MANUAL_NO                           ,   /* 01 : 手册编号               */
+                    CONTR_ITEM                          ,   /* 02 : 货物序号               */
+                    CODE_T||SUBSTRB(NVL(CODE_S,'00'),1,2),  /* 03 : 税则号                 */
+                    CLASS_MARK                          ,   /* 04 : 归类标志               */
+                    G_NAME                              ,   /* 05 : 商品名称               */
+                    G_MODEL                             ,   /* 06 : 规格、型号             */
+                    ORIGIN_CONSUME                      ,   /* 07 : 产消国                 */
+                    DUTY_MODE                           ,   /* 08 : 征减免税方式           */
+                    DUTY_RATIO                          ,   /* 09 : 进口征税比率           */
+                    LOCAL_CONTR                         ,   /* 10 : 购销合同号             */
+                    APPR_AMT                            ,   /* 11 : 允许进出口金额         */
+                    FACT_AMT                            ,   /* 12 : 实际进口金额           */
+                    UNIT_PRICE                          ,   /* 13 : 单价                   */
+                    APPR_QTY                            ,   /* 14 : 允许进出口料、件数量   */
+                    FACT_QTY                            ,   /* 15 : 实际进口数量           */
+                    TRANSFER_QTY                        ,   /* 16 : 上手册转入数量         */
+                    UNIT_1                              ,   /* 17 : 计量单位代码           */
+                    CONSUME_NOTE                        ,   /* 18 : 单耗说明               */
+                    EX_NO                               ,   /* 19 : 对应出口成品序号       */
+                    IM_MODE                             ,   /* 20 : 进口方式               */
+                    WORK_PAY                            ,   /* 21 : 加工费                 */
+                    CURR_WORK                               /* 22 : 加工费币制             */
+                from
+                    TMP_EX_CONTRACT_LIST
+                where
+                    SYSTEM_ID = ?SYSTEM_ID
+            </query-statement>
+        </query>
+        <field>
+            <description>手册编号</description>
+            <field-name>mANUALNO</field-name>
+            <type>CHAR</type>
+            <format>X12</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>货物序号</description>
+            <field-name>cONTRITEM</field-name>
+            <type>INTEGER</type>
+            <format>N9</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>税则号</description>
+            <field-name>cODETS</field-name>
+            <type>CHAR</type>
+            <format>X10</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>归类标志</description>
+            <field-name>cLASSMARK</field-name>
+            <type>CHAR</type>
+            <format>X</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>商品名称</description>
+            <field-name>gNAME</field-name>
+            <type>CHAR</type>
+            <format>X50</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>规格、型号</description>
+            <field-name>gMODEL</field-name>
+            <type>CHAR</type>
+            <format>X50</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>产消国</description>
+            <field-name>oRIGINCONSUME</field-name>
+            <type>CHAR</type>
+            <format>X3</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>征减免税方式</description>
+            <field-name>dUT_MODE</field-name>
+            <type>CHAR</type>
+            <format>X</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>进口征税比率</description>
+            <field-name>dUTYRATIO</field-name>
+            <type>NUMBER</type>
+            <format>+N12.N7</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>购销合同号</description>
+            <field-name>lOCALCONTR</field-name>
+            <type>CHAR</type>
+            <format>X32</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>允许进出口金额</description>
+            <field-name>aPPRAMT</field-name>
+            <type>NUMBER</type>
+            <format>+N17.N2</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>实际进口金额</description>
+            <field-name>fACTAMT</field-name>
+            <type>NUMBER</type>
+            <format>+N17.N2</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>单价</description>
+            <field-name>uNITPRICE</field-name>
+            <type>NUMBER</type>
+            <format>+N15.N4</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>允许进出口料件数量</description>
+            <field-name>aPPRQTY</field-name>
+            <type>NUMBER</type>
+            <format>N14.N5</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>实际进口数量</description>
+            <field-name>fACTQTY</field-name>
+            <type>NUMBER</type>
+            <format>N14.N5</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>上手册转入数量</description>
+            <field-name>tRANSFERQTY</field-name>
+            <type>NUMBER</type>
+            <format>N14.N5</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>计量单位代码</description>
+            <field-name>uNIT1</field-name>
+            <type>CHAR</type>
+            <format>X3</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>单耗说明</description>
+            <field-name>cONSUMENOTE</field-name>
+            <type>CHAR</type>
+            <format>X255</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>对应出口成品序号</description>
+            <field-name>eXNO</field-name>
+            <type>INTEGER</type>
+            <format>N9</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>进口方式</description>
+            <field-name>iMMODE</field-name>
+            <type>CHAR</type>
+            <format>X</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>加工费</description>
+            <field-name>wORKPAY</field-name>
+            <type>NUMBER</type>
+            <format>+N17.N2</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>加工费币制</description>
+            <field-name>cURRWORK</field-name>
+            <type>CHAR</type>
+            <format>X3</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+    </section>
+ 
+    <section multiple="true" required="false">
+        <description>单耗关系</description>
+        <section-flag>&lt;CONTRACT_CONSUME    &gt;</section-flag>
+        <query>
+            <query-param>
+                <param-name>SYSTEM_ID</param-name>
+                <type>CHAR</type>
+                <format>X18</format>
+                <value>C00000000000000719</value>
+            </query-param>
+            <query-statement>
+                select
+                    MANUAL_NO     ,     /* 1 : 手册编号           */
+                    EX_NO         ,     /* 2 : 对应出口成品序号   */
+                    CONTR_ITEM    ,     /* 3 : 对应进口料件序号   */
+                    DECL_CONSUME  ,     /* 4 : 申报单耗量         */
+                    APPR_CONSUME  ,     /* 5 : 审定单耗           */
+                    DECL_DAMAGE   ,     /* 6 : 申报损耗量         */
+                    APPR_DAMAGE         /* 7 : 审定单损耗         */
+                from
+                    TMP_CONSUME
+                where
+                    SYSTEM_ID = ?SYSTEM_ID
+            </query-statement>
+        </query>
+        <field>
+            <description>手册编号</description>
+            <field-name>mANUALNO</field-name>
+            <type>CHAR</type>
+            <format>X12</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>对应出口成品序号</description>
+            <field-name>eXNO</field-name>
+            <type>INTEGER</type>
+            <format>N9</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>对应进口料件序号</description>
+            <field-name>cONTRITEM</field-name>
+            <type>INTEGER</type>
+            <format>N9</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>申报单耗量</description>
+            <field-name>dECLCONSUME</field-name>
+            <type>NUMBER</type>
+            <format>N14.N5</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>审定单耗</description>
+            <field-name>aPPRCONSUME</field-name>
+            <type>NUMBER</type>
+            <format>N14.N5</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>申报损耗量</description>
+            <field-name>dECLDAMAGE</field-name>
+            <type>NUMBER</type>
+            <format>N14.N5</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+        <field>
+            <description>审定单损耗</description>
+            <field-name>aPPRDAMAGE</field-name>
+            <type>NUMBER</type>
+            <format>N14.N5</format>
+            <CustomWriteFlag>0</CustomWriteFlag>
+            <UniqueIndexFlag>0</UniqueIndexFlag>
+        </field>
+    </section>
+</message>

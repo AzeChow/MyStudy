@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class lazy="false" name="com.bestway.bls.entity.StorageBill" 
+		table="storagebill">
+		<cache usage="read-write" />
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex" />
+		</id>
+		<property name="billNo"></property>
+		<property name="emsNo"></property>
+		<property name="validDate"></property>
+		<property name="billType"></property>
+		<property name="ioFlag"></property>
+		<property name="orderNo"></property>
+		<property name="planNo"></property>
+		<property name="packCount"></property>
+		<property name="grossWeight"></property>
+		<property name="netWeight"></property>
+		<property name="manualNo"></property>
+		<property name="itemsCount"></property>
+		<property name="outName"></property>
+		<property name="inName"></property>
+		<property name="effective"></property>
+		<many-to-one lazy="false" name="delivery" column="delivery" 
+			class="com.bestway.bls.entity.Delivery" />
+		<many-to-one lazy="false" name="wareHouseCode" 
+			class="com.bestway.common.materialbase.entity.WareSet" />
+		<many-to-one lazy="false" name="customsCode" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Customs" />
+		<many-to-one lazy="false" name="wrap" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Wrap" />
+		<many-to-one lazy="false" name="supplierCd" 
+			class="com.bestway.common.materialbase.entity.ScmCoc" />
+		<many-to-one lazy="false" name="corrOwnerCode" 
+			class="com.bestway.common.materialbase.entity.ScmCoc" />
+		<many-to-one lazy="false" name="iePort" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Customs" />
+		<many-to-one lazy="false" name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" />
+	</class>
+</hibernate-mapping>

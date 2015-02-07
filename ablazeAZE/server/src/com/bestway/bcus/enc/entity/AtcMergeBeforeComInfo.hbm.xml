@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class lazy="false" 
+		name="com.bestway.bcus.enc.entity.AtcMergeBeforeComInfo" 
+		table="atcmergebeforecominfo">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<many-to-one lazy="false" name="afterComInfo" column="afterComInfo" 
+			class="com.bestway.bcus.enc.entity.AtcMergeAfterComInfo"/>
+		<many-to-one lazy="false" name="materiel" column="materiel" 
+			class="com.bestway.common.materialbase.entity.Materiel" 
+			index="atcbefore_materiel"/>
+		<property name="declaredPrice" />
+		<property name="declaredAmount" />
+		<property name="legalAmount" />
+		<property name="secondLegalAmount" />
+		<property name="grossWeight" />
+		<property name="netWeight" />
+		<property name="piece"/>
+		<property name="boxNo"  length="1000"/>
+		<property name="totalPrice" />
+		<property name="workUsd"/>
+		<property name="isAutoCreate" />
+		<property name="totalnetweight"/>
+		<property name="memos" />
+		<property name="serialNo"/>
+		<property name="version"/>
+		<property name="cmpVersion"/>
+		<property name="storeAmount"/>
+		<property name="unitWeight"/>
+		<property name="customsNo"/>
+		<property name="extendMemo"/>
+		<property name="extendMemo1"/>
+		<many-to-one lazy="false" name="projectDept" column="projectDept" 
+			class="com.bestway.common.materialbase.entity.ProjectDept"/>
+		<many-to-one lazy="false" name="salesCountry" column="salesCountry" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Country"/>
+		<many-to-one lazy="false" name="usesCode" column="usesCode" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Uses"/>
+		<many-to-one lazy="false" name="currency" column="currency" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Curr"/>
+		<many-to-one lazy="false" name="levyMode" column="levyMode" 
+			class="com.bestway.bcus.custombase.entity.parametercode.LevyMode"/>
+		<many-to-one lazy="false" name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" 
+			index="atcmeebereomin_company"/>
+	</class>
+</hibernate-mapping>
+<!-- parsed in 0ms -->

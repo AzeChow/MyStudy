@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcus.manualdeclare.entity.EmsEdiMergerImgAfter" table="emsedimergerimgafter">
+		<cache usage="read-write"/> 
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="seqNum" index="emsimgafter_seqnum"/>
+		<many-to-one lazy="false"      name="complex" column="complex" class="com.bestway.bcus.custombase.entity.hscode.Complex" index="emsdmergriaft_complex"/>
+		<property name="name" length="255"/>
+		<property name="spec" length="255"/>
+		<property name="changeDate"/>
+		<many-to-one lazy="false"      name="unit" column="unit" class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<!--<many-to-one lazy="false"      name="legalUnit" column="legalUnit" class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>-->
+		<property name="legalUnitGene" />
+		<!--<many-to-one lazy="false"      name="legalUnit2" column="legalUnit2" class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>-->
+		<property name="legalUnit2Gene" />
+		<property name="weigthUnitGene" />
+		<property name="maxApprSpace" />
+        <property name="modifyMark" length="225"/>
+		<property name="modifyTimes"/>
+		<property name="price"/>
+		<property name="sendState"/>
+		<property name="isMainImg"/>
+		<many-to-one lazy="false"      name="curr" column="curr" class="com.bestway.bcus.custombase.entity.parametercode.Curr"/>
+		<property name="note" length="255"/>
+		<many-to-one lazy="false"      name="emsEdiMergerHead" column="emsEdiMergerHead" class="com.bestway.bcus.manualdeclare.entity.EmsEdiMergerHead"/>
+		<many-to-one lazy="false"      name="company" column="coid" class="com.bestway.bcus.system.entity.Company" index="emsdmergriaft_company"/>
+	</class>
+
+</hibernate-mapping>
+<!-- parsed in 0ms -->

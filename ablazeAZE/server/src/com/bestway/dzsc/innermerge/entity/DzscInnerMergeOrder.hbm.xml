@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.dzsc.innermerge.entity.DzscInnerMergeDataOrder" 
+		table="dzscinnermergedataorder">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="serialNo" />
+		<property name="beforeTenComplexCode" />
+		<property name="beforeMaterielCode" />
+		<property name="beforeMaterielNameSpec" />
+		<property name="beforeMaterielName" />
+		<property name="beforeMaterielSpec" />
+		<property name="beforeEnterpriseUnit" />
+		<property name="beforeUnit" />
+		<property name="afterTenMemoNo" />		
+		<property name="afterTenComplexCode" />
+		<property name="afterComplexlNameSpec" />
+		<property name="afterComplexlName" />
+		<property name="afterComplexSpec" />		
+		<property name="afterUnit" />
+		<property name="legalUnitGene" />
+		<property name="legalUnit2Gene" />
+		<property name="weigthUnitGene" />
+		<property name="fourNo" />
+		<property name="fourComplexName" />
+		<property name="fourComplexCode" />
+		<property name="fourUnit" />
+		<property name="unitConvert" />
+		<property name="unitWeight" />
+		<many-to-one lazy="false"      name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" index="dzsccc_coid"/>
+	</class>
+
+</hibernate-mapping>
+<!-- parsed in 0ms -->

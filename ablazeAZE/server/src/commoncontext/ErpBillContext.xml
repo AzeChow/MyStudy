@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+<beans>
+	<!--==================DAO Beans====================-->
+	<bean id="erpBillDao" class="com.bestway.common.erpbill.dao.ErpBillDao">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>
+	<!--==================Logic Beans====================-->
+	<bean id="erpBillLogic" class="com.bestway.common.erpbill.logic.ErpBillLogic">
+		<property name="erpBillDao">
+			<ref bean="erpBillDao"/>
+		</property>
+	</bean>
+
+	<!--==================Action Bean====================-->
+	<bean id="erpBillAction" 
+		class="com.bestway.common.erpbill.action.ErpBillActionImpl">
+		<property name="erpBillDao">
+			<ref bean="erpBillDao"/>
+		</property>
+		<property name="erpBillLogic">
+			<ref bean="erpBillLogic"/>
+		</property>
+	</bean>
+	
+	<!--==================Other Beans====================-->
+</beans>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!--==================DAO Beans====================-->
+	<bean id="ecsContractAnalyseDao" class="com.bestway.bcus.checkstock.dao.ECSContractAnalyseDao">
+    	<property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+	<bean id="ecsFactoryAnalyseDao" class="com.bestway.bcus.checkstock.dao.ECSFactoryAnalyseDao">
+    	<property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+	<bean id="ecsTransferAnalyseDao" class="com.bestway.bcus.checkstock.dao.ECSTransferAnalyseDao">
+    	<property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+	<bean id="ecsCheckStockDao" class="com.bestway.bcus.checkstock.dao.ECSCheckStockDao">
+    	<property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+	
+	<!--==================Logic Beans====================-->
+	<bean id="ecsContractAnalyseLogic" class="com.bestway.bcus.checkstock.logic.ECSContractAnalyseLogic">
+		<property name="ecsContractAnalyseDao"><ref bean="ecsContractAnalyseDao"/></property>
+		<property name="ecsCheckStockDao"><ref bean="ecsCheckStockDao"/></property>
+	</bean>
+	<bean id="ecsFactoryAnalyseLogic" class="com.bestway.bcus.checkstock.logic.ECSFactoryAnalyseLogic">
+		<property name="ecsFactoryAnalyseDao"><ref bean="ecsFactoryAnalyseDao"/></property>
+		<property name="ecsCheckStockDao"><ref bean="ecsCheckStockDao"/></property>
+	</bean>
+	<bean id="ecsTransferAnalyseLogic" class="com.bestway.bcus.checkstock.logic.ECSTransferAnalyseLogic">
+		<property name="ecsTransferAnalyseDao"><ref bean="ecsTransferAnalyseDao"/></property>
+		<property name="ecsCheckStockDao"><ref bean="ecsCheckStockDao"/></property>
+	</bean>
+	<bean id="ecsCheckStockLogic" class="com.bestway.bcus.checkstock.logic.ECSCheckStockLogic">
+		<property name="ecsCheckStockDao"><ref bean="ecsCheckStockDao"/></property>
+	</bean>
+	<!--==================Action Bean====================-->
+	<bean id="ecsCheckStockAction" class="com.bestway.bcus.checkstock.action.ECSCheckStockActionImpl">
+		<property name="ecsContractAnalyseLogic"><ref bean="ecsContractAnalyseLogic"/></property>
+		<property name="ecsFactoryAnalyseLogic"><ref bean="ecsFactoryAnalyseLogic"/></property>
+		<property name="ecsTransferAnalyseLogic"><ref bean="ecsTransferAnalyseLogic"/></property>
+		<property name="ecsCheckStockLogic"><ref bean="ecsCheckStockLogic"/></property>
+	</bean>
+	<!-- =================Authority Bean -->
+	<bean id="ecsCheckStockAuthority" class="com.bestway.bcus.checkstock.action.ECSCheckStockAuthorityImpl" />
+</beans>

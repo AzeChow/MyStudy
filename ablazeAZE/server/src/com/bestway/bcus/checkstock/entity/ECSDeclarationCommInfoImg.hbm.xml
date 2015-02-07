@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class lazy="false" name="com.bestway.bcus.checkstock.entity.ECSDeclarationCommInfoImg"
+		table="ecsdeclarationcomminfoImg">
+		<cache usage="read-write" />
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex" />
+		</id>
+		<property name="serialNumber" />
+		<property name="emsNo" />
+		<property name="seqNum" />
+		<property name="customsDeclarationCode" />
+		<property name="declarationDate" />
+		<property name="unit" />
+		<property name="commName" />
+		<property name="commSpec" />
+		<property name="commAmount" not-null="true" />
+		<property name="commUnitPrice" not-null="true" />
+		<property name="totalMoney" not-null="true" />
+		<property name="impExpType" />
+		<property name="tradeMode" />
+		<property name="currency" />
+		<property name="impExpFlag" />
+		<many-to-one lazy="false" name="section" column="section"
+			class="com.bestway.bcus.checkstock.entity.ECSSection" index="ecsdeclarationcomminfoimg_section"/>
+		<many-to-one lazy="false" name="company" column="company"
+			class="com.bestway.bcus.system.entity.Company" index="ecsdeclarationcomminfoimg_company" />
+	</class>
+</hibernate-mapping>
+	<!-- parsed in 0ms -->

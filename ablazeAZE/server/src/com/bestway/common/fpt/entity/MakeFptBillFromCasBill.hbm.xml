@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class 
+		name="com.bestway.common.fpt.entity.MakeFptBillFromCasBill" 
+		table="makefptbillfromcasbill">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<many-to-one lazy="false"      name="company" column="companyId" 
+			class="com.bestway.bcus.system.entity.Company" index="makeransffcrbill_company"/>
+		<property name="billDetailId" />
+		<property name="fptBillItemId" />
+		<property name="createDate" />
+		<property name="modifyDate" />
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="eportmsg.xsl"?>
+<!--Element message: 此元素内所有内容及属性描述一个报文的定义及从数据库的获取途径。-->
+<message version="1.0" type="FptBill">
+	<description>收发货报文定义及获取方法描述</description>
+	<section-flag>FPT_DATA</section-flag>
+	<sub-section>
+		<description>签名信息</description>
+		<file-name>FptBillSignFormat.xml</file-name>
+	</sub-section>
+	<section multiple="false" required="true">
+		<description>收发货单表头</description>
+		<section-flag>FPT_BILL_HEAD</section-flag>
+		<data-id>FptBillHead</data-id>
+		<field nullable="true">
+			<description>收发货单编号</description>
+			<field-name>billNo</field-name>
+			<format>X(17)</format>
+			<field-flag>BILL_NO</field-flag>
+		</field>
+		<field nullable="true">
+			<description>电子口岸统一编号</description>
+			<field-name>seqNo</field-name>
+			<format>X(18)</format>
+			<field-flag>SEQ_NO</field-flag>
+		</field>
+		<field nullable="false">
+			<description>申请表编号</description>
+			<field-name>appNo</field-name>
+			<format>X(12)</format>
+			<field-flag>APP_NO</field-flag>
+		</field>
+		<field nullable="false">
+			<description>发（收）货企业内部编号</description>
+			<field-name>copNo</field-name>
+			<format>X(20)</format>
+			<field-flag>COP_BILL_NO</field-flag>
+		</field>
+		<field nullable="false">
+			<description>发（收）货企业编码</description>
+			<field-name>tradeCod</field-name>
+			<format>X(10)</format>
+			<field-flag>TRADE_CODE</field-flag>
+		</field>
+		<field nullable="false">
+			<description>发（收）货企业名称</description>
+			<field-name>tradeName</field-name>
+			<format>X(70)</format>
+			<field-flag>TRADE_NAME</field-flag>
+		</field>
+		<field nullable="false">
+			<description>发（收）货日期</description>
+			<field-name>iossueDate</field-name>
+			<format>Z(14)</format>
+			<field-flag>ISSUE_DATE</field-flag>
+		</field>
+		<field nullable="false">
+			<description>发（收）货申报人</description>
+			<field-name>isDeclaEm</field-name>
+			<format>X(10)</format>
+			<field-flag>IS_DECLA_EM</field-flag>
+		</field>
+		<field nullable="false">
+			<description>发（收）货申报时间</description>
+			<field-name>isDeclaDate</field-name>
+			<format>Z(14)</format>
+			<field-flag>IS_DECLA_DATE</field-flag>
+		</field>
+		<field nullable="false">
+			<description>发（收）货申报企业9位组织机构代码</description>
+			<field-name>agentCode</field-name>
+			<format>X(10)</format>
+			<field-flag>AGENT_CODE </field-flag>
+		</field>
+		<field nullable="false">
+			<description>发（收）货申报企业组织机构名称</description>
+			<field-name>agentName</field-name>
+			<format>X(30)</format>
+			<field-flag>AGENT_NAME</field-flag>
+		</field>
+		<field nullable="true">
+			<description>运输工具类别</description>
+			<field-name>transportToolType</field-name>
+			<format>X(2)</format>
+			<field-flag>CONVEY_TYPE</field-flag>
+		</field>
+		<field nullable="true">
+			<description>运输工具编号</description>
+			<field-name>transportToolNumber</field-name>
+			<format>X(32)</format>
+			<field-flag>CONVEY_NO</field-flag>
+		</field>
+		<field nullable="true">
+			<description>备注</description>
+			<field-name></field-name>
+			<format>X(128)</format>
+			<field-flag>NOTE</field-flag>
+		</field>
+	  	<field nullable="true">
+			<description>转入合同号</description>
+			<field-name></field-name>
+			<format>X(20)</format>
+			<field-flag>CONTR_NO</field-flag>
+		</field>
+		
+	</section>
+	<section multiple="false" required="true">
+		<description>收发货单企业表体</description>
+		<section-flag>FPT_BILL_LIST</section-flag>
+		<section multiple="false" required="true">
+			<description>收发货单企业表体商品明细</description>
+			<section-flag>FPT_BILL_ITEM</section-flag>
+			<data-id>FptBillItem</data-id>
+			<field nullable="false">
+				<description>序号</description>
+				<field-name>listNo</field-name>
+				<format>Z(8)9</format>
+				<field-flag>LIST_NO</field-flag>
+			</field>
+			<field nullable="true">
+				<description>发货序号</description>
+				<field-name>outNo</field-name>
+				<format>X(8)</format>
+				<field-flag>OUT_NO</field-flag>
+			</field>
+			<field nullable="true">
+				<description>转入手册/账册号</description>
+				<field-name>inEmsNo</field-name>
+				<format>X(12)</format>
+				<field-flag>IN_EMS_NO</field-flag>
+			</field>
+			<field nullable="true">
+				<description>料号</description>
+				<field-name>copGNo</field-name>
+				<format>X(30)</format>
+				<field-flag>COP_G_NO</field-flag>
+			</field>
+			<field nullable="true">
+				<description>归并前商品名称</description>
+				<field-name>copGName</field-name>
+				<format>X(50)</format>
+				<field-flag>COP_G_NAME</field-flag>
+			</field>
+			<field nullable="true">
+				<description>归并前规格型号</description>
+				<field-name>copGModel</field-name>
+				<format>X(50)</format>
+				<field-flag>COP_G_MODEL</field-flag>
+			</field>
+			<field nullable="false">
+				<description>申表请序号</description>
+				<field-name>appGNo</field-name>
+				<format>Z(8)9</format>
+				<field-flag>APP_G_NO</field-flag>
+			</field>
+			<field nullable="false">
+				<description>项号</description>
+				<field-name>trGno</field-name>
+				<format>Z(8)9</format>
+				<field-flag>G_NO</field-flag>
+			</field>
+			<field nullable="false">
+				<description>商品编码</description>
+				<field-name>complex.code</field-name>
+				<format>X(10)</format>
+				<field-flag>CODE_T_S</field-flag>
+			</field>
+			<field nullable="false">
+				<description>商品名称</description>
+				<field-name>commName</field-name>
+				<format>X(50)</format>
+				<field-flag>G_NAME</field-flag>
+			</field>
+			<field nullable="true">
+				<description>规格型号</description>
+				<field-name>commSpec</field-name>
+				<format>X(50)</format>
+				<field-flag>G_MODEL</field-flag>
+			</field>
+			<field nullable="false">
+				<description>交易单位</description>
+				<field-name>tradeUnit.code</field-name>
+				<format>X(3)</format>
+				<field-flag>TRADE_UNIT</field-flag>
+			</field>
+			<field nullable="false">
+				<description>交易数量</description>
+				<field-name>tradeQty</field-name>
+				<format>Z(12)9.9(5)</format>
+				<field-flag>TRADE_QTY</field-flag>
+			</field>
+			<field nullable="false">
+				<description>计量单位</description>
+				<field-name>unit.code</field-name>
+				<format>X(3)</format>
+				<field-flag>UNIT</field-flag>
+			</field>
+			<field nullable="false">
+				<description>申报数量</description>
+				<field-name>qty</field-name>
+				<format>Z(12)9.9(5)</format>
+				<field-flag>QTY</field-flag>
+			</field>
+			<field nullable="true">
+				<description>备注</description>
+				<field-name>note</field-name>
+				<format>X(50)</format>
+				<field-flag>NOTE</field-flag>
+			</field>
+		</section>
+	</section>
+	<section multiple="false" required="true">
+		<description>收发货单企业归并后表体</description>
+		<section-flag>FPT_BILL_DICT_LIST</section-flag>
+		<section multiple="false" required="true">
+			<description>收发货单企业归并后表体商品明细</description>
+			<section-flag>FPT_BILL_DICT_ITEM</section-flag>
+			<data-id>FptBillDictItem</data-id>
+			<field nullable="false">
+				<description>序号</description>
+				<field-name>listNo</field-name>
+				<format>Z(8)9</format>
+				<field-flag>LIST_NO</field-flag>
+			</field>
+			<field nullable="true">
+				<description>发货序号</description>
+				<field-name>outNo</field-name>
+				<format>Z(8)9</format>
+				<field-flag>OUT_NO</field-flag>
+			</field>
+			<field nullable="true">
+				<description>转入手册/账册号</description>
+				<field-name>inEmsNo</field-name>
+				<format>X(12)</format>
+				<field-flag>IN_EMS_NO</field-flag>
+			</field>
+			<field nullable="true">
+				<description>料号</description>
+				<field-name>copGNo</field-name>
+				<format>X(30)</format>
+				<field-flag>COP_G_NO</field-flag>
+			</field>
+			<field nullable="true">
+				<description>归并前商品名称</description>
+				<field-name>copGName</field-name>
+				<format>X(50)</format>
+				<field-flag>COP_G_NAME</field-flag>
+			</field>
+			<field nullable="true">
+				<description>归并前规格型号</description>
+				<field-name>copGModel</field-name>
+				<format>X(50)</format>
+				<field-flag>COP_G_MODEL</field-flag>
+			</field>
+			<field nullable="false">
+				<description>申表请序号</description>
+				<field-name>appGNo</field-name>
+				<format>Z(8)9</format>
+				<field-flag>APP_G_NO</field-flag>
+			</field>
+			<field nullable="false">
+				<description>项号</description>
+				<field-name>trGno</field-name>
+				<format>Z(8)9</format>
+				<field-flag>G_NO</field-flag>
+			</field>
+			<field nullable="false">
+				<description>商品编码</description>
+				<field-name>complex.code</field-name>
+				<format>X(10)</format>
+				<field-flag>CODE_T_S</field-flag>
+			</field>
+			<field nullable="false">
+				<description>商品名称</description>
+				<field-name>commName</field-name>
+				<format>X(50)</format>
+				<field-flag>G_NAME</field-flag>
+			</field>
+			<field nullable="true">
+				<description>规格型号</description>
+				<field-name>commSpec</field-name>
+				<format>X(50)</format>
+				<field-flag>G_MODEL</field-flag>
+			</field>
+			<field nullable="false">
+				<description>交易单位</description>
+				<field-name>tradeUnit.code</field-name>
+				<format>X(3)</format>
+				<field-flag>TRADE_UNIT</field-flag>
+			</field>
+			<field nullable="false">
+				<description>交易数量</description>
+				<field-name>tradeQty</field-name>
+				<format>Z(12)9.9(5)</format>
+				<field-flag>TRADE_QTY</field-flag>
+			</field>
+			<field nullable="false">
+				<description>计量单位</description>
+				<field-name>unit.code</field-name>
+				<format>X(3)</format>
+				<field-flag>UNIT</field-flag>
+			</field>
+			<field nullable="false">
+				<description>申报数量</description>
+				<field-name>qty</field-name>
+				<format>Z(12)9.9(5)</format>
+				<field-flag>QTY</field-flag>
+			</field>
+			<field nullable="true">
+				<description>备注</description>
+				<field-name>note</field-name>
+				<format>X(50)</format>
+				<field-flag>NOTE</field-flag>
+			</field>
+		</section>
+	</section>
+</message>

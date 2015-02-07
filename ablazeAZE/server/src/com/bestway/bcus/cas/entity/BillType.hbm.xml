@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcus.cas.entity.BillType" table="billtype">
+		<cache usage="read-write"/> 
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="billType" />
+		<property name="sysDefine"/>
+		<property name="isTransferBill"/>
+		<property name="isCustomsDeclarationCorresponding" column = "isCustomDeclaration" />	
+
+		<property name="code" length="100"/>
+		<property name="name" length="255"/>
+		<property name="factoryBillName" length="100"/>
+		<property name="wareType" />
+		<property name="produceType" />	
+		<property name="isShow" />
+		<!--<many-to-one lazy="false" name="company" column="coid" class="com.bestway.bcus.system.entity.Company"/>-->
+	</class>
+
+</hibernate-mapping>
+<!-- parsed in 0ms -->
+
+		

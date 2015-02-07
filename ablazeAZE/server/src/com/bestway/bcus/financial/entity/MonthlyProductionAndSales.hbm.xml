@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcus.financial.entity.MonthlyProductionAndSales" 
+		table="monthlyproductionandsales">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<many-to-one lazy="false" name="company" column="companyId" 
+			class="com.bestway.bcus.system.entity.Company" index="expbaortreestb_company"/>
+		<many-to-one lazy="false" name="hsUnit" column="hsUnitId"
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>		
+		<property name="accountDate"/>
+		<property name="hsName" />
+		<property name="hsSpec"/>
+		<property name="lastQuantity"/>
+		<property name="productionQuantity"/>
+		<property name="productionAccount"/>
+		<property name="productionPrice"/>
+		<property name="saleQuantity"/>
+		<property name="saleAccount"/>
+		<property name="salePrice"/>
+	</class>
+</hibernate-mapping>

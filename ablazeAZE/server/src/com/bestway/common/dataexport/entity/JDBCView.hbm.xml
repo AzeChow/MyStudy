@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.common.dataexport.entity.JDBCView" table="jdbcView">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<many-to-one lazy="false"      name="jdbcDataSource" column="jdbcDataSource"
+			 class="com.bestway.common.dataexport.entity.JDBCDataSource"/>
+		<property name="name" />
+		<property name="sqlStr1" column ="sqlScript" length="225"/>
+		<property name="sqlStr2" length="225"/>
+		<property name="sqlStr3" length="225"/>
+		<property name="sqlStr4" length="225"/>
+		<property name="sqlStr5" length="225"/>		
+		<many-to-one lazy="false"      name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company"/>
+	</class>
+
+</hibernate-mapping>

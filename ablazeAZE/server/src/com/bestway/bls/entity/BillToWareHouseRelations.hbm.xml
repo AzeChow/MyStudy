@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class lazy="false" name="com.bestway.bls.entity.BillToWareHouseRelations"
+		table="BillToWareHouseRelations">
+		<cache usage="read-write" />
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex" />
+		</id>
+		<many-to-one lazy="false" name="bsd" column="bsd"
+			class="com.bestway.bls.entity.BlsInOutStockBillDetail" />
+		<many-to-one lazy="false" name="sbb" column="sbb"
+			class="com.bestway.bls.entity.StorageBillBefore" />
+		<many-to-one lazy="false" name="sb" column="sb"
+			class="com.bestway.bls.entity.StorageBill" />
+		<many-to-one lazy="false" name="company" column="coid"
+			class="com.bestway.bcus.system.entity.Company" />
+		<many-to-one lazy="false" name="sbAfter" column="sbAfter"
+			class="com.bestway.bls.entity.StorageBillAfter" />
+	</class>
+</hibernate-mapping>

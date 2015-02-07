@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class  lazy="false"  name="com.bestway.bcus.system.entity.CustomsDeclarationSet" table="customsdset">
+		<cache usage="read-write"/> 
+       	<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="impType"/>
+		<many-to-one lazy="false"      name="declarationCustoms" column="declaraid" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Customs"/>	
+		<many-to-one lazy="false"      name="customlevyKind" column="clevyKind" 
+			class="com.bestway.bcus.custombase.entity.parametercode.LevyKind"/>	
+		<property name="billOfLading"/>		
+		<many-to-one lazy="false"      name="balanceMode" column="balanceMode" 
+			class="com.bestway.bcus.custombase.entity.parametercode.BalanceMode"/>	
+		<many-to-one lazy="false"      name="tradeMode" column="tradeMode" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Trade"/>	
+		<property name="conveyance"/>	
+		<many-to-one lazy="false"      name="levyMode" column="levyMode" 
+			class="com.bestway.bcus.custombase.entity.parametercode.LevyMode"/>			
+		<many-to-one lazy="false"      name="uses" column="uses" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Uses"/>	
+		<many-to-one lazy="false"      name="transac" column="transac" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Transac"/>
+		<many-to-one lazy="false"      name="country" column="country" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Country"/>
+		<many-to-one lazy="false"      name="coun" column="coun" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Country"/>		
+		<many-to-one lazy="false"      name="predock" column="predock" 
+			class="com.bestway.bcus.custombase.entity.countrycode.PreDock"/>
+		<many-to-one lazy="false"      name="port" column="port" 
+			class="com.bestway.bcus.custombase.entity.countrycode.PortLin"/>	
+		<many-to-one lazy="false"      name="wrapType" column="wrapType" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Wrap"/>
+		<many-to-one lazy="false"      name="commWrapType" column="commWrapType" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Wrap"/>
+		<many-to-one lazy="false"      name="customs" column="customs" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Customs"/>	
+		<many-to-one lazy="false"      name="transferMode" column="transferMode" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Transf"/>	
+		<many-to-one lazy="false"      name="curr" column="curr" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Curr"/>
+		<many-to-one lazy="false"      name="district" column="district" 
+			class="com.bestway.bcus.custombase.entity.countrycode.District"/>	
+		<many-to-one lazy="false"      name="company" column="coid" class="com.bestway.bcus.system.entity.Company" index="customsdset_company"/>
+		<many-to-one lazy="false"      name="brokerCorp" column="brokerCorp" 
+			class="com.bestway.pis.entity.BrokerCorp"/>	
+    </class>
+
+</hibernate-mapping>
+<!-- parsed in 0ms -->

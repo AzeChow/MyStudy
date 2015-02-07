@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+<beans>
+	<!--==================DAO Beans====================-->
+	<bean id="fixAssetDao" 
+		class="com.bestway.fixasset.dao.FixAssetDao">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>
+	
+	<!--==================Logic Beans====================-->
+	<bean id="fixAssetLogic" 
+		class="com.bestway.fixasset.logic.FixAssetLogic">
+		<property name="fixAssetDao">
+			<ref bean="fixAssetDao"/>
+		</property>
+	</bean>	
+	
+
+	<!--==================Action Bean====================-->
+	<bean id="fixAssetAction" 
+		class="com.bestway.fixasset.action.FixAssetActionImpl">
+		<property name="fixAssetDao">
+			<ref bean="fixAssetDao"/>
+		</property>		
+        <property name="fixAssetLogic">
+			<ref bean="fixAssetLogic"/>
+		</property>	
+	</bean>
+	
+	
+</beans>

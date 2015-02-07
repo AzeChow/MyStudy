@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!--==================DAO Beans====================-->
+	<bean id="dzscInnerMergeDao" class="com.bestway.dzsc.innermerge.dao.DzscInnerMergeDao">
+              <property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+	<!--==================Logic Beans====================-->
+	<bean id="dzscInnerMergeLogic" class="com.bestway.dzsc.innermerge.logic.DzscInnerMergeLogic">
+              <property name="materialManageDao"><ref bean="materialManageDao"/></property>			  
+			  <property name="dzscInnerMergeDao"><ref bean="dzscInnerMergeDao"/></property>
+			  <property name="materialApplyDao"><ref bean="materialApplyDao"/></property>
+			  <property name="dzscMessageLogic"><ref bean="dzscMessageLogic"/></property>
+	</bean>
+	<bean id="dzscHandInnerLogic" class="com.bestway.dzsc.innermerge.logic.DzscHandInnerLogic">
+			  <property name="dzscInnerMergeDao"><ref bean="dzscInnerMergeDao"/></property>
+			  <property name="materialApplyDao"><ref bean="materialApplyDao"/></property>
+	</bean>
+	<bean id="dzscImportFromOther" class="com.bestway.dzsc.innermerge.logic.DzscImportFromOther">
+              <property name="materialManageDao"><ref bean="materialManageDao"/></property>
+			  <property name="materialApplyDao"><ref bean="materialApplyDao"/></property>
+			  <property name="dzscInnerMergeDao"><ref bean="dzscInnerMergeDao"/></property>
+			  <property name="dzscInnerMergeLogic"><ref bean="dzscInnerMergeLogic"/></property>
+			  <property name="hsCodeDao"><ref bean="hsCodeDao"/></property>
+			  <property name="paramerterCodeDao"><ref bean="parameterCodeDao"/></property>
+	</bean>
+	<bean id="dzscCustomInnerMerge" class="com.bestway.dzsc.innermerge.logic.DzscCustomInnerMerge">
+			  <property name="dzscInnerMergeDao"><ref bean="dzscInnerMergeDao"/></property>
+	</bean>
+	<bean id="dzscAutoInnerMerge" class="com.bestway.dzsc.innermerge.logic.DzscAutoInnerMerge">
+			  <property name="dzscInnerMergeDao"><ref bean="dzscInnerMergeDao"/></property>
+	</bean>
+	<!--==================Action Bean====================-->
+	<bean id="dzscInnerMergeAction" class="com.bestway.dzsc.innermerge.action.DzscInnerMergeActionImpl">
+              <property name="dzscInnerMergeDao"><ref bean="dzscInnerMergeDao"/></property>
+			  <property name="dzscInnerMergeLogic"><ref bean="dzscInnerMergeLogic"/></property>			  
+			  <property name="dzscHandInnerLogic"><ref bean="dzscHandInnerLogic"/></property>
+			  <property name="dzscImportFromOther"><ref bean="dzscImportFromOther"/></property>
+			  <property name="dzscCustomInnerMerge"><ref bean="dzscCustomInnerMerge"/></property>
+			  <property name="dzscAutoInnerMerge"><ref bean="dzscAutoInnerMerge"/></property>			  
+	</bean>
+
+</beans>

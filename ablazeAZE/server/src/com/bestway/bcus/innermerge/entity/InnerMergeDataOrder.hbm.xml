@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcus.innermerge.entity.InnerMergeDataOrder" 
+		table="innermergedataorder">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		
+		<property name="seqNum"/>
+		<property name="ptNo"/>
+		<property name="tenComplex"/>
+		<property name="namespec"/>
+		<property name="name"/>
+		<property name="spec"/>
+		<property name="funit"/>
+		<property name="calunit"/>
+		<property name="hsSeqNum"/>
+		<property name="hsComplex"/>
+		<property name="hsnamespec"/>
+		<property name="hsname"/>
+		<property name="hsspec"/>
+		<property name="hsfunit"/>
+		<property name="hsunit"/>
+		
+		<property name="fourseqnum"/>
+		<property name="fourName"/>
+		<property name="fourcomplex"/>
+		<property name="unitWeight"/>
+		<property name="unitConvert"/>
+		
+		<many-to-one lazy="false"      name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" index="innermergedataorder_company"/>			
+	</class>
+
+</hibernate-mapping>
+<!-- parsed in 0ms -->

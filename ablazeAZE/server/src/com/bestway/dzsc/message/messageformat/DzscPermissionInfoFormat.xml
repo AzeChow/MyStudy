@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="eportmsg.xsl"?>
+<!--Element message: 此元素内所有内容及属性描述一个报文的定义及从数据库的获取途径。-->
+<message version="1.0" type="MaterielApply">
+	<description>授权信息报文定义及获取方法描述</description>
+	<section-flag>PTS_DATA</section-flag>
+	<sub-section>
+		<description>签名信息</description>
+		<file-name>PtsSignFormat.xml</file-name>
+	</sub-section>
+	
+		<section multiple="false" required="true">
+			<description>被授权企业权限信息表体</description>
+			<section-flag>PTS_AUTH_COMPANY_LIST</section-flag>
+				<section multiple="false" required="true">
+					<description>被授权企业权限信息记录</description>
+					<section-flag>PTS_AUTH_COMPANY</section-flag>
+					<data-id></data-id>
+					<field nullable="false" signNo="1">
+						<description>业务类型</description>
+						<field-name></field-name>
+						<format>X(1)</format>
+						<field-flag>BIZ_TYPE</field-flag>
+					</field>
+					<field nullable="false" signNo="2">
+						<description>经营单位代码</description>
+						<field-name></field-name>
+						<format>X(10)</format>
+						<field-flag>TRADE_CODE</field-flag>
+					</field>
+					<field nullable="false" signNo="3">
+						<description>企业内部编号</description>
+						<field-name></field-name>
+						<format>X(20)</format>
+						<field-flag>COP_EMS_NO</field-flag>
+					</field>
+					<field nullable="false" signNo="4">
+						<description>被授权企业海关代码（或组织机构代码）</description>
+						<field-name></field-name>
+						<format>X(10)</format>
+						<field-flag>SYNONYM_CODE</field-flag>
+					</field>
+					<field nullable="false" signNo="5">
+						<description>权限信息</description>
+						<field-name></field-name>
+						<format>X(10)</format>
+						<field-flag>AUTH_CODE</field-flag>
+					</field>
+					<field nullable="false" signNo="6">
+						<description>是否授权企业全部操作员</description>
+						<field-name></field-name>
+						<format>X(1)</format>
+						<field-flag>ALL_OPERATOR</field-flag>
+					</field>
+					<field nullable="false" signNo="7">
+						<description>权限类型</description>
+						<field-name></field-name>
+						<format>X(1)</format>
+						<field-flag>GRANT_TYPE</field-flag>
+					</field>
+					<field nullable="false" signNo="8">
+						<description>权限处理标志</description>
+						<field-name></field-name>
+						<format>X(1)</format>
+						<field-flag>DEAL_FLAG</field-flag>
+					</field>
+				</section>
+	</section>
+	
+	<section multiple="false" required="true">
+			<description>被授权操作员权限信息表体</description>
+			<section-flag>PTS_AUTH_OPERATOR_LIST</section-flag>
+				<section multiple="false" required="true">
+					<description>被授权操作员权限信息记录</description>
+					<section-flag>PTS_AUTH_OPERATOR</section-flag>
+					<data-id></data-id>
+					<field nullable="false" signNo="1">
+						<description>业务类型</description>
+						<field-name></field-name>
+						<format>X(1)</format>
+						<field-flag>BIZ_TYPE</field-flag>
+					</field>
+					<field nullable="false" signNo="2">
+						<description>经营单位代码</description>
+						<field-name></field-name>
+						<format>X(10)</format>
+						<field-flag>TRADE_CODE</field-flag>
+					</field>
+					<field nullable="false" signNo="3">
+						<description>企业内部编号</description>
+						<field-name></field-name>
+						<format>X(20)</format>
+						<field-flag>COP_EMS_NO</field-flag>
+					</field>
+					<field nullable="false" signNo="4">
+						<description>被授权企业海关代码（或组织机构代码）</description>
+						<field-name></field-name>
+						<format>X(10)</format>
+						<field-flag>SYNONYM_CODE</field-flag>
+					</field>
+					<field nullable="false" signNo="5">
+						<description>权限信息</description>
+						<field-name></field-name>
+						<format>X(10)</format>
+						<field-flag>AUTH_CODE</field-flag>
+					</field>
+					<field nullable="false" signNo="6">
+						<description>卡号</description>
+						<field-name></field-name>
+						<format>X(20)</format>
+						<field-flag>CARD_CODE</field-flag>
+					</field>
+					<field nullable="false" signNo="7">
+						<description>权限处理标志</description>
+						<field-name></field-name>
+						<format>X(1)</format>
+						<field-flag>DEAL_FLAG</field-flag>
+					</field>
+					<field nullable="false" signNo="8">
+						<description>是否授权企业全部操作员</description>
+						<field-name></field-name>
+						<format>X(1)</format>
+						<field-flag>ALL_OPERATOR</field-flag>
+					</field>
+				</section>
+	</section>
+</message>

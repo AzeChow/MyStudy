@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class lazy="false"
+		name="com.bestway.bcus.cas.parameterset.entity.OtherOption" table="otherOption">
+		<cache usage="read-write" />
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex" />
+		</id>
+		<property name="isNameSpecRepeat" />
+		<property name="isImportExportAccountBalance" />
+		<property name="inOutMaximumFractionDigits" column="inOutDigits" />
+		<property name="allReportInOutMaximumFractionDigits" column="allinOutDigits" />
+		<property name="isShowTransFactIncipient" />
+		<property name="fillPerson" />
+		<property name="isShowBillCorrRecord" column="isShowRecord" />
+		<property name="otherReportMaximumFractionDigits" column="otherinOutDigits" />
+		
+		<property name="isBcsSelected" />
+		<property name="isBcusSelected" />
+		<property name="isDzscSelected" />
+		<property name="lastTimedate" />
+		<property name="isFromCheck" />
+		<property name="isAll" />
+		
+		
+		<property name="leftOverBeginDate" />
+		<property name="leftOverEndDate" />
+		<property name="leftOverIsBcs" />
+		<property name="leftOverIsBcus" />
+		<property name="leftOverIsDzsc" />
+		<property name="leftOverIsCancelBefore" />
+		
+		<property name="balanceDegree" />
+		
+		
+		<many-to-one lazy="false" name="company" column="coid"
+			class="com.bestway.bcus.system.entity.Company" index="index_company" />
+	</class>
+</hibernate-mapping>
+		

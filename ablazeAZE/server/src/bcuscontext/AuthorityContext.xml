@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!--==================DAO Beans====================-->
+	<bean id="aclUserDao" class="com.bestway.common.authority.dao.AclUserDao">
+		<property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+	<bean id="aclGroupDao" class="com.bestway.common.authority.dao.AclGroupDao">
+		<property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+	<bean id="aclGroupPermissionDao" class="com.bestway.common.authority.dao.AclGroupPermissionDao">
+		<property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+	<bean id="aclUserPermissionDao" class="com.bestway.common.authority.dao.AclUserPermissionDao">
+		<property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+	<bean id="baseCompanyDao" class="com.bestway.common.authority.dao.BaseCompanyDao">
+		<property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+	<bean id="aclIPDao" class="com.bestway.common.authority.dao.AclIPDao">
+		<property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+	
+	<!--==================Logic Beans====================-->
+	<bean id="authorityLogic" class="com.bestway.common.authority.logic.AuthorityLogic">
+		<property name="userDao"><ref bean="aclUserDao"/></property>
+        <property name="groupDao"><ref bean="aclGroupDao"/></property>
+		<property name="userPermissionDao"><ref bean="aclUserPermissionDao"/></property>
+		<property name="groupPermissionDao"><ref bean="aclGroupPermissionDao"/></property>
+		<property name="aclIPDao"><ref bean="aclIPDao"/></property>
+	</bean>
+
+	<!--==================Action Bean====================-->
+	<bean id="authorityAction" class="com.bestway.common.authority.action.AuthorityActionImpl">
+		<property name="authorityLogic"><ref bean="authorityLogic"/></property>
+	</bean>
+	
+	<!--====================  AOP Beans  ================================-->
+	<bean id = "authorityAdvice" class = "com.bestway.common.authority.action.AuthorityAdvice">
+		<property name="authorityLogic">
+			<ref local = "authorityLogic"/>
+		</property>
+    </bean>
+	<!--==================Other Beans====================-->		
+	<bean id="initializeAclLogic" 
+		class="com.bestway.common.authority.logic.InitializeAclLogic" 
+		init-method = "init">
+		<!--init-method = "init"-->
+		<property name = "userDao">
+			<ref local="aclUserDao"/>
+		</property>
+		<property name = "groupDao">
+			<ref local="aclGroupDao"/>
+		</property>
+		<property name = "userPermissionDao">
+			<ref local="aclUserPermissionDao"/>
+		</property>
+		<property name = "groupPermissionDao">
+			<ref local="aclGroupPermissionDao"/>
+		</property>
+		<property name = "baseCompanyDao">
+			<ref local="baseCompanyDao"/>
+		</property>
+		<property name="aclIPDao">
+			<ref local="aclIPDao"/>
+		</property>
+	</bean>	
+</beans>

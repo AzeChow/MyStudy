@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="eportmsg.xsl"?>
+<!--Element message: 此元素内所有内容及属性描述一个报文的定义及从数据库的获取途径。-->
+<message version="1.0" type="MaterielApply">
+	<description>中期核查报文定义及获取方法描述</description>
+	<section-flag>PTS_DATA</section-flag>
+	<sub-section>
+		<description>签名信息</description>
+		<file-name>PtsSignFormat.xml</file-name>
+	</sub-section>
+	
+	<section multiple="false" required="true">
+		<description>通用报文表头</description>
+		<section-flag>PTS_COMM_HEAD</section-flag>
+		<data-id></data-id>
+		<field nullable="false" signNo="1">
+			<description>企业编码</description>
+			<field-name></field-name>
+			<format>X(10)</format>
+			<field-flag>TRADE_CODE</field-flag>
+		</field>
+		<field nullable="false" signNo="2">
+			<description>文件名称</description>
+			<field-name></field-name>
+			<format>X(64)</format>
+			<field-flag>FILE_NAME</field-flag>
+		</field>
+		<field nullable="true" signNo="3">
+			<description>备注</description>
+			<field-name></field-name>
+			<format>X(32)</format>
+			<field-flag>NOTE</field-flag>
+		</field>
+		<field nullable="true" signNo="4">
+			<description>备用字段1</description>
+			<field-name></field-name>
+			<format>X(32)</format>
+			<field-flag>NOTE_1</field-flag>
+		</field>
+		<field nullable="true" signNo="5">
+			<description>备用代码1</description>
+			<field-name></field-name>
+			<format>X(16)</format>
+			<field-flag>NOTE_CODE_1</field-flag>
+		</field>
+		<field nullable="true" signNo="6">
+			<description>备用代码2</description>
+			<field-name></field-name>
+			<format>X(16)</format>
+			<field-flag>NOTE_CODE_2</field-flag>
+		</field>
+	</section>
+	
+	<section multiple="false" required="true">
+		<description>通用报文内容</description>
+		<section-flag>PTS_COMM_CONTENT</section-flag>
+		<data-id></data-id>
+		<field nullable="false" signNo="1">
+			<description>通用报文内容</description>
+			<field-name></field-name>
+			<format>X(4*1024*1024)</format>
+			<field-flag>PTS_COMM_CONTENT</field-flag>
+		</field>
+	</section>
+		
+</message>

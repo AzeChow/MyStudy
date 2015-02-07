@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcus.cas.entity.MarginDetail" table="margindetail">
+		<cache usage="read-write"/> 
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<many-to-one lazy="false"      name="marginMaster" column="marginMaster" class="com.bestway.bcus.cas.entity.MarginMaster"/>
+		<property name="item" length="100"/>
+		<property name="times" length="10"/>
+		<property name="thisCount"/>
+		<property name="thisSumCount"/>
+		<property name="priveSumCount"/>
+		<many-to-one lazy="false"      name="company" column="coid" class="com.bestway.bcus.system.entity.Company" index="margindetai_coany"/>
+	</class>
+</hibernate-mapping>
+<!-- parsed in 0ms -->
+
+		

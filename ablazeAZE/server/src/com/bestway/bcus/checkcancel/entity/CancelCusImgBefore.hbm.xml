@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcus.checkcancel.entity.CancelCusImgBefore" table="cancelimgbefore">
+		<cache usage="read-write"/> 
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="emsSeqNum"/>
+		<property name="num"/>
+		<property name="price"/>
+        <many-to-one lazy="false"      name="cancelHead" column="cancelHead"
+			class="com.bestway.bcus.checkcancel.entity.CancelCusHead"/>
+        <property name="customNo"/>
+		<property name="inOutType" />
+		<property name="tradeMode" />
+		<property name="transportMode" />
+		<property name="checkCode"/>
+		<property name="checkWay" />
+		<property name="checkName" />
+		<property name="checkModeShow" />
+		<many-to-one lazy="false"      name="company" column="coid" class="com.bestway.bcus.system.entity.Company" index="cancelcusimgbefore_company"/>
+	</class>
+
+</hibernate-mapping>
+<!-- parsed in 0ms -->
+
+		

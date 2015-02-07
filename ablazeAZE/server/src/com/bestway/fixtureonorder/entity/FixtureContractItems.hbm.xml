@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.fixtureonorder.entity.FixtureContractItems" 
+		table="fixturecontractitems">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<many-to-one lazy="false"      name="contract" column="contract" 
+			class="com.bestway.fixtureonorder.entity.FixtureContract" index="fixItems_contract"/>
+		<property name="seqNum"/>
+		<many-to-one lazy="false"      name="complex" column="complex" 
+			class="com.bestway.bcus.custombase.entity.hscode.Complex" index="fixItems_complex"/>
+		<property name="name" />
+		<property name="spec" />
+		<many-to-one lazy="false"      name="unit" column="unit" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<property name="declarePrice"/>
+		
+		<property name="secondProtocol"/>
+		<property name="importDate"/>
+		
+		<property name="ptNo"/>
+		<property name="note"/>
+		<property name="amount" />
+		<property name="totalPrice" />
+		<property name="declareState" />
+		<property name="isChange" />
+		<property name="changeAmount" />
+		<property name="fixKind" />
+		<many-to-one lazy="false"      name="levyMode" column="levyMode" 
+			class="com.bestway.bcus.custombase.entity.parametercode.LevyMode"/>
+		<many-to-one lazy="false"      name="country" column="country" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Country"/>
+		<property name="detailNote"/>
+		<property name="createDate" />
+		<property name="modifyDate" />
+		<many-to-one lazy="false"      name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" index="fcontractImg_coid"/>
+	</class>
+</hibernate-mapping>
+<!-- parsed in 0ms -->

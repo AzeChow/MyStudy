@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class lazy="false" name="com.bestway.bcus.enc.entity.AtcMergeAfterComInfo" 
+		table="atcmergeaftercominfo">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<many-to-one lazy="false" name="billList" column="billList" 
+			class="com.bestway.bcus.enc.entity.ApplyToCustomsBillList"/>
+		<property name="emsSerialNo" />
+		<many-to-one lazy="false" name="complex" column="complex" 
+			class="com.bestway.bcus.custombase.entity.hscode.Complex" 
+			index="atcmgearcomin_complex"/>
+		<!--		<property name="complexCode" />-->
+		<property name="complexName" />
+		<property name="complexSpec" />
+		<property name="declaredAmount" />
+		<property name="legalAmount" />
+		<property name="secondLegalAmount" />
+		<property name="grossWeight" />
+		<property name="netWeight" />
+		<property name="piece"/>
+		<!--当归并后的商品箱号由多个归并前的商品箱号组成，所以需扩大boxNo的长度，修改语句：
+		alter table atcmergeaftercominfo  alter column  boxNo VARCHAR (1000)
+		-->
+		<property name="boxNo"  length="1000"/>
+		<property name="price"/>
+		<property name="version"/>
+		<property name="totalPrice"/>
+		<property name="workUsd"/>
+		<property name="totalNetWeight"/>
+		<property name="isTransferCustomsBill"/>
+		<property name="standbyNote"/>
+		<property name="currency"/>
+		<property name="cbm"/>
+		<many-to-one lazy="false" name="projectDept" column="projectDept" 
+			class="com.bestway.common.materialbase.entity.ProjectDept"/>
+		<many-to-one lazy="false" name="levyMode" column="levyMode" 
+			class="com.bestway.bcus.custombase.entity.parametercode.LevyMode"/>
+		<many-to-one lazy="false" name="usesCode" column="usesCode" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Uses"/>
+		<many-to-one lazy="false" name="country" column="country" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Country"/>
+		<many-to-one lazy="false" name="unit" column="unit" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<many-to-one lazy="false" name="legalUnit" column="legalUnit" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<many-to-one lazy="false" name="secondLegalUnit" 
+			column="secondLegalUnit" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<property name="memos" />
+		<many-to-one lazy="false" name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" 
+			index="atcmgearcomin_company"/>
+	</class>
+</hibernate-mapping>
+<!-- parsed in 0ms -->

@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class lazy="false" name="com.bestway.common.erpbill.entity.CustomOrderDetail" 
+		table="customorderdetail">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<many-to-one lazy="false" name="customOrder" column="customOrderid" 
+			class="com.bestway.common.erpbill.entity.CustomOrder"/>
+			
+		<many-to-one lazy="false" name="materiel" column="materielid" 
+			class="com.bestway.common.materialbase.entity.Materiel"/>
+		<many-to-one lazy="false" name="calUnit" column="calUnitid" 
+			class="com.bestway.common.materialbase.entity.CalUnit"/>
+		<many-to-one lazy="false" name="curr" column="curr" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Curr"/>
+		<property name="unitPrice" />
+		<property name="amount" />
+		<property name="totalPrice" />
+		<property name="salesDate" />
+		<property name="ifzc" />
+
+
+		<property name="bgamount"/>
+		<property name="bgname"/>
+		<property name="bgspec"/>
+		<many-to-one lazy="false" name="bgunit" column="unitcodeid"
+		   class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<many-to-one lazy="false" name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company"/>
+		
+		<property name="version"/>
+		<property name="unitConvert"/>
+		<property name="ifcustomer"/>
+		<property name="emsno"/>
+		<property name="copEmsNo" />
+		<property name="editDate"/>
+		<property name="transNum"/>
+		<property name="contractNum"/>
+		<property name="notTransNum"/>
+		<property name="notContractNum"/>
+		<property name="orderERPId"/>
+		
+	</class>
+</hibernate-mapping>
+<!-- parsed in 0ms -->
+
+		

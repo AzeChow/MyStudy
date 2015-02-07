@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcus.enc.entity.ExItemCode" 
+		table="ExItemCode">
+		<cache usage="read-write"/>
+<!-- 
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+-->	
+		<id name="code" length="10">
+			<generator class="assigned"/>
+		</id>
+		
+		<!--<property name="code" />-->
+		<property name="outItemCode" />
+		<property name="outItemName" />
+		<property name="reqItemCode" />
+		<property name="reqItemName" />
+		<property name="unit" />
+		<property name="outRate" />
+		<property name="inRate" />
+		<property name="types" />
+		 
+		<!-- <property name="editDate" /> -->
+		<!--  <many-to-one lazy="false"      name="company" column="coid" class="com.bestway.bcus.system.entity.Company" index="customseclatioommi_company"/> -->
+	</class>
+</hibernate-mapping>
+<!-- parsed in 0ms -->

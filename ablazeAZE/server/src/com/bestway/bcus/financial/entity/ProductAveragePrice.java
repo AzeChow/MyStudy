@@ -1,0 +1,104 @@
+package com.bestway.bcus.financial.entity;
+
+import com.bestway.bcus.custombase.entity.parametercode.Unit;
+import com.bestway.common.BaseScmEntity;
+import com.bestway.common.CommonUtils;
+
+public class ProductAveragePrice extends BaseScmEntity {
+	private static final long serialVersionUID = CommonUtils.getSerialVersionUID();
+	/**
+	 * 报表日期
+	 */
+	private String accountDate;
+	/**
+	 * 海关商品名称
+	 */
+	private String hsName;
+
+	/**
+	 * 海关商品规格型号
+	 */
+	private String hsSpec;
+	/**
+	 * 海关单位
+	 */
+	private Unit hsUnit;
+	/**
+	 * 上月结存数量
+	 */
+	private Double previousCount;
+	/**
+	 * 上月结存金额
+	 */
+	private Double previousAmount;
+	/**
+	 * 本月进入数量
+	 */
+	private Double thisInCount;
+	/**
+	 * 本月进入金额
+	 */
+	private Double thisInAmount;
+	/**
+	 * 加权平均价
+	 */
+	private Double averagePrice;
+	
+	public String getAccountDate() {
+		return accountDate;
+	}
+	public void setAccountDate(String accountDate) {
+		this.accountDate = accountDate;
+	}
+	public String getHsName() {
+		return hsName;
+	}
+	public void setHsName(String hsName) {
+		this.hsName = hsName;
+	}
+	public String getHsSpec() {
+		return hsSpec;
+	}
+	public void setHsSpec(String hsSpec) {
+		this.hsSpec = hsSpec;
+	}
+	public Unit getHsUnit() {
+		return hsUnit;
+	}
+	public void setHsUnit(Unit hsUnit) {
+		this.hsUnit = hsUnit;
+	}
+	public Double getPreviousCount() {
+		return previousCount;
+	}
+	public void setPreviousCount(Double previousCount) {
+		this.previousCount = previousCount;
+	}
+	public Double getPreviousAmount() {
+		return previousAmount;
+	}
+	public void setPreviousAmount(Double previousAmount) {
+		this.previousAmount = previousAmount;
+	}
+	public Double getThisInCount() {
+		return thisInCount;
+	}
+	public void setThisInCount(Double thisInCount) {
+		this.thisInCount = thisInCount;
+	}
+	public Double getThisInAmount() {
+		return thisInAmount;
+	}
+	public void setThisInAmount(Double thisInAmount) {
+		this.thisInAmount = thisInAmount;
+	}
+	public Double getAveragePrice() {
+		return averagePrice;
+	}
+	public void setAveragePrice(Double averagePrice) {
+		this.averagePrice = averagePrice;
+	}
+	public static long getSerialVersionUID() {
+		return serialVersionUID;
+	}
+}

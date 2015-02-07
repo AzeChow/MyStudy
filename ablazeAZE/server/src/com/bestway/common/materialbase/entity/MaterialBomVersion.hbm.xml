@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class  lazy="false"  name="com.bestway.common.materialbase.entity.MaterialBomVersion" table="materialbomversion">
+		<cache usage="read-write"/> 
+        <id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+	    </id>
+		<many-to-one lazy="false"      name="master" column="masterId" 
+			class="com.bestway.common.materialbase.entity.MaterialBomMaster" index="mbversion_master"/>
+		<property name="version" index="mbversion_version"/>	
+		<property name="beginDate"/>
+		<property name="endDate"/>
+		<property name="ptNo"/>
+		<property name="notes"/>
+		<property name="factUnitWeight"/>
+		<property name="countUnitWeight"/>
+		<many-to-one lazy="false"      name="company" column="companyId" 
+			class="com.bestway.bcus.system.entity.Company" index="mbversion_coid"/>
+    </class>
+
+</hibernate-mapping>
+<!-- parsed in 0ms -->

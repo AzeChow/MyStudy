@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class lazy="false" 
+		name="com.bestway.common.aptitudereport.entity.SelectCondition" 
+		table="selectCondition">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="reportName"/>
+		<property name="aimObject"/>
+		<property name="aimObjectValue"/>
+		<property name="statColumnValue"/>
+        <property name="groupingColumnValue"/>
+		<property name="statColumn"/>
+		<property name="reportType"/>
+
+		<many-to-one lazy="false" name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company"/>
+
+	</class>
+</hibernate-mapping>
+

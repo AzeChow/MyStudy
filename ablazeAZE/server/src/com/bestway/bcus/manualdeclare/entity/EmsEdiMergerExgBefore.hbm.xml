@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcus.manualdeclare.entity.EmsEdiMergerExgBefore" table="emsedimergerexgbefore">
+		<cache usage="read-write"/> 
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="seqNum" index="emsexgbefore_seqnum"/>
+		<property name="ptNo" length="225" index="emsexgbefore_ptno"/>
+		<many-to-one lazy="false"      name="complex" column="complex" class="com.bestway.bcus.custombase.entity.hscode.Complex" index="emedimgergbore_complex"/>
+		<property name="name" length="255"/>
+		<property name="spec" length="255"/>
+		<property name="changeDate"/>
+		<many-to-one lazy="false"      name="unit" column="unit" class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<!--<many-to-one lazy="false"      name="legalUnit" column="legalUnit" class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>-->
+		<!--<many-to-one lazy="false"      name="legalUnit2" column="legalUnit2" class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>-->	
+		<property name="maxApprSpace" />
+		<many-to-one lazy="false"      name="curr" column="curr" class="com.bestway.bcus.custombase.entity.parametercode.Curr"/>
+		<property name="note" length="255"/>
+		<property name="modifyMark" length="225"/>
+		<property name="modifyTimes"/>
+		<property name="price"/>
+		<property name="sendState"/>
+		<many-to-one lazy="false"      name="emsEdiMergerExgAfter" column="afterId"  
+			class="com.bestway.bcus.manualdeclare.entity.EmsEdiMergerExgAfter"/>
+		<many-to-one lazy="false"      name="company" column="coid" class="com.bestway.bcus.system.entity.Company" index="emedimgergbore_company"/>
+	</class>
+
+</hibernate-mapping>
+<!-- parsed in 0ms -->

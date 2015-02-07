@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!--====================以下为基础代码(注入/构造bean)==Dao Beans===================================-->
+	<bean id="customBaseVersionDao" class="com.bestway.bcus.custombase.dao.CustomBaseVersionDao">
+              <property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+    <bean id="baseCodeDao" class="com.bestway.bcus.custombase.dao.BaseCodeDao">
+              <property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+    <bean id="depCodeDao" class="com.bestway.bcus.custombase.dao.DepCodeDao">
+                <property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+	 <bean id="countryCodeDao" class="com.bestway.bcus.custombase.dao.CountryCodeDao">
+                <property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+    <bean id="parameterCodeDao" class="com.bestway.bcus.custombase.dao.ParameterCodeDao">
+                <property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+	<bean id="hsCodeDao" class="com.bestway.bcus.custombase.dao.HsCodeDao">
+                <property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+	
+	
+	<bean id="updateCustomBase" class="com.bestway.bcus.custombase.logic.UpdateCustomBase" init-method = "init"><!---->
+				<property name="tableOwner"><value>${jdbc.tableOwner}</value></property>
+				<property name="dataSource"><ref bean="dataSource"/></property>
+	</bean>	
+	
+	<bean id="handUpdateCustomsLogic" class="com.bestway.bcus.custombase.logic.HandUpdateCustomsLogic" >
+			<property name="baseCodeDao"><ref local="baseCodeDao"/></property>
+			<property name="customBaseVersionDao"><ref local="customBaseVersionDao"/></property>
+	</bean>	
+	
+	<bean id="dbimportDao" 
+		class="com.bestway.bcus.dbimport.dao.DbimportDao">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>
+	<bean id="dbCustomDao" 
+		class="com.bestway.bcus.dbimport.dao.DbCustomDao">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>
+	<bean id="tcsParametersDao" 
+		class="com.bestway.bcus.system.dao.TcsParametersDao">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>
+	<bean id="updateBase" class="com.bestway.bcus.custombase.logic.UpdateBase">
+				<property name="dataSource"><ref bean="dataSource"/></property>
+				<property name="dbimportDao">
+			         <ref bean="dbimportDao"/>
+		        </property>
+				<property name="dbCustomDao">
+			         <ref bean="dbCustomDao"/>
+		        </property>				
+	</bean>	
+	<bean id="customBaseLogic" class="com.bestway.bcus.custombase.logic.CustomBaseLogic">
+				<property name="hsCodeDao">
+			         <ref bean="hsCodeDao"/>
+		        </property>	
+		        <property name="tcsParametersDao">
+			         <ref bean="tcsParametersDao"/>
+		        </property>	
+	</bean>	
+	<!--==================Action Bean====================-->
+	<bean id="customBaseAction" class="com.bestway.bcus.custombase.action.CustomBaseActionImpl">
+		<property name="baseCodeDao"><ref local="baseCodeDao"/></property>
+		<property name="depCodeDao"><ref local="depCodeDao"/></property>
+		<property name="countryCodeDao"><ref local="countryCodeDao"/></property>
+		<property name="parameterCodeDao"><ref local="parameterCodeDao"/></property>
+		<property name="customBaseVersionDao"><ref local="customBaseVersionDao"/></property>
+		<property name="hsCodeDao"><ref local="hsCodeDao"/></property>	
+		<property name="updateBase"><ref local="updateBase"/></property>	
+		<property name="customBaseLogic"><ref local="customBaseLogic"/></property>
+		<property name="handUpdateCustomsLogic"><ref local="handUpdateCustomsLogic"/></property>
+	</bean>
+</beans>

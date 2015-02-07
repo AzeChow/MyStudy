@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<subclass lazy="false" name="com.bestway.bcus.system.entity.Company" 
+		extends="com.bestway.common.authority.entity.BaseCompany" 
+		discriminator-value="BASE">
+		<property name="buCode" />
+		<property name="buName" />
+		<property name="buLevel" />
+		<property name="butel" />
+		<property name="buaddress" />
+		<property name="buOwner" />
+		<property name="code" />
+		<property name="coLevel" />
+		<property name="owner"/>
+		<property name="address" />
+		<property name="inverst" />
+		<property name="area" />
+		<property name="tel" />
+		<property name="amountIn" />
+		<property name="amountOut" />
+		<property name="amountProduct" />
+		<property name="bank" />
+		<property name="account"/>
+		<many-to-one lazy="false" name="masterCustoms" column="masterCustoms" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Customs"/>
+		<property name="inArea" />
+		<property name="outArea" />
+		<property name="sysName" />
+		<property name="sysOwner" />
+		<property name="outTradeCo"/>
+		<property name="outCoTel" />
+		<property name="outAddress" />
+		<property name="outLinkMan" />
+		<property name="outLinkManager" />
+		<property name="outFax" />
+		<property name="sysFunc" />
+		<property name="consent"/>
+		<property name="counFlag" />
+		<property name="ownercounFlag" />
+		<property name="description"/>
+		<property name="appCusMan" />
+		<property name="appCusManTel" />
+		<property name="linkman"/>
+		<property name="englishName"/>
+		<property name="englishAddr"/>
+		<property name="isCurrCompany"/>
+		<property name="bcsFtpAddress"/>
+		<property name="bcsFtpUser"/>
+		<property name="bcsFtpPassword"/>
+		<property name="bcsEDICode"/>
+		<property name="dzscFtpAddress"/>
+		<property name="dzscFtpUser"/>
+		<property name="dzscFtpPassword"/>
+		<property name="dzscEDICode"/>
+		<property name="bcusftpAddress"/>
+		<property name="bcusftpUser"/>
+		<property name="bcusftpPassword"/>
+		<property name="bcusbcusEDICode"/>
+		<many-to-one lazy="false" name="buOwnerType" column="bCoType" 
+			class="com.bestway.bcus.custombase.entity.basecode.CoType"/>
+		<many-to-one lazy="false" name="ownerType" column="coType" 
+			class="com.bestway.bcus.custombase.entity.basecode.CoType"/>
+		<many-to-one lazy="false" name="masterFtc" column="masterFtc" 
+			class="com.bestway.bcus.custombase.entity.depcode.RedDep"/>
+			
+			
+		<!--以下转厂申请表用到的参数-->			
+		<many-to-one lazy="false"      name="outDistrict" column="outDistrictId" 
+			class="com.bestway.bcus.custombase.entity.countrycode.District" index="outDistrictId_index"/>
+		<property name="inAgentCode"/>
+		<property name="inAgentName"/>
+		<property name="inCorp"/>
+		<property name="inDecl"/>	
+		<property name="inTradeCode2"/>
+		<property name="inTradeName2"/>
+		<property name="isEnable"/>
+		
+		<!--<many-to-one lazy="false" name="applicationMode" column="applicationMode" 
+			class="com.bestway.bcus.custombase.entity.basecode.ApplicationMode"/>-->		
+	</subclass>
+
+</hibernate-mapping>
+<!-- parsed in 0ms -->

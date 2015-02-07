@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.dzsc.customslist.entity.DzscCustomsBillList" 
+		table="dzsccustomsbilllist">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="impExpType" />
+		<property name="impExpFlag" />
+		<property name="impExpDate" />
+		<property name="listState" />
+		<property name="listType" />
+		<property name="emsHeadH2k" />
+		<property name="tradeCode" />
+		<property name="tradeName" />
+		<property name="listNo" />
+		<property name="copEmsNo" />
+		<property name="materialNum" />
+		<property name="listDeclareDate" />
+		<!--<property name="customsDeclarationDate" />-->
+		<property name="customsSeqNo" />
+		<property name="createdDate" />
+		<property name="customsEnvelopBillNo" />
+		<many-to-one lazy="false"      name="createdUser" column="createdUser" 
+			class="com.bestway.common.authority.entity.AclUser"/>
+		<many-to-one lazy="false"      name="impExpCIQ" column="impExpCIQ" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Customs"/>
+		<many-to-one lazy="false"      name="declareCIQ" column="declareCIQ" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Customs"/>
+		<property name="materielProductFlag" />
+		<many-to-one lazy="false"      name="transportMode" column="transportMode" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Transf"/>
+		<many-to-one lazy="false"      name="tradeMode" column="tradeMode" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Trade"/>
+		<many-to-one lazy="false"      name="createdCompany" column="createdCompany" 
+			class="com.bestway.bcus.custombase.entity.basecode.Brief"/>
+		<property name="memos" />
+		<property name="isGenerateDeclaration" />
+		<many-to-one lazy="false"      name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" index="dzscbilllist_coid"/>
+	</class>
+</hibernate-mapping>
+<!-- parsed in 0ms -->

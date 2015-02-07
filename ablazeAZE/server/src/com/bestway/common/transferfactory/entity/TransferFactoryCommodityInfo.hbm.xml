@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class 
+		name="com.bestway.common.transferfactory.entity.TransferFactoryCommodityInfo" 
+		table="transferfactorycommodityinfo">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<!--<many-to-one lazy="false"      name="materiel" column="materielId" 
+			class="com.bestway.common.materialbase.entity.Materiel"/>-->
+		<many-to-one lazy="false"      name="transferFactoryBill" column="tfCommodityInfoId" 
+			class="com.bestway.common.transferfactory.entity.TransferFactoryBill"/>
+		<property name="emsNo" />
+		<property name="seqNum" />
+		<many-to-one lazy="false"      name="complex" column="complex" 
+			class="com.bestway.bcus.custombase.entity.hscode.Complex"/>
+		<property name="commName" />
+		<property name="commSpec" />
+		<many-to-one lazy="false"      name="unit" column="unitid" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<property name="quantity" />
+		<property name="transFactAmount" />
+		<property name="unitPrice" />
+		<property name="totalPrice" />
+		<many-to-one lazy="false"      name="curr" column="currId" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Curr"/>
+		<property name="grossWeight" />
+		<property name="netWeight" />
+		<many-to-one lazy="false"      name="country" column="countryId" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Country"/>
+		<property name="version" />
+		<property name="sourceBill" />
+		<property name="isTransferCustomsEnvelopReqeust" column="isTCER"/>
+		<property name="cubage" />
+		<property name="isTransferATC" />
+		<property name="isPutOnRecord" />
+		<property name="memo" />		
+		<property name="exchangeRate"/>
+		<many-to-one lazy="false"      name="company" column="companyId" 
+			class="com.bestway.bcus.system.entity.Company" index="trnsfectormotyif_company"/>
+	</class>
+</hibernate-mapping>

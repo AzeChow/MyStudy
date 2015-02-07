@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcus.manualdeclare.entity.EmsHeadH2kFasImg" table="emsheadh2kfasimg">
+		<cache usage="read-write"/> 
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<many-to-one lazy="false"      name="emsHeadH2kFas" column="emsHeadH2kFas" class="com.bestway.bcus.manualdeclare.entity.EmsHeadH2kFas"/>
+		<property name="seqNum" />
+		<many-to-one lazy="false"      name="complex" column="complex" class="com.bestway.bcus.custombase.entity.hscode.Complex" index="emsheakfasimg_complex"/>
+		<property name="name" length="255"/>
+		<property name="spec" length="255"/>
+		<many-to-one lazy="false"      name="unit" column="unit" class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<many-to-one lazy="false"      name="curr" column="curr" class="com.bestway.bcus.custombase.entity.parametercode.Curr"/>
+		<property name="allowAmount"/>
+		<property name="note" length="255"/>
+		<property name="declarePrice"/>
+		<property name="modifyMark" length="225"/>
+		<property name="modifyTimes"/>
+		<many-to-one lazy="false"      name="company" column="coid" class="com.bestway.bcus.system.entity.Company" index="emsheakfasimg_company"/>
+	</class>
+
+</hibernate-mapping>
+<!-- parsed in 0ms -->

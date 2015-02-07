@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcus.manualdeclare.entity.EmsEdiTrHead" table="emseditrhead">
+		<cache usage="read-write"/> 
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="copEmsNo" length="225"/>
+		<property name="emsNo" length="225"/>
+		<property name="preEmsNo" length="225"/>
+		<property name="emsApprNo" length="225"/>
+		<property name="tradeCode" length="225"/>
+		<property name="tradeName" length="225"/>
+		<property name="ownerCode" length="225"/>
+		<property name="ownerName" length="225"/>
+		<property name="declareType" length="225"/>
+		<property name="declareErType" length="225"/>
+		<property name="declareState" length="225"/>
+		<many-to-one lazy="false"      name="area" column="areaCode" class="com.bestway.bcus.custombase.entity.countrycode.District"/>
+		<property name="phone" length="225"/>
+		<property name="address" length="255"/>
+		<property name="investAmount" />
+		<property name="productRatio" />
+		<many-to-one lazy="false"      name="curr" column="curr" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Curr"/>
+		<many-to-one lazy="false"      name="ownerType" column="ownerType" 
+			class="com.bestway.bcus.custombase.entity.basecode.CoType"/>
+		<many-to-one lazy="false"      name="masterCustoms" column="masterCustoms" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Customs"/>
+		<many-to-one lazy="false"      name="declareDep" column="declareDep" 
+			class="com.bestway.bcus.custombase.entity.depcode.RedDep"/>
+		<property name="beginDate" />
+		<property name="endDate" />
+		<property name="declareDate" />
+		<property name="declareTime" />
+		<property name="inputDate" />
+		<property name="inputEr" length="225"/>
+		<property name="emsType" length="225"/>
+		<property name="newApprDate" />
+		<property name="changeApprDate" />
+		<property name="note" length="255"/>
+		<property name="modifyTimes"/>
+		<property name="modifyMark" length="225"/>
+		<property name="historyState" />
+		<property name="checkMark" length="225"/>
+		<property name="exeMark" length="225"/>
+		<many-to-one lazy="false"      name="company" column="coid" class="com.bestway.bcus.system.entity.Company" index="emsitrhead_company"/>
+	</class>
+
+</hibernate-mapping>
+<!-- parsed in 0ms -->

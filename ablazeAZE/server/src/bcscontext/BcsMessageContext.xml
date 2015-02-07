@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!--==================DAO Beans====================-->
+	<bean id="bcsMessageDao" 
+		class="com.bestway.bcs.message.dao.BcsMessageDao">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>	
+	<!--==================Logic Beans====================-->
+	<bean id="bcsMessageLogic" class="com.bestway.bcs.message.logic.BcsMessageLogic">
+		<property name="baseCodeDao"><ref bean="baseCodeDao"/></property>
+		<property name="cspMessageDao"><ref bean="bcsMessageDao"/></property>	
+	</bean>
+	<!--==================Action Bean====================-->
+	<bean id="bcsMessageAction" class="com.bestway.bcs.message.action.BcsMessageActionImpl">
+		<property name="cspMessageLogic"><ref bean="bcsMessageLogic"/></property>
+		<property name="cspMessageDao"><ref bean="bcsMessageDao"/></property>
+	</bean>
+</beans>

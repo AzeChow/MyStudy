@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+	<!--==================DAO Beans====================-->
+	<bean id="owpMessageDao" class="com.bestway.owp.dao.OwpMessageDao">
+	<property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>	
+	<!-- wss2010.08.30添加外发加工申请表dao -->
+	<bean id="owpAppDao" class="com.bestway.owp.dao.OwpAppDao">
+	<property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+	
+	<!-- sxk2010.08.30添加外发加工登记表dao -->
+	<bean id="owpBillDao" class="com.bestway.owp.dao.OwpBillDao">
+	<property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+	
+	<!-- hcl 2010-09-01添加外发加工统计分析dao -->
+	<bean id="owpAnalyDao" class="com.bestway.owp.dao.OwpAnalyDao">
+	<property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+	
+	<!--==================Logic Beans====================-->
+	<bean id="owpMessageLogic" class="com.bestway.owp.logic.OwpMessageLogic">
+	    <property name="cspMessageDao"><ref local="owpMessageDao"/></property>
+	</bean>
+	
+	<!-- wss2010.08.30添加外发加工申请表logic -->
+	<bean id="owpAppLogic" class="com.bestway.owp.logic.OwpAppLogic">
+	    <property name="owpAppDao"><ref local="owpAppDao"/></property>
+	    <property name="owpMessageLogic"><ref local="owpMessageLogic"/></property>
+	</bean>
+	
+	<!-- sxk2010.08.30添加外发加工登记表logic -->
+	<bean id="owpBillLogic" class="com.bestway.owp.logic.OwpBillLogic">
+	    <property name="owpBillDao"><ref local="owpBillDao"/></property>
+	    <property name="owpMessageLogic"><ref local="owpMessageLogic"/></property>
+	</bean>
+	<!-- hcl 2010-09-01添加外发加工统计分析logic -->
+	<bean id="owpAnalyLogic" class="com.bestway.owp.logic.OwpAnalyLogic">
+	    <property name="owpAnalyDao"><ref local="owpAnalyDao"/></property>
+	</bean>
+	<!--==================Action Bean====================-->
+	<bean id="owpMessageAction"
+		class="com.bestway.owp.action.OwpMessageActionImpl">
+		<property name="cspMessageDao"><ref local="owpMessageDao"/></property>
+		<property name="cspMessageLogic"><ref local="owpMessageLogic"/></property>
+	</bean>
+	
+	<!-- wss2010.08.30添加外发加工申请表action -->
+	<bean id="owpAppAction"
+		class="com.bestway.owp.action.OwpAppActionImpl">
+		<property name="owpAppDao"><ref local="owpAppDao"/></property>
+		<property name="owpAppLogic"><ref local="owpAppLogic"/></property>
+	</bean>
+	
+	<!-- sxk2010.08.30添加外发加工登记表action -->
+	<bean id="owpBillAction"
+		class="com.bestway.owp.action.OwpBillActionImpl">
+		<property name="owpBillDao"><ref local="owpBillDao"/></property>
+		<property name="owpBillLogic"><ref local="owpBillLogic"/></property>
+	</bean>
+	<!-- hcl2010.09.01添加外发加工统计分析action -->
+	<bean id="owpAnalyAction"
+		class="com.bestway.owp.action.OwpAnalyActionImpl">
+		<property name="owpAnalyDao"><ref local="owpAnalyDao"/></property>
+		<property name="owpAnalyLogic"><ref local="owpAnalyLogic"/></property>
+	</bean>
+	<!--==================Other Beans====================-->
+	
+	
+	
+</beans>

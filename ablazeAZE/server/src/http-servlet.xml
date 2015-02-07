@@ -1,0 +1,1036 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+
+
+<beans>
+	<!--================== context =======================-->
+	<bean name="/licenseService-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="licenseAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>com.bestway.bcus.license.action.LicenseAction</value>
+		</property>
+	</bean>
+		
+    <bean name="/invoiceAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="invoiceAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.invoice.action.InvoiceAction
+			</value>
+		</property>
+	</bean>
+	 
+    <bean name="/fecavAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="fecavAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.fecav.action.FecavAction
+			</value>
+		</property>
+	</bean>
+	
+	<bean name="/fixAssetAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="fixAssetAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.fixasset.action.FixAssetAction
+			</value>
+		</property>
+	</bean>
+	
+	<bean name="/fixtureContractAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="fixtureContractAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.fixtureonorder.action.FixtureContractAction
+			</value>
+		</property>
+	</bean>
+	
+	<bean name="/checkFixAuthorityAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="checkFixAuthorityAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.fixtureonorder.action.CheckFixAuthorityAction
+			</value>
+		</property>
+	</bean>
+	
+	<bean name="/erpBillAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="erpBillAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>com.bestway.common.erpbill.action.ErpBillAction</value>
+		</property>
+	</bean>
+	
+	<bean name="/orderCommonAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="orderCommonAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>com.bestway.common.erpbill.action.OrderCommonAction</value>
+		</property>
+	</bean>
+	<!--==================bcus context =======================-->
+	<bean name="/AuthorityService-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="authorityAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.common.authority.action.AuthorityAction
+			</value>
+		</property>
+	</bean>
+
+	<bean name="/backupAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="backupAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>com.bestway.bcus.backup.action.BackupAction</value>
+		</property>
+	</bean>
+
+
+	<bean name="/casAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="casAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>com.bestway.bcus.cas.action.CasAction</value>
+		</property>
+	</bean>
+	
+	<bean name="/casCheckAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="casCheckAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>com.bestway.bcus.cas.action.CasCheckAction</value>
+		</property>
+	</bean>
+
+	<bean name="/checkCancelAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="checkCancelAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.bcus.checkcancel.action.CheckCancelAction
+			</value>
+		</property>
+	</bean>
+
+     <bean name="/checkCancelAuthorityAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="checkCancelAuthorityAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.bcus.checkcancel.action.CheckCancelAuthorityAction
+			</value>
+		</property>
+	</bean>
+	
+
+	<bean name="/checkToolsAuthorityAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="checkToolsAuthorityAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.common.tools.action.CheckToolsAuthorityAction
+			</value>
+		</property>
+	</bean>
+
+
+	<bean name="/customBaseAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="customBaseAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.bcus.custombase.action.CustomBaseAction
+			</value>
+		</property>
+	</bean>
+
+
+	<bean name="/dataImportAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="dataImportAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.bcus.dataimport.action.DataImportAction
+			</value>
+		</property>
+	</bean>
+
+
+	<bean name="/dbimportAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="dbimportAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.bcus.dbimport.action.DbimportAction
+			</value>
+		</property>
+	</bean>
+
+
+	<bean name="/encAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="encAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>com.bestway.bcus.enc.action.EncAction</value>
+		</property>
+	</bean>
+
+
+	<bean name="/commonBaseCodeDao-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="commonCodeAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.bcus.innermerge.action.CommonBaseCodeAction
+			</value>
+		</property>
+	</bean>
+	
+
+
+    <bean name="/manualDeclareAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="manualDeclareAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.bcus.manualdeclare.action.ManualDeclareAction
+			</value>
+		</property>
+	</bean>
+
+	<bean name="/manualDeclareReportAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="manualDeclareReportAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.bcus.manualdeclarereport.action.ManualDeclareReportAction
+			</value>
+		</property>
+	</bean>
+	
+    <bean name="/impCustomsAuthorityAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="impCustomsAuthorityAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.customs.common.action.ImpCustomsAuthorityAction
+			</value>
+		</property>
+	</bean>
+	
+	<bean name="/bCSImpCustomsAuthorityAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="bCSImpCustomsAuthorityAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.customs.common.action.BCSImpCustomsAuthorityAction
+			</value>
+		</property>
+	</bean>
+	
+	<bean name="/dZSCImpCustomsAuthorityAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="dZSCImpCustomsAuthorityAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.customs.common.action.DZSCImpCustomsAuthorityAction
+			</value>
+		</property>
+	</bean>
+	
+    <bean name="/expCustomsAuthorityAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="expCustomsAuthorityAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.customs.common.action.ExpCustomsAuthorityAction
+			</value>
+		</property>
+	</bean>
+	
+	<bean name="/bCSExpCustomsAuthorityAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="bCSExpCustomsAuthorityAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.customs.common.action.BCSExpCustomsAuthorityAction
+			</value>
+		</property>
+	</bean>
+	
+	<bean name="/dZSCExpCustomsAuthorityAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="dZSCExpCustomsAuthorityAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.customs.common.action.DZSCExpCustomsAuthorityAction
+			</value>
+		</property>
+	</bean>
+	
+    <bean name="/specialCustomsAuthorityAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="specialCustomsAuthorityAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.customs.common.action.SpecialCustomsAuthorityAction
+			</value>
+		</property>
+	</bean>		
+
+	<bean name="/bCSSpecialCustomsAuthorityAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="bCSSpecialCustomsAuthorityAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.customs.common.action.BCSSpecialCustomsAuthorityAction
+			</value>
+		</property>
+	</bean>	
+	
+	<bean name="/dZSCSpecialCustomsAuthorityAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="dZSCSpecialCustomsAuthorityAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.customs.common.action.DZSCSpecialCustomsAuthorityAction
+			</value>
+		</property>
+	</bean>	
+
+	<bean name="/messageAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="messageAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>com.bestway.bcus.message.action.MessageAction</value>
+		</property>
+	</bean>
+
+
+	<bean name="/outsourceAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="outsourceAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.common.outsource.action.OutsourceAction
+			</value>
+		</property>
+	</bean>
+
+	
+	<bean name="/systemAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="systemAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>com.bestway.bcus.system.action.SystemAction</value>
+		</property>
+	</bean>
+	
+	<bean name="/tcsParametersAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="tcsParametersAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>com.bestway.bcus.system.action.TcsParametersAction</value>
+		</property>
+	</bean>
+	
+	<bean name="/contractSystemAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="contractSystemAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>com.bestway.bcus.system.action.ContractSystemAction</value>
+		</property>
+	</bean>
+	
+
+	<bean name="/toolsAction-http" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="toolsAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>com.bestway.common.tools.action.ToolsAction</value>
+		</property>
+	</bean>
+	
+	<bean name="/fptManageAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="fptManageAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.common.fpt.action.FptManageAction
+			</value>
+		</property>
+	</bean>
+	<bean name="/fptMessageAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="fptMessageAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.common.fpt.action.FptMessageAction
+			</value>
+		</property>
+	</bean>
+	<bean name="/btplsDownloadParaAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="btplsDownloadParaAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.common.fpt.btplsinput.action.BtplsDownloadParaAction
+			</value>
+		</property>
+	</bean>
+	<bean name="/btplsDownloadAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="btplsDownloadAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.common.fpt.btplsinput.action.BtplsDownloadAction
+			</value>
+		</property>
+	</bean>
+	<bean name="/transferFactoryManageAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="transferFactoryManageAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.common.transferfactory.action.TransferFactoryManageAction
+			</value>
+		</property>
+	</bean>
+	
+	<!--==================bcs context =======================-->
+	<bean name="/contractAnalyseAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="contractAnalyseAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.bcs.contractanalyse.action.ContractAnalyseAction
+			</value>
+		</property>
+	</bean>
+
+
+	<bean name="/contractCavAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="contractCavAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.bcs.contractcav.action.ContractCavAction
+			</value>
+		</property>
+	</bean>
+
+	<bean name="/contractAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="contractAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.bcs.contract.action.ContractAction
+			</value>
+		</property>
+	</bean>
+
+	<bean name="/contractExeAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="contractExeAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.bcs.contractexe.action.ContractExeAction
+			</value>
+		</property>
+	</bean>
+
+	<bean name="/contractStatAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="contractStatAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.bcs.contractstat.action.ContractStatAction
+			</value>
+		</property>
+	</bean>
+
+
+	<bean name="/bcsInnerMergeAction-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service"><ref bean="bcsInnerMergeAction"/></property>
+		<property name="serviceInterface">
+			<value>com.bestway.bcs.bcsinnermerge.action.BcsInnerMergeAction</value>
+		</property>		
+	</bean>	
+	
+	<bean name="/bcsMessageAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="bcsMessageAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>com.bestway.bcs.message.action.BcsMessageAction</value>
+		</property>
+	</bean>
+	
+	<bean name="/bcsDictPorAction-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service"><ref bean="bcsDictPorAction"/></property>
+		<property name="serviceInterface">
+			<value>com.bestway.bcs.dictpor.action.BcsDictPorAction</value>
+		</property>		
+	</bean>	
+
+	<!--==================dzsc context =======================-->
+	<bean name="/dzscMessageAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="dzscMessageAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>com.bestway.dzsc.message.action.DzscMessageAction</value>
+		</property>
+	</bean>
+	
+	<bean name="/materialManageAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="materialManageAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>com.bestway.common.materialbase.action.MaterialManageAction</value>
+		</property>
+	</bean>
+	<bean name="/materialApplyAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="materialApplyAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>com.bestway.dzsc.materialapply.action.MaterialApplyAction</value>
+		</property>
+	</bean>
+	<bean name="/dzscInnerMergeAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="dzscInnerMergeAction"/>
+		</property>
+		<property name="serviceInterface">
+			<value>com.bestway.dzsc.innermerge.action.DzscInnerMergeAction</value>
+		</property>
+	</bean>
+	<bean name="/dzscAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="dzscAction"/>
+		</property>
+		<property name="serviceInterface">
+			<value>com.bestway.dzsc.dzscmanage.action.DzscAction</value>
+		</property>
+	</bean>
+	
+	<bean name="/dzscListAction-http" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="dzscListAction"/>
+		</property>
+		<property name="serviceInterface">
+			<value>com.bestway.dzsc.customslist.action.DzscListAction</value>
+		</property>
+	</bean>
+	
+	<bean name="/dzscContractExeAction-http" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="dzscContractExeAction"/>
+		</property>
+		<property name="serviceInterface">
+			<value>com.bestway.dzsc.contractexe.action.DzscContractExeAction</value>
+		</property>
+	</bean>
+	
+	<bean name="/dzscContractCavAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="dzscContractCavAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.dzsc.checkcancel.action.DzscContractCavAction
+			</value>
+		</property>
+	</bean>
+	
+	<bean name="/dzscAnalyseAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="dzscAnalyseAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.dzsc.contractanalyse.action.DzscAnalyseAction
+			</value>
+		</property>
+	</bean>
+
+	<bean name="/dzscStatAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="dzscStatAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.dzsc.contractstat.action.DzscStatAction
+			</value>
+		</property>
+	</bean>
+	
+	<bean name="/aptitudeReportAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="aptitudeReportAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.common.aptitudereport.action.AptitudeReportAction
+			</value>
+		</property>
+	</bean>
+	
+	
+	
+	
+	<!-- =========================================================-->
+	<!-- cas check authority control remoting http service object-->
+	<!-- 以下六个对象都是 专门用于 Cas 权限控制-->	
+	<!-- =========================================================-->
+	<bean name="/casParameterAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="casParameterAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>com.bestway.bcus.cas.authority.CasParameterAction</value>
+		</property>
+	</bean>
+	
+	<bean name="/casSpecifControlAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="casSpecifControlAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>com.bestway.bcus.cas.authority.CasSpecifControlAction</value>
+		</property>
+	</bean>
+	
+	<bean name="/casFactoryReportAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="casFactoryReportAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>com.bestway.bcus.cas.authority.CasFactoryReportAction</value>
+		</property>
+	</bean>
+	
+	<bean name="/casCustomReportAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="casCustomReportAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>com.bestway.bcus.cas.authority.CasCustomReportAction</value>
+		</property>
+	</bean>
+
+	<bean name="/casFinanceReportAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="casFinanceReportAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>com.bestway.bcus.cas.authority.CasFinanceReportAction</value>
+		</property>
+	</bean>	
+	
+	<bean name="/casOtherReportAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="casOtherReportAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>com.bestway.bcus.cas.authority.CasOtherReportAction</value>
+		</property>
+	</bean>	
+	
+	
+	<bean name="/casBalanceReportAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="casBalanceReportAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>com.bestway.bcus.cas.authority.CasBalanceReportAction</value>
+		</property>
+	</bean>	
+
+	
+	<bean name="/erpBillCenterAuthority-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="erpBillCenterAuthority" />
+		</property>
+		<property name="serviceInterface">
+			<value>com.bestway.common.erpbillcenter.authority.ErpBillCenterAuthority</value>
+		</property>
+	</bean>	
+	
+	
+	<bean name="/outsourceAuthority-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="outsourceAuthority" />
+		</property>
+		<property name="serviceInterface">
+			<value>com.bestway.common.outsource.authority.OutsourceAuthority</value>
+		</property>
+	</bean>	
+	
+	<bean name="/warningAction-http" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="warningAction"/>
+		</property>
+		<property name="serviceInterface">
+			<value>com.bestway.common.warning.action.WarningAction</value>
+		</property>
+	</bean>
+	
+	<bean name="/dataExportAction-http" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="dataExportAction"/>
+		</property>
+		<property name="serviceInterface">
+			<value>com.bestway.common.dataexport.action.DataExportAction</value>
+		</property>
+	</bean>
+	
+	<!-- 保税物流系统 -->
+	<bean name="/blsMessageAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="blsMessageAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.bls.action.BlsMessageAction
+			</value>
+		</property>
+	</bean>
+	
+	<bean name="/blsInnerMergeAction-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="blsInnerMergeAction"/>
+		</property>
+		<property name="serviceInterface">
+			<value>com.bestway.bls.action.BlsInnerMergeAction</value>
+		</property>		
+	</bean>	
+	
+	<bean name="/entranceMessageAction-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="entranceMessageAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.bls.action.EntranceMessageAction
+			</value>
+		</property>
+	</bean>
+
+	
+	<bean name="/blsInOutStockBillAction-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="blsInOutStockBillAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.bls.action.BlsInOutStockBillAction
+			</value>
+		</property>
+	</bean>
+	
+
+	<bean name="/storageBillAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="storageBillAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.bls.action.StorageBillAction
+			</value>
+		</property>
+	</bean>
+
+	
+	<bean name="/blsCheckCancelAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="blsCheckCancelAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.bls.action.BlsCheckCancelAction
+			</value>
+		</property>
+	</bean>
+	<bean name="/materielImportApplyAction-http"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="materielImportApplyAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.bls.action.MaterielImportApplyAction
+			</value>
+		</property>
+	</bean>
+	<bean name="/billSpecialApplyAction-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+	   <property name="service">
+			<ref bean="billSpecialApplyAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.bls.action.BillSpecialApplyAction
+			</value>
+		</property>
+	</bean>
+	<bean name="/wjszAction-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+	   <property name="service">
+			<ref bean="wjszAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.waijing.action.WjszAction
+			</value>
+		</property>
+	</bean>
+	<bean name="/owpMessageAction-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+	   <property name="service">
+			<ref bean="owpMessageAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.owp.action.OwpMessageAction
+			</value>
+		</property>
+	</bean>
+	<bean name="/owpAnalyAction-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+	   <property name="service">
+			<ref bean="owpAnalyAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.owp.action.OwpAnalyAction
+			</value>
+		</property>
+	</bean>
+	<bean name="/owpAppAction-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+	   <property name="service">
+			<ref bean="owpAppAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.owp.action.OwpAppAction
+			</value>
+		</property>
+	</bean>
+	
+	<bean name="/owpBillAction-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+	   <property name="service">
+			<ref bean="owpBillAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.owp.action.OwpBillAction
+			</value>
+		</property>
+	</bean>
+	<!-- 财务成本分析远程调用 add by zrt 2011-03-03 -->
+	<bean name="/financialAction-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+	   <property name="service">
+			<ref bean="financialAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.bcus.financial.action.FinancialAction
+			</value>
+		</property>
+	</bean>
+	
+	<!-- 核查分析 -->
+	<bean name="/vfVerificationAction-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+	   <property name="service">
+			<ref bean="vfVerificationAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.bcs.verification.action.VFVerificationAction
+			</value>
+		</property>
+	</bean>
+	<bean name="/vfVerificationAuthority-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="vfVerificationAuthority" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.bcs.verification.action.VFVerificationAuthority
+			</value>
+		</property>
+	</bean>
+	<!-- 盘点核查 -->
+	<bean name="/ecsCheckStockAction-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+	   <property name="service">
+			<ref bean="ecsCheckStockAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.bcus.checkstock.action.ECSCheckStockAction
+			</value>
+		</property>
+	</bean>
+	<bean name="/ecsCheckStockAuthority-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="ecsCheckStockAuthority" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.bcus.checkstock.action.ECSCheckStockAuthority
+			</value>
+		</property>
+	</bean>
+	<!-- pis报关行小助手 -->
+	<bean name="/pisAction-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="pisAction" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.pis.action.PisAction
+			</value>
+		</property>
+	</bean>
+		<bean name="/PisVerificationAuthority-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="PisVerificationAuthority" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				com.bestway.pis.action.PisVerificationAuthority
+			</value>
+		</property>
+	</bean>
+</beans>

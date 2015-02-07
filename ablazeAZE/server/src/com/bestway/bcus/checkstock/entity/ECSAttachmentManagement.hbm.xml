@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.bestway.bcus.checkstock.entity.ECSAttachmentManagement"
+		table="ecsattachmentManagement">
+		<cache usage="read-write" />
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex" />
+		</id>
+		<property name="projectContent" />
+		<property name="dataContent" />
+		<property name="provideUnit" />
+		<property name="dataType" />
+		<property name="requirements" />
+		<property name="usingSeal" />
+		<property name="dataSignature" />
+		<property name="attachmentName" />
+		<property name="createDate" />
+		<property name="createPeople" />
+		<property name="updatePeople" />
+		<property name="updateDate" />
+		<property name="isHidden" />
+		<property name="parentId" />
+		<property name="controlsState" />
+		<property name="operateState" />
+		<property name="isTemplate" />
+		<many-to-one lazy="false" name="company" column="company"
+			class="com.bestway.bcus.system.entity.Company" index="ecsattachmentManagement_company" />
+		<many-to-one lazy="false" name="ecssection" column="ecssection"
+			class="com.bestway.bcus.checkstock.entity.ECSSection" index="ecsattachmentManagement_ecssection" />
+	</class>
+</hibernate-mapping>
+	<!-- parsed in 0ms -->

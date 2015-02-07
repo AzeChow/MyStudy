@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  
+		name="com.bestway.common.fpt.entity.FptEmail" 
+		table="fptemail">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="sysType" />
+		<property name="toEmailAdress" />
+		<property name="myEmailAdress" />
+		<property name="mailSubject" />
+		<property name="mailbodyNote" />
+		<property name="mailbody1" column ="mailbody" length="225"/>
+		<property name="mailbody2" length="225"/>
+		<property name="mailbody3" length="225"/>
+		<property name="mailbody4" length="225"/>
+		<property name="mailbody5" length="225"/>
+		<property name="mailbody6" length="225"/>
+		<property name="mailbody7" length="225"/>
+		<property name="mailbody8" length="225"/>
+		<property name="mailbody9" length="225"/>
+		<property name="mailbody10" length="225"/>
+		<property name="mailIRType" />
+		<property name="mailFileAffix" />
+		<property name="smtpServer" />
+		<property name="isCancel" />
+		<property name="createDate" />
+		<many-to-one lazy="false"      name="company" column="companyId" 
+			class="com.bestway.bcus.system.entity.Company" index="transraconitbl_company"/>
+	</class>
+</hibernate-mapping>

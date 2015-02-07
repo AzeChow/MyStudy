@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="eportmsg.xsl"?>
+<!--Element message: 此元素内所有内容及属性描述一个报文的定义及从数据库的获取途径。-->
+<message version="1.0" type="MaterielApply">
+	<field nullable="false" signNo="1">
+		<description>料件/成品序号</description>
+		<field-name>no</field-name>
+		<format>Z(8)9</format>
+		<field-flag>G_NO</field-flag>
+	</field>
+	<field nullable="true" signNo="2">
+		<description>料件/成品货号</description>
+		<field-name>ptNo</field-name>
+		<format>X(30)</format>
+		<field-flag>COP_G_NO</field-flag>
+	</field>
+	<field nullable="false" signNo="4">
+		<description>商品编码</description>
+		<field-name>complex.code</field-name>
+		<format>X(8)</format>
+		<field-flag>CODE_T</field-flag>
+	</field>
+	<field nullable="true" signNo="5">
+		<description>附加编码</description>
+		<field-name>complexSCode</field-name>
+		<format>X(8)</format>
+		<field-flag>CODE_S</field-flag>
+	</field>
+	<field nullable="false" signNo="6">
+		<description>商品名称</description>
+		<field-name>factoryName</field-name>
+		<format>X(50)</format>
+		<field-flag>G_NAME</field-flag>
+	</field>
+	<field nullable="true" signNo="7">
+		<description>商品规格型号</description>
+		<field-name>factorySpec</field-name>
+		<format>X(50)</format>
+		<field-flag>G_MODEL</field-flag>
+	</field>
+	<field nullable="false" signNo="11">
+		<description>申报计量单位</description>
+		<field-name>ptUnit.code</field-name>
+		<format>9(3)</format>
+		<field-flag>UNIT</field-flag>
+	</field>
+	<field nullable="false" signNo="12">
+		<description>法定计量单位</description>
+		<field-name>complex.firstUnit.code</field-name>
+		<format>9(3)</format>
+		<field-flag>UNIT_1</field-flag>
+	</field>
+	<field nullable="true" signNo="13">
+		<description>法定第二单位</description>
+		<field-name>complex.secondUnit.code</field-name>
+		<format>9(3)</format>
+		<field-flag>UNIT_2</field-flag>
+	</field>
+	<field nullable="true" signNo="14">
+		<description>产销国(地区)</description>
+		<field-name>sysArea.code</field-name>
+		<format>9(3)</format>
+		<field-flag>ORIGIN_COUNTRY</field-flag>
+	</field>
+	<field nullable="true" signNo="15">
+		<description>企业申报单价</description>
+		<field-name></field-name>
+		<format>Z(12)9.9(5)</format>
+		<field-flag>UNIT_PRICE</field-flag>
+	</field>
+	<field nullable="true" signNo="16">
+		<description>币制</description>
+		<field-name></field-name>
+		<format>9(3)</format>
+		<field-flag>CURR</field-flag>
+	</field>
+	<field nullable="true" signNo="17">
+		<description>申报单价人民币</description>
+		<field-name></field-name>
+		<format>Z(12)9.9(5)</format>
+		<field-flag>DEC_PRICE_RMB</field-flag>
+	</field>
+	<field nullable="true" signNo="20">
+		<description>法定计量单位比例因子</description>
+		<field-name></field-name>
+		<format>Z(8)9.9(9)</format>
+		<field-flag>FACTOR_1</field-flag>
+	</field>
+	<field nullable="true" signNo="21">
+		<description>第二法定计量单位比例因子</description>
+		<field-name></field-name>
+		<format>Z(8)9.9(9)</format>
+		<field-flag>FACTOR_2</field-flag>
+	</field>
+	<field nullable="true" signNo="22">
+		<description>重量比例因子</description>
+		<field-name></field-name>
+		<format>Z(8)9.9(9)</format>
+		<field-flag>FACTOR_WT</field-flag>
+	</field>
+	<field nullable="true" signNo="23">
+		<description>比例因子浮动比率</description>
+		<field-name></field-name>
+		<format>Z(3)9.9(5)</format>
+		<field-flag>FACTOR_RATE</field-flag>
+	</field>
+	<field nullable="true" signNo="18">
+		<description>申报进口数量</description>
+		<field-name></field-name>
+		<format>Z(12)9.9(5)</format>
+		<field-flag>I_QTY</field-flag>
+	</field>
+	<field nullable="true">
+		<description>批准最大余量</description>
+		<field-name></field-name>
+		<format>Z(12)9.9(5)</format>
+		<field-flag>MAX_QTY</field-flag>
+	</field>
+	<field nullable="true">
+		<description>初始库存数量</description>
+		<field-name></field-name>
+		<format>Z(12)9.9(5)</format>
+		<field-flag>ORIGIN_QTY</field-flag>
+	</field>
+	<field nullable="true">
+		<description>用途代码</description>
+		<field-name></field-name>
+		<format>Z(8)9</format>
+		<field-flag>USE_TYPE</field-flag>
+	</field>
+	<field nullable="true">
+		<description>备用标志1</description>
+		<field-name></field-name>
+		<format>X(1)</format>
+		<field-flag>NOTE_1</field-flag>
+	</field>
+	<field nullable="true">
+		<description>备用标志2</description>
+		<field-name></field-name>
+		<format>X(1)</format>
+		<field-flag>NOTE_2</field-flag>
+	</field>
+	<field nullable="true" signNo="26">
+		<description>备注</description>
+		<field-name></field-name>
+		<format>X(10)</format>
+		<field-flag>NOTE</field-flag>
+	</field>
+	<field nullable="false" signNo="3">
+		<description>修改标志</description>
+		<field-name>customsModifyMark</field-name>
+		<format>X(1)</format>
+		<field-flag>MODIFY_MARK</field-flag>
+	</field>
+	<field nullable="true">
+		<description>总价</description>
+		<field-name></field-name>
+		<format>Z(12)9.9(5)</format>
+		<field-flag>APPR_AMT</field-flag>
+	</field>
+	<field nullable="true" signNo="9">
+		<description>英文名称</description>
+		<field-name></field-name>
+		<format>X(50)</format>
+		<field-flag>G_ENAME</field-flag>
+	</field>
+	<field nullable="true">
+		<description>英文规格型号</description>
+		<field-name></field-name>
+		<format>X(50)</format>
+		<field-flag>G_EMODEL</field-flag>
+	</field>
+	<field nullable="true" signNo="25">
+		<description>归类说明</description>
+		<field-name></field-name>
+		<format>X(1024)</format>
+		<field-flag>CLASS_NOTE</field-flag>
+	</field>
+	<field nullable="true" signNo="10">
+		<description>企业自编计量单位</description>
+		<field-name></field-name>
+		<format>X(30)</format>
+		<field-flag>COP_UNIT</field-flag>
+	</field>
+	<field nullable="true" signNo="19">
+		<description>企业自编计量单位比例因子</description>
+		<field-name></field-name>
+		<format>Z(8)9.9(9)</format>
+		<field-flag>COP_FACTOR</field-flag>
+	</field>
+	<field nullable="true" signNo="24">
+		<description>征免方式</description>
+		<field-name></field-name>
+		<format>X(1)</format>
+		<field-flag>DUTY_MODE</field-flag>
+	</field>
+</message>

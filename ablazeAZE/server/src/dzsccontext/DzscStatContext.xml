@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!--==================DAO Beans====================-->
+	<bean id="dzscStatDao" class="com.bestway.dzsc.contractstat.dao.DzscStatDao">
+              <property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+	<!--==================Logic Beans====================-->
+	<bean id="dzscStatLogic" class="com.bestway.dzsc.contractstat.logic.DzscStatLogic">
+              <property name="dzscStatDao"><ref bean="dzscStatDao"/></property>
+			  <property name="dzscCavDao"><ref bean="dzscContractCavDao"/></property>
+			  <property name="dzscDao"><ref bean="dzscDao"/></property>
+	</bean>
+
+	<!--==================Action Bean====================-->
+	<bean id="dzscStatAction" class="com.bestway.dzsc.contractstat.action.DzscStatActionImpl">
+			  <property name="dzscStatLogic"><ref bean="dzscStatLogic"/></property>
+	</bean>
+</beans>

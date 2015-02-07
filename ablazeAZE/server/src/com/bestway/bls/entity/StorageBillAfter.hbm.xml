@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class lazy="false" name="com.bestway.bls.entity.StorageBillAfter"
+		table="storageBillAfter">
+		<cache usage="read-write" />
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex" />
+		</id>
+
+		<property name="seqNo"></property>
+		<property name="seqNum"></property>
+		<property name="copGNo"></property>
+		<property name="tafName"></property>
+		<property name="name"></property>
+		<property name="isOut"></property>
+
+		<property name="model"></property>
+		<property name="qty1"></property>
+		<property name="qty2"></property>
+		<property name="qty"></property>
+
+		<property name="unitPrice"></property>
+		<property name="totalP"></property>
+		<property name="contrItem"></property>
+		<property name="apprTime"></property>
+		<property name="entryID"></property>
+		<property name="entryGNo"></property>
+		<property name="corrBillNo"></property>
+		<property name="corrBillGNo"></property>
+		<property name="remainingQuantity"></property>
+		<property name="blsDocuments"></property>
+		<property name="inBillGoodNo"></property>
+		<property name="remarks1"></property>
+		<property name="remarks2"></property>
+		<many-to-one lazy="false" name="storageBill"
+			class="com.bestway.bls.entity.StorageBill" />
+		<many-to-one lazy="false" name="codeTS"
+			class="com.bestway.bcus.custombase.entity.hscode.Complex" />
+		<many-to-one lazy="false" name="unit"
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit" />
+		<many-to-one lazy="false" name="curr"
+			class="com.bestway.bcus.custombase.entity.parametercode.Curr" />
+		<many-to-one lazy="false" name="originCountry"
+			class="com.bestway.bcus.custombase.entity.countrycode.Country" />
+		<many-to-one lazy="false" name="tradeModel"
+			class="com.bestway.bcus.custombase.entity.parametercode.Trade" />
+		<many-to-one lazy="false" name="transModel"
+			class="com.bestway.bcus.custombase.entity.parametercode.Transac" />
+
+		<many-to-one lazy="false" name="company" column="coid"
+			class="com.bestway.bcus.system.entity.Company" />
+
+	</class>
+</hibernate-mapping>

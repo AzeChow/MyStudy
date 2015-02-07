@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcus.cas.entity.CheckBalanceConvertMateriel" table="CheckBalanceConvertMateriel">
+		<cache usage="read-write"/> 
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="checkDate"/>
+		<property name="ptNo"/>
+		<property name="ptName"/>
+		<property name="ptSpec"/>
+		<many-to-one lazy="false" name="wareSet" column="wareSet" 
+			class="com.bestway.common.materialbase.entity.WareSet"/>		
+		<property name="checkAmount"/>
+		<many-to-one lazy="false"   name="complex" column="tenCode"
+				class="com.bestway.bcus.custombase.entity.hscode.Complex" 
+				index="CheckBalance_complex"/>
+				
+		<many-to-one  name="fatherCheckBalance" column="fatherCheckId"
+				class="com.bestway.bcus.cas.entity.CheckBalance" 
+				index="CheckBalanceBom_father"/>
+		
+		<property name="name"/>
+		<property name="spec"/>
+		<many-to-one lazy="false"      name="ptUnit" column="ptUnit" class="com.bestway.common.materialbase.entity.CalUnit"/>
+		<property name="unitConvert"/>
+		<property name="hsAmount"/>
+		<many-to-one lazy="false"      name="hsUnit" column="hsUnit" class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<property name="note"/>		
+		<property name="ljCpMark"/>
+		<property name="kcType"/>
+		<property name="unitWaste"/>
+		<property name="waste"/>
+		<property name="unitUsed"/>
+		
+		<many-to-one lazy="false" name="company" column="coid" class="com.bestway.bcus.system.entity.Company" index="CheckBalance_company"/>
+	</class>
+</hibernate-mapping>
+<!-- parsed in 0ms -->
+
+		

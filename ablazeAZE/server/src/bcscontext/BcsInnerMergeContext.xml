@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!--==================DAO Beans====================-->
+	<bean id="bcsInnerMergeDao" class="com.bestway.bcs.bcsinnermerge.dao.BcsInnerMergeDao">
+              <property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+	<!--==================Logic Beans====================-->
+	<bean id="bcsInnerMergeLogic" class="com.bestway.bcs.bcsinnermerge.logic.BcsInnerMergeLogic">
+              <property name="bcsInnerMergeDao"><ref bean="bcsInnerMergeDao"/></property>
+              <property name="contractLogic"><ref bean="contractLogic"/></property>
+              <property name="materialManageDao"><ref bean="materialManageDao"/></property>
+              <property name="materialManageLogic"><ref bean="materialManageLogic"/></property>
+	</bean>	
+	<bean id="bcsImportFromOther" class="com.bestway.bcs.bcsinnermerge.logic.BcsImportFromOther">
+              <property name="materialManageDao"><ref bean="materialManageDao"/></property>
+			  <property name="bcsInnerMergeDao"><ref bean="bcsInnerMergeDao"/></property>
+			  <property name="hsCodeDao"><ref bean="hsCodeDao"/></property>
+			  <property name="paramerterCodeDao"><ref bean="parameterCodeDao"/></property>
+	</bean>
+	<!--==================Action Bean====================-->
+	<bean id="bcsInnerMergeAction" class="com.bestway.bcs.bcsinnermerge.action.BcsInnerMergeActionImpl">
+		<property name="bcsInnerMergeDao"><ref local="bcsInnerMergeDao"/></property>		
+		<property name="bcsInnerMergeLogic"><ref local="bcsInnerMergeLogic"/></property>	
+		<property name="bcsImportFromOther"><ref bean="bcsImportFromOther"/></property>
+	</bean>
+	</beans>

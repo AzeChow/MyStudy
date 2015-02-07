@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="eportmsg.xsl"?>
+<!--Element message: 此元素内所有内容及属性描述一个报文的定义及从数据库的获取途径。-->
+<message version="1.0" type="DzscCheckImg" description="中期核查料件" 
+	data-id="CheckImgId">
+	<field nullable="false">
+		<description>填报报核料件在企业计算机管理系统中的料件编号（归并前）</description>
+		<field-name>ptNum</field-name>
+		<format>X(30)</format>
+		<field-flag>Cop_G_No</field-flag>
+	</field>
+	<field nullable="true">
+		<description>填报本期已实际入库但未办理结转（深加工结转）报关手续的数量</description>
+		<field-name></field-name>
+		<format>Z(13)</format>
+		<field-flag>Qty_Not_Decl</field-flag>
+	</field>
+	<field nullable="true">
+		<description>填报本期已进口放行但未入库和已出厂未申报出口的料件数量</description>
+		<field-name>seqNum</field-name>
+		<format>Z(13)</format>
+		<field-flag>Qty_On_Way</field-flag>
+	</field>
+	<field nullable="false">
+		<description>填报本期料件实际库存在原料仓库中数量，不包括11、12项数量</description>
+		<field-name>seqNum</field-name>
+		<format>Z(13)</format>
+		<field-flag>Qty_Stock</field-flag>
+	</field>
+	<field nullable="true">
+		<description>填报本期报废原材料数量（不包括200和400监管方式已申报放弃处理的数量）</description>
+		<field-name>seqNum</field-name>
+		<format>Z(13)</format>
+		<field-flag>Qty_Xr</field-flag>
+	</field>
+	<field nullable="true">
+		<description>填报本期料件在生产线上的数量，包括企业领料后成品入库前的数量</description>
+		<field-name>seqNum</field-name>
+		<format>Z(13)</format>
+		<field-flag>Qty_Online</field-flag>
+	</field>
+	<field nullable="true">
+		<description>按本期库存边角料实际情况填报，无库存填“0”</description>
+		<field-name>seqNum</field-name>
+		<format>Z(13)</format>
+		<field-flag>Qty_Gr</field-flag>
+	</field>
+	<field nullable="true">
+		<description>本期原料入库数量</description>
+		<field-name>seqNum</field-name>
+		<format>Z(13)</format>
+		<field-flag>Qty_Enter_Stock</field-flag>
+	</field>
+	<field nullable="true">
+		<description>填报原料出库数量</description>
+		<field-name>seqNum</field-name>
+		<format>Z(13)</format>
+		<field-flag>Qty_Rec</field-flag>
+	</field>
+	<field nullable="true">
+		<description>填报本期644、245监管方式下料件内销的数量</description>
+		<field-name>seqNum</field-name>
+		<format>Z(13)</format>
+		<field-flag>Qty_Sale_Dem</field-flag>
+	</field>
+	<field nullable="true">
+		<description>填报本期200监管方式下放弃料件的数量</description>
+		<field-name>seqNum</field-name>
+		<format>Z(13)</format>
+		<field-flag>Consume_Amt</field-flag>
+	</field>
+	<field nullable="true">
+		<description>填报本期已入库成品折料数量，不包括15项</description>
+		<field-name>seqNum</field-name>
+		<format>Z(13)</format>
+		<field-flag>Con_Amount</field-flag>
+	</field>
+	<field nullable="true">
+		<description>填报本期已入库废品、残次品折料数量（不包括200和400监管方式已申报放弃处理的数量）</description>
+		<field-name>seqNum</field-name>
+		<format>Z(13)</format>
+		<field-flag>Aban_Amount</field-flag>
+	</field>
+	<field nullable="true">
+		<description>填报本期200监管方式下放弃的半成品、残次品（不完整品）按放弃按料件申报的数量</description>
+		<field-name>seqNum</field-name>
+		<format>Z(13)</format>
+		<field-flag>Img_Giveup</field-flag>
+	</field>
+	<field nullable="true">
+		<description>填报本期300、700监管方式下原料退换出口的数量，仅出的（进口的计入8项）</description>
+		<field-name>seqNum</field-name>
+		<format>Z(13)</format>
+		<field-flag>Img_Change</field-flag>
+	</field>
+	<field nullable="true">
+		<description>填报本期半成品仓库库存折料数量</description>
+		<field-name>seqNum</field-name>
+		<format>Z(13)</format>
+		<field-flag>Half_G_Amt</field-flag>
+	</field>
+	<field nullable="true">
+		<description>填报本期265、664监管方式下料件复运出境的数量</description>
+		<field-name>seqNum</field-name>
+		<format>Z(13)</format>
+		<field-flag>Img_Again</field-flag>
+	</field>
+</message>

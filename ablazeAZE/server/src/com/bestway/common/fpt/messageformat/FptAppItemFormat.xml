@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="eportmsg.xsl"?>
+<!--Element message: 此元素内所有内容及属性描述一个报文的定义及从数据库的获取途径。-->
+<message version="1.0">
+	<section multiple="false" required="true">
+		<description>结转申请表表体商品明细</description>
+		<section-flag>FPT_APP_ITEM</section-flag>
+		<data-id>FptAppItem</data-id>
+		<field nullable="false">
+			<description>序号</description>
+			<field-name>listNo</field-name>
+			<format>Z(8)9</format>
+			<field-flag>LIST_NO</field-flag>
+		</field>
+		<field nullable="true">
+			<description>转出序号</description>
+			<field-name>inOutNo</field-name>
+			<format>Z(8)9</format>
+			<field-flag>IN_OUT_NO</field-flag>
+		</field>
+		<field nullable="true">
+			<description>转入手册号</description>
+			<field-name>inEmsNo</field-name>
+			<format>X(12)</format>
+			<field-flag>IN_EMS_NO</field-flag>
+		</field>
+		<field nullable="false">
+			<description>商品项号</description>
+			<field-name>trNo</field-name>
+			<format>Z(8)9</format>
+			<field-flag>TR_NO</field-flag>
+		</field>
+		<field nullable="false">
+			<description>商品编码</description>
+			<field-name>codeTs.code</field-name>
+			<format>X(10)</format>
+			<field-flag>CODE_T_S</field-flag>
+		</field>
+		<field nullable="false">
+			<description>商品名称</description>
+			<field-name>name</field-name>
+			<format>X(50)</format>
+			<field-flag>G_NAME</field-flag>
+		</field>
+		<field nullable="true">
+			<description>规格型号</description>
+			<field-name>spec</field-name>
+			<format>X(50)</format>
+			<field-flag>G_MODEL</field-flag>
+		</field>
+		<field nullable="false">
+			<description>计量单位</description>
+			<field-name>unit.code</field-name>
+			<format>X(3)</format>
+			<field-flag>UNIT</field-flag>
+		</field>
+		<field nullable="false">
+			<description>法定单位</description>
+			<field-name>unit1.code</field-name>
+			<format>X(3)</format>
+			<field-flag>UNIT_1</field-flag>
+		</field>
+		<field nullable="false">
+			<description>申报数量</description>
+			<field-name>qty</field-name>
+			<format>Z(12)9.9(5)</format>
+			<field-flag>QTY</field-flag>
+		</field>
+		<field nullable="true">
+			<description>法定数量</description>
+			<field-name>qty1</field-name>
+			<format>Z(12)9.9(5)</format>
+			<field-flag>QTY_1</field-flag>
+		</field>
+		<field nullable="true">
+			<description>备注</description>
+			<field-name>note</field-name>
+			<format>X(50)</format>
+			<field-flag>NOTE</field-flag>
+		</field>
+		<field nullable="true">
+			<description>备用结转商品编码</description>
+			<field-name>standComplex.code</field-name>
+			<format>X(10)</format>
+			<field-flag>BAK_CODE_TS</field-flag>
+		</field>
+		<field nullable="false">
+			<description>修改标志</description>
+			<field-name>modifyMarkState</field-name>
+			<format>X(1)</format>
+			<field-flag>MODIFY_MARK</field-flag>
+		</field>
+	</section>
+</message>

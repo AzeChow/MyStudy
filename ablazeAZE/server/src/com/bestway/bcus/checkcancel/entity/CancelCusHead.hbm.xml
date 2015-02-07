@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcus.checkcancel.entity.CancelCusHead" table="cancelhead">
+		<cache usage="read-write"/> 
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="emsNo" length="225"/>
+		<property name="emsApprNo" length="225"/>
+		<property name="declareType" length="20"/>
+		<property name="cancelTimes" length="20"/>
+		<property name="beginDate"/>
+		<property name="endDate"/>
+		<property name="inportCustomNum" length="4"/>
+		<property name="outportCustomNum" length="4"/>
+		<property name="declareImgNum" length="4"/>
+		<property name="declareExgNum" length="4"/>
+		<property name="thisInportMoney"/>
+		<property name="thisOutportMoney"/>
+		<property name="beginImgMoney"/>
+		<property name="endBalanceImgMoney"/>
+		<property name="innerCancelMoney"/>
+		<property name="innerCancelFillTaxMoney"/>
+		<property name="outportExgUseImgNum"/>
+		<property name="exitImgMoney"/>
+		<property name="note" length="4000"/>
+		<property name="inputDate"/>
+		<property name="declareDate"/>
+		<property name="declareTime"/>
+        <property name="inputUser" length="10"/>		
+		<property name="modifyMark"/>
+		<property name="checkMark"/>
+		<property name="exeMark"/>
+		<property name="declareState"/>
+		<property name="scale"/>
+		<property name="checkStaffName"/>
+		<property name="checkStaffTime"/>
+		<property name="remainExportMoney"/>
+		<property name="simulateBeginImgMoney"/>
+		<property name="simulateThisInportMoney"/>
+		<property name="simulateThisOutportMoney"/>
+		<property name="simulateOutportExgUseImgNum"/>
+		<property name="simulateInnerCancelMoney"/>
+		<property name="simulateExitImgMoney"/>
+		<property name="simulateRemainExportMoney"/>
+		<property name="simulateEndBalanceImgMoney"/>
+		<many-to-one lazy="false"      name="company" column="coid" class="com.bestway.bcus.system.entity.Company" index="cancelhead_company"/>
+	</class>
+
+</hibernate-mapping>
+<!-- parsed in 0ms -->
+
+		

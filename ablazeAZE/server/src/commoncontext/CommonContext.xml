@@ -1,0 +1,1844 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+	<!-- 设置器会用从属性文件中读取出来的值来替换${...}占位符 -->
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>WEB-INF/jdbc.properties</value>
+				<value>WEB-INF/rmi.properties</value>
+				<value>WEB-INF/mail.properties</value>
+			</list>
+		</property>
+	</bean>
+	<!-- Message source for this context, loaded from localized "messages_xx" 
+		files -->
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename">
+			<value>messages</value>
+		</property>
+	</bean>
+
+	<!--这个是原先的 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		<property name="maxActive" value="30" />
+		<property name="maxIdle" value="30" />
+		<property name="initialSize" value="2" />
+	</bean>
+
+
+
+	<!-- <bean id="dataSource" class="org.logicalcobwebs.proxool.ProxoolDataSource" 
+		destroy-method="close"> <property name="driver" value="${jdbc.driverClassName}" 
+		/> <property name="driverUrl" value="${jdbc.url}" /> <property name="user" 
+		value="${jdbc.username}" /> <property name="password" value="${jdbc.password}" 
+		/> <property name="alias" value="DBPool" /> <property name="houseKeepingSleepTime" 
+		value="90000" /> <property name="prototypeCount" value="5" /> <property name="maximumConnectionCount" 
+		value="100" /> <property name="minimumConnectionCount" value="10" /> <property 
+		name="trace" value="" /> <property name="verbose" value="" /> </bean> -->
+
+	<!-- <bean id="dataSource" class="org.logicalcobwebs.proxool.ProxoolDataSource"> 
+		<property name="driver" value="${jdbc.driverClassName}" /> <property name="driverUrl" 
+		value="jdbc:jtds:sqlserver://127.0.0.1/jbcus_wss?user=sa password=sa" /> 
+		<property name="user" value="${jdbc.username}" /> <property name="password" 
+		value="${jdbc.password}" /> <property name="alias" value="Pool_dbname" /> 
+		<property name="houseKeepingSleepTime" value="90000" /> <property name="prototypeCount" 
+		value="0" /> <property name="maximumConnectionCount" value="50" /> <property 
+		name="minimumConnectionCount" value="2" /> <property name="simultaneousBuildThrottle" 
+		value="50" /> <property name="maximumConnectionLifetime" value="14400000" 
+		/> <property name="houseKeepingTestSql" value="select CURRENT_DATE" /> </bean> -->
+
+	<!-- ========================= Data Access Beans ========================= 
+		<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close"> 
+		<property name="driverClass"><value>${jdbc.driverClassName}</value></property> 
+		<property name="jdbcUrl"><value>${jdbc.url}</value></property> <property 
+		name="user"><value>${jdbc.username}</value></property> <property name="password"><value>${jdbc.password}</value></property> 
+		<property name="acquireIncrement"><value>1</value></property> <property name="maxIdleTime"><value>60</value></property> 
+		<property name="maxPoolSize"><value>60</value></property> <property name="minPoolSize"><value>20</value></property> 
+		<property name="maxStatements"><value>0</value></property> <property name="maxStatementsPerConnection"><value>0</value></property> 
+		<property name="automaticTestTable"><value>testC3P0</value></property> <property 
+		name="idleConnectionTestPeriod"><value>3600</value></property> <property 
+		name="initialPoolSize"><value>300</value></property> <property name="checkoutTimeout"><value>5000</value></property> 
+		</bean> -->
+
+	<!--设置系统ORM的命名策略 -->
+	<bean id="customNamingStrategy" class="com.bestway.bcus.CustomNamingStrategy">
+		<property name="dialect">
+			<value>${hibernate.dialect}</value>
+		</property>
+	</bean>
+	<bean id="sessionFactory" class="com.bestway.bcus.LocalSessionFactoryBeanSubClass">
+		<property name="tableOwner" value="${jdbc.tableOwner}" />
+		<property name="dataSource">
+			<ref local="dataSource" />
+		</property>
+		<property name="namingStrategy">
+			<ref local="customNamingStrategy" />
+		</property>
+		<property name="schemaUpdate">
+			<value>false</value>
+		</property>
+		<property name="mappingResources">
+			<list>
+				<!--System权限管理 -->
+				<value>
+					com/bestway/common/authority/entity/AclGroup.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/authority/entity/AclUser.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/authority/entity/AclGroupUser.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/authority/entity/AclGroupPermission.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/authority/entity/AclUserPermission.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/authority/entity/BaseCompany.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/authority/entity/OperationLogs.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/authority/entity/AclIPaddress.hbn.xml
+				</value>
+				<value>
+					com/bestway/common/authority/entity/AclIpaddressPermission.hbn.xml
+				</value>
+				<!--System系统管理 -->
+
+				<value>com/bestway/bcus/system/entity/ReportControl.hbm.xml</value>
+				<value>com/bestway/bcus/system/entity/Company.hbm.xml</value>
+				<value>
+					com/bestway/bcus/system/entity/CompanyOther.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/system/entity/InputTableColumnSet.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/system/entity/CommonCheckNull.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/system/entity/ApplyCustomBillParameter.hbm.xml
+				</value>
+				<value>com/bestway/bcus/system/entity/SysCode.hbm.xml</value>
+				<value>
+					com/bestway/bcus/custombase/entity/CustomBaseVersion.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/system/entity/ParameterSet.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/system/entity/BcusParameterSet.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/system/entity/CustomsDeclarationSet.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/system/entity/RenderDataColumn.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/system/entity/TcsParameters.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/system/entity/TcsLinkMan.hbm.xml
+				</value>
+				<!--关务基本资料（基础代码） -->
+				<value>
+					com/bestway/bcus/custombase/entity/basecode/InvestMode.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/custombase/entity/basecode/CoType.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/custombase/entity/basecode/InvClass.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/custombase/entity/basecode/MachiningType.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/custombase/entity/basecode/ApplicationMode.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/custombase/entity/basecode/Brief.hbm.xml
+				</value>
+				<!--关务基本资料（部门代码） -->
+				<value>
+					com/bestway/bcus/custombase/entity/depcode/TaxCode.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/custombase/entity/depcode/SaicCode.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/custombase/entity/depcode/StsCode.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/custombase/entity/depcode/RedDep.hbm.xml
+				</value>
+				<!--关务基本资料（国家地区） -->
+				<value>
+					com/bestway/bcus/custombase/entity/countrycode/Country.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/custombase/entity/countrycode/Customs.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/custombase/entity/countrycode/PortInternal.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/custombase/entity/countrycode/PortLin.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/custombase/entity/countrycode/PreDock.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/custombase/entity/countrycode/District.hbm.xml
+				</value>
+				<!--关务基本资料（报关参数） -->
+				<value>
+					com/bestway/bcus/custombase/entity/parametercode/Trade.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/custombase/entity/parametercode/Unit.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/custombase/entity/parametercode/Curr.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/custombase/entity/parametercode/LicenseDocu.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/custombase/entity/parametercode/Transf.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/custombase/entity/parametercode/Transac.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/custombase/entity/parametercode/PayMode.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/custombase/entity/parametercode/Wrap.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/custombase/entity/parametercode/Uses.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/custombase/entity/parametercode/LevyMode.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/custombase/entity/parametercode/LevyKind.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/custombase/entity/parametercode/SrtJzx.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/custombase/entity/parametercode/ContaModel.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/custombase/entity/parametercode/ContaSize.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/custombase/entity/parametercode/SrtTj.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/custombase/entity/parametercode/PayType.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/custombase/entity/parametercode/PayerType.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/custombase/entity/parametercode/Deduc.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/custombase/entity/parametercode/BalanceMode.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/custombase/entity/parametercode/Gbtobig.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/custombase/entity/parametercode/BargainType.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/custombase/entity/parametercode/FetchInMode.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/custombase/entity/parametercode/CustomsBroker.hbm.xml
+				</value>
+				<!--关务基本资料（商品编码） -->
+				<value>
+					com/bestway/bcus/custombase/entity/hscode/CustomsComplex.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/custombase/entity/hscode/Complex.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/custombase/entity/hscode/CheckupComplex.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/custombase/entity/hscode/LicenseNote.hbm.xml
+				</value>
+				<!--物流资料 -->
+				<value>
+					com/bestway/common/materialbase/entity/WareSet.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/materialbase/entity/SysArea.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/materialbase/entity/ScmCoc.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/materialbase/entity/ScmCocControl.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/materialbase/entity/ScmCoi.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/materialbase/entity/CalUnit.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/materialbase/entity/CurrCode.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/materialbase/entity/ShareCode.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/materialbase/entity/Materiel.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/materialbase/entity/UnitWaste.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/materialbase/entity/CurrRate.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/materialbase/entity/MotorCode.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/materialbase/entity/CustomsUser.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/materialbase/entity/ParaSet.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/materialbase/entity/ProjectDept.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/materialbase/entity/EnterpriseMaterial.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/materialbase/entity/EnterpriseBomMaster.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/materialbase/entity/EnterpriseBomVersion.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/materialbase/entity/EnterpriseBomManage.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/materialbase/entity/MaterialBomDetail.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/materialbase/entity/MaterialBomMaster.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/materialbase/entity/MaterialBomVersion.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/materialbase/entity/UnitCollate.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/erpbill/entity/CustomOrder.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/erpbill/entity/CustomOrderDetail.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/erpbill/entity/CustomOrderExg.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/erpbill/entity/CustomOrderImg.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/erpbill/entity/CustomOrderBom.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/erpbill/entity/Customparames.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/erpbill/entity/OrderDateIndex.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/erpbill/entity/MakeCustomOrderToContract.hbm.xml
+				</value>
+				<!--Bcus参数设置 -->
+				<value>
+					com/bestway/bcus/manualdeclare/entity/BcusParameter.hbm.xml
+				</value>
+				<!--企业内部归并（物流通用代码） -->
+				<value>
+					com/bestway/bcus/innermerge/entity/ReverseMergeFourData.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/innermerge/entity/ReverseMergeTenData.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/innermerge/entity/ReverseMergeBeforeData.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/innermerge/entity/InnerMergeData.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/innermerge/entity/CustomInnerMergeCondition.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/innermerge/entity/MaterielAndHalfProduct.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/innermerge/entity/InnerMergeDataOrder.hbm.xml
+				</value>
+				<!--经营范围 -->
+				<value>
+					com/bestway/bcus/manualdeclare/entity/EmsEdiTrHead.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/manualdeclare/entity/EmsEdiTrImg.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/manualdeclare/entity/EmsEdiTrExg.hbm.xml
+				</value>
+				<!--归并关系 -->
+				<value>
+					com/bestway/bcus/manualdeclare/entity/EmsEdiMergerHead.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/manualdeclare/entity/EmsEdiMergerImgAfter.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/manualdeclare/entity/EmsEdiMergerImgBefore.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/manualdeclare/entity/EmsEdiMergerExgAfter.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/manualdeclare/entity/EmsEdiMergerExgBefore.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/manualdeclare/entity/EmsEdiMergerExgBom.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/manualdeclare/entity/EmsEdiMergerVersion.hbm.xml
+				</value>
+				<!--电子帐册 -->
+				<value>
+					com/bestway/customs/common/entity/CustomsBrokerDetail.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/manualdeclare/entity/EmsHeadH2k.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/manualdeclare/entity/EmsHeadH2kImg.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/manualdeclare/entity/EmsHeadH2kExg.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/manualdeclare/entity/EmsHeadH2kBom.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/manualdeclare/entity/EmsHeadH2kVersion.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/manualdeclare/entity/CommdityForbid.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/manualdeclare/entity/CommdityForbidHis.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/manualdeclare/entity/RestirictCommodity.hbm.xml
+				</value>
+				<!--电子帐册历史记录 -->
+				<value>
+					com/bestway/bcus/manualdeclare/entity/EmsHeadH2kHistory.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/manualdeclare/entity/EmsHeadH2kHistoryImg.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/manualdeclare/entity/EmsHeadH2kHistoryExg.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/manualdeclare/entity/EmsHeadH2kHistoryBom.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/manualdeclare/entity/EmsHeadH2kHistoryVersion.hbm.xml
+				</value>
+				<!--电子帐册分册 -->
+				<value>
+					com/bestway/bcus/manualdeclare/entity/EmsHeadH2kFas.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/manualdeclare/entity/EmsHeadH2kFasImg.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/manualdeclare/entity/EmsHeadH2kFasExg.hbm.xml
+				</value>
+				<!--电子联网通关 -->
+				<value>
+					com/bestway/bcus/enc/entity/ApplyToCustomsBillList.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/enc/entity/AtcMergeAfterComInfo.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/enc/entity/AtcMergeBeforeComInfo.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/enc/entity/ImpExpCommodityInfo.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/enc/entity/ImpExpRequestBill.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/enc/entity/ImportApplyCustomsProperty.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/enc/entity/InputInExRequestBillOrder.hbn.xml
+				</value>
+				<value>
+					com/bestway/bcus/enc/entity/MakeApplyToCustoms.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/enc/entity/MakeImpExpRequestBill.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/enc/entity/CustomsDeclaration.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/enc/entity/CustomsDeclarationCommInfo.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/enc/entity/CustomsDeclarationDelete.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/enc/entity/CustomsDeclarationDeleteCommInfo.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/enc/entity/CustomsDeclarationContainer.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/enc/entity/ExportInvoiceItem.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/enc/entity/ExpBackPortRequestBook.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/enc/entity/ImpBackPortRequestBook.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/enc/entity/MakeListExgList.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/enc/entity/CustomsFromMateriel.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/enc/entity/MakeListToCustoms.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/enc/entity/XinpuReport.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/enc/entity/LoadBGDFromQPXml.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/enc/entity/CustomsMonthStatInfo.hbm.xml
+				</value>
+				<!--核销 -->
+				<value>
+					com/bestway/bcus/checkcancel/entity/CancelCusHead.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/checkcancel/entity/CancelCusCustomsDeclara.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/checkcancel/entity/CancelCusImgResult.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/checkcancel/entity/CancelCusImgBefore.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/checkcancel/entity/CancelCusExgResult.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/checkcancel/entity/CancelCusExgBefore.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/checkcancel/entity/CancelTemp.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/checkcancel/entity/CancelCusImgAvgPrice.hbm.xml
+				</value>
+				<!--核销自用核销 -->
+				<value>
+					com/bestway/bcus/checkcancel/entity/CancelOwnerHead.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/checkcancel/entity/CancelOwnerCustomsDeclara.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/checkcancel/entity/CancelOwnerImgResult.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/checkcancel/entity/CancelOwnerImgBefore.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/checkcancel/entity/CancelOwnerExgResult.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/checkcancel/entity/CancelOwnerExgBefore.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/checkcancel/entity/TempDD.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/checkcancel/entity/CancelOwnerUnitWear.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/checkcancel/entity/CancelCusUnitWear.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/checkcancel/entity/CancelOwnerImgAvgPrice.hbm.xml
+				</value>
+				<!--中期核查工厂盘点 -->
+				<value>
+					com/bestway/bcus/checkcancel/entity/CheckParameter.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/checkcancel/entity/FactoryCheckExgConverImg.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/checkcancel/entity/FactoryCheckExg.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/checkcancel/entity/FactoryCheckImg.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/checkcancel/entity/FactoryCheckImgResult.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/checkcancel/entity/FactoryStoryProduct.hbn.xml
+				</value>
+				<value>
+					com/bestway/bcus/checkcancel/entity/FactoryCheckImgForBg.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/checkcancel/entity/CheckBgCy.hbm.xml
+				</value>
+				<!--中期核查计算表 -->
+				<value>
+					com/bestway/bcus/checkcancel/entity/CheckOwnerAccount.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/checkcancel/entity/CheckOwnerAccountComport.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/checkcancel/entity/ColorSet.hbm.xml
+				</value>
+				<!--中期核查 -->
+				<value>
+					com/bestway/bcus/checkcancel/entity/CheckHead.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/checkcancel/entity/CheckImg.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/checkcancel/entity/CheckExg.hbm.xml
+				</value>
+				<!--帐帐分析 -->
+				<value>
+					com/bestway/bcus/checkcancel/entity/EmsAnalyHead.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/checkcancel/entity/EmsBgExg.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/checkcancel/entity/EmsBgExgBg.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/checkcancel/entity/EmsBgImg.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/checkcancel/entity/EmsBgTotal.hbm.xml
+				</value>
+				<value>com/bestway/bcus/checkcancel/entity/EmsCy.hbm.xml</value>
+				<value>
+					com/bestway/bcus/checkcancel/entity/EmsPdExg.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/checkcancel/entity/EmsPdExgBg.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/checkcancel/entity/EmsPdExgImgBg.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/checkcancel/entity/EmsPdImg.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/checkcancel/entity/EmsPdImgBg.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/checkcancel/entity/EmsTransFactory.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/checkcancel/entity/EmsTransFactoryBg.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/checkcancel/entity/EmsPdTotal.hbm.xml
+				</value>
+				<!--报文 -->
+				<value>
+					com/bestway/bcus/message/entity/ReceiptResult.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/message/entity/MessageQuery.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/message/entity/CustomSendMessage.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/message/entity/CustomReceiptMessage.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/message/entity/DecSupplementList.hbm.xml
+				</value>
+				<!--海关账 -->
+				<value>
+					com/bestway/bcus/cas/entity/FactoryAndFactualCustomsRalation.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/cas/entity/StatCusNameRelation.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/cas/entity/StatCusNameRelationMt.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/cas/entity/StatCusNameRelationHsn.hbm.xml
+				</value>
+				<value>com/bestway/bcus/cas/entity/BillType.hbm.xml</value>
+				<value>
+					com/bestway/bcus/cas/bill/entity/BillDetailFixture.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/cas/bill/entity/BillDetailHalfProduct.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/cas/bill/entity/BillDetailMateriel.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/cas/bill/entity/BillDetailProduct.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/cas/bill/entity/BillDetailRemainProduct.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/cas/bill/entity/BillDetailLeftoverMateriel.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/cas/bill/entity/BillMasterFixture.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/cas/bill/entity/BillMasterHalfProduct.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/cas/bill/entity/BillMasterLeftoverMateriel.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/cas/bill/entity/BillMasterMateriel.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/cas/bill/entity/BillMasterProduct.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/cas/bill/entity/BillMasterRemainProduct.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/cas/bill/entity/CasInnerMergeDataOrder.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/cas/bill/entity/BillInit.hbm.xml
+				</value>
+				<value>com/bestway/bcus/cas/entity/BillTemp.hbm.xml</value>
+				<value>com/bestway/bcus/cas/entity/BillTemp1.hbm.xml</value>
+				<value>com/bestway/bcus/cas/entity/BillTemp2.hbm.xml</value>
+				<value>com/bestway/bcus/cas/entity/BillTemp3.hbm.xml</value>
+				<value>com/bestway/bcus/cas/entity/BillTemp4.hbm.xml</value>
+				<value>com/bestway/bcus/cas/entity/BillTemp5.hbm.xml</value>
+				<value>com/bestway/bcus/cas/entity/BillTemp6.hbm.xml</value>
+				<value>com/bestway/bcus/cas/entity/BillTemp7.hbm.xml</value>
+				<value>com/bestway/bcus/cas/entity/BillTemp8.hbm.xml</value>
+				<value>com/bestway/bcus/cas/entity/BillTemp9.hbm.xml</value>
+				<value>com/bestway/bcus/cas/entity/BillTemp10.hbm.xml</value>
+				<value>com/bestway/bcus/cas/entity/BillTemp11.hbm.xml</value>
+				<value>com/bestway/bcus/cas/entity/BillTemp12.hbm.xml</value>
+				<value>com/bestway/bcus/cas/entity/BillTemp13.hbm.xml</value>
+				<value>com/bestway/bcus/cas/entity/BillTemp14.hbm.xml</value>
+				<value>com/bestway/bcus/cas/entity/BillTemp15.hbm.xml</value>
+				<value>com/bestway/bcus/cas/entity/BillTemp16.hbm.xml</value>
+				<value>com/bestway/bcus/cas/entity/BillTemp17.hbm.xml</value>
+				<value>com/bestway/bcus/cas/entity/BillTemp18.hbm.xml</value>
+				<value>com/bestway/bcus/cas/entity/BillTemp20.hbm.xml</value>
+				<value>com/bestway/bcus/cas/entity/BillTemp19.hbm.xml</value>
+				<value>com/bestway/bcus/cas/entity/DzscTemp.hbm.xml</value>
+				<value>com/bestway/bcus/cas/entity/CheckMaster.hbm.xml</value>
+				<value>com/bestway/bcus/cas/entity/CheckDetail.hbm.xml</value>
+				<value>com/bestway/bcus/cas/entity/MoneyMaster.hbm.xml</value>
+				<value>com/bestway/bcus/cas/entity/MoneyDetail.hbm.xml</value>
+				<value>com/bestway/bcus/cas/entity/DebtMaster.hbm.xml</value>
+				<value>com/bestway/bcus/cas/entity/DebtDetail.hbm.xml</value>
+				<value>com/bestway/bcus/cas/entity/MarginMaster.hbm.xml</value>
+				<value>com/bestway/bcus/cas/entity/MarginDetail.hbm.xml</value>
+				<value>
+					com/bestway/bcus/cas/entity/BillFixingThing.hbm.xml
+				</value>
+				<value>com/bestway/bcus/cas/entity/BillFixing.hbm.xml</value>
+				<value>com/bestway/bcus/cas/entity/ImgOrgUseInfo.hbm.xml</value>
+				<value>
+					com/bestway/bcus/cas/entity/ImgOrgUseInfoCustom.hbm.xml
+				</value>
+				<value>com/bestway/bcus/cas/entity/ExgExportInfo.hbm.xml</value>
+				<value>
+					com/bestway/bcus/cas/entity/ExgExportInfoCustom.hbm.xml
+				</value>
+				<value>com/bestway/bcus/cas/entity/MonthStorage.hbm.xml</value>
+				<value>com/bestway/bcus/cas/entity/MonthStorage2.hbm.xml</value>
+				<value>com/bestway/bcus/cas/entity/BalanceInfo.hbm.xml</value>
+				<value>com/bestway/bcus/cas/entity/BalanceInfo2.hbm.xml</value>
+				<value>com/bestway/bcus/cas/entity/TempObjectId.hbm.xml</value>
+				<value>
+					com/bestway/bcus/cas/invoice/entity/CasInvoice.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/cas/invoice/entity/CasInvoiceInfo.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/cas/invoice/entity/InvoiceAndBillCorresponding.hbm.xml
+				</value>
+				<value>com/bestway/bcus/cas/entity/CheckBalance.hbm.xml</value>
+				<value>com/bestway/bcus/cas/entity/CheckBalanceOfCustom.hbm.xml
+				</value>
+				<value>com/bestway/bcus/cas/entity/CheckBalanceConvertMateriel.hbm.xml
+				</value>
+				<value>com/bestway/bcus/cas/invoice/entity/LeftoverMaterielStatInfo.hbm.xml
+				</value>
+
+				<!--边角料管理 -->
+				<value>
+					com/bestway/bcus/cas/entity/LeftoverMaterielBalanceInfo.hbm.xml
+				</value>
+				<!--海关出口发票管理 -->
+				<value>com/bestway/invoice/entity/Invoice.hbm.xml</value>
+				<value>com/bestway/invoice/entity/InvoiceParameters.hbm.xml</value>
+				<!--外汇核销管理 -->
+				<value>com/bestway/fecav/entity/FecavParameters.hbm.xml</value>
+				<value>com/bestway/fecav/entity/FecavBillStrike.hbm.xml</value>
+				<value>com/bestway/fecav/entity/FecavBill.hbm.xml</value>
+				<value>com/bestway/fecav/entity/BillOfExchange.hbm.xml</value>
+				<value>
+					com/bestway/fecav/entity/ImpCustomsDeclaration.hbm.xml
+				</value>
+				<value>
+					com/bestway/fecav/entity/StrikeBillOfExchange.hbm.xml
+				</value>
+				<value>
+					com/bestway/fecav/entity/StrikeImpCustomsDeclaration.hbm.xml
+				</value>
+				<!--海关帐参数设置 -->
+				<value>
+					com/bestway/bcus/cas/parameterset/entity/BillCorrespondingControl.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/cas/parameterset/entity/BillOption.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/cas/parameterset/entity/LotControl.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/cas/parameterset/entity/OtherOption.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/cas/parameterset/entity/WriteAccountYear.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/cas/parameterset/entity/BillCorrespondingOption.hbm.xml
+				</value>
+				<!--海关帐殊殊功能设置 -->
+				<value>
+					com/bestway/bcus/cas/specificontrol/entity/CustomsDeclarationCommInfoBillCorresponding.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/cas/specificontrol/entity/MakeBillCorrespondingInfoByProduct.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/cas/specificontrol/entity/MakeBillCorrespondingInfoByMateriel.hbm.xml
+				</value>
+				<!-- 账务成本分析 -->
+
+				<value>
+					com/bestway/bcus/financial/entity/MonthlyProductionAndSales.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/financial/entity/ProductConsumption.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/financial/entity/MaterialAccount.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/financial/entity/MaterialAveragePrice.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/financial/entity/CostSummaryReport.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/financial/entity/ProductAveragePrice.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/financial/entity/ProductAccount.hbm.xml
+				</value>
+				<!--转厂管理 -->
+				<value>
+					com/bestway/common/transferfactory/entity/CustomsEnvelopRequestBill.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/transferfactory/entity/CustomsEnvelopRequestCommodityInfo.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/transferfactory/entity/CustomsEnvelopBill.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/transferfactory/entity/CustomsEnvelopCommodityInfo.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/transferfactory/entity/TransferFactoryBill.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/transferfactory/entity/TransferFactoryCommodityInfo.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/transferfactory/entity/TransferFactoryInitBill.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/transferfactory/entity/TransferFactoryInitBillCommodityInfo.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/transferfactory/entity/MakeApplyToCustomsInfo.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/transferfactory/entity/MakeCustomsDeclaration.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/transferfactory/entity/MakeCustomsEnvelop.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/transferfactory/entity/MakeCustomsEnvelopRequest.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/transferfactory/entity/MakeTransferFactoryBill.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/transferfactory/entity/BillPriceMaintenance.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/transferfactory/entity/TransParameterSet.hbm.xml
+				</value>
+
+				<!--深加工结转 -->
+				<value>
+					com/bestway/common/fpt/entity/FptComplex.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/fpt/entity/FptAppHead.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/fpt/entity/FptAppItem.hbm.xml
+				</value>
+
+				<!-- <value> com/bestway/common/fpt/entity/CustomsEnvelopBill.hbm.xml</value> 
+					<value> com/bestway/common/fpt/entity/CustomsEnvelopCommodityInfo.hbm.xml</value> -->
+				<value>
+					com/bestway/common/fpt/entity/FptBillHead.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/fpt/entity/FptBillItem.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/fpt/entity/FptEmail.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/fpt/entity/FptEmailParamver.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/fpt/entity/FptInitBill.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/fpt/entity/FptInitBillItem.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/fpt/btplsinput/entity/BtplsDownloadPara.hbm.xml
+				</value>
+				<!-- <value> com/bestway/common/fpt/entity/MakeApplyToCustomsInfo.hbm.xml</value> -->
+				<value>
+					com/bestway/common/fpt/entity/MakeFptBillCustomsDeclaration.hbm.xml
+				</value>
+				<!-- <value> com/bestway/common/fpt/entity/MakeCustomsEnvelop.hbm.xml</value> -->
+				<!-- <value> com/bestway/common/fpt/entity/MakeCustomsEnvelopRequest.hbm.xml</value> -->
+				<value>
+					com/bestway/common/fpt/entity/MakeFptBillFromCasBill.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/fpt/entity/FptBillPriceMaintenance.hbn.xml
+				</value>
+				<value>
+					com/bestway/common/fpt/entity/FptParameterSet.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/fpt/entity/FptMessageSend.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/fpt/entity/FptReceiptResult.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/fpt/entity/FptReceiptResultDetail.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/fpt/entity/FptDownData.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/fpt/entity/FptCancelBill.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/fpt/entity/FptAppItemAndOrderDetail.hbn.xml
+				</value>
+
+				<!-- <value>com/bestway/common/fpt/entity/TransferInitBillInfoForCustoms.hbm.xml</value> -->
+				<!--导入数据接口 -->
+				<value>
+					com/bestway/bcus/dataimport/entity/TxtTask.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/dataimport/entity/TxtFormat.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/dataimport/entity/TxtTaskEx.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/dataimport/entity/TxtTaskSel.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/dataimport/entity/ClassList.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/dataimport/entity/FieldList.hbm.xml
+				</value>
+				<value>com/bestway/bcus/dataimport/entity/TxtLog.hbm.xml</value>
+				<value>
+					com/bestway/bcus/dataimport/entity/ThreadList.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/dataimport/entity/DBDataRoot.hbm.xml
+				</value>
+				<value>com/bestway/bcus/dataimport/entity/DBView.hbm.xml</value>
+				<value>
+					com/bestway/bcus/dataimport/entity/DBTaskEx.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/dataimport/entity/DBTaskSel.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/dataimport/entity/ParameterList.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/dataimport/entity/DBFormat.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/dataimport/entity/DBFormatSetup.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/dataimport/entity/DriverList.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/dataimport/entity/SuperClassList.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/dataimport/entity/SuperFieldList.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/dbimport/entity/DBDataConnect.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/dataimport/entity/DBDataExecuSql.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcus/dataimport/entity/DBQuerySql.hbm.xml
+				</value>
+				<!--导出导入数据接口(其于JDBC的) -->
+				<value>
+					com/bestway/common/dataexport/entity/JDBCDataSource.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/dataexport/entity/JDBCParameter.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/dataexport/entity/JDBCRegion.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/dataexport/entity/JDBCRegionSetup.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/dataexport/entity/JDBCSqlEvent.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/dataexport/entity/JDBCTask.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/dataexport/entity/JDBCTaskDetail.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/dataexport/entity/JDBCView.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/dataexport/entity/ThreadData.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/dataexport/entity/DBToTxtRegion.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/dataexport/entity/TxtDBTask.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/dataexport/entity/TxtDBTaskDetail.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/dataexport/entity/TxtToDBRegion.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/dataexport/entity/TxtToDBRegionSetup.hbm.xml
+				</value>
+				<!--委托加工管理 -->
+				<!--BCS 内部归并 -->
+				<value>
+					com/bestway/bcs/bcsinnermerge/entity/BcsInnerMerge.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcs/bcsinnermerge/entity/BcsCustomsBomDetail.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcs/bcsinnermerge/entity/BcsCustomsBomExg.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcs/bcsinnermerge/entity/BcsTenInnerMerge.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcs/bcsinnermerge/entity/BcsInnerMergeOrder.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcs/dictpor/entity/BcsDictPorHead.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcs/dictpor/entity/BcsDictPorImg.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcs/dictpor/entity/BcsDictPorExg.hbm.xml
+				</value>
+				<!--BCS 合同管理 -->
+				<value>
+					com/bestway/bcs/contract/entity/BcsParameterSet.hbm.xml
+				</value>
+				<value>com/bestway/bcs/contract/entity/Contract.hbm.xml</value>
+				<value>
+					com/bestway/bcs/contract/entity/ContractImg.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcs/contract/entity/ContractExg.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcs/contract/entity/ContractBom.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcs/contract/entity/ProcessedContractData.hbm.xml
+				</value>
+				<!-- <value> com/bestway/bcs/contract/entity/BcsCommdityForbid.hbm.xml 
+					</value> -->
+				<!--BCS 合同执行 -->
+				<value>
+					com/bestway/bcs/contractexe/entity/BcsCustomsDeclaration.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcs/contractexe/entity/BcsCustomsDeclarationCommInfo.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcs/contractexe/entity/BcsCustomsDeclarationContainer.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcs/contractexe/entity/BcsExportInvoiceItem.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcs/contractexe/entity/MakeBcsCustomsDeclaration.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcs/contractexe/entity/BcsCustomsFromMateriel.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcs/contractexe/entity/ImpExpGoodsBill.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcs/contractexe/entity/BcsLoadBGDFromQPXml.hbm.xml
+				</value>
+				<!--BCS 合同核销 -->
+				<value>
+					com/bestway/bcs/contractcav/entity/ContractCav.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcs/contractcav/entity/ContractBomCav.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcs/contractcav/entity/ContractExgCav.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcs/contractcav/entity/ContractImgCav.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcs/contractcav/entity/BcsCutomsDeclarationCav.hbm.xml
+				</value>
+				<!--BCS 手册报文 -->
+				<value>
+					com/bestway/bcs/message/entity/BcsReceiptResult.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcs/message/entity/BcsMessageSend.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcs/message/entity/BcsReceiptResultDetail.hbm.xml
+				</value>
+				<value>
+					com/bestway/bcs/message/entity/BcsExportQPMessageInfo.hbm.xml
+				</value>
+				<!--电子手册物料申报 -->
+				<value>
+					com/bestway/dzsc/materialapply/entity/DzscMaterielHead.hbm.xml
+				</value>
+				<value>
+					com/bestway/dzsc/materialapply/entity/MaterialApply.hbm.xml
+				</value>
+				<value>
+					com/bestway/dzsc/materialapply/entity/MaterialHistory.hbm.xml
+				</value>
+				<value>
+					com/bestway/dzsc/materialapply/entity/MaterialChange.hbm.xml
+				</value>
+				<value>
+					com/bestway/dzsc/materialapply/entity/MaterialBomMasterApply.hbm.xml
+				</value>
+				<value>
+					com/bestway/dzsc/materialapply/entity/MaterialBomVersionApply.hbm.xml
+				</value>
+				<value>
+					com/bestway/dzsc/materialapply/entity/MaterialBomDetailApply.hbm.xml
+				</value>
+				<value>
+					com/bestway/dzsc/materialapply/entity/BomMasterHistory.hbm.xml
+				</value>
+				<value>
+					com/bestway/dzsc/materialapply/entity/BomVersionHistory.hbm.xml
+				</value>
+				<value>
+					com/bestway/dzsc/materialapply/entity/BomDetailHistory.hbm.xml
+				</value>
+				<!--电子手册 内部归并 -->
+				<!-- <value>com/bestway/dzsc/dzscmanage/entity/DzscInnerMergeHead.hbm.xml</value> -->
+				<value>
+					com/bestway/dzsc/innermerge/entity/DzscInnerMergeData.hbm.xml
+				</value>
+				<value>
+					com/bestway/dzsc/innermerge/entity/DzscInnerMergeOrder.hbm.xml
+				</value>
+				<value>
+					com/bestway/dzsc/innermerge/entity/DzscTenInnerMerge.hbm.xml
+				</value>
+				<value>
+					com/bestway/dzsc/innermerge/entity/DzscFourInnerMerge.hbm.xml
+				</value>
+				<value>
+					com/bestway/dzsc/innermerge/entity/DzscInnerMergeDataHistory.hbm.xml
+				</value>
+				<value>
+					com/bestway/dzsc/innermerge/entity/DzscCustomInnerMergeCondition.hbm.xml
+				</value>
+				<value>
+					com/bestway/dzsc/innermerge/entity/DzscCustomsBomDetail.hbm.xml
+				</value>
+				<value>
+					com/bestway/dzsc/innermerge/entity/DzscCustomsBomExg.hbm.xml
+				</value>
+				<!--电子手册 -->
+				<value>
+					com/bestway/dzsc/dzscmanage/entity/DzscEmsPorHead.hbm.xml
+				</value>
+				<value>
+					com/bestway/dzsc/dzscmanage/entity/DzscEmsPorHeadFas.hbm.xml
+				</value>
+				<value>
+					com/bestway/dzsc/dzscmanage/entity/DzscEmsPorMaterialExg.hbm.xml
+				</value>
+				<value>
+					com/bestway/dzsc/dzscmanage/entity/DzscEmsPorMaterialImg.hbm.xml
+				</value>
+				<value>
+					com/bestway/dzsc/dzscmanage/entity/DzscEmsImgBill.hbm.xml
+				</value>
+				<value>
+					com/bestway/dzsc/dzscmanage/entity/DzscEmsExgBill.hbm.xml
+				</value>
+				<value>
+					com/bestway/dzsc/dzscmanage/entity/DzscEmsBomBill.hbm.xml
+				</value>
+				<value>
+					com/bestway/dzsc/dzscmanage/entity/DzscEmsPorWjHead.hbm.xml
+				</value>
+				<value>
+					com/bestway/dzsc/dzscmanage/entity/DzscEmsImgWj.hbm.xml
+				</value>
+				<value>
+					com/bestway/dzsc/dzscmanage/entity/DzscEmsExgWj.hbm.xml
+				</value>
+				<value>
+					com/bestway/dzsc/dzscmanage/entity/DzscCommdityForbid.hbm.xml
+				</value>
+				<!-- <value>com/bestway/dzsc/dzscmanage/entity/DzscEmsBomWj.hbm.xml</value> -->
+				<!-- <value>com/bestway/dzsc/dzscmanage/entity/DzscComplex.hbm.xml</value> -->
+				<!--电子手册报关清单 -->
+				<value>
+					com/bestway/dzsc/customslist/entity/DzscMakeApplyToCustoms.hbm.xml
+				</value>
+				<value>
+					com/bestway/dzsc/customslist/entity/DzscBillListAfterCommInfo.hbm.xml
+				</value>
+				<value>
+					com/bestway/dzsc/customslist/entity/DzscBillListBeforeCommInfo.hbm.xml
+				</value>
+				<value>
+					com/bestway/dzsc/customslist/entity/DzscCustomsBillList.hbm.xml
+				</value>
+				<!--电子手册合同执行 -->
+				<value>
+					com/bestway/dzsc/contractexe/entity/DzscCustomsDeclaration.hbm.xml
+				</value>
+				<value>
+					com/bestway/dzsc/contractexe/entity/DzscCustomsDeclarationCommInfo.hbm.xml
+				</value>
+				<value>
+					com/bestway/dzsc/contractexe/entity/DzscCustomsDeclarationContainer.hbm.xml
+				</value>
+				<value>
+					com/bestway/dzsc/contractexe/entity/DzscExportInvoiceItem.hbm.xml
+				</value>
+				<value>
+					com/bestway/dzsc/contractexe/entity/MakeDzscCustomsDeclaration.hbm.xml
+				</value>
+				<value>
+					com/bestway/dzsc/contractexe/entity/DzscLoadBGDFromQPXml.hbm.xml
+				</value>
+				<!--电子手册核查核销 -->
+				<value>
+					com/bestway/dzsc/checkcancel/entity/DzscContractCav.hbm.xml
+				</value>
+				<value>
+					com/bestway/dzsc/checkcancel/entity/DzscContractBomCav.hbm.xml
+				</value>
+				<value>
+					com/bestway/dzsc/checkcancel/entity/DzscContractExgCav.hbm.xml
+				</value>
+				<value>
+					com/bestway/dzsc/checkcancel/entity/DzscContractImgCav.hbm.xml
+				</value>
+				<value>
+					com/bestway/dzsc/checkcancel/entity/DzscCutomsDeclarationCav.hbm.xml
+				</value>
+				<value>
+					com/bestway/dzsc/checkcancel/entity/DzscCheckHead.hbm.xml
+				</value>
+				<value>
+					com/bestway/dzsc/checkcancel/entity/DzscCheckImg.hbm.xml
+				</value>
+				<!--电子手册报文 -->
+				<value>
+					com/bestway/dzsc/message/entity/DzscParameterSet.hbm.xml
+				</value>
+				<value>
+					com/bestway/dzsc/message/entity/DzscReceiptResult.hbm.xml
+				</value>
+				<value>
+					com/bestway/dzsc/message/entity/DzscMessageSend.hbm.xml
+				</value>
+				<value>
+					com/bestway/dzsc/message/entity/DzscReceiptResultDetail.hbm.xml
+				</value>
+				<value>
+					com/bestway/dzsc/message/entity/DzscExportQPMessageInfo.hbm.xml
+				</value>
+				<!--智能报表 -->
+				<value>
+					com/bestway/common/aptitudereport/entity/SelectCondition.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/aptitudereport/entity/FiltCondition.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/aptitudereport/entity/GroupValue.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/aptitudereport/entity/ReportField.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/aptitudereport/entity/StatTypeValue.hbm.xml
+				</value>
+				<!--tools report file -->
+				<value>com/bestway/common/tools/entity/FtpConfig.hbm.xml</value>
+				<!--预警管理 -->
+				<value>
+					com/bestway/common/warning/entity/PlanTask.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/warning/entity/WarningItem.hbm.xml
+				</value>
+				<value>
+					com/bestway/common/warning/entity/WarningThread.hbm.xml
+				</value>
+				<!--设备管理 -->
+				<value>com/bestway/fixasset/entity/Agreement.hbm.xml</value>
+				<value>
+					com/bestway/fixasset/entity/AgreementCommInfo.hbm.xml
+				</value>
+				<value>
+					com/bestway/fixasset/entity/ImpAgreementCommInfo.hbm.xml
+				</value>
+				<value>
+					com/bestway/fixasset/entity/DeleteAgreementCommInfo.hbm.xml
+				</value>
+				<value>
+					com/bestway/fixasset/entity/ImpAgreementCommInfoHistory.hbm.xml
+				</value>
+				<value>
+					com/bestway/fixasset/entity/DeleteAgreementCommInfoHistory.hbm.xml
+				</value>
+				<value>
+					com/bestway/fixasset/entity/AgreementGroupHead.hbm.xml
+				</value>
+				<value>
+					com/bestway/fixasset/entity/AgreementGroupDetail.hbm.xml
+				</value>
+				<value>
+					com/bestway/fixasset/entity/AgreementInvoiceHead.hbm.xml
+				</value>
+				<value>
+					com/bestway/fixasset/entity/AgreementInvoiceDetail.hbm.xml
+				</value>
+				<value>
+					com/bestway/fixasset/entity/AgreementWarHead.hbm.xml
+				</value>
+				<value>
+					com/bestway/fixasset/entity/AgreementWarDetail.hbm.xml
+				</value>
+				<value>com/bestway/fixasset/entity/DutyCertHead.hbm.xml</value>
+				<value>
+					com/bestway/fixasset/entity/DutyCertDetail.hbm.xml
+				</value>
+				<value>
+					com/bestway/fixasset/entity/FixassetLocation.hbm.xml
+				</value>
+				<value>
+					com/bestway/fixasset/entity/FixassetLocationChangeBillInfo.hbm.xml
+				</value>
+				<value>
+					com/bestway/fixasset/entity/FixassetLocationResultInfo.hbm.xml
+				</value>
+				<!--来料设备管理 -->
+				<value>
+					com/bestway/fixtureonorder/entity/FixtureContract.hbm.xml
+				</value>
+				<value>
+					com/bestway/fixtureonorder/entity/FixtureContractItems.hbm.xml
+				</value>
+				<value>
+					com/bestway/fixtureonorder/entity/FixtureLocation.hbm.xml
+				</value>
+				<value>
+					com/bestway/fixtureonorder/entity/FixtureLocationChangeBillInfo.hbm.xml
+				</value>
+				<value>
+					com/bestway/fixtureonorder/entity/FixtureLocationResultInfo.hbm.xml
+				</value>
+				<!--保税物流管理 -->
+				<!--内部归并 -->
+				<value>
+					com/bestway/bls/entity/BlsInnerMerge.hbm.xml
+				</value>
+				<value>
+					com/bestway/bls/entity/BlsTenInnerMerge.hbm.xml
+				</value>
+				<value>
+					com/bestway/bls/entity/BlsInnerMergeOrder.hbm.xml
+				</value>
+				<value>com/bestway/bls/entity/BlsParameterSet.hbm.xml</value>
+				<value>com/bestway/bls/entity/EntranceMessage.hbm.xml</value>
+				<value>com/bestway/bls/entity/BlsInOutStockBill.hbm.xml</value>
+				<value>com/bestway/bls/entity/BlsInOutStockBillDetail.hbm.xml
+				</value>
+				<value>com/bestway/bls/entity/GoodsList.hbm.xml</value>
+				<value>com/bestway/bls/entity/MaterielImportApply.hbm.xml</value>
+				<!--仓单管理 -->
+				<value>com/bestway/bls/entity/StorageBillAfter.hbm.xml</value>
+				<value>com/bestway/bls/entity/StorageBillBefore.hbm.xml</value>
+				<value>com/bestway/bls/entity/StorageBill.hbm.xml</value>
+				<value>com/bestway/bls/entity/Delivery.hbm.xml</value>
+				<value>com/bestway/bls/entity/BillToWareHouseRelations.hbm.xml
+				</value>
+				<value>com/bestway/bls/entity/BillToWareHouseRelationExp.hbm.xml
+				</value>
+				<value>com/bestway/bls/entity/BillSpeciaApplyApplyList.hbm.xml
+				</value>
+				<value>com/bestway/bls/entity/BillSpecialApplyHead.hbm.xml</value>
+				<value>com/bestway/bls/entity/BillMatchInfo.hbm.xml</value>
+				<value>com/bestway/bls/entity/BillMatchSet.hbm.xml</value>
+				<!--仓单管理 -->
+				<!-- 核销 -->
+				<value>com/bestway/bls/entity/CollateBind.hbm.xml</value>
+				<value>com/bestway/bls/entity/CollateBindDetail.hbm.xml</value>
+				<value>com/bestway/bls/entity/CollateBindDetailList.hbm.xml</value>
+				<!-- 报文 -->
+				<value>com/bestway/bls/entity/BlsReceiptResult.hbm.xml</value>
+				<value>com/bestway/bls/entity/BlsMessageSend.hbm.xml</value>
+				<value>com/bestway/bls/entity/BlsAutoDeclareProcessInfo.hbm.xml
+				</value>
+				<value>com/bestway/bls/entity/BlsAutoBackBillInfo.hbm.xml</value>
+				<!--公共实体类 -->
+				<value>com/bestway/common/dataimport/entity/ImportDataOrder.hbm.xml
+				</value>
+				<value>com/bestway/bls/entity/BlsInOutStockSwichParameterSet.hbm.xml
+				</value>
+				<!-- 外经接口 -->
+				<value>com/bestway/waijing/entity/WjszParaSet.hbm.xml</value>
+				<!-- 外发加工 -->
+				<value>com/bestway/owp/entity/OwpBomDetail.hbm.xml</value>
+				<value>com/bestway/owp/entity/OwpBomMaster.hbm.xml</value>
+				<value>com/bestway/owp/entity/OwpBomVersion.hbm.xml</value>
+				<value>com/bestway/owp/entity/OwpAppHead.hbm.xml</value>
+				<value>com/bestway/owp/entity/OwpAppSendItem.hbm.xml</value>
+				<value>com/bestway/owp/entity/OwpAppRecvItem.hbm.xml</value>
+
+				<value>com/bestway/owp/entity/OwpBillRecvHead.hbm.xml</value>
+				<value>com/bestway/owp/entity/OwpBillRecvItem.hbm.xml</value>
+				<value>com/bestway/owp/entity/OwpBillSendHead.hbm.xml</value>
+				<value>com/bestway/owp/entity/OwpBillSendItem.hbm.xml</value>
+				<value>com/bestway/owp/entity/OwpBillAndBillDetailRelation.hbm.xml
+				</value>
+				<value>com/bestway/owp/entity/OwpBillAndBillDetail.hbm.xml</value>
+
+				<value>com/bestway/owp/entity/OwpMessageSend.hbm.xml</value>
+				<value>com/bestway/owp/entity/OwpParameterSet.hbm.xml</value>
+				<value>com/bestway/owp/entity/OwpReceiptResult.hbm.xml</value>
+				<value>com/bestway/owp/entity/OwpReceiptResultDetail.hbm.xml</value>
+				<!-- 技嘉出口商品编码库 -->
+				<value>com/bestway/bcus/enc/entity/ExItemCode.hbm.xml</value>
+				<!--核查分析 -->
+				<value>com/bestway/bcs/verification/entity/VFSection.hbm.xml</value>
+				<value>com/bestway/bcs/verification/entity/VFAttachmentManagement.hbm.xml</value>
+				<value>com/bestway/bcs/verification/entity/VFAnalyse.hbm.xml</value>
+				<value>com/bestway/bcs/verification/entity/VFContractAnalyse.hbm.xml
+				</value>
+				<value>com/bestway/bcs/verification/entity/VFCustomsCountExg.hbm.xml
+				</value>
+				<value>com/bestway/bcs/verification/entity/VFCustomsCountExgConvert.hbm.xml
+				</value>
+				<value>com/bestway/bcs/verification/entity/VFCustomsCountImg.hbm.xml
+				</value>
+				<value>com/bestway/bcs/verification/entity/VFCustomsExg.hbm.xml
+				</value>
+				<value>com/bestway/bcs/verification/entity/VFCustomsImg.hbm.xml
+				</value>
+				<value>com/bestway/bcs/verification/entity/VFStockAnalyse.hbm.xml
+				</value>
+				<value>com/bestway/bcs/verification/entity/VFStockBuyImg.hbm.xml
+				</value>
+				<value>com/bestway/bcs/verification/entity/VFStockExg.hbm.xml
+				</value>
+				<value>com/bestway/bcs/verification/entity/VFStockOutSendSemiExg.hbm.xml
+				</value>
+				<value>com/bestway/bcs/verification/entity/VFStockOutSendSemiExgConvert.hbm.xml
+				</value>
+				<value>com/bestway/bcs/verification/entity/VFStockSemiExgHadStore.hbm.xml
+				</value>
+				<value>com/bestway/bcs/verification/entity/VFStockOutSendAnalyse.hbm.xml
+				</value>
+				<value>com/bestway/bcs/verification/entity/VFStockSemiExgHadStoreConvert.hbm.xml
+				</value>
+				<value>com/bestway/bcs/verification/entity/VFFinishingImg.hbm.xml
+				</value>
+				<value>com/bestway/bcs/verification/entity/VFFinishingExg.hbm.xml
+				</value>
+				<value>com/bestway/bcs/verification/entity/VFFinishingExgConvert.hbm.xml
+				</value>
+				<value>com/bestway/bcs/verification/entity/VFFinishingStockAnalyse.hbm.xml
+				</value>
+				<value>com/bestway/bcs/verification/entity/VFBadImg.hbm.xml
+				</value>
+				<value>com/bestway/bcs/verification/entity/VFBadExg.hbm.xml
+				</value>
+				<value>com/bestway/bcs/verification/entity/VFBadExgConvert.hbm.xml
+				</value>
+				<value>com/bestway/bcs/verification/entity/VFSemiBadExg.hbm.xml
+				</value>
+				<value>com/bestway/bcs/verification/entity/VFSemiBadExgConvert.hbm.xml
+				</value>
+				<value>com/bestway/bcs/verification/entity/VFBadStockAnalyse.hbm.xml
+				</value>
+				<value>com/bestway/bcs/verification/entity/VFStockExgConvert.hbm.xml
+				</value>
+				<value>com/bestway/bcs/verification/entity/VFStockProcessImg.hbm.xml
+				</value>
+				<value>com/bestway/bcs/verification/entity/VFStockImg.hbm.xml
+				</value>
+				<value>com/bestway/bcs/verification/entity/VFStockOutSendImg.hbm.xml
+				</value>
+				<value>com/bestway/bcs/verification/entity/VFStockOutFactoryImg.hbm.xml
+				</value>
+				<value>com/bestway/bcs/verification/entity/VFStockOutSendExg.hbm.xml
+				</value>
+				<value>com/bestway/bcs/verification/entity/VFStockOutSendExgConvert.hbm.xml
+				</value>
+				<value>com/bestway/bcs/verification/entity/VFStockTravelingImg.hbm.xml
+				</value>
+				<value>com/bestway/bcs/verification/entity/VFStockTravelingExg.hbm.xml
+				</value>
+				<value>com/bestway/bcs/verification/entity/VFStockTravelingExgConvert.hbm.xml
+				</value>
+				<value>com/bestway/bcs/verification/entity/VFTransferDiffCount.hbm.xml
+				</value>
+				<value>com/bestway/bcs/verification/entity/VFTransferDiffExg.hbm.xml
+				</value>
+				<value>com/bestway/bcs/verification/entity/VFTransferDiffExgConvert.hbm.xml
+				</value>
+				<value>com/bestway/bcs/verification/entity/VFTransferDiffImg.hbm.xml
+				</value>
+				<value>com/bestway/bcs/verification/entity/VFCategory.hbm.xml
+				</value>
+				<value>com/bestway/bcs/verification/entity/VFCategoryAnalyse.hbm.xml
+				</value>
+				<value>com/bestway/bcs/verification/entity/VFCategoryBcsTenInnerMerge.hbm.xml
+				</value>
+				<value>com/bestway/bcs/verification/entity/VFTransferDiffHsExg.hbm.xml
+				</value>
+				<value>com/bestway/bcs/verification/entity/VFTransferDiffHsExgResolve.hbm.xml
+				</value>
+				<value>com/bestway/bcs/verification/entity/VFTransferDiffHsImg.hbm.xml
+				</value>
+
+				<!--盘点核查 -->
+				<value>com/bestway/bcus/checkstock/entity/ECSSection.hbm.xml</value>
+				<value>com/bestway/bcus/checkstock/entity/ECSAttachmentManagement.hbm.xml</value>
+				<value>com/bestway/bcus/checkstock/entity/ECSAnalyse.hbm.xml</value>
+				<value>com/bestway/bcus/checkstock/entity/ECSContractAnalyse.hbm.xml
+				</value>
+				<value>com/bestway/bcus/checkstock/entity/ECSDeclarationCommInfoImg.hbm.xml
+				</value>
+				<value>com/bestway/bcus/checkstock/entity/ECSDeclarationCommInfoExg.hbm.xml
+				</value>
+				<value>com/bestway/bcus/checkstock/entity/ECSCustomsCountExg.hbm.xml
+				</value>
+				<value>com/bestway/bcus/checkstock/entity/ECSCustomsCountExgResolve.hbm.xml
+				</value>
+				<value>com/bestway/bcus/checkstock/entity/ECSCustomsCountImg.hbm.xml
+				</value>
+				<value>com/bestway/bcus/checkstock/entity/ECSStockAnalyse.hbm.xml
+				</value>
+				<value>com/bestway/bcus/checkstock/entity/ECSStockBuyImg.hbm.xml
+				</value>
+				<value>com/bestway/bcus/checkstock/entity/ECSStockExg.hbm.xml
+				</value>
+				<value>com/bestway/bcus/checkstock/entity/ECSStockExgResolve.hbm.xml
+				</value>
+				<value>com/bestway/bcus/checkstock/entity/ECSStockProcessImg.hbm.xml
+				</value>
+				<value>com/bestway/bcus/checkstock/entity/ECSStockImg.hbm.xml
+				</value>
+				<value>com/bestway/bcus/checkstock/entity/ECSStockOutFactoryImg.hbm.xml
+				</value>
+				<value>com/bestway/bcus/checkstock/entity/ECSStockOutSendExg.hbm.xml
+				</value>
+				<value>com/bestway/bcus/checkstock/entity/ECSStockOutSendExgResolve.hbm.xml
+				</value>
+				<value>com/bestway/bcus/checkstock/entity/ECSStockTravelingImg.hbm.xml
+				</value>
+				<value>com/bestway/bcus/checkstock/entity/ECSTransferAnalyse.hbm.xml
+				</value>
+				<value>com/bestway/bcus/checkstock/entity/ECSTransferDiffExg.hbm.xml
+				</value>
+				<value>com/bestway/bcus/checkstock/entity/ECSTransferDiffExgResolve.hbm.xml
+				</value>
+				<value>com/bestway/bcus/checkstock/entity/ECSTransferDiffImg.hbm.xml
+				</value>
+				<value>com/bestway/bcus/checkstock/entity/ECSStockTravelingExg.hbm.xml
+				</value>
+				<value>com/bestway/bcus/checkstock/entity/ECSStockTravelingExgResolve.hbm.xml
+				</value>
+				<value>com/bestway/bcus/checkstock/entity/ECSBadImg.hbm.xml
+				</value>
+				<value>com/bestway/bcus/checkstock/entity/ECSBadStockResolve.hbm.xml
+				</value>
+				<value>com/bestway/bcus/checkstock/entity/ECSFinishedExg.hbm.xml
+				</value>
+				<value>com/bestway/bcus/checkstock/entity/ECSFinishedExgResolve.hbm.xml
+				</value>
+				<value>com/bestway/bcus/checkstock/entity/ECSSemiFinishedExg.hbm.xml
+				</value>
+				<value>com/bestway/bcus/checkstock/entity/ECSSemiFinishedExgResolve.hbm.xml
+				</value>
+				<value>com/bestway/bcus/checkstock/entity/ECSFinishingImg.hbm.xml
+				</value>
+				<value>com/bestway/bcus/checkstock/entity/ECSFinishingExg.hbm.xml
+				</value>
+				<value>com/bestway/bcus/checkstock/entity/ECSFinishingExgResolve.hbm.xml
+				</value>
+				<value>com/bestway/bcus/checkstock/entity/ECSFinishingStockAnalyse.hbm.xml
+				</value>
+				<value>com/bestway/bcus/checkstock/entity/ECSStockOutSendImg.hbm.xml
+				</value>
+				<value>com/bestway/bcus/checkstock/entity/ECSStockOutSendExgPt.hbm.xml
+				</value>
+				<value>com/bestway/bcus/checkstock/entity/ECSStockOutSendExgPtResolve.hbm.xml
+				</value>
+				<value>com/bestway/bcus/checkstock/entity/ECSStockOutSendSemiExgPt.hbm.xml
+				</value>
+				<value>com/bestway/bcus/checkstock/entity/ECSStockOutSendSemiExgPtResolve.hbm.xml
+				</value>
+				<value>com/bestway/bcus/checkstock/entity/ECSStockOutSendAnalyse.hbm.xml
+				</value>
+				<value>com/bestway/bcus/checkstock/entity/ECSStockSemiExgPtHadStore.hbm.xml
+				</value>
+				<value>com/bestway/bcus/checkstock/entity/ECSStockSemiExgPtHadStoreResolve.hbm.xml
+				</value>
+				<value>com/bestway/bcus/checkstock/entity/ECSStagnateImg.hbm.xml
+				</value>
+				<value>com/bestway/bcus/checkstock/entity/ECSStagnateExg.hbm.xml
+				</value>
+				<value>com/bestway/bcus/checkstock/entity/ECSStagnateExgResolve.hbm.xml
+				</value>
+				<value>com/bestway/bcus/checkstock/entity/ECSStagnateStockAnalyse.hbm.xml
+				</value>
+				<!--盘点核查 -->
+				<value>com/bestway/pis/entity/BrokerCorp.hbm.xml</value>
+				<value>com/bestway/pis/entity/EspAuthorityBrokerCorp.hbm.xml</value>
+				<value>com/bestway/pis/entity/EspAuthorityBrokerCorpItem.hbm.xml</value>
+				<value>com/bestway/pis/entity/PisEspServer.hbm.xml</value>
+				<value>com/bestway/pis/entity/PisSyncAclUser.hbm.xml</value>
+				<value>com/bestway/pis/entity/PisSyncAgentCorp.hbm.xml</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<!--hibernate.connection.provider_class 为 c3p0单独增加 <prop key="hibernate.connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</prop> 
+					<prop key="hibernate.c3p0.max_statements">0</prop> -->
+
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<prop key="hibernate.cache.use_query_cache">false</prop>
+				<prop key="hibernate.cache.use_second_level_cache">false</prop>
+				<prop key="hibernate.cache.provider_class">
+					org.hibernate.cache.EhCacheProvider
+				</prop>
+				<prop key="hibernate.use_outer_join">true</prop>
+				<prop key="hibernate.max_fetch_depth">3</prop>
+				<prop key="hibernate.jdbc.fetch_size">100</prop>
+				<prop key="hibernate.jdbc.batch_size">50</prop>
+				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<!-- 事物级别 可重读  
+				      1：读操作未提交（Read Uncommitted） 2：读操作已提交（Read Committed） 4：可重读（Repeatable Read） 8：可串行化（Serializable） -->
+				<prop key="hibernate.connection.isolation">2</prop>
+				
+				<prop key="hibernate.connection.autocommit">false</prop>
+				<!--<prop key="hibernate.default_schema">${jdbc.tableOwner}</prop> -->
+				<!--<prop key="hibernate.default_catalog">${jdbc.tableOwner}</prop> -->
+				<prop key="hibernate.use_sql_comments">false</prop>
+				<!--<prop key="hibernate.default_batch_fetch_size">16</prop> -->
+				<prop key="hibernate.query.factory_class">
+					org.hibernate.hql.ast.ASTQueryTranslatorFactory
+				</prop>
+				<!-- <prop key="hibernate.transaction.factory_class">org.hibernate.transaction.JTATransactionFactory</prop> -->
+
+				<!-- 以下是wss用来测试的 <prop key="hibernate.proxool.xml">proxool.xml</prop> 
+					<prop key="hibernate.proxool.pool_alias">DBPool</prop> <prop key="connection.provider_class">org.hibernate.connection.ProxoolConnectionProvider</prop> -->
+
+			</props>
+		</property>
+	</bean>
+	<!-- transactionManager -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+	<!-- ========================= ASPECT CONFIGURATION TRANSACTION AND AUTHORITY 
+		ADVICE ======================== -->
+	<aop:config proxy-target-class="false">
+		<aop:pointcut id="jbcusActionImplAspect"
+			expression="execution(* com.bestway..*Impl.*(..))
+			 or execution(* com.bestway.bls.schedule.ScheduleSingleLogic.*(..)) " />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="jbcusActionImplAspect" />
+		<aop:advisor advice-ref="authorityAdvice" pointcut-ref="jbcusActionImplAspect" />
+	</aop:config>
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="makeBillHsAmount" propagation="NOT_SUPPORTED" />
+			<tx:method name="billCorresponding" propagation="REQUIRED" />
+			<tx:method name="cancelCorresponding" propagation="REQUIRED" />
+			<tx:method name="getCurrent*" propagation="NOT_SUPPORTED"
+				read-only="true" />
+			<tx:method name="insert*" propagation="REQUIRED" />
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="add*" propagation="REQUIRED" />
+			<tx:method name="save*" propagation="REQUIRED" />
+			<tx:method name="make*" propagation="REQUIRED" />
+			<tx:method name="apply*" propagation="REQUIRED" />
+			<tx:method name="process*" propagation="REQUIRED" />
+			<tx:method name="export*" propagation="REQUIRED" />
+			<tx:method name="put*" propagation="REQUIRED" />
+			<tx:method name="copy*" propagation="REQUIRED" />
+			<tx:method name="*Change*" propagation="REQUIRED" />
+			<tx:method name="run*" propagation="REQUIRED" />
+			<tx:method name="import*" propagation="REQUIRED" />
+			<tx:method name="singleAuto*" propagation="REQUIRED" />
+			<!-- <tx:method name="allAuto*" propagation="NOT_SUPPORTED"/> -->
+			<tx:method name="find*" propagation="NOT_SUPPORTED" />
+			<tx:method name="get*" propagation="NOT_SUPPORTED" />
+			<tx:method name="check*" propagation="NOT_SUPPORTED" />
+			<tx:method name="checkImportDataForRelation" propagation="REQUIRED" />
+			<tx:method name="intoData" propagation="NOT_SUPPORTED" />
+			<tx:method name="execuSql" propagation="NOT_SUPPORTED" />
+			<tx:method name="*" propagation="REQUIRED" />
+		</tx:attributes>
+	</tx:advice>
+</beans>

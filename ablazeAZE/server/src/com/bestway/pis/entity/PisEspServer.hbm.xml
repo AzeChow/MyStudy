@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.pis.entity.PisEspServer" table="pisespserver">
+		<cache usage="read-write"/> 
+		<id name="id" column="id" >
+			<generator class="uuid.hex"/>
+		</id>
+		
+	    <property name="espCompanyCode" />
+	    <property name="espCompanyName" />
+	    <property name="ownership" />
+	    <property name="serverAddress" />
+		<property name="portNumber" />
+		<many-to-one lazy="false"      name="company" column="company" class="com.bestway.bcus.system.entity.Company" index="pisespserver_company"/>
+	</class>
+
+</hibernate-mapping>
+<!-- parsed in 0ms -->

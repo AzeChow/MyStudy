@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcus.enc.entity.InputInExRequestBillOrder" 
+		table="inputinexrequestbillorder">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="billNo"/>
+		<property name="scmCoc" />
+		<property name="scmCocCodeName" />
+		<property name="containerCode"/>
+		<property name="conveyance"/>
+		<property name="beginAvailability"/>
+		<property name="ptNo"/>		
+		<property name="grossWeight"/>
+		<property name="invgrossWeight"/>
+		<property name="quantity"/>
+		<property name="factoryName"/>	
+		<property name="falctorySpece"/>
+		<property name="netWeight"/>
+		<property name="invnetWeight"/>
+		<property name="makeBillNo"/>
+		<property name="calUnit"/>
+		<property name="ieport"/>
+		<property name="version"/>	
+		<property name="unitPrice"/>
+		<property name="country"/>
+		<property name="countryCodeName"/>
+		<property name="amountPrice"/>
+		<property name="curency"/>
+		<property name="curencyCodeName"/>
+		<property name="ieportCodeName"/>
+		<property name="picec"/>
+		<property name="isvalid"/>
+		<property name="isdjnore"/>
+		<property name="extendMemo"/>
+		<property name="extendMemoHead"/>
+		<property name="TransferModeCodeName"/>	
+		<many-to-one lazy="false"      name="company" column="companyId" 
+			class="com.bestway.bcus.system.entity.Company" index="tInExRequest_company"/>
+	</class>
+
+</hibernate-mapping>

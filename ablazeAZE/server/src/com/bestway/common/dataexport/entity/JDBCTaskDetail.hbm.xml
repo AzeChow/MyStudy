@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.common.dataexport.entity.JDBCTaskDetail" 
+		table="JDBCTaskDetail">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="seqNum"/>
+		<property name="taskType"/>		
+		<many-to-one lazy="false"      name="jdbcTask" column="jdbcTask"
+			 class="com.bestway.common.dataexport.entity.JDBCTask"/>
+			 
+	    <many-to-one lazy="false"      name="jdbcRegion" column="jdbcRegion"
+			 class="com.bestway.common.dataexport.entity.JDBCRegion" />
+		<many-to-one lazy="false"      name="jdbcSqlEvent" column="jdbcSqlEvent"
+			 class="com.bestway.common.dataexport.entity.JDBCSqlEvent" />
+		<many-to-one lazy="false"      name="subJDBCTask" column="subJDBCTask"
+			 class="com.bestway.common.dataexport.entity.JDBCTask" />
+
+	    
+		<many-to-one lazy="false"      name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" />
+	</class>
+
+</hibernate-mapping>

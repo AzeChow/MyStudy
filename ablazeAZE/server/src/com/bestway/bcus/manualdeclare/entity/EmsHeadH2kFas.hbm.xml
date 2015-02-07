@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcus.manualdeclare.entity.EmsHeadH2kFas" table="emsheadh2kfas">
+		<cache usage="read-write"/> 
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="emsHeadH2kNo" length="225"/>
+		<property name="emsType" length="225"/>
+		<property name="declareState" length="225"/>
+		<property name="declareType" length="225"/>
+		<property name="copEmsNo" length="225"/>
+		<property name="emsNo" length="225"/>
+		<property name="tradeCode" length="225"/>
+		<property name="tradeName" length="225"/>
+		<property name="declareCode" length="225"/>
+		<property name="declareName" length="225"/>
+		<property name="limitDate" />
+		<property name="modifyMark" length="225"/>
+		<property name="modifyTimes"/>
+		<many-to-one lazy="false"      name="iePort" column="iePort" class="com.bestway.bcus.custombase.entity.countrycode.Customs"/>
+		<property name="inputEr" length="225"/>
+		<property name="inputDate" />
+		<many-to-one lazy="false"      name="declareMark" column="declareMark" class="com.bestway.bcus.custombase.entity.basecode.ApplicationMode"/>
+		<property name="declareDate"/>
+		<property name="declareTime"/>
+		<property name="newApprDate"/>
+		<property name="changeApprDate"/>
+		<property name="note" length="225"/>
+        <property name="historyState"/>
+		<property name="checkMark" length="225"/>
+		<property name="exeMark" length="225"/>
+		<many-to-one lazy="false"      name="company" column="coid" class="com.bestway.bcus.system.entity.Company" index="emsheadh2kfas_company"/>
+	</class>
+
+</hibernate-mapping>
+<!-- parsed in 0ms -->

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcus.dataimport.entity.TxtTask" 
+		table="txttask">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<many-to-one lazy="false"      name="classList" column="classList" 
+			class="com.bestway.bcus.dataimport.entity.ClassList"/>
+		<property name="taskname" />
+		<property name="memo" />
+		<property name="gbflag" length="1"/>
+		<property name="creator" length="20"/>
+		<property name="editor" length="20"/>	
+		<property name="createdate" />
+		<many-to-one lazy="false"      name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" index="txttask_company"/>
+	</class>
+
+</hibernate-mapping>

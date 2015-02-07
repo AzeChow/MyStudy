@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.dzsc.checkcancel.entity.DzscContractBomCav" 
+		table="dzsccontractbomcav">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<many-to-one lazy="false"      name="contractCav" column="contractCav" 
+			class="com.bestway.dzsc.checkcancel.entity.DzscContractCav" index="dzsccheckimg_cav"/>
+		<property name="seqProductNum"/>
+		<property name="seqMaterialNum"/>
+		<property name="productName"/>
+		<property name="productSpec"/>
+		<property name="materialName"/>
+		<property name="materialSpec"/>
+		<property name="unitWaste"/>
+		<property name="waste"/>
+		<property name="nonMnlRatio"/>
+		<property name="exgExpTotalAmount"/>
+		<property name="wasteAmount"/>
+		<property name="totalAmount"/>
+		<property name="isCustoms"/>
+		<property name="modifyMark"/>
+		<many-to-one lazy="false"      name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" index="dzsccheckimg_coid"/>
+	</class>
+</hibernate-mapping>
+<!-- parsed in 0ms -->

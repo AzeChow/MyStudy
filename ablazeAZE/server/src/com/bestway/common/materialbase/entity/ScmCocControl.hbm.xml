@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.common.materialbase.entity.ScmCocControl" table="scmcoccontrol">
+		<cache usage="read-write"/> 
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="briefName" />
+		<property name="countryName" />
+		<property name="portLinName" />
+		<property name="country2Name" />
+		<property name="customsName"/>
+		
+		<property name="belongToCustomsName"/>
+		<property name="transfName"/>
+		<property name="predock"/>
+		<property name="wrapType"/>
+		<property name="tradeMode"/>
+		
+		<many-to-one lazy="false"      name="company" column="companyId" 
+			class="com.bestway.bcus.system.entity.Company" index="scmcoc_company"/>
+
+	</class>
+
+</hibernate-mapping>
+<!-- parsed in 0ms -->

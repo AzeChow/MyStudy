@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class lazy="false" name="com.bestway.bcus.checkstock.entity.ECSStockImg"
+		table="ecsstockimg">
+		<cache usage="read-write" />
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex" />
+		</id>
+		<property name="serialNumber" />
+		<property name="ptNo" />
+		<property name="ptName" />
+		<property name="ptSpec" />
+		<property name="ptUnit" />
+		<property name="ptAmount" not-null="true" />
+		<property name="emsNo" />
+		<property name="seqNum" />
+		<property name="hsName" />
+		<property name="hsSpec" />
+		<property name="hsUnit" />
+		<property name="unitConvert" />
+		<property name="hsAmount" />
+		<property name="warehouse" />
+		<property name="memo" />
+		<many-to-one lazy="false" name="section" column="section"
+			class="com.bestway.bcus.checkstock.entity.ECSSection" index="ecsstockimg_section"/>
+		<many-to-one lazy="false" name="company" column="company"
+			class="com.bestway.bcus.system.entity.Company" index="ecsstockimg_company" />
+	</class>
+</hibernate-mapping>
+	<!-- parsed in 0ms -->

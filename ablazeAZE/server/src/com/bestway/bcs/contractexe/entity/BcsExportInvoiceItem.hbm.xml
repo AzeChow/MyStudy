@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcs.contractexe.entity.BcsExportInvoiceItem" 
+		table="bcsexportinvoiceitem">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="openAnAccountBank" length="100"/>
+		<property name="bankAccounts" />
+		<property name="makeInvoiceEmployeeName"  />
+		<property name="memo"/>
+		<many-to-one lazy="false"      name="company" column="companyId" 
+			class="com.bestway.bcus.system.entity.Company"/>
+		<many-to-one lazy="false"      name="portOfLoadingOrUnloading" 
+			column="portOfLoadingOrUnloading" 
+			class="com.bestway.bcus.custombase.entity.countrycode.PortLin"/>
+		<property name="transferMode"/>
+		<property name="portDest"/>		
+		<many-to-one lazy="false"      name="baseCustomsDeclaration" 
+			class="com.bestway.bcs.contractexe.entity.BcsCustomsDeclaration" />
+	</class>
+</hibernate-mapping>

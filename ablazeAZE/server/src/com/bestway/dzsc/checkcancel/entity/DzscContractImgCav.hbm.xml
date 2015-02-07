@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.dzsc.checkcancel.entity.DzscContractImgCav" 
+		table="dzsccontractimgcav">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<many-to-one lazy="false"      name="contractCav" column="contractCav" 
+			class="com.bestway.dzsc.checkcancel.entity.DzscContractCav"/>
+		<many-to-one lazy="false"      name="complex" column="complex" 
+			class="com.bestway.bcus.custombase.entity.hscode.Complex" index="dzsccimgcav_complex"/>
+		<property name="seqNum"/>
+		<property name="name"/>
+		<property name="spec"/>
+		<many-to-one lazy="false"      name="unit" column="unit" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<property name="impTotal"/>
+		<property name="directImport"/>
+		<property name="transferFactoryImport"/>
+		<property name="remainImport"/>
+		<property name="remainExport"/>
+		<property name="productWaste"/>
+		<property name="internalAmount"/>
+		<property name="backExport"/>
+		<property name="leftoverMaterial"/>
+		<property name="remainMaterial"/>
+		<property name="stockAmount"/>
+		<property name="isCustoms"/>
+		<many-to-one lazy="false"      name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" index="dzsccimgcav_coid"/>
+	</class>
+</hibernate-mapping>
+<!-- parsed in 0ms -->

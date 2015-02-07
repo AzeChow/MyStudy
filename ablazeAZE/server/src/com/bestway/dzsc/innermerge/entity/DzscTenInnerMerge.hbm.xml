@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class lazy="false" 
+		name="com.bestway.dzsc.innermerge.entity.DzscTenInnerMerge" 
+		table="dzscteninnermerge">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<many-to-one lazy="false" fetch="join" name="dzscFourInnerMerge" 
+			column="dzscFourInnerMerge" 
+			class="com.bestway.dzsc.innermerge.entity.DzscFourInnerMerge" 
+			index="dzscinnermerge_four"/>
+		<property name="tenSeqNum"/>
+		<many-to-one lazy="false" fetch="join" name="tenComplex" 
+			class="com.bestway.bcus.custombase.entity.hscode.Complex">
+			<column name="tenComplexId"/>
+		</many-to-one>
+		<property name="tenPtName"/>
+		<property name="tenPtSpec"/>
+		<many-to-one lazy="false" fetch="join" name="tenUnit" column="tenUnit" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<property name="machinPrice" />
+		<property name="machinScale" />
+		<property name="legalUnitGene" />
+		<property name="legalUnit2Gene" />
+		<property name="weigthUnitGene" />
+		<property name="tenModifyMark" />
+		<many-to-one lazy="false" name="company" 
+			class="com.bestway.bcus.system.entity.Company">
+			<column name="coid" index="dzscinnermerge_coid"/>
+		</many-to-one>
+	</class>
+
+</hibernate-mapping>

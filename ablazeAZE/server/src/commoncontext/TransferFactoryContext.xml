@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+	<!--==================DAO Beans====================-->
+	<bean id="transferFactoryManageDao" class="com.bestway.common.transferfactory.dao.TransferFactoryManageDao">
+		<property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+	<!--==================Logic Beans====================-->
+	<bean id="transferFactoryManageLogic" class="com.bestway.common.transferfactory.logic.TransferFactoryManageLogic">
+		<property name="transferFactoryManageDao"><ref local="transferFactoryManageDao"/></property>
+		<property name="emsEdiTrDao"><ref bean="emsEdiTrDao"/></property>
+		<property name="encDao"><ref bean="encDao"/></property>
+		<property name="casDao"><ref bean="casDao"/></property>	
+		<property name="contractDao"><ref bean="contractDao"/></property>	
+		<property name="dzscDao"><ref bean="dzscDao"/></property>	
+		<property name="commonCodeDao"><ref bean="commonCodeDao"/></property>				
+	</bean>
+	<bean id="transferQueryLogic" class="com.bestway.common.transferfactory.logic.TransferQueryLogic">
+	    <property name="transferFactoryManageDao"><ref local="transferFactoryManageDao"/></property>
+	</bean>
+	<!--==================Action Bean====================-->
+	<bean id="transferFactoryManageAction" 
+		class="com.bestway.common.transferfactory.action.TransferFactoryManageActionImpl">
+		<property name="transferFactoryManageDao"><ref local="transferFactoryManageDao"/></property>
+		<property name="transferFactoryManageLogic"><ref local="transferFactoryManageLogic"/></property>
+		<property name="transferQueryLogic"><ref local="transferQueryLogic"/></property>
+	</bean>
+	
+	<!--==================Other Beans====================-->
+</beans>

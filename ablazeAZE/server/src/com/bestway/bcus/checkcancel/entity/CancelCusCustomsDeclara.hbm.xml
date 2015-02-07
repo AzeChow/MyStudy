@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.bcus.checkcancel.entity.CancelCusCustomsDeclara" table="cancelcustomsdeclara">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<many-to-one lazy="false"      name="cancelHead" column="cancelHead"
+			class="com.bestway.bcus.checkcancel.entity.CancelCusHead"/>
+		<property name="customNo" length="225"/>
+		<many-to-one lazy="false"      name="custom" column="custom"
+			class="com.bestway.bcus.custombase.entity.countrycode.Customs"/>
+		<property name="inOutportType" length="10"/>
+		<property name="inOutportFlat" length="10"/>
+		<property name="declareDate"/>
+		<property name="inOutportDate"/>
+		<many-to-one lazy="false"      name="tradeMode" column="tradeMode"
+			class="com.bestway.bcus.custombase.entity.parametercode.Trade"/>
+	    <property name="note"/>
+		<many-to-one lazy="false"      name="company" column="coid" class="com.bestway.bcus.system.entity.Company" index="cancelcuscustomsdeclara_company"/>
+	</class>
+
+</hibernate-mapping>
+<!-- parsed in 0ms -->
+
+		

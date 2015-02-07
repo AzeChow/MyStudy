@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class 
+		name="com.bestway.bcus.cas.specificontrol.entity.MakeBillCorrespondingInfoByMateriel" 
+		table="makeBillCorrByMateriel">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="billDetailId"/>
+		<property name="impExpType"/>
+		<property name="billNo"/>
+		<property name="validDate"/>
+		<property name="ptPart"/>
+		<property name="ptName"/>
+		<property name="ptSpec"/>			
+		<property name="customsDeclarationId"/>
+		<property name="customsDeclarationCommInfoId"/>
+		<property name="customsDeclarationCode"/>
+		<property name="emsHeadH2k"/>
+		<property name="commName"/>
+		<property name="commSpec"/>		
+		
+		<property name="amount"/>
+		
+		
+		<many-to-one lazy="false" name="scmCoc" column="scmCoc" 
+			class="com.bestway.common.materialbase.entity.ScmCoc"/>
+			
+			
+		<many-to-one lazy="false" name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" 
+			index="meBillCoeondgInf_company"/>
+			
+		<property name="billTypeName"/>	
+	</class>
+</hibernate-mapping>
+		

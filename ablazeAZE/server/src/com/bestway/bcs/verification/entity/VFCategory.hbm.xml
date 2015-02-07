@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2013-10-14 14:46:28 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.bestway.bcs.verification.entity.VFCategory" table="VFCategory" lazy="false">
+        <cache usage="read-write" />
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex" />
+		</id>
+		<property name="createPeople" type="java.lang.String" />
+        <property name="modifyPeople" type="java.lang.String" />        
+        <property name="createDate" type="java.util.Date" />
+        <property name="modifyDate" type="java.util.Date" />
+        <many-to-one lazy="false" name="company" column="company"
+			class="com.bestway.bcus.system.entity.Company" index="vfcategory_company" />
+			
+        <property name="seqNum" type="java.lang.Integer" />
+            
+        <property name="complexCode" type="java.lang.String" />
+            
+        <property name="complexName" type="java.lang.String" />
+            
+        <property name="spec" type="java.lang.String" />
+        <property name="unit" type="java.lang.String" />
+                
+    </class>
+</hibernate-mapping>
+

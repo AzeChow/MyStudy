@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<class lazy="false"  name="com.bestway.bls.entity.BlsInOutStockBill" table="blsInOutStockBill">
+		<cache usage="read-write"/> 
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<property name="ioFlag" />
+		<property name="billNo" />
+		<property name="validDate" />
+		<property name="isEffective" />
+		<property name="createDate" />
+		<property name="createPeople" />
+		<property name="modifyDate" />
+		<property name="isFirstBill" />
+		<many-to-one lazy="false"    name="corrOwner" column="corrOwner" 
+			class="com.bestway.common.materialbase.entity.ScmCoc"/>
+		<many-to-one lazy="false"    name="wareHouseCode" column="wareHouseCode" 
+			class="com.bestway.common.materialbase.entity.WareSet"/>
+		<many-to-one lazy="false" name="company" column="coid"
+			class="com.bestway.bcus.system.entity.Company" />
+	</class>
+</hibernate-mapping>

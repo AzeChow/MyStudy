@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  lazy="false"  name="com.bestway.dzsc.dzscmanage.entity.DzscEmsExgWj" 
+		table="dzscemsexgwj">
+		<cache usage="read-write"/>
+		<id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+		</id>
+		<!--		<property name="no" />
+		<property name="tenSeqNum"/>
+		<property name="seqNum" />
+		<property name="complex" />
+		<property name="name" />
+		<property name="spec" />
+		<property name="price" />
+		<property name="amount"/>
+		<property name="legalAmount"/>
+		<property name="imgMoney" />
+		<property name="machinPrice" />
+		<property name="machinMoney" />
+		<property name= "note"/>
+		<property name="money"/>
+		<property name="unitNetWeight"/>
+		<property name="unitGrossWeight"/>
+		<many-to-one lazy="false"      name="unit" column="unit" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<many-to-one lazy="false"      name="legalUnit" column="legalUnit" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<many-to-one lazy="false"      name="levyMode" column="levyMode" 
+			class="com.bestway.bcus.custombase.entity.parametercode.LevyMode"/>		
+		<many-to-one lazy="false"      name="country" column="country" 
+			class="com.bestway.bcus.custombase.entity.countrycode.Country"/>-->
+		<property name="seqNum" />
+		<property name="fourSeqNum" index="index_four"/>
+		<property name="fourComplex"/>
+		<property name="fourName"/>
+		<property name="fourSpec"/>
+		<property name="modifyMark"/>
+		<property name="wjCode"/>
+		<many-to-one lazy="false" name="fourUnit" column="fourunit" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<many-to-one lazy="false" name="firstUnit" column="firstUnit" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<many-to-one lazy="false" name="secondUnit" column="secondUnit" 
+			class="com.bestway.bcus.custombase.entity.parametercode.Unit"/>
+		<many-to-one lazy="false" name="dzscEmsPorWjHead" column="dzscEmsPorWjHead" 
+			class="com.bestway.dzsc.dzscmanage.entity.DzscEmsPorWjHead"/>
+		<many-to-one lazy="false" name="company" column="coid" 
+			class="com.bestway.bcus.system.entity.Company" index="dzscemsexgwj_coid"/>
+	</class>
+</hibernate-mapping>
+<!-- parsed in 0ms -->

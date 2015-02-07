@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class  lazy="false"  name="com.bestway.dzsc.materialapply.entity.MaterialApply" table="materialapply">
+		<cache usage="read-write"/> 
+        <id name="id" column="id" length="32">
+			<generator class="uuid.hex"/>
+	    </id>	
+		<property name="no"/>
+		<many-to-one lazy="false" name="materiel" column="materielid" class="com.bestway.common.materialbase.entity.Materiel" index="materialapply_materiel"/>
+		<property name="stateMark" index="index_state"/>
+		<property name="modifyMark"/>
+		<property name="isForbidMerge"/>
+		<many-to-one lazy="false" name="company" column="coid" class="com.bestway.bcus.system.entity.Company" index="materialapply_coid"/>
+    </class>
+
+</hibernate-mapping>
+<!-- parsed in 0ms -->
+<!--country 指对象，countryCode 定义字段-->

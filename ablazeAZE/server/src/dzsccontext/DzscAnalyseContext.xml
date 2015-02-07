@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!--==================DAO Beans====================-->
+	<bean id="dzscAnalyseDao" class="com.bestway.dzsc.contractanalyse.dao.DzscAnalyseDao">
+              <property name="sessionFactory"><ref bean="sessionFactory"/></property>
+	</bean>
+	
+	
+	<!--==================Logic Beans====================-->
+	<bean id="dzscAnalyseLogic" class="com.bestway.dzsc.contractanalyse.logic.DzscAnalyseLogic">
+              <property name="dzscAnalyseDao"><ref bean="dzscAnalyseDao"/></property>
+			  <property name="dzscStatDao"><ref bean="dzscStatDao"/></property> 
+			  <property name="dzscStatLogic"><ref bean="dzscStatLogic"/></property>
+  			  <property name="dzscDao"><ref bean="dzscDao"/></property> 
+	</bean>
+
+	<!--==================Action Bean====================-->
+	<bean id="dzscAnalyseAction" class="com.bestway.dzsc.contractanalyse.action.DzscAnalyseActionImpl">
+			  <property name="dzscAnalyseLogic"><ref bean="dzscAnalyseLogic"/></property>
+			  <property name="dzscStatLogic"><ref bean="dzscStatLogic"/></property>
+	</bean>
+</beans>
