@@ -1,0 +1,1139 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="ExportCancelBill"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Landscape"
+		 pageWidth="1077"
+		 pageHeight="496"
+		 columnWidth="1049"
+		 columnSpacing="0"
+		 leftMargin="14"
+		 rightMargin="14"
+		 topMargin="14"
+		 bottomMargin="14"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<parameter name="totalMoney" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="currencyName" isForPrompting="false" class="java.lang.String">
+		<parameterDescription><![CDATA[currencyName]]></parameterDescription>
+		<defaultValueExpression ><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="payDate" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="declarationDate" isForPrompting="false" class="java.util.Date"/>
+	<parameter name="memo" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="hsCode" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="balanceModelName" isForPrompting="false" class="java.lang.String">
+		<parameterDescription><![CDATA[balanceModelName]]></parameterDescription>
+		<defaultValueExpression ><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="overprint" isForPrompting="false" class="java.lang.Boolean">
+		<parameterDescription><![CDATA[overprint]]></parameterDescription>
+		<defaultValueExpression ><![CDATA[new Boolean(false)]]></defaultValueExpression>
+	</parameter>
+
+	<field name="commName" class="java.lang.String">
+		<fieldDescription><![CDATA[commName]]></fieldDescription>
+	</field>
+	<field name="commAmount" class="java.lang.String">
+		<fieldDescription><![CDATA[commAmount]]></fieldDescription>
+	</field>
+	<field name="unitName" class="java.lang.String">
+		<fieldDescription><![CDATA[unit.name]]></fieldDescription>
+	</field>
+	<field name="commTotalPrice" class="java.lang.String">
+		<fieldDescription><![CDATA[commTotalPrice]]></fieldDescription>
+	</field>
+
+		<background>
+			<band height="468"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="70"
+						y="37"
+						width="229"
+						height="23"
+						key="staticText-1">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="14" isBold="true"/>
+					</textElement>
+				<text><![CDATA[出口收汇核销单]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="328"
+						y="37"
+						width="364"
+						height="23"
+						key="staticText-2">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="14" isBold="true"/>
+					</textElement>
+				<text><![CDATA[出口收汇核销单]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="721"
+						y="37"
+						width="286"
+						height="23"
+						key="staticText-3">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="14" isBold="true"/>
+					</textElement>
+				<text><![CDATA[出口收汇核销单]]></text>
+				</staticText>
+				<rectangle>
+					<reportElement
+						x="70"
+						y="113"
+						width="229"
+						height="325"
+						key="rectangle-1">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="NoStretch"/>
+				</rectangle>
+				<rectangle>
+					<reportElement
+						x="328"
+						y="113"
+						width="364"
+						height="325"
+						key="rectangle-2">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="NoStretch"/>
+				</rectangle>
+				<rectangle>
+					<reportElement
+						x="721"
+						y="113"
+						width="286"
+						height="325"
+						key="rectangle-3">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="NoStretch"/>
+				</rectangle>
+				<line direction="TopDown">
+					<reportElement
+						x="70"
+						y="141"
+						width="229"
+						height="0"
+						key="line-1">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="70"
+						y="169"
+						width="229"
+						height="0"
+						key="line-2">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="70"
+						y="197"
+						width="229"
+						height="0"
+						key="line-3">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="70"
+						y="225"
+						width="229"
+						height="0"
+						key="line-4">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="70"
+						y="254"
+						width="229"
+						height="0"
+						key="line-5">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="70"
+						y="282"
+						width="229"
+						height="0"
+						key="line-6">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="70"
+						y="376"
+						width="229"
+						height="0"
+						key="line-7">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="328"
+						y="141"
+						width="364"
+						height="0"
+						key="line-8">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="328"
+						y="169"
+						width="364"
+						height="0"
+						key="line-9">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="328"
+						y="305"
+						width="364"
+						height="0"
+						key="line-10">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="328"
+						y="376"
+						width="364"
+						height="0"
+						key="line-11">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="359"
+						y="169"
+						width="0"
+						height="136"
+						key="line-12">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="359"
+						y="197"
+						width="333"
+						height="0"
+						key="line-13">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="470"
+						y="169"
+						width="0"
+						height="136"
+						key="line-14">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="545"
+						y="169"
+						width="0"
+						height="136"
+						key="line-15">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="597"
+						y="169"
+						width="0"
+						height="136"
+						key="line-16">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="721"
+						y="141"
+						width="286"
+						height="0"
+						key="line-17">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="721"
+						y="169"
+						width="286"
+						height="0"
+						key="line-18">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="721"
+						y="197"
+						width="286"
+						height="0"
+						key="line-19">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="721"
+						y="305"
+						width="286"
+						height="0"
+						key="line-20">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="721"
+						y="376"
+						width="286"
+						height="0"
+						key="line-21">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="843"
+						y="169"
+						width="0"
+						height="136"
+						key="line-22">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="921"
+						y="169"
+						width="0"
+						height="136"
+						key="line-23">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<staticText>
+					<reportElement
+						x="70"
+						y="60"
+						width="229"
+						height="20"
+						key="staticText-4">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="12" isBold="true"/>
+					</textElement>
+				<text><![CDATA[存根]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="721"
+						y="60"
+						width="286"
+						height="20"
+						key="staticText-5">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="12" isBold="true"/>
+					</textElement>
+				<text><![CDATA[出口退税专用]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="166"
+						y="91"
+						width="37"
+						height="22"
+						key="staticText-6">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+				<text><![CDATA[编号：]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="558"
+						y="91"
+						width="39"
+						height="22"
+						key="staticText-7">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+				<text><![CDATA[编号：]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="862"
+						y="91"
+						width="37"
+						height="22"
+						key="staticText-8">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+				<text><![CDATA[编号：]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="80"
+						y="118"
+						width="60"
+						height="23"
+						key="staticText-9">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+				<text><![CDATA[出口单位：]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="80"
+						y="146"
+						width="60"
+						height="23"
+						key="staticText-10">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+				<text><![CDATA[单位代码：]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="80"
+						y="174"
+						width="91"
+						height="23"
+						key="staticText-11">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+				<text><![CDATA[出口货币总价：]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="80"
+						y="202"
+						width="60"
+						height="23"
+						key="staticText-12">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+				<text><![CDATA[收汇方式：]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="80"
+						y="231"
+						width="86"
+						height="23"
+						key="staticText-13">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+				<text><![CDATA[预计收款日期：]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="80"
+						y="259"
+						width="60"
+						height="23"
+						key="staticText-14">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+				<text><![CDATA[报关日期：]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="80"
+						y="287"
+						width="37"
+						height="23"
+						key="staticText-15">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+				<text><![CDATA[备注：]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="80"
+						y="381"
+						width="135"
+						height="23"
+						key="staticText-16">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+				<text><![CDATA[此单报关有效期截止到：]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="337"
+						y="118"
+						width="60"
+						height="23"
+						key="staticText-17">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+				<text><![CDATA[出口单位：]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="337"
+						y="146"
+						width="60"
+						height="23"
+						key="staticText-18">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+				<text><![CDATA[单位代码：]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="337"
+						y="169"
+						width="15"
+						height="136"
+						key="staticText-19">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12"/>
+					</textElement>
+				<text><![CDATA[银行签注栏]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="359"
+						y="174"
+						width="111"
+						height="23"
+						key="staticText-20">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font size="12"/>
+					</textElement>
+				<text><![CDATA[类     别]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="470"
+						y="174"
+						width="75"
+						height="23"
+						key="staticText-21">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font size="12"/>
+					</textElement>
+				<text><![CDATA[货币金额]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="545"
+						y="174"
+						width="52"
+						height="23"
+						key="staticText-22">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font size="12"/>
+					</textElement>
+				<text><![CDATA[日期]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="597"
+						y="174"
+						width="95"
+						height="23"
+						key="staticText-23">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font size="12"/>
+					</textElement>
+				<text><![CDATA[盖     章]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="337"
+						y="310"
+						width="76"
+						height="23"
+						key="staticText-24">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+				<text><![CDATA[海关签注栏：]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="337"
+						y="381"
+						width="86"
+						height="23"
+						key="staticText-25">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+				<text><![CDATA[外汇局签注栏：]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="730"
+						y="118"
+						width="60"
+						height="23"
+						key="staticText-26">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+				<text><![CDATA[出口单位：]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="730"
+						y="146"
+						width="60"
+						height="23"
+						key="staticText-27">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+				<text><![CDATA[单位代码：]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="721"
+						y="174"
+						width="122"
+						height="23"
+						key="staticText-28">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font size="12"/>
+					</textElement>
+				<text><![CDATA[货 物 名 称]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="843"
+						y="174"
+						width="78"
+						height="23"
+						key="staticText-29">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font size="12"/>
+					</textElement>
+				<text><![CDATA[数     量]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="921"
+						y="174"
+						width="86"
+						height="23"
+						key="staticText-30">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font size="12"/>
+					</textElement>
+				<text><![CDATA[货 币 总 价]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="730"
+						y="310"
+						width="76"
+						height="23"
+						key="staticText-31">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+				<text><![CDATA[报关单编号：]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="730"
+						y="381"
+						width="84"
+						height="23"
+						key="staticText-32">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+				<text><![CDATA[外汇局签注栏：]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="521"
+						y="415"
+						width="23"
+						height="22"
+						key="staticText-33">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font size="12"/>
+					</textElement>
+				<text><![CDATA[年]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="566"
+						y="415"
+						width="23"
+						height="22"
+						key="staticText-34">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font size="12"/>
+					</textElement>
+				<text><![CDATA[月]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="609"
+						y="415"
+						width="63"
+						height="22"
+						key="staticText-35">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font size="12"/>
+					</textElement>
+				<text><![CDATA[日（盖章）]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="921"
+						y="415"
+						width="63"
+						height="22"
+						key="staticText-36">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font size="12"/>
+					</textElement>
+				<text><![CDATA[日（盖章）]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="833"
+						y="415"
+						width="23"
+						height="22"
+						key="staticText-37">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font size="12"/>
+					</textElement>
+				<text><![CDATA[年]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="878"
+						y="415"
+						width="23"
+						height="22"
+						key="staticText-38">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font size="12"/>
+					</textElement>
+				<text><![CDATA[月]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="308"
+						y="54"
+						width="15"
+						height="136"
+						key="staticText-39">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None">
+						<font pdfFontName="Helvetica" size="12" isItalic="false" isUnderline="false" isStrikeThrough="false" />
+					</textElement>
+				<text><![CDATA[︵出口单位盖章︶]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="698"
+						y="54"
+						width="15"
+						height="136"
+						key="staticText-40">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None">
+						<font pdfFontName="Helvetica" size="12" isItalic="false" isUnderline="false" isStrikeThrough="false" />
+					</textElement>
+				<text><![CDATA[︵出口单位盖章︶]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="698"
+						y="299"
+						width="15"
+						height="109"
+						key="staticText-41">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None">
+						<font pdfFontName="Helvetica" size="12" isItalic="false" isUnderline="false" isStrikeThrough="false" />
+					</textElement>
+				<text><![CDATA[︵海关盖章︶]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="1019"
+						y="181"
+						width="19"
+						height="193"
+						key="staticText-42">
+							<printWhenExpression><![CDATA[Boolean.valueOf(!$P{overprint}.booleanValue())]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+				<text><![CDATA[未经核销此联不得撕开]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="215"
+						y="174"
+						width="79"
+						height="18"
+						key="textField">
+							<printWhenExpression><![CDATA[new Boolean(true)]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{totalMoney}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="171"
+						y="231"
+						width="100"
+						height="18"
+						key="textField"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{payDate}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="yyyy-MM-dd" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="148"
+						y="259"
+						width="100"
+						height="18"
+						key="textField"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.util.Date"><![CDATA[$P{declarationDate}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="80"
+						y="315"
+						width="100"
+						height="18"
+						key="textField"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{memo}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="730"
+						y="341"
+						width="100"
+						height="18"
+						key="textField"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{hsCode}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="180"
+						y="174"
+						width="35"
+						height="18"
+						key="textField"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{currencyName}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="148"
+						y="202"
+						width="100"
+						height="18"
+						key="textField"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{balanceModelName}]]></textFieldExpression>
+				</textField>
+			</band>
+		</background>
+		<title>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="199"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="28"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="746"
+						y="7"
+						width="97"
+						height="18"
+						key="textField"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{commName}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="848"
+						y="7"
+						width="73"
+						height="18"
+						key="textField"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{commAmount}+"  "+$F{unitName}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="926"
+						y="7"
+						width="81"
+						height="18"
+						key="textField"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{commTotalPrice}]]></textFieldExpression>
+				</textField>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="164"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

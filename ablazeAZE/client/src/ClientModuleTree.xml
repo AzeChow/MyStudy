@@ -1,0 +1,690 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!-- 外商投资企业关务物流一体化管理系统 -->
+	<!-- 保税物流关务进出口管理平台 -->
+	<!--本文件中的 id 值 不要轻易修改，因为License以此 id值作为主要判断，一旦修改，license文件就要失效-->
+<root caption="保税物流关务进出口管理平台" targetForm="">
+	<link caption="系统管理" id="XiTongGuanLi" isshow="1" defaultSelect="true"
+		targetForm="com.bestway.bcus.client.system.PnSysSetup">
+		<!--
+			<link caption="系统数据管理"
+			targetForm="com.bestway.bcus.client.system.FmSysDataManage"/>
+			iconName="/com/bestway/common/client/resource/image/系统管理.gif"
+			iconName="/com/bestway/common/client/resource/image/系统参数设置.gif"
+			iconName="/com/bestway/common/client/resource/image/系统日志管理.gif"
+			iconName="/com/bestway/common/client/resource/image/系统日志管理.gif"
+			iconName="/com/bestway/common/client/resource/image/用户管理.gif"
+			iconName="/com/bestway/common/client/resource/image/群组管理.gif"
+		-->
+		<link caption="系统参数设置" targetForm="com.bestway.bcus.client.system.FmParameterSet" />
+		<link caption="系统日志管理" targetForm="com.bestway.bcus.client.system.FmOperationLogs" />
+		<link caption="授权公司设置" targetForm="com.bestway.bcus.client.system.FmCompany" />
+		<link caption="公共查询" targetForm="com.bestway.common.client.dataimport.FmQuerySql" />
+	</link>
+	<link caption="权限管理" id="QuanXianGuanLi" isshow="1" defaultSelect="true"
+		targetForm="com.bestway.bcus.client.authority.PnAuthority">
+		<link caption="用户管理" targetForm="com.bestway.bcus.client.authority.FmUser" />
+		<link caption="群组管理" targetForm="com.bestway.bcus.client.authority.FmGroup" />
+		<link caption="用户群组管理" targetForm="com.bestway.bcus.client.authority.FmGroupUser" />
+		<link caption="用户群组授权管理" targetForm="com.bestway.bcus.client.authority.FmAccredit" />
+		<link caption="IP地址管理" targetForm="com.bestway.bcus.client.authority.FmIPaddress" />
+		<link caption="IP地址授权管理" targetForm="com.bestway.bcus.client.authority.FmIPAccredit" />
+	</link>
+	<link caption="海关基础资料" id="HaiGuanJiChuZiLiao" isshow="1"
+		defaultSelect="true" targetForm="com.bestway.bcus.client.custombase.PnCustomBase">
+		<link caption="基础代码" targetForm="com.bestway.bcus.client.custombase.FmBaseCode" />
+		<link caption="部门代码" targetForm="com.bestway.bcus.client.custombase.FmBaseCodeDep" />
+		<link caption="国家地区" targetForm="com.bestway.bcus.client.custombase.FmBaseCodeCountry" />
+		<link caption="报关参数" targetForm="com.bestway.bcus.client.custombase.FmBaseCodeParameter" />
+		<link caption="商品编码" targetForm="com.bestway.bcus.client.custombase.FmBaseCodeHs" />
+		<link caption="商检编码及疫区" targetForm="com.bestway.bcus.client.custombase.FmCheckupComplex" />
+	</link>
+	<link caption="物流基础资料" id="WuLiuJiChuZiLiao" isshow="1"
+		defaultSelect="true" targetForm="com.bestway.common.client.materialbase.PnLogisticsBase">
+		<link caption="BOM管理方式设定"
+			targetForm="com.bestway.common.client.materialbase.FmBomStructureType" />
+		<link caption="工厂通用代码"
+			targetForm="com.bestway.common.client.materialbase.FmCommonBaseCode" />
+		<link caption="工厂物料主档"
+			targetForm="com.bestway.common.client.materialbase.FmEnterpriseMaterial" />
+		<link caption="工厂BOM管理"
+			targetForm="com.bestway.common.client.materialbase.FmEnterpriseBomManage" />
+		<link caption="报关常用工厂物料" targetForm="com.bestway.common.client.materialbase.FmMateriel" />
+		<link caption="报关常用工厂BOM"
+			targetForm="com.bestway.common.client.materialbase.FmCustomBomManage" />
+	</link>
+	<link caption="单据中心" id="DanJuZhongXin" isshow="1" defaultSelect="true"
+		targetForm="com.bestway.common.client.erpbillcenter.PnErpBillCenter">
+		<link caption="参数设置"
+			targetForm="com.bestway.common.client.erpbillcenter.parameter.FmErpBillCenterParameterSet" />
+		<link caption="实际报关资料"
+			targetForm="com.bestway.common.client.erpbillcenter.FmFactualCustoms" />
+		<link caption="对应关系"
+			targetForm="com.bestway.common.client.erpbillcenter.FmFactoryAndFactualCustomsRalation" />
+		<!--
+			<link caption="商品大类关系对照"
+			targetForm="com.bestway.common.client.erpbillcenter.FmStatCusNameRelation"/>
+		-->
+		<link caption="工厂单据类型"
+			targetForm="com.bestway.common.client.erpbillcenter.FmBillType" />
+		<link caption="工厂单据管理" targetForm="com.bestway.common.client.erpbillcenter.FmBill" />
+		<link caption="订单管理" targetForm="com.bestway.common.client.erpbill.FmCustomOrder" />
+		<link caption="特殊控制"
+			targetForm="com.bestway.common.client.erpbillcenter.specificontrol.FmSpecificControl" />
+	</link>
+	<!--
+		<link caption="订单管理" isshow="1" targetForm=""> <link caption="客户订单管理"
+		targetForm="com.bestway.common.client.erpbill.FmCustomOrder"/> </link>
+	-->
+	<link caption="电子化手册" id="ZhiZhiShouCeGuanLi" isshow="1"
+		targetForm="com.bestway.bcs.client.bcsinnermerge.PnContractFlow">
+		<link caption="参数设定" targetForm="com.bestway.bcs.client.contract.FmBcsParameterSet" />
+		<link caption="报关商品资料"
+			targetForm="com.bestway.bcs.client.bcsinnermerge.FmBcsTenInnerMerge" />
+		<link caption="物料与报关对应表"
+			targetForm="com.bestway.bcs.client.bcsinnermerge.FmBcsInnerMerge" />
+		<link caption="工厂与报关对比"
+			targetForm="com.bestway.bcs.client.bcsinnermerge.FmBcsFactoryCustoms" />
+		<link caption="报关单耗"
+			targetForm="com.bestway.bcs.client.bcsinnermerge.FmBcsCustomsBom" />
+		<link caption="备案资料库备案" targetForm="com.bestway.bcs.client.dictpor.FmBcsDictPor" />
+		<link caption="通关手册备案" targetForm="com.bestway.bcs.client.contract.FmContract" />
+		<link caption="进出口申请单"
+			targetForm="com.bestway.bcs.client.contractexe.FmBcsImpExpRequestBill" />
+		<!--
+			<link caption="进出口报关单" isshow="1"
+			targetForm="com.bestway.bcs.client.contractexe.PnATC"> 暂时屏蔽 <link
+			caption="商品禁用维护"
+			targetForm="com.bestway.bcs.client.contract.FmBcsCommodityForbid" />
+			</link>
+		-->
+		<link caption="进口报关单"
+			targetForm="com.bestway.bcs.client.contractexe.FmBcsImportCustomsDeclaration" />
+		<link caption="出口报关单"
+			targetForm="com.bestway.bcs.client.contractexe.FmBcsExportCustomsDeclaration" />
+		<link caption="特殊报关单"
+			targetForm="com.bestway.bcs.client.contractexe.FmBcsSpecialCustomsDeclaration" />
+		<link caption="补充申报单"
+			targetForm="com.bestway.client.custom.common.supplement.FmSupplementListBCS" />
+		<link caption="报关单删单查询"
+			targetForm="com.bestway.bcs.client.contractexe.FmImExportCustomsDeclarationDelete" />
+		<link caption="批量修改商品编码与法定单位"
+			targetForm="com.bestway.bcs.client.contractexe.DgBcsBatchUpdateComplex" />
+		<link caption="数据报核" targetForm="com.bestway.bcs.client.contractcav.FmContractCav" />
+		<link caption="统计报表"
+			targetForm="com.bestway.bcs.client.contractstat.FmContractReport" />
+		<link caption="报关分析"
+			targetForm="com.bestway.bcs.client.contractanalyse.FmCustomsAnalyse" />
+		<link caption="报文查询" targetForm="com.bestway.bcs.client.message.FmBcsMessageQuery" />
+	</link>
+	<!-- 联网监管 -->
+	<!-- 电子帐册 -->
+	<link caption="电子帐册" id="LianWangJianGuan" isshow="1"
+		targetForm="com.bestway.bcus.client.manualdeclare.PnEms">
+		<link caption="参数设定"
+			targetForm="com.bestway.bcus.client.manualdeclare.FmBcusParameterSet" />
+		<link caption="企业内部归并" isshow="1"
+			targetForm="com.bestway.bcus.client.innermerge.PnInnerMerge">
+			<link caption="内部归并" targetForm="com.bestway.bcus.client.innermerge.FmInnerMerge" />
+			<link caption="报关与工厂资料对照"
+				targetForm="com.bestway.bcus.client.innermerge.FmFactoryCustoms" />
+			<link caption="归并关系禁用维护"
+				targetForm="com.bestway.bcus.client.innermerge.FmInnerMergeForbid" />
+		</link>
+		<link caption="电子帐册申报" isshow="1"
+			targetForm="com.bestway.bcus.client.manualdeclare.PnEmsDeclare">
+			<link caption="经营范围管理" targetForm="com.bestway.bcus.client.manualdeclare.FmEmsEdiTr" />
+			<link caption="归并关系管理"
+				targetForm="com.bestway.bcus.client.manualdeclare.FmEmsEdiMerger" />
+			<link caption="电子帐册管理"
+				targetForm="com.bestway.bcus.client.manualdeclare.FmEmsHeadH2k" />
+			<link caption="帐册分册管理"
+				targetForm="com.bestway.bcus.client.manualdeclare.FmEmsHeadH2kFas" />
+			<link caption="历史变更记录查询"
+				targetForm="com.bestway.bcus.client.manualdeclare.FmHistoryChange" />
+			<link caption="帐册商品禁用维护"
+				targetForm="com.bestway.bcus.client.manualdeclare.FmCommodityForbid" />
+			<link caption="BOM单耗比较"
+				targetForm="com.bestway.bcus.client.manualdeclare.FmBomUnitWearCompare" />
+			<link caption="限制类商品维护"
+				targetForm="com.bestway.bcus.client.manualdeclare.FmRestirictcommodity" />
+			<link caption="批量修改商品编码与法定单位"
+				targetForm="com.bestway.bcus.client.manualdeclare.DgBcusBatchUpdateComplex" />
+			<link caption="报文收发信息查询" targetForm="com.bestway.bcus.client.message.FmMessageQuery" />
+		</link>
+		<link caption="电子帐册通关" isshow="1" targetForm="com.bestway.bcus.client.enc.PnEnc">
+			<link caption="进出口申请单"
+				targetForm="com.bestway.bcus.client.enc.FmBcusImpExpRequestBill" />
+			<link caption="报关清单"
+				targetForm="com.bestway.bcus.client.enc.FmApplyToCustomsBillList" />
+			<link caption="进口报关单"
+				targetForm="com.bestway.bcus.client.enc.FmImportCustomsDeclaration" />
+			<link caption="出口报关单"
+				targetForm="com.bestway.bcus.client.enc.FmExportCustomsDeclaration" />
+			<link caption="特殊报关单"
+				targetForm="com.bestway.bcus.client.enc.FmSpecialCustomsDeclaration" />
+			<link caption="补充申报单"
+				targetForm="com.bestway.client.custom.common.supplement.FmSupplementList" />
+			<link caption="报关单删单查询"
+				targetForm="com.bestway.bcus.client.enc.FmImExportCustomsDeclarationDelete" />
+		</link>
+		<link caption="滚动核销" isshow="1"
+			targetForm="com.bestway.bcus.client.checkcancel.PnCancelCheck">
+			<link caption="自用核销"
+				targetForm="com.bestway.bcus.client.checkcancel.FmCancelOwnerHead" />
+			<link caption="数据报核"
+				targetForm="com.bestway.bcus.client.checkcancel.FmCancelCusHead" />
+			<link caption="帐帐分析"
+				targetForm="com.bestway.bcus.client.checkcancel.FmEmsAnalyHead" />
+		</link>
+		<link caption="中期核查" isshow="1" targetForm="">
+			<link caption="参数设定"
+				targetForm="com.bestway.bcus.client.checkcancel.FmCheckParameter" />
+			<link caption="工厂盘点"
+				targetForm="com.bestway.bcus.client.checkcancel.FmFactoryCheck" />
+			<link caption="自用中期核查计算表"
+				targetForm="com.bestway.bcus.client.checkcancel.FmCheckAccountHead" />
+			<link caption="中期核查" targetForm="com.bestway.bcus.client.checkcancel.FmCheckHead" />
+			<link caption="成品折算料件"
+				targetForm="com.bestway.bcus.client.checkcancel.FrmProductToMaterilel" />
+		</link>
+		<link caption="电子帐册统计报表" isshow="1"
+			targetForm="com.bestway.bcus.client.manualdeclare.PnEmsReport">
+			<!--
+				<link caption="边角料统计报表"
+				targetForm="com.bestway.bcus.client.manualdeclare.FmRemainMaterielStat"
+				/>
+			-->
+			<link caption="报表查询打印"
+				targetForm="com.bestway.bcus.client.manualdeclare.FmReportQueryPrint" />
+			<link caption="免抵退税管理报表"
+				targetForm="com.bestway.bcus.client.manualdeclare.FmFinancialReportQuery" />
+		</link>
+	</link>
+
+	<!-- 核查分析 -->
+	<link caption="核查分析(手册)" id="BCSVerificationAnalyse" isshow="1"
+		targetForm="com.bestway.bcs.client.verification.PnVFGuide">
+					
+		<link caption="核查批次设定"
+			targetForm="com.bestway.bcs.client.verification.FmVFSection" />
+		<link caption="核查流程指引" targetForm="com.bestway.bcs.client.verification.FmProcessGuide" />
+		<link caption="工作分配与资料管理"  targetForm="com.bestway.bcs.client.verification.FmVFAttachment" />
+		<link caption="大类名称对应表"
+			targetForm="com.bestway.bcs.client.verification.FmVFCategoryBcsTenInnerMerge" />		
+
+		<link caption="合同数据分析" isshow="1"
+			targetForm="">
+			<link caption="3料件报关明细表" targetForm="com.bestway.bcs.client.verification.contractanalyse.FmVFDeclarationCommInfoImg" />
+			<link caption="3成品报关明细表" targetForm="com.bestway.bcs.client.verification.contractanalyse.FmVFDeclarationCommInfoExg" />
+			<link caption="2料件数据统计表" targetForm="com.bestway.bcs.client.verification.contractanalyse.FmVFCustomsCountImg" />
+			<link caption="2成品数据统计表" targetForm="com.bestway.bcs.client.verification.contractanalyse.FmVFCustomsCountExg" />
+			<link caption="2成品折算统计表" targetForm="com.bestway.bcs.client.verification.contractanalyse.FmVFCustomsCountExgConvert" />
+			<link caption="1合同分析" targetForm="com.bestway.bcs.client.verification.contractanalyse.FmVFContractAnalyse" />
+		</link>
+		<link caption="工厂盘点数据分析" isshow="1" targetForm="">
+			<link caption="2料件库存" targetForm="com.bestway.bcs.client.verification.factoryanalyse.FmVFStockImg" />
+			<link caption="2在产品库存" targetForm="com.bestway.bcs.client.verification.factoryanalyse.FmVFStockHalfExg" />
+			<link caption="2成品库存" targetForm="com.bestway.bcs.client.verification.factoryanalyse.FmVFStockExg" />
+			<link caption="2厂外库存" targetForm="com.bestway.bcs.client.verification.factoryanalyse.FmVFStockOutFactoryImg" />
+			<link caption="2内购库存" targetForm="com.bestway.bcs.client.verification.factoryanalyse.FmVFStockBuyImg" />
+			<link caption="2在途料件" targetForm="com.bestway.bcs.client.verification.factoryanalyse.FmVFStockTravelingImg" />
+			<link caption="2在途成品" targetForm="com.bestway.bcs.client.verification.factoryanalyse.FmVFStockTravelingExg" />
+			<link caption="2半成品库存（已入库）" targetForm="com.bestway.bcs.client.verification.factoryanalyse.FmVFStockSemiExgHadStore" />
+			<link caption="2外发库存" isshow="1" targetForm="">
+				<link caption="2原材料" targetForm="com.bestway.bcs.client.verification.factoryanalyse.FmVFStockOutSendImg"/>
+				<link caption="2半成品" targetForm="com.bestway.bcs.client.verification.factoryanalyse.FmVFStockOutSendSemiExg" />
+				<link caption="2成品" targetForm="com.bestway.bcs.client.verification.factoryanalyse.FmVFStockOutSendExg" />
+				<link caption="2外发库存汇总" targetForm="com.bestway.bcs.client.verification.factoryanalyse.FmVFStockOutSendAnalyse" />
+			</link>
+			<link caption="2在制品库存" isshow="1" targetForm="">
+				<link caption="2原材料" targetForm="com.bestway.bcs.client.verification.factoryanalyse.FmVFFinishingImg "/>
+				<link caption="2成品(料号级)" targetForm="com.bestway.bcs.client.verification.factoryanalyse.FmVFFinishingExg" />
+				<link caption="2在制品库存汇总" targetForm="com.bestway.bcs.client.verification.factoryanalyse.FmVFFinishingStock" />
+			</link>
+			<link caption="2残次品库存" isshow="1" targetForm="">
+				<link caption="2原材料" targetForm="com.bestway.bcs.client.verification.factoryanalyse.FmVFBadImg"/>
+				<link caption="2半成品" targetForm="com.bestway.bcs.client.verification.factoryanalyse.FmVFSemiBadExg" />
+				<link caption="2成品" targetForm="com.bestway.bcs.client.verification.factoryanalyse.FmVFBadExg" />
+				<link caption="2残次品库存汇总" targetForm="com.bestway.bcs.client.verification.factoryanalyse.FmVFBadStockAnalyse" />
+			</link>
+			<link caption="1工厂库存汇总表" targetForm="com.bestway.bcs.client.verification.factoryanalyse.FmVFStockAnalyse" />
+		</link>
+		<link caption="结转数据分析" isshow="1"
+			targetForm="">
+			<link caption="2料件结转差额表" targetForm="com.bestway.bcs.client.verification.transferanalyse.FmVFTransferDiffImg" />
+			<link caption="2成品结转差额表" targetForm="com.bestway.bcs.client.verification.transferanalyse.FmVFTransferDiffExg" />
+			<link caption="1结转差额汇总表" targetForm="com.bestway.bcs.client.verification.transferanalyse.FmVFTransferDiffCount" />
+		</link>
+		<link caption="0短溢分析"
+			targetForm="com.bestway.bcs.client.verification.FmVFAnalyse" />
+		<link caption="0大类短溢分析"
+			targetForm="com.bestway.bcs.client.verification.FmVFCategoryAnalyse" />
+	</link>
+	
+	
+	<!-- 盘点核查 -->
+	<link caption="盘点核查(帐册)" id="BCUSCheckStock" isshow="1"
+		targetForm="com.bestway.bcus.client.checkstock.PnECSGuide">
+		<link caption="盘点核销批次设定" targetForm="com.bestway.bcus.client.checkstock.FmECSSection" />
+		<link caption="核查流程指引" targetForm="com.bestway.bcus.client.checkstock.FmProcessGuide" />
+		<link caption="工作分配与资料管理"  targetForm="com.bestway.bcus.client.checkstock.FmECSAttachment" />
+		<link caption="帐册数据分析" isshow="1" targetForm="">
+			<link caption="3料件明细表" targetForm="com.bestway.bcus.client.checkstock.contractanalyse.FmECSDeclarationCommInfoImg" />
+			<link caption="3成品明细表" targetForm="com.bestway.bcus.client.checkstock.contractanalyse.FmECSDeclarationCommInfoExgx" />
+			<link caption="2料件情况统计表" targetForm="com.bestway.bcus.client.checkstock.contractanalyse.FmECSCustomsCountImg" />
+			<link caption="2成品情况统计表" targetForm="com.bestway.bcus.client.checkstock.contractanalyse.FmECSDeclarationCommInfoExg" />
+			<link caption="1帐册分析" targetForm="com.bestway.bcus.client.checkstock.contractanalyse.FmECSContractAnalyse" />
+		</link>
+		<link caption="盘点数据分析" isshow="1" targetForm="">
+			<link caption="2料件库存" targetForm="com.bestway.bcus.client.checkstock.factoryanalyse.FmECSStockImg" />
+			<link caption="2在产品库存" targetForm="com.bestway.bcus.client.checkstock.factoryanalyse.FmECSStockProcessImg" />
+			<link caption="2成品库存" targetForm="com.bestway.bcus.client.checkstock.factoryanalyse.FmECSStockExg" />
+			<link caption="2厂外库存" targetForm="com.bestway.bcus.client.checkstock.factoryanalyse.FmECSStockOutFactoryImg" />
+			<link caption="2内购库存" targetForm="com.bestway.bcus.client.checkstock.factoryanalyse.FmECSStockBuyImg" />
+			<link caption="2在途料件" targetForm="com.bestway.bcus.client.checkstock.factoryanalyse.FmECSStockTravelingImg" />
+			<link caption="2在途成品" targetForm="com.bestway.bcus.client.checkstock.factoryanalyse.FmECSStockTravelingExg" />
+			<link caption="2外发库存" isshow="1" targetForm="">
+				<link caption="2原材料" targetForm="com.bestway.bcus.client.checkstock.factoryanalyse.FmECSStockOutSendImg"/>
+				<link caption="2半成品(料号级)" targetForm="com.bestway.bcus.client.checkstock.factoryanalyse.FmECSStockOutSendSemiExgPt" />
+				<link caption="2成品(料号级)" targetForm="com.bestway.bcus.client.checkstock.factoryanalyse.FmECSStockOutSendExgPt" />
+				<link caption="2外发库存汇总" targetForm="com.bestway.bcus.client.checkstock.factoryanalyse.FmECSStockOutSendAnalyse" />
+			</link>
+			<link caption="2半成品库存（已入库）" targetForm="com.bestway.bcus.client.checkstock.factoryanalyse.FmECSStockSemiExgPtHadStore" />
+			<link caption="2在制品库存" isshow="1" targetForm="">
+				<link caption="2原材料" targetForm="com.bestway.bcus.client.checkstock.factoryanalyse.FmECSFinishingImg"/>
+				<link caption="2成品(料号级)" targetForm="com.bestway.bcus.client.checkstock.factoryanalyse.FmECSFinishingExg" />
+				<link caption="2在制品库存汇总" targetForm="com.bestway.bcus.client.checkstock.factoryanalyse.FmECSFinishingStock" />
+			</link>
+			<link caption="2残次品库存" isshow="1" targetForm="">
+				<link caption="2原材料" targetForm="com.bestway.bcus.client.checkstock.factoryanalyse.FmECSBadImg"/>
+				<link caption="2半成品(料号级)" targetForm="com.bestway.bcus.client.checkstock.factoryanalyse.FmECSSemiFinishedExg" />
+				<link caption="2成品(料号级)" targetForm="com.bestway.bcus.client.checkstock.factoryanalyse.FmECSFinishedExg" />
+				<link caption="2残次品库存汇总" targetForm="com.bestway.bcus.client.checkstock.factoryanalyse.FmECSBadStock" />
+			</link>
+			<link caption="2呆滞品库存" isshow="1" targetForm="">
+				<link caption="2原材料" targetForm="com.bestway.bcus.client.checkstock.factoryanalyse.FmECSStagnateImg"/>
+				<link caption="2成品(料号级)" targetForm="com.bestway.bcus.client.checkstock.factoryanalyse.FmECSStagnateExg" />
+				<link caption="2呆滞品库存汇总" targetForm="com.bestway.bcus.client.checkstock.factoryanalyse.FmECSStagnateStock" />
+			</link>
+			<link caption="1盘点总库存" targetForm="com.bestway.bcus.client.checkstock.factoryanalyse.FmECSStockAnalyse" />
+		</link>
+		<link caption="结转数据分析" isshow="1"
+			targetForm="">
+			<link caption="2料件结转情况表" targetForm="com.bestway.bcus.client.checkstock.transferanalyse.FmECSTransferImgBalance" />
+			<link caption="2成品结转情况表" targetForm="com.bestway.bcus.client.checkstock.transferanalyse.FmECSTransferExgBalance" />
+			<link caption="1结转汇总情况表" targetForm="com.bestway.bcus.client.checkstock.transferanalyse.FmECSTransferCollectBalance" />
+		</link>
+		<link caption="0短溢分析"
+			targetForm="com.bestway.bcus.client.checkstock.FmECSAnalyse" />
+	</link>
+	
+	<link caption="电子手册" id="DianZiShouCeGuanLi"
+		targetForm="com.bestway.dzsc.client.dzscmanage.PnDzscFlow">
+		<link caption="参数设定"
+			targetForm="com.bestway.dzsc.client.message.FmDzscParameterSet" />
+		<link caption="物料和BOM备案" isshow="1" targetForm="">
+			<link caption="物料备案"
+				targetForm="com.bestway.dzsc.client.materialapply.FmMaterialApply" />
+			<link caption="BOM备案"
+				targetForm="com.bestway.dzsc.client.materialapply.FmApplyBomManage" />
+		</link>
+		<link caption="归并关系" isshow="1" targetForm="">
+			<link caption="手册商品归并"
+				targetForm="com.bestway.dzsc.client.innermerge.FmDzscInnerMerge" />
+			<link caption="报关与工厂资料对照"
+				targetForm="com.bestway.dzsc.client.innermerge.FmDzscFactoryCustoms" />
+			<link caption="成品加工费预设"
+				targetForm="com.bestway.dzsc.client.innermerge.FmDzscExgTenInnerMerge" />
+			<link caption="报关单耗"
+				targetForm="com.bestway.dzsc.client.innermerge.FmDzscCustomsBom" />
+		</link>
+		<link caption="手册合同备案"
+			targetForm="com.bestway.dzsc.client.dzscmanage.FmDzscEmsPorWjHead" />
+		<link caption="手册通关备案"
+			targetForm="com.bestway.dzsc.client.dzscmanage.FmDzscEmsPorBillHead" />
+		<link caption="电子手册分册"
+			targetForm="com.bestway.dzsc.client.dzscmanage.FmDzscFascicule" />
+		<link caption="手册报关申请单"
+			targetForm="com.bestway.dzsc.client.impexprequest.FmDzscImpExpRequestBill" />
+		<link caption="手册报关清单"
+			targetForm="com.bestway.dzsc.client.customslist.FmDzscCustomsBillList" />
+		<link caption="手册报关申报" isshow="1" targetForm="">
+			<link caption="进口报关单"
+				targetForm="com.bestway.dzsc.client.contractexe.FmDzscImportCustomsDeclaration" />
+			<link caption="出口报关单"
+				targetForm="com.bestway.dzsc.client.contractexe.FmDzscExportCustomsDeclaration" />
+			<link caption="特殊报关单"
+				targetForm="com.bestway.dzsc.client.contractexe.FmDzscSpecialCustomsDeclaration" />
+			<link caption="补充申报单"
+				targetForm="com.bestway.client.custom.common.supplement.FmSupplementListDzsc" />
+			<link caption="报关单删单查询"
+				targetForm="com.bestway.dzsc.client.contractexe.FmImExportCustomsDeclarationDelete" />
+			<link caption="禁用商品管理"
+				targetForm="com.bestway.dzsc.client.contractexe.FmDzscCommodityForbid" />
+		</link>
+		<link caption="手册核查核销" isshow="1" targetForm="">
+			<link caption="数据报核"
+				targetForm="com.bestway.dzsc.client.checkcancel.FmDzscContractCav" />
+			<link caption="中期核查"
+				targetForm="com.bestway.dzsc.client.checkcancel.FmDzscCheckHead" />
+		</link>
+		<link caption="统计报表"
+			targetForm="com.bestway.dzsc.client.contractstat.FmDzscContractReport" />
+		<link caption="报关分析"
+			targetForm="com.bestway.dzsc.client.contractanalyse.FmDzscCustomsAnalyse" />
+		<!--
+			<link caption="导出文件(供QP导入用)"
+			targetForm="com.bestway.dzsc.client.message.FmDzscExportQPMessage"/>
+		-->
+		<link caption="报文查询"
+			targetForm="com.bestway.dzsc.client.message.FmDzscMessageQuery" />
+	</link>
+	<link caption="出口专用发票管理" id="ChuKouZhuanYongFaPiao" isshow="1"
+		targetForm="com.bestway.client.invoice.PnInvoiceFlow">
+		<link caption="参数设置" targetForm="com.bestway.client.invoice.FmInvoiceParameters" />
+		<link caption="出口专用发票管理" targetForm="com.bestway.client.invoice.FmInvoice" />
+		<link caption="出口商品发票领用存统计表" targetForm="com.bestway.client.invoice.FmInvoiceObtainStat" />
+	</link>
+	<link caption="外汇核销管理" id="WaiHuiHeXiaoGuanLi" isshow="1"
+		targetForm="com.bestway.client.fecav.PnFecavFlow">
+		<link caption="参数设置" targetForm="com.bestway.client.fecav.FmFecavParameters" />
+		<link caption="外部领单" targetForm="com.bestway.client.fecav.FmOuterObtainFecavBill" />
+		<link caption="内部领单" targetForm="com.bestway.client.fecav.FmInnerObtainFecavBill" />
+		<link caption="核销单使用" targetForm="com.bestway.client.fecav.FmUseFecavBill" />
+		<link caption="进口白单管制" targetForm="com.bestway.client.fecav.FmUseImportFecavBill" />
+		<link caption="核销单退税联签收" targetForm="com.bestway.client.fecav.FmDebentureSignInFecavBill" />
+		<link caption="核销单交单明细" targetForm="com.bestway.client.fecav.FmHandInFecavBill" />
+		<link caption="出口收汇管制" targetForm="com.bestway.client.fecav.FmControlFecavBill" />
+		<link caption="银行汇票录入" targetForm="com.bestway.client.fecav.FmBillOfExchange" />
+		<link caption="核销单冲销" targetForm="com.bestway.client.fecav.FmStrikeFecavBill" />
+		<link caption="核销单核销" targetForm="com.bestway.client.fecav.FmCavFecavBill" />
+		<link caption="核销单财务签收" targetForm="com.bestway.client.fecav.FmFinanceSignInFecavBill" />
+		<link caption="核销单关帐" targetForm="com.bestway.client.fecav.FmCloseAccountFecavBill" />
+		<link caption="核销单遗失作废管理" targetForm="com.bestway.client.fecav.FmBlankOutFecavBill" />
+		<link caption="统计报表" targetForm="com.bestway.client.fecav.FmFecavStatReport" />
+	</link>
+
+	<link caption="设备管理" id="SheBeiGuanLi" isshow="1"
+		targetForm="com.bestway.client.fixtureonorder.PnFixFlow">
+		<link caption="设备参数设置"
+			targetForm="com.bestway.client.fixtureonorder.FmFixtureParameterSet" />
+		<link caption="三资设备管理" isshow="1"
+			targetForm="com.bestway.client.fixasset.PnFixassetFlow">
+			<link caption="设备批文" targetForm="com.bestway.client.fixasset.FmAgreement" />
+			<link caption="商务发票" targetForm="com.bestway.client.fixasset.FmAgreementInvoice" />
+			<link caption="进口全新设备保证书" targetForm="com.bestway.client.fixasset.FmAgreementWar" />
+			<link caption="进出口货物征免税证明" targetForm="com.bestway.client.fixasset.FmDutyCert" />
+			<link caption="设备位置存放表" targetForm="com.bestway.client.fixasset.FmFixassetLocation" />
+			<link caption="设备异动"
+				targetForm="com.bestway.client.fixasset.FmFixassetChangeLocation" />
+			<link caption="设备金额(余额)查询"
+				targetForm="com.bestway.client.fixasset.FmFixassetRemainMoneyQuery" />
+			<link caption="设备状态(进度)查询"
+				targetForm="com.bestway.client.fixasset.FmFixassetStatusQuery" />
+			<link caption="报关单查询"
+				targetForm="com.bestway.client.fixasset.FmFixassetCustomsDeclarationStat" />
+		</link>
+		<link caption="来料设备管理" isshow="1"
+			targetForm="com.bestway.client.fixtureonorder.PnFixtureFlow">
+			<link caption="设备协议"
+				targetForm="com.bestway.client.fixtureonorder.FmFixtureContract" />
+			<link caption="设备存放位置表"
+				targetForm="com.bestway.client.fixtureonorder.FmFixtureLocation" />
+			<link caption="设备移动管理"
+				targetForm="com.bestway.client.fixtureonorder.FmFixtureChangeLocation" />
+			<link caption="来料设备报表"
+				targetForm="com.bestway.client.fixtureonorder.FmFixtureContractReport" />
+		</link>
+	</link>
+	<link caption="深加工结转" id="ShenJiaGongJieZhuan" isshow="1"
+		iconName="" targetForm="com.bestway.common.client.fpt.PnFptFlow">
+		<link caption="参数设置" targetForm="com.bestway.common.client.fpt.FmFptParameterSet" />
+		<!-- <link caption="客户供应商编码" targetForm="com.bestway.common.client.fpt.FmFptComplex" /> -->
+		<!-- 
+		 <link caption="结转申请表(关封)" targetForm="com.bestway.common.client.fpt.FmFptAppHead" />-->
+			<!--<link caption="客户供应商编码" targetForm="com.bestway.common.client.fpt.FmFptComplex" />-->
+		<!-- 
+		 <link caption="结转申请表" targetForm="com.bestway.common.client.fpt.FmFptAppHead" />-->
+		<link caption="成品结转">
+			<link caption="结转申请表(成品)" targetForm="com.bestway.common.client.fpt.FmFptExgAppHead" />
+			<link caption="成品发货单" targetForm="com.bestway.common.client.fpt.FmFptExgBillHead" />
+			<link caption="成品退货单" targetForm="com.bestway.common.client.fpt.FmFptExgBackBillHead" />
+		</link>
+		<link caption="料件结转">
+			<link caption="结转申请表(料件)" targetForm="com.bestway.common.client.fpt.FmFptImgAppHead" />
+			<link caption="料件收货单" targetForm="com.bestway.common.client.fpt.FmFptImgBillHead" />
+			<link caption="料件退货单" targetForm="com.bestway.common.client.fpt.FmFptImgBackBillHead" />
+		</link>
+		<!-- 
+		
+		<link caption="进出货转厂单据" targetForm="com.bestway.common.client.fpt.FmFptBillHead" /> -->
+		<!--s
+			<link caption="发/退货单据撤消"targetForm="com.bestway.common.client.fpt.FmFptCancelBill"/>
+		-->
+		<!--
+			<link caption="备案资料下载"targetForm="com.bestway.common.client.fpt.FmFptDownData"/>
+		-->
+		<!-- <link caption="收发Email" targetForm="com.bestway.common.client.fpt.FmFptEmail" /> -->
+		<link caption="统计报表" targetForm="com.bestway.common.client.fpt.FmFptAppSpareAnalyseGuide" />
+		<!-- 
+		<link caption="转厂分析报表" targetForm="com.bestway.common.client.fpt.FmFptStatisticAnalyseGuide" />
+		 -->
+		<link caption="结转单据对应表" targetForm="com.bestway.common.client.fpt.FmRequestToFptToCustomsReport" />
+		<link caption="报文查询" targetForm="com.bestway.common.client.fpt.FmFptMessageQuery" />
+		<link caption="深加工结转平台下载" targetForm="com.bestway.common.client.fpt.btpls.FmBtplsDownData" />
+	</link>
+	<link caption="转厂管理" id="ZhuanChangGuanLi" isshow="1"
+		targetForm="com.bestway.common.client.transferfactory.PnTransferFlow">
+		<link caption="参数设置"
+			targetForm="com.bestway.common.client.transferfactory.FmTransParameterSet" />
+		<link caption="关封管理"
+			targetForm="com.bestway.common.client.transferfactory.FmCustomsEnvelopBill" />
+		<link caption="商品单价维护"
+			targetForm="com.bestway.common.client.transferfactory.FmBillPriceMaintenance" />
+		<link caption="进出货转厂期初单"
+			targetForm="com.bestway.common.client.transferfactory.FmTransferFactoryInitBill" />
+		<link caption="进出货转厂单据"
+			targetForm="com.bestway.common.client.transferfactory.FmTransferFactoryBill" />
+		<link caption="关封余量分析"
+			targetForm="com.bestway.common.client.transferfactory.FmCustomsEnvelopSpareAnalyse" />
+		<link caption="转厂统计分析"
+			targetForm="com.bestway.common.client.transferfactory.FmTransferStatisticAnalyse" />
+		<link caption="转厂其他报表"
+			targetForm="com.bestway.common.client.transferfactory.FmOtherReportQuery" />
+	</link>
+
+
+	<link caption="委外管理" id="WeiWaiGuanLi" isshow="1"
+		targetForm="com.bestway.common.client.outsource.PnOutSource">
+		<link caption="委外明细报表" targetForm="com.bestway.common.client.outsource.FmQueryGuide" />
+		<link caption="特殊控制"
+			targetForm="com.bestway.common.client.outsource.specificcontrol.FmSpecificControl" />
+		<link caption="委外统计报表"
+			targetForm="com.bestway.common.client.outsource.FmStatQueryGuide" />
+	</link>
+	<link caption="海关帐" id="HaiGuanZhang" isshow="1"
+		targetForm="com.bestway.bcus.client.cas.BcusAndCasFlowChart">
+		<link caption="参数设置"
+			targetForm="com.bestway.bcus.client.cas.parameter.FmCasParameterSet" />
+		<!--
+			<link caption="特殊控制"
+			targetForm="com.bestway.bcus.client.cas.specificontrol.FmSpecificControl"/>
+		-->
+		<link caption="工厂资料统计报表" targetForm="com.bestway.bcus.client.cas.FmFactoryQueryGuide" />
+		<link caption="海关资料统计报表" targetForm="com.bestway.bcus.client.cas.FmCustomQueryGuide" />
+		<link caption="海关财务报表"
+			targetForm="com.bestway.bcus.client.cas.finance.FmFinanceQueryGuide" />
+		<link caption="其它报表"
+			targetForm="com.bestway.bcus.client.cas.otherreport.FmOtherQueryGuide" />
+		<link caption="平衡表"
+			targetForm="com.bestway.bcus.client.cas.otherreport.FmBalanceGuide" />
+		<!--
+			<link caption="海关帐流程图"
+			targetForm="com.bestway.bcus.client.cas.BcusAndCasFlowChart"/>
+		-->
+		<link caption="发票管理"
+			targetForm="com.bestway.bcus.client.cas.invoice.FmBuyIntestineManage" />
+	</link>
+
+	<link caption="账务成本分析" id="CaiWuChengBenFenXi" isshow="1"
+		targetForm="com.bestway.bcus.client.financial.PnFinancialCost">
+		<link caption="每月产量与销量"
+			targetForm="com.bestway.bcus.client.financial.FmMonthlyProductionAndSales" />
+		<link caption="成品单耗调整表"
+			targetForm="com.bestway.bcus.client.financial.FmProductConsumption" />
+		<link caption="原材料进出仓帐"
+			targetForm="com.bestway.bcus.client.financial.FmMaterialAccount" />
+		<link caption="料件加权平均价"
+			targetForm="com.bestway.bcus.client.financial.FmMaterialAveragePrice" />
+		<link caption="成本汇总表"
+			targetForm="com.bestway.bcus.client.financial.FmCostSummaryReport" />
+		<link caption="成品成本进出仓帐"
+			targetForm="com.bestway.bcus.client.financial.FmFinishedProductCost" />
+		<link caption="成品加权平均价"
+			targetForm="com.bestway.bcus.client.financial.FmProductWeightedAveragePrice" />
+	</link>
+	<link caption="自我核查管理" id="ZiWoHeChaGuanLi" isshow="1"
+		targetForm="com.bestway.client.selfcheck.PnSelfCheck">
+		<link caption="平衡表"
+			targetForm="com.bestway.bcus.client.cas.otherreport.FmBalanceGuide" />
+		<link caption="库存分析" targetForm="com.bestway.client.selfcheck.FmStockManage" />
+		<link caption="转厂分析" targetForm="com.bestway.client.selfcheck.FmTransferAnalyse" />
+		<link caption="合同分析" targetForm="com.bestway.client.selfcheck.FmContractExecStat" />
+	</link>
+
+	<link caption="保税仓管理" id="BaoShuiWuLiuGuanLi" targetForm="">
+		<link caption="参数设置" targetForm="com.bestway.bls.client.message.FmBlsParameterSet" />
+		<link caption="商品库商品"
+			targetForm="com.bestway.bls.client.blsinnermerge.FmBlsTenInnerMerge" />
+		<link caption="内部归并"
+			targetForm="com.bestway.bls.client.blsinnermerge.FmBlsInnerMerge" />
+		<link caption="工厂与报关折算系数"
+			targetForm="com.bestway.bls.client.blsinnermerge.FmBlsFactoryCustoms" />
+		<link caption="出入仓单据"
+			targetForm="com.bestway.bls.client.storagebill.FmBlsInOutStockBill" />
+		<link caption="出入仓单据对应"
+			targetForm="com.bestway.bls.client.storagebill.FmBillCorresponding" />
+		<link caption="进仓管理" isshow="1">
+			<link caption="转入仓单"
+				targetForm="com.bestway.bls.client.storagebill.FmImportStorageBill" />
+			<link caption="转入车次"
+				targetForm="com.bestway.bls.client.storagebill.FmImportDelivery" />
+		</link>
+		<link caption="出仓管理" isshow="1">
+			<link caption="转出仓单"
+				targetForm="com.bestway.bls.client.storagebill.FmExportStorageBill" />
+			<link caption="转出车次"
+				targetForm="com.bestway.bls.client.storagebill.FmExportDelivery" />
+		</link>
+		<link caption="货到报告" targetForm="com.bestway.bls.client.entrance.FmEntranceMessage" />
+		<link caption="仓单特殊申请"
+			targetForm="com.bestway.bls.client.entrance.FmBillSpecialApply" />
+		<link caption="保税物料进口申请"
+			targetForm="com.bestway.bls.client.entrance.FmMaterielImportApply" />
+		<link caption="核销管理" targetForm="com.bestway.bls.client.checkcancel.FmCollateBind" />
+		<link caption="报文查询" targetForm="com.bestway.bls.client.message.FmBlsMessageQuery" />
+		<link caption="自动申报处理信息" targetForm="com.bestway.bls.client.message.FmAutoDeclareInfo" />
+		<link caption="库存查询"
+			targetForm="com.bestway.bls.client.storagebill.FmBlsStockQuery" />
+	</link>
+	<link caption="外发加工管理" id="WaiFaJiaGongGuanLi" targetForm="">
+		<link caption="参数设置" targetForm="com.bestway.client.owp.FmOwpParameterSet" />
+		<link caption="工厂BOM管理" targetForm="com.bestway.client.owp.FmOwpBomManage">
+		</link>
+		<link caption="备案申请" targetForm="com.bestway.client.owp.FmOwpAppHead">
+		</link>
+		<link caption="收发货登记" targetForm="">
+			<link caption="发货登记表" targetForm="com.bestway.client.owp.FmOwpBillSend" />
+			<link caption="收货登记表" targetForm="com.bestway.client.owp.FmOwpBillRecv" />
+		</link>
+		<link caption="统计分析" targetForm="com.bestway.client.owp.FmOwpAnalyManage">
+		</link>
+		<link caption="报文查询" targetForm="com.bestway.client.owp.FmOwpMessageQuery" />
+	</link>
+	<link caption="外经系统(三资)交换接口" id="WaiJingSanZiJiaoHuanJieKou"
+		targetForm="">
+		<link caption="外经系统连接设置" targetForm="com.bestway.wjsz.client.FmWjszParaSet">
+		</link>
+		<link caption="凭证资料数据交换" targetForm="com.bestway.wjsz.client.FmSBaseDataHead">
+		</link>
+		<link caption="合同资料数据交换" targetForm="com.bestway.wjsz.client.FmSContractHead">
+		</link>
+		<link caption="企业管理" targetForm="">
+			<link caption="公司设置" targetForm="com.bestway.jptds.system.client.FmCompany" />
+			<link caption="数据同步" targetForm="com.bestway.jptds.system.client.DgSyncData" />
+			<link caption="参数设置" targetForm="com.bestway.jptds.system.client.FmParameterSet" />
+		</link>
+		<link caption="用户设置" targetForm="">
+			<link caption="修改密码"
+				targetForm="com.bestway.jptds.acluser.client.DgCorpChangePassword" />
+		</link>
+		<link caption="基础参数" targetForm="">
+			<link caption="基础参数"
+				targetForm="com.bestway.jptds.custombase.client.FmParametersSetup" />
+			<link caption="管制类商品"
+				targetForm="com.bestway.jptds.custombase.client.FmRestrictionsGoods" />
+		</link>
+		<link caption="凭证管理" targetForm="">
+			<link caption="料件审批凭证" targetForm="com.bestway.jptds.credence.client.FmImgAppCrede" />
+			<link caption="成品审批凭证" targetForm="com.bestway.jptds.credence.client.FmExgAppCrede" />
+			<link caption="导入凭证数据"
+				targetForm="com.bestway.jptds.credence.client.FmCredenceImportNew" />
+		</link>
+		<link caption="合同管理" targetForm="">
+			<link caption="合同申报" targetForm="com.bestway.jptds.contract.client.FmContract" />
+		</link>
+		<link caption="内销管理" targetForm="">
+			<link caption="内销申报" targetForm="com.bestway.jptds.salein.client.FmSaleIn" />
+			<link caption="帐册内销" targetForm="com.bestway.jptds.salein.client.FmEmsSaleIn" />
+		</link>
+		<link caption="企业通知" targetForm="">
+			<link caption="企业通知" targetForm="com.bestway.jptds.system.client.FmMailInfo" />
+		</link>
+		<link caption="报文回执管理" targetForm="">
+			<link caption="报文回执查询"
+				targetForm="com.bestway.jptds.message.client.FmCspMessageQuery" />
+		</link>
+	</link>
+	<link caption="自定义报表" id="ZiDingYiBaoBiao" targetForm="">
+		<link caption="报表查询"
+			targetForm="com.bestway.common.client.aptitudereport.FmReportQuery" />
+		<link caption="报表统计图表分析"
+			targetForm="com.bestway.common.client.aptitudereport.FmReportStatQuery" />
+
+	</link>
+	<link caption="预警管理" id="YuJingGuanLi" targetForm="">
+		<link caption="预警项目" targetForm="com.bestway.common.client.warning.FmWarningItem" />
+		<link caption="计划任务" targetForm="com.bestway.common.client.warning.FmPlanTask" />
+	</link>
+	<link caption="数据导入接口" id="ShuJuDaoRuJieKou" targetForm="">
+		<link caption="DB导入管理" targetForm="com.bestway.common.client.dataimport.FmDBImport" />
+		<link caption="文本导入管理" targetForm="com.bestway.common.client.dataimport.FmTxtImport" />
+		<link caption="老系统切换接口"
+			targetForm="com.bestway.common.client.dataimport.FmOldBcsImport" />
+	</link>
+	<link caption="数据导出接口" id="ShuJuDaoChuJieKou" targetForm="">
+		<link caption="DB导出管理" targetForm="com.bestway.common.client.dataexport.FmDBExport" />
+		<link caption="文本导出管理" targetForm="com.bestway.common.client.dataexport.FmTxtExport" />
+	</link>
+	<link caption="远程打单" id="YuanChengDaDan" targetForm="">
+		<link caption="远程打单" targetForm="com.bestway.common.client.tools.FmReportTool" />
+	</link>
+	<link caption="二次开发平台" id="GuanLiGongJu" targetForm="">
+		<link caption="数据查询" targetForm="com.bestway.common.client.tools.FmQueryTool" />
+		<link caption="数据字典" targetForm="com.bestway.common.client.tools.FmDataDict" />
+		<link caption="程式插件" targetForm="com.bestway.common.client.tools.FmPlugin" />
+	</link>
+	
+	<link caption="发送报关行" id="pis" targetForm="" defaultSelect="true">
+		<link caption="同步资料" targetForm="com.bestway.pis.sync.FmPisSync" />
+		<link caption="进出口报关单" targetForm="">
+			<link caption="进口报关单" targetForm="com.bestway.pis.dec.FmPisImpDecHead" />
+			<link caption="出口报关单" targetForm="com.bestway.pis.dec.FmPisExpDecHead" />
+		</link>
+		<link caption="一般贸易报关单" targetForm="" >
+			<link caption="特殊报关单" targetForm="com.bestway.pis.dec.FmPisSpecialDecHead" />
+		</link>
+		<link caption="进度查询" targetForm="com.bestway.pis.dec.FmDecProcessQuery" />
+	</link>
+	
+</root>

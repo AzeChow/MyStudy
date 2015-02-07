@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<project name="report" default="compile" basedir=".">
+	<target name="compile">
+		<property name="jbcus.bin" value="${basedir}/../jbcus3/bin" />
+		<property name="jbcusclient.bin" value="${basedir}/../jbcusclient/bin" />
+		<!--<property name="javaLib.dir" value="${basedir}/../JavaLib3" />-->
+		<property name="iReport.dir" value="${basedir}/../iReport/lib" />
+		<path id="classpath">
+			<pathelement location="${jbcus.bin}" />
+			<pathelement location="${jbcusclient.bin}" />
+			<!--<fileset dir="${javaLib.dir}">
+				<include name="**/*.jar"/>
+			</fileset>-->
+			<fileset dir="${iReport.dir}">
+				<include name="**/*.jar"/>
+			</fileset>
+		</path>
+		<taskdef name="jrc" 
+			classname="com.bestway.bcus.client.AutoCompileReport">
+			<classpath refid="classpath"/>
+		</taskdef>
+		<jrc destdir="./">
+			<src>
+				<fileset dir="./src">
+					<include name="**/*.jrxml"/>
+				</fileset>
+			</src>
+			<classpath refid="classpath"/>
+		</jrc>
+	</target>
+</project>
