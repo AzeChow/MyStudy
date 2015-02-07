@@ -1,0 +1,774 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="FmFptImpExpStatReport"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Landscape"
+		 pageWidth="842"
+		 pageHeight="595"
+		 columnWidth="782"
+		 columnSpacing="0"
+		 leftMargin="30"
+		 rightMargin="30"
+		 topMargin="20"
+		 bottomMargin="20"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<parameter name="scmcoc" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="beginDate" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="endDate" isForPrompting="false" class="java.lang.String"/>
+
+	<field name="addType" class="java.lang.String">
+		<fieldDescription><![CDATA[addType]]></fieldDescription>
+	</field>
+	<field name="baseCustomsDeclaration" class="com.bestway.customs.common.entity.BaseCustomsDeclaration">
+		<fieldDescription><![CDATA[baseCustomsDeclaration]]></fieldDescription>
+	</field>
+	<field name="class" class="java.lang.Class">
+		<fieldDescription><![CDATA[class]]></fieldDescription>
+	</field>
+	<field name="commAmount" class="java.lang.String">
+		<fieldDescription><![CDATA[commAmount]]></fieldDescription>
+	</field>
+	<field name="commName" class="java.lang.String">
+		<fieldDescription><![CDATA[commName]]></fieldDescription>
+	</field>
+	<field name="commSerialNo" class="java.lang.String">
+		<fieldDescription><![CDATA[commSerialNo]]></fieldDescription>
+	</field>
+	<field name="commSpec" class="java.lang.String">
+		<fieldDescription><![CDATA[commSpec]]></fieldDescription>
+	</field>
+	<field name="commTotalPrice" class="java.lang.Double">
+		<fieldDescription><![CDATA[commTotalPrice]]></fieldDescription>
+	</field>
+	<field name="commUnitPrice" class="java.lang.Double">
+		<fieldDescription><![CDATA[commUnitPrice]]></fieldDescription>
+	</field>
+	<field name="company" class="com.bestway.common.authority.entity.BaseCompany">
+		<fieldDescription><![CDATA[company]]></fieldDescription>
+	</field>
+	<field name="complex" class="com.bestway.bcus.custombase.entity.hscode.Complex">
+		<fieldDescription><![CDATA[complex]]></fieldDescription>
+	</field>
+	<field name="country" class="com.bestway.bcus.custombase.entity.countrycode.Country">
+		<fieldDescription><![CDATA[country]]></fieldDescription>
+	</field>
+	<field name="createDate" class="java.util.Date">
+		<fieldDescription><![CDATA[createDate]]></fieldDescription>
+	</field>
+	<field name="declarationCompany" class="com.bestway.bcus.system.entity.Company">
+		<fieldDescription><![CDATA[declarationCompany]]></fieldDescription>
+	</field>
+	<field name="detailNote" class="java.lang.String">
+		<fieldDescription><![CDATA[detailNote]]></fieldDescription>
+	</field>
+	<field name="dollarTotalPrice" class="java.lang.Double">
+		<fieldDescription><![CDATA[dollarTotalPrice]]></fieldDescription>
+	</field>
+	<field name="firstAmount" class="java.lang.Double">
+		<fieldDescription><![CDATA[firstAmount]]></fieldDescription>
+	</field>
+	<field name="grossWeight" class="java.lang.Double">
+		<fieldDescription><![CDATA[grossWeight]]></fieldDescription>
+	</field>
+	<field name="id" class="java.lang.String">
+		<fieldDescription><![CDATA[id]]></fieldDescription>
+	</field>
+	<field name="isSelected" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[isSelected]]></fieldDescription>
+	</field>
+	<field name="legalUnit" class="com.bestway.bcus.custombase.entity.parametercode.Unit">
+		<fieldDescription><![CDATA[legalUnit]]></fieldDescription>
+	</field>
+	<field name="legalUnit2Gene" class="java.lang.Double">
+		<fieldDescription><![CDATA[legalUnit2Gene]]></fieldDescription>
+	</field>
+	<field name="legalUnitGene" class="java.lang.Double">
+		<fieldDescription><![CDATA[legalUnitGene]]></fieldDescription>
+	</field>
+	<field name="levyMode" class="com.bestway.bcus.custombase.entity.parametercode.LevyMode">
+		<fieldDescription><![CDATA[levyMode]]></fieldDescription>
+	</field>
+	<field name="materielNo" class="java.lang.String">
+		<fieldDescription><![CDATA[materielNo]]></fieldDescription>
+	</field>
+	<field name="modifyDate" class="java.util.Date">
+		<fieldDescription><![CDATA[modifyDate]]></fieldDescription>
+	</field>
+	<field name="netWeight" class="java.lang.Double">
+		<fieldDescription><![CDATA[netWeight]]></fieldDescription>
+	</field>
+	<field name="pieces" class="java.lang.Integer">
+		<fieldDescription><![CDATA[pieces]]></fieldDescription>
+	</field>
+	<field name="projectDept" class="com.bestway.common.materialbase.entity.ProjectDept">
+		<fieldDescription><![CDATA[projectDept]]></fieldDescription>
+	</field>
+	<field name="secondAmount" class="java.lang.Double">
+		<fieldDescription><![CDATA[secondAmount]]></fieldDescription>
+	</field>
+	<field name="secondLegalUnit" class="com.bestway.bcus.custombase.entity.parametercode.Unit">
+		<fieldDescription><![CDATA[secondLegalUnit]]></fieldDescription>
+	</field>
+	<field name="serialNumber" class="java.lang.Integer">
+		<fieldDescription><![CDATA[serialNumber]]></fieldDescription>
+	</field>
+	<field name="tempName" class="java.lang.String">
+		<fieldDescription><![CDATA[tempName]]></fieldDescription>
+	</field>
+	<field name="unit" class="com.bestway.bcus.custombase.entity.parametercode.Unit">
+		<fieldDescription><![CDATA[unit]]></fieldDescription>
+	</field>
+	<field name="unitWeight" class="java.lang.Double">
+		<fieldDescription><![CDATA[unitWeight]]></fieldDescription>
+	</field>
+	<field name="uses" class="com.bestway.bcus.custombase.entity.parametercode.Uses">
+		<fieldDescription><![CDATA[uses]]></fieldDescription>
+	</field>
+	<field name="version" class="java.lang.String">
+		<fieldDescription><![CDATA[version]]></fieldDescription>
+	</field>
+	<field name="unitName" class="java.lang.String">
+		<fieldDescription><![CDATA[unit.name]]></fieldDescription>
+	</field>
+	<field name="complexCode" class="java.lang.String">
+		<fieldDescription><![CDATA[complex.code]]></fieldDescription>
+	</field>
+	<field name="customerName" class="java.lang.String">
+		<fieldDescription><![CDATA[baseCustomsDeclaration.customer.brief.name]]></fieldDescription>
+	</field>
+	<field name="impExpType" class="java.lang.String">
+		<fieldDescription><![CDATA[baseCustomsDeclaration.impExpType
+]]></fieldDescription>
+	</field>
+	<field name="declarationDate" class="java.lang.String">
+		<fieldDescription><![CDATA[baseCustomsDeclaration.declarationDate]]></fieldDescription>
+	</field>
+
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="50"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="286"
+						y="10"
+						width="173"
+						height="22"
+						key="staticText-1"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font size="16"/>
+					</textElement>
+				<text><![CDATA[深加工结转报关明细表]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="3"
+						y="33"
+						width="51"
+						height="17"
+						key="staticText-16"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<text><![CDATA[公司名称：]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="57"
+						y="34"
+						width="162"
+						height="16"
+						key="textField-13"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{scmcoc}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="568"
+						y="34"
+						width="51"
+						height="16"
+						key="staticText-17"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<text><![CDATA[收货日期：]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="698"
+						y="34"
+						width="15"
+						height="16"
+						key="staticText-18"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<text><![CDATA[至]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="yyyy-MM-dd" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="621"
+						y="33"
+						width="74"
+						height="17"
+						key="textField-14"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{beginDate}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="yyyy-MM-dd" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="717"
+						y="33"
+						width="65"
+						height="17"
+						key="textField-15"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{endDate}]]></textFieldExpression>
+				</textField>
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="28"  isSplitAllowed="false" >
+				<staticText>
+					<reportElement
+						x="5"
+						y="3"
+						width="74"
+						height="19"
+						key="staticText-2"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<text><![CDATA[申报日期]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="83"
+						y="4"
+						width="86"
+						height="19"
+						key="staticText-3"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<text><![CDATA[报关单类型]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="179"
+						y="4"
+						width="51"
+						height="19"
+						key="staticText-4"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<text><![CDATA[手册序号]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="264"
+						y="4"
+						width="76"
+						height="19"
+						key="staticText-5"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<text><![CDATA[客户/供应商]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="372"
+						y="4"
+						width="65"
+						height="19"
+						key="staticText-6"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<text><![CDATA[商品编码]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="478"
+						y="4"
+						width="66"
+						height="19"
+						key="staticText-7"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<text><![CDATA[商品名称]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="556"
+						y="4"
+						width="77"
+						height="19"
+						key="staticText-8"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<text><![CDATA[商品规格]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="646"
+						y="4"
+						width="36"
+						height="19"
+						key="staticText-9"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<text><![CDATA[单位]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="708"
+						y="4"
+						width="40"
+						height="19"
+						key="staticText-10"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<text><![CDATA[数量]]></text>
+				</staticText>
+				<line direction="TopDown">
+					<reportElement
+						x="2"
+						y="1"
+						width="0"
+						height="27"
+						key="line-5"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="684"
+						y="1"
+						width="0"
+						height="27"
+						key="line-6"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="643"
+						y="1"
+						width="0"
+						height="27"
+						key="line-7"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="549"
+						y="1"
+						width="0"
+						height="27"
+						key="line-8"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="444"
+						y="1"
+						width="0"
+						height="27"
+						key="line-9"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="365"
+						y="1"
+						width="0"
+						height="27"
+						key="line-10"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="238"
+						y="1"
+						width="0"
+						height="27"
+						key="line-11"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="170"
+						y="1"
+						width="0"
+						height="27"
+						key="line-12"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="81"
+						y="1"
+						width="0"
+						height="27"
+						key="line-13"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="775"
+						y="1"
+						width="0"
+						height="27"
+						key="line-15"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="2"
+						y="0"
+						width="774"
+						height="0"
+						key="line-28"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="2"
+						y="27"
+						width="774"
+						height="0"
+						key="line-26"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="27"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="448"
+						y="2"
+						width="97"
+						height="21"
+						key="textField-2"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{commName}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="556"
+						y="3"
+						width="82"
+						height="21"
+						key="textField-9"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{commSpec}]]></textFieldExpression>
+				</textField>
+				<line direction="TopDown">
+					<reportElement
+						x="2"
+						y="0"
+						width="0"
+						height="27"
+						key="line-14"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="775"
+						y="0"
+						width="0"
+						height="27"
+						key="line-16"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="684"
+						y="0"
+						width="0"
+						height="27"
+						key="line-17"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="643"
+						y="0"
+						width="0"
+						height="27"
+						key="line-18"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="549"
+						y="0"
+						width="0"
+						height="27"
+						key="line-19"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="444"
+						y="0"
+						width="0"
+						height="27"
+						key="line-20"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="365"
+						y="0"
+						width="0"
+						height="27"
+						key="line-21"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="238"
+						y="0"
+						width="0"
+						height="27"
+						key="line-22"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="170"
+						y="0"
+						width="0"
+						height="27"
+						key="line-23"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="81"
+						y="0"
+						width="0"
+						height="27"
+						key="line-24"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="2"
+						y="26"
+						width="774"
+						height="0"
+						key="line-25"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="646"
+						y="2"
+						width="38"
+						height="21"
+						key="textField-16"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{unitName}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="366"
+						y="2"
+						width="76"
+						height="21"
+						key="textField-17"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Justified" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{complexCode}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="239"
+						y="2"
+						width="125"
+						height="21"
+						key="textField-18"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Justified" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{customerName}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="684"
+						y="2"
+						width="89"
+						height="21"
+						key="textField-20"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{commAmount}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="172"
+						y="2"
+						width="66"
+						height="19"
+						key="textField-22"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{commSerialNo}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="84"
+						y="3"
+						width="82"
+						height="19"
+						key="textField-23"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Justified" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[com.bestway.common.constant.ImpExpType.getImpExpTypeDesc(Integer.valueOf($F{impExpType}==null?"1":$F{impExpType}).intValue())]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="yyyy-MM-dd" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="4"
+						y="5"
+						width="71"
+						height="19"
+						key="textField-24"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Justified" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{declarationDate}]]></textFieldExpression>
+				</textField>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="30"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="646"
+						y="2"
+						width="56"
+						height="19"
+						key="staticText-11"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[打印时间：]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="517"
+						y="3"
+						width="60"
+						height="18"
+						key="textField"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["共 " + $V{PAGE_NUMBER} + " 页 "]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Report" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="584"
+						y="3"
+						width="65"
+						height="18"
+						key="textField"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["当前第" + $V{PAGE_NUMBER} + "页"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="yyyy.MM.dd HH:mm" isBlankWhenNull="false" evaluationTime="Report" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="694"
+						y="2"
+						width="86"
+						height="19"
+						key="textField"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

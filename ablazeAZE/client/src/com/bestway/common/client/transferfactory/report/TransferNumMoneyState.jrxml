@@ -1,0 +1,811 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="TransferNumMoneyState"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Landscape"
+		 pageWidth="842"
+		 pageHeight="595"
+		 columnWidth="535"
+		 columnSpacing="0"
+		 leftMargin="30"
+		 rightMargin="30"
+		 topMargin="20"
+		 bottomMargin="20"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<parameter name="printDate" isForPrompting="false" class="java.lang.String">
+		<parameterDescription><![CDATA[printDate]]></parameterDescription>
+	</parameter>
+	<parameter name="imgExgDS" isForPrompting="false" class="net.sf.jasperreports.engine.JREmptyDataSource"/>
+	<parameter name="detailReport" isForPrompting="false" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="year" isForPrompting="false" class="java.lang.String">
+		<parameterDescription><![CDATA[year]]></parameterDescription>
+	</parameter>
+	<parameter name="year1" isForPrompting="false" class="java.lang.String">
+		<parameterDescription><![CDATA[year1]]></parameterDescription>
+	</parameter>
+
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="33"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="244"
+						y="0"
+						width="288"
+						height="20"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-26"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H" isStrikeThrough="false" />
+					</textElement>
+				<text><![CDATA[公司送货&报关数量/金额对照表]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="2"
+						y="17"
+						width="253"
+						height="16"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-23"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Trade Code:TRP   Year:"+$P{year}+"   Currency:USD"]]></textFieldExpression>
+				</textField>
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="23"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="115"
+						y="8"
+						width="49"
+						height="9"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-24"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="7" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["承接("+$P{year1}+")"]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="585"
+						y="8"
+						width="41"
+						height="9"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-5"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="7" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H" isStrikeThrough="false" />
+					</textElement>
+				<text><![CDATA[NOV]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="544"
+						y="8"
+						width="41"
+						height="9"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-6"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="7" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H" isStrikeThrough="false" />
+					</textElement>
+				<text><![CDATA[OCT]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="502"
+						y="8"
+						width="41"
+						height="9"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-7"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="7" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H" isStrikeThrough="false" />
+					</textElement>
+				<text><![CDATA[SEP]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="460"
+						y="8"
+						width="41"
+						height="9"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-8"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="7" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H" isStrikeThrough="false" />
+					</textElement>
+				<text><![CDATA[AUG]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="418"
+						y="8"
+						width="41"
+						height="9"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-9"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="7" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H" isStrikeThrough="false" />
+					</textElement>
+				<text><![CDATA[JUL]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="376"
+						y="8"
+						width="41"
+						height="9"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-10"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="7" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H" isStrikeThrough="false" />
+					</textElement>
+				<text><![CDATA[JUN]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="74"
+						y="8"
+						width="18"
+						height="9"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-13"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="7" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H" isStrikeThrough="false" />
+					</textElement>
+				<text><![CDATA[单位]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="36"
+						y="8"
+						width="38"
+						height="9"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-14"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="7" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H" isStrikeThrough="false" />
+					</textElement>
+				<text><![CDATA[商品编码]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="1"
+						y="8"
+						width="38"
+						height="9"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-15"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="7" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H" isStrikeThrough="false" />
+					</textElement>
+				<text><![CDATA[厂商名称]]></text>
+				</staticText>
+				<line direction="TopDown">
+					<reportElement
+						mode="Opaque"
+						x="0"
+						y="2"
+						width="782"
+						height="0"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="line-10"/>
+					<graphicElement stretchType="NoStretch" fill="Solid" />
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						mode="Opaque"
+						x="0"
+						y="22"
+						width="782"
+						height="0"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="line-11"/>
+					<graphicElement stretchType="NoStretch" fill="Solid" />
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						mode="Opaque"
+						x="0"
+						y="3"
+						width="0"
+						height="20"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="line-14"/>
+					<graphicElement stretchType="NoStretch" fill="Solid" />
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						mode="Opaque"
+						x="503"
+						y="2"
+						width="1"
+						height="20"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="line-15"/>
+					<graphicElement stretchType="NoStretch" fill="Solid" />
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						mode="Opaque"
+						x="462"
+						y="3"
+						width="0"
+						height="19"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="line-17"/>
+					<graphicElement stretchType="NoStretch" fill="Solid" />
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						mode="Opaque"
+						x="419"
+						y="3"
+						width="1"
+						height="19"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="line-19"/>
+					<graphicElement stretchType="NoStretch" fill="Solid" />
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						mode="Opaque"
+						x="166"
+						y="3"
+						width="0"
+						height="19"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="line-21"/>
+					<graphicElement stretchType="NoStretch" fill="Solid" />
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						mode="Opaque"
+						x="116"
+						y="3"
+						width="0"
+						height="19"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="line-28"/>
+					<graphicElement stretchType="NoStretch" fill="Solid" />
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						mode="Opaque"
+						x="74"
+						y="2"
+						width="0"
+						height="19"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="line-29"/>
+					<graphicElement stretchType="NoStretch" fill="Solid" />
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						mode="Opaque"
+						x="37"
+						y="2"
+						width="0"
+						height="19"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="line-30"/>
+					<graphicElement stretchType="NoStretch" fill="Solid" />
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						mode="Opaque"
+						x="781"
+						y="3"
+						width="0"
+						height="20"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="line-31"/>
+					<graphicElement stretchType="NoStretch" fill="Solid" />
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						mode="Opaque"
+						x="588"
+						y="3"
+						width="0"
+						height="19"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="line-33"/>
+					<graphicElement stretchType="NoStretch" fill="Solid" />
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						mode="Opaque"
+						x="546"
+						y="3"
+						width="0"
+						height="19"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="line-37"/>
+					<graphicElement stretchType="NoStretch" fill="Solid" />
+				</line>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="333"
+						y="8"
+						width="41"
+						height="9"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-20"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="7" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H" isStrikeThrough="false" />
+					</textElement>
+				<text><![CDATA[MAY]]></text>
+				</staticText>
+				<line direction="TopDown">
+					<reportElement
+						mode="Opaque"
+						x="377"
+						y="3"
+						width="0"
+						height="19"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="line-38"/>
+					<graphicElement stretchType="NoStretch" fill="Solid" />
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						mode="Opaque"
+						x="631"
+						y="2"
+						width="0"
+						height="20"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="line-40"/>
+					<graphicElement stretchType="NoStretch" fill="Solid" />
+				</line>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="632"
+						y="8"
+						width="41"
+						height="9"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-21"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="7" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H" isStrikeThrough="false" />
+					</textElement>
+				<text><![CDATA[DEC]]></text>
+				</staticText>
+				<line direction="TopDown">
+					<reportElement
+						mode="Opaque"
+						x="335"
+						y="3"
+						width="0"
+						height="19"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="line-41"/>
+					<graphicElement stretchType="NoStretch" fill="Solid" />
+				</line>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="292"
+						y="8"
+						width="41"
+						height="9"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-30"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="7" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H" isStrikeThrough="false" />
+					</textElement>
+				<text><![CDATA[APR]]></text>
+				</staticText>
+				<line direction="TopDown">
+					<reportElement
+						mode="Opaque"
+						x="292"
+						y="3"
+						width="0"
+						height="19"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="line-42"/>
+					<graphicElement stretchType="NoStretch" fill="Solid" />
+				</line>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="251"
+						y="8"
+						width="41"
+						height="9"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-31"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="7" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H" isStrikeThrough="false" />
+					</textElement>
+				<text><![CDATA[MAR]]></text>
+				</staticText>
+				<line direction="TopDown">
+					<reportElement
+						mode="Opaque"
+						x="251"
+						y="3"
+						width="0"
+						height="19"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="line-43"/>
+					<graphicElement stretchType="NoStretch" fill="Solid" />
+				</line>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="210"
+						y="8"
+						width="41"
+						height="9"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-32"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="7" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H" isStrikeThrough="false" />
+					</textElement>
+				<text><![CDATA[FEB]]></text>
+				</staticText>
+				<line direction="TopDown">
+					<reportElement
+						mode="Opaque"
+						x="209"
+						y="3"
+						width="0"
+						height="19"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="line-44"/>
+					<graphicElement stretchType="NoStretch" fill="Solid" />
+				</line>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="166"
+						y="8"
+						width="41"
+						height="9"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-33"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="7" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H" isStrikeThrough="false" />
+					</textElement>
+				<text><![CDATA[JUN]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="94"
+						y="8"
+						width="20"
+						height="9"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-34"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="7" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H" isStrikeThrough="false" />
+					</textElement>
+				<text><![CDATA[类别]]></text>
+				</staticText>
+				<line direction="TopDown">
+					<reportElement
+						mode="Opaque"
+						x="92"
+						y="3"
+						width="0"
+						height="19"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="line-45"/>
+					<graphicElement stretchType="NoStretch" fill="Solid" />
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						mode="Opaque"
+						x="674"
+						y="3"
+						width="0"
+						height="20"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="line-46"/>
+					<graphicElement stretchType="NoStretch" fill="Solid" />
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						mode="Opaque"
+						x="728"
+						y="3"
+						width="0"
+						height="20"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="line-47"/>
+					<graphicElement stretchType="NoStretch" fill="Solid" />
+				</line>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="676"
+						y="8"
+						width="41"
+						height="9"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-35"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="7" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H" isStrikeThrough="false" />
+					</textElement>
+				<text><![CDATA[本年度合计]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="733"
+						y="8"
+						width="41"
+						height="9"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-36"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="7" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H" isStrikeThrough="false" />
+					</textElement>
+				<text><![CDATA[总累计]]></text>
+				</staticText>
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="16"  isSplitAllowed="true" >
+				<subreport  isUsingCache="true">
+					<reportElement
+						mode="Opaque"
+						x="0"
+						y="0"
+						width="781"
+						height="16"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="subreport-1"/>
+					<dataSourceExpression><![CDATA[$P{imgExgDS}]]></dataSourceExpression>
+					<subreportExpression  class="net.sf.jasperreports.engine.JasperReport"><![CDATA[$P{detailReport}]]></subreportExpression>
+				</subreport>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="16"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="13"
+						y="1"
+						width="56"
+						height="15"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-16"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="7" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H" isStrikeThrough="false" />
+					</textElement>
+				<text><![CDATA[打印日期]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="76"
+						y="0"
+						width="180"
+						height="16"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-18"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="7" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{printDate}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="515"
+						y="1"
+						width="13"
+						height="15"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-22"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="7" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H" isStrikeThrough="false" />
+					</textElement>
+				<text><![CDATA[第]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="553"
+						y="1"
+						width="13"
+						height="15"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-23"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="7" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H" isStrikeThrough="false" />
+					</textElement>
+				<text><![CDATA[页]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="568"
+						y="1"
+						width="13"
+						height="15"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-24"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="7" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H" isStrikeThrough="false" />
+					</textElement>
+				<text><![CDATA[共]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="599"
+						y="1"
+						width="13"
+						height="15"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="staticText-25"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="7" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H" isStrikeThrough="false" />
+					</textElement>
+				<text><![CDATA[页]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="529"
+						y="1"
+						width="21"
+						height="14"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-21"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="7" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Report" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="582"
+						y="1"
+						width="15"
+						height="14"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-22"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="7" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

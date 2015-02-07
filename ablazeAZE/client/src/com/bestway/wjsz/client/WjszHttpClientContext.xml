@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+	"http://www.springframework.org/dtd/spring-beans.dtd">
+<!--
+  - Application context for the remote OrderService client.
+	- Defines various OrderService proxies to be called by OrderServiceClient.
+	-->
+<beans>
+    <bean id="propertyConfigurer"
+		class="com.bestway.wjsz.client.SCustomPropertyPlaceholderConfigurer">
+        <property name="location">
+            <value>client.properties</value>
+        </property>
+        <property name="ignoreResourceNotFound">
+            <value>true</value>
+        </property>
+    </bean>
+    <bean id="aclUserAction"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+        <property name="serviceUrl">
+            <value>
+				http://${wjszServerName}:${wjszHttpPort}${wjszContextPath}/http/aclUserAction-http
+            </value>
+        </property>
+        <property name="serviceInterface">
+            <value>com.bestway.jptds.acluser.action.AclUserAction</value>
+        </property>
+    </bean>
+    <bean id="contractAction"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+        <property name="serviceUrl">
+            <value>
+				http://${wjszServerName}:${wjszHttpPort}${wjszContextPath}/http/contractAction-http
+            </value>
+        </property>
+        <property name="serviceInterface">
+            <value>com.bestway.jptds.contract.action.ContractAction</value>
+        </property>
+    </bean>
+    <bean id="saleInAction"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+        <property name="serviceUrl">
+            <value>
+				http://${wjszServerName}:${wjszHttpPort}${wjszContextPath}/http/saleInAction-http
+            </value>
+        </property>
+        <property name="serviceInterface">
+            <value>com.bestway.jptds.salein.action.SaleInAction</value>
+        </property>
+    </bean>
+    <bean id="customBaseAction"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+        <property name="serviceUrl">
+            <value>
+				http://${wjszServerName}:${wjszHttpPort}${wjszContextPath}/http/customBaseAction-http
+            </value>
+        </property>
+        <property name="serviceInterface">
+            <value>com.bestway.jptds.custombase.action.CustomBaseAction</value>
+        </property>
+    </bean>
+    <bean id="cspMessageAction"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+        <property name="serviceUrl">
+            <value>
+				http://${wjszServerName}:${wjszHttpPort}${wjszContextPath}/http/cspMessageAction-http
+            </value>
+        </property>
+        <property name="serviceInterface">
+            <value>com.bestway.jptds.message.action.CspMessageAction</value>
+        </property>
+    </bean>
+    <bean id="systemAction"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+        <property name="serviceInterface">
+            <value>com.bestway.jptds.system.action.SystemAction</value>
+        </property>
+        <property name="serviceUrl">
+            <value>
+				http://${wjszServerName}:${wjszHttpPort}${wjszContextPath}/http/systemAction-http
+            </value>
+        </property>
+    </bean>
+    <bean id="credenceAction"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+        <property name="serviceInterface">
+            <value>com.bestway.jptds.credence.action.CredenceAction</value>
+        </property>
+        <property name="serviceUrl">
+            <value>
+				http://${wjszServerName}:${wjszHttpPort}${wjszContextPath}/http/credenceAction-http
+            </value>
+        </property>
+    </bean>
+    <bean id="parameterSetAction"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+        <property name="serviceInterface">
+            <value>com.bestway.jptds.parameterset.action.ParameterSetAction</value>
+        </property>
+        <property name="serviceUrl">
+            <value>
+				http://${wjszServerName}:${wjszHttpPort}${wjszContextPath}/http/parameterSetAction-http
+            </value>
+        </property>
+    </bean>
+</beans>

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="erpBillReportTwo"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="595"
+		 pageHeight="842"
+		 columnWidth="595"
+		 columnSpacing="0"
+		 leftMargin="0"
+		 rightMargin="0"
+		 topMargin="0"
+		 bottomMargin="0"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<parameter name="SUBREPORT_DIR" isForPrompting="true" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["E:\\program\\jbcusclient\\src\\com\\bestway\\common\\client\\erpbillcenter\\specificontrol\\report\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dsA" isForPrompting="false" class="net.sf.jasperreports.engine.JREmptyDataSource"/>
+	<parameter name="dsB" isForPrompting="false" class="net.sf.jasperreports.engine.JREmptyDataSource"/>
+	<parameter name="subReportA" isForPrompting="false" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="subReportB" isForPrompting="false" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="isShow" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="billTypeA" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="billTypeB" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="validDateA" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="validDateB" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="billNoA" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="billNoB" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="scmCocA" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="scmCocB" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="currentPageA" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="currentPageB" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="allPageB" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="allPageA" isForPrompting="false" class="java.lang.String"/>
+
+	<field name="billNo" class="java.lang.String">
+		<fieldDescription><![CDATA[billNo]]></fieldDescription>
+	</field>
+	<field name="id" class="java.lang.String">
+		<fieldDescription><![CDATA[id]]></fieldDescription>
+	</field>
+
+
+		<group  name="11" >
+			<groupExpression><![CDATA[null]]></groupExpression>
+			<groupHeader>
+			<band height="57"  isSplitAllowed="true" >
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="3"
+						y="0"
+						width="462"
+						height="50"
+						key="subreport-2"/>
+					<subreportParameter  name="currentPage">
+						<subreportParameterExpression><![CDATA[$P{currentPageA}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="allPage">
+						<subreportParameterExpression><![CDATA[$P{allPageA}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="id">
+						<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
+					</subreportParameter>
+					<dataSourceExpression><![CDATA[$P{dsA}]]></dataSourceExpression>
+					<subreportExpression  class="net.sf.jasperreports.engine.JasperReport"><![CDATA[$P{subReportA}]]></subreportExpression>
+				</subreport>
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="52"  isSplitAllowed="true" >
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="3"
+						y="1"
+						width="463"
+						height="50"
+						key="subreport-1">
+							<printWhenExpression><![CDATA["true".equals($P{isShow})?new Boolean(true):new Boolean (false)]]></printWhenExpression>
+						</reportElement>
+					<subreportParameter  name="allPage">
+						<subreportParameterExpression><![CDATA[$P{allPageB}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="currentPage">
+						<subreportParameterExpression><![CDATA[$P{currentPageB}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="id">
+						<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
+					</subreportParameter>
+					<dataSourceExpression><![CDATA[$P{dsB}]]></dataSourceExpression>
+					<subreportExpression  class="net.sf.jasperreports.engine.JasperReport"><![CDATA[$P{subReportB}]]></subreportExpression>
+				</subreport>
+			</band>
+			</groupFooter>
+		</group>
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

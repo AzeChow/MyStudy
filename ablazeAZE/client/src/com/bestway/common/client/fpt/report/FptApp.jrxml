@@ -1,0 +1,1352 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="FptApp"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Landscape"
+		 pageWidth="842"
+		 pageHeight="595"
+		 columnWidth="782"
+		 columnSpacing="0"
+		 leftMargin="30"
+		 rightMargin="30"
+		 topMargin="20"
+		 bottomMargin="20"
+		 whenNoDataType="AllSectionsNoDetail"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<parameter name="appNo" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="seqNo" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="printDate" isForPrompting="false" class="java.util.Date">
+		<defaultValueExpression ><![CDATA[new Date()]]></defaultValueExpression>
+	</parameter>
+	<parameter name="outTradeName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="outCopAppNo" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="outCorp" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="outDate" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="appClass" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="outCustoms.name" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="outDistrict.name" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="outLiceNo" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="contrNo" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="inCopAppNo" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="inTradeName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="inCorp" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="inDate" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="inCustoms.name" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="inDistrict.name" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="inLiceNo" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="inAgentName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="conveyDay" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="outAgentCode" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="conveySpa" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="subReportImp" isForPrompting="false" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="subReportExp" isForPrompting="false" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="dsExp" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="dsImp" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="outTradeCode" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="inTradeCode" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="endDate" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="outAgentName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="inAgentCode" isForPrompting="false" class="java.lang.String"/>
+	<queryString><![CDATA[select * from fptappitem]]></queryString>
+
+	<field name="listNo" class="java.lang.String">
+		<fieldDescription><![CDATA[listNo]]></fieldDescription>
+	</field>
+	<field name="trNo" class="java.lang.String">
+		<fieldDescription><![CDATA[trNo]]></fieldDescription>
+	</field>
+	<field name="codeTs" class="java.lang.String">
+		<fieldDescription><![CDATA[codeTs.code]]></fieldDescription>
+	</field>
+	<field name="name" class="java.lang.String">
+		<fieldDescription><![CDATA[name]]></fieldDescription>
+	</field>
+	<field name="spec" class="java.lang.String">
+		<fieldDescription><![CDATA[spec]]></fieldDescription>
+	</field>
+	<field name="unit" class="java.lang.String">
+		<fieldDescription><![CDATA[unit.name]]></fieldDescription>
+	</field>
+	<field name="qty" class="java.lang.String">
+		<fieldDescription><![CDATA[qty]]></fieldDescription>
+	</field>
+	<field name="unit1" class="java.lang.String">
+		<fieldDescription><![CDATA[unit1.name]]></fieldDescription>
+	</field>
+	<field name="qty1" class="java.lang.String">
+		<fieldDescription><![CDATA[qty1]]></fieldDescription>
+	</field>
+	<field name="fptAppHead" class="java.lang.String">
+		<fieldDescription><![CDATA[fptAppHead.emsNo]]></fieldDescription>
+	</field>
+	<field name="inOutNo" class="java.lang.String">
+		<fieldDescription><![CDATA[inOutNo]]></fieldDescription>
+	</field>
+	<field name="inEmsNo" class="java.lang.String">
+		<fieldDescription><![CDATA[inEmsNo]]></fieldDescription>
+	</field>
+	<field name="inOutFlag" class="java.lang.String">
+		<fieldDescription><![CDATA[inOutFlag]]></fieldDescription>
+	</field>
+	<field name="id" class="java.lang.String">
+		<fieldDescription><![CDATA[id]]></fieldDescription>
+	</field>
+	<field name="serialNumber" class="java.lang.String">
+		<fieldDescription><![CDATA[serialNumber]]></fieldDescription>
+	</field>
+
+	<variable name="RealPageNum" class="java.lang.Integer" resetType="Report" calculation="Nothing">
+		<variableExpression><![CDATA[$V{PAGE_NUMBER}]]></variableExpression>
+	</variable>
+
+		<group  name="inOutflag" isStartNewPage="true" >
+			<groupExpression><![CDATA[$F{inOutFlag}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="22"  isSplitAllowed="true" >
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="0"
+						y="0"
+						width="782"
+						height="21"
+						key="subreport-4"/>
+					<subreportParameter  name="appNo">
+						<subreportParameterExpression><![CDATA[$P{appNo}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="seqNo">
+						<subreportParameterExpression><![CDATA[$P{seqNo}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="printDate">
+						<subreportParameterExpression><![CDATA[$P{printDate}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="outTradeName">
+						<subreportParameterExpression><![CDATA[$P{outTradeName}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="outCopAppNo">
+						<subreportParameterExpression><![CDATA[$P{outCopAppNo}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="outCorp">
+						<subreportParameterExpression><![CDATA[$P{outCorp}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="outDate">
+						<subreportParameterExpression><![CDATA[$P{outDate}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="appClass">
+						<subreportParameterExpression><![CDATA[$P{appClass}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="outCustoms.name">
+						<subreportParameterExpression><![CDATA[$P{outCustoms.name}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="outDistrict.name">
+						<subreportParameterExpression><![CDATA[$P{outDistrict.name}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="outLiceNo">
+						<subreportParameterExpression><![CDATA[$P{outLiceNo}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="contrNo">
+						<subreportParameterExpression><![CDATA[$P{contrNo}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="inCopAppNo">
+						<subreportParameterExpression><![CDATA[$P{inCopAppNo}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="inTradeName">
+						<subreportParameterExpression><![CDATA[$P{inTradeName}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="inCorp">
+						<subreportParameterExpression><![CDATA[$P{inCorp}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="inDate">
+						<subreportParameterExpression><![CDATA[$P{inDate}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="inCustoms.name">
+						<subreportParameterExpression><![CDATA[$P{inCustoms.name}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="inDistrict.name">
+						<subreportParameterExpression><![CDATA[$P{inDistrict.name}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="inLiceNo">
+						<subreportParameterExpression><![CDATA[$P{inLiceNo}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="inAgentName">
+						<subreportParameterExpression><![CDATA[$P{inAgentName}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="conveyDay">
+						<subreportParameterExpression><![CDATA[$P{conveyDay}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="outAgentName">
+						<subreportParameterExpression><![CDATA[$P{outAgentName}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="conveySpa">
+						<subreportParameterExpression><![CDATA[$P{conveySpa}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="subReportImp">
+						<subreportParameterExpression><![CDATA[$P{subReportImp}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="subReportExp">
+						<subreportParameterExpression><![CDATA[$P{subReportExp}]]></subreportParameterExpression>
+					</subreportParameter>
+					<dataSourceExpression><![CDATA[com.bestway.common.client.fpt.report.CustomsEnvelopSubReportDataSource.getInstance($P{dsImp})]]></dataSourceExpression>
+					<subreportExpression  class="net.sf.jasperreports.engine.JasperReport"><![CDATA[$P{subReportImp}]]></subreportExpression>
+				</subreport>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="flag" >
+			<groupExpression><![CDATA[$F{inOutFlag}]]></groupExpression>
+			<groupHeader>
+			<band height="22"  isSplitAllowed="true" >
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="0"
+						y="0"
+						width="782"
+						height="22"
+						key="subreport-3"/>
+					<subreportParameter  name="appNo">
+						<subreportParameterExpression><![CDATA[$P{appNo}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="seqNo">
+						<subreportParameterExpression><![CDATA[$P{seqNo}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="printDate">
+						<subreportParameterExpression><![CDATA[$P{printDate}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="outTradeName">
+						<subreportParameterExpression><![CDATA[$P{outTradeName}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="outCopAppNo">
+						<subreportParameterExpression><![CDATA[$P{outCopAppNo}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="outCorp">
+						<subreportParameterExpression><![CDATA[$P{outCorp}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="outDate">
+						<subreportParameterExpression><![CDATA[$P{outDate}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="appClass">
+						<subreportParameterExpression><![CDATA[$P{appClass}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="outCustoms.name">
+						<subreportParameterExpression><![CDATA[$P{outCustoms.name}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="outDistrict.name">
+						<subreportParameterExpression><![CDATA[$P{outDistrict.name}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="outLiceNo">
+						<subreportParameterExpression><![CDATA[$P{outLiceNo}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="contrNo">
+						<subreportParameterExpression><![CDATA[$P{contrNo}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="inCopAppNo">
+						<subreportParameterExpression><![CDATA[$P{inCopAppNo}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="inTradeName">
+						<subreportParameterExpression><![CDATA[$P{inTradeName}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="inCorp">
+						<subreportParameterExpression><![CDATA[$P{inCorp}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="inDate">
+						<subreportParameterExpression><![CDATA[$P{inDate}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="inCustoms.name">
+						<subreportParameterExpression><![CDATA[$P{inCustoms.name}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="inDistrict.name">
+						<subreportParameterExpression><![CDATA[$P{inDistrict.name}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="inLiceNo">
+						<subreportParameterExpression><![CDATA[$P{inLiceNo}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="inAgentName">
+						<subreportParameterExpression><![CDATA[$P{inAgentName}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="conveyDay">
+						<subreportParameterExpression><![CDATA[$P{conveyDay}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="outAgentName">
+						<subreportParameterExpression><![CDATA[$P{outAgentName}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="conveySpa">
+						<subreportParameterExpression><![CDATA[$P{conveySpa}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="subReportImp">
+						<subreportParameterExpression><![CDATA[$P{subReportImp}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="subReportExp">
+						<subreportParameterExpression><![CDATA[$P{subReportExp}]]></subreportParameterExpression>
+					</subreportParameter>
+					<dataSourceExpression><![CDATA[com.bestway.common.client.fpt.report.CustomsEnvelopSubReportDataSource.getInstance($P{dsExp})]]></dataSourceExpression>
+					<subreportExpression  class="net.sf.jasperreports.engine.JasperReport"><![CDATA[$P{subReportExp}]]></subreportExpression>
+				</subreport>
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupFooter>
+		</group>
+		<background>
+			<band height="1"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="216"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="117"
+						y="2"
+						width="549"
+						height="18"
+						key="staticText-1"
+						positionType="FixRelativeToBottom"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="14" isBold="true" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<text><![CDATA[中华人民共和国海关加工贸易保税货物/出口加工区货物深加工结转申请表]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="1"
+						y="25"
+						width="68"
+						height="16"
+						key="staticText-2"
+						positionType="FixRelativeToBottom"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None">
+						<font fontName="宋体" pdfFontName="STSong-Light" isBold="true" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<text><![CDATA[申请表编号：]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="71"
+						y="25"
+						width="111"
+						height="16"
+						key="textField"
+						positionType="FixRelativeToBottom"
+						isPrintWhenDetailOverflows="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="10" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{appNo}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="388"
+						y="25"
+						width="95"
+						height="16"
+						key="staticText-3"
+						positionType="FixRelativeToBottom"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" isBold="true" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<text><![CDATA[电子口岸统一编号:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="484"
+						y="25"
+						width="117"
+						height="16"
+						key="textField"
+						positionType="FixRelativeToBottom"
+						isPrintWhenDetailOverflows="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="10" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{seqNo}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="614"
+						y="25"
+						width="56"
+						height="16"
+						key="staticText-4"
+						positionType="FixRelativeToBottom"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" isBold="true" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<text><![CDATA[打印日期：]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="yyyy-MM-dd" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="670"
+						y="25"
+						width="85"
+						height="16"
+						key="textField"
+						positionType="FixRelativeToBottom"
+						isPrintWhenDetailOverflows="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="10" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<textFieldExpression   class="java.util.Date"><![CDATA[$P{printDate}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="0"
+						y="49"
+						width="390"
+						height="17"
+						key="staticText-5"
+						positionType="FixRelativeToBottom"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font fontName="宋体" pdfFontName="STSong-Light" isBold="true" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<text><![CDATA[转入地申报]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="0"
+						y="66"
+						width="70"
+						height="30"
+						key="staticText-7"
+						stretchType="RelativeToTallestObject"
+						positionType="FixRelativeToBottom"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" isBold="true" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<text><![CDATA[转出企业]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="0"
+						y="96"
+						width="70"
+						height="30"
+						key="staticText-8"
+						stretchType="RelativeToTallestObject"
+						positionType="FixRelativeToBottom"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" isBold="true" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<text><![CDATA[转出企业内部编号]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="0"
+						y="126"
+						width="70"
+						height="30"
+						key="staticText-9"
+						stretchType="RelativeToTallestObject"
+						positionType="FixRelativeToBottom"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" isBold="true" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<text><![CDATA[转出企业法人/联系电话]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="0"
+						y="156"
+						width="70"
+						height="30"
+						key="staticText-10"
+						stretchType="RelativeToTallestObject"
+						positionType="FixRelativeToBottom"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" isBold="true" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<text><![CDATA[申报日期]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="0"
+						y="186"
+						width="70"
+						height="30"
+						key="staticText-11"
+						stretchType="RelativeToTallestObject"
+						positionType="FixRelativeToBottom"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" isBold="true" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<text><![CDATA[申请表类型]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="70"
+						y="76"
+						width="100"
+						height="20"
+						key="textField"
+						stretchType="RelativeToTallestObject"
+						positionType="FixRelativeToBottom"
+						isPrintWhenDetailOverflows="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Top">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="8" isBold="false" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{outTradeName}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="70"
+						y="96"
+						width="100"
+						height="30"
+						key="textField-1"
+						stretchType="RelativeToTallestObject"
+						positionType="FixRelativeToBottom"
+						isPrintWhenDetailOverflows="true"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="8" isBold="false" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{outCopAppNo}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="70"
+						y="126"
+						width="100"
+						height="30"
+						key="textField-2"
+						stretchType="RelativeToTallestObject"
+						positionType="FixRelativeToBottom"
+						isPrintWhenDetailOverflows="true"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="8" isBold="false" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{outCorp}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="yyyy-MM-dd" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="70"
+						y="156"
+						width="100"
+						height="30"
+						key="textField-3"
+						stretchType="RelativeToTallestObject"
+						positionType="FixRelativeToBottom"
+						isPrintWhenDetailOverflows="true"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="8" isBold="false" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{outDate}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="70"
+						y="186"
+						width="100"
+						height="30"
+						key="textField-4"
+						stretchType="RelativeToTallestObject"
+						positionType="FixRelativeToBottom"
+						isPrintWhenDetailOverflows="true"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="8" isBold="false" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Z".equals($P{appClass})?"一般保税货物深加工结转":("H".equals($P{appClass})?"加工区的深加工结转":("G".equals($P{appClass})?"外发加工申请":""))]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="170"
+						y="66"
+						width="55"
+						height="30"
+						key="staticText-12"
+						stretchType="RelativeToTallestObject"
+						positionType="FixRelativeToBottom"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" isBold="true" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<text><![CDATA[主管海关]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="225"
+						y="66"
+						width="55"
+						height="30"
+						key="textField-5"
+						stretchType="RelativeToTallestObject"
+						positionType="FixRelativeToBottom"
+						isPrintWhenDetailOverflows="true"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="8" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{outCustoms.name}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="280"
+						y="66"
+						width="55"
+						height="30"
+						key="staticText-13"
+						stretchType="RelativeToTallestObject"
+						positionType="FixRelativeToBottom"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" isBold="true" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<text><![CDATA[转出地]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="335"
+						y="66"
+						width="56"
+						height="30"
+						key="textField-6"
+						stretchType="RelativeToTallestObject"
+						positionType="FixRelativeToBottom"
+						isPrintWhenDetailOverflows="true"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="8" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{outDistrict.name}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="170"
+						y="96"
+						width="110"
+						height="30"
+						key="staticText-14"
+						stretchType="RelativeToTallestObject"
+						positionType="FixRelativeToBottom"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" isBold="true" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<text><![CDATA[转出批准证编号]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="280"
+						y="96"
+						width="111"
+						height="30"
+						key="textField-7"
+						stretchType="RelativeToTallestObject"
+						positionType="FixRelativeToBottom"
+						isPrintWhenDetailOverflows="true"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="8" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{outLiceNo}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="170"
+						y="126"
+						width="110"
+						height="30"
+						key="staticText-15"
+						stretchType="RelativeToTallestObject"
+						positionType="FixRelativeToBottom"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" isBold="true" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<text><![CDATA[转出申报企业]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="280"
+						y="136"
+						width="111"
+						height="20"
+						key="textField-8"
+						stretchType="RelativeToTallestObject"
+						positionType="FixRelativeToBottom"
+						isPrintWhenDetailOverflows="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Top">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="8" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{outAgentName}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="170"
+						y="156"
+						width="110"
+						height="30"
+						key="staticText-16"
+						stretchType="RelativeToTallestObject"
+						positionType="FixRelativeToBottom"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" isBold="true" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<text><![CDATA[审批日期]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="280"
+						y="156"
+						width="111"
+						height="30"
+						key="textField-9"
+						stretchType="RelativeToTallestObject"
+						positionType="FixRelativeToBottom"
+						isPrintWhenDetailOverflows="true"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="8" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="170"
+						y="186"
+						width="110"
+						height="30"
+						key="staticText-17"
+						stretchType="RelativeToTallestObject"
+						positionType="FixRelativeToBottom"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" isBold="true" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<text><![CDATA[企业合同号]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="280"
+						y="186"
+						width="111"
+						height="30"
+						key="textField-10"
+						stretchType="RelativeToTallestObject"
+						positionType="FixRelativeToBottom"
+						isPrintWhenDetailOverflows="true"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="8" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{contrNo}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="391"
+						y="66"
+						width="70"
+						height="30"
+						key="staticText-18"
+						stretchType="RelativeToTallestObject"
+						positionType="FixRelativeToBottom"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" lineSpacing="Single">
+						<font fontName="宋体" pdfFontName="STSong-Light" isBold="true" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<text><![CDATA[转入企业]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="391"
+						y="96"
+						width="70"
+						height="30"
+						key="staticText-19"
+						stretchType="RelativeToTallestObject"
+						positionType="FixRelativeToBottom"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" isBold="true" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<text><![CDATA[转入企业内部编号]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="391"
+						y="126"
+						width="70"
+						height="30"
+						key="staticText-20"
+						stretchType="RelativeToTallestObject"
+						positionType="FixRelativeToBottom"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" isBold="true" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<text><![CDATA[转入企业法人/联系电话]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="391"
+						y="156"
+						width="70"
+						height="30"
+						key="staticText-21"
+						stretchType="RelativeToTallestObject"
+						positionType="FixRelativeToBottom"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" isBold="true" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<text><![CDATA[申报日期]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="391"
+						y="186"
+						width="70"
+						height="30"
+						key="staticText-22"
+						stretchType="RelativeToTallestObject"
+						positionType="FixRelativeToBottom"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" isBold="true" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<text><![CDATA[送货距离(公里)]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="461"
+						y="76"
+						width="100"
+						height="20"
+						key="textField-11"
+						stretchType="RelativeToTallestObject"
+						positionType="FixRelativeToBottom"
+						isPrintWhenDetailOverflows="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="8" isBold="false" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{inTradeName}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="461"
+						y="96"
+						width="100"
+						height="30"
+						key="textField-12"
+						stretchType="RelativeToTallestObject"
+						positionType="FixRelativeToBottom"
+						isPrintWhenDetailOverflows="true"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="8" isBold="false" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{inCopAppNo}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="461"
+						y="126"
+						width="100"
+						height="30"
+						key="textField-13"
+						stretchType="RelativeToTallestObject"
+						positionType="FixRelativeToBottom"
+						isPrintWhenDetailOverflows="true"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="8" isBold="false" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{inCorp}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="yyyy-MM-dd" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="461"
+						y="156"
+						width="100"
+						height="30"
+						key="textField-14"
+						stretchType="RelativeToTallestObject"
+						positionType="FixRelativeToBottom"
+						isPrintWhenDetailOverflows="true"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="8" isBold="false" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{inDate}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="461"
+						y="186"
+						width="100"
+						height="30"
+						key="textField-15"
+						stretchType="RelativeToTallestObject"
+						positionType="FixRelativeToBottom"
+						isPrintWhenDetailOverflows="true"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="8" isBold="false" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{conveySpa}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="563"
+						y="66"
+						width="57"
+						height="30"
+						key="staticText-23"
+						stretchType="RelativeToTallestObject"
+						positionType="FixRelativeToBottom"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" isBold="true" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<text><![CDATA[主管海关]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="619"
+						y="66"
+						width="52"
+						height="30"
+						key="textField-16"
+						stretchType="RelativeToTallestObject"
+						positionType="FixRelativeToBottom"
+						isPrintWhenDetailOverflows="true"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="8" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{inCustoms.name}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="671"
+						y="66"
+						width="52"
+						height="30"
+						key="staticText-24"
+						stretchType="RelativeToTallestObject"
+						positionType="FixRelativeToBottom"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" isBold="true" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<text><![CDATA[目的地]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="724"
+						y="66"
+						width="58"
+						height="30"
+						key="textField-17"
+						stretchType="RelativeToTallestObject"
+						positionType="FixRelativeToBottom"
+						isPrintWhenDetailOverflows="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Top">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="8" isBold="false" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{inDistrict.name}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="561"
+						y="96"
+						width="110"
+						height="30"
+						key="staticText-25"
+						stretchType="RelativeToTallestObject"
+						positionType="FixRelativeToBottom"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" isBold="true" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<text><![CDATA[转入批准证编号]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="671"
+						y="96"
+						width="111"
+						height="30"
+						key="textField-18"
+						stretchType="RelativeToTallestObject"
+						positionType="FixRelativeToBottom"
+						isPrintWhenDetailOverflows="true"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="8" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{inLiceNo}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="561"
+						y="126"
+						width="110"
+						height="30"
+						key="staticText-26"
+						stretchType="RelativeToTallestObject"
+						positionType="FixRelativeToBottom"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" isBold="true" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<text><![CDATA[转入申报企业]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="671"
+						y="136"
+						width="111"
+						height="20"
+						key="textField-19"
+						stretchType="RelativeToTallestObject"
+						positionType="FixRelativeToBottom"
+						isPrintWhenDetailOverflows="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Top">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="8" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{inAgentName}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="561"
+						y="156"
+						width="110"
+						height="30"
+						key="staticText-27"
+						stretchType="RelativeToTallestObject"
+						positionType="FixRelativeToBottom"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" isBold="true" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<text><![CDATA[审批日期]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="671"
+						y="156"
+						width="111"
+						height="30"
+						key="textField-20"
+						stretchType="RelativeToTallestObject"
+						positionType="FixRelativeToBottom"
+						isPrintWhenDetailOverflows="true"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="8" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="561"
+						y="186"
+						width="110"
+						height="30"
+						key="staticText-28"
+						stretchType="RelativeToTallestObject"
+						positionType="FixRelativeToBottom"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" isBold="true" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<text><![CDATA[预计运输耗时(天)]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="671"
+						y="186"
+						width="111"
+						height="30"
+						key="textField-21"
+						stretchType="RelativeToTallestObject"
+						positionType="FixRelativeToBottom"
+						isPrintWhenDetailOverflows="true"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="8" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{conveyDay}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="70"
+						y="66"
+						width="100"
+						height="10"
+						key="textField-34"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="8" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{outTradeCode}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="461"
+						y="66"
+						width="100"
+						height="10"
+						key="textField-35"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="8" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{inTradeCode}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="280"
+						y="126"
+						width="111"
+						height="10"
+						key="textField-37"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="8" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{outAgentCode}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="391"
+						y="49"
+						width="391"
+						height="17"
+						key="staticText-55"
+						positionType="FixRelativeToBottom"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font fontName="宋体" pdfFontName="STSong-Light" isBold="true" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<text><![CDATA[转入地申报]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="191"
+						y="25"
+						width="68"
+						height="16"
+						key="staticText-56"
+						positionType="FixRelativeToBottom"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None">
+						<font fontName="宋体" pdfFontName="STSong-Light" isBold="true" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<text><![CDATA[申请表有效期期：]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="yyyy-MM-dd" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="262"
+						y="25"
+						width="80"
+						height="16"
+						key="textField-38"
+						positionType="FixRelativeToBottom"
+						isPrintWhenDetailOverflows="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="10" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{endDate}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="671"
+						y="126"
+						width="111"
+						height="10"
+						key="textField-39"
+						stretchType="RelativeToTallestObject"
+						positionType="FixRelativeToBottom"
+						isPrintWhenDetailOverflows="true"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Top">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="8" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{inAgentCode}]]></textFieldExpression>
+				</textField>
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="0"  isSplitAllowed="false" >
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="18"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="409"
+						y="0"
+						width="38"
+						height="18"
+						key="textField-32"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="8" isBold="false" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Report" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="320"
+						y="0"
+						width="34"
+						height="18"
+						key="textField-33"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" size="8" isBold="false" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="303"
+						y="0"
+						width="18"
+						height="18"
+						key="staticText-51"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" isBold="true" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<text><![CDATA[共]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="354"
+						y="0"
+						width="14"
+						height="18"
+						key="staticText-52"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" isBold="true" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<text><![CDATA[页]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="376"
+						y="0"
+						width="33"
+						height="18"
+						key="staticText-53"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" isBold="true" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<text><![CDATA[当前：]]></text>
+				</staticText>
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="18"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="0"
+						y="0"
+						width="100"
+						height="18"
+						key="staticText-29"
+						positionType="FixRelativeToBottom"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" isBold="true" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<text><![CDATA[转出地海关批注]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="100"
+						y="0"
+						width="250"
+						height="18"
+						key="staticText-30"
+						positionType="FixRelativeToBottom"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="350"
+						y="0"
+						width="100"
+						height="18"
+						key="staticText-31"
+						positionType="FixRelativeToBottom"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" isBold="true" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<text><![CDATA[转入地海关批注]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="450"
+						y="0"
+						width="332"
+						height="18"
+						key="staticText-32"
+						positionType="FixRelativeToBottom"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="宋体" pdfFontName="STSong-Light" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+			</band>
+		</summary>
+</jasperReport>

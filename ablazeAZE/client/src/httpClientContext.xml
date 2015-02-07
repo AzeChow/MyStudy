@@ -1,0 +1,1033 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+	"http://www.springframework.org/dtd/spring-beans.dtd">
+<!--
+  - Application context for the remote OrderService client.
+	- Defines various OrderService proxies to be called by OrderServiceClient.
+	-->
+<beans>
+	<bean id="propertyConfigurer" 
+		class="com.bestway.bcus.client.CustomPropertyPlaceholderConfigurer">
+		<property name="location">
+			<value>client.properties</value>
+		</property>
+		<property name="ignoreResourceNotFound">
+			<value>true</value>
+		</property>
+	</bean>
+	<bean id="authorityAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/AuthorityService-http</value>
+		</property>
+		<property name="serviceInterface">
+			<value>com.bestway.common.authority.action.AuthorityAction</value>
+		</property>
+	</bean>
+	<bean id="systemAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value>com.bestway.bcus.system.action.SystemAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/systemAction-http</value>
+		</property>
+	</bean>
+	
+	<bean id="tcsParametersAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value>com.bestway.bcus.system.action.TcsParametersAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/tcsParametersAction-http</value>
+		</property>
+	</bean>
+	
+	<bean id="contractSystemAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value>com.bestway.bcus.system.action.ContractSystemAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/contractSystemAction-http</value>
+		</property>
+	</bean>
+	
+	<bean id="customBaseAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value>com.bestway.bcus.custombase.action.CustomBaseAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/customBaseAction-http</value>
+		</property>
+	</bean>
+	<bean id="materialManageAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value> 
+				com.bestway.common.materialbase.action.MaterialManageAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/materialManageAction-http</value>
+		</property>
+	</bean>
+	<bean id="commonBaseCodeAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value> 
+				com.bestway.bcus.innermerge.action.CommonBaseCodeAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/commonBaseCodeDao-http</value>
+		</property>
+	</bean>
+	<bean id="manualdeclearAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value> 
+				com.bestway.bcus.manualdeclare.action.ManualDeclareAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/manualDeclareAction-http</value>
+		</property>
+	</bean>
+	<bean id="encAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value>com.bestway.bcus.enc.action.EncAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/encAction-http</value>
+		</property>
+	</bean>
+	<bean id="checkCancelAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value>com.bestway.bcus.checkcancel.action.CheckCancelAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/checkCancelAction-http</value>
+		</property>
+	</bean>
+	<bean id="checkCancelAuthorityAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value> 
+				com.bestway.bcus.checkcancel.action.CheckCancelAuthorityAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/checkCancelAuthorityAction-http</value>
+		</property>
+	</bean>
+	<bean id="messageAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value>com.bestway.bcus.message.action.MessageAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/messageAction-http</value>
+		</property>
+	</bean>
+	<bean id="casAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value>com.bestway.bcus.cas.action.CasAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/casAction-http</value>
+		</property>
+	</bean>
+	<bean id="casCheckAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value>com.bestway.bcus.cas.action.CasCheckAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/casCheckAction-http</value>
+		</property>
+	</bean>
+	<!--转厂管理远程服务接口-->
+	<bean id="fptManageAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value> 
+				com.bestway.common.fpt.action.FptManageAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/fptManageAction-http</value>
+		</property>
+	</bean>
+	
+	<bean id="fptMessageAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value> 
+				com.bestway.common.fpt.action.FptMessageAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/fptMessageAction-http</value>
+		</property>
+	</bean>
+	<bean id="btplsDownloadParaAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value> 
+				com.bestway.common.fpt.btplsinput.action.BtplsDownloadParaAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http//btplsDownloadParaAction-http</value>
+		</property>
+	</bean>
+	<bean id="btplsDownloadAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value> 
+				com.bestway.common.fpt.btplsinput.action.BtplsDownloadAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http///btplsDownloadAction-http</value>
+		</property>
+	</bean>
+	<!--转厂管理远程服务接口-->
+	<bean id="transferFactoryManageAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value> 
+				com.bestway.common.transferfactory.action.TransferFactoryManageAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/transferFactoryManageAction-http</value>
+		</property>
+	</bean>
+	
+	<!--委外加工-->
+	<bean id="outsourceAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value>com.bestway.common.outsource.action.OutsourceAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/outsourceAction-http</value>
+		</property>
+	</bean>
+	<bean id="toolsAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value>com.bestway.common.tools.action.ToolsAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/toolsAction-http</value>
+		</property>
+	</bean>
+	<!--数程导入接口远程服务接口-->
+	<bean id="dataImportAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value>com.bestway.bcus.dataimport.action.DataImportAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/dataImportAction-http</value>
+		</property>
+	</bean>
+	<!--接口-->
+	<bean id="dbimportAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value>com.bestway.bcus.dbimport.action.DbimportAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/dbimportAction-http</value>
+		</property>
+	</bean>
+	<!--License-->
+	<bean id="licenseAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value>com.bestway.bcus.license.action.LicenseAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/licenseService-http</value>
+		</property>
+	</bean>
+	<!--数据备份与恢复-->
+	<bean id="backupAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value>com.bestway.bcus.backup.action.BackupAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/backupAction-http</value>
+		</property>
+	</bean>
+	<!--BCS 内部归并管理-->
+	<bean id="bcsInnerMergeAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value> 
+				com.bestway.bcs.bcsinnermerge.action.BcsInnerMergeAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/bcsInnerMergeAction-http</value>
+		</property>
+	</bean>
+	<bean id="bcsDictPorAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value>com.bestway.bcs.dictpor.action.BcsDictPorAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/bcsDictPorAction-http</value>
+		</property>
+	</bean>
+	<!--BCS 合同管理-->
+	<bean id="contractAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value>com.bestway.bcs.contract.action.ContractAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/contractAction-http</value>
+		</property>
+	</bean>
+	<!--BCS 合同执行-->
+	<bean id="contractExeAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value>com.bestway.bcs.contractexe.action.ContractExeAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/contractExeAction-http</value>
+		</property>
+	</bean>
+	<!--BCS 合同核销-->
+	<bean id="contractCavAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value>com.bestway.bcs.contractcav.action.ContractCavAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/contractCavAction-http</value>
+		</property>
+	</bean>
+	<!--BCS 统计报表-->
+	<bean id="contractStatAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value> 
+				com.bestway.bcs.contractstat.action.ContractStatAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/contractStatAction-http</value>
+		</property>
+	</bean>
+	<!--BCS 查询分析-->
+	<bean id="contractAnalyseAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value> 
+				com.bestway.bcs.contractanalyse.action.ContractAnalyseAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/contractAnalyseAction-http</value>
+		</property>
+	</bean>
+	<bean id="bcsMessageAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value>com.bestway.bcs.message.action.BcsMessageAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/bcsMessageAction-http</value>
+		</property>
+	</bean>
+	<!--电子帐册统计报表-->
+	<bean id="manualDeclareReportAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value> 
+				com.bestway.bcus.manualdeclarereport.action.ManualDeclareReportAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/manualDeclareReportAction-http</value>
+		</property>
+	</bean>
+	<!--进口报关单权限控制-->
+	<bean id="impCustomsAuthorityAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value> 
+				com.bestway.customs.common.action.ImpCustomsAuthorityAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/impCustomsAuthorityAction-http</value>
+		</property>
+	</bean>
+	<!--BCS进口报关单权限控制-->
+	<bean id="bCSImpCustomsAuthorityAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value> 
+				com.bestway.customs.common.action.BCSImpCustomsAuthorityAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/bCSImpCustomsAuthorityAction-http</value>
+		</property>
+	</bean>
+	<!--DZSC进口报关单权限控制-->
+	<bean id="dZSCImpCustomsAuthorityAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value> 
+				com.bestway.customs.common.action.DZSCImpCustomsAuthorityAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/dZSCImpCustomsAuthorityAction-http</value>
+		</property>
+	</bean>
+	<!--出口报关单权限控制-->
+	<bean id="expCustomsAuthorityAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value> 
+				com.bestway.customs.common.action.ExpCustomsAuthorityAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/expCustomsAuthorityAction-http</value>
+		</property>
+	</bean>
+	<bean id="bCSExpCustomsAuthorityAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value> 
+				com.bestway.customs.common.action.BCSExpCustomsAuthorityAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/bCSExpCustomsAuthorityAction-http</value>
+		</property>
+	</bean>
+	<bean id="dZSCExpCustomsAuthorityAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value> 
+				com.bestway.customs.common.action.DZSCExpCustomsAuthorityAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/dZSCExpCustomsAuthorityAction-http</value>
+		</property>
+	</bean>
+	<!--特殊报关单权限控制-->
+	<bean id="specialCustomsAuthorityAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value> 
+				com.bestway.customs.common.action.SpecialCustomsAuthorityAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/specialCustomsAuthorityAction-http</value>
+		</property>
+	</bean>
+	<bean id="bCSSpecialCustomsAuthorityAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value> 
+				com.bestway.customs.common.action.BCSSpecialCustomsAuthorityAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/bCSSpecialCustomsAuthorityAction-http</value>
+		</property>
+	</bean>
+	<bean id="dZSCSpecialCustomsAuthorityAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value> 
+				com.bestway.customs.common.action.DZSCSpecialCustomsAuthorityAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/dZSCSpecialCustomsAuthorityAction-http</value>
+		</property>
+	</bean>
+	<!--管理工具权限控制-->
+	<bean id="checkToolsAuthorityAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value> 
+				com.bestway.common.tools.action.CheckToolsAuthorityAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/checkToolsAuthorityAction-http</value>
+		</property>
+	</bean>
+	<!--出口专用发票管理-->
+	<bean id="invoiceAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value>com.bestway.invoice.action.InvoiceAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/invoiceAction-http</value>
+		</property>
+	</bean>
+	<!--外汇核销管理-->
+	<bean id="fecavAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value>com.bestway.fecav.action.FecavAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/fecavAction-http</value>
+		</property>
+	</bean>
+	<bean id="fixAssetAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value>com.bestway.fixasset.action.FixAssetAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/fixAssetAction-http</value>
+		</property>
+	</bean>
+	<bean id="fixtureContractAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value> 
+				com.bestway.fixtureonorder.action.FixtureContractAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/fixtureContractAction-http</value>
+		</property>
+	</bean>
+	<bean id="checkFixAuthorityAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value> 
+				com.bestway.fixtureonorder.action.CheckFixAuthorityAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/checkFixAuthorityAction-http</value>
+		</property>
+	</bean>
+	<bean id="dzscMessageAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value>com.bestway.dzsc.message.action.DzscMessageAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/dzscMessageAction-http</value>
+		</property>
+	</bean>
+	<!--电子手册物料申报-->
+	<bean id="materialApplyAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value> 
+				com.bestway.dzsc.materialapply.action.MaterialApplyAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/materialApplyAction-http</value>
+		</property>
+	</bean>
+	<!--电子手册内部归并-->
+	<bean id="dzscInnerMergeAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value> 
+				com.bestway.dzsc.innermerge.action.DzscInnerMergeAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/dzscInnerMergeAction-http</value>
+		</property>
+	</bean>
+	<!--电子手册-->
+	<bean id="dzscAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value>com.bestway.dzsc.dzscmanage.action.DzscAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/dzscAction-http</value>
+		</property>
+	</bean>
+	<!--电子手册 报关清单-->
+	<bean id="dzscListAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value>com.bestway.dzsc.customslist.action.DzscListAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/dzscListAction-http</value>
+		</property>
+	</bean>
+	<!--电子手册合同执行-->
+	<bean id="dzscContractExeAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value> 
+				com.bestway.dzsc.contractexe.action.DzscContractExeAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/dzscContractExeAction-http</value>
+		</property>
+	</bean>
+	<!--电子手册合同核销-->
+	<bean id="dzscContractCavAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value> 
+				com.bestway.dzsc.checkcancel.action.DzscContractCavAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/dzscContractCavAction-http</value>
+		</property>
+	</bean>
+	<!--ERP单据管理-->
+	<bean id="erpBillAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value>com.bestway.common.erpbill.action.ErpBillAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/erpBillAction-http</value>
+		</property>
+	</bean>
+	<!--定单管理-->
+	<bean id="orderCommonAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value>com.bestway.common.erpbill.action.OrderCommonAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/orderCommonAction-http</value>
+		</property>
+	</bean>
+	<!--电子手册 统计报表-->
+	<bean id="dzscStatAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value>com.bestway.dzsc.contractstat.action.DzscStatAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/dzscStatAction-http</value>
+		</property>
+	</bean>
+	<!--电子手册 查询分析-->
+	<bean id="dzscAnalyseAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value> 
+				com.bestway.dzsc.contractanalyse.action.DzscAnalyseAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/dzscAnalyseAction-http</value>
+		</property>
+	</bean>
+	<!--智能报表-->
+	<bean id="aptitudeReportAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value> 
+				com.bestway.common.aptitudereport.action.AptitudeReportAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/aptitudeReportAction-http</value>
+		</property>
+	</bean>
+	<!-- ==============================================================-->
+	<!-- cas check authority control remoting http service proxy object-->
+	<!-- 以下六个对象都是 专门用于 Cas 权限控制-->
+	<!-- ==============================================================-->
+	<bean id="casParameterAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value>com.bestway.bcus.cas.authority.CasParameterAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/casParameterAction-http</value>
+		</property>
+	</bean>
+	<bean id="casSpecifControlAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value>com.bestway.bcus.cas.authority.CasSpecifControlAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/casSpecifControlAction-http</value>
+		</property>
+	</bean>
+	<bean id="casFactoryReportAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value>com.bestway.bcus.cas.authority.CasFactoryReportAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/casFactoryReportAction-http</value>
+		</property>
+	</bean>
+	<bean id="casCustomReportAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value>com.bestway.bcus.cas.authority.CasCustomReportAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/casCustomReportAction-http</value>
+		</property>
+	</bean>
+	<bean id="casFinanceReportAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value>com.bestway.bcus.cas.authority.CasFinanceReportAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/casFinanceReportAction-http</value>
+		</property>
+	</bean>
+	
+	<bean id="casOtherReportAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value>com.bestway.bcus.cas.authority.CasOtherReportAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/casOtherReportAction-http</value>
+		</property>
+	</bean>
+	
+	<bean id="casBalanceReportAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value>com.bestway.bcus.cas.authority.CasBalanceReportAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/casBalanceReportAction-http</value>
+		</property>
+	</bean>
+	
+	<bean id="erpBillCenterAuthority" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value> 
+				com.bestway.common.erpbillcenter.authority.ErpBillCenterAuthority</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/erpBillCenterAuthority-http</value>
+		</property>
+	</bean>
+	<bean id="outsourceAuthority" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value> 
+				com.bestway.common.outsource.authority.OutsourceAuthority</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/outsourceAuthority-http</value>
+		</property>
+	</bean>
+	<bean id="warningAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value>com.bestway.common.warning.action.WarningAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/warningAction-http</value>
+		</property>
+	</bean>
+	<bean id="dataExportAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value>com.bestway.common.dataexport.action.DataExportAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/dataExportAction-http</value>
+		</property>
+	</bean>
+	<!--保税物流管理系统接口-->
+	<bean id="blsMessageAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value> 
+				com.bestway.bls.action.BlsMessageAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/blsMessageAction-http</value>
+		</property>
+	</bean>
+	<bean id="blsInnerMergeAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value> 
+				com.bestway.bls.action.BlsInnerMergeAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/blsInnerMergeAction-http</value>
+		</property>
+	</bean>
+	<bean id="entranceMessageAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value> 
+				com.bestway.bls.action.EntranceMessageAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/entranceMessageAction-http</value>
+		</property>
+	</bean>
+	<bean id="blsInOutStockBillAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value> 
+				com.bestway.bls.action.BlsInOutStockBillAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/blsInOutStockBillAction-http</value>
+		</property>
+	</bean>
+	<bean id="storageBillAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value> 
+				com.bestway.bls.action.StorageBillAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/storageBillAction-http</value>
+		</property>
+	</bean>
+	
+	<bean id="blsCheckCancelAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value> 
+				com.bestway.bls.action.BlsCheckCancelAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/blsCheckCancelAction-http</value>
+		</property>
+	</bean>
+	<bean id="materielImportApplyAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value> 
+				com.bestway.bls.action.MaterielImportApplyAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http//materielImportApplyAction-http</value>
+		</property>
+	</bean>
+	<bean id="billSpecialApplyAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value> 
+				com.bestway.bls.action.BillSpecialApplyAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/billSpecialApplyAction-http</value>
+		</property>
+	</bean>
+	<bean id="wjszAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value> 
+				com.bestway.waijing.action.WjszAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/wjszAction-http</value>
+		</property>
+	</bean>
+	<bean id="owpMessageAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value> 
+				com.bestway.owp.action.OwpMessageAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/owpMessageAction-http</value>
+		</property>
+	</bean>
+	<bean id="owpAnalyAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value> 
+				com.bestway.owp.action.OwpAnalyAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/owpAnalyAction-http</value>
+		</property>
+	</bean>
+	
+	<bean id="owpAppAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value> 
+				com.bestway.owp.action.OwpAppAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/owpAppAction-http</value>
+		</property>
+	</bean>
+	
+	<bean id="owpBillAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value> 
+				com.bestway.owp.action.OwpBillAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value> 
+				http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/owpBillAction-http</value>
+		</property>
+	</bean>
+	
+	<!-- 财务成本分析远程调用 add by zrt 2011-03-03 -->	
+	<bean id="financialAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value>com.bestway.bcus.financial.action.FinancialAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value>http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/financialAction-http</value>
+		</property>
+	</bean>	
+	
+	<!-- 核查分析远程业务调用 -->
+	<bean id="vfVerificationAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value>com.bestway.bcs.verification.action.VFVerificationAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value>http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/vfVerificationAction-http</value>
+		</property>
+	</bean>	
+	<bean id="vfVerificationAuthority" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value>com.bestway.bcs.verification.action.VFVerificationAuthority</value>
+		</property>
+		<property name="serviceUrl">
+			<value>http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/vfVerificationAuthority-http</value>
+		</property>
+	</bean>	
+	<!-- 盘点核查远程业务调用 -->
+	<bean id="ecsCheckStockAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value>com.bestway.bcus.checkstock.action.ECSCheckStockAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value>http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/ecsCheckStockAction-http</value>
+		</property>
+	</bean>
+	<bean id="ecsCheckStockAuthority" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value>com.bestway.bcus.checkstock.action.ECSCheckStockAuthority</value>
+		</property>
+		<property name="serviceUrl">
+			<value>http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/ecsCheckStockAuthority-http</value>
+		</property>
+	</bean>
+	
+	<!-- pis报关行小助手 -->
+	<bean id="pisAction" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value>com.bestway.pis.action.PisAction</value>
+		</property>
+		<property name="serviceUrl">
+			<value>http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/pisAction-http</value>
+		</property>
+	</bean>
+		<bean id="PisVerificationAuthority" 
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceInterface">
+			<value>com.bestway.pis.action.PisVerificationAuthority</value>
+		</property>
+		<property name="serviceUrl">
+			<value>http://${jnlp.serverName}:${jnlp.httpPort}${jnlp.contextPath}/http/PisVerificationAuthority-http</value>
+		</property>
+	</bean>
+</beans>
