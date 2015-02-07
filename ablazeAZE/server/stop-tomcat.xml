@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<project name="jbcus" default="stop" basedir=".">
+	<property name="tomcat" value="${basedir}/../tomcat/" />
+
+	<target name="stop" >
+		<java classname="org.apache.catalina.startup.Bootstrap" fork="true" 
+			failonerror="true" maxmemory="600m">
+			<jvmarg 
+				value="-Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager" 
+				/>
+			<jvmarg value="-DJava.endorsed.dirs=${tomcat}/common/endorsed" />
+			<jvmarg value="-Dcatalina.base=${basedir}/web" />
+			<jvmarg value="-Dcatalina.home=${tomcat}" />
+			<jvmarg value="-Djava.io.tmpdir=${tomcat}/temp" />
+			<arg value="-config" />
+			<arg value="conf/server.xml" />
+			<arg value="stop" />
+			<classpath>
+				<fileset dir="${tomcat}/bin">
+					<include name="*.jar" />
+				</fileset>
+				<fileset dir="${tomcat}/lib">
+					<include name="*.jar" />
+				</fileset>
+				<pathelement path="${java.class.path}" />
+			</classpath>
+		</java>
+	</target>
+
+</project>

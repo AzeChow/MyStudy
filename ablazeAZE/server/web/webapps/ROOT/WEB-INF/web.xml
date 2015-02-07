@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE web-app PUBLIC
+	"-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+	"http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app>
+	<display-name>Bestway Bcus</display-name>
+
+	<context-param>
+		<param-name>log4jConfigLocation</param-name>
+		<param-value>/WEB-INF/log4j.properties</param-value>
+	</context-param>
+	
+	<servlet>
+		<servlet-name>log4j</servlet-name>
+		<servlet-class>com.bestway.bcus.CustomLog4jConfigServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	
+	
+
+	<servlet>
+		<servlet-name>context</servlet-name>
+		<servlet-class> 
+			com.bestway.bcus.CustomContextLoaderServlet</servlet-class>
+		<load-on-startup>2</load-on-startup>
+	</servlet>
+	
+		 
+		 
+	<servlet>
+		<servlet-name>http</servlet-name>
+		<servlet-class>com.bestway.bcus.CustomDispatcherServlet</servlet-class>
+		<load-on-startup>3</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>http</servlet-name>
+		<url-pattern>/http/*</url-pattern>
+	</servlet-mapping>
+	
+	
+	
+	<welcome-file-list>
+		<!-- Redirects to "welcome.htm" for dispatcher handling -->
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>jbcus server</web-resource-name>
+			<url-pattern>/index.html</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>superuser</role-name>
+		</auth-constraint>
+	</security-constraint>
+	<login-config>
+		<auth-method>BASIC</auth-method>
+		<realm-name>jbcus server</realm-name>
+	</login-config>
+</web-app>

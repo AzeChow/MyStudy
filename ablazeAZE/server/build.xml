@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<project name="jbcus" default="debug" basedir=".">
+	<property name="clientcommon.bin" value="${basedir}/../bestwayclientcommon/bin" />
+	<property name="jbcus.bin" value="${basedir}/../jbcus3/bin" />
+	<property name="jbcusclientplugin.bin" value="${basedir}/../jbcusclientplugin/bin" />
+	<property name="javaLib.dir" value="${basedir}/../JavaLib3" />
+	<property name="web.root" value="${basedir}/web/webapps/ROOT" />
+	<property name="tomcat" value="${basedir}/../tomcat/" />
+	<target name="build">
+		<delete dir="${web.root}/WEB-INF/" />
+		<copy todir="${web.root}/WEB-INF/" preservelastmodified="true">
+			<fileset dir="${jbcus.bin}">
+				<include name="**/web.xml" />
+				<include name="**/jdbc.properties" />
+				<include name="**/rmi.properties" />
+				<include name="**/mail.properties" /><!-- --><and><and></and></and>
+				<include name="**/log4j.properties" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="run" depends="build">
+		<java classname="org.apache.catalina.startup.Bootstrap" fork="true" failonerror="true" maxmemory="600m">
+			<jvmarg value="-Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager" />
+			<jvmarg value="-DJava.endorsed.dirs=${tomcat}/common/endorsed" />
+			<jvmarg value="-Dcatalina.base=${basedir}/web" />
+			<jvmarg value="-Dcatalina.home=${tomcat}" />
+			<jvmarg value="-Djava.io.tmpdir=${tomcat}/temp" />
+			<!--	  
+			相关知识参考   :
+			http://www.javaeye.com/topic/75128 
+			http://access911.net/ocr/doc1.asp?mode=a&bid=005401&aid=4875448
+			
+			<jvmarg value="-Xdebug" />
+			<jvmarg value="-Xnoagent" />
+			<jvmarg value="-Djava.compiler=none" />
+			<jvmarg value="-Xrunjdwp:transport=dt_socket,suspend=n,server=y,address=8000" />
+            -->
+			<arg value="-config" />
+			<arg value="conf/server.xml" />
+			<arg value="start" />
+			<classpath>
+				<fileset dir="${tomcat}/bin">
+					<include name="*.jar" />
+				</fileset>
+				<fileset dir="${tomcat}/lib">
+					<include name="*.jar" />
+				</fileset>
+				<fileset dir="${javaLib.dir}">
+					<include name="*.jar" />
+				</fileset>
+				<pathelement path="${jbcus.bin}" />
+				<pathelement path="${jbcusclientplugin.bin}" />
+				<pathelement path="${clientcommon.bin}" />
+				<pathelement path="${java.class.path}" />
+			</classpath>
+		</java>
+	</target>
+	<target name="debug" depends="build">
+		<java classname="org.apache.catalina.startup.Bootstrap" fork="true" failonerror="true" maxmemory="600m">
+			<jvmarg value="-Dcatalina.home=${tomcat}" />
+			<jvmarg value="-Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager" />
+			<jvmarg value="-DJava.endorsed.dirs=${tomcat}/common/endorsed" />
+			<jvmarg value="-Dcatalina.base=${basedir}/web" />
+			<jvmarg value="-Djava.io.tmpdir=${tomcat}/temp" />
+			<jvmarg value="-Xdebug" />
+			<jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000" />
+			<classpath>
+				<fileset dir="${tomcat}/bin">
+					<include name="*.jar" />
+				</fileset>
+				<fileset dir="${tomcat}/lib">
+					<include name="*.jar" />
+				</fileset>
+				<fileset dir="${javaLib.dir}">
+					<include name="*.jar" />
+				</fileset>
+				<pathelement path="${jbcus.bin}" />
+				<pathelement path="${jbcusclientplugin.bin}" />
+				<pathelement path="${clientcommon.bin}" />
+				<pathelement path="${java.class.path}" />
+			</classpath>
+		</java>
+	</target>
+	<target name="stop">
+		<java jar="${tomcat}/bin/bootstrap.jar" fork="true">
+			<jvmarg value="-Dcatalina.home=${tomcat}" />
+			<arg line="stop" />
+		</java>
+	</target>
+</project>
