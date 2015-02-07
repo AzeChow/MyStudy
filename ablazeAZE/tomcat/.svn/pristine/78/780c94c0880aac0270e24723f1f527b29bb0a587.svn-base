@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jnlp spec="6.0+" codebase="http://#hostAddress#:#port#/#contextPath#" href="Webjbcus.jnlp.jsp?protocol=http">
+	<information>
+	
+		<title>保税物流关务进出口管理平台</title>
+		<vendor>BestWay Software</vendor>
+		<homepage href="index.html"/>
+		<description>保税物流关务进出口管理平台</description>
+
+		<icon href="bestwaysoft_logo.gif"/>
+		<!--		
+		<shortcut online="true">
+			<desktop/>
+			<menu submenu="jbcus"/>	
+		</shortcut>
+		-->
+	</information>
+	
+	<update check="always" policy="prompt-update"/> 
+	<security>
+		<all-permissions/>
+	</security>
+	
+	
+	<resources>
+		<j2se version="1.5+" initial-heap-size="256m" max-heap-size="512m"/>		
+		<jar href="clientlib/jbcusclient.jar" download="eager" main="true"/>#jarHref#<property name="serverName" value="#hostAddress#"/>
+		<property name="httpPort" value="#port#"/>
+		<property name="rmiPort" value="8889"/>
+		<property name="protocol" value="#protocol#"/>		
+		<property name="contextPath" value="#contextPath#"/>
+	</resources>
+	
+	<application-desc main-class="com.bestway.bcus.client.ApplicationLauncher" />
+	
+</jnlp> 
