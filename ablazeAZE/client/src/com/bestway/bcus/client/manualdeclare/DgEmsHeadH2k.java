@@ -534,9 +534,11 @@ public class DgEmsHeadH2k extends JDialogBase {
 	}
 
 	public boolean getIsEmsSend() {
+		
 		String isSend = manualdeclearAction.getBpara(
 				new Request(CommonVars.getCurrUser()),
 				BcusParameter.EmsEdiH2kSend);
+		
 		if (isSend != null && "1".equals(isSend)) {
 			return true;
 		}

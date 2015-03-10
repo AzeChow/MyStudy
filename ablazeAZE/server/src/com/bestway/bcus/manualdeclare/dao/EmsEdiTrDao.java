@@ -4942,10 +4942,13 @@ public class EmsEdiTrDao extends BaseDao {
 	 * @return
 	 */
 	public String getBpara(int type) {
+		
 		List list = find(
 				"select a from BcusParameter a where a.type = ? and a.company.id = ?",
 				new Object[] { type, CommonUtils.getCompany().getId() });
+		
 		if (list != null && list.size() > 0) {
+		
 			BcusParameter obj = (BcusParameter) list.get(0);
 			return obj.getStrValue();
 		}

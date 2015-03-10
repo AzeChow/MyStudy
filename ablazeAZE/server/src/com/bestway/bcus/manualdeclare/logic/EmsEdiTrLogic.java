@@ -31,13 +31,6 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.Vector;
 
-import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.beanutils.PropertyUtils;
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.input.SAXBuilder;
-
 import com.bestway.bcs.contract.entity.ContractUnitWaste;
 import com.bestway.bcus.cas.entity.BillTemp;
 import com.bestway.bcus.custombase.entity.CustomBaseEntity;
@@ -4192,16 +4185,21 @@ public class EmsEdiTrLogic {
 		// 1.5 准备辅助数据
 		initAssistDataForSaveToEmsHeadH2k(list, emsHeadH2k, emsBomMap, exgMap,
 				versionMap, imgMap);
+
 		long end = System.currentTimeMillis();
+
 		System.out.println("准备数据 用时：" + (end - begin) / 1000.0);
 
 		begin = System.currentTimeMillis();
+
 		/*
 		 * 2、生成需要保存的bom
 		 */
 		Object[] res = buildDataForSaveToEmsHeadH2k(emsHeadH2k, list,
 				cbIsOverwrite, emsBomMap, exgMap, versionMap, imgMap);
+
 		end = System.currentTimeMillis();
+
 		System.out.println("生成需要保存的bom 用时：" + (end - begin) / 1000.0);
 
 		begin = System.currentTimeMillis();
@@ -4216,6 +4214,17 @@ public class EmsEdiTrLogic {
 		return (int[]) res[0];
 	}
 
+	/**
+	 * 
+	 * @param emsHeadH2k
+	 * @param list
+	 * @param cbIsOverwrite
+	 * @param emsBomMap
+	 * @param exgMap
+	 * @param versionMap
+	 * @param imgMap
+	 * @return
+	 */
 	private Object[] buildDataForSaveToEmsHeadH2k(EmsHeadH2k emsHeadH2k,
 			List<EmsEdiHeadH2kBomFrom> list, boolean cbIsOverwrite,
 			Map<String, EmsHeadH2kBom> emsBomMap,
