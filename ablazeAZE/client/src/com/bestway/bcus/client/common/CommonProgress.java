@@ -17,201 +17,145 @@ import com.bestway.ui.winuicontrol.JDialogBaseHelper;
 /**
  * @author Administrator
  * 
- * // change the template for this generated type comment go to Window -
- * Preferences - Java - Code Style - Code Templates
+ *         // change the template for this generated type comment go to Window -
+ *         Preferences - Java - Code Style - Code Templates
  */
 public class CommonProgress {
 
-    private static DgProgress     dgProgress     = null;
+	private static DgProgress dgProgress = null;
 
-//    private static DgStepProgress dgStepProgress = null;
+	// private static DgStepProgress dgStepProgress = null;
 
-    public static void showProgressDialog(Dialog owner) {
-        if (dgProgress == null) {
-            dgProgress = new DgProgress(owner, false);
-        }
-        dgProgress.setVisible(true);
-    }
-    
+	public static void showProgressDialog(Dialog owner) {
+		if (dgProgress == null) {
+			dgProgress = new DgProgress(owner, false);
+		}
+		dgProgress.setVisible(true);
+	}
 
-    public static void showProgressDialog(JFrame owner) {
-        if (dgProgress == null) {
-            dgProgress = new DgProgress(owner, false);
-        }
-        dgProgress.setVisible(true);
-    }
-    //add by zhangyong 2006/09/25
-    public static void showProgressDialog(JInternalFrame owner) {
-        if (dgProgress == null) {
-            dgProgress = new DgProgress(owner, false);
-        }
-        dgProgress.setVisible(true);
-    }
-    
-    public static void showProgressDialog() {
-        if (dgProgress == null) {
-            dgProgress = new DgProgress();
-            dgProgress.setModal(false);
-        }
-        dgProgress.setVisible(true);
-    }
+	public static void showProgressDialog(JFrame owner) {
+		if (dgProgress == null) {
+			dgProgress = new DgProgress(owner, false);
+		}
+		dgProgress.setVisible(true);
+	}
 
-//    public static void showStepProgressDialog() {
-//        if (dgStepProgress == null) {
-//            dgStepProgress = new DgStepProgress();
-//            dgStepProgress.setModal(false);
-//        }
-//        dgStepProgress.setVisible(true);
-//    }
-//
-//    public static void showStepProgressDialog(String taskId) {
-//        if (dgStepProgress == null) {
-//            dgStepProgress = new DgStepProgress();
-//            dgStepProgress.setModal(false);
-//            dgStepProgress.setTaskId(taskId);
-//        }
-//        dgStepProgress.setVisible(true);
-//    }
-//    
-    public static void closeProgressDialog() {
-        if (dgProgress != null) {
-            dgProgress.dispose();
-            // Thread.interrupted();
-            dgProgress = null;
-        }
-    }
-    
-    
-//    public static void closeStepProgressDialog() {
-//        if (dgStepProgress != null) {
-//            dgStepProgress.dispose();
-////            // Thread.interrupted();
-//        	dgStepProgress.close();
-//            dgStepProgress = null;
-//        }
-//    }
+	// add by zhangyong 2006/09/25
+	public static void showProgressDialog(JInternalFrame owner) {
+		if (dgProgress == null) {
+			dgProgress = new DgProgress(owner, false);
+		}
+		dgProgress.setVisible(true);
+	}
 
-    public static void setMessage(String message) {
-        if (dgProgress != null) {
-            dgProgress.setMessage(message);
-        }
-    }
+	public static void showProgressDialog() {
+		if (dgProgress == null) {
+			dgProgress = new DgProgress();
+			dgProgress.setModal(false);
+		}
+		dgProgress.setVisible(true);
+	}
 
-//    public static void setStepMessage(String message) {
-//        if (dgStepProgress != null) {
-//            dgStepProgress.setMessage(message);
-//        }
-//    }
-//
-//    public static void setStepProgressMaximum(int maximum) {
-//        if (dgStepProgress != null) {
-//            dgStepProgress.setProgressMaximum(maximum);
-//        }
-//    }
-//
-//    public static void setStepProgressValue(int value) {
-//        if (dgStepProgress != null) {
-//            dgStepProgress.setProgressValue(value);
-//        }
-//    }
+	public static void closeProgressDialog() {
 
-//    public static RunningTask createRunningTask() {
-//        if (dgProgress != null) {
-//            // return dgProgress.createRunningTask();
-//        }
-//        return null;
-//    }
+		if (dgProgress != null) {
 
-    public static void setDgProgress(DgProgress dgProgress) {
-        CommonProgress.dgProgress = dgProgress;
-    }
-    
-    
-    
-    
-    //////////////////////////////////////////////////////////
-    // 用于运行独立对象的进度条对话框 
-    //////////////////////////////////////////////////////////
-    
-    public static void showProgressDialog(String flag,Dialog owner, boolean isModal,
-            ProgressTask progressTask, long period) {
-        
-        JDialogBase dialog = JDialogBaseHelper.getJDialogBaseByFlag(flag);
-        if (dialog == null) {
-            dialog = new  DgProgress(owner, isModal, progressTask, period);
-            JDialogBaseHelper.putJDialogBaseToFlag(flag,dialog);
-            dialog.setVisible(true);
-        } else {
-            dialog.setVisibleNoChange(true);
-        }        
-    }
-    
-    public static void showProgressDialog(String flag,JFrame owner, boolean isModal,
-            ProgressTask progressTask, long period) {
-        
-        JDialogBase dialog = JDialogBaseHelper.getJDialogBaseByFlag(flag);
-        if (dialog == null) {
-            dialog = new  DgProgress(owner, isModal, progressTask, period);
-            JDialogBaseHelper.putJDialogBaseToFlag(flag,dialog);
-            dialog.setVisible(true);
-        } else {
-            dialog.setVisibleNoChange(true);
-        }        
-    }
-    
-    public static void showProgressDialog(String flag,JInternalFrame owner) {        
-        JDialogBase dialog = JDialogBaseHelper.getJDialogBaseByFlag(flag);
-        if (dialog == null) {
-            dialog = new  DgProgress(owner, false, null, 0);
-            JDialogBaseHelper.putJDialogBaseToFlag(flag,dialog);
-            dialog.setVisible(true);
-        } else {
-            dialog.setVisibleNoChange(true);
-        }        
-    }
-    
-    public static void showProgressDialog(String flag,Dialog owner) {        
-        JDialogBase dialog = JDialogBaseHelper.getJDialogBaseByFlag(flag);
-        if (dialog == null) {
-            dialog = new  DgProgress(owner, false, null, 0);
-            JDialogBaseHelper.putJDialogBaseToFlag(flag,dialog);
-            dialog.setVisible(true);
-        } else {
-            dialog.setVisibleNoChange(true);
-        }        
-    }
-    
-    
-    public static void closeProgressDialog(String flag) {
-        JDialogBase dialog = JDialogBaseHelper.getJDialogBaseByFlag(flag);
-        if (dialog != null) {
-            dialog.dispose();            
-        }       
-    }
-    
-    public static void setMessage(String flag,String message) {
-        JDialogBase dialog = JDialogBaseHelper.getJDialogBaseByFlag(flag);
-        if (dialog != null) {
-            ((DgProgress)dialog).setMessage(message);
-        }  
-    }
-    
-    public static void setJProgressBarValue(String flag,final int value) {
-        JDialogBase dialog = JDialogBaseHelper.getJDialogBaseByFlag(flag);
-        if (dialog != null) {
-            ((DgProgress)dialog).setJProgressBarValue(value);
-        }  
-    }
-    
-    public static void initJProgressBar(String flag,final int maxValue) {
-        JDialogBase dialog = JDialogBaseHelper.getJDialogBaseByFlag(flag);
-        if (dialog != null) {
-            ((DgProgress)dialog).initJProgressBar(maxValue);
-        }  
-    }
-    
-    
-    
+			dgProgress.dispose();
+
+			dgProgress = null;
+		}
+	}
+
+	public static void setMessage(String message) {
+		if (dgProgress != null) {
+			dgProgress.setMessage(message);
+		}
+	}
+
+	public static void setDgProgress(DgProgress dgProgress) {
+		CommonProgress.dgProgress = dgProgress;
+	}
+
+	// ////////////////////////////////////////////////////////
+	// 用于运行独立对象的进度条对话框
+	// ////////////////////////////////////////////////////////
+
+	public static void showProgressDialog(String flag, Dialog owner,
+			boolean isModal, ProgressTask progressTask, long period) {
+
+		JDialogBase dialog = JDialogBaseHelper.getJDialogBaseByFlag(flag);
+		if (dialog == null) {
+			dialog = new DgProgress(owner, isModal, progressTask, period);
+			JDialogBaseHelper.putJDialogBaseToFlag(flag, dialog);
+			dialog.setVisible(true);
+		} else {
+			dialog.setVisibleNoChange(true);
+		}
+	}
+
+	public static void showProgressDialog(String flag, JFrame owner,
+			boolean isModal, ProgressTask progressTask, long period) {
+
+		JDialogBase dialog = JDialogBaseHelper.getJDialogBaseByFlag(flag);
+		if (dialog == null) {
+			dialog = new DgProgress(owner, isModal, progressTask, period);
+			JDialogBaseHelper.putJDialogBaseToFlag(flag, dialog);
+			dialog.setVisible(true);
+		} else {
+			dialog.setVisibleNoChange(true);
+		}
+	}
+
+	public static void showProgressDialog(String flag, JInternalFrame owner) {
+		JDialogBase dialog = JDialogBaseHelper.getJDialogBaseByFlag(flag);
+		if (dialog == null) {
+			dialog = new DgProgress(owner, false, null, 0);
+			JDialogBaseHelper.putJDialogBaseToFlag(flag, dialog);
+			dialog.setVisible(true);
+		} else {
+			dialog.setVisibleNoChange(true);
+		}
+	}
+
+	public static void showProgressDialog(String flag, Dialog owner) {
+		JDialogBase dialog = JDialogBaseHelper.getJDialogBaseByFlag(flag);
+		if (dialog == null) {
+			dialog = new DgProgress(owner, false, null, 0);
+			JDialogBaseHelper.putJDialogBaseToFlag(flag, dialog);
+			dialog.setVisible(true);
+		} else {
+			dialog.setVisibleNoChange(true);
+		}
+	}
+
+	public static void closeProgressDialog(String flag) {
+		JDialogBase dialog = JDialogBaseHelper.getJDialogBaseByFlag(flag);
+		if (dialog != null) {
+			dialog.dispose();
+		}
+	}
+
+	public static void setMessage(String flag, String message) {
+		JDialogBase dialog = JDialogBaseHelper.getJDialogBaseByFlag(flag);
+		if (dialog != null) {
+			((DgProgress) dialog).setMessage(message);
+		}
+	}
+
+	public static void setJProgressBarValue(String flag, final int value) {
+		JDialogBase dialog = JDialogBaseHelper.getJDialogBaseByFlag(flag);
+		if (dialog != null) {
+			((DgProgress) dialog).setJProgressBarValue(value);
+		}
+	}
+
+	public static void initJProgressBar(String flag, final int maxValue) {
+		JDialogBase dialog = JDialogBaseHelper.getJDialogBaseByFlag(flag);
+		if (dialog != null) {
+			((DgProgress) dialog).initJProgressBar(maxValue);
+		}
+	}
+
 	public static String getExeTaskId() {
 		return Double.toString(Math.random());
 	}
