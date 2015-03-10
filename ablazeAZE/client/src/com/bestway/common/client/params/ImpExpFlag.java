@@ -1,8 +1,5 @@
 package com.bestway.common.client.params;
 
-/**
- * 进出口标记
- */
 public enum ImpExpFlag {
 	// 进口标志
 	IMPORT(0),
