@@ -301,7 +301,9 @@ public class DgEmsHeadH2kImport1 extends JDialogBase {
 				e.printStackTrace();
 
 			} finally {
+
 				initTable(afterList);
+
 				String tishi = "以下为损耗超过50%\n\n";
 				for (int i = 0; i < tlist.size(); i++) {
 					tishi = tishi + ((String) tlist.get(i)) + "\n";
@@ -315,11 +317,21 @@ public class DgEmsHeadH2kImport1 extends JDialogBase {
 		}
 	}
 
+	/**
+	 * 递归改变字符数组
+	 * 
+	 * @param source
+	 * @return
+	 */
 	private String[] changStrs(String[] source) {
+
 		String newStrs[] = new String[source.length];
+
 		for (int i = 0, n = source.length; i < n; i++) {
+
 			newStrs[i] = changeStr(source[i]);
 		}
+
 		return newStrs;
 	}
 
@@ -334,6 +346,12 @@ public class DgEmsHeadH2kImport1 extends JDialogBase {
 		}
 	}
 
+	/**
+	 * 获取后缀
+	 * 
+	 * @param f
+	 * @return
+	 */
 	private String getSuffix(File f) {
 		String s = f.getPath(), suffix = null;
 		int i = s.lastIndexOf('.');
@@ -359,7 +377,9 @@ public class DgEmsHeadH2kImport1 extends JDialogBase {
 		boolean isMerge = cbMergeUnitWaste.isSelected();
 
 		String suffix = getSuffix(txtFile);
+
 		List<List> lines = new ArrayList<List>();
+
 		if (suffix.equals("xls")) {
 			//
 			// 导入xls
@@ -379,26 +399,43 @@ public class DgEmsHeadH2kImport1 extends JDialogBase {
 				lines = FileReading.readTxt(txtFile, 1, null);
 			}
 		}
+
 		List<EmsEdiHeadH2kBomFrom> list = new ArrayList<EmsEdiHeadH2kBomFrom>();
+
 		List<String> lsIndex = InputTableColumnSetUtils
 				.getColumnFieldIndex(InputTableColumnSet.EMSH2K_BOM_INPUT);
+
 		int zcount = lsIndex.size();// 5; // 字段数目
+
 		for (int i = 0; i < lines.size(); i++) {
+
 			List line = lines.get(i);
+
 			String[] strs = new String[line.size()];
+
 			for (int j = 0; j < line.size(); j++) {
+
 				Object obj = line.get(j);
+
 				strs[j] = obj == null ? "" : obj.toString();
 			}
+
 			if (ischange) {
 				strs = changStrs(strs);
 			}
+
 			EmsEdiHeadH2kBomFrom obj = new EmsEdiHeadH2kBomFrom();
+
 			EmsHeadH2kBom bom = new EmsHeadH2kBom();
+
 			String err = "";
+
 			for (int j = 0; j < zcount; j++) {
+
 				String value = getFileColumnValue(strs, j);
+
 				String columnField = lsIndex.get(j);
+
 				if ("seqNum".equals(columnField)) {
 					try {
 						obj.setSeqNum(Integer.valueOf(value.trim()));
@@ -499,23 +536,31 @@ public class DgEmsHeadH2kImport1 extends JDialogBase {
 		}
 
 		if (isMerge) {
+
 			/*
 			 * 把list转化为map
 			 */
 			Map<String, EmsEdiHeadH2kBomFrom> map = new HashMap<String, EmsEdiHeadH2kBomFrom>();
+
 			CommonUtils.listToMap(list, map,
 					new GetKeyValueImpl<EmsEdiHeadH2kBomFrom>() {
 						public String getKey(EmsEdiHeadH2kBomFrom e) {
+
 							String key = null;
+
 							EmsHeadH2kBom bom = e.getBom();
+
 							key = e.getSeqNum() + "/" + e.getVersion() + "/"
 									+ bom.getSeqNum();
+
 							return key;
 						}
 
 						public void put(EmsEdiHeadH2kBomFrom e, Map map) {
+
 							EmsEdiHeadH2kBomFrom o = (EmsEdiHeadH2kBomFrom) map
 									.get(getKey(e));
+
 							if (o == null) {
 								super.put(e, map);
 							} else if (o.getBom().getWear() != null
