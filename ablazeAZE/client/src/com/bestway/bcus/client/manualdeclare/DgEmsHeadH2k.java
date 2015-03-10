@@ -534,11 +534,11 @@ public class DgEmsHeadH2k extends JDialogBase {
 	}
 
 	public boolean getIsEmsSend() {
-		
+
 		String isSend = manualdeclearAction.getBpara(
 				new Request(CommonVars.getCurrUser()),
 				BcusParameter.EmsEdiH2kSend);
-		
+
 		if (isSend != null && "1".equals(isSend)) {
 			return true;
 		}
@@ -3525,10 +3525,15 @@ public class DgEmsHeadH2k extends JDialogBase {
 						return;
 					}
 					DgEmsHeadH2kImport1 dg = new DgEmsHeadH2kImport1();
+
 					dg.setEmsHeadH2k(emsHeadH2k);
+
 					dg.setImgs(tableModelImg.getList());
+
 					dg.setExgs(tableModelExg.getList());
+
 					dg.setVisible(true);
+
 					if (emsHeadH2kExg == null) {
 						return;
 					}
@@ -3539,27 +3544,44 @@ public class DgEmsHeadH2k extends JDialogBase {
 		return jButton12;
 	}
 
+	/**
+	 * 刷新单耗和版本
+	 */
 	private void freshBomAndVersion() {
-		List dataSourceVersion = null;
-		dataSourceVersion = manualdeclearAction.findEmsHeadH2kVersion( // 得到版本号
+
+		// 得到版本号
+		List dataSourceVersion = manualdeclearAction.findEmsHeadH2kVersion(
 				new Request(CommonVars.getCurrUser()), emsHeadH2kExg);
+
 		if (dataSourceVersion != null && !dataSourceVersion.isEmpty()) {
+
 			initTableVersion(dataSourceVersion);
 
-			emsHeadH2kVersion = (EmsHeadH2kVersion) dataSourceVersion.get(0); // 第一个版本号
+			// 第一个版本号
+			emsHeadH2kVersion = (EmsHeadH2kVersion) dataSourceVersion.get(0);
 
-			Integer version = emsHeadH2kVersion.getVersion();
+			// 得到BOM
 			dataSourceBom = manualdeclearAction.findEmsHeadH2kBom(new Request(
-					CommonVars.getCurrUser()), // 得到BOM
-					emsHeadH2kVersion);
+					CommonVars.getCurrUser()), emsHeadH2kVersion);
+
+			// 如果有电子账册单耗
 			if (dataSourceBom != null && !dataSourceBom.isEmpty()) {
+
 				initTableBom(dataSourceBom);
+
 				EmsEdiMergerClientLogic.transEmsSendState(jTableBom);
+
+				// 如果没有查到电子账册单耗
 			} else {
+
 				initTableBom(new Vector());
+
 			}
+
 		} else {
+
 			initTableVersion(new Vector());
+
 			initTableBom(new Vector());
 		}
 	}
