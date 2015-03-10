@@ -7,8 +7,6 @@
 package com.bestway.bcus.client.manualdeclare;
 
 import java.awt.Component;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.Date;
@@ -72,14 +70,14 @@ public class EmsEdiMergerClientLogic {
 		List list = manualdeclearAction.findEmsEdiMergerExgBefore(new Request(
 				CommonVars.getCurrUser()), emsExgAfter);
 		tableModelExgBefore.setList(list);
-		//tableModelBomExg.setList(list);
+		// tableModelBomExg.setList(list);
 		EmsEdiMergerClientLogic.transModifyMark(table);
 		EmsEdiMergerClientLogic.transModifyMark(tableExgBom);
 	}
 
 	public static boolean getIsSend() {
-		String isSend = manualdeclearAction.getBpara(new Request(CommonVars
-				.getCurrUser()), BcusParameter.EmsSEND);
+		String isSend = manualdeclearAction.getBpara(
+				new Request(CommonVars.getCurrUser()), BcusParameter.EmsSEND);
 		if (isSend != null && "1".equals(isSend)) {
 			return true;
 		}
@@ -87,8 +85,9 @@ public class EmsEdiMergerClientLogic {
 	}
 
 	public static boolean getIsEmsSend() {
-		String isSend = manualdeclearAction.getBpara(new Request(CommonVars
-				.getCurrUser()), BcusParameter.EmsEdiH2kSend);
+		String isSend = manualdeclearAction.getBpara(
+				new Request(CommonVars.getCurrUser()),
+				BcusParameter.EmsEdiH2kSend);
 		if (isSend != null && "1".equals(isSend)) {
 			return true;
 		}
@@ -181,18 +180,18 @@ public class EmsEdiMergerClientLogic {
 			}
 		});
 		if (getIsSend())
-			table.getColumnModel().getColumn(13).setCellRenderer(
-					new TableCheckBoxRender());
+			table.getColumnModel().getColumn(13)
+					.setCellRenderer(new TableCheckBoxRender());
 		else
-			table.getColumnModel().getColumn(12).setCellRenderer(
-					new TableCheckBoxRender());
+			table.getColumnModel().getColumn(12)
+					.setCellRenderer(new TableCheckBoxRender());
 		return model;
 
 	}
 
 	public static void transModifyMark(JTable table) {
-		table.getColumnModel().getColumn(1).setCellRenderer(
-				new DefaultTableCellRenderer() {
+		table.getColumnModel().getColumn(1)
+				.setCellRenderer(new DefaultTableCellRenderer() {
 					public Component getTableCellRendererComponent(
 							JTable table, Object value, boolean isSelected,
 							boolean hasFocus, int row, int column) {
@@ -223,8 +222,8 @@ public class EmsEdiMergerClientLogic {
 
 	public static void transSendState(JTable table) {
 		if (getIsSend()) {
-			table.getColumnModel().getColumn(2).setCellRenderer(
-					new DefaultTableCellRenderer() {
+			table.getColumnModel().getColumn(2)
+					.setCellRenderer(new DefaultTableCellRenderer() {
 						public Component getTableCellRendererComponent(
 								JTable table, Object value, boolean isSelected,
 								boolean hasFocus, int row, int column) {
@@ -255,8 +254,8 @@ public class EmsEdiMergerClientLogic {
 
 	// 显示料件状态
 	public static void MaterielTypeState(JTable table) {
-		table.getColumnModel().getColumn(1).setCellRenderer(
-				new DefaultTableCellRenderer() {
+		table.getColumnModel().getColumn(1)
+				.setCellRenderer(new DefaultTableCellRenderer() {
 					public Component getTableCellRendererComponent(
 							JTable table, Object value, boolean isSelected,
 							boolean hasFocus, int row, int column) {
@@ -298,24 +297,33 @@ public class EmsEdiMergerClientLogic {
 
 	// 电子帐册申报标记
 	public static void transEmsSendState(JTable table) {
+
 		if (getIsEmsSend()) {
-			table.getColumnModel().getColumn(2).setCellRenderer(
-					new DefaultTableCellRenderer() {
+
+			table.getColumnModel().getColumn(2)
+					.setCellRenderer(new DefaultTableCellRenderer() {
+
 						public Component getTableCellRendererComponent(
 								JTable table, Object value, boolean isSelected,
 								boolean hasFocus, int row, int column) {
+
 							super.getTableCellRendererComponent(table, value,
 									isSelected, hasFocus, row, column);
+
 							super.setText((value == null) ? "  ○  "
 									: castValue1(value));
+
 							return this;
 						}
 
 						private String castValue1(Object value) {
+
 							String returnValue = "";
+
 							if (String.valueOf(value).trim().equals("")) {
 								return "";
 							}
+
 							if (value.equals("0")) {
 								returnValue = "  ○  ";// "未申报";
 							} else if (value.equals("1")) {
@@ -442,9 +450,8 @@ public class EmsEdiMergerClientLogic {
 	 * @param list
 	 * @return
 	 */
-	public static JTableListModel initTableBom( JTable table,
-			 List list) {
-		 JTableListModel tablemodel = new JTableListModel(table, list,
+	public static JTableListModel initTableBom(JTable table, List list) {
+		JTableListModel tablemodel = new JTableListModel(table, list,
 				new JTableListModelAdapter() {
 					public List InitColumns() {
 						List<JTableListColumn> list = new Vector<JTableListColumn>();
@@ -480,31 +487,36 @@ public class EmsEdiMergerClientLogic {
 						list.add(addColumn("单位", "unit.name", 80));
 						list.add(addColumn("单耗", "unitWaste", 80));
 						list.add(addColumn("损耗率%", "waste", 80));
-						list.add(addColumn("备案序号","emsEdiMergerImgAfter.seqNum", 80));
-						list.add(addColumn("备案名称", "emsEdiMergerImgAfter.name",100));
-						list.add(addColumn("备案规格", "emsEdiMergerImgAfter.spec",100));
+						list.add(addColumn("备案序号",
+								"emsEdiMergerImgAfter.seqNum", 80));
+						list.add(addColumn("备案名称", "emsEdiMergerImgAfter.name",
+								100));
+						list.add(addColumn("备案规格", "emsEdiMergerImgAfter.spec",
+								100));
 
 						return list;
 					}
 				});
-		table.getColumnModel().getColumn(5).setCellRenderer(
-	                new DefaultTableCellRenderer() {
+		table.getColumnModel().getColumn(5)
+				.setCellRenderer(new DefaultTableCellRenderer() {
 
-	                    public Component getTableCellRendererComponent(
-	                            JTable table, Object value, boolean isSelected,
-	                            boolean hasFocus, int row, int column) {
-	                        super.getTableCellRendererComponent(table, value,
-	                                isSelected, hasFocus, row, column);
-	        				if (value != null) {// 设置Double数据的显示格式
-	        					if (value instanceof Double) {
-//	        						Double tmp = Double.parseDouble((String) value);
-	        						DecimalFormat df = new DecimalFormat("######0.#########");
-	        						this.setText("" + df.format(value));
-	        					}
-	        				}
-	        				return this;
-	                    }
-	                });
+					public Component getTableCellRendererComponent(
+							JTable table, Object value, boolean isSelected,
+							boolean hasFocus, int row, int column) {
+						super.getTableCellRendererComponent(table, value,
+								isSelected, hasFocus, row, column);
+						if (value != null) {// 设置Double数据的显示格式
+							if (value instanceof Double) {
+								// Double tmp = Double.parseDouble((String)
+								// value);
+								DecimalFormat df = new DecimalFormat(
+										"######0.#########");
+								this.setText("" + df.format(value));
+							}
+						}
+						return this;
+					}
+				});
 
 		return tablemodel;
 	}
@@ -530,8 +542,9 @@ public class EmsEdiMergerClientLogic {
 			JTable table) {
 		List beforesList = null; // 显示归并前数据
 		Integer seqNum = imgAfter.getSeqNum();
-		String isSendSign = manualdeclearAction.getBpara(new Request(CommonVars
-				.getCurrUser()), BcusParameter.EmsSEND_Sign);
+		String isSendSign = manualdeclearAction.getBpara(
+				new Request(CommonVars.getCurrUser()),
+				BcusParameter.EmsSEND_Sign);
 		beforesList = commonBaseCodeAction.findInnerMergeDataAfterImgByType10(
 				new Request(CommonVars.getCurrUser()), type, seqNum,
 				emsEdiMergerHead, -1, -1, null, null, null);
@@ -543,16 +556,11 @@ public class EmsEdiMergerClientLogic {
 						.getHsAfterTenMemoNo());
 				emsBefore.setPtNo(data // 料号
 						.getMateriel().getPtNo());
-				emsBefore.setComplex(data
-						.getHsAfterComplex());
-				emsBefore.setName(data
-						.getMateriel().getFactoryName()); // 报关名称
-				emsBefore.setSpec(data
-						.getMateriel().getFactorySpec());
-				if (data
-						.getHsBeforeEnterpriseUnit() != null) {
-					emsBefore.setUnit(data
-							.getHsAfterMemoUnit());// 计量单位
+				emsBefore.setComplex(data.getHsAfterComplex());
+				emsBefore.setName(data.getMateriel().getFactoryName()); // 报关名称
+				emsBefore.setSpec(data.getMateriel().getFactorySpec());
+				if (data.getHsBeforeEnterpriseUnit() != null) {
+					emsBefore.setUnit(data.getHsAfterMemoUnit());// 计量单位
 				}
 				emsBefore.setCompany(CommonVars.getCurrUser().getCompany());
 				emsBefore.setEmsEdiMergerImgAfter(imgAfter);
@@ -567,10 +575,10 @@ public class EmsEdiMergerClientLogic {
 				emsBefore = manualdeclearAction.saveEmsEdiMergerImgBefore(
 						new Request(CommonVars.getCurrUser()), emsBefore);
 				EmsEdiMergerClientLogic.transModifyMark(table);
-				
+
 				data.setIsExistMerger(new Boolean(true));
-				commonBaseCodeAction.saveInnerMergeData(new Request(CommonVars
-						.getCurrUser()), data);
+				commonBaseCodeAction.saveInnerMergeData(
+						new Request(CommonVars.getCurrUser()), data);
 
 			}
 		}
@@ -587,8 +595,9 @@ public class EmsEdiMergerClientLogic {
 			JTable table) {
 		List befores = null; // 显示归并前数据
 		Integer seqNum = exgAfter.getSeqNum();
-		String isSendSign = manualdeclearAction.getBpara(new Request(CommonVars
-				.getCurrUser()), BcusParameter.EmsSEND_Sign);
+		String isSendSign = manualdeclearAction.getBpara(
+				new Request(CommonVars.getCurrUser()),
+				BcusParameter.EmsSEND_Sign);
 		befores = commonBaseCodeAction.findInnerMergeDataAfterExgByType10(
 				new Request(CommonVars.getCurrUser()), type, seqNum,
 				emsEdiMergerHead, -1, -1, null, null, null);
@@ -624,8 +633,8 @@ public class EmsEdiMergerClientLogic {
 						new Request(CommonVars.getCurrUser()), emsBefore);
 				InnerMergeData data = (InnerMergeData) befores.get(i);
 				data.setIsExistMerger(new Boolean(true));
-				commonBaseCodeAction.saveInnerMergeData(new Request(CommonVars
-						.getCurrUser()), data);
+				commonBaseCodeAction.saveInnerMergeData(
+						new Request(CommonVars.getCurrUser()), data);
 				EmsEdiMergerClientLogic.transModifyMark(table);
 			}
 		}
@@ -635,8 +644,9 @@ public class EmsEdiMergerClientLogic {
 			EmsEdiMergerHead emsEdiMergerHead, JTableListModel tableModelBom,
 			EmsEdiMergerExgBefore emsExgBefore, JTable table,
 			EmsEdiMergerVersion emsEdiMergerVersion) {
-		String isSendSign = manualdeclearAction.getBpara(new Request(CommonVars
-				.getCurrUser()), BcusParameter.EmsSEND_Sign);
+		String isSendSign = manualdeclearAction.getBpara(
+				new Request(CommonVars.getCurrUser()),
+				BcusParameter.EmsSEND_Sign);
 		EmsEdiMergerExgBom emsExgBom = null;
 		List list = (List) CommonQuery.getInstance().getMergerAfterImg(false,
 				emsEdiMergerVersion, emsEdiMergerHead);

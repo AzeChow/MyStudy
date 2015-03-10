@@ -4166,7 +4166,9 @@ public class EmsEdiTrLogic {
 	 */
 	public int[] saveToEmsHeadH2k(EmsHeadH2k emsHeadH2k,
 			List<EmsEdiHeadH2kBomFrom> list, boolean cbIsOverwrite) {
+
 		long begin = System.currentTimeMillis();
+
 		/*
 		 * 1、 准备辅助数据
 		 */
@@ -4203,18 +4205,25 @@ public class EmsEdiTrLogic {
 		System.out.println("生成需要保存的bom 用时：" + (end - begin) / 1000.0);
 
 		begin = System.currentTimeMillis();
+
 		/*
 		 * 3、保存数据
 		 */
 		List<EmsHeadH2kVersion> versionSaveList = (List<EmsHeadH2kVersion>) res[1]; // 需要保存的版本
+
 		List<EmsHeadH2kBom> bomSaveList = (List<EmsHeadH2kBom>) res[2];// 需要保存的bom
+
 		emsEdiTrDao.batchSaveOrUpdate(versionSaveList);// 保存的版本
+
 		emsEdiTrDao.batchSaveOrUpdate(bomSaveList);// 保存的bom
+
 		System.out.println("保存数据 用时：" + (end - begin) / 1000.0);
+
 		return (int[]) res[0];
 	}
 
 	/**
+	 * 建立数据为了保存到电子账册
 	 * 
 	 * @param emsHeadH2k
 	 * @param list
@@ -4232,7 +4241,9 @@ public class EmsEdiTrLogic {
 			Map<String, EmsHeadH2kVersion> versionMap,
 			Map<Integer, EmsHeadH2kImg> imgMap) {
 
+		//
 		List<EmsHeadH2kVersion> versionSaveList = new ArrayList<EmsHeadH2kVersion>();
+
 		List<EmsHeadH2kBom> bomSaveList = new ArrayList<EmsHeadH2kBom>();
 
 		String isEmsH2kSendSign = emsEdiTrDao
@@ -4445,23 +4456,31 @@ public class EmsEdiTrLogic {
 
 		// 1.1 获取有bom导入的成品序号和料件序号
 		List<Integer> seqNumList = new ArrayList<Integer>();
+
 		List<Integer> imgSeqNumList = new ArrayList<Integer>();
+
 		// 成品序号
 		Integer seqNum = null;
+
 		// 料件序号
 		Integer imgSeqNum = null;
+
 		EmsEdiHeadH2kBomFrom bomFrom = null;
+
 		for (int i = 0; i < size; i++) {
+
 			bomFrom = list.get(i);
 
 			// 记录成品序号
 			seqNum = bomFrom.getSeqNum();
+
 			if (!seqNumList.contains(seqNum)) {
 				seqNumList.add(seqNum);
 			}
 
 			// 记录料件序号
 			imgSeqNum = bomFrom.getBom().getSeqNum();
+
 			if (!imgSeqNumList.contains(imgSeqNum)) {
 				imgSeqNumList.add(imgSeqNum);
 			}
@@ -4473,7 +4492,9 @@ public class EmsEdiTrLogic {
 
 		// 1.3 把emsBomList转化为emsBomMap, 同时获versionMap
 		String key = null;
+
 		EmsHeadH2kBom b = null;
+
 		for (int i = 0; i < emsBomList.size(); i++) {
 			b = emsBomList.get(i);
 			// 料件序号 + 版本号 + 成品序号

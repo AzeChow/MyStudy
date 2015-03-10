@@ -7,27 +7,16 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
-import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.context.support.StaticApplicationContext;
-
-import jxl.Cell;
-import jxl.CellType;
-import jxl.DateCell;
-import jxl.LabelCell;
-import jxl.NumberCell;
-import jxl.Sheet;
-import jxl.Workbook;
-import jxl.WorkbookSettings;
-import jxl.read.biff.CellValue;
-
+import javafx.scene.control.Cell;
+import javafx.scene.control.DateCell;
 
 public class FileReading {
- 
+
 	/**
 	 * ��ȡ excel return Object[]
 	 * 
@@ -53,69 +42,85 @@ public class FileReading {
 
 	public static List<List> readExcel(File file, int beginRow, int endRow,
 			String encoding) {
+
 		List<List> list = new ArrayList<List>();
+
 		Workbook workbook = null;
+
 		try {
 
 			WorkbookSettings wbs = new WorkbookSettings();
 
-			// excel is default ISO-8859-1 encoding
-			// setEncoding("UTF-8"); utf-8 no support in excel  
-			//String encodings = System.getProperty("file.encoding");
-
 			if (encoding == null || encoding.trim().equals("")) {
+
 				wbs.setEncoding("ISO-8859-1");
+
 			} else {
+
 				wbs.setEncoding(encoding);
 			}
+
 			workbook = Workbook.getWorkbook(file, wbs);
-			//第一个工作表
+
+			// 第一个工作表
 			Sheet sheet = workbook.getSheet(0);
-			
+
 			int columns = sheet.getColumns();
+
 			int rows = sheet.getRows();
 
 			for (int j = 0; j < rows; j++) {
+
 				// 从beginRow开始读取
 				if (beginRow > 1 && beginRow > (j + 1)) {
 					continue;
 				}
+
 				// 读取到endRow行为止
 				if (endRow < (j + 1)) {
+
 					break;
 				}
+
 				List<Object> row = new ArrayList<Object>();
+
 				String key = "";
+
 				for (int i = 0; i < columns; i++) {
-					key += (getValue(sheet.getCell(i, j)) == null ? "" 
-							: getValue(sheet.getCell(i, j)).toString().trim());		
+
+					key += (getValue(sheet.getCell(i, j)) == null ? ""
+							: getValue(sheet.getCell(i, j)).toString().trim());
+
 					Object tmp = null;
+
 					tmp = getValue(sheet.getCell(i, j));
-					
-					if (tmp instanceof String) { 
-//						System.out.println(" index i"+i+"  Tem >>> "+tmp+" new String >>> "+ new String(((String) tmp).getBytes(), "UTF-8").trim());
-						//考虑是否只转第一列 即：i=0 的时候
-//						row.add(new String(((String) tmp).getBytes(), "UTF-8").trim());
+
+					if (tmp instanceof String) {
+
 						row.add(tmp.toString().trim());
+
 					} else {
 						row.add(tmp);
 					}
 				}
 
 				if (!key.trim().equals("")) {
-					// System.out.println("key--->:"+key);
+
 					list.add(row);
 				}
 			}
 		} catch (Exception e) {
+
 			e.printStackTrace();
+
 		} finally {
+
 			if (workbook != null) {
 				workbook.close();
 			}
 		}
 		return list;
-		
+
 	}
 
 	/**
@@ -137,7 +142,7 @@ public class FileReading {
 			//
 			if (encoding == null || encoding.trim().equals("")) {
 				wbs.setEncoding("ISO-8859-1");
-//				wbs.setEncoding(wbs.getEncoding()); //使用Excel 默认的编码格式 不做转换
+				// wbs.setEncoding(wbs.getEncoding()); //使用Excel 默认的编码格式 不做转换
 			} else {
 				wbs.setEncoding(encoding);
 			}
@@ -163,8 +168,7 @@ public class FileReading {
 				for (int i = 0; i < columns; i++) {
 					String contents = sheet.getCell(i, row - 1).getContents();
 					contents = (contents == null && contents.trim().equals("")) ? String
-							.valueOf(i + 1)
-							: contents;
+							.valueOf(i + 1) : contents;
 					columnNames[i] = contents;
 				}
 			}
@@ -205,21 +209,30 @@ public class FileReading {
 	 * @return
 	 */
 	private static Object getValue(Cell cell) {
-		
+
 		Object returnValue = null;
+
 		if (cell.getType() == CellType.LABEL) {
+
 			LabelCell labelCell = (LabelCell) cell;
+
 			returnValue = labelCell.getString().trim();
+
 		} else if (cell.getType() == CellType.NUMBER) {
 			/**
 			 * @author zyy date 2012-04-18 修改原因：只能抓取小数点后面三位小数
 			 */
 			NumberCell numberCell = (NumberCell) cell;
+
 			numberCell.getNumberFormat().setMinimumFractionDigits(9);
+
 			double value = numberCell.getValue();
+
 			// 科学计数法转普通计数法
 			BigDecimal bd = new BigDecimal(value);
+
 			String content = bd.toPlainString();
+
 			if (content == null || "".equals(content.trim())) {
 				return "";
 			}
@@ -252,7 +265,7 @@ public class FileReading {
 						"yyyy-MM-dd");
 				returnValue = bartDateFormat.format((Date) date);
 			}
-		}else {
+		} else {
 			returnValue = cell.getContents();
 		}
 		return returnValue;
