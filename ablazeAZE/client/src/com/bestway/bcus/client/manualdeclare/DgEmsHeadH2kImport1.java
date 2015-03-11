@@ -3,9 +3,11 @@ package com.bestway.bcus.client.manualdeclare;
 import java.awt.BorderLayout;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
@@ -186,30 +188,21 @@ public class DgEmsHeadH2kImport1 extends JDialogBase {
 			jButton.setText("1.打开文件");
 			jButton.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-
 					JFileChooser fileChooser = new JFileChooser();
-
 					fileChooser.removeChoosableFileFilter(fileChooser
 							.getFileFilter());
-
 					fileChooser.setFileFilter(new CommonFileFilter(
 							new String[] { "txt", "xls" }, "选择文档"));
-
 					int state = fileChooser
 							.showOpenDialog(DgEmsHeadH2kImport1.this);
-
 					if (state != JFileChooser.APPROVE_OPTION) {
 						return;
 					}
-
 					txtFile = fileChooser.getSelectedFile();
-
 					if (txtFile == null || !txtFile.exists()) {
 						return;
 					}
-
 					tlist.clear();
-
 					new ImportFileDataRunnable().start();
 				}
 			});
@@ -285,7 +278,6 @@ public class DgEmsHeadH2kImport1 extends JDialogBase {
 		public void run() {
 
 			try {
-
 				CommonProgress.showProgressDialog(DgEmsHeadH2kImport1.this);
 
 				CommonProgress.setMessage("系统正在读取文件资料，请稍后...");
@@ -317,21 +309,11 @@ public class DgEmsHeadH2kImport1 extends JDialogBase {
 		}
 	}
 
-	/**
-	 * 递归改变字符数组
-	 * 
-	 * @param source
-	 * @return
-	 */
 	private String[] changStrs(String[] source) {
-
 		String newStrs[] = new String[source.length];
-
 		for (int i = 0, n = source.length; i < n; i++) {
-
 			newStrs[i] = changeStr(source[i]);
 		}
-
 		return newStrs;
 	}
 
@@ -346,12 +328,6 @@ public class DgEmsHeadH2kImport1 extends JDialogBase {
 		}
 	}
 
-	/**
-	 * 获取后缀
-	 * 
-	 * @param f
-	 * @return
-	 */
 	private String getSuffix(File f) {
 		String s = f.getPath(), suffix = null;
 		int i = s.lastIndexOf('.');
@@ -364,22 +340,23 @@ public class DgEmsHeadH2kImport1 extends JDialogBase {
 
 		boolean ischange = true;
 
+		// 繁简转换
 		if (getCbJF().isSelected()) {
-
 			infTojHsTable();
-
 		} else {
-
 			ischange = false;
-
 		}
 
 		boolean isMerge = cbMergeUnitWaste.isSelected();
 
+		// 获取文件名字的后缀名
 		String suffix = getSuffix(txtFile);
 
 		List<List> lines = new ArrayList<List>();
 
+		/*
+		 * 读取导入文件
+		 */
 		if (suffix.equals("xls")) {
 			//
 			// 导入xls
@@ -418,6 +395,7 @@ public class DgEmsHeadH2kImport1 extends JDialogBase {
 				Object obj = line.get(j);
 
 				strs[j] = obj == null ? "" : obj.toString();
+
 			}
 
 			if (ischange) {
@@ -437,7 +415,9 @@ public class DgEmsHeadH2kImport1 extends JDialogBase {
 				String columnField = lsIndex.get(j);
 
 				if ("seqNum".equals(columnField)) {
+
 					try {
+
 						obj.setSeqNum(Integer.valueOf(value.trim()));
 						if (!exgNoExists(Integer.valueOf(value.trim()))) {
 							err = err + "[" + value + "] 成品序号不存在！";
@@ -445,6 +425,7 @@ public class DgEmsHeadH2kImport1 extends JDialogBase {
 					} catch (Exception e) {
 						err = err + "[" + value + "]   成品序号不合法/";
 					}
+
 				} else if ("version".equals(columnField)) {
 					try {
 						obj.setVersion(Integer.valueOf(value.trim()));
@@ -484,58 +465,99 @@ public class DgEmsHeadH2kImport1 extends JDialogBase {
 					}
 				}
 			}
+
 			obj.setErrinfo(err);
+
 			obj.setBom(bom);
+
 			list.add(obj);
 		}
 
+		/*
+		 * 覆盖导入
+		 */
 		if (!cbIsOverwrite.isSelected()) {
 			int size = list.size();
 
 			CommonProgress.setMessage("系统正在检验文件资料，一共有：" + size
 					+ "笔bom资料，请稍后...");
+
 			// 1.1 验证emsbom数据
-			Map<Integer, Map<Integer, Map<Integer, EmsHeadH2kBom>>> emsBomMap = new HashMap<Integer, Map<Integer, Map<Integer, EmsHeadH2kBom>>>();// WeakHashMap();
+			Map<Integer, Map<Integer, Map<Integer, EmsHeadH2kBom>>> emsBomMap = new HashMap<Integer, Map<Integer, Map<Integer, EmsHeadH2kBom>>>();
 
 			EmsEdiHeadH2kBomFrom obj = null;
+
 			Integer exgSeqNum = null;// 成品序号
+
 			Integer version = null;// 版本号
+
 			Integer imgSeqNum = null;// 料件序号
-			// String key = null;// 料件序号 + 版本号 + 成品序号
+
+			// key = 料件序号 + 版本号 + 成品序号
 			for (int i = 0; i < size; i++) {
+
 				obj = list.get(i);
+
+				// 获取料件序号
 				exgSeqNum = obj.getSeqNum();
+
+				// 获取 版本号
 				version = obj.getVersion();
+
+				// 获取成品序号
 				imgSeqNum = obj.getBom().getSeqNum();
+
+				// 取得 对应的 成品单耗
 				Map<Integer, Map<Integer, EmsHeadH2kBom>> exgMap = emsBomMap
 						.get(exgSeqNum);
+
+				// 如果没有 或者没有包含的成品序号那么就 查出对应的数据 放进 emsBomMap
 				if (exgMap == null && !emsBomMap.containsKey(exgSeqNum)) {
+
 					exgMap = this.manualdeclearAction
 							.getEmsHeadH2kBomByExgSeqNum(
 									new Request(CommonVars.getCurrUser()),
 									emsHeadH2k, exgSeqNum);
+
 					emsBomMap.put(exgSeqNum, exgMap);
 				}
+
+				// 如果 有对应的成品序号
 				if (exgMap != null) {
+
+					// 那么就获取对应的版本号
 					Map<Integer, EmsHeadH2kBom> versionMap = exgMap
 							.get(version);
+
 					if (versionMap != null) {
+
+						// 获取对应的单耗
 						EmsHeadH2kBom h2kBom = versionMap.get(imgSeqNum);
+
+						// 出现重复的单耗 询问是否覆盖导入
 						if (h2kBom != null) {
+
 							obj.setErrinfo(obj.getErrinfo()
 									+ "该版本料件已经存在！如果要导入请选择覆盖导入！否则将忽略该单耗。");
+
 						}
 					}
 				}
 
 				if ((i + 1) % 1000 == 0) {
+
 					CommonProgress.setMessage("系统检验" + (i + 1) + "笔单耗，一共有："
 							+ size);
 				}
 			}
 		}
 
+		/*
+		 * 是否合并单耗
+		 */
 		if (isMerge) {
+
+			final int size = list.size();
 
 			/*
 			 * 把list转化为map
@@ -544,6 +566,22 @@ public class DgEmsHeadH2kImport1 extends JDialogBase {
 
 			CommonUtils.listToMap(list, map,
 					new GetKeyValueImpl<EmsEdiHeadH2kBomFrom>() {
+
+						// 用于循环结束后判断是否可以计算合并损耗率的 标记
+						private int count;
+
+						// 企业 料件净耗
+						private BigDecimal eUnitWear = null;
+
+						// 企业 料件损耗
+						private BigDecimal eWear = null;
+
+						// 企业 成品单项用量
+						private BigDecimal eUnitDosage = null;
+
+						// key : 成品序号 + 版本号 + 料件序号 / value : 单项用量
+						private Map<String, BigDecimal> eUnitDosages = new HashMap<String, BigDecimal>();
+
 						public String getKey(EmsEdiHeadH2kBomFrom e) {
 
 							String key = null;
@@ -558,26 +596,140 @@ public class DgEmsHeadH2kImport1 extends JDialogBase {
 
 						public void put(EmsEdiHeadH2kBomFrom e, Map map) {
 
+							// 获取列表里面EmsEdiHeadH2kBomFrom的损耗
+							Double wear = e.getBom().getWear() == null ? Double
+									.valueOf("0.0") : e.getBom().getWear();
+
+							// 获取列表EmsEdiHeadH2kBomFrom的单耗
+							Double unitWear = e.getBom().getUnitWear() == null ? Double
+									.valueOf("0.0") : e.getBom().getUnitWear();
+
+							// 获取 key
+							String key = getKey(e);
+
+							// 获取旧值EmsEdiHeadH2kBomFrom ； 需要先判断是否已 放进去一个
+							// EmsEdiHeadH2kBomFrom
+							// 如果检验没有待单耗和损耗计算完毕后放进去
 							EmsEdiHeadH2kBomFrom o = (EmsEdiHeadH2kBomFrom) map
-									.get(getKey(e));
+									.get(key);
 
 							if (o == null) {
+
 								super.put(e, map);
-							} else if (o.getBom().getWear() != null
-									&& e.getBom().getWear() != null
-									&& o.getBom().getWear()
-											.equals(e.getBom().getWear())) {
-								e.getBom().setUnitWear(
-										e.getBom().getUnitWear()
-												+ o.getBom().getUnitWear());
-								super.put(e, map);
+
+								key = getKey(e);
+
+								calculateMergeUnitWearBefore(unitWear, wear,
+										key);
+
 							} else {
-								o.setErrinfo(o.getErrinfo() + "成品序号"
-										+ o.getSeqNum() + "料件序号"
-										+ o.getBom().getSeqNum()
-										+ "损耗不一致，单耗无法合并导入！");
+
+								if (e.getBom().getWear() != null
+										&& o.getBom().getWear() != null) {
+
+									// 净耗相加
+									e.getBom()
+											.setUnitWear(
+													unitWear
+															+ o.getBom()
+																	.getUnitWear());
+
+									calculateMergeUnitWearBefore(unitWear,
+											wear, key);
+
+									// o.setErrinfo(o.getErrinfo() + "成品序号"
+									// + o.getSeqNum() + "料件序号"
+									// + o.getBom().getSeqNum()
+									// + "损耗不一致，单耗无法合并导入！");
+
+									super.put(e, map);
+
+								}
+
 							}
+
+							count++;
+
+							// 如果已经全部循环完毕就开始进行计算
+							calculateMergeUnitWearAfter(count, map);
 						}
+
+						/**
+						 * 缓存合并前的单项用量
+						 * 
+						 * @param unitWear
+						 * @param wear
+						 * @param key
+						 */
+						private void calculateMergeUnitWearBefore(
+								Double unitWear, Double wear, String key) {
+
+							// 获取 净耗
+							eUnitWear = new BigDecimal(unitWear);
+
+							// 获取损耗
+							eWear = new BigDecimal(wear);
+
+							// 计算单项用量 = 净耗/(1-损耗) 保留 5 位小数
+							eUnitDosage = eUnitWear.divide(
+									new BigDecimal("1.0").subtract(eWear), 5,
+									BigDecimal.ROUND_HALF_UP);
+
+							// 当获取的key值包含单项用量就相加
+							if (eUnitDosages.get(key) != null) {
+
+								eUnitDosage = eUnitDosages.get(key).add(
+										eUnitDosage);
+
+							}
+
+							// 计算后 缓存 单项用量和
+							eUnitDosages.put(key, eUnitDosage);
+
+						}
+
+						/**
+						 * 
+						 * @param count
+						 *            外部循环结束后开始计算 合并单耗
+						 */
+						private void calculateMergeUnitWearAfter(int count,
+								Map map) {
+
+							if (count == (size - 1)) {
+
+								Iterator<String> it = map.keySet().iterator();
+
+								// 开始求合并损耗率
+								for (; it.hasNext();) {
+
+									String key = it.next();
+
+									// 这里获取的是单项用量和
+									eUnitDosage = eUnitDosages.get(key);
+
+									EmsEdiHeadH2kBomFrom eehbf = (EmsEdiHeadH2kBomFrom) map
+											.get(key);
+
+									// 这里获取的是单耗和
+									eUnitWear = new BigDecimal(eehbf.getBom()
+											.getUnitWear());
+
+									BigDecimal one = new BigDecimal("1");
+
+									// 这里获取的是 <合并损耗率>
+									eWear = one.subtract(eUnitWear.divide(
+											eUnitDosage, 5,
+											BigDecimal.ROUND_HALF_UP));
+
+									eehbf.getBom().setWear(eWear.doubleValue());
+
+								}
+
+							}
+
+						}
+
 					});
 
 			list = new ArrayList(map.values());
@@ -633,20 +785,29 @@ public class DgEmsHeadH2kImport1 extends JDialogBase {
 			jButton1.setText("2.保存数据");
 			jButton1.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
+
 					if (afterList == null) {
 						return;
 					}
+
 					boolean isYesNo = false;
+
 					for (int i = 0; i < afterList.size(); i++) {
+
 						EmsEdiHeadH2kBomFrom o = (EmsEdiHeadH2kBomFrom) afterList
 								.get(i);
+
 						if (o.getErrinfo() != null
 								&& !"".equals(o.getErrinfo().trim())) {
+
 							isYesNo = true;
 						}
 					}
+
 					if (isYesNo) {
+
 						CommonProgress.closeProgressDialog();
+
 						if (JOptionPane.YES_OPTION != JOptionPane
 								.showOptionDialog(DgEmsHeadH2kImport1.this,
 										"数据中有错误信息，是否继续保存数据？", "提示",
@@ -666,12 +827,6 @@ public class DgEmsHeadH2kImport1 extends JDialogBase {
 		return jButton1;
 	}
 
-	/**
-	 * 保存数据
-	 * 
-	 * @author Administrator
-	 *
-	 */
 	class SaveFileDataRunnable extends Thread {
 		List afterList = null;
 
@@ -680,11 +835,8 @@ public class DgEmsHeadH2kImport1 extends JDialogBase {
 		}
 
 		public void run() {
-
 			try {
-
 				CommonProgress.showProgressDialog(DgEmsHeadH2kImport1.this);
-
 				CommonProgress.setMessage("系统正在保存数据资料，请稍后...");
 				// boolean isSave = chechSave();
 				// if (!isSave) {
@@ -713,7 +865,6 @@ public class DgEmsHeadH2kImport1 extends JDialogBase {
 				// }
 				// }
 				// }
-
 				int[] x = manualdeclearAction.saveToEmsHeadH2k(new Request(
 						CommonVars.getCurrUser()), emsHeadH2k, afterList,
 						cbIsOverwrite.isSelected());
@@ -728,6 +879,7 @@ public class DgEmsHeadH2kImport1 extends JDialogBase {
 								+ x[3] + "", "提示", 2);
 
 				initTable(new Vector());
+
 			} catch (Exception e) {
 				e.printStackTrace();
 				CommonProgress.closeProgressDialog();
@@ -850,14 +1002,10 @@ public class DgEmsHeadH2kImport1 extends JDialogBase {
 
 		DgSaveTableListToExcel dgSave = new DgSaveTableListToExcel(
 				DgEmsHeadH2kImport1.this);
-
 		dgSave.setTableModel(tableModel);
-
 		dgSave.setFileName(fileName);
-
 		dgSave.setTitle("保存(" + ((JDialog) DgEmsHeadH2kImport1.this).getTitle()
 				+ ")到Excel");
-
 		dgSave.setVisible(true);
 	}
 
