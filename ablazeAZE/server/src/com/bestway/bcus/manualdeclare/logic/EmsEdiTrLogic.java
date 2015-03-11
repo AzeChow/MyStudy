@@ -4160,9 +4160,15 @@ public class EmsEdiTrLogic {
 	 * 保存导入电子帐册文本导入 -- 普通
 	 * 
 	 * @param emsHeadH2k
+	 *            电子账册表头
+	 * 
 	 * @param list
+	 *            文件导入后已处理的列表
+	 * 
 	 * @param cbIsOverwrite
-	 * @return
+	 *            是否覆盖导入
+	 * 
+	 * @return 处理的结果内容
 	 */
 	public int[] saveToEmsHeadH2k(EmsHeadH2k emsHeadH2k,
 			List<EmsEdiHeadH2kBomFrom> list, boolean cbIsOverwrite) {
