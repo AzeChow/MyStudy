@@ -67,10 +67,10 @@ public class DgEmsHeadH2kImport1 extends JDialogBase {
 	private JButton jButton2 = null;
 	private List list = null;
 	private File txtFile = null;
-	private Hashtable gbHash = null; // @jve:decl-index=0:
-	private EmsHeadH2k emsHeadH2k = null; // @jve:decl-index=0:
+	private Hashtable gbHash = null; 
+	private EmsHeadH2k emsHeadH2k = null; 
 	private ManualDeclareAction manualdeclearAction = (ManualDeclareAction) CommonVars
-			.getApplicationContext().getBean("manualdeclearAction"); // @jve:decl-index=0:
+			.getApplicationContext().getBean("manualdeclearAction"); 
 	private List afterList = null;
 	private List tlist = new Vector(); // @jve:decl-index=0:
 	private JButton btnColumn = null;
