@@ -1,5 +1,7 @@
 package test;
 
+import javax.swing.JOptionPane;
+
 import org.junit.Test;
 
 public class TestAll {
@@ -7,10 +9,8 @@ public class TestAll {
 	@Test
 	public void testUit() throws Exception {
 
-		System.out.println("\u7e41\u8f6c\u7b80");
-
-		System.out.println("\u7b2c\u4e00\u884c\u4e3a\u6807\u9898\u884c");
-
+		JOptionPane.showOptionDialog(null, "数据中有错误信息，是否继续保存数据？", "提示",
+				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+				new Object[] { "是", "否" }, "否");
 	}
-
 }

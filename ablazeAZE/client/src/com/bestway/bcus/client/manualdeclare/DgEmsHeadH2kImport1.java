@@ -67,10 +67,10 @@ public class DgEmsHeadH2kImport1 extends JDialogBase {
 	private JButton jButton2 = null;
 	private List list = null;
 	private File txtFile = null;
-	private Hashtable gbHash = null; 
-	private EmsHeadH2k emsHeadH2k = null; 
+	private Hashtable gbHash = null;
+	private EmsHeadH2k emsHeadH2k = null;
 	private ManualDeclareAction manualdeclearAction = (ManualDeclareAction) CommonVars
-			.getApplicationContext().getBean("manualdeclearAction"); 
+			.getApplicationContext().getBean("manualdeclearAction");
 	private List afterList = null;
 	private List tlist = new Vector(); // @jve:decl-index=0:
 	private JButton btnColumn = null;
@@ -786,12 +786,14 @@ public class DgEmsHeadH2kImport1 extends JDialogBase {
 			jButton1.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 
+					// 如果没有任何数据就直接返回
 					if (afterList == null) {
 						return;
 					}
 
 					boolean isYesNo = false;
 
+					// 迭代是否包含错误信息 如果没有错误信息才开始进行保存数据
 					for (int i = 0; i < afterList.size(); i++) {
 
 						EmsEdiHeadH2kBomFrom o = (EmsEdiHeadH2kBomFrom) afterList
