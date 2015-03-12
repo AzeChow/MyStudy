@@ -67,10 +67,10 @@ public class DgEmsHeadH2kImport1 extends JDialogBase {
 	private JButton jButton2 = null;
 	private List list = null;
 	private File txtFile = null;
-	private Hashtable gbHash = null;
-	private EmsHeadH2k emsHeadH2k = null;
+	private Hashtable gbHash = null; // @jve:decl-index=0:
+	private EmsHeadH2k emsHeadH2k = null; // @jve:decl-index=0:
 	private ManualDeclareAction manualdeclearAction = (ManualDeclareAction) CommonVars
-			.getApplicationContext().getBean("manualdeclearAction");
+			.getApplicationContext().getBean("manualdeclearAction"); // @jve:decl-index=0:
 	private List afterList = null;
 	private List tlist = new Vector(); // @jve:decl-index=0:
 	private JButton btnColumn = null;
@@ -579,7 +579,7 @@ public class DgEmsHeadH2kImport1 extends JDialogBase {
 						// 企业 成品单项用量
 						private BigDecimal eUnitDosage = null;
 
-						// key : 成品序号 + 版本号 + 料件序号 / value : 单项用量
+						// key : 成品序号 + 版本号 + 料件序号 / value : 单项用量和 <缓存对应的单项用量和>
 						private Map<String, BigDecimal> eUnitDosages = new HashMap<String, BigDecimal>();
 
 						public String getKey(EmsEdiHeadH2kBomFrom e) {
@@ -596,11 +596,11 @@ public class DgEmsHeadH2kImport1 extends JDialogBase {
 
 						public void put(EmsEdiHeadH2kBomFrom e, Map map) {
 
-							// 获取列表里面EmsEdiHeadH2kBomFrom的损耗
+							// 获取list里面EmsEdiHeadH2kBomFrom的损耗
 							Double wear = e.getBom().getWear() == null ? Double
 									.valueOf("0.0") : e.getBom().getWear();
 
-							// 获取列表EmsEdiHeadH2kBomFrom的单耗
+							// 获取list 里面 EmsEdiHeadH2kBomFrom的单耗
 							Double unitWear = e.getBom().getUnitWear() == null ? Double
 									.valueOf("0.0") : e.getBom().getUnitWear();
 
@@ -613,40 +613,32 @@ public class DgEmsHeadH2kImport1 extends JDialogBase {
 							EmsEdiHeadH2kBomFrom o = (EmsEdiHeadH2kBomFrom) map
 									.get(key);
 
+							/*
+							 * 每次循环都更新map
+							 * <e:每次迭代list的EmsEdiHeadH2kBomFrom对象><o:map已保存的对象>
+							 */
 							if (o == null) {
 
 								super.put(e, map);
 
 								key = getKey(e);
 
-								calculateMergeUnitWearBefore(unitWear, wear,
-										key);
-
 							} else {
 
-								if (e.getBom().getWear() != null
-										&& o.getBom().getWear() != null) {
+								// 获取 map 里面 EmsEdiHeadH2kBomFrom的单耗
+								Double unitWearInMap = o.getBom().getWear() == null ? Double
+										.valueOf("0.0") : o.getBom()
+										.getUnitWear();
 
-									// 净耗相加
-									e.getBom()
-											.setUnitWear(
-													unitWear
-															+ o.getBom()
-																	.getUnitWear());
+								// 净耗相加
+								e.getBom()
+										.setUnitWear(unitWear + unitWearInMap);
 
-									calculateMergeUnitWearBefore(unitWear,
-											wear, key);
-
-									// o.setErrinfo(o.getErrinfo() + "成品序号"
-									// + o.getSeqNum() + "料件序号"
-									// + o.getBom().getSeqNum()
-									// + "损耗不一致，单耗无法合并导入！");
-
-									super.put(e, map);
-
-								}
+								super.put(e, map);
 
 							}
+
+							calculateMergeUnitWearBefore(unitWear, wear, key);
 
 							count++;
 
@@ -655,11 +647,14 @@ public class DgEmsHeadH2kImport1 extends JDialogBase {
 						}
 
 						/**
-						 * 缓存合并前的单项用量
+						 * <缓存>合并前的单项用量
 						 * 
 						 * @param unitWear
+						 *            每次循环拿到的净耗
 						 * @param wear
+						 *            每次循环拿到的损耗率%
 						 * @param key
+						 *            map保存对应的键值
 						 */
 						private void calculateMergeUnitWearBefore(
 								Double unitWear, Double wear, String key) {
@@ -667,12 +662,13 @@ public class DgEmsHeadH2kImport1 extends JDialogBase {
 							// 获取 净耗
 							eUnitWear = new BigDecimal(unitWear);
 
-							// 获取损耗
-							eWear = new BigDecimal(wear);
+							// 获取损耗 (因表示方式是 % 百分比 因此需要除100)
+							eWear = new BigDecimal(wear).divide(new BigDecimal(
+									"100.0"));
 
-							// 计算单项用量 = 净耗/(1-损耗) 保留 5 位小数
+							// 计算单项用量 = 净耗/(1-损耗) 保留 9 位小数
 							eUnitDosage = eUnitWear.divide(
-									new BigDecimal("1.0").subtract(eWear), 5,
+									new BigDecimal("1.0").subtract(eWear), 9,
 									BigDecimal.ROUND_HALF_UP);
 
 							// 当获取的key值包含单项用量就相加
@@ -689,9 +685,11 @@ public class DgEmsHeadH2kImport1 extends JDialogBase {
 						}
 
 						/**
+						 * 外部循环结束后开始计算 合并单耗
 						 * 
 						 * @param count
-						 *            外部循环结束后开始计算 合并单耗
+						 *            用于触发计算合并单耗的标记数
+						 * @param map
 						 */
 						private void calculateMergeUnitWearAfter(int count,
 								Map map) {
@@ -715,12 +713,17 @@ public class DgEmsHeadH2kImport1 extends JDialogBase {
 									eUnitWear = new BigDecimal(eehbf.getBom()
 											.getUnitWear());
 
+									// 合并损耗率公式
+									// 合并损耗率 =1-(净耗1+...+净耗n)/(单项用量1+...+单项用量n)
 									BigDecimal one = new BigDecimal("1");
 
 									// 这里获取的是 <合并损耗率>
 									eWear = one.subtract(eUnitWear.divide(
-											eUnitDosage, 5,
+											eUnitDosage, 9,
 											BigDecimal.ROUND_HALF_UP));
+
+									eWear = eWear.multiply(new BigDecimal(
+											"100.0"));
 
 									eehbf.getBom().setWear(eWear.doubleValue());
 
@@ -786,14 +789,12 @@ public class DgEmsHeadH2kImport1 extends JDialogBase {
 			jButton1.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 
-					// 如果没有任何数据就直接返回
 					if (afterList == null) {
 						return;
 					}
 
 					boolean isYesNo = false;
 
-					// 迭代是否包含错误信息 如果没有错误信息才开始进行保存数据
 					for (int i = 0; i < afterList.size(); i++) {
 
 						EmsEdiHeadH2kBomFrom o = (EmsEdiHeadH2kBomFrom) afterList
@@ -880,6 +881,7 @@ public class DgEmsHeadH2kImport1 extends JDialogBase {
 								+ "版本存在新增记录数：" + x[2] + "\n" + "版本不存在新增记录数："
 								+ x[3] + "", "提示", 2);
 
+				// 导入完成后 清空table
 				initTable(new Vector());
 
 			} catch (Exception e) {
