@@ -16,8 +16,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
 
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -37,7 +35,6 @@ import com.bestway.bcus.client.common.CommonVars;
 import com.bestway.client.util.JTableListColumn;
 import com.bestway.common.constant.ImpExpFlag;
 import com.bestway.customs.common.action.BaseEncAction;
-import com.bestway.customs.common.entity.BaseCustomsDeclaration;
 import com.bestway.ui.winuicontrol.JDialogBase;
 import com.bestway.ui.winuicontrol.calendar.JCalendarComboBox;
 import com.google.gson.Gson;
@@ -46,7 +43,7 @@ public class DgQPImport extends JDialogBase {
 	private JLabel lblNewLabel;
 	private JComboBox cbbDecType;
 	private JLabel label;
-	private JComboBox cbbUserType;
+	// private JComboBox cbbUserType;
 	private JLabel label_1;
 	private JCalendarComboBox ccbBeginDate;
 	private JLabel label_2;
@@ -64,7 +61,12 @@ public class DgQPImport extends JDialogBase {
 	private Integer projectType;
 	private JList cbbDecTypeList;
 	private JLabel lbCustomsDeclarationCode;
+
+	// 报关单号 输入框
 	private JTextField tfCustomsDeclarationCode;
+
+	// 根据报关单号导入
+	private JCheckBox cbByCustomsDeclarationCodeImport;
 
 	public DgQPImport(Integer impExpFlag, Integer projectType) {
 		setBounds(new Rectangle(0, 0, 510, 230));
@@ -97,14 +99,16 @@ public class DgQPImport extends JDialogBase {
 		getContentPane().add(getLbCustomsDeclarationCode());
 		getContentPane().add(getTfCustomsDeclarationCode());
 
+		getContentPane().add(getCbByCustomsDeclarationCodeImport());
+
 	}
 
 	private void init() {
 
 		// DefaultComboBoxModel cbmDecType = new DefaultComboBoxModel();
-		DefaultComboBoxModel cbmUserType = new DefaultComboBoxModel();
-
-		DefaultListModel cbmDecTypeList = new DefaultListModel();
+		// DefaultComboBoxModel cbmUserType = new DefaultComboBoxModel();
+		//
+		// DefaultListModel cbmDecTypeList = new DefaultListModel();
 
 		// cbbDecType.setModel(cbmDecType);
 		// cbbUserType.setModel(cbmUserType);
@@ -192,13 +196,13 @@ public class DgQPImport extends JDialogBase {
 		return label;
 	}
 
-	private JComboBox getCbbUserType() {
-		if (cbbUserType == null) {
-			cbbUserType = new JComboBox();
-			cbbUserType.setBounds(337, 23, 142, 21);
-		}
-		return cbbUserType;
-	}
+	// private JComboBox getCbbUserType() {
+	// if (cbbUserType == null) {
+	// cbbUserType = new JComboBox();
+	// cbbUserType.setBounds(337, 23, 142, 21);
+	// }
+	// return cbbUserType;
+	// }
 
 	private JLabel getLabel_1() {
 		if (label_1 == null) {
@@ -314,33 +318,35 @@ public class DgQPImport extends JDialogBase {
 
 		}
 
-		// 已报报关单号
-		String customsDeclarationCode = tfCustomsDeclarationCode.getText();
-
 		if (ImpExpFlag.EXPORT == impExpFlag) {
 			userTypes = new String[] { "录入或申报单位", "经营单位", "发货单位" };
 		}
+
 		for (int j = 0; j < decTypes.size(); j++) {
 
 			for (int i = 0; i < userTypes.length; i++) {
 
 				Map<String, Object> param = new HashMap<String, Object>();
 
-				param.put("bdate", ccbBeginDate.getDate());
+				// 如果选择了<报关单号> 导入，那么就不需要加入 <日期> 参数
+				if (cbByCustomsDeclarationCodeImport.isSelected()) {
 
-				param.put("edate", ccbEndDate.getDate());
+					// 报关单号
+					param.put("entryId", tfCustomsDeclarationCode.getText());
+
+				} else {
+
+					param.put("bdate", ccbBeginDate.getDate());
+
+					param.put("edate", ccbEndDate.getDate());
+
+				}
 
 				param.put("impExpFlag", impExpFlag);
 
 				param.put("decType", decTypes.get(j));
 
 				param.put("userType", userTypes[i]);
-
-				if (StringUtils.isNotBlank(customsDeclarationCode)) {
-
-					param.put("customsDeclarationCode", customsDeclarationCode);
-
-				}
 
 				// 最后将每一段参数放进去 List里面
 				params.add(param);
@@ -410,11 +416,13 @@ public class DgQPImport extends JDialogBase {
 
 	private boolean checkData() {
 
-		// 发送的已报报关单号
-		String cdCode = tfCustomsDeclarationCode.getText();
+		List p = getParams();
+
+		System.out.println(p);
 
 		// 检查报关单号是否符合18位
-		if (StringUtils.isNotBlank(cdCode) && cdCode.length() < 18) {
+		if (StringUtils.isNotBlank(tfCustomsDeclarationCode.getText())
+				&& tfCustomsDeclarationCode.getText().length() != 18) {
 
 			JOptionPane.showMessageDialog(DgQPImport.this, "请输入18位报关单号");
 
@@ -452,17 +460,6 @@ public class DgQPImport extends JDialogBase {
 
 			return false;
 		}
-
-		// if (cbbDecType.getSelectedItem() == null) {
-		// }
-
-		/**
-		 * 默认全选 不需要再判断
-		 */
-		// if (cbbUserType.getSelectedItem() == null) {
-		// JOptionPane.showMessageDialog(this, "请选择用户类型");
-		// return false;
-		// }
 
 		if (ccbBeginDate.getDate() == null) {
 
@@ -531,6 +528,12 @@ public class DgQPImport extends JDialogBase {
 
 				List params = getParams();
 
+				Map<String, Integer> checkSameCode = new HashMap<String, Integer>();
+
+				Set<String> keys = new HashSet<String>();
+
+				String sameCode = null;
+
 				for (int j = 0; j < params.size(); j++) {
 
 					// JSON格式数据
@@ -540,14 +543,33 @@ public class DgQPImport extends JDialogBase {
 					System.out.println("全部数据：" + data);
 
 					if (data == null || "".equals(data.trim())) {
-
-						return;
-
+						continue;
 					}
 
 					Gson gson = new Gson();
 
 					List list = gson.fromJson(data, List.class);
+
+					for (String s : keys) {
+
+						// 如果有值，证明已经有重复的报关单了
+						if (checkSameCode.get(s) != null) {
+
+							sameCode = s;
+
+							break;
+
+						}
+
+					}
+
+					if (StringUtils.isNotBlank(sameCode)) {
+
+						sameCode = null;
+
+						continue;
+
+					}
 
 					for (int i = 0; i < list.size(); i++) {
 
@@ -562,24 +584,30 @@ public class DgQPImport extends JDialogBase {
 
 						System.out.println(bgdhead);
 
-						// 判断是否有相同的报关单号
-						boolean isSamecustomsDeclarationCode = false;
-
 						String customsDeclarationCode = bgdhead.get("海关编号");
 
-						// 检验是否出现相同的报关单号 如果有就跳过不作处理
-						for (int k = 0; k < declaration.size()
-								&& !isSamecustomsDeclarationCode; k++) {
+						// 先判断是否为空
+						if (checkSameCode.get(customsDeclarationCode) == null) {
 
-							BaseCustomsDeclaration baseCustomsDeclaration = (BaseCustomsDeclaration) declaration
-									.get(k);
+							checkSameCode.put(customsDeclarationCode,
+									Integer.valueOf(0));
 
-							if (customsDeclarationCode
-									.equals(baseCustomsDeclaration
-											.getCustomsDeclarationCode())) {
+							// 加到判断键值
+							keys.add(customsDeclarationCode);
 
-								isSamecustomsDeclarationCode = true;
+						} else {
 
+							Integer count = checkSameCode
+									.get(customsDeclarationCode);
+
+							count++;
+
+							keys.add(customsDeclarationCode);
+
+							System.out.println("重复的次数是    :  " + count);
+
+							if (count != Integer.valueOf(0)) {
+								continue;
 							}
 
 						}
@@ -590,13 +618,6 @@ public class DgQPImport extends JDialogBase {
 
 						} else if (!setDeclaration
 								.contains(customsDeclarationCode)) {
-
-							// 如果出现相同的报关单号那么就跳过
-							if (isSamecustomsDeclarationCode) {
-
-								continue;
-
-							}
 
 							CommonProgress.setMessage("系统正在导入报关单号为："
 									+ customsDeclarationCode + "的报关单,请稍后...");
@@ -620,8 +641,12 @@ public class DgQPImport extends JDialogBase {
 
 						} else {
 
-							errors.add(new Object[] { customsDeclarationCode,
-									"报关单号已经存在" });
+							if (StringUtils.isNotBlank(customsDeclarationCode)) {
+
+								errors.add(new Object[] {
+										customsDeclarationCode, "报关单号已经存在" });
+
+							}
 						}
 					}
 
@@ -781,8 +806,42 @@ public class DgQPImport extends JDialogBase {
 		if (tfCustomsDeclarationCode == null) {
 			tfCustomsDeclarationCode = new JTextField();
 			tfCustomsDeclarationCode.setBounds(91, 128, 162, 21);
-			tfCustomsDeclarationCode.setColumns(10);
+
+			tfCustomsDeclarationCode.setEnabled(false);
+
 		}
 		return tfCustomsDeclarationCode;
+	}
+
+	private JCheckBox getCbByCustomsDeclarationCodeImport() {
+
+		if (cbByCustomsDeclarationCodeImport == null) {
+
+			cbByCustomsDeclarationCodeImport = new JCheckBox();
+
+			cbByCustomsDeclarationCodeImport.setBounds(253, 125, 54, 23);
+
+			cbByCustomsDeclarationCodeImport
+					.addActionListener(new ActionListener() {
+
+						@Override
+						public void actionPerformed(ActionEvent e) {
+
+							boolean isSelected = cbByCustomsDeclarationCodeImport
+									.isSelected();
+
+							tfCustomsDeclarationCode.setEnabled(isSelected);
+
+							ccbBeginDate.setEnabled(!isSelected);
+
+							ccbEndDate.setEnabled(!isSelected);
+
+						}
+					});
+
+		}
+
+		return cbByCustomsDeclarationCodeImport;
+
 	}
 }
