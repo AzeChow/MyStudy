@@ -27,8 +27,6 @@ import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
 import javax.swing.UIManager;
 
-import org.apache.commons.lang.StringUtils;
-
 import com.bestway.bcs.contractexe.action.ContractExeAction;
 import com.bestway.bcus.client.common.CommonProgress;
 import com.bestway.bcus.client.common.CommonVars;
@@ -37,7 +35,7 @@ import com.bestway.common.constant.ImpExpFlag;
 import com.bestway.customs.common.action.BaseEncAction;
 import com.bestway.ui.winuicontrol.JDialogBase;
 import com.bestway.ui.winuicontrol.calendar.JCalendarComboBox;
-import com.google.gson.Gson;
+import com.sun.xml.internal.ws.util.StringUtils;
 
 public class DgQPImport extends JDialogBase {
 	private JLabel lblNewLabel;
@@ -513,8 +511,6 @@ public class DgQPImport extends JDialogBase {
 						.getInstance().getDownloadDataFormEport(
 								Consts.DEC_DOWNLOAD_MODULE_ID);
 
-				boolean isConnect = dataExchange.testConnect();
-
 				// 测试 连接 QP
 				if (!dataExchange.testConnect()) {
 
@@ -529,10 +525,6 @@ public class DgQPImport extends JDialogBase {
 				List params = getParams();
 
 				Map<String, Integer> checkSameCode = new HashMap<String, Integer>();
-
-				Set<String> keys = new HashSet<String>();
-
-				String sameCode = null;
 
 				for (int j = 0; j < params.size(); j++) {
 
@@ -549,27 +541,6 @@ public class DgQPImport extends JDialogBase {
 					Gson gson = new Gson();
 
 					List list = gson.fromJson(data, List.class);
-
-					for (String s : keys) {
-
-						// 如果有值，证明已经有重复的报关单了
-						if (checkSameCode.get(s) != null) {
-
-							sameCode = s;
-
-							break;
-
-						}
-
-					}
-
-					if (StringUtils.isNotBlank(sameCode)) {
-
-						sameCode = null;
-
-						continue;
-
-					}
 
 					for (int i = 0; i < list.size(); i++) {
 
@@ -592,17 +563,12 @@ public class DgQPImport extends JDialogBase {
 							checkSameCode.put(customsDeclarationCode,
 									Integer.valueOf(0));
 
-							// 加到判断键值
-							keys.add(customsDeclarationCode);
-
 						} else {
 
 							Integer count = checkSameCode
 									.get(customsDeclarationCode);
 
 							count++;
-
-							keys.add(customsDeclarationCode);
 
 							System.out.println("重复的次数是    :  " + count);
 
