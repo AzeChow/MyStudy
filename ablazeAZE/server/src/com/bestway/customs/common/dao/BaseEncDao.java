@@ -7,7 +7,6 @@
 package com.bestway.customs.common.dao;
 
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -15,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate3.HibernateOptimisticLockingFailureException;
 
@@ -55,14 +54,11 @@ import com.bestway.common.constant.SendState;
 import com.bestway.common.fpt.entity.FptAppHead;
 import com.bestway.common.fpt.entity.FptBillHead;
 import com.bestway.common.fpt.entity.FptParameterSet;
-import com.bestway.common.fpt.entity.MakeFptBillCustomsDeclaration;
 import com.bestway.common.materialbase.entity.CurrRate;
 import com.bestway.common.materialbase.entity.Materiel;
 import com.bestway.common.materialbase.entity.ScmCoc;
 import com.bestway.common.transferfactory.entity.CustomsEnvelopBill;
-import com.bestway.common.transferfactory.entity.MakeCustomsDeclaration;
 import com.bestway.common.transferfactory.entity.TransferFactoryBill;
-import com.bestway.customs.common.entity.BaseContractHead;
 import com.bestway.customs.common.entity.BaseCustomsDeclaration;
 import com.bestway.customs.common.entity.BaseCustomsDeclarationCommInfo;
 import com.bestway.customs.common.entity.BaseCustomsDeclarationContainer;
@@ -220,16 +216,17 @@ public class BaseEncDao extends BaseDao {
 		}
 		return list;
 	}
-	
+
 	/**
 	 * 取得报关单明细
 	 * 
-	 * @param baseID 表头ID
+	 * @param baseID
+	 *            表头ID
 	 * @return 返回报关单明细列表
 	 */
-	public List findCustomsDeclarationInfos(List<String> baseID,Integer projectType){
-		
-		
+	public List findCustomsDeclarationInfos(List<String> baseID,
+			Integer projectType) {
+
 		String tableName = "";
 		switch (projectType) {
 		case ProjectType.BCUS:
@@ -245,17 +242,19 @@ public class BaseEncDao extends BaseDao {
 			tableName = " CustomsDeclarationCommInfo ";
 			break;
 		}
-		
-		String sql = "select a from "+tableName+"a where ";
-		
+
+		String sql = "select a from " + tableName + "a where ";
+
 		List list = new ArrayList();
-		for (int i = 0; i < baseID.size(); i+=1000) {
-			int maxIndex = i+1000 > baseID.size() ? baseID.size() : i+1000;
-			String ql = sql+"a.baseCustomsDeclaration.id in ('"+
-					StringUtils.join(baseID.subList(i, maxIndex).toArray(),"','")+"') order by a.serialNumber";
+		for (int i = 0; i < baseID.size(); i += 1000) {
+			int maxIndex = i + 1000 > baseID.size() ? baseID.size() : i + 1000;
+			String ql = sql
+					+ "a.baseCustomsDeclaration.id in ('"
+					+ StringUtils.join(baseID.subList(i, maxIndex).toArray(),
+							"','") + "') order by a.serialNumber";
 			list.addAll(this.find(ql));
 		}
-		
+
 		return list;
 	}
 
@@ -337,29 +336,31 @@ public class BaseEncDao extends BaseDao {
 	 */
 	public void saveCustomsDeclaration(
 			BaseCustomsDeclaration baseCustomsDeclaration) {
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>dao  >>>>>>>>>>>>" + baseCustomsDeclaration);
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>dao  >>>>>>>>>>>>"
+				+ baseCustomsDeclaration);
 		this.saveOrUpdate(baseCustomsDeclaration);
 	}
 
-	
 	/**
 	 * 找申报公司
+	 * 
 	 * @param company
 	 * @return
 	 */
 	public List<Company> findCompany(String company) {
 		String hsql = "select a from Company a where a.code =?";
-		return this.find(hsql, new Object[]{company});
+		return this.find(hsql, new Object[] { company });
 	}
-//	/**
-//	 * 找商品编码
-//	 * @param company
-//	 * @return
-//	 */
-//	public List<Complex> findCommCode(String commCode) {
-//		String hsql = "select a from Complex a  where a.code =?";
-//		return this.find(hsql, new Object[]{commCode});
-//	}
+
+	// /**
+	// * 找商品编码
+	// * @param company
+	// * @return
+	// */
+	// public List<Complex> findCommCode(String commCode) {
+	// String hsql = "select a from Complex a  where a.code =?";
+	// return this.find(hsql, new Object[]{commCode});
+	// }
 	/**
 	 * 保存实体对象
 	 * 
@@ -386,17 +387,18 @@ public class BaseEncDao extends BaseDao {
 	/**
 	 * 查询进出货转厂单据
 	 */
-	public List<TransferFactoryBill> findTransferFactoryBill(BaseCustomsDeclaration baseCustomsDeclaration){
+	public List<TransferFactoryBill> findTransferFactoryBill(
+			BaseCustomsDeclaration baseCustomsDeclaration) {
 		List<Object> param = new ArrayList<Object>();
-		String hql = "select a from TransferFactoryBill a where a.company.id= ? " +
-				"and a.id in (select a.transFactBillId from MakeCustomsDeclaration a where a.customsDeclarationId = ? ) ";
+		String hql = "select a from TransferFactoryBill a where a.company.id= ? "
+				+ "and a.id in (select a.transFactBillId from MakeCustomsDeclaration a where a.customsDeclarationId = ? ) ";
 		param.add(CommonUtils.getCompany().getId());
 		param.add(baseCustomsDeclaration.getId());
-		
-		List transfer = this.find(hql,param.toArray());
+
+		List transfer = this.find(hql, param.toArray());
 		return transfer;
 	}
-	
+
 	/**
 	 * 取得报关单
 	 * 
@@ -594,8 +596,7 @@ public class BaseEncDao extends BaseDao {
 				Integer.valueOf(ImpExpFlag.IMPORT),
 				CommonUtils.getCompany().getId() });
 	}
-	
-	
+
 	/**
 	 * 取得已检查进口报关单
 	 * 
@@ -622,8 +623,7 @@ public class BaseEncDao extends BaseDao {
 				Integer.valueOf(ImpExpFlag.IMPORT),
 				CommonUtils.getCompany().getId(), Boolean.TRUE });
 	}
-	
-	
+
 	/**
 	 * 取得一个月内已生成taskId的报关单
 	 * 
@@ -648,22 +648,23 @@ public class BaseEncDao extends BaseDao {
 			break;
 		}
 		hql.append(" where a.impExpDate > ? and a.tcsTaskId is not null and a.company.id=? ");
-		List<BaseCustomsDeclaration> list = this.find(hql.toString(), new Object[] { cal.getTime(), 
-			CommonUtils.getCompany().getId() });
+		List<BaseCustomsDeclaration> list = this
+				.find(hql.toString(), new Object[] { cal.getTime(),
+						CommonUtils.getCompany().getId() });
 		List<BaseCustomsDeclaration> result = new ArrayList<BaseCustomsDeclaration>();
-		if(list != null && !list.isEmpty()) {
+		if (list != null && !list.isEmpty()) {
 			BaseCustomsDeclaration d = null;
 			for (int i = 0; i < list.size(); i++) {
 				d = list.get(i);
-				if(CommonUtils.notEmpty(d.getTcsTaskId())) {
+				if (CommonUtils.notEmpty(d.getTcsTaskId())) {
 					result.add(d);
 				}
 			}
 		}
-		
+
 		return result;
 	}
-	
+
 	/**
 	 * 取得进口报关单BY 申报日期
 	 * 
@@ -739,9 +740,9 @@ public class BaseEncDao extends BaseDao {
 		}
 		hql += "  where a.impExpFlag=? and a.company.id=? "
 				+ " and a.customsDeclarationCode=? ";
-		List list = this.find(hql, new Object[] {
-				Integer.valueOf(ImpExpFlag.EXPORT),
-				CommonUtils.getCompany().getId(), code });
+		List list = this.find(hql,
+				new Object[] { Integer.valueOf(ImpExpFlag.EXPORT),
+						CommonUtils.getCompany().getId(), code });
 		if (list.size() > 0) {
 			return (BaseCustomsDeclaration) list.get(0);
 		}
@@ -774,7 +775,7 @@ public class BaseEncDao extends BaseDao {
 				Integer.valueOf(ImpExpFlag.EXPORT),
 				CommonUtils.getCompany().getId() });
 	}
-	
+
 	/**
 	 * 取得已检查的出口报关单
 	 * 
@@ -799,7 +800,7 @@ public class BaseEncDao extends BaseDao {
 		hql += "  where a.impExpFlag=? and a.company.id=? and a.isCheck = ?";
 		return this.find(hql, new Object[] {
 				Integer.valueOf(ImpExpFlag.EXPORT),
-				CommonUtils.getCompany().getId(), Boolean.TRUE});
+				CommonUtils.getCompany().getId(), Boolean.TRUE });
 	}
 
 	/**
@@ -932,9 +933,9 @@ public class BaseEncDao extends BaseDao {
 			break;
 		}
 		hql += " where a.impExpFlag=? and a.company.id=?";
-		return this.find(hql, new Object[] {
-				Integer.valueOf(ImpExpFlag.SPECIAL),
-				CommonUtils.getCompany().getId() });
+		return this.find(hql,
+				new Object[] { Integer.valueOf(ImpExpFlag.SPECIAL),
+						CommonUtils.getCompany().getId() });
 	}
 
 	/**
@@ -1084,7 +1085,7 @@ public class BaseEncDao extends BaseDao {
 		// }
 		// return code;
 		// synchronized (mutex) {
-		//				
+		//
 		// }
 
 		synchronized (CommonUtils.localForPreCustomsDeclarationCode) {
@@ -1120,8 +1121,7 @@ public class BaseEncDao extends BaseDao {
 					} catch (HibernateOptimisticLockingFailureException ex) {// StaleObjectStateException
 						isNotGetCode = true;
 						list = this
-								.find(
-										"select a from CompanyOther a where a.company.id=?",
+								.find("select a from CompanyOther a where a.company.id=?",
 										new Object[] { CommonUtils.getCompany()
 												.getId() });
 					}
@@ -1208,8 +1208,8 @@ public class BaseEncDao extends BaseDao {
 			// no = new Integer(n);
 			no = Integer.parseInt(temp);
 		}
-//		@SuppressWarnings("unused")
-//		Object object = CommonUtils.getCompany().getId();
+		// @SuppressWarnings("unused")
+		// Object object = CommonUtils.getCompany().getId();
 		return no;
 	}
 
@@ -1225,22 +1225,22 @@ public class BaseEncDao extends BaseDao {
 	}
 
 	public List findIsSpecification() {
-		List specification =  new ArrayList();
-		List  list = this.find(
-				"select a.isSpecification from CompanyOther a where a.company.id = ? ",
-				new Object[] { CommonUtils.getCompany().getId()});
-		if(list.size() > 0 ){
+		List specification = new ArrayList();
+		List list = this
+				.find("select a.isSpecification from CompanyOther a where a.company.id = ? ",
+						new Object[] { CommonUtils.getCompany().getId() });
+		if (list.size() > 0) {
 			Object o = list.get(0);
-			if(o instanceof Boolean){
-				Boolean boo =(Boolean) o;
+			if (o instanceof Boolean) {
+				Boolean boo = (Boolean) o;
 				specification.add(boo);
 				return specification;
-			}		
+			}
 		}
 		specification.add(false);
 		return specification;
 	}
-	
+
 	/**
 	 * 保存报关单表头信息
 	 * 
@@ -1286,8 +1286,6 @@ public class BaseEncDao extends BaseDao {
 						+ " and m.dzbaCustomsDeclarationCommInfo.id = ?   ",
 				new Object[] { CommonUtils.getCompany().getId(), id });
 	}
-	
-	
 
 	/**
 	 * 查找纸质手册中间表信息来自报关单商品信息
@@ -1367,8 +1365,11 @@ public class BaseEncDao extends BaseDao {
 			break;
 		}
 		hql += " where a.baseCustomsDeclaration.id=?"
-				+ " order by a.serialNumber asc ";//order by a.commSerialNo,a.country.code asc
-		System.out.println(baseCustomsDeclaration+" >>>>>>>>>>>>>>>>>>>>>> "+hql);
+				+ " order by a.serialNumber asc ";// order by
+													// a.commSerialNo,a.country.code
+													// asc
+		System.out.println(baseCustomsDeclaration + " >>>>>>>>>>>>>>>>>>>>>> "
+				+ hql);
 		return this.find(hql, new Object[] { baseCustomsDeclaration.getId() });
 	}
 
@@ -1386,10 +1387,10 @@ public class BaseEncDao extends BaseDao {
 				+ " where a.baseCustomsDeclaration.emsHeadH2k=? "
 				+ " and a.baseCustomsDeclaration.id=? "
 				+ " and a.baseCustomsDeclaration.company.id =? "
-				+ "	order by a.commSerialNo ", new Object[] {
-				baseCustomsDeclaration.getEmsHeadH2k(),
-				baseCustomsDeclaration.getId(),
-				CommonUtils.getCompany().getId() });
+				+ "	order by a.commSerialNo ",
+				new Object[] { baseCustomsDeclaration.getEmsHeadH2k(),
+						baseCustomsDeclaration.getId(),
+						CommonUtils.getCompany().getId() });
 	}
 
 	/**
@@ -1421,10 +1422,10 @@ public class BaseEncDao extends BaseDao {
 				+ " and a.baseCustomsDeclaration.id=? "
 				+ " and a.baseCustomsDeclaration.company.id =? "
 				+ " order by a.serialNumber ";
-		return this.find(hql, new Object[] {
-				baseCustomsDeclaration.getEmsHeadH2k(),
-				baseCustomsDeclaration.getId(),
-				CommonUtils.getCompany().getId() });
+		return this.find(hql,
+				new Object[] { baseCustomsDeclaration.getEmsHeadH2k(),
+						baseCustomsDeclaration.getId(),
+						CommonUtils.getCompany().getId() });
 		// return this
 		// .find(
 		// "select a.serialNumber,a.commAmount,a.unit.name,a.firstAmount,a.legalUnit.name,a.secondAmount,a.secondLegalUnit.name "
@@ -1606,6 +1607,7 @@ public class BaseEncDao extends BaseDao {
 		System.out.println(hql);
 		return this.find(hql, new Object[] { conveyance, impExpFlag, false });
 	}
+
 	/**
 	 * 取得报关单商品信息
 	 * 
@@ -1616,7 +1618,7 @@ public class BaseEncDao extends BaseDao {
 	 * @return 报关单商品信息
 	 */
 	public List findCustomsDeclarationCommInfoByConveyance(String conveyance,
-			Integer impExpFlag,Integer projectType) {
+			Integer impExpFlag, Integer projectType) {
 		String hql = "";
 		switch (projectType) {
 		case ProjectType.BCUS:
@@ -1748,7 +1750,7 @@ public class BaseEncDao extends BaseDao {
 	 */
 	public List findCustomsDeclarationCommInfo(
 			BaseCustomsDeclaration baseCustomsDeclaration, int projectType) {
-		if(baseCustomsDeclaration==null){
+		if (baseCustomsDeclaration == null) {
 			return null;
 		}
 		System.out.println("--projectType:" + projectType);
@@ -1797,8 +1799,8 @@ public class BaseEncDao extends BaseDao {
 			break;
 		}
 		hql += " where a.baseCustomsDeclaration.id=?";
-		List list = this.find(hql, new Object[] { baseCustomsDeclaration
-				.getId() });
+		List list = this.find(hql,
+				new Object[] { baseCustomsDeclaration.getId() });
 		if (list.size() > 0 && list.get(0) != null) {
 			return Double.valueOf(list.get(0).toString());
 		} else {
@@ -1897,15 +1899,14 @@ public class BaseEncDao extends BaseDao {
 			return new ArrayList();
 		}
 	}
-	
+
 	/**
 	 * 查询报关行
 	 */
 	public List findcustomsbrokerList() {
-		return this.find( "select a from CustomsBroker a where a.company.id" +
-				"order by code ",CommonUtils.getCompany().getId());
+		return this.find("select a from CustomsBroker a where a.company.id"
+				+ "order by code ", CommonUtils.getCompany().getId());
 	}
-	
 
 	/**
 	 * 取得集装箱号来自报关单头
@@ -2099,15 +2100,13 @@ public class BaseEncDao extends BaseDao {
 		switch (projectType) {
 		case ProjectType.BCUS:
 			list = this
-					.find(
-							"select a from CustomsFromMateriel a where a.company.id = ? and a.infoid = ?",
+					.find("select a from CustomsFromMateriel a where a.company.id = ? and a.infoid = ?",
 							new Object[] { CommonUtils.getCompany().getId(),
 									info.getId() });
 			break;
 		case ProjectType.BCS:
 			list = this
-					.find(
-							"select a from BcsCustomsFromMateriel a where a.company.id = ? and a.infoid = ?",
+					.find("select a from BcsCustomsFromMateriel a where a.company.id = ? and a.infoid = ?",
 							new Object[] { CommonUtils.getCompany().getId(),
 									info.getId() });
 			break;
@@ -2135,17 +2134,15 @@ public class BaseEncDao extends BaseDao {
 		switch (projectType) {
 		case ProjectType.BCUS:
 			list = this
-					.find(
-							"select a from CustomsFromMateriel a "
-									+ " where a.company.id = ? and a.infoid = ? and a.materiel.id is null",
+					.find("select a from CustomsFromMateriel a "
+							+ " where a.company.id = ? and a.infoid = ? and a.materiel.id is null",
 							new Object[] { CommonUtils.getCompany().getId(),
 									info.getId() });
 			break;
 		case ProjectType.BCS:
 			list = this
-					.find(
-							"select a from BcsCustomsFromMateriel a "
-									+ " where a.company.id = ? and a.infoid = ? and a.materiel.id is null",
+					.find("select a from BcsCustomsFromMateriel a "
+							+ " where a.company.id = ? and a.infoid = ? and a.materiel.id is null",
 							new Object[] { CommonUtils.getCompany().getId(),
 									info.getId() });
 			break;
@@ -2168,8 +2165,7 @@ public class BaseEncDao extends BaseDao {
 	 */
 	public List getMakeListToCustoms(BaseCustomsDeclarationCommInfo info) {
 		return this
-				.find(
-						"select a from MakeListToCustoms a where a.company.id=? and a.customsInfo.id = ?",
+				.find("select a from MakeListToCustoms a where a.company.id=? and a.customsInfo.id = ?",
 						new Object[] { CommonUtils.getCompany().getId(),
 								info.getId() });
 	}
@@ -2247,8 +2243,7 @@ public class BaseEncDao extends BaseDao {
 	 */
 	public List findBillForbillNo(String listno) {
 		return this
-				.find(
-						"select a from ApplyToCustomsBillList a where a.company.id=? and a.listNo = ?",
+				.find("select a from ApplyToCustomsBillList a where a.company.id=? and a.listNo = ?",
 						new Object[] { CommonUtils.getCompany().getId(), listno });
 
 	}
@@ -2287,8 +2282,7 @@ public class BaseEncDao extends BaseDao {
 	 */
 	public List findnameValues(int type) {
 		return this
-				.find(
-						"select a from ParameterSet a left join fetch a.company where a.company= ? and a.type=?",
+				.find("select a from ParameterSet a left join fetch a.company where a.company= ? and a.type=?",
 						new Object[] { CommonUtils.getCompany(), type });
 	}
 
@@ -2301,20 +2295,21 @@ public class BaseEncDao extends BaseDao {
 	 */
 	public Integer getInfoForToCustom(ImpExpRequestBill head) {
 		List list = this
-				.find(
-						"select count(a) from ImpExpCommodityInfo a where "
-								+ "a.impExpRequestBill.id = ? and a.isTransferCustomsBill = ? ",
+				.find("select count(a) from ImpExpCommodityInfo a where "
+						+ "a.impExpRequestBill.id = ? and a.isTransferCustomsBill = ? ",
 						new Object[] { head.getId(), new Boolean(true) });
 		if (list.size() > 0 && list.get(0) != null) {
 			return Integer.parseInt(list.get(0).toString());
 		}
 		return 0;
 	}
-	
-	public ImpExpRequestBill findImpExpRequestBillById(String id){
-		List list = this.find("select a from ImpExpRequestBill a where a.id = ?",new Object[] {id});
-		if(list.size()>0){
-			return (ImpExpRequestBill)list.get(0);
+
+	public ImpExpRequestBill findImpExpRequestBillById(String id) {
+		List list = this.find(
+				"select a from ImpExpRequestBill a where a.id = ?",
+				new Object[] { id });
+		if (list.size() > 0) {
+			return (ImpExpRequestBill) list.get(0);
 		}
 		return null;
 	}
@@ -2561,7 +2556,7 @@ public class BaseEncDao extends BaseDao {
 	 *            第一个索引
 	 * @param obj
 	 *            查询的值
-	 *@param sFields
+	 * @param sFields
 	 *            查询的属性
 	 * @return 归并关系物料主档对象
 	 */
@@ -2614,25 +2609,22 @@ public class BaseEncDao extends BaseDao {
 		switch (projectType) {
 		case ProjectType.BCUS:
 			list = this
-					.find(
-							"select a.hsAfterTenMemoNo from InnerMergeData a "
-									+ " where a.imrType = ? and a.company.id = ? and a.materiel.ptNo = ?",
+					.find("select a.hsAfterTenMemoNo from InnerMergeData a "
+							+ " where a.imrType = ? and a.company.id = ? and a.materiel.ptNo = ?",
 							new Object[] { type,
 									CommonUtils.getCompany().getId(), ptNo });
 			break;
 		case ProjectType.BCS:
 			list = this
-					.find(
-							"select a.bcsTenInnerMerge.seqNum from BcsInnerMerge a "
-									+ " where a.materielType = ? and a.company.id = ? and a.materiel.ptNo = ?",
+					.find("select a.bcsTenInnerMerge.seqNum from BcsInnerMerge a "
+							+ " where a.materielType = ? and a.company.id = ? and a.materiel.ptNo = ?",
 							new Object[] { type,
 									CommonUtils.getCompany().getId(), ptNo });
 			break;
 		case ProjectType.DZSC:
 			list = this
-					.find(
-							"select a.tenComplex.seqNum from DzscInnerMergeData a "
-									+ " where a.imrType = ? and a.company.id = ? and a.materiel.ptNo = ? ",
+					.find("select a.tenComplex.seqNum from DzscInnerMergeData a "
+							+ " where a.imrType = ? and a.company.id = ? and a.materiel.ptNo = ? ",
 							new Object[] { type,
 									CommonUtils.getCompany().getId(), ptNo });
 			break;
@@ -2657,25 +2649,22 @@ public class BaseEncDao extends BaseDao {
 		switch (projectType) {
 		case ProjectType.BCUS:
 			list = this
-					.find(
-							"select a.hsAfterTenMemoNo from InnerMergeData a "
-									+ " where a.imrType = ? and a.company.id = ? and a.materiel.ptNo = ?",
+					.find("select a.hsAfterTenMemoNo from InnerMergeData a "
+							+ " where a.imrType = ? and a.company.id = ? and a.materiel.ptNo = ?",
 							new Object[] { type,
 									CommonUtils.getCompany().getId(), ptNo });
 			break;
 		case ProjectType.BCS:
 			list = this
-					.find(
-							"select a.bcsTenInnerMerge.seqNum from BcsInnerMerge a "
-									+ " where a.materielType = ? and a.company.id = ? and a.materiel.ptNo = ?",
+					.find("select a.bcsTenInnerMerge.seqNum from BcsInnerMerge a "
+							+ " where a.materielType = ? and a.company.id = ? and a.materiel.ptNo = ?",
 							new Object[] { type,
 									CommonUtils.getCompany().getId(), ptNo });
 			break;
 		case ProjectType.DZSC:
 			list = this
-					.find(
-							"select a.tenComplex.seqNum from DzscInnerMergeData a "
-									+ " where a.imrType = ? and a.company.id = ? and a.materiel.ptNo = ? ",
+					.find("select a.tenComplex.seqNum from DzscInnerMergeData a "
+							+ " where a.imrType = ? and a.company.id = ? and a.materiel.ptNo = ? ",
 							new Object[] { type,
 									CommonUtils.getCompany().getId(), ptNo });
 			break;
@@ -2690,8 +2679,7 @@ public class BaseEncDao extends BaseDao {
 	 */
 	private boolean getIsEmsH2kSend() {
 		List list = this
-				.find(
-						"select a from BcusParameter a where a.type = ? and a.company.id = ?",
+				.find("select a from BcusParameter a where a.type = ? and a.company.id = ?",
 						new Object[] { BcusParameter.EmsEdiH2kSend,
 								CommonUtils.getCompany().getId() });
 		if (list != null && list.size() > 0) {
@@ -2732,9 +2720,10 @@ public class BaseEncDao extends BaseDao {
 						+ " and a.sendState = ? and a.emsHeadH2k.historyState=?";
 				// System.out.println("=sql1="+sql+"=seqNum="+seqNum+"=id="+CommonUtils.getCompany().getId()+" ="+new
 				// Boolean(false));
-				list = this.find(sql, new Object[] {
-						CommonUtils.getCompany().getId(), seqNum,
-						Integer.valueOf(SendState.SEND), new Boolean(false) });
+				list = this.find(sql,
+						new Object[] { CommonUtils.getCompany().getId(),
+								seqNum, Integer.valueOf(SendState.SEND),
+								new Boolean(false) });
 			} else {
 				String sql = "from "
 						+ obj
@@ -2755,11 +2744,10 @@ public class BaseEncDao extends BaseDao {
 				obj = "ContractExg";
 			}
 			list = this
-					.find(
-							"select a from "
-									+ obj
-									+ " a where a.contract.emsNo=? "
-									+ " and a.contract.company.id=? and a.credenceNo = ? and a.contract.declareState=? ",
+					.find("select a from "
+							+ obj
+							+ " a where a.contract.emsNo=? "
+							+ " and a.contract.company.id=? and a.credenceNo = ? and a.contract.declareState=? ",
 							new Object[] { emsNo,
 									CommonUtils.getCompany().getId(), seqNum,
 									DeclareState.PROCESS_EXE });
@@ -2791,21 +2779,19 @@ public class BaseEncDao extends BaseDao {
 	public List findEmsHeadH2kVersionByExgSeqNum(EmsHeadH2kExg exg) {
 		if (getIsEmsH2kSend()) {
 			return this
-					.find(
-							"select distinct a.emsHeadH2kVersion from EmsHeadH2kBom a where a.emsHeadH2kVersion.emsHeadH2kExg.id= ? " +
-							" and a.company.id = ? and a.sendState =? and a.emsHeadH2kVersion.emsHeadH2kExg.sendState =?",
+					.find("select distinct a.emsHeadH2kVersion from EmsHeadH2kBom a where a.emsHeadH2kVersion.emsHeadH2kExg.id= ? "
+							+ " and a.company.id = ? and a.sendState =? and a.emsHeadH2kVersion.emsHeadH2kExg.sendState =?",
 							new Object[] { exg.getId(),
 									CommonUtils.getCompany().getId(),
 									Integer.valueOf(SendState.SEND),
 									Integer.valueOf(SendState.SEND) });
 		} else {
 			return this
-					.find(
-							"select distinct a.emsHeadH2kVersion from EmsHeadH2kBom a where a.emsHeadH2kVersion.emsHeadH2kExg.id= ? " +
-							" and a.company.id = ? and a.sendState =?",
+					.find("select distinct a.emsHeadH2kVersion from EmsHeadH2kBom a where a.emsHeadH2kVersion.emsHeadH2kExg.id= ? "
+							+ " and a.company.id = ? and a.sendState =?",
 							new Object[] { exg.getId(),
 									CommonUtils.getCompany().getId(),
-							Integer.valueOf(SendState.SEND)});
+									Integer.valueOf(SendState.SEND) });
 		}
 
 	}
@@ -2820,10 +2806,9 @@ public class BaseEncDao extends BaseDao {
 	public List findAppFromMaterielByCustomsInfo(
 			BaseCustomsDeclarationCommInfo customs) {
 		return this
-				.find(
-						"select a.impExpCommodityInfo from MakeApplyToCustoms a "
-								+ " where a.company.id = ? and a.atcMergeBeforeComInfo.afterComInfo.id in "
-								+ "(select c.atcMergeAfterComInfo.id from MakeListToCustoms c where c.customsInfo.id = ?)",
+				.find("select a.impExpCommodityInfo from MakeApplyToCustoms a "
+						+ " where a.company.id = ? and a.atcMergeBeforeComInfo.afterComInfo.id in "
+						+ "(select c.atcMergeAfterComInfo.id from MakeListToCustoms c where c.customsInfo.id = ?)",
 						new Object[] { CommonUtils.getCompany().getId(),
 								customs.getId() });
 	}
@@ -2837,8 +2822,7 @@ public class BaseEncDao extends BaseDao {
 	public void DeleteMakeApplyToCustomsByImpExp(ImpExpCommodityInfo info) {
 		MakeApplyToCustoms obj = null;
 		List list = this
-				.find(
-						"select a from MakeApplyToCustoms a where a.company.id = ? and a.impExpCommodityInfo.id = ?",
+				.find("select a from MakeApplyToCustoms a where a.company.id = ? and a.impExpCommodityInfo.id = ?",
 						new Object[] { CommonUtils.getCompany().getId(),
 								info.getId() });
 		if (list != null && list.size() > 0) {
@@ -2937,14 +2921,14 @@ public class BaseEncDao extends BaseDao {
 			return null;
 		}
 		List list = this
-				.find(
-						"select a.billNo from ImpExpRequestBill a where a.allBillNo = ? and a.company.id = ?",
+				.find("select a.billNo from ImpExpRequestBill a where a.allBillNo = ? and a.company.id = ?",
 						new Object[] { billNo, CommonUtils.getCompany().getId() });
 		if (list.size() > 0 && list.get(0) != null) {
 			return String.valueOf(list.get(0));
 		}
 		return null;
 	}
+
 	/**
 	 * 得到多个申请单号通过报关清单号码
 	 * 
@@ -2954,19 +2938,19 @@ public class BaseEncDao extends BaseDao {
 	 *            报关清单号码
 	 * @return 进出口申请单单据号
 	 */
-	public List getImpExpMultiNoByBillNo(String billNo){
+	public List getImpExpMultiNoByBillNo(String billNo) {
 		if (billNo == null || "".equals(billNo.trim())) {
 			return null;
 		}
 		List list = this
-				.find(
-						"select a.billNo from ImpExpRequestBill a where a.allBillNo = ? and a.company.id = ?",
+				.find("select a.billNo from ImpExpRequestBill a where a.allBillNo = ? and a.company.id = ?",
 						new Object[] { billNo, CommonUtils.getCompany().getId() });
 		if (list.size() > 0 && list.get(0) != null) {
 			return list;
 		}
 		return null;
 	}
+
 	/**
 	 * 取得报关单商品信息来自序号
 	 * 
@@ -3013,8 +2997,7 @@ public class BaseEncDao extends BaseDao {
 	public int findTransFactMakeCustomsDeclarationCount(
 			BaseCustomsDeclarationCommInfo commInfo) {
 		List list = this
-				.find(
-						"select count(a) from MakeFptBillCustomsDeclaration a where a.customsDeclarationCommInId = ? ",
+				.find("select count(a) from MakeFptBillCustomsDeclaration a where a.customsDeclarationCommInId = ? ",
 						new Object[] { commInfo.getId() });
 		if (list.size() > 0 && list.get(0) != null) {
 			return Integer.parseInt(list.get(0).toString());
@@ -3033,19 +3016,22 @@ public class BaseEncDao extends BaseDao {
 	public List findTransFactMakeCustomsDeclaration(
 			BaseCustomsDeclarationCommInfo commInfo) {
 		return this
-				.find(
-						"select a from MakeFptBillCustomsDeclaration a where a.customsDeclarationCommInId = ? ",
+				.find("select a from MakeFptBillCustomsDeclaration a where a.customsDeclarationCommInId = ? ",
 						new Object[] { commInfo.getId() });
 	}
-	
-//	public List getFptBillItemIdByMakeCustomsDeclarationAppNo(MakeFptBillCustomsDeclaration make){
-//		return this.find("select  a from FptBillItem a where a.fptBillHead.appNo=? and a.trGno=?",
-//				new Object[]{make.getFptBillHeadAppNo(),make.getFptBillItemTrGno()});
-//	}
 
-    public List findFptBillItemByCustomsDeclaration(FptBillHead fptBillHead, BaseCustomsDeclaration customsDeclaration) {
-    	String commInfoTableNames="CustomsDeclarationCommInfo";
-    	switch (projectType) {
+	// public List
+	// getFptBillItemIdByMakeCustomsDeclarationAppNo(MakeFptBillCustomsDeclaration
+	// make){
+	// return
+	// this.find("select  a from FptBillItem a where a.fptBillHead.appNo=? and a.trGno=?",
+	// new Object[]{make.getFptBillHeadAppNo(),make.getFptBillItemTrGno()});
+	// }
+
+	public List findFptBillItemByCustomsDeclaration(FptBillHead fptBillHead,
+			BaseCustomsDeclaration customsDeclaration) {
+		String commInfoTableNames = "CustomsDeclarationCommInfo";
+		switch (projectType) {
 		case ProjectType.BCUS:
 			commInfoTableNames = "CustomsDeclarationCommInfo";
 			break;
@@ -3059,13 +3045,16 @@ public class BaseEncDao extends BaseDao {
 			commInfoTableNames = "CustomsDeclarationCommInfo";
 			break;
 		}
-        return this
-                .find(
-                "select distinct a from FptBillItem a,MakeFptBillCustomsDeclaration b,"+commInfoTableNames+" c "
-                + " where a.id=b.fptBillItemId and b.customsDeclarationCommInId=c.id "
-                + " and a.fptBillHead.id = ? and c.baseCustomsDeclaration.id=? ",
-                new Object[]{fptBillHead.getId(), customsDeclaration.getId()});
-    }
+		return this
+				.find("select distinct a from FptBillItem a,MakeFptBillCustomsDeclaration b,"
+						+ commInfoTableNames
+						+ " c "
+						+ " where a.id=b.fptBillItemId and b.customsDeclarationCommInId=c.id "
+						+ " and a.fptBillHead.id = ? and c.baseCustomsDeclaration.id=? ",
+						new Object[] { fptBillHead.getId(),
+								customsDeclaration.getId() });
+	}
+
 	/**
 	 * 删除报关单时，如果此报关单是由转厂单据转过来的话，反写转厂单据的转报关单标志位
 	 * 
@@ -3073,10 +3062,9 @@ public class BaseEncDao extends BaseDao {
 	 *            转厂单据id
 	 */
 	public void updateTransferFactoryBillCommInfo(String billItemId) {
-		this
-				.batchUpdateOrDelete(
-						" update FptBillItem a set a.isCustomsDeclaration=? where a.id=? ",
-						new Object[] { false, billItemId });
+		this.batchUpdateOrDelete(
+				" update FptBillItem a set a.isCustomsDeclaration=? where a.id=? ",
+				new Object[] { false, billItemId });
 	}
 
 	/**
@@ -3091,8 +3079,7 @@ public class BaseEncDao extends BaseDao {
 	public List findTransferFactoryBillId(String emsNO, String impExpFlag) {
 		if (impExpFlag.equals(ImpExpFlag.EXPORT)) {
 			return this
-					.find(
-							"select a from FptBillItem a where  a.fptBillHead.outEmsNo = ? ",
+					.find("select a from FptBillItem a where  a.fptBillHead.outEmsNo = ? ",
 							new Object[] { emsNO });
 		} else if (impExpFlag.equals(ImpExpFlag.IMPORT)) {
 			return this.find(
@@ -3102,17 +3089,19 @@ public class BaseEncDao extends BaseDao {
 		return null;
 	}
 
-//	/**
-//	 * 返回转厂单据信息
-//	 * 
-//	 * @param billid
-//	 *            转厂单据id
-//	 * @return List 转厂单据信息
-//	 */
-//	public List findTransferFactoryBillId(MakeFptBillCustomsDeclaration mfp) {
-//		return this.find("select a from FptBillItem a where  a.fptBillHead.appNo= ?  and a.trGno=? ",
-//				new Object[] { mfp.getFptBillHeadAppNo(),mfp.getFptBillItemTrGno() });
-//	}
+	// /**
+	// * 返回转厂单据信息
+	// *
+	// * @param billid
+	// * 转厂单据id
+	// * @return List 转厂单据信息
+	// */
+	// public List findTransferFactoryBillId(MakeFptBillCustomsDeclaration mfp)
+	// {
+	// return
+	// this.find("select a from FptBillItem a where  a.fptBillHead.appNo= ?  and a.trGno=? ",
+	// new Object[] { mfp.getFptBillHeadAppNo(),mfp.getFptBillItemTrGno() });
+	// }
 
 	/**
 	 * 更新转厂进出货单信息
@@ -3123,10 +3112,9 @@ public class BaseEncDao extends BaseDao {
 	 *            转厂单据id
 	 */
 	public void updateTransferFactoryBill(String emsNoCode, String BillId) {
-		this
-				.batchUpdateOrDelete(
-						"update FptBillHead set makeCustomsDeclarationCode=? where id = ? ",
-						new Object[] { emsNoCode, BillId });
+		this.batchUpdateOrDelete(
+				"update FptBillHead set makeCustomsDeclarationCode=? where id = ? ",
+				new Object[] { emsNoCode, BillId });
 	}
 
 	/**
@@ -3229,8 +3217,7 @@ public class BaseEncDao extends BaseDao {
 	public CustomsDeclarationSet findCustomsSet(Integer type) {
 		if (type != null) {
 			List list = this
-					.find(
-							"select a from CustomsDeclarationSet a where a.impType = ? and a.company.id = ?",
+					.find("select a from CustomsDeclarationSet a where a.impType = ? and a.company.id = ?",
 							new Object[] { type,
 									CommonUtils.getCompany().getId() });
 			if (list != null && list.size() > 0) {
@@ -3305,8 +3292,8 @@ public class BaseEncDao extends BaseDao {
 		}
 		hql += "  where a.company.id=? and a.impExpFlag=? "
 				+ " order by a.date desc ";
-		return this.findPageList(hql, new Object[] { CommonUtils.getCompany().getId(),
-				impExpFlag },0,1);
+		return this.findPageList(hql, new Object[] {
+				CommonUtils.getCompany().getId(), impExpFlag }, 0, 1);
 	}
 
 	/**
@@ -3351,8 +3338,7 @@ public class BaseEncDao extends BaseDao {
 			return Double.valueOf(0.0);
 		}
 		List ls = this
-				.find(
-						"select a from CurrRate a where a.company.id = ? and a.curr.code = ? and a.curr1.code = ?",
+				.find("select a from CurrRate a where a.company.id = ? and a.curr.code = ? and a.curr1.code = ?",
 						new Object[] { CommonUtils.getCompany().getId(), "502",
 								curr.getCode() });
 		if (ls != null && ls.size() > 0) {
@@ -3371,9 +3357,8 @@ public class BaseEncDao extends BaseDao {
 	public List findEmsEdiMergerImgBeforeByGNo(String ptNo) {
 		EmsEdiMergerHead head = findEmsEdiMergerHeadByDeclareState();
 		return this
-				.find(
-						"select  distinct a.seqNum from EmsEdiMergerImgBefore a where a.ptNo=? and a.company.id= ?"
-								+ " and a.emsEdiMergerImgAfter.emsEdiMergerHead.id=?",
+				.find("select  distinct a.seqNum from EmsEdiMergerImgBefore a where a.ptNo=? and a.company.id= ?"
+						+ " and a.emsEdiMergerImgAfter.emsEdiMergerHead.id=?",
 						new Object[] { ptNo, CommonUtils.getCompany().getId(),
 								head.getId() });
 	}
@@ -3393,18 +3378,16 @@ public class BaseEncDao extends BaseDao {
 		if (type.equals(MaterielType.MATERIEL)) {
 			if (getIsMergerSend()) {
 				return this
-						.find(
-								"select a from EmsEdiMergerImgBefore a where a.ptNo=? and a.company.id= ?"
-										+ " and a.emsEdiMergerImgAfter.emsEdiMergerHead.id=? and a.sendState = ?",
+						.find("select a from EmsEdiMergerImgBefore a where a.ptNo=? and a.company.id= ?"
+								+ " and a.emsEdiMergerImgAfter.emsEdiMergerHead.id=? and a.sendState = ?",
 								new Object[] { ptNo,
 										CommonUtils.getCompany().getId(),
 										head.getId(),
 										Integer.valueOf(SendState.SEND) });
 			} else {
 				return this
-						.find(
-								"select a from EmsEdiMergerImgBefore a where a.ptNo=? and a.company.id= ?"
-										+ " and a.emsEdiMergerImgAfter.emsEdiMergerHead.id=?",
+						.find("select a from EmsEdiMergerImgBefore a where a.ptNo=? and a.company.id= ?"
+								+ " and a.emsEdiMergerImgAfter.emsEdiMergerHead.id=?",
 								new Object[] { ptNo,
 										CommonUtils.getCompany().getId(),
 										head.getId() });
@@ -3412,18 +3395,16 @@ public class BaseEncDao extends BaseDao {
 		} else {
 			if (getIsMergerSend()) {
 				return this
-						.find(
-								"select a from EmsEdiMergerExgBefore a where a.ptNo=? and a.company.id= ?"
-										+ " and a.emsEdiMergerExgAfter.emsEdiMergerHead.id=? and a.sendState = ?",
+						.find("select a from EmsEdiMergerExgBefore a where a.ptNo=? and a.company.id= ?"
+								+ " and a.emsEdiMergerExgAfter.emsEdiMergerHead.id=? and a.sendState = ?",
 								new Object[] { ptNo,
 										CommonUtils.getCompany().getId(),
 										head.getId(),
 										Integer.valueOf(SendState.SEND) });
 			} else {
 				return this
-						.find(
-								"select a from EmsEdiMergerExgBefore a where a.ptNo=? and a.company.id= ?"
-										+ " and a.emsEdiMergerExgAfter.emsEdiMergerHead.id=?",
+						.find("select a from EmsEdiMergerExgBefore a where a.ptNo=? and a.company.id= ?"
+								+ " and a.emsEdiMergerExgAfter.emsEdiMergerHead.id=?",
 								new Object[] { ptNo,
 										CommonUtils.getCompany().getId(),
 										head.getId() });
@@ -3449,11 +3430,9 @@ public class BaseEncDao extends BaseDao {
 			return (EmsEdiMergerHead) list.get(0);
 		} else {
 			List list = this
-					.find(
-							"select a from EmsEdiMergerHead a where a.company.id= ? "
-									+ "and a.historyState=? "
-									+ "and a.declareState=? ", new Object[] {
-									CommonUtils.getCompany().getId(),
+					.find("select a from EmsEdiMergerHead a where a.company.id= ? "
+							+ "and a.historyState=? " + "and a.declareState=? ",
+							new Object[] { CommonUtils.getCompany().getId(),
 									new Boolean(false),
 									DeclareState.PROCESS_EXE });
 			if (list == null || list.size() <= 0) {
@@ -3485,8 +3464,7 @@ public class BaseEncDao extends BaseDao {
 	 */
 	private boolean getIsMergerSend() {
 		List list = this
-				.find(
-						"select a from BcusParameter a where a.type = ? and a.company.id = ?",
+				.find("select a from BcusParameter a where a.type = ? and a.company.id = ?",
 						new Object[] { BcusParameter.EmsSEND,
 								CommonUtils.getCompany().getId() });
 		if (list != null && list.size() > 0) {
@@ -3522,11 +3500,13 @@ public class BaseEncDao extends BaseDao {
 		} else {
 			list = find("select a.amount from DutyCertDetail a where "
 					+ " a.company.id=? and a.certHead.certNo= ? "
-					+ " and a.mainNo=? )", new Object[] {
-					CommonUtils.getCompany().getId(),
-					baseCustomsDeclarationCommInfo.getBaseCustomsDeclaration()
-							.getEmsHeadH2k(),
-					baseCustomsDeclarationCommInfo.getCommSerialNo() });
+					+ " and a.mainNo=? )",
+					new Object[] {
+							CommonUtils.getCompany().getId(),
+							baseCustomsDeclarationCommInfo
+									.getBaseCustomsDeclaration()
+									.getEmsHeadH2k(),
+							baseCustomsDeclarationCommInfo.getCommSerialNo() });
 		}
 		if (list.size() < 1)
 			return 0.0;
@@ -3554,11 +3534,12 @@ public class BaseEncDao extends BaseDao {
 		return this.find("select a from " + customsDeclarationCommInfo
 				+ " a where "
 				+ " a.company.id=? and a.baseCustomsDeclaration.emsHeadH2k=? "
-				+ " and a.commSerialNo=? ", new Object[] {
-				CommonUtils.getCompany().getId(),
-				baseCustomsDeclarationCommInfo.getBaseCustomsDeclaration()
-						.getEmsHeadH2k(),
-				baseCustomsDeclarationCommInfo.getCommSerialNo() });
+				+ " and a.commSerialNo=? ",
+				new Object[] {
+						CommonUtils.getCompany().getId(),
+						baseCustomsDeclarationCommInfo
+								.getBaseCustomsDeclaration().getEmsHeadH2k(),
+						baseCustomsDeclarationCommInfo.getCommSerialNo() });
 
 	}
 
@@ -3616,8 +3597,8 @@ public class BaseEncDao extends BaseDao {
 			break;
 		}
 		hql += " where a.id=?" + " order by a.serialNumber asc ";
-		List list = this.find(hql, new Object[] { customsDeclarationCommInfo
-				.getId() });
+		List list = this.find(hql,
+				new Object[] { customsDeclarationCommInfo.getId() });
 		if (list.isEmpty())
 			return null;
 		return (BaseCustomsDeclarationCommInfo) list.get(0);
@@ -3749,8 +3730,7 @@ public class BaseEncDao extends BaseDao {
 	 */
 	public String getBpara(int type) {
 		List list = this
-				.find(
-						"select a from BcusParameter a where a.type = ? and a.company.id = ?",
+				.find("select a from BcusParameter a where a.type = ? and a.company.id = ?",
 						new Object[] { type, CommonUtils.getCompany().getId() });
 		if (list != null && list.size() > 0) {
 			BcusParameter obj = (BcusParameter) list.get(0);
@@ -3768,8 +3748,7 @@ public class BaseEncDao extends BaseDao {
 	 */
 	public List findAllEmsHeadH2k(String emsNo) {
 		List lbcs = this
-				.find(
-						"select a from Contract a where a.company.id = ?  and a.emsNo =? )",
+				.find("select a from Contract a where a.company.id = ?  and a.emsNo =? )",
 						new Object[] { CommonUtils.getCompany().getId(), emsNo });
 		if (lbcs.size() > 0) {
 			return lbcs;
@@ -3780,7 +3759,7 @@ public class BaseEncDao extends BaseDao {
 			List tlbcus = this
 					.find(
 
-							"select a from EmsHeadH2k a where a.company.id = ?  and a.historyState=? and a.emsNo =?  ",
+					"select a from EmsHeadH2k a where a.company.id = ?  and a.historyState=? and a.emsNo =?  ",
 							new Object[] { CommonUtils.getCompany().getId(),
 									new Boolean(false), emsNo });
 			if (tlbcus.size() > 0) {
@@ -3789,8 +3768,7 @@ public class BaseEncDao extends BaseDao {
 
 		} else {
 			List lbcus = this
-					.find(
-							"select a from EmsHeadH2k a where a.company.id = ?  and a.emsNo =? ",
+					.find("select a from EmsHeadH2k a where a.company.id = ?  and a.emsNo =? ",
 							new Object[] { CommonUtils.getCompany().getId(),
 									emsNo });
 			if (lbcus.size() > 0) {
@@ -3799,8 +3777,7 @@ public class BaseEncDao extends BaseDao {
 		}
 		// -----------------------------------------------------------------------------------
 		List ldzsc = this
-				.find(
-						"select a from DzscEmsPorHead a where a.company.id = ?    and a.emsNo =? ",
+				.find("select a from DzscEmsPorHead a where a.company.id = ?    and a.emsNo =? ",
 						new Object[] { CommonUtils.getCompany().getId(), emsNo });
 		if (ldzsc.size() > 0) {
 			return ldzsc;
@@ -3860,18 +3837,17 @@ public class BaseEncDao extends BaseDao {
 		// }
 		//
 		// }
-		
-//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//		java.sql.Date.valueOf(sdf.format(date))
+
+		// SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		// java.sql.Date.valueOf(sdf.format(date))
 		List list = this
-				.find(
-						"select a from CurrRate a where a.company.id = ? "
-								+ " and a.curr.code=? and a.curr1.code=?  and a.createDate<= ?"
-								+ "order by a.createDate desc ", new Object[] {
-								CommonUtils.getCompany().getId(), currcode,
-								curr,date});
+				.find("select a from CurrRate a where a.company.id = ? "
+						+ " and a.curr.code=? and a.curr1.code=?  and a.createDate<= ?"
+						+ "order by a.createDate desc ",
+						new Object[] { CommonUtils.getCompany().getId(),
+								currcode, curr, date });
 		if (list.size() != 0) {
-			CurrRate cr = (CurrRate) list.get(0); 
+			CurrRate cr = (CurrRate) list.get(0);
 			// CurrRate cr = (CurrRate) list.get(list.size() - 1);
 			return cr.getRate() == null ? 0.0 : cr.getRate();
 		} else {
@@ -3993,12 +3969,11 @@ public class BaseEncDao extends BaseDao {
 	 */
 	public List findCustomsDeclarationByImpExpFlag(int flag) {
 		return this
-				.find(
-						" select a from  CustomsDeclaration  a where  a.company.id= ? "
-								+ "  and  a.impExpFlag =?   and  ( a.effective=?  or  a.effective  is null ) "
-								+ "    order  by   a.serialNumber  ",
-						new Object[] { CommonUtils.getCompany().getId(), flag,
-								new Boolean(false) });
+				.find(" select a from  CustomsDeclaration  a where  a.company.id= ? "
+						+ "  and  a.impExpFlag =?   and  ( a.effective=?  or  a.effective  is null ) "
+						+ "    order  by   a.serialNumber  ", new Object[] {
+						CommonUtils.getCompany().getId(), flag,
+						new Boolean(false) });
 
 	}
 
@@ -4011,9 +3986,8 @@ public class BaseEncDao extends BaseDao {
 	 */
 	public List findDzscCustomsBillList(String listNo) {
 		return this
-				.find(
-						" select a from  DzscCustomsBillList  a where  a.company.id= ? "
-								+ "  and  a.listNo =?  and  a.isGenerateDeclaration=?  ",
+				.find(" select a from  DzscCustomsBillList  a where  a.company.id= ? "
+						+ "  and  a.listNo =?  and  a.isGenerateDeclaration=?  ",
 						new Object[] { CommonUtils.getCompany().getId(),
 								listNo, new Boolean(true) });
 
@@ -4037,9 +4011,10 @@ public class BaseEncDao extends BaseDao {
 		}
 		String hsql = " select  a from  " + table
 				+ "  a   where a.company.id=? and a.declareState=? ";
-		return this.find(hsql,
-				new Object[] { CommonUtils.getCompany().getId(), DzscState.EXECUTE});
+		return this.find(hsql, new Object[] { CommonUtils.getCompany().getId(),
+				DzscState.EXECUTE });
 	}
+
 	/**
 	 * 返回正在执行的电子化手册合同备案or电子手册通关备案or电子账册表头信息
 	 * 
@@ -4063,8 +4038,9 @@ public class BaseEncDao extends BaseDao {
 		String hsql = " select  a from  " + table
 				+ "  a   where a.declareState=? and a.company.id=?  ";
 		para.add(CommonUtils.getCompany().getId());
-		return this.find(hsql,para.toArray());
+		return this.find(hsql, para.toArray());
 	}
+
 	/**
 	 * 返回相关表信息
 	 * 
@@ -4270,8 +4246,7 @@ public class BaseEncDao extends BaseDao {
 	 */
 	public List findCommdityForbid(String type) {
 		List list = this
-				.find(
-						"select distinct a from CommdityForbid a   where a.company.id= ?  and a.type=? ",
+				.find("select distinct a from CommdityForbid a   where a.company.id= ?  and a.type=? ",
 						new Object[] { CommonUtils.getCompany().getId(), type });
 		return list;
 
@@ -4280,9 +4255,9 @@ public class BaseEncDao extends BaseDao {
 	/**
 	 * 取得进口报关单
 	 * 
-	 *@param str1
+	 * @param str1
 	 *            账册号
-	 *@param str2
+	 * @param str2
 	 *            合同号
 	 * @return List进口报关单
 	 */
@@ -4313,7 +4288,7 @@ public class BaseEncDao extends BaseDao {
 	 * 
 	 * @param str1
 	 *            账册号
-	 *@param str2
+	 * @param str2
 	 *            合同号
 	 * @return List出口报关单
 	 */
@@ -4344,7 +4319,7 @@ public class BaseEncDao extends BaseDao {
 	 * 
 	 * @param str1
 	 *            账册号
-	 *@param str2
+	 * @param str2
 	 *            合同号
 	 * @return List 特殊报关单
 	 */
@@ -4365,9 +4340,9 @@ public class BaseEncDao extends BaseDao {
 			break;
 		}
 		hql += " where a.impExpFlag=? and a.company.id=? and a.emsHeadH2k=?";
-		return this.find(hql, new Object[] {
-				Integer.valueOf(ImpExpFlag.SPECIAL),
-				CommonUtils.getCompany().getId(), str1 });
+		return this.find(hql,
+				new Object[] { Integer.valueOf(ImpExpFlag.SPECIAL),
+						CommonUtils.getCompany().getId(), str1 });
 	}
 
 	/**
@@ -4391,8 +4366,7 @@ public class BaseEncDao extends BaseDao {
 	 */
 	public ScmCoc findScmCocByCode(String code) {
 		List list = this
-				.find(
-						" select a from ScmCoc a where a.company.id = ? and a.code= ? ",
+				.find(" select a from ScmCoc a where a.company.id = ? and a.code= ? ",
 						new Object[] { CommonUtils.getCompany().getId(), code });
 		if (list.size() > 0) {
 			return (ScmCoc) list.get(0);
@@ -4767,7 +4741,8 @@ public class BaseEncDao extends BaseDao {
 	 * @param seqNum
 	 */
 	public void updateAllContractComplex(String contractId, Boolean isMaterial,
-			Complex complex, String oldComplexId, Integer seqNum, boolean isSendData) {
+			Complex complex, String oldComplexId, Integer seqNum,
+			boolean isSendData) {
 		String tableName = "";
 		if (isMaterial) {
 			tableName = " ContractImg ";
@@ -4790,8 +4765,7 @@ public class BaseEncDao extends BaseDao {
 		parameters.add(contractId);
 		// System.out.println("==hsql==" + hsql);
 		this.batchUpdateOrDelete(hsql, parameters.toArray());
-		
-		
+
 		if (isMaterial) {
 			List<Object> paras = new ArrayList<Object>();
 			hsql = "select a from ContractBom a where  a.complex.id = ? and a.company.id = ? and a.contractImgSeqNum=? and a.contractExg.contract.id=? ";
@@ -4799,12 +4773,13 @@ public class BaseEncDao extends BaseDao {
 			paras.add(CommonUtils.getCompany().getId());
 			paras.add(seqNum);
 			paras.add(contractId);
-			List<ContractBom> contractBomList = this.find(hsql, paras.toArray());
+			List<ContractBom> contractBomList = this
+					.find(hsql, paras.toArray());
 			for (ContractBom contractBom : contractBomList) {
 				contractBom.setComplex(complex);
-//				if (isSendData) {
-//					contractBom.setModifyMark(ModifyMarkState.MODIFIED);
-//				}
+				// if (isSendData) {
+				// contractBom.setModifyMark(ModifyMarkState.MODIFIED);
+				// }
 				this.saveOrUpdate(contractBom);
 			}
 		}
@@ -4818,8 +4793,8 @@ public class BaseEncDao extends BaseDao {
 	 * @param seqNum
 	 */
 	public void updateAllBcsDictPorComplex(String dictPorHeadId,
-			Boolean isMaterial, Complex complex, String oldComplexId, Integer seqNum,
-			boolean isSendData) {
+			Boolean isMaterial, Complex complex, String oldComplexId,
+			Integer seqNum, boolean isSendData) {
 		String tableName = "";
 		if (isMaterial) {
 			tableName = " BcsDictPorImg ";
@@ -4897,8 +4872,7 @@ public class BaseEncDao extends BaseDao {
 	 */
 	public List findContractByDeclareState(String declareState) {
 		List lbcs = this
-				.find(
-						"select a from Contract a where a.company.id = ?  and a.declareState =? ",
+				.find("select a from Contract a where a.company.id = ?  and a.declareState =? ",
 						new Object[] { CommonUtils.getCompany().getId(),
 								declareState });
 		return lbcs;
@@ -4912,31 +4886,28 @@ public class BaseEncDao extends BaseDao {
 	 */
 	public List findBcsDictPorHeadByDeclareState(String declareState) {
 		List lbcs = this
-				.find(
-						"select a from BcsDictPorHead a where a.company.id = ?  and a.declareState =? ",
+				.find("select a from BcsDictPorHead a where a.company.id = ?  and a.declareState =? ",
 						new Object[] { CommonUtils.getCompany().getId(),
 								declareState });
 		return lbcs;
 	}
-	
+
 	/**
 	 * 查询未复进数据报表。
+	 * 
 	 * @return
 	 */
-	public List queryReturnImportReport(Date begin, 
-			Date end, int impExpType) {
+	public List queryReturnImportReport(Date begin, Date end, int impExpType) {
 		List params = new ArrayList();
-		StringBuilder hql = new StringBuilder(
-				"select " +
-					"a.commSerialNo," + //备案序号
-					"a.commName," +//商品名称
-					"c," +//商品id
-					"'' as version," +//版本号
-					"sum(a.commAmount)," +//统计数量
-					"sum(a.commTotalPrice)," +//统计金额
-					"a.commSpec," +//商品规格
-					"u" +//单位
-					" from ");
+		StringBuilder hql = new StringBuilder("select " + "a.commSerialNo," + // 备案序号
+				"a.commName," + // 商品名称
+				"c," + // 商品id
+				"'' as version," + // 版本号
+				"sum(a.commAmount)," + // 统计数量
+				"sum(a.commTotalPrice)," + // 统计金额
+				"a.commSpec," + // 商品规格
+				"u" + // 单位
+				" from ");
 		switch (projectType) {
 		case ProjectType.BCUS:
 			hql.append("CustomsDeclarationCommInfo as a");
@@ -4952,42 +4923,40 @@ public class BaseEncDao extends BaseDao {
 			break;
 		}
 		hql.append(" join a.complex c join a.unit u where ")
-			.append("	a.baseCustomsDeclaration.declarationDate >= ? and a.baseCustomsDeclaration.declarationDate <= ?")
-			.append("	and a.baseCustomsDeclaration.impExpType = ? and (a.baseCustomsDeclaration.tradeMode = '0700' or a.baseCustomsDeclaration.tradeMode = '0300') ")
-			.append("group by a.commSerialNo,a.commName,a.commSpec,c.id,c.code," +
-					"c.name,c.note,c.firstUnit,c.secondUnit,c.lowrate,c.highrate," +
-					"c.ccontrol,c.isOut,c.isChange," +
-					"u.code,u.name,u.isOut,u.unitRatio,u.isMustInt ")
-			.append("order by a.commSerialNo,a.commName,a.commSpec,c.id,c.code," +
-					"c.name,c.note,c.firstUnit,c.secondUnit,c.lowrate,c.highrate," +
-					"c.ccontrol,c.isOut,c.isChange," +
-					"u.code,u.name,u.isOut,u.unitRatio,u.isMustInt ");
+				.append("	a.baseCustomsDeclaration.declarationDate >= ? and a.baseCustomsDeclaration.declarationDate <= ?")
+				.append("	and a.baseCustomsDeclaration.impExpType = ? and (a.baseCustomsDeclaration.tradeMode = '0700' or a.baseCustomsDeclaration.tradeMode = '0300') ")
+				.append("group by a.commSerialNo,a.commName,a.commSpec,c.id,c.code,"
+						+ "c.name,c.note,c.firstUnit,c.secondUnit,c.lowrate,c.highrate,"
+						+ "c.ccontrol,c.isOut,c.isChange,"
+						+ "u.code,u.name,u.isOut,u.unitRatio,u.isMustInt ")
+				.append("order by a.commSerialNo,a.commName,a.commSpec,c.id,c.code,"
+						+ "c.name,c.note,c.firstUnit,c.secondUnit,c.lowrate,c.highrate,"
+						+ "c.ccontrol,c.isOut,c.isChange,"
+						+ "u.code,u.name,u.isOut,u.unitRatio,u.isMustInt ");
 		params.add(begin);
 		params.add(end);
 		params.add(impExpType);
-		
+
 		return this.find(hql.toString(), params.toArray());
 	}
-	
-	
+
 	/**
 	 * 查询未复进数据报表。
+	 * 
 	 * @return
 	 */
-	public List queryReturnImportReport(Date begin, 
-			Date end, int impExpType,String emsNo,int projectType) {
+	public List queryReturnImportReport(Date begin, Date end, int impExpType,
+			String emsNo, int projectType) {
 		List params = new ArrayList();
-		StringBuilder hql = new StringBuilder(
-				"select " +
-					"a.commSerialNo," + //备案序号
-					"a.commName," +//商品名称
-					"c," +//商品id
-					"'' as version," +//版本号
-					"sum(a.commAmount)," +//统计数量
-					"sum(a.commTotalPrice)," +//统计金额
-					"a.commSpec," +//商品规格
-					"u" +//单位
-					" from ");
+		StringBuilder hql = new StringBuilder("select " + "a.commSerialNo," + // 备案序号
+				"a.commName," + // 商品名称
+				"c," + // 商品id
+				"'' as version," + // 版本号
+				"sum(a.commAmount)," + // 统计数量
+				"sum(a.commTotalPrice)," + // 统计金额
+				"a.commSpec," + // 商品规格
+				"u" + // 单位
+				" from ");
 		switch (projectType) {
 		case ProjectType.BCUS:
 			hql.append("CustomsDeclarationCommInfo as a");
@@ -5003,50 +4972,48 @@ public class BaseEncDao extends BaseDao {
 			break;
 		}
 		hql.append(" join a.complex c join a.unit u left join a.baseCustomsDeclaration.tradeMode t where ");
-		if(null!=emsNo){
+		if (null != emsNo) {
 			hql.append("a.baseCustomsDeclaration.emsHeadH2k = ? and ");
 			params.add(emsNo);
 		}
-		if(null != begin){
+		if (null != begin) {
 			hql.append(" a.baseCustomsDeclaration.declarationDate >= ? and");
 			params.add(begin);
 		}
-		if(null!=end){
+		if (null != end) {
 			hql.append(" a.baseCustomsDeclaration.declarationDate <= ? and");
 			params.add(end);
 		}
-		
+
 		hql.append(" a.baseCustomsDeclaration.impExpType = ? and (t.code = '0700' or t.code = '0300')  ");
-		hql.append("group by a.commSerialNo,a.commName,a.commSpec,c.id,c.code," +
-					"c.name,c.note,c.firstUnit,c.secondUnit,c.lowrate,c.highrate," +
-					"c.ccontrol,c.isOut,c.isChange," +
-					"u.code,u.name,u.isOut,u.unitRatio,u.isMustInt ");
-		hql.append("order by a.commSerialNo,a.commName,a.commSpec,c.id,c.code," +
-					"c.name,c.note,c.firstUnit,c.secondUnit,c.lowrate,c.highrate," +
-					"c.ccontrol,c.isOut,c.isChange," +
-					"u.code,u.name,u.isOut,u.unitRatio,u.isMustInt ");
+		hql.append("group by a.commSerialNo,a.commName,a.commSpec,c.id,c.code,"
+				+ "c.name,c.note,c.firstUnit,c.secondUnit,c.lowrate,c.highrate,"
+				+ "c.ccontrol,c.isOut,c.isChange,"
+				+ "u.code,u.name,u.isOut,u.unitRatio,u.isMustInt ");
+		hql.append("order by a.commSerialNo,a.commName,a.commSpec,c.id,c.code,"
+				+ "c.name,c.note,c.firstUnit,c.secondUnit,c.lowrate,c.highrate,"
+				+ "c.ccontrol,c.isOut,c.isChange,"
+				+ "u.code,u.name,u.isOut,u.unitRatio,u.isMustInt ");
 		params.add(impExpType);
 		return this.find(hql.toString(), params.toArray());
 	}
-	
+
 	/**
 	 * 查询未复出数据报表。
+	 * 
 	 * @return
 	 */
-	public List queryReturnExportReport(Date begin, 
-			Date end, int impExpType) {
+	public List queryReturnExportReport(Date begin, Date end, int impExpType) {
 		List params = new ArrayList();
-		StringBuilder hql = new StringBuilder(
-				"select " +
-					"a.commSerialNo," + //备案序号
-					"a.commName," +//商品名称
-					"c," +//商品id
-					"a.version," +//版本号
-					"sum(a.commAmount)," +//统计数量
-					"sum(a.commTotalPrice)," +//统计金额
-					"a.commSpec," +//商品规格
-					"u" +//单位
-					" from ");
+		StringBuilder hql = new StringBuilder("select " + "a.commSerialNo," + // 备案序号
+				"a.commName," + // 商品名称
+				"c," + // 商品id
+				"a.version," + // 版本号
+				"sum(a.commAmount)," + // 统计数量
+				"sum(a.commTotalPrice)," + // 统计金额
+				"a.commSpec," + // 商品规格
+				"u" + // 单位
+				" from ");
 		switch (projectType) {
 		case ProjectType.BCUS:
 			hql.append("CustomsDeclarationCommInfo as a");
@@ -5062,42 +5029,41 @@ public class BaseEncDao extends BaseDao {
 			break;
 		}
 		hql.append(" join a.complex c join a.unit u where ")
-			.append("	a.baseCustomsDeclaration.declarationDate >= ? and a.baseCustomsDeclaration.declarationDate <= ?")
-			.append("	and a.baseCustomsDeclaration.impExpType = ? ")
-			.append("group by a.commSerialNo,a.commName,a.commSpec,c.id,c.code," +
-					"c.name,c.note,c.firstUnit,c.secondUnit,c.lowrate,c.highrate," +
-					"c.ccontrol,c.isOut,c.isChange,a.version," +
-					"u.code,u.name,u.isOut,u.unitRatio,u.isMustInt ")
-			.append("order by a.commSerialNo,a.commName,a.commSpec,c.id,c.code," +
-					"c.name,c.note,c.firstUnit,c.secondUnit,c.lowrate,c.highrate," +
-					"c.ccontrol,c.isOut,c.isChange,a.version," +
-					"u.code,u.name,u.isOut,u.unitRatio,u.isMustInt ");
+				.append("	a.baseCustomsDeclaration.declarationDate >= ? and a.baseCustomsDeclaration.declarationDate <= ?")
+				.append("	and a.baseCustomsDeclaration.impExpType = ? ")
+				.append("group by a.commSerialNo,a.commName,a.commSpec,c.id,c.code,"
+						+ "c.name,c.note,c.firstUnit,c.secondUnit,c.lowrate,c.highrate,"
+						+ "c.ccontrol,c.isOut,c.isChange,a.version,"
+						+ "u.code,u.name,u.isOut,u.unitRatio,u.isMustInt ")
+				.append("order by a.commSerialNo,a.commName,a.commSpec,c.id,c.code,"
+						+ "c.name,c.note,c.firstUnit,c.secondUnit,c.lowrate,c.highrate,"
+						+ "c.ccontrol,c.isOut,c.isChange,a.version,"
+						+ "u.code,u.name,u.isOut,u.unitRatio,u.isMustInt ");
 		params.add(begin);
 		params.add(end);
 		params.add(impExpType);
-		
+
 		return this.find(hql.toString(), params.toArray());
 	}
-	
-	////////////////////////////////////////////////////////////////////////
+
+	// //////////////////////////////////////////////////////////////////////
 	/**
 	 * 查询未复出数据报表。
+	 * 
 	 * @return
 	 */
-	public List queryReturnExportReport(Date begin, 
-			Date end, int impExpType,String emsHeadH2k,int projectType) {
+	public List queryReturnExportReport(Date begin, Date end, int impExpType,
+			String emsHeadH2k, int projectType) {
 		List params = new ArrayList();
-		StringBuilder hql = new StringBuilder(
-				"select " +
-					"a.commSerialNo," + //备案序号
-					"a.commName," +//商品名称
-					"c," +//商品id
-					"a.version," +//版本号
-					"sum(a.commAmount)," +//统计数量
-					"sum(a.commTotalPrice)," +//统计金额
-					"a.commSpec," +//商品规格
-					"u" +//单位
-					" from ");
+		StringBuilder hql = new StringBuilder("select " + "a.commSerialNo," + // 备案序号
+				"a.commName," + // 商品名称
+				"c," + // 商品id
+				"a.version," + // 版本号
+				"sum(a.commAmount)," + // 统计数量
+				"sum(a.commTotalPrice)," + // 统计金额
+				"a.commSpec," + // 商品规格
+				"u" + // 单位
+				" from ");
 		switch (projectType) {
 		case ProjectType.BCUS:
 			hql.append("CustomsDeclarationCommInfo as a");
@@ -5115,37 +5081,34 @@ public class BaseEncDao extends BaseDao {
 		hql.append(" join a.complex c join a.unit u where ");
 		hql.append(" a.baseCustomsDeclaration.impExpType = ? ");
 		params.add(impExpType);
-		if(emsHeadH2k != null){
+		if (emsHeadH2k != null) {
 			hql.append(" and a.baseCustomsDeclaration.emsHeadH2k = ? ");
 			params.add(emsHeadH2k);
 		}
-		if(begin!=null){
+		if (begin != null) {
 			hql.append(" and a.baseCustomsDeclaration.declarationDate >= ? ");
 			params.add(begin);
 		}
-		if(end!=null){
+		if (end != null) {
 			hql.append(" and a.baseCustomsDeclaration.declarationDate <= ?");
 			params.add(end);
 		}
-		hql.append(" group by a.commSerialNo,a.commName,a.commSpec,c.id,c.code," +
-					"c.name,c.note,c.firstUnit,c.secondUnit,c.lowrate,c.highrate," +
-					"c.ccontrol,c.isOut,c.isChange,a.version," +
-					"u.code,u.name,u.isOut,u.unitRatio,u.isMustInt ");
-		hql.append("order by a.commSerialNo,a.commName,a.commSpec,c.id,c.code," +
-					"c.name,c.note,c.firstUnit,c.secondUnit,c.lowrate,c.highrate," +
-					"c.ccontrol,c.isOut,c.isChange,a.version," +
-					"u.code,u.name,u.isOut,u.unitRatio,u.isMustInt ");
-		
+		hql.append(" group by a.commSerialNo,a.commName,a.commSpec,c.id,c.code,"
+				+ "c.name,c.note,c.firstUnit,c.secondUnit,c.lowrate,c.highrate,"
+				+ "c.ccontrol,c.isOut,c.isChange,a.version,"
+				+ "u.code,u.name,u.isOut,u.unitRatio,u.isMustInt ");
+		hql.append("order by a.commSerialNo,a.commName,a.commSpec,c.id,c.code,"
+				+ "c.name,c.note,c.firstUnit,c.secondUnit,c.lowrate,c.highrate,"
+				+ "c.ccontrol,c.isOut,c.isChange,a.version,"
+				+ "u.code,u.name,u.isOut,u.unitRatio,u.isMustInt ");
+
 		return this.find(hql.toString(), params.toArray());
 	}
-	//////////////////////////////////////////////////////////////////////////////////////////
-	
+
+	// ////////////////////////////////////////////////////////////////////////////////////////
+
 	/**
-	 * 查询统计退厂返工数据或返工复出数据。
-	 * 1
-	 * 2
-	 * 3
-	 * 4
+	 * 查询统计退厂返工数据或返工复出数据。 1 2 3 4
 	 * 
 	 * @param begin
 	 * @param end
@@ -5154,28 +5117,27 @@ public class BaseEncDao extends BaseDao {
 	 * 
 	 * @return
 	 */
-	public Double countReturnNumbers(Date begin, 
-			Date end, String complexId, int impExpType,String version,int commSerialNo) {
+	public Double countReturnNumbers(Date begin, Date end, String complexId,
+			int impExpType, String version, int commSerialNo) {
 		List params = new ArrayList();
-		StringBuilder hql = new StringBuilder(
-				"select " +
-					"sum(a.commAmount)" +//统计数量
-					" from CustomsDeclarationCommInfo as a where 1=1");
+		StringBuilder hql = new StringBuilder("select " + "sum(a.commAmount)" + // 统计数量
+				" from CustomsDeclarationCommInfo as a where 1=1");
 		// 料件退换出口，料件退换进口。要加贸易方式的条件
-		if(ImpExpType.BACK_MATERIEL_EXPORT == impExpType || ImpExpType.DIRECT_IMPORT == impExpType) {
+		if (ImpExpType.BACK_MATERIEL_EXPORT == impExpType
+				|| ImpExpType.DIRECT_IMPORT == impExpType) {
 			hql.append(" and (a.baseCustomsDeclaration.tradeMode = '0700' or a.baseCustomsDeclaration.tradeMode = '0300')");
 		}
-			hql.append(" and a.commSerialNo = ?");
-			params.add(commSerialNo);
-		if(version != null) {
+		hql.append(" and a.commSerialNo = ?");
+		params.add(commSerialNo);
+		if (version != null) {
 			hql.append(" and a.version = ?");
 			params.add(version);
 		}
-		if(begin != null) {
+		if (begin != null) {
 			hql.append(" and a.baseCustomsDeclaration.declarationDate >= ?");
 			params.add(begin);
 		}
-		if(end != null) {
+		if (end != null) {
 			hql.append(" and a.baseCustomsDeclaration.declarationDate <= ?");
 			params.add(end);
 		}
@@ -5184,13 +5146,13 @@ public class BaseEncDao extends BaseDao {
 		params.add(complexId);
 		List list = this.find(hql.toString(), params.toArray());
 		Double nums = 0.0;
-		if(list != null && list.size() >0 && list.get(0)!=null) {
+		if (list != null && list.size() > 0 && list.get(0) != null) {
 			nums = new Double(list.get(0).toString());
 		}
 		System.out.println(hql);
 		return nums;
 	}
-	
+
 	public BaseCustomsDeclaration findCustomsDeclarationByCustomsDeclarationCode(
 			String customsDeclarationCode, boolean impExpFlag) {
 		StringBuilder hql = new StringBuilder("select a from ");
@@ -5218,16 +5180,15 @@ public class BaseEncDao extends BaseDao {
 		return null;
 	}
 
-	
 	/**
 	 * 根据清单编号查询报关单
+	 * 
 	 * @param listNo
 	 * @return
 	 */
 	public List findCustomsDeclarationByListNo(String listNo) {
 		String hql = "select a  from CustomsDeclaration as a";
-		hql += "  where a.company.id=? "
-				+ " and a.billListId=? ";
+		hql += "  where a.company.id=? " + " and a.billListId=? ";
 		return this.find(hql, new Object[] { CommonUtils.getCompany().getId(),
 				listNo });
 	}
@@ -5240,12 +5201,12 @@ public class BaseEncDao extends BaseDao {
 	 */
 	public List findBcusApplyToCustomsBillList(String listUniteNo) {
 		List lBcus = this
-				.find(
-						"select a from ApplyToCustomsBillList a where a.company.id = ?  and a.listUniteNo =? ",
+				.find("select a from ApplyToCustomsBillList a where a.company.id = ?  and a.listUniteNo =? ",
 						new Object[] { CommonUtils.getCompany().getId(),
 								listUniteNo });
 		return lBcus;
 	}
+
 	/**
 	 * 通过归并前的商品信息获得申请单的商品信息
 	 * 
@@ -5265,8 +5226,10 @@ public class BaseEncDao extends BaseDao {
 		List list = this.find(hsql.toString(), params.toArray());
 		return list;
 	}
+
 	/**
 	 * 查询统计进口料件数,出口成品
+	 * 
 	 * @param begin
 	 * @param end
 	 * @param emsHeadH2
@@ -5276,32 +5239,31 @@ public class BaseEncDao extends BaseDao {
 	 * @param commSerialNo
 	 * @return
 	 */
-	public Double countRetreatNumbers(Date begin, 
-			Date end,String emsHeadH2k,String complexId, int impExpType,String version,int commSerialNo){
+	public Double countRetreatNumbers(Date begin, Date end, String emsHeadH2k,
+			String complexId, int impExpType, String version, int commSerialNo) {
 		List params = new ArrayList();
-		StringBuilder hql = new StringBuilder(
-				"select " +
-					"sum(a.commAmount)" +//统计数量
-					" from CustomsDeclarationCommInfo as a where 1=1");
+		StringBuilder hql = new StringBuilder("select " + "sum(a.commAmount)" + // 统计数量
+				" from CustomsDeclarationCommInfo as a where 1=1");
 		// 进口料件,出口成品。要加贸易方式的条件:来料加工【0214】，进料对口【0615】，进料非对口【0715】
-		if(ImpExpType.DIRECT_IMPORT == impExpType||ImpExpType.DIRECT_EXPORT == impExpType) {
+		if (ImpExpType.DIRECT_IMPORT == impExpType
+				|| ImpExpType.DIRECT_EXPORT == impExpType) {
 			hql.append(" and (a.baseCustomsDeclaration.tradeMode = '0214' or a.baseCustomsDeclaration.tradeMode = '0615' or a.baseCustomsDeclaration.tradeMode = '0715')");
 		}
-			hql.append(" and a.commSerialNo = ?");
-			params.add(commSerialNo);
-		if(emsHeadH2k!=null){
+		hql.append(" and a.commSerialNo = ?");
+		params.add(commSerialNo);
+		if (emsHeadH2k != null) {
 			hql.append(" and a.baseCustomsDeclaration.emsHeadH2k = ?");
 			params.add(emsHeadH2k);
 		}
-		if(version != null) {
+		if (version != null) {
 			hql.append(" and a.version = ?");
 			params.add(version);
 		}
-		if(begin != null) {
+		if (begin != null) {
 			hql.append(" and a.baseCustomsDeclaration.declarationDate >= ?");
 			params.add(begin);
 		}
-		if(end != null) {
+		if (end != null) {
 			hql.append(" and a.baseCustomsDeclaration.declarationDate <= ?");
 			params.add(end);
 		}
@@ -5310,13 +5272,15 @@ public class BaseEncDao extends BaseDao {
 		params.add(complexId);
 		List list = this.find(hql.toString(), params.toArray());
 		Double nums = 0.0;
-		if(list != null && list.size() >0 && list.get(0)!=null) {
+		if (list != null && list.size() > 0 && list.get(0) != null) {
 			nums = new Double(list.get(0).toString());
 		}
 		return nums;
 	}
+
 	/**
 	 * 统计可退换料件出口数
+	 * 
 	 * @param begin
 	 * @param end
 	 * @param complexId
@@ -5324,32 +5288,31 @@ public class BaseEncDao extends BaseDao {
 	 * @param emsHeadH2k
 	 * @return
 	 */
-	public Double countReturnNumbers(Date begin, 
-			Date end,String emsHeadH2k, String complexId, int impExpType,String version,int commSerialNo) {
+	public Double countReturnNumbers(Date begin, Date end, String emsHeadH2k,
+			String complexId, int impExpType, String version, int commSerialNo) {
 		List params = new ArrayList();
-		StringBuilder hql = new StringBuilder(
-				"select " +
-					"sum(a.commAmount)" +//统计数量
-					" from CustomsDeclarationCommInfo as a where 1=1");
+		StringBuilder hql = new StringBuilder("select " + "sum(a.commAmount)" + // 统计数量
+				" from CustomsDeclarationCommInfo as a where 1=1");
 		// 料件退换出口，料件退换进口。要加贸易方式的条件
-		if(ImpExpType.BACK_MATERIEL_EXPORT == impExpType || ImpExpType.DIRECT_IMPORT == impExpType) {
+		if (ImpExpType.BACK_MATERIEL_EXPORT == impExpType
+				|| ImpExpType.DIRECT_IMPORT == impExpType) {
 			hql.append(" and (a.baseCustomsDeclaration.tradeMode = '0700' or a.baseCustomsDeclaration.tradeMode = '0300')");
 		}
-			hql.append(" and a.commSerialNo = ?");
-			params.add(commSerialNo);
-		if(emsHeadH2k !=null){
-			hql .append("  and a.baseCustomsDeclaration.emsHeadH2k = ?");
+		hql.append(" and a.commSerialNo = ?");
+		params.add(commSerialNo);
+		if (emsHeadH2k != null) {
+			hql.append("  and a.baseCustomsDeclaration.emsHeadH2k = ?");
 			params.add(emsHeadH2k);
 		}
-		if(version != null) {
+		if (version != null) {
 			hql.append(" and a.version = ?");
 			params.add(version);
 		}
-		if(begin != null) {
+		if (begin != null) {
 			hql.append(" and a.baseCustomsDeclaration.declarationDate >= ?");
 			params.add(begin);
 		}
-		if(end != null) {
+		if (end != null) {
 			hql.append(" and a.baseCustomsDeclaration.declarationDate <= ?");
 			params.add(end);
 		}
@@ -5358,19 +5321,16 @@ public class BaseEncDao extends BaseDao {
 		params.add(complexId);
 		List list = this.find(hql.toString(), params.toArray());
 		Double nums = 0.0;
-		if(list != null && list.size() >0 && list.get(0)!=null) {
+		if (list != null && list.size() > 0 && list.get(0) != null) {
 			nums = new Double(list.get(0).toString());
 		}
 		System.out.println(hql);
 		return nums;
 	}
-	
+
 	/**
-	 * 根据 
-	 * 手册号,补充报关单类型,流水号,
-	 * 开始日期（进出口日期在该日期之后）,
-	 * 结束日期（进出口日期在该日期之前）, 
-	 * 查询报关单
+	 * 根据 手册号,补充报关单类型,流水号, 开始日期（进出口日期在该日期之后）, 结束日期（进出口日期在该日期之前）, 查询报关单
+	 * 
 	 * @param ems
 	 * @param supplmentType
 	 * @param serialNumber
@@ -5378,11 +5338,11 @@ public class BaseEncDao extends BaseDao {
 	 * @param end
 	 * @return
 	 */
-	public List getCustomsDeclaration(String ems, Integer supplmentType, 
+	public List getCustomsDeclaration(String ems, Integer supplmentType,
 			Integer serialNumber, Date begin, Date end) {
 		StringBuffer hql = new StringBuffer();
 		List params = new ArrayList();
-		
+
 		switch (projectType) {
 		case ProjectType.BCUS:
 			hql.append("select a  from CustomsDeclaration as a");
@@ -5399,50 +5359,54 @@ public class BaseEncDao extends BaseDao {
 		}
 		hql.append(" where a.emsHeadH2k = ? ");
 		params.add(ems);
-		if(supplmentType != null ) {
+		if (supplmentType != null) {
 			hql.append(" and a.supplmentType = ?");
 			params.add(supplmentType);
 		}
-		if(serialNumber != null) {
+		if (serialNumber != null) {
 			hql.append(" and a.serialNumber = ?");
 			params.add(serialNumber);
 		}
-		if(begin != null) {
+		if (begin != null) {
 			hql.append(" and a.impExpDate > ?");
 			params.add(begin);
 		}
-		if(end != null) {
+		if (end != null) {
 			hql.append(" and a.impExpDate < ?");
 			params.add(end);
 		}
-		
+
 		return this.find(hql.toString(), params.toArray());
 	}
-	
+
 	/**
 	 * 保存补充报关单信息
+	 * 
 	 * @param decSupplementList
 	 */
-	public String saveDecSupplementList(
-			DecSupplementList decSupplementList) {
+	public String saveDecSupplementList(DecSupplementList decSupplementList) {
 		this.saveOrUpdate(decSupplementList);
 		return decSupplementList.getId();
 	}
+
 	/**
 	 * 通过获得补充报关单信息
+	 * 
 	 * @param decSupplementList
 	 */
-	public List getDecSupplementList(String supType,String baseCustomsDeclarationCommInfo) {
+	public List getDecSupplementList(String supType,
+			String baseCustomsDeclarationCommInfo) {
 		StringBuffer hql = new StringBuffer();
 		List params = new ArrayList();
-			hql.append("select a  from DecSupplementList as a where a.supType = ?  and a.baseCustomsDeclarationCommInfo = ? ");
-		    params.add(supType);
-		    params.add(baseCustomsDeclarationCommInfo);
-		    return this.find(hql.toString(), params.toArray());
+		hql.append("select a  from DecSupplementList as a where a.supType = ?  and a.baseCustomsDeclarationCommInfo = ? ");
+		params.add(supType);
+		params.add(baseCustomsDeclarationCommInfo);
+		return this.find(hql.toString(), params.toArray());
 	}
-	
+
 	/**
 	 * 通过报关单id获得报关单底下的补充报关单信息列表
+	 * 
 	 * @param decSupplementList
 	 * @return
 	 */
@@ -5464,22 +5428,23 @@ public class BaseEncDao extends BaseDao {
 			hql.append("CustomsDeclarationCommInfo as b");
 			break;
 		}
-		
+
 		hql.append(" where a.baseCustomsDeclarationCommInfo = b.id");
 		hql.append(" and b.baseCustomsDeclaration.id = ? ");
 		params.add(baseCustomsDeclarationId);
-		
+
 		return this.find(hql.toString(), params.toArray());
 	}
-	
+
 	/**
 	 * 根据时间 补充报关单
+	 * 
 	 * @param request
 	 * @param begin
 	 * @param end
 	 * @return
 	 */
-	public List queryDecSupplementList(Date begin, Date end){
+	public List queryDecSupplementList(Date begin, Date end) {
 		StringBuffer hql = new StringBuffer();
 		List params = new ArrayList();
 		hql.append("select b.baseCustomsDeclaration.serialNumber,b.baseCustomsDeclaration.customsDeclarationCode,b.baseCustomsDeclaration.supplmentType,");
@@ -5502,80 +5467,87 @@ public class BaseEncDao extends BaseDao {
 		hql.append(" where a.baseCustomsDeclarationCommInfo = b.id");
 		hql.append(" and a.inputDate >=? ");
 		hql.append(" and a.inputDate <=? ");
-	    params.add(CommonUtils.getBeginDate(begin));
-	    params.add(CommonUtils.getEndDate(end));
-	    return this.find(hql.toString(), params.toArray());
+		params.add(CommonUtils.getBeginDate(begin));
+		params.add(CommonUtils.getEndDate(end));
+		return this.find(hql.toString(), params.toArray());
 	}
+
 	/**
 	 * 根据全部补充报关单
+	 * 
 	 * @param request
 	 * @param begin
 	 * @param end
 	 * @return
 	 */
-	
-	//2012-9-14
-	public List queryDecSupplementListAll(){
+
+	// 2012-9-14
+	public List queryDecSupplementListAll() {
 		StringBuffer hql = new StringBuffer();
 		List params = new ArrayList();
-			hql.append("select b.serialNumber,b.baseCustomsDeclaration.customsDeclarationCode,b.baseCustomsDeclaration.supplmentType,");
-			hql.append("a.supType,b.baseCustomsDeclaration.impExpType,b.commSerialNo,b.complex.code,b.commName,b.commSpec,a.inputDate,");
-			hql.append("b.baseCustomsDeclaration.emsHeadH2k,a.isSend,a.baseCustomsDeclarationCommInfo,a.id,b.baseCustomsDeclaration from DecSupplementList as a ,");
-			switch (projectType) {
-			case ProjectType.BCUS:
-				hql.append("CustomsDeclarationCommInfo as b");
-				break;
-			case ProjectType.BCS:
-				hql.append("BcsCustomsDeclarationCommInfo as b");
-				break;
-			case ProjectType.DZSC:
-				hql.append("DzscCustomsDeclarationCommInfo as b");
-				break;
-			default:
-				hql.append("CustomsDeclarationCommInfo as b");
-				break;
-			}
-			hql.append(" where a.baseCustomsDeclarationCommInfo = b.id");
-			List list = this.find(hql.toString(), params.toArray()); 
-		    return list;
+		hql.append("select b.serialNumber,b.baseCustomsDeclaration.customsDeclarationCode,b.baseCustomsDeclaration.supplmentType,");
+		hql.append("a.supType,b.baseCustomsDeclaration.impExpType,b.commSerialNo,b.complex.code,b.commName,b.commSpec,a.inputDate,");
+		hql.append("b.baseCustomsDeclaration.emsHeadH2k,a.isSend,a.baseCustomsDeclarationCommInfo,a.id,b.baseCustomsDeclaration from DecSupplementList as a ,");
+		switch (projectType) {
+		case ProjectType.BCUS:
+			hql.append("CustomsDeclarationCommInfo as b");
+			break;
+		case ProjectType.BCS:
+			hql.append("BcsCustomsDeclarationCommInfo as b");
+			break;
+		case ProjectType.DZSC:
+			hql.append("DzscCustomsDeclarationCommInfo as b");
+			break;
+		default:
+			hql.append("CustomsDeclarationCommInfo as b");
+			break;
+		}
+		hql.append(" where a.baseCustomsDeclarationCommInfo = b.id");
+		List list = this.find(hql.toString(), params.toArray());
+		return list;
 	}
+
 	/**
 	 * 删除补充报关单
+	 * 
 	 * @param request
 	 * @param date
 	 * @return
 	 */
 	public void deleteDecSupplementList(String id) {
-		    DecSupplementList obj = null;
-			List list = this
-					.find(
-							"select a from DecSupplementList a where a.id = ?",
-							new Object[] { id });
-			if (list != null && list.size() > 0) {
-				obj = (DecSupplementList) list.get(0);
-				this.delete(obj);
-			}
+		DecSupplementList obj = null;
+		List list = this.find(
+				"select a from DecSupplementList a where a.id = ?",
+				new Object[] { id });
+		if (list != null && list.size() > 0) {
+			obj = (DecSupplementList) list.get(0);
+			this.delete(obj);
+		}
 	}
+
 	/**
 	 * 根据ID查找补充报关单
+	 * 
 	 * @param request
 	 * @param date
 	 * @return
 	 */
-	public List getDecSupplementListById(String id){
-		List list = this
-				.find(
-						"select a from DecSupplementList a where a.id = ?",
-						new Object[] { id });
+	public List getDecSupplementListById(String id) {
+		List list = this.find(
+				"select a from DecSupplementList a where a.id = ?",
+				new Object[] { id });
 		return list;
 	}
+
 	/**
 	 * 根据ID查找内部商品新增补充报关单表体
+	 * 
 	 * @param request
 	 * @param date
 	 * @return
 	 */
-	public BaseCustomsDeclarationCommInfo getBaseCustomsDeclarationCommInfoById(String id){
+	public BaseCustomsDeclarationCommInfo getBaseCustomsDeclarationCommInfoById(
+			String id) {
 		StringBuffer hql = new StringBuffer();
 		switch (1) {
 		case ProjectType.BCUS:
@@ -5592,63 +5564,68 @@ public class BaseEncDao extends BaseDao {
 			break;
 		}
 		hql.append(" where a.id=? ");
-		List list = this.find(hql.toString(), new Object[] {id});
-		if(list != null && list.size() > 0) {
+		List list = this.find(hql.toString(), new Object[] { id });
+		if (list != null && list.size() > 0) {
 			return (BaseCustomsDeclarationCommInfo) list.get(0);
 		}
 		return null;
 	}
+
 	/**
 	 * 查找所有未发送的补充申报单
+	 * 
 	 * @param request
 	 * @param isSend
 	 * @return
 	 */
-	public List findDecSupplementListByIsSend(String isSend){
+	public List findDecSupplementListByIsSend(String isSend) {
 		StringBuffer hql = new StringBuffer();
 		List params = new ArrayList();
-			hql.append("select b.baseCustomsDeclaration.emsHeadH2k,b.baseCustomsDeclaration.serialNumber,");
-			hql.append("b.baseCustomsDeclaration.customsDeclarationCode,a.inputDate,a.isCheck ,b.baseCustomsDeclaration.impExpType,a.id,a.baseCustomsDeclarationCommInfo ");
-			hql.append(" from DecSupplementList as a ,");
-			switch (projectType) {
-			case ProjectType.BCUS:
-				hql.append("CustomsDeclarationCommInfo as b");
-				break;
-			case ProjectType.BCS:
-				hql.append("BcsCustomsDeclarationCommInfo as b");
-				break;
-			case ProjectType.DZSC:
-				hql.append("DzscCustomsDeclarationCommInfo as b");
-				break;
-			default:
-				hql.append("CustomsDeclarationCommInfo as b");
-				break;
-			}
-			hql.append(" where a.baseCustomsDeclarationCommInfo = b.id and a.isSend = ?");
-			params.add(isSend);
-		    return this.find(hql.toString(), params.toArray());
+		hql.append("select b.baseCustomsDeclaration.emsHeadH2k,b.baseCustomsDeclaration.serialNumber,");
+		hql.append("b.baseCustomsDeclaration.customsDeclarationCode,a.inputDate,a.isCheck ,b.baseCustomsDeclaration.impExpType,a.id,a.baseCustomsDeclarationCommInfo ");
+		hql.append(" from DecSupplementList as a ,");
+		switch (projectType) {
+		case ProjectType.BCUS:
+			hql.append("CustomsDeclarationCommInfo as b");
+			break;
+		case ProjectType.BCS:
+			hql.append("BcsCustomsDeclarationCommInfo as b");
+			break;
+		case ProjectType.DZSC:
+			hql.append("DzscCustomsDeclarationCommInfo as b");
+			break;
+		default:
+			hql.append("CustomsDeclarationCommInfo as b");
+			break;
+		}
+		hql.append(" where a.baseCustomsDeclarationCommInfo = b.id and a.isSend = ?");
+		params.add(isSend);
+		return this.find(hql.toString(), params.toArray());
 	}
-	
-	
+
 	/**
 	 * 查找报关单底下所有商品所有的主动补充申报单
+	 * 
 	 * @param ids
 	 * @return
 	 */
-	public List<DecSupplementList> findDecSupplementListByCustomsDeclarationComminfoIds(String[] ids){
-		StringBuffer hql = new StringBuffer("Select a from DecSupplementList a where a.isSend != 1 and a.baseCustomsDeclarationCommInfo in (");
+	public List<DecSupplementList> findDecSupplementListByCustomsDeclarationComminfoIds(
+			String[] ids) {
+		StringBuffer hql = new StringBuffer(
+				"Select a from DecSupplementList a where a.isSend != 1 and a.baseCustomsDeclarationCommInfo in (");
 		for (int i = 0; i < ids.length; i++) {
-			if(i != 0) {
+			if (i != 0) {
 				hql.append(",");
-			} 
+			}
 			hql.append("'" + ids[i] + "'");
 		}
 		hql.append(")");
-		
+
 		return this.find(hql.toString());
 	}
+
 	/**
-	 *  申请单商品信息来自申请单转报关单中间表
+	 * 申请单商品信息来自申请单转报关单中间表
 	 * 
 	 * @param customs
 	 *            报关商品信息
@@ -5657,33 +5634,33 @@ public class BaseEncDao extends BaseDao {
 	public List findImpExpCommodityInfoByCustomsInfo(
 			BaseCustomsDeclarationCommInfo customs) {
 		return this
-				.find(
-						"select a.impExpCommodityInfo from MakeBcsCustomsDeclaration a "
-								+ " where a.company.id = ? and a.bcsCustomsDeclarationCommInfo.id  = ?",
+				.find("select a.impExpCommodityInfo from MakeBcsCustomsDeclaration a "
+						+ " where a.company.id = ? and a.bcsCustomsDeclarationCommInfo.id  = ?",
 						new Object[] { CommonUtils.getCompany().getId(),
 								customs.getId() });
 	}
+
 	/**
 	 * 获得多个申请单,报关单通过申请单转报关单中间表获得申请单
-	 * @param custom 报关单
+	 * 
+	 * @param custom
+	 *            报关单
 	 * @return
 	 */
 	public List getMultiImpExpBillByCustomsDeclaration(
 			BaseCustomsDeclaration custom) {
 		return this
-				.find(
-						" select distinct b.impExpCommodityInfo.impExpRequestBill from "
-								+ " MakeApplyToCustoms b where b.atcMergeBeforeComInfo in "
-								+ " (select a from AtcMergeBeforeComInfo as a  where a.afterComInfo in "
-								+ " (select a.atcMergeAfterComInfo from MakeListToCustoms a  where a.customsInfo in "
-								+ " (select a from CustomsDeclarationCommInfo a where a.baseCustomsDeclaration.company.id=? " 
-								+ " and a.baseCustomsDeclaration.id=?)))" 
-								+ " order by b.impExpCommodityInfo.impExpRequestBill.billNo ",
+				.find(" select distinct b.impExpCommodityInfo.impExpRequestBill from "
+						+ " MakeApplyToCustoms b where b.atcMergeBeforeComInfo in "
+						+ " (select a from AtcMergeBeforeComInfo as a  where a.afterComInfo in "
+						+ " (select a.atcMergeAfterComInfo from MakeListToCustoms a  where a.customsInfo in "
+						+ " (select a from CustomsDeclarationCommInfo a where a.baseCustomsDeclaration.company.id=? "
+						+ " and a.baseCustomsDeclaration.id=?)))"
+						+ " order by b.impExpCommodityInfo.impExpRequestBill.billNo ",
 						new Object[] { CommonUtils.getCompany().getId(),
-										custom.getId() });
+								custom.getId() });
 	}
-	
-	
+
 	/**
 	 * 根据手册号来抓取合同备案表头
 	 * 
@@ -5702,6 +5679,7 @@ public class BaseEncDao extends BaseDao {
 		}
 		return null;
 	}
+
 	/**
 	 * 取得进口报关单
 	 * 
@@ -5709,10 +5687,11 @@ public class BaseEncDao extends BaseDao {
 	 *            报关单号
 	 * @return 与指定的报关单号匹配的出口报关单
 	 */
-	public BaseCustomsDeclaration findImportCustomsDeclarationByCode(String code,int projectType) {
+	public BaseCustomsDeclaration findImportCustomsDeclarationByCode(
+			String code, int projectType) {
 		String hql = "";
 		switch (projectType) {
-		
+
 		case ProjectType.BCUS:
 			hql = "select a  from CustomsDeclaration as a";
 			break;
@@ -5726,18 +5705,19 @@ public class BaseEncDao extends BaseDao {
 			hql = " select a from CustomsDeclaration as a";
 			break;
 		}
-		
+
 		String ss = CommonUtils.getCompany().getId();
 		hql += "  where a.impExpFlag=? and a.company.id=? "
 				+ " and a.customsDeclarationCode=? ";
-		List list = this.find(hql, new Object[] {
-				Integer.valueOf(ImpExpFlag.IMPORT),
-				CommonUtils.getCompany().getId(), code });
+		List list = this.find(hql,
+				new Object[] { Integer.valueOf(ImpExpFlag.IMPORT),
+						CommonUtils.getCompany().getId(), code });
 		if (list.size() > 0) {
 			return (BaseCustomsDeclaration) list.get(0);
 		}
 		return null;
 	}
+
 	/**
 	 * 取得报关单商品信息(电子化手册)
 	 * 
@@ -5746,7 +5726,7 @@ public class BaseEncDao extends BaseDao {
 	 * @return 报关单商品信息
 	 */
 	public List findCustomsDeclarationCommInfos(
-			BaseCustomsDeclaration baseCustomsDeclaration,int projectType) {
+			BaseCustomsDeclaration baseCustomsDeclaration, int projectType) {
 		String hql = "";
 		switch (projectType) {
 		case ProjectType.BCUS:
@@ -5763,15 +5743,21 @@ public class BaseEncDao extends BaseDao {
 			break;
 		}
 		hql += " where a.baseCustomsDeclaration.id=?"
-				+ " order by a.serialNumber asc ";//order by a.commSerialNo,a.country.code asc
+				+ " order by a.serialNumber asc ";// order by
+													// a.commSerialNo,a.country.code
+													// asc
 		return this.find(hql, new Object[] { baseCustomsDeclaration.getId() });
 	}
+
 	/**
 	 * 取得报关单商品信
+	 * 
 	 * @return 报关单
 	 */
-	public List<BaseCustomsDeclaration> findCustomsDeclaration(Integer impExpFlag,Date beginDate,Date endDate,
-			String customsDecCode,Integer projectType,String emsNo,List impExpTypeList) {
+	public List<BaseCustomsDeclaration> findCustomsDeclaration(
+			Integer impExpFlag, Date beginDate, Date endDate,
+			String customsDecCode, Integer projectType, String emsNo,
+			List impExpTypeList) {
 		StringBuffer hql = new StringBuffer(" select a from ");
 		List<Object> params = new ArrayList<Object>();
 		switch (projectType) {
@@ -5790,45 +5776,50 @@ public class BaseEncDao extends BaseDao {
 		}
 		hql.append(" where a.company.id = ? ");
 		params.add(CommonUtils.getCompany().getId());
-		
-		if(impExpFlag!=null){
+
+		if (impExpFlag != null) {
 			hql.append(" and a.impExpFlag = ? ");
 			params.add(impExpFlag);
 		}
-		
+
 		if (beginDate != null) {
 			hql.append(" and (a.declarationDate>=? or a.declarationDate is null) ");
 			params.add(CommonUtils.getBeginDate(beginDate));
 		}
-		
+
 		if (endDate != null) {
 			hql.append(" and (a.declarationDate<=? or a.declarationDate is null) ");
 			params.add(CommonUtils.getEndDate(endDate));
 		}
-		
-		if(customsDecCode!=null&&!"".equals(customsDecCode.trim())){
+
+		if (customsDecCode != null && !"".equals(customsDecCode.trim())) {
 			hql.append(" and a.customsDeclarationCode = ? ");
 			params.add(customsDecCode);
 		}
-		
-		if(emsNo!=null&&!"".equals(emsNo.trim())){
+
+		if (emsNo != null && !"".equals(emsNo.trim())) {
 			hql.append(" and a.emsHeadH2k = ? ");
 			params.add(emsNo);
 		}
-		
-		if(!impExpTypeList.isEmpty()){
-			hql.append(" and a.impExpType in ("+impExpTypeList.get(0)+","+impExpTypeList.get(1)+","+impExpTypeList.get(2)+","+impExpTypeList.get(3)+","+impExpTypeList.get(4)+""
-					+ ","+impExpTypeList.get(5)+","+impExpTypeList.get(6)+","+impExpTypeList.get(7)+","+impExpTypeList.get(8)+")");
-			
+
+		if (!impExpTypeList.isEmpty()) {
+			hql.append(" and a.impExpType in (" + impExpTypeList.get(0) + ","
+					+ impExpTypeList.get(1) + "," + impExpTypeList.get(2) + ","
+					+ impExpTypeList.get(3) + "," + impExpTypeList.get(4) + ""
+					+ "," + impExpTypeList.get(5) + "," + impExpTypeList.get(6)
+					+ "," + impExpTypeList.get(7) + "," + impExpTypeList.get(8)
+					+ ")");
+
 		}
 		hql.append(" order by a.serialNumber asc ");
 		System.out.println(hql.toString());
-		
-		return this.find(hql.toString(),params.toArray());
+
+		return this.find(hql.toString(), params.toArray());
 	}
-	
+
 	/**
 	 * 查询报关单
+	 * 
 	 * @param impExpFlag
 	 * @param beginDate
 	 * @param endDate
@@ -5837,8 +5828,9 @@ public class BaseEncDao extends BaseDao {
 	 * @param emsNo
 	 * @return
 	 */
-	public List<BaseCustomsDeclaration> findCustomsDeclaration(Integer impExpFlag,Date beginDate,Date endDate,
-			String customsDecCode,Integer projectType,String emsNo) {
+	public List<BaseCustomsDeclaration> findCustomsDeclaration(
+			Integer impExpFlag, Date beginDate, Date endDate,
+			String customsDecCode, Integer projectType, String emsNo) {
 		StringBuffer hql = new StringBuffer(" select a from ");
 		List<Object> params = new ArrayList<Object>();
 		switch (projectType) {
@@ -5857,39 +5849,40 @@ public class BaseEncDao extends BaseDao {
 		}
 		hql.append(" where a.company.id = ? ");
 		params.add(CommonUtils.getCompany().getId());
-		
-		if(impExpFlag!=null){
+
+		if (impExpFlag != null) {
 			hql.append(" and a.impExpFlag = ? ");
 			params.add(impExpFlag);
 		}
-		
+
 		if (beginDate != null) {
 			hql.append(" and (a.declarationDate>=? or a.declarationDate is null) ");
 			params.add(CommonUtils.getBeginDate(beginDate));
 		}
-		
+
 		if (endDate != null) {
 			hql.append(" and (a.declarationDate<=? or a.declarationDate is null) ");
 			params.add(CommonUtils.getEndDate(endDate));
 		}
-		
-		if(customsDecCode!=null&&!"".equals(customsDecCode.trim())){
+
+		if (customsDecCode != null && !"".equals(customsDecCode.trim())) {
 			hql.append(" and a.customsDeclarationCode = ? ");
 			params.add(customsDecCode);
 		}
-		
-		if(emsNo!=null&&!"".equals(emsNo.trim())){
+
+		if (emsNo != null && !"".equals(emsNo.trim())) {
 			hql.append(" and a.emsHeadH2k = ? ");
 			params.add(emsNo);
 		}
-		
+
 		hql.append(" order by a.serialNumber asc ");
 		System.out.println(hql.toString());
-		
-		return this.find(hql.toString(),params.toArray());
+
+		return this.find(hql.toString(), params.toArray());
 	}
 
-	public List findCustomsDeclaration(Integer projectType,Date date,Integer impExpFlag){
+	public List findCustomsDeclaration(Integer projectType, Date date,
+			Integer impExpFlag) {
 		String hql = "";
 		switch (projectType) {
 		case ProjectType.BCUS:
@@ -5899,22 +5892,26 @@ public class BaseEncDao extends BaseDao {
 			hql = "select a.customsDeclarationCode  from BcsCustomsDeclaration  a";
 			break;
 		case ProjectType.DZSC:
-			hql="select a.customsDeclarationCode  from DzscCustomsDeclaration  a";
+			hql = "select a.customsDeclarationCode  from DzscCustomsDeclaration  a";
 			break;
 		default:
 			hql = "select a.customsDeclarationCode  from CustomsDeclaration  a";
 			break;
 		}
-		hql+=" where a.company.id = ? and a.declarationDate = ? and a.impExpFlag = ?";
-		return this.find(hql,new Object[] {CommonUtils.getCompany().getId(),date,impExpFlag});
+		hql += " where a.company.id = ? and a.declarationDate = ? and a.impExpFlag = ?";
+		return this.find(hql, new Object[] { CommonUtils.getCompany().getId(),
+				date, impExpFlag });
 	}
+
 	/**
 	 * 查询所有报告单号
+	 * 
 	 * @param projectType
 	 * @param impExpFlag
 	 * @return
 	 */
-	public List findAllCustomsDeclaration(Integer projectType,Integer impExpFlag){
+	public List findAllCustomsDeclaration(Integer projectType,
+			Integer impExpFlag) {
 		List para = new ArrayList();
 		String hql = "";
 		switch (projectType) {
@@ -5925,23 +5922,24 @@ public class BaseEncDao extends BaseDao {
 			hql = "select a.customsDeclarationCode  from BcsCustomsDeclaration  a";
 			break;
 		case ProjectType.DZSC:
-			hql="select a.customsDeclarationCode  from DzscCustomsDeclaration  a";
+			hql = "select a.customsDeclarationCode  from DzscCustomsDeclaration  a";
 			break;
 		default:
 			hql = "select a.customsDeclarationCode  from CustomsDeclaration  a";
 			break;
 		}
-		hql+=" where a.company.id = ?";
+		hql += " where a.company.id = ?";
 		para.add(CommonUtils.getCompany().getId());
-		if(impExpFlag!=null){
-			hql+=" and a.impExpFlag = ? ";
+		if (impExpFlag != null) {
+			hql += " and a.impExpFlag = ? ";
 			para.add(impExpFlag);
 		}
-		return this.find(hql,para.toArray());
+		return this.find(hql, para.toArray());
 	}
-	
-	public List findContractHead(Integer projectType,BaseCustomsDeclaration bgdhead){
-		if(projectType==null||bgdhead==null){
+
+	public List findContractHead(Integer projectType,
+			BaseCustomsDeclaration bgdhead) {
+		if (projectType == null || bgdhead == null) {
 			return new ArrayList();
 		}
 		String hql = "";
@@ -5962,12 +5960,12 @@ public class BaseEncDao extends BaseDao {
 			params.add(new Boolean(false));
 			params.add(bgdhead.getEmsHeadH2k());
 		}
-		
-		return this.find(hql,params.toArray());
+
+		return this.find(hql, params.toArray());
 	}
-	
-	public List findBaseEmsImg(Integer projectType,BaseEmsHead baseContractHead){
-		if(projectType==null){
+
+	public List findBaseEmsImg(Integer projectType, BaseEmsHead baseContractHead) {
+		if (projectType == null) {
 			return new ArrayList();
 		}
 		String tableName = "";
@@ -5979,25 +5977,25 @@ public class BaseEncDao extends BaseDao {
 			tableName = " EmsHeadH2kImg ";
 		}
 		List params = new ArrayList();
-		String hql = "select a from "+tableName+" a where a.company.id=? ";
+		String hql = "select a from " + tableName + " a where a.company.id=? ";
 		params.add(CommonUtils.getCompany().getId());
-		if(baseContractHead!=null&&baseContractHead.getId()!=null){
-			
+		if (baseContractHead != null && baseContractHead.getId() != null) {
+
 			if (projectType == ProjectType.BCS) {
-				hql+=" and a.contract.id = ? ";
+				hql += " and a.contract.id = ? ";
 			} else if (projectType == ProjectType.DZSC) {
-				hql+=" and a.dzscEmsPorHead.id = ? ";
+				hql += " and a.dzscEmsPorHead.id = ? ";
 			} else if (projectType == ProjectType.BCUS) {
-				hql+=" and a.emsHeadH2k.id = ? ";
+				hql += " and a.emsHeadH2k.id = ? ";
 			}
-			
+
 			params.add(baseContractHead.getId());
 		}
-		return this.find(hql,params.toArray());
+		return this.find(hql, params.toArray());
 	}
-	
-	public List findBaseEmsExg(Integer projectType,BaseEmsHead baseContractHead){
-		if(projectType==null){
+
+	public List findBaseEmsExg(Integer projectType, BaseEmsHead baseContractHead) {
+		if (projectType == null) {
 			return new ArrayList();
 		}
 		String tableName = "";
@@ -6009,39 +6007,38 @@ public class BaseEncDao extends BaseDao {
 			tableName = " EmsHeadH2kExg ";
 		}
 		List params = new ArrayList();
-		String hql = "select a from "+tableName+" a where a.company.id=? ";
+		String hql = "select a from " + tableName + " a where a.company.id=? ";
 		params.add(CommonUtils.getCompany().getId());
-		if(baseContractHead!=null&&baseContractHead.getId()!=null){
+		if (baseContractHead != null && baseContractHead.getId() != null) {
 			if (projectType == ProjectType.BCS) {
-				hql+=" and a.contract.id = ? ";
+				hql += " and a.contract.id = ? ";
 			} else if (projectType == ProjectType.DZSC) {
-				hql+=" and a.dzscEmsPorHead.id = ? ";
+				hql += " and a.dzscEmsPorHead.id = ? ";
 			} else if (projectType == ProjectType.BCUS) {
-				hql+=" and a.emsHeadH2k.id = ? ";
+				hql += " and a.emsHeadH2k.id = ? ";
 			}
 			params.add(baseContractHead.getId());
 		}
-		return this.find(hql,params.toArray());
+		return this.find(hql, params.toArray());
 	}
-	
+
 	public String getReceiverUnit() {
-		List list = this
-				.find(
-						"select a.name from Company a where id = ?",
-						new Object[] { CommonUtils.getCompany().getId() });
+		List list = this.find("select a.name from Company a where id = ?",
+				new Object[] { CommonUtils.getCompany().getId() });
 		if (list.size() > 0 && list.get(0) != null) {
 			return String.valueOf(list.get(0));
 		}
 		return null;
 	}
-	
+
 	/**
 	 * 查找【出口装箱单/出口加工发票】打印显示购货单位/发货单位
+	 * 
 	 * @return
 	 */
-	public List findExportPackinglistOrInvoice(){
-		return this.find("select a.isExportPackinglistOrInvoice from CompanyOther a where a.company= ?",
-				new Object[] { CommonUtils.getCompany()});
+	public List findExportPackinglistOrInvoice() {
+		return this
+				.find("select a.isExportPackinglistOrInvoice from CompanyOther a where a.company= ?",
+						new Object[] { CommonUtils.getCompany() });
 	}
 }
-	

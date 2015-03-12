@@ -27,6 +27,8 @@ import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
 import javax.swing.UIManager;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.bestway.bcs.contractexe.action.ContractExeAction;
 import com.bestway.bcus.client.common.CommonProgress;
 import com.bestway.bcus.client.common.CommonVars;
@@ -35,7 +37,7 @@ import com.bestway.common.constant.ImpExpFlag;
 import com.bestway.customs.common.action.BaseEncAction;
 import com.bestway.ui.winuicontrol.JDialogBase;
 import com.bestway.ui.winuicontrol.calendar.JCalendarComboBox;
-import com.sun.xml.internal.ws.util.StringUtils;
+import com.google.gson.Gson;
 
 public class DgQPImport extends JDialogBase {
 	private JLabel lblNewLabel;
