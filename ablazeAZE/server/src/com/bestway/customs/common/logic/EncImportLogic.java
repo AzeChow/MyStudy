@@ -7,8 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.beanutils.PropertyUtils;
-
 import com.bestway.bcs.contractexe.entity.BcsCustomsDeclaration;
 import com.bestway.bcs.contractexe.entity.BcsCustomsDeclarationCommInfo;
 import com.bestway.bcs.contractexe.entity.BcsCustomsDeclarationContainer;
@@ -119,23 +117,35 @@ public class EncImportLogic {
 		}
 
 		Map<String, Complex> ComplexMap = initCustomsBase("Complex", "code");
+
 		Map<String, CustomsComplex> CustomsComplexMap = initCustomsBase(
 				"CustomsComplex", "code");
+
 		Map<String, Unit> MapUnit = initCustomsBase("Unit", "name");
+
 		Map<String, LevyMode> mapLevyMode = initCustomsBase("LevyMode", "name");
+
 		Gson gson = new Gson();
+
 		Map map = (Map) gson.fromJson(json, Map.class);
+
 		Map<String, String> bgdhead = (Map<String, String>) map.get("报关单表头");// 报关单表头
+
 		BaseCustomsDeclaration head = this.importbgdhead(bgdhead, impExpFlag,
 				projectType);
+
 		List<Map<String, String>> SFDZ = (List<Map<String, String>>) map
 				.get("随附单证");// 随附单证
+
 		if (SFDZ != null && SFDZ.size() > 0) {
 			this.importbgdsfdz(head, SFDZ);
 		}
+
 		List<Map<String, String>> bgdItems = (List<Map<String, String>>) map
 				.get("报关单表体");// 报关单表体
+
 		Map<Integer, String> mapSpec = getCommSpec(projectType, head);
+
 		for (int j = 0; j < bgdItems.size(); j++) {
 			BaseCustomsDeclarationCommInfo bgdBaseCustomsDeclarationCommInfo = null;
 			Map<String, String> bgdItem = bgdItems.get(j);
@@ -1411,9 +1421,11 @@ public class EncImportLogic {
 				String value = null;
 				if (boo) {
 					if (ls.get(i) instanceof BaseEmsImg) {
+
 						BaseEmsImg baseEmsImg = (BaseEmsImg) ls.get(i);
 						key = baseEmsImg.getSeqNum();
 						value = baseEmsImg.getSpec();
+
 					} else {
 						DzscEmsImgBill emsImg = (DzscEmsImgBill) ls.get(i);
 						key = emsImg.getSeqNum();
