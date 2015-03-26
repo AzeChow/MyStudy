@@ -14,17 +14,19 @@ package com.bestway.common.client.erpbillcenter.specificontrol;
  * 
  */
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Cursor;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
+import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -33,16 +35,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
 
 import com.bestway.bcus.cas.action.CasAction;
 import com.bestway.bcus.cas.authority.CasSpecifControlAction;
-import com.bestway.bcus.cas.bill.entity.BillDetail;
-import com.bestway.bcus.cas.entity.CheckBalance;
-import com.bestway.bcus.cas.entity.FactoryAndFactualCustomsRalation;
-import com.bestway.bcus.cas.entity.StatCusNameRelationHsn;
-import com.bestway.bcus.cas.specificontrol.entity.CustomsDeclarationCommInfoBillCorresponding;
-import com.bestway.bcus.cas.specificontrol.entity.TempResult;
-import com.bestway.bcus.client.cas.otherreport.FmCheckBalance;
 import com.bestway.bcus.client.cas.parameter.CasCommonVars;
 import com.bestway.bcus.client.cas.specificontrol.DgBigBatchDeleteBill;
 import com.bestway.bcus.client.cas.specificontrol.DgBillCorresByPk;
@@ -53,10 +50,8 @@ import com.bestway.bcus.client.cas.specificontrol.DgFinanceBatchWriteAccount;
 import com.bestway.bcus.client.cas.specificontrol.DgHalfProductManager;
 import com.bestway.bcus.client.cas.specificontrol.DgHandworkBatchCorresponding;
 import com.bestway.bcus.client.cas.specificontrol.FmBillCorresponding;
-import com.bestway.bcus.client.common.CommonProgress;
 import com.bestway.bcus.client.common.CommonStepProgress;
 import com.bestway.bcus.client.common.CommonVars;
-import com.bestway.bcus.client.common.ProgressTask;
 import com.bestway.common.MaterielType;
 import com.bestway.common.Request;
 import com.bestway.common.erpbillcenter.authority.ErpBillCenterAuthority;
@@ -65,15 +60,6 @@ import com.bestway.ui.winuicontrol.JDialogBaseHelper;
 import com.bestway.ui.winuicontrol.JFrameBase;
 import com.bestway.ui.winuicontrol.JFrameBaseHelper;
 import com.bestway.ui.winuicontrol.JInternalFrameBase;
-import java.awt.Rectangle;
-import javax.swing.BorderFactory;
-import javax.swing.border.EtchedBorder;
-import javax.swing.border.TitledBorder;
-
-import org.apache.commons.beanutils.PropertyUtils;
-
-import java.awt.Font;
-import java.awt.Color;
 
 /**
  * @author Administrator // change the template for this generated type comment
@@ -184,17 +170,14 @@ public class FmSpecificControl extends JInternalFrameBase {
 			jPanel2 = new JPanel();
 			jPanel2.setLayout(null);
 			jPanel2.setOpaque(false);
-			jPanel2
-					.setBorder(javax.swing.BorderFactory
-							.createTitledBorder(
-									javax.swing.BorderFactory
-											.createEtchedBorder(javax.swing.border.EtchedBorder.LOWERED),
-									"单据",
-									javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-									javax.swing.border.TitledBorder.DEFAULT_POSITION,
-									new java.awt.Font("Dialog",
-											java.awt.Font.PLAIN, 12),
-									java.awt.Color.black));
+			jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(
+					javax.swing.BorderFactory
+							.createEtchedBorder(javax.swing.border.EtchedBorder.LOWERED),
+					"单据",
+					javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
+					javax.swing.border.TitledBorder.DEFAULT_POSITION,
+					new java.awt.Font("Dialog", java.awt.Font.PLAIN, 12),
+					java.awt.Color.black));
 			jPanel2.setBounds(28, 20, 654, 108);
 			jPanel2.add(getRbEditBillPrice(), null);
 			jPanel2.add(getRbBigBatchDeleteBill(), null);
@@ -252,16 +235,12 @@ public class FmSpecificControl extends JInternalFrameBase {
 			jLabel.setText("单据中心特殊控制");
 			jLabel.setForeground(new java.awt.Color(255, 153, 0));
 			jLabel.setFont(new Font("\u65b0\u5b8b\u4f53", Font.BOLD, 18));
-			jPanel
-					.setBorder(javax.swing.BorderFactory
-							.createEtchedBorder(javax.swing.border.EtchedBorder.LOWERED));
+			jPanel.setBorder(javax.swing.BorderFactory
+					.createEtchedBorder(javax.swing.border.EtchedBorder.LOWERED));
 			jPanel.setBackground(java.awt.Color.white);
 			jLabel1.setText("");
-			jLabel1
-					.setIcon(new ImageIcon(
-							getClass()
-									.getResource(
-											"/com/bestway/bcus/client/resources/images/titlepoint.jpg")));
+			jLabel1.setIcon(new ImageIcon(getClass().getResource(
+					"/com/bestway/bcus/client/resources/images/titlepoint.jpg")));
 			jLabel2.setText("");
 			jLabel2.setIcon(new ImageIcon(getClass().getResource(
 					"/com/bestway/bcus/client/resources/images/titlepic.jpg")));
@@ -300,9 +279,8 @@ public class FmSpecificControl extends JInternalFrameBase {
 			jPanel5 = new JPanel();
 			jPanel5.setOpaque(false);
 			jPanel5.setBounds(14, 395, 682, 3);
-			jPanel5
-					.setBorder(javax.swing.BorderFactory
-							.createEtchedBorder(javax.swing.border.EtchedBorder.LOWERED));
+			jPanel5.setBorder(javax.swing.BorderFactory
+					.createEtchedBorder(javax.swing.border.EtchedBorder.LOWERED));
 		}
 		return jPanel5;
 	}
@@ -347,18 +325,18 @@ public class FmSpecificControl extends JInternalFrameBase {
 	 */
 	private void initUIComponents() {
 
-		jPanel2.setBounds(28, this.jPanel1.getHeight() / 12, this.jPanel1
-				.getWidth() - 28 - 28, this.jPanel1.getHeight() / 4);
+		jPanel2.setBounds(28, this.jPanel1.getHeight() / 12,
+				this.jPanel1.getWidth() - 28 - 28, this.jPanel1.getHeight() / 4);
 
-		jPanel3.setBounds(28, this.jPanel1.getHeight() / 11 * 4, this.jPanel1
-				.getWidth() - 28 - 28, this.jPanel1.getHeight() / 5);
+		jPanel3.setBounds(28, this.jPanel1.getHeight() / 11 * 4,
+				this.jPanel1.getWidth() - 28 - 28, this.jPanel1.getHeight() / 5);
 
-		jPanel4.setBounds(28, this.jPanel1.getHeight() / 5 * 3, this.jPanel1
-				.getWidth() - 28 - 28, this.jPanel1.getHeight() / 5);
+		jPanel4.setBounds(28, this.jPanel1.getHeight() / 5 * 3,
+				this.jPanel1.getWidth() - 28 - 28, this.jPanel1.getHeight() / 5);
 
-		btnExit.setBounds(this.jPanel1.getWidth() - 92, this.jPanel1
-				.getHeight()
-				- this.btnExit.getHeight() - 10, 68, 26);
+		btnExit.setBounds(this.jPanel1.getWidth() - 92,
+				this.jPanel1.getHeight() - this.btnExit.getHeight() - 10, 68,
+				26);
 		jPanel5.setBounds(3, this.btnExit.getY() - 13,
 				this.jPanel1.getWidth() - 6, 3);
 
@@ -406,8 +384,11 @@ public class FmSpecificControl extends JInternalFrameBase {
 	 */
 	private class RadioActionListner implements ActionListener {
 		public void actionPerformed(java.awt.event.ActionEvent e) {
+
 			JComponent component = (JComponent) e.getSource();
+
 			component.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+
 			/**
 			 * 1.修改单据单价 2.大批量删除和回卷单据 3.财务成批记帐 4.批量打印单据 5.单据对应 6.手工批量对应
 			 * 7.报关单和单据对应查询 8.单据对应--PK单对应 9.生成单据的折算报关数量 10.半成品委外管理
@@ -415,7 +396,9 @@ public class FmSpecificControl extends JInternalFrameBase {
 			 */
 			CasSpecifControlAction casSpecifControlAction = (CasSpecifControlAction) CommonVars
 					.getApplicationContext().getBean("casSpecifControlAction");
+
 			try {
+
 				if (rbEditBillPrice.isSelected()) { // 修改单据单价
 
 					//
@@ -424,16 +407,23 @@ public class FmSpecificControl extends JInternalFrameBase {
 					ErpBillCenterAuthority erpBillCenterAuthority = (ErpBillCenterAuthority) CommonVars
 							.getApplicationContext().getBean(
 									"erpBillCenterAuthority");
+
 					erpBillCenterAuthority.check3ByBrower(new Request(
 							CommonVars.getCurrUser()));
 
 					String flag = rbEditBillPrice.getActionCommand();
+
 					JDialogBase dialog = JDialogBaseHelper
 							.getJDialogBaseByFlag(flag);
+
 					if (dialog == null) {
+
 						dialog = new DgEditBillPrice();
+
 						JDialogBaseHelper.putJDialogBaseToFlag(flag, dialog);
+
 						dialog.setVisible(true);
+
 					} else {
 						dialog.setVisibleNoChange(true);
 					}
@@ -446,17 +436,25 @@ public class FmSpecificControl extends JInternalFrameBase {
 					ErpBillCenterAuthority erpBillCenterAuthority = (ErpBillCenterAuthority) CommonVars
 							.getApplicationContext().getBean(
 									"erpBillCenterAuthority");
+
 					erpBillCenterAuthority.check1ByBrower(new Request(
 							CommonVars.getCurrUser()));
 
 					String flag = rbBigBatchDeleteBill.getActionCommand();
+
 					JDialogBase dialog = JDialogBaseHelper
 							.getJDialogBaseByFlag(flag);
+
 					if (dialog == null) {
+
 						dialog = new DgBigBatchDeleteBill();
+
 						JDialogBaseHelper.putJDialogBaseToFlag(flag, dialog);
+
 						dialog.setVisible(true);
+
 					} else {
+
 						dialog.setVisibleNoChange(true);
 					}
 
@@ -468,16 +466,24 @@ public class FmSpecificControl extends JInternalFrameBase {
 					ErpBillCenterAuthority erpBillCenterAuthority = (ErpBillCenterAuthority) CommonVars
 							.getApplicationContext().getBean(
 									"erpBillCenterAuthority");
+
 					erpBillCenterAuthority.check2ByBrower(new Request(
 							CommonVars.getCurrUser()));
+
 					String flag = rbFinanceBatchWriteAccount.getActionCommand();
+
 					JDialogBase dialog = JDialogBaseHelper
 							.getJDialogBaseByFlag(flag);
+
 					if (dialog == null) {
+
 						dialog = new DgFinanceBatchWriteAccount();
+
 						JDialogBaseHelper.putJDialogBaseToFlag(flag, dialog);
+
 						dialog.setVisible(true);
 					} else {
+
 						dialog.setVisibleNoChange(true);
 					}
 
@@ -488,25 +494,35 @@ public class FmSpecificControl extends JInternalFrameBase {
 					ErpBillCenterAuthority erpBillCenterAuthority = (ErpBillCenterAuthority) CommonVars
 							.getApplicationContext().getBean(
 									"erpBillCenterAuthority");
+
 					erpBillCenterAuthority.check4ByBrower(new Request(
 							CommonVars.getCurrUser()));
 
 					String flag = rbBillCorresponding.getActionCommand();
+
 					JFrameBase fm = JFrameBaseHelper.getJFrameBaseByFlag(flag);
+
 					if (fm == null) {
+
 						fm = new FmBillCorresponding();
+
 						JFrameBaseHelper.putJDialogBaseToFlag(flag, fm);
+
 						fm.setVisible(true);
+
 					} else {
+
 						fm.setVisibleNoChange(true);
+
 						JFrameBaseHelper.deiconify(fm);
+
 					}
 
 				} else if (rbHandworkBatchCorresponding.isSelected()) {// 手工批量对应
 					//
 					// check authority
 					//
-					
+
 					String flag = rbHandworkBatchCorresponding
 							.getActionCommand();
 					JDialogBase dialog = JDialogBaseHelper
@@ -610,11 +626,10 @@ public class FmSpecificControl extends JInternalFrameBase {
 					// check authority
 					//
 					ErpBillCenterAuthority erpBillCenterAuthority = (ErpBillCenterAuthority) CommonVars
-					.getApplicationContext().getBean(
-							"erpBillCenterAuthority");
-			erpBillCenterAuthority.check5ByBrower(new Request(
-					CommonVars.getCurrUser()));
-
+							.getApplicationContext().getBean(
+									"erpBillCenterAuthority");
+					erpBillCenterAuthority.check5ByBrower(new Request(
+							CommonVars.getCurrUser()));
 
 					String flag = rbBatchUpdateHs.getActionCommand();
 					JDialogBase dialog = JDialogBaseHelper
@@ -907,26 +922,30 @@ public class FmSpecificControl extends JInternalFrameBase {
 				CommonStepProgress.setStepProgressValue(1);
 				CommonStepProgress
 						.setStepMessage("正在更新 【料件】类别的对应关系的手册号更新至相应单据....");
-				casAction.updateBillDetailEmsNo(new Request(CommonVars
-						.getCurrUser()), MaterielType.MATERIEL);
+				casAction.updateBillDetailEmsNo(
+						new Request(CommonVars.getCurrUser()),
+						MaterielType.MATERIEL);
 
 				CommonStepProgress.setStepProgressValue(2);
 				CommonStepProgress
 						.setStepMessage("正在更新 【成品】类别的对应关系的手册号更新至相应单据....");
-				casAction.updateBillDetailEmsNo(new Request(CommonVars
-						.getCurrUser()), MaterielType.FINISHED_PRODUCT);
+				casAction.updateBillDetailEmsNo(
+						new Request(CommonVars.getCurrUser()),
+						MaterielType.FINISHED_PRODUCT);
 
 				CommonStepProgress.setStepProgressValue(3);
 				CommonStepProgress
 						.setStepMessage("正在更新 【边角料】类别的对应关系的手册号更新至相应单据....");
-				casAction.updateBillDetailEmsNo(new Request(CommonVars
-						.getCurrUser()), MaterielType.REMAIN_MATERIEL);
+				casAction.updateBillDetailEmsNo(
+						new Request(CommonVars.getCurrUser()),
+						MaterielType.REMAIN_MATERIEL);
 
 				CommonStepProgress.setStepProgressValue(4);
 				CommonStepProgress
 						.setStepMessage("正在更新 【设备】类别的对应关系的手册号更新至相应单据....");
-				casAction.updateBillDetailEmsNo(new Request(CommonVars
-						.getCurrUser()), MaterielType.MACHINE);
+				casAction.updateBillDetailEmsNo(
+						new Request(CommonVars.getCurrUser()),
+						MaterielType.MACHINE);
 
 				// wss******************************************************************************************************以上
 
@@ -934,35 +953,35 @@ public class FmSpecificControl extends JInternalFrameBase {
 				// List listM = casAction.findStatCusNameRelationHsnInUsed(
 				// new Request(CommonVars.getCurrUser(),true),
 				// MaterielType.MATERIEL);
-				//				
+				//
 				// //成品的
 				// List listF = casAction.findStatCusNameRelationHsnInUsed(
 				// new Request(CommonVars.getCurrUser(),true),
 				// MaterielType.FINISHED_PRODUCT);
-				//				
+				//
 				// //边角料
 				// List listBJL = casAction.findStatCusNameRelationHsnInUsed(
 				// new Request(CommonVars.getCurrUser(),true),
 				// MaterielType.REMAIN_MATERIEL);
-				//				
+				//
 				// //设备
 				// List listMachine =
 				// casAction.findStatCusNameRelationHsnInUsed(
 				// new Request(CommonVars.getCurrUser(),true),
 				// MaterielType.MACHINE);
-				//				
-				//				
-				//				
+				//
+				//
+				//
 				// CommonStepProgress.setStepProgressMaximum(listM.size()
 				// + listF.size()
 				// + listBJL.size()
 				// + listMachine.size());
-				//				
-				//				
+				//
+				//
 				// //料件的
 				// System.out.println("wss listM.size = " + listM.size());
 				// for(int i=0;i<listM.size();i++){
-				//					
+				//
 				// StatCusNameRelationHsn s =
 				// (StatCusNameRelationHsn)listM.get(i);
 				// CommonStepProgress.setStepMessage(
@@ -973,18 +992,18 @@ public class FmSpecificControl extends JInternalFrameBase {
 				// // + "\n报关规格为：" + s.getCusSpec()
 				// // + "\n报关单位为：" + s.getCusUnit().getName()
 				// // + "\n手册号为：" + s.getEmsNo());
-				//					
+				//
 				// CommonStepProgress.setStepProgressValue(i + 1);
-				//					
+				//
 				// casAction.updateEmsNoToBillDetail(new
 				// Request(CommonVars.getCurrUser()),s,MaterielType.MATERIEL);
-				//					
+				//
 				// }
-				//				
+				//
 				// //成品的
 				// System.out.println("wss listF.size = " + listF.size());
 				// for(int i=0;i<listF.size();i++){
-				//					
+				//
 				// StatCusNameRelationHsn s =
 				// (StatCusNameRelationHsn)listF.get(i);
 				// CommonStepProgress.setStepMessage(
@@ -995,18 +1014,18 @@ public class FmSpecificControl extends JInternalFrameBase {
 				// // + "\n报关规格为：" + s.getCusSpec()
 				// // + "\n报关单位为：" + s.getCusUnit().getName()
 				// // + "\n手册号为：" + s.getEmsNo());
-				//					
+				//
 				// CommonStepProgress.setStepProgressValue(i + 1);
-				//					
+				//
 				// casAction.updateEmsNoToBillDetail(new
 				// Request(CommonVars.getCurrUser()),s,MaterielType.FINISHED_PRODUCT);
-				//					
+				//
 				// }
-				//				
+				//
 				// //边角料
 				// System.out.println("wss listBJL.size = " + listBJL.size());
 				// for(int i=0;i<listBJL.size();i++){
-				//					
+				//
 				// StatCusNameRelationHsn s =
 				// (StatCusNameRelationHsn)listBJL.get(i);
 				// CommonStepProgress.setStepMessage(
@@ -1017,19 +1036,19 @@ public class FmSpecificControl extends JInternalFrameBase {
 				// // + "\n报关规格为：" + s.getCusSpec()
 				// // + "\n报关单位为：" + s.getCusUnit().getName()
 				// // + "\n手册号为：" + s.getEmsNo());
-				//					
+				//
 				// CommonStepProgress.setStepProgressValue(i + 1);
-				//					
+				//
 				// casAction.updateEmsNoToBillDetail(new
 				// Request(CommonVars.getCurrUser()),s,MaterielType.REMAIN_MATERIEL);
-				//					
+				//
 				// }
-				//				
+				//
 				// //设备
 				// System.out.println("wss listMachine.size = " +
 				// listMachine.size());
 				// for(int i=0;i<listMachine.size();i++){
-				//					
+				//
 				// StatCusNameRelationHsn s =
 				// (StatCusNameRelationHsn)listMachine.get(i);
 				// CommonStepProgress.setStepMessage(
@@ -1040,12 +1059,12 @@ public class FmSpecificControl extends JInternalFrameBase {
 				// // + "\n报关规格为：" + s.getCusSpec()
 				// // + "\n报关单位为：" + s.getCusUnit().getName()
 				// // + "\n手册号为：" + s.getEmsNo());
-				//					
+				//
 				// CommonStepProgress.setStepProgressValue(i + 1);
-				//					
+				//
 				// casAction.updateEmsNoToBillDetail(new
 				// Request(CommonVars.getCurrUser()), s,MaterielType.MACHINE);
-				//					
+				//
 				// }
 
 				CommonStepProgress.closeStepProgressDialog();

@@ -7,7 +7,9 @@
 package com.bestway.bcs.client.contractcav;
 
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
 import java.util.List;
 import java.util.Vector;
 import java.util.concurrent.ExecutionException;
@@ -28,7 +30,6 @@ import com.bestway.bcs.contract.action.ContractAction;
 import com.bestway.bcs.contract.entity.Contract;
 import com.bestway.bcs.contractcav.action.ContractCavAction;
 import com.bestway.bcs.contractcav.entity.ContractCav;
-import com.bestway.bcus.client.common.CommonProgress;
 import com.bestway.bcus.client.common.CommonStepProgress;
 import com.bestway.bcus.client.common.CommonVars;
 import com.bestway.bcus.client.common.DataState;
@@ -39,8 +40,6 @@ import com.bestway.common.Request;
 import com.bestway.common.constant.ContractKind;
 import com.bestway.common.constant.DeclareState;
 import com.bestway.ui.winuicontrol.JInternalFrameBase;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
 
 /**
  * @author Administrator // change the template for this generated type comment
@@ -205,19 +204,29 @@ public class FmContractCav extends JInternalFrameBase {
 		@Override
 		protected Object doInBackground() throws Exception {
 			String taskId = CommonStepProgress.getExeTaskId();
+
 			CommonStepProgress.showStepProgressDialog(taskId);
+
 			CommonStepProgress.setStepMessage("系统正核销计算，请稍后...");
+
 			Contract contract = (Contract) tableModel.getCurrentRow();
+
 			ContractCav contractCavSelf = contractCavAction.findContractCav(
 					new Request(CommonVars.getCurrUser()), contract.getEmsNo(),
 					false);
+
 			if (contractCavSelf == null) {
+
 				Request request = new Request(CommonVars.getCurrUser());
+
 				request.setTaskId(taskId);
+
 				contractCavAction.cavContract(request, contract.getEmsNo());
+
 				contractCavSelf = contractCavAction.findContractCav(
-						new Request(CommonVars.getCurrUser()), contract
-								.getEmsNo(), false);
+						new Request(CommonVars.getCurrUser()),
+						contract.getEmsNo(), false);
+
 				if (contractCavSelf == null) {
 					CommonStepProgress.closeStepProgressDialog();
 					JOptionPane.showMessageDialog(FmContractCav.this, "核销计算失败",
@@ -244,31 +253,41 @@ public class FmContractCav extends JInternalFrameBase {
 			try {
 				contractCavSelf = (ContractCav) this.get();
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 				return;
 			} catch (ExecutionException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 				return;
 			}
 			if (contractCavSelf == null) {
 				return;
 			}
+
 			Contract contract = (Contract) tableModel.getCurrentRow();
-			String emsNo =(String)tableModel.getValueAt(tableModel.getCurrentRow(), 7);
+
+			String emsNo = (String) tableModel.getValueAt(
+					tableModel.getCurrentRow(), 7);
+
 			DgContractCav dgContractCav = new DgContractCav();
+
 			dgContractCav.setContractCavSelf(contractCavSelf);
+
 			dgContractCav.setEmsNo(emsNo);
+
 			ContractCav contractCavCustoms = contractCavAction.findContractCav(
 					new Request(CommonVars.getCurrUser()), contract.getEmsNo(),
 					true);
+
 			if (contractCavCustoms == null) {
+
 				CommonStepProgress.closeStepProgressDialog();
 				JOptionPane.showMessageDialog(FmContractCav.this, "核销计算失败",
 						"提示", 0);
 				return;
 			}
+
 			dgContractCav.setContractCavCustoms(contractCavCustoms);
 			dgContractCav.setContract(contract);
 			CommonStepProgress.closeStepProgressDialog();
@@ -439,8 +458,8 @@ public class FmContractCav extends JInternalFrameBase {
 					}
 				});
 
-		tblContract.getColumnModel().getColumn(3).setCellRenderer(
-				new DefaultTableCellRenderer() {
+		tblContract.getColumnModel().getColumn(3)
+				.setCellRenderer(new DefaultTableCellRenderer() {
 					public Component getTableCellRendererComponent(
 							JTable table, Object value, boolean isSelected,
 							boolean hasFocus, int row, int column) {
@@ -456,8 +475,8 @@ public class FmContractCav extends JInternalFrameBase {
 					}
 				});
 
-		tblContract.getColumnModel().getColumn(6).setCellRenderer(
-				new DefaultTableCellRenderer() {
+		tblContract.getColumnModel().getColumn(6)
+				.setCellRenderer(new DefaultTableCellRenderer() {
 					public Component getTableCellRendererComponent(
 							JTable table, Object value, boolean isSelected,
 							boolean hasFocus, int row, int column) {
@@ -478,37 +497,38 @@ public class FmContractCav extends JInternalFrameBase {
 	}
 
 	/**
-	 * This method initializes btnSimulation	
-	 * 	
-	 * @return javax.swing.JButton	
+	 * This method initializes btnSimulation
+	 * 
+	 * @return javax.swing.JButton
 	 */
 	private JButton getBtnSimulation() {
 		if (btnSimulation == null) {
 			btnSimulation = new JButton();
 			btnSimulation.setText("核销确认");
 			btnSimulation.setPreferredSize(new Dimension(65, 30));
-			btnSimulation.addActionListener(new java.awt.event.ActionListener(){
-				
-				public void actionPerformed(ActionEvent e) {
-					if (JOptionPane.showConfirmDialog(
-							FmContractCav.this, "你确定核销吗？", "提示",
-							JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
-						if (tableModel.getCurrentRow() == null) {
-							JOptionPane.showMessageDialog(
-									FmContractCav.this, "请选择要核销确认的合同",
-									"提示", JOptionPane.OK_OPTION);
-							return;
+			btnSimulation
+					.addActionListener(new java.awt.event.ActionListener() {
+
+						public void actionPerformed(ActionEvent e) {
+							if (JOptionPane.showConfirmDialog(
+									FmContractCav.this, "你确定核销吗？", "提示",
+									JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
+								if (tableModel.getCurrentRow() == null) {
+									JOptionPane.showMessageDialog(
+											FmContractCav.this, "请选择要核销确认的合同",
+											"提示", JOptionPane.OK_OPTION);
+									return;
+								}
+								Contract contract = (Contract) tableModel
+										.getCurrentRow();
+								contract.setDeclareState("5");
+								contract.setIsCancel(new Boolean(true));
+								contractAction.saveContract(new Request(
+										CommonVars.getCurrUser()), contract);
+								tableModel.deleteRow(contract);
+							}
 						}
-						Contract contract = (Contract) tableModel
-								.getCurrentRow();
-						contract.setDeclareState("5");
-						contract.setIsCancel(new Boolean(true));
-						contractAction.saveContract(new Request(
-								CommonVars.getCurrUser()), contract);
-						tableModel.deleteRow(contract);
-					}
-				}
-			});
+					});
 		}
 		return btnSimulation;
 	}

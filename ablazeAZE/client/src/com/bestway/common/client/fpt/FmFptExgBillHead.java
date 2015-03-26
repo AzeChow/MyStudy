@@ -47,6 +47,7 @@ import com.bestway.bcus.client.common.CustomReportDataSource;
 import com.bestway.bcus.client.common.DataState;
 import com.bestway.bcus.client.common.DgReportViewer;
 import com.bestway.bcus.client.license.LicenseClient;
+import com.bestway.bcus.custombase.entity.parametercode.Transf;
 import com.bestway.client.util.JTableListColumn;
 import com.bestway.client.util.JTableListModel;
 import com.bestway.client.util.JTableListModelAdapter;
@@ -698,17 +699,27 @@ public class FmFptExgBillHead extends FmCommon {
 			fptBillHead = (FptBillHead) tableModelExport.getCurrentRow();
 
 		} else if (tpnPane.getSelectedIndex() == 1) {
+
 			JTableListModel tableModel = (JTableListModel) tbCancel.getModel();
+
 			FptCancelBill fptCancelBill = (FptCancelBill) tableModel
 					.getCurrentRow();
+
 			String copNo = fptCancelBill.getCopNo();
+
 			JTableListModel tableModelExp = (JTableListModel) tbExport
 					.getModel();
+
 			List list = tableModelExp.getList();
+
 			for (int i = 0; i < list.size(); i++) {
+
 				if (list.get(i) instanceof FptBillHead) {
+
 					FptBillHead head = (FptBillHead) list.get(i);
+
 					if (head.getIssueCopBillNo().equals(copNo)) {
+
 						fptBillHead = head;
 						break;
 					}
@@ -827,6 +838,13 @@ public class FmFptExgBillHead extends FmCommon {
 			parameters.put("dsOut", FptInOutFlag.OUT);
 
 			parameters.put("dsIn", FptInOutFlag.IN);
+
+			Transf transportToolTypenew = fptBillHead.getTransportToolTypenew();
+
+			parameters.put(
+					"transportToolTypenew",
+					transportToolTypenew == null ? "" : transportToolTypenew
+							.getName());
 
 			parameters.put("fptInBillSubReport", fptInBillSubReport);
 

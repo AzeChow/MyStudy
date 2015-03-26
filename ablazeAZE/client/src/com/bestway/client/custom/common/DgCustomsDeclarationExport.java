@@ -2,44 +2,33 @@ package com.bestway.client.custom.common;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.Vector;
 
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 
-import com.bestway.bcus.cas.entity.ImportExportInfo;
-import com.bestway.bcus.client.cas.DgImpExpQuery;
 import com.bestway.bcus.client.common.CommonProgress;
 import com.bestway.bcus.client.common.CommonVars;
-import com.bestway.bcus.client.manualdeclare.FmEmsHeadH2k;
 import com.bestway.client.util.JTableListColumn;
 import com.bestway.client.util.JTableListModel;
 import com.bestway.client.util.JTableListModelAdapter;
-import com.bestway.common.Condition;
 import com.bestway.common.Request;
 import com.bestway.common.constant.ImpExpFlag;
 import com.bestway.common.constant.ImpExpType;
-import com.bestway.common.constant.ProjectType;
 import com.bestway.customs.common.action.BaseEncAction;
 import com.bestway.ui.winuicontrol.JDialogBase;
-import com.bestway.ui.winuicontrol.JInternalFrameBase;
-
-import javax.swing.JOptionPane;
-import javax.swing.JToolBar;
-import javax.swing.JButton;
-import javax.swing.JSplitPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JLabel;
-import javax.swing.JComboBox;
 import com.bestway.ui.winuicontrol.calendar.JCalendarComboBox;
-import javax.swing.JRadioButton;
-import javax.swing.JCheckBox;
-import javax.swing.table.DefaultTableCellRenderer;
 
 public class DgCustomsDeclarationExport extends JDialogBase {
 
@@ -91,7 +80,7 @@ public class DgCustomsDeclarationExport extends JDialogBase {
 				}
 			}
 		});
-		
+
 	}
 
 	/**
@@ -325,11 +314,8 @@ public class DgCustomsDeclarationExport extends JDialogBase {
 								"baseCustomsDeclaration.declarationDate", 100));
 						list.add(addColumn("经营单位",
 								"baseCustomsDeclaration.tradeName", 120));
-						list
-								.add(addColumn(
-										"运输方式",
-										"baseCustomsDeclaration.transferMode.name",
-										80));
+						list.add(addColumn("运输方式",
+								"baseCustomsDeclaration.transferMode.name", 80));
 						list.add(addColumn("运输工具",
 								"baseCustomsDeclaration.conveyance", 80));
 						list.add(addColumn("提运单号",
@@ -344,21 +330,18 @@ public class DgCustomsDeclarationExport extends JDialogBase {
 								"baseCustomsDeclaration.perTax", 120));
 						list.add(addColumn("许可证号",
 								"baseCustomsDeclaration.license", 100));
-						list
-								.add(addColumn(
-										"起运国",
-										"baseCustomsDeclaration.countryOfLoadingOrUnloading.name",
-										80));
-						list
-								.add(addColumn(
-										"装货港/指运港",
-										"baseCustomsDeclaration.portOfLoadingOrUnloading.name",
-										100));
-						list
-								.add(addColumn(
-										"境内目的地/境内货源地",
-										"baseCustomsDeclaration.domesticDestinationOrSource.name",
-										120));
+						list.add(addColumn(
+								"起运国",
+								"baseCustomsDeclaration.countryOfLoadingOrUnloading.name",
+								80));
+						list.add(addColumn(
+								"装货港/指运港",
+								"baseCustomsDeclaration.portOfLoadingOrUnloading.name",
+								100));
+						list.add(addColumn(
+								"境内目的地/境内货源地",
+								"baseCustomsDeclaration.domesticDestinationOrSource.name",
+								120));
 						list.add(addColumn("批准文号",
 								"baseCustomsDeclaration.authorizeFile", 100));
 						list.add(addColumn("成交方式",
@@ -367,14 +350,15 @@ public class DgCustomsDeclarationExport extends JDialogBase {
 								"baseCustomsDeclaration.freightage", 80));
 						list.add(addColumn("保费率",
 								"baseCustomsDeclaration.insurance", 80));
-						list
-								.add(addColumn(
-										"杂费率",
-										"baseCustomsDeclaration.incidentalExpenses",
-										80));
-						list.add(addColumn("合同号", "", 80));
+						list.add(addColumn("杂费率",
+								"baseCustomsDeclaration.incidentalExpenses", 80));
+
+						list.add(addColumn("合同号",
+								"baseCustomsDeclaration.contract", 100));
+
 						list.add(addColumn("件数",
 								"baseCustomsDeclaration.commodityNum", 80));
+
 						list.add(addColumn("包装种类",
 								"baseCustomsDeclaration.wrapType.name", 80));
 						list.add(addColumn("毛重",
@@ -388,53 +372,41 @@ public class DgCustomsDeclarationExport extends JDialogBase {
 								"baseCustomsDeclaration.uses.name", 100));
 						list.add(addColumn("备注",
 								"baseCustomsDeclaration.memos", 120));
-						list
-								.add(addColumn(
-										"预录入编号",
-										"baseCustomsDeclaration.preCustomsDeclarationCode",
-										100));
-						list
-								.add(addColumn(
-										"报关单号",
-										"baseCustomsDeclaration.customsDeclarationCode",
-										120));
-						list
-								.add(addColumn(
-										"币制",
-										"baseCustomsDeclaration.currency.currSymb",
-										80));
-						list
-								.add(addColumn(
-										"申报单位名称",
-										"baseCustomsDeclaration.declarationCompany.name",
-										120));
-						list
-								.add(addColumn(
-										"录入员",
-										"baseCustomsDeclaration.creater.userName",
-										100));
+						list.add(addColumn(
+								"预录入编号",
+								"baseCustomsDeclaration.preCustomsDeclarationCode",
+								100));
+						list.add(addColumn(
+								"报关单号",
+								"baseCustomsDeclaration.customsDeclarationCode",
+								120));
+						list.add(addColumn("币制",
+								"baseCustomsDeclaration.currency.currSymb", 80));
+						list.add(addColumn(
+								"申报单位名称",
+								"baseCustomsDeclaration.declarationCompany.name",
+								120));
+						list.add(addColumn("录入员",
+								"baseCustomsDeclaration.creater.userName", 100));
 						list.add(addColumn("大单来源", "", 80));
 						list.add(addColumn("所附单据内容", "", 100));
-						list
-								.add(addColumn(
-										"发货单位",
-										"baseCustomsDeclaration.acceptGoodsCompany.name",
-										80));
+						list.add(addColumn(
+								"发货单位",
+								"baseCustomsDeclaration.acceptGoodsCompany.name",
+								80));
 						list.add(addColumn("内销比例", "", 120));
-						list
-								.add(addColumn(
-										"报送海关",
-										"baseCustomsDeclaration.declarationCustoms.name",
-										80));
+						list.add(addColumn(
+								"报送海关",
+								"baseCustomsDeclaration.declarationCustoms.name",
+								80));
 						list.add(addColumn("运费标记",
 								"baseCustomsDeclaration.freightageType", 80));
 						list.add(addColumn("保费标记",
 								"baseCustomsDeclaration.insuranceType", 80));
-						list
-								.add(addColumn(
-										"杂费标记",
-										"baseCustomsDeclaration.incidentalExpensesType",
-										80));
+						list.add(addColumn(
+								"杂费标记",
+								"baseCustomsDeclaration.incidentalExpensesType",
+								80));
 						list.add(addColumn("所有集装箱号码",
 								"baseCustomsDeclaration.allContainerNum", 120));
 						list.add(addColumn("装卸码头",
@@ -448,46 +420,38 @@ public class DgCustomsDeclarationExport extends JDialogBase {
 						list.add(addColumn("联系电话", "", 80));
 						list.add(addColumn("打印人", "", 80));
 						list.add(addColumn("是否通过逻辑监控", "", 120));
-						list
-								.add(addColumn(
-										"境外运输工具编码",
-										"baseCustomsDeclaration.overseasConveyanceCode",
-										120));
-						list
-								.add(addColumn(
-										"境外运输工具名称",
-										"baseCustomsDeclaration.overseasConveyanceName",
-										120));
-						list
-								.add(addColumn(
-										"境外运输工具航次",
-										"baseCustomsDeclaration.overseasConveyanceFlights",
-										120));
-						list
-								.add(addColumn(
-										"境外运输工具提单号",
-										"baseCustomsDeclaration.overseasConveyanceBillOfLading",
-										120));
-						list
-								.add(addColumn(
-										"境内运输工具编号",
-										"baseCustomsDeclaration.domesticConveyanceCode",
-										120));
-						list
-								.add(addColumn(
-										"境内运输工具名称",
-										"baseCustomsDeclaration.domesticConveyanceName",
-										120));
-						list
-								.add(addColumn(
-										"境内运输工具航次",
-										"baseCustomsDeclaration.domesticConveyanceFlights",
-										120));
-						list
-								.add(addColumn(
-										"境内运输方式",
-										"baseCustomsDeclaration.domesticTransferMode.name",
-										120));
+						list.add(addColumn(
+								"境外运输工具编码",
+								"baseCustomsDeclaration.overseasConveyanceCode",
+								120));
+						list.add(addColumn(
+								"境外运输工具名称",
+								"baseCustomsDeclaration.overseasConveyanceName",
+								120));
+						list.add(addColumn(
+								"境外运输工具航次",
+								"baseCustomsDeclaration.overseasConveyanceFlights",
+								120));
+						list.add(addColumn(
+								"境外运输工具提单号",
+								"baseCustomsDeclaration.overseasConveyanceBillOfLading",
+								120));
+						list.add(addColumn(
+								"境内运输工具编号",
+								"baseCustomsDeclaration.domesticConveyanceCode",
+								120));
+						list.add(addColumn(
+								"境内运输工具名称",
+								"baseCustomsDeclaration.domesticConveyanceName",
+								120));
+						list.add(addColumn(
+								"境内运输工具航次",
+								"baseCustomsDeclaration.domesticConveyanceFlights",
+								120));
+						list.add(addColumn(
+								"境内运输方式",
+								"baseCustomsDeclaration.domesticTransferMode.name",
+								120));
 						list.add(addColumn("IC卡号", "", 80));
 						list.add(addColumn("转关是否确认", "", 120));
 						list.add(addColumn("单据资料/海关帐", "", 120));
@@ -500,11 +464,10 @@ public class DgCustomsDeclarationExport extends JDialogBase {
 								"baseCustomsDeclaration.exchangeRate", 120));
 						list.add(addColumn("统一编号",
 								"baseCustomsDeclaration.unificationCode", 120));
-						list
-								.add(addColumn(
-										"报关单号",
-										"baseCustomsDeclaration.customsDeclarationCode",
-										120));
+						list.add(addColumn(
+								"报关单号",
+								"baseCustomsDeclaration.customsDeclarationCode",
+								120));
 						list.add(addColumn("海关手册号",
 								"baseCustomsDeclaration.emsHeadH2k", 120));
 						list.add(addColumn("进口大单流水号",
@@ -544,8 +507,8 @@ public class DgCustomsDeclarationExport extends JDialogBase {
 						return list;
 					}
 				});
-		jTable.getColumnModel().getColumn(1).setCellRenderer(
-				new DefaultTableCellRenderer() {
+		jTable.getColumnModel().getColumn(1)
+				.setCellRenderer(new DefaultTableCellRenderer() {
 					public Component getTableCellRendererComponent(
 							JTable table, Object value, boolean isSelected,
 							boolean hasFocus, int row, int column) {
@@ -553,20 +516,23 @@ public class DgCustomsDeclarationExport extends JDialogBase {
 								isSelected, hasFocus, row, column);
 						String str = "";
 						if (value != null) {
-							if(String.valueOf(ImpExpFlag.IMPORT).equals(value)){
-								str="进口报关单";
-							}else if(String.valueOf(ImpExpFlag.EXPORT).equals(value)){
-								str="出口报关单";
-							}if(String.valueOf(ImpExpFlag.SPECIAL).equals(value)){
-								str="特殊报关单";
+							if (String.valueOf(ImpExpFlag.IMPORT).equals(value)) {
+								str = "进口报关单";
+							} else if (String.valueOf(ImpExpFlag.EXPORT)
+									.equals(value)) {
+								str = "出口报关单";
+							}
+							if (String.valueOf(ImpExpFlag.SPECIAL)
+									.equals(value)) {
+								str = "特殊报关单";
 							}
 						}
 						this.setText(str);
 						return this;
 					}
 				});
-		jTable.getColumnModel().getColumn(4).setCellRenderer(
-				new DefaultTableCellRenderer() {
+		jTable.getColumnModel().getColumn(4)
+				.setCellRenderer(new DefaultTableCellRenderer() {
 					public Component getTableCellRendererComponent(
 							JTable table, Object value, boolean isSelected,
 							boolean hasFocus, int row, int column) {
@@ -581,8 +547,8 @@ public class DgCustomsDeclarationExport extends JDialogBase {
 						return this;
 					}
 				});
-		jTable.getColumnModel().getColumn(5).setCellRenderer(
-				new DefaultTableCellRenderer() {
+		jTable.getColumnModel().getColumn(5)
+				.setCellRenderer(new DefaultTableCellRenderer() {
 					public Component getTableCellRendererComponent(
 							JTable table, Object value, boolean isSelected,
 							boolean hasFocus, int row, int column) {
@@ -594,8 +560,7 @@ public class DgCustomsDeclarationExport extends JDialogBase {
 					}
 				});
 
-		jTable
-				.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		jTable.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
 	}
 

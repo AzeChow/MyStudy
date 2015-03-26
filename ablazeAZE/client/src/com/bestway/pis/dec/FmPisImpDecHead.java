@@ -28,7 +28,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import org.apache.axis.utils.StringUtils;
+import org.apache.commons.lang.StringUtils;
 
 import com.bestway.bcs.client.contractexe.DgBcsImportCustomsDeclaration;
 import com.bestway.bcus.client.common.CommonVars;
@@ -428,22 +428,26 @@ public class FmPisImpDecHead extends JInternalFrameBase {
 			btnUpload.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					pisVerificationAuthority.checkPisImpDecUpload(request);
-					
+
 					List list = getSelectRows();
 					if (list.isEmpty()) {
 						JOptionPane.showMessageDialog(rootPane, "请选择进口报关单。");
 						return;
 					}
-					
-					if(!checkData(list)){
+
+					if (!checkData(list)) {
 						return;
 					}
 
 					DgChooseBrokerCorp dgBrokerCorp = new DgChooseBrokerCorp();
-					dgBrokerCorp.setEspMainBusinessType(EspMainBusinessType.BUSINESS_TYPE_IMP);
+
+					dgBrokerCorp
+							.setEspMainBusinessType(EspMainBusinessType.BUSINESS_TYPE_IMP);
+
 					dgBrokerCorp.setIsMulti(false);
+
 					dgBrokerCorp.setVisible(true);
-					
+
 					if (dgBrokerCorp.isOk) {
 						BrokerCorp brokerCorp = (BrokerCorp) dgBrokerCorp
 								.getReturnValue();
@@ -492,20 +496,21 @@ public class FmPisImpDecHead extends JInternalFrameBase {
 		return btnUpload;
 	}
 
-	public boolean checkData(List<BaseCustomsDeclaration> list){
-		for(BaseCustomsDeclaration base : list){
+	public boolean checkData(List<BaseCustomsDeclaration> list) {
+		for (BaseCustomsDeclaration base : list) {
 			String serialNumber = "";
-			if(base.getTransferMode()==null){
-				serialNumber+=base.getSerialNumber()+",";
+			if (base.getTransferMode() == null) {
+				serialNumber += base.getSerialNumber() + ",";
 			}
-			if(!StringUtils.isEmpty(serialNumber)){
-				JOptionPane.showMessageDialog(this, "报关单流水为号："+serialNumber+"的报关单,运输方式为空！");
+			if (!StringUtils.isEmpty(serialNumber)) {
+				JOptionPane.showMessageDialog(this, "报关单流水为号：" + serialNumber
+						+ "的报关单,运输方式为空！");
 				return false;
 			}
 		}
 		return true;
 	}
-	
+
 	private JButton getBtnDownload() {
 		if (btnDownload == null) {
 			btnDownload = new JButton("更新报关单数据");
@@ -755,157 +760,177 @@ public class FmPisImpDecHead extends JInternalFrameBase {
 		}
 	}
 
-//	/**
-//	 * 下载报关单回执信息
-//	 *
-//	 * @param decHead
-//	 * @return
-//	 */
-//	private String downloadDecRecvData(BaseCustomsDeclaration decHead) {
-//		String resultInfo = "";
-//		String espTaskId = decHead.getEspTaskId();
-//		if (espTaskId == null || "".equals(espTaskId.trim())) {
-//			resultInfo = "进口报关单" + decHead.getSerialNumber() + "的espTaskId为空。";
-//			return resultInfo;
-//		}
-//		if (decHead.getBrokerCorp() == null) {
-//			resultInfo = "进口报关单" + decHead.getSerialNumber() + "的代理报关公司栏位为空。";
-//			return resultInfo;
-//		}
-//		if (!testConnnect(decHead.getBrokerCorp())) {
-//			resultInfo = "连接"
-//					+ decHead.getBrokerCorp().getPisEspServer()
-//							.getServerAddress() + ":"
-//					+ decHead.getBrokerCorp().getPisEspServer().getPortNumber()
-//					+ "测试失败，网络不通！" + "进口报关单" + decHead.getSerialNumber()
-//					+ "更新回执失败！";
-//			return resultInfo;
-//		}
-//		// String urlAddress =
-//		// "http://127.0.0.1:8080/esp-war/UploadDecServLet";//
-//		String urlAddress = "http://"
-//				+ decHead.getBrokerCorp().getPisEspServer().getServerAddress()
-//				+ ":"
-//				+ decHead.getBrokerCorp().getPisEspServer().getPortNumber()
-//				+ "/esp-war/UploadDecServLet";//
-//		HttpClientInvoker clientInvoker = new HttpClientInvoker();
-//		Map<String, String> params = new HashMap();
-//		params.put("methodname", "downloadDecRecvData");
-//		params.put("esptaskid", espTaskId);
-//		// HttpProxyParam proxyParam=new
-//		// HttpProxyParam("113.105.139.6",8087,"","");
-//		String resultData = clientInvoker.executeMethod(urlAddress, params,
-//				null);
-//		if (resultData != null && !"".equals(resultData.trim())) {
-//			Map resultMap = jsonToMap(resultData);
-//			String resultcode = (String) resultMap.get("resultcode");
-//			String msg = (String) resultMap.get("msg");
-//			if ("1".equals(resultcode)) {
-//				String decData = (String) resultMap.get("decdata");
-//				Integer projectType = Integer
-//						.parseInt(((ItemProperty) cbbProjectType
-//								.getSelectedItem()).getCode());
-//				decHead = pisAction.downloadDecData(request, decHead, decData,
-//						projectType);
-//				resultInfo = "读取进口报关单" + decHead.getSerialNumber()
-//						+ "回执成功，统一编号为：" + decHead.getUnificationCode()
-//						+ " 报关单号为：" + decHead.getCustomsDeclarationCode();
-//			} else {
-//				resultInfo = "读取进口报关单" + decHead.getSerialNumber()
-//						+ "回执失败，失败原因如下：" + msg;
-//			}
-//		} else {
-//			resultInfo = "读取进口报关单" + decHead.getSerialNumber()
-//					+ "回执失败，没有读到此报关单的信息。";
-//		}
-//		return resultInfo;
-//	}
-    /**
-     * 下载报关单回执信息
-     *
-     * @param decHead
-     * @return
-     */
-    private String downloadDecRecvData(BaseCustomsDeclaration decHead) {
-        String espTaskId = decHead.getEspTaskId();
-        if (espTaskId == null || "".equals(espTaskId.trim())) {
-            return "进口报关单" + decHead.getSerialNumber() + "的espTaskId为空。";
-        }
-        if (decHead.getBrokerCorp() == null) {
-            return "进口报关单" + decHead.getSerialNumber() + "的代理报关公司栏位为空。";
-        }
-        if (!testConnnect(decHead.getBrokerCorp())) {
-            return "连接" + decHead.getBrokerCorp().getPisEspServer().getServerAddress() + ":" + decHead.getBrokerCorp().getPisEspServer().getPortNumber() + "测试失败，网络不通！" + "出口报关单" + decHead.getSerialNumber() + "更新回执失败！";
-        }
-        String urlAddress = "http://" + decHead.getBrokerCorp().getPisEspServer().getServerAddress() + ":" + decHead.getBrokerCorp().getPisEspServer().getPortNumber() + "/esp-war/UploadDecServLet";//
-        HttpClientInvoker clientInvoker = new HttpClientInvoker();
-        Map<String, String> params = new HashMap();
-        params.put("methodname", "findDecHeadEdiStatus");
-        params.put("esptaskid", espTaskId);
-        String resultData = clientInvoker.executeMethod(urlAddress, params, null);
-        if (resultData != null && !"".equals(resultData.trim())) {
-            Map resultMap = jsonToMap(resultData);
-            String resultcode = (String) resultMap.get("resultcode");
-            String msg = (String) resultMap.get("msg");
-            if ("1".equals(resultcode)) {
-                String decStatus = (String) resultMap.get("decstatus");
-                if (decStatus != null && !"".equals(decStatus)) {
-                    //5:资料检查不通过；8:海关申报退单。
-                    if ("5".equals(decStatus) || "8".equals(decStatus)) {
-                        String noPassInfo = "5".equals(decStatus) ? "资料检查不通过" : "海关申报退单";
-                        decHead.setEffective(false);
-                        decHead.setIsSend(false);
-                        decHead.setIsCheck(false);
-                        pisAction.saveOrUpdate(request, decHead);
-                        return "进口报关单" + decHead.getSerialNumber() + noPassInfo ;
-                    }
-                }
-            } else {
-                return "读取进口报关单" + decHead.getSerialNumber() + "状态失败，失败原因如下：" + msg;
-            }
-        } else {
-            return  "读取进口报关单" + decHead.getSerialNumber() + "状态失败，没有读到此报关单的信息。";
-        }
-        params = new HashMap();
-        params.put("methodname", "downloadDecRecvData");
-        params.put("esptaskid", espTaskId);
-//        HttpProxyParam proxyParam=new HttpProxyParam("113.105.139.6",8087,"","");
-        resultData = clientInvoker.executeMethod(urlAddress, params, null);
-        if (resultData != null && !"".equals(resultData.trim())) {
-            Map resultMap = jsonToMap(resultData);
-            String resultcode = (String) resultMap.get("resultcode");
-            String msg = (String) resultMap.get("msg");
-            if ("1".equals(resultcode)) {
-            	
-                String decData = (String) resultMap.get("decdata");
-                Integer projectType = Integer
-                		.parseInt(((ItemProperty) cbbProjectType
-                				.getSelectedItem()).getCode());
-                
-        		Map decMap = jsonToMap(decData);
-        		Map<String, Object> mapHead = (Map<String, Object>) decMap.get("报关单表头");
-        		if (mapHead == null) {
-        			throw new RuntimeException("报关单表头为空！");
-        		}
-        		String isCustomsDelete=(String)mapHead.get("是否海关删单");
-        		if("1".equals(isCustomsDelete)){
-        			String customsDeleteReason=(String)mapHead.get("删单原因");
-        			pisAction.customsDeleteDecl(request,decData,projectType);
-        			EncAction baseEncAction = (EncAction) CommonVars.getApplicationContext().getBean(
-        					"encAction");
-        			baseEncAction.deleteCustomsDeclaration(request,decHead,true);
-        			return "海关删单，删单原因:"+customsDeleteReason;
-        		}else{
-	                decHead = pisAction.downloadDecData(request, decHead, decData,projectType);
-	                return "读取进口报关单" + decHead.getSerialNumber() + "数据成功，统一编号为：" + decHead.getUnificationCode() + " 报关单号为：" + decHead.getCustomsDeclarationCode();
-        		}
-            } else {
-                return "读取进口报关单" + decHead.getSerialNumber() + "数据失败，失败原因如下：" + msg;
-            }
-        } else {
-            return "读取进口报关单" + decHead.getSerialNumber() + "数据失败，没有读到此报关单的信息。";
-        }
-    }
+	// /**
+	// * 下载报关单回执信息
+	// *
+	// * @param decHead
+	// * @return
+	// */
+	// private String downloadDecRecvData(BaseCustomsDeclaration decHead) {
+	// String resultInfo = "";
+	// String espTaskId = decHead.getEspTaskId();
+	// if (espTaskId == null || "".equals(espTaskId.trim())) {
+	// resultInfo = "进口报关单" + decHead.getSerialNumber() + "的espTaskId为空。";
+	// return resultInfo;
+	// }
+	// if (decHead.getBrokerCorp() == null) {
+	// resultInfo = "进口报关单" + decHead.getSerialNumber() + "的代理报关公司栏位为空。";
+	// return resultInfo;
+	// }
+	// if (!testConnnect(decHead.getBrokerCorp())) {
+	// resultInfo = "连接"
+	// + decHead.getBrokerCorp().getPisEspServer()
+	// .getServerAddress() + ":"
+	// + decHead.getBrokerCorp().getPisEspServer().getPortNumber()
+	// + "测试失败，网络不通！" + "进口报关单" + decHead.getSerialNumber()
+	// + "更新回执失败！";
+	// return resultInfo;
+	// }
+	// // String urlAddress =
+	// // "http://127.0.0.1:8080/esp-war/UploadDecServLet";//
+	// String urlAddress = "http://"
+	// + decHead.getBrokerCorp().getPisEspServer().getServerAddress()
+	// + ":"
+	// + decHead.getBrokerCorp().getPisEspServer().getPortNumber()
+	// + "/esp-war/UploadDecServLet";//
+	// HttpClientInvoker clientInvoker = new HttpClientInvoker();
+	// Map<String, String> params = new HashMap();
+	// params.put("methodname", "downloadDecRecvData");
+	// params.put("esptaskid", espTaskId);
+	// // HttpProxyParam proxyParam=new
+	// // HttpProxyParam("113.105.139.6",8087,"","");
+	// String resultData = clientInvoker.executeMethod(urlAddress, params,
+	// null);
+	// if (resultData != null && !"".equals(resultData.trim())) {
+	// Map resultMap = jsonToMap(resultData);
+	// String resultcode = (String) resultMap.get("resultcode");
+	// String msg = (String) resultMap.get("msg");
+	// if ("1".equals(resultcode)) {
+	// String decData = (String) resultMap.get("decdata");
+	// Integer projectType = Integer
+	// .parseInt(((ItemProperty) cbbProjectType
+	// .getSelectedItem()).getCode());
+	// decHead = pisAction.downloadDecData(request, decHead, decData,
+	// projectType);
+	// resultInfo = "读取进口报关单" + decHead.getSerialNumber()
+	// + "回执成功，统一编号为：" + decHead.getUnificationCode()
+	// + " 报关单号为：" + decHead.getCustomsDeclarationCode();
+	// } else {
+	// resultInfo = "读取进口报关单" + decHead.getSerialNumber()
+	// + "回执失败，失败原因如下：" + msg;
+	// }
+	// } else {
+	// resultInfo = "读取进口报关单" + decHead.getSerialNumber()
+	// + "回执失败，没有读到此报关单的信息。";
+	// }
+	// return resultInfo;
+	// }
+	/**
+	 * 下载报关单回执信息
+	 *
+	 * @param decHead
+	 * @return
+	 */
+	private String downloadDecRecvData(BaseCustomsDeclaration decHead) {
+		String espTaskId = decHead.getEspTaskId();
+		if (espTaskId == null || "".equals(espTaskId.trim())) {
+			return "进口报关单" + decHead.getSerialNumber() + "的espTaskId为空。";
+		}
+		if (decHead.getBrokerCorp() == null) {
+			return "进口报关单" + decHead.getSerialNumber() + "的代理报关公司栏位为空。";
+		}
+		if (!testConnnect(decHead.getBrokerCorp())) {
+			return "连接"
+					+ decHead.getBrokerCorp().getPisEspServer()
+							.getServerAddress() + ":"
+					+ decHead.getBrokerCorp().getPisEspServer().getPortNumber()
+					+ "测试失败，网络不通！" + "出口报关单" + decHead.getSerialNumber()
+					+ "更新回执失败！";
+		}
+		String urlAddress = "http://"
+				+ decHead.getBrokerCorp().getPisEspServer().getServerAddress()
+				+ ":"
+				+ decHead.getBrokerCorp().getPisEspServer().getPortNumber()
+				+ "/esp-war/UploadDecServLet";//
+		HttpClientInvoker clientInvoker = new HttpClientInvoker();
+		Map<String, String> params = new HashMap();
+		params.put("methodname", "findDecHeadEdiStatus");
+		params.put("esptaskid", espTaskId);
+		String resultData = clientInvoker.executeMethod(urlAddress, params,
+				null);
+		if (resultData != null && !"".equals(resultData.trim())) {
+			Map resultMap = jsonToMap(resultData);
+			String resultcode = (String) resultMap.get("resultcode");
+			String msg = (String) resultMap.get("msg");
+			if ("1".equals(resultcode)) {
+				String decStatus = (String) resultMap.get("decstatus");
+				if (decStatus != null && !"".equals(decStatus)) {
+					// 5:资料检查不通过；8:海关申报退单。
+					if ("5".equals(decStatus) || "8".equals(decStatus)) {
+						String noPassInfo = "5".equals(decStatus) ? "资料检查不通过"
+								: "海关申报退单";
+						decHead.setEffective(false);
+						decHead.setIsSend(false);
+						decHead.setIsCheck(false);
+						pisAction.saveOrUpdate(request, decHead);
+						return "进口报关单" + decHead.getSerialNumber() + noPassInfo;
+					}
+				}
+			} else {
+				return "读取进口报关单" + decHead.getSerialNumber() + "状态失败，失败原因如下："
+						+ msg;
+			}
+		} else {
+			return "读取进口报关单" + decHead.getSerialNumber() + "状态失败，没有读到此报关单的信息。";
+		}
+		params = new HashMap();
+		params.put("methodname", "downloadDecRecvData");
+		params.put("esptaskid", espTaskId);
+		// HttpProxyParam proxyParam=new
+		// HttpProxyParam("113.105.139.6",8087,"","");
+		resultData = clientInvoker.executeMethod(urlAddress, params, null);
+		if (resultData != null && !"".equals(resultData.trim())) {
+			Map resultMap = jsonToMap(resultData);
+			String resultcode = (String) resultMap.get("resultcode");
+			String msg = (String) resultMap.get("msg");
+			if ("1".equals(resultcode)) {
+
+				String decData = (String) resultMap.get("decdata");
+				Integer projectType = Integer
+						.parseInt(((ItemProperty) cbbProjectType
+								.getSelectedItem()).getCode());
+
+				Map decMap = jsonToMap(decData);
+				Map<String, Object> mapHead = (Map<String, Object>) decMap
+						.get("报关单表头");
+				if (mapHead == null) {
+					throw new RuntimeException("报关单表头为空！");
+				}
+				String isCustomsDelete = (String) mapHead.get("是否海关删单");
+				if ("1".equals(isCustomsDelete)) {
+					String customsDeleteReason = (String) mapHead.get("删单原因");
+					pisAction.customsDeleteDecl(request, decData, projectType);
+					EncAction baseEncAction = (EncAction) CommonVars
+							.getApplicationContext().getBean("encAction");
+					baseEncAction.deleteCustomsDeclaration(request, decHead,
+							true);
+					return "海关删单，删单原因:" + customsDeleteReason;
+				} else {
+					decHead = pisAction.downloadDecData(request, decHead,
+							decData, projectType);
+					return "读取进口报关单" + decHead.getSerialNumber()
+							+ "数据成功，统一编号为：" + decHead.getUnificationCode()
+							+ " 报关单号为：" + decHead.getCustomsDeclarationCode();
+				}
+			} else {
+				return "读取进口报关单" + decHead.getSerialNumber() + "数据失败，失败原因如下："
+						+ msg;
+			}
+		} else {
+			return "读取进口报关单" + decHead.getSerialNumber() + "数据失败，没有读到此报关单的信息。";
+		}
+	}
+
 	private Map jsonToMap(String jsonData) {
 		Gson gson = new Gson();
 		Map<String, String> map = gson.fromJson(jsonData, new TypeToken<Map>() {

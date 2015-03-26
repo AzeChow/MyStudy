@@ -36,6 +36,8 @@ import javax.swing.ListCellRenderer;
 import javax.swing.UIManager;
 import javax.swing.plaf.basic.BasicComboBoxUI;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.bestway.bcus.client.common.CheckBoxListCellRenderer;
 import com.bestway.bcus.client.common.CheckBoxListItem;
 import com.bestway.bcus.client.common.CommonVars;
@@ -329,19 +331,15 @@ public class DgInputBGDFromQP extends JDialogBase {
 
 					}
 
+					// 结束日期与开始日期相差的天数 不能大于7天
 					GregorianCalendar calendar = new GregorianCalendar();
 
 					calendar.setTime(beginDate);
 
 					calendar.add(GregorianCalendar.DATE, 7);
 
-					/*
-					 * if (calendar.getTime().before(endDate)) {
-					 * JOptionPane.showMessageDialog(DgInputBGDFromQP.this,
-					 * "结束日期与开始日期相差的天数 不能大于7天"); return; }
-					 */
-
-					if (!"".equals(tfEntryId.getText().trim())
+					// 判断 报关单号如果不为空 并且 长度不等于18 那么就不能继续执行
+					if (StringUtils.isNotBlank(tfEntryId.getText())
 							&& tfEntryId.getText().trim().length() != 18) {
 
 						JOptionPane.showMessageDialog(DgInputBGDFromQP.this,

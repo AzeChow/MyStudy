@@ -560,10 +560,9 @@ public class DgFptBillHead extends DgCommon {
 		// head.setContractNoIn(this.contractNoIn.getText().trim());
 
 		head.setTransportToolNumber(transportToolNumberInput.getText().trim());
-		Transf transf = (Transf) this.cbbTransferMode.getSelectedItem();
-		if (transf != null) {
-			head.setTransportToolType(transf.getName());
-		}
+
+		head.setTransportToolTypenew((Transf) this.cbbTransferMode
+				.getSelectedItem());
 	}
 
 	/**
@@ -681,38 +680,14 @@ public class DgFptBillHead extends DgCommon {
 			this.tfExpNote.setText("");
 		}
 
-		if (head.getTransportToolType() != null) {
+		if (head.getTransportToolTypenew() != null) {
 
-			String transportToolType = head.getTransportToolType();
-
-			for (int i = 0; i < cbbTransferMode.getItemCount(); i++) {
-
-				Transf transf = (Transf) cbbTransferMode.getItemAt(i);
-
-				if (transportToolType.equals(transf.getName())) {
-
-					this.cbbTransferMode.setSelectedIndex(i);
-
-					break;
-
-				}
-
-			}
+			cbbTransferMode.setSelectedItem(head.getTransportToolTypenew());
 
 		} else {
-
 			this.cbbTransferMode.setSelectedItem(null);
 		}
-		// 初始化 运输工具类型
-		// List<Transf> list = CustomBaseList.getInstance().getTransfs();
-		// System.out.println("list.size()======"+list.size());
-		// for (int i = 0; i < list.size(); i++) {
-		// Transf transf = list.get(i);
-		// if(transf.getCode().equals(head.getTransportToolType())){
-		// cbbTransferMode.setSelectedItem(transf);
-		// break;
-		// }
-		// }
+
 		// 初始化 运输工具编号
 		if (head.getTransportToolNumber() != null) {
 			transportToolNumberInput.setText(head.getTransportToolNumber());
@@ -982,13 +957,17 @@ public class DgFptBillHead extends DgCommon {
 			jLabel19.setText("转出帐册编号");
 		else
 			jLabel19.setText("转出手册编号");
+
 		// 初始化运输方式
 		this.cbbTransferMode.setModel(CustomBaseModel.getInstance()
 				.getTransfModel());
+
 		this.cbbTransferMode.setRenderer(CustomBaseRender.getInstance()
 				.getRender());
+
 		CustomBaseComboBoxEditor.getInstance().setComboBoxEditor(
 				this.cbbTransferMode);
+
 		List list = null;
 		// if (this.fptInOutFlag.equals(FptInOutFlag.OUT)) {
 		// list = materialManageAction.findScmManuFactoryIn(new Request(

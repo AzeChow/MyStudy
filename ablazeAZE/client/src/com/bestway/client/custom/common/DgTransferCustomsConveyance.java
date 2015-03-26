@@ -1,7 +1,5 @@
 package com.bestway.client.custom.common;
 
-import java.text.ParseException;
-
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -159,8 +157,7 @@ public class DgTransferCustomsConveyance extends JDialogBase {
 	private void initialize() {
 		this.setTitle("转关运输填写");
 		this.setContentPane(getJContentPane());
-		this
-				.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+		this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		this.setSize(449, 345);
 		this.addWindowListener(new java.awt.event.WindowAdapter() {
 
@@ -228,8 +225,7 @@ public class DgTransferCustomsConveyance extends JDialogBase {
 			jLabel14.setText("(汽车则填司机本号)");
 			jLabel19.setBounds(307, 135, 12, 22);
 			jLabel19.setText("*");
-			jLabel19
-					.setFont(new java.awt.Font("Dialog", java.awt.Font.BOLD, 14));
+			jLabel19.setFont(new java.awt.Font("Dialog", java.awt.Font.BOLD, 14));
 			jLabel19.setForeground(new java.awt.Color(51, 51, 255));
 			jContentPane.add(getJPanel(), null);
 			jContentPane.add(jLabel, null);
@@ -300,9 +296,8 @@ public class DgTransferCustomsConveyance extends JDialogBase {
 			jPanel = new JPanel();
 			jPanel.setLayout(null);
 			jPanel.setBounds(0, 258, 441, 41);
-			jPanel
-					.setBorder(javax.swing.BorderFactory
-							.createEtchedBorder(javax.swing.border.EtchedBorder.LOWERED));
+			jPanel.setBorder(javax.swing.BorderFactory
+					.createEtchedBorder(javax.swing.border.EtchedBorder.LOWERED));
 			jPanel.add(getBtnOk(), null);
 			jPanel.add(getBtnCancel(), null);
 			jPanel.add(getJButton(), null);
@@ -384,17 +379,23 @@ public class DgTransferCustomsConveyance extends JDialogBase {
 			tfOverseasConveyanceCode.setFont(new java.awt.Font("Dialog",
 					java.awt.Font.BOLD, 18));
 			tfOverseasConveyanceCode.setForeground(java.awt.Color.black);
+
 			tfOverseasConveyanceCode.getDocument().addDocumentListener(
 					new DocumentListener() {
+
 						public void insertUpdate(DocumentEvent e) {
+
 							// 境外运输工具是否自动带出境内运输工具编号
 							String jwjn = manualDecleareAction.getBpara(
 									new Request(CommonVars.getCurrUser()),
 									BcusParameter.CUSTOMS_JW_JN);
+
 							if (jwjn != null && "1".equals(jwjn)) {
+
 								tfDomesticConveyanceCode
 										.setText(tfOverseasConveyanceCode
 												.getText());
+
 							}
 						}
 

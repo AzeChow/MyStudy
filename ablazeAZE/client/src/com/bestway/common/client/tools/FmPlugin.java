@@ -205,8 +205,8 @@ public class FmPlugin extends JInternalFrameBase {
 		if (JOptionPane.showConfirmDialog(this, "是否确定删除插件!", "提示", 0) != 0) {
 			return;
 		}
-		boolean isSuccess = toolsAction.deletePlugin(new Request(CommonVars
-				.getCurrUser()), pluginInfo);
+		boolean isSuccess = toolsAction.deletePlugin(
+				new Request(CommonVars.getCurrUser()), pluginInfo);
 		if (isSuccess) {
 			this.tableModel.deleteRow(pluginInfo);
 		}
@@ -270,11 +270,15 @@ public class FmPlugin extends JInternalFrameBase {
 		public void run() {
 
 			int type = analysePlugin(file);
+
 			Object obj = getExistPluginById(pluginId, type);
 
 			if (obj != null) {
+
 				if (type == FmPlugin.WINDOW_PLUGIN) {
+
 					PluginInfoClientReport plugin = (PluginInfoClientReport) obj;
+
 					if (JOptionPane
 							.showConfirmDialog(FmPlugin.this, "已经存在相同的插件文件 ["
 									+ plugin.getFileName() + "],是否覆盖!!", "提示",
@@ -284,10 +288,13 @@ public class FmPlugin extends JInternalFrameBase {
 					//
 					// 删除
 					//
-					toolsAction.deleteReportPlugin(new Request(CommonVars
-							.getCurrUser()), plugin);
+					toolsAction.deleteReportPlugin(
+							new Request(CommonVars.getCurrUser()), plugin);
+
 				} else if (type == FmPlugin.MENU_PLUGIN) {
+
 					PluginInfoClient plugin = (PluginInfoClient) obj;
+
 					if (JOptionPane
 							.showConfirmDialog(FmPlugin.this, "已经存在相同的插件文件 ["
 									+ plugin.getFileName() + "],是否覆盖!!", "提示",
@@ -297,10 +304,13 @@ public class FmPlugin extends JInternalFrameBase {
 					//
 					// 删除
 					//
-					toolsAction.deleteClientPlugin(new Request(CommonVars
-							.getCurrUser()), plugin);
+					toolsAction.deleteClientPlugin(
+							new Request(CommonVars.getCurrUser()), plugin);
+
 				} else if (type == FmPlugin.SERVER_PLUGIN) {
+
 					PluginInfo plugin = (PluginInfo) obj;
+
 					if (JOptionPane
 							.showConfirmDialog(FmPlugin.this, "已经存在相同的插件文件 ["
 									+ plugin.getFileName() + "],是否覆盖!!", "提示",
@@ -310,8 +320,8 @@ public class FmPlugin extends JInternalFrameBase {
 					//
 					// 删除
 					//
-					toolsAction.deletePlugin(new Request(CommonVars
-							.getCurrUser()), plugin);
+					toolsAction.deletePlugin(
+							new Request(CommonVars.getCurrUser()), plugin);
 				}
 
 			}
@@ -331,14 +341,17 @@ public class FmPlugin extends JInternalFrameBase {
 				byte[] bytes = CommonUtils.getBytesByFile(file
 						.getAbsolutePath());
 				if (type == FmPlugin.WINDOW_PLUGIN) {
-					toolsAction.uploadReportPlugin(new Request(CommonVars
-							.getCurrUser()), file.getName(), bytes);
+					toolsAction.uploadReportPlugin(
+							new Request(CommonVars.getCurrUser()),
+							file.getName(), bytes);
 				} else if (type == FmPlugin.MENU_PLUGIN) {
-					toolsAction.uploadClientPlugin(new Request(CommonVars
-							.getCurrUser()), file.getName(), bytes);
+					toolsAction.uploadClientPlugin(
+							new Request(CommonVars.getCurrUser()),
+							file.getName(), bytes);
 				} else if (type == FmPlugin.SERVER_PLUGIN) {
-					toolsAction.uploadPlugin(new Request(CommonVars
-							.getCurrUser()), file.getName(), bytes);
+					toolsAction.uploadPlugin(
+							new Request(CommonVars.getCurrUser()),
+							file.getName(), bytes);
 				}
 				//
 				// 刷新插件
@@ -350,33 +363,45 @@ public class FmPlugin extends JInternalFrameBase {
 				JOptionPane.showMessageDialog(FmPlugin.this, info, "提示", 2);
 			} catch (Exception e) {
 				CommonProgress.closeProgressDialog(flag);
-				JOptionPane.showMessageDialog(FmPlugin.this, "上传插件失败：！"
-						+ e.getMessage(), "提示", 2);
+				JOptionPane.showMessageDialog(FmPlugin.this,
+						"上传插件失败：！" + e.getMessage(), "提示", 2);
 			}
 			btnUpload.setEnabled(true);
 		}
 	}
 
 	private Object getExistPluginById(String id, int type) {
+
 		Object plugin = null;
+
 		if (type == FmPlugin.WINDOW_PLUGIN) {
+
 			List<PluginInfoClientReport> list = this.toolsAction
 					.loadReportPlugin(new Request(CommonVars.getCurrUser()));
 
 			for (PluginInfoClientReport tempPlugin : list) {
+
 				String tempId = tempPlugin.getId() == null ? "" : tempPlugin
 						.getId();
+
 				if (tempId.equals(id)) {
+
 					plugin = tempPlugin;
+
 					break;
 				}
 			}
+
 		} else if (type == FmPlugin.MENU_PLUGIN) {
+
 			List<PluginInfoClient> list = this.toolsAction
 					.loadClientPlugin(new Request(CommonVars.getCurrUser()));
+
 			for (PluginInfoClient tempPlugin : list) {
+
 				String tempId = tempPlugin.getId() == null ? "" : tempPlugin
 						.getId();
+
 				if (tempId.equals(id)) {
 					plugin = tempPlugin;
 					break;
@@ -418,7 +443,7 @@ public class FmPlugin extends JInternalFrameBase {
 	private int analysePlugin(File f) {
 		//
 		// 载入文件
-		//	
+		//
 		JarInputStream jarInputStream = null;
 
 		try {

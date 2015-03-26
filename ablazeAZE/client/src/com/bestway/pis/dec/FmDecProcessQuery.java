@@ -116,7 +116,7 @@ public class FmDecProcessQuery extends JInternalFrameBase {
         String userPwd = aclUser.getPassword();
 //        String urlAddress = "http://" + serverName + ":" + serverPort + "/esp-war/webdirect.jnlp.jsp?href=http%3A//" + serverName + "%3A" + serverPort + "/esp-war/&useremail=" + userEmail + "&userpwd=" + userPwd + "";//
         String urlAddress = "http://" + serverName + ":" + serverPort + "/esp-war/webdirect.jnlp.jsp?";
-        urlAddress += "useremail=" + userEmail + "&userpwd=" + userPwd + "&orgacode="+brokerCorp.getOrgaCode()+"&href=";
+        urlAddress += "useremail=" + userEmail + "&userpwd=" + userPwd + "&orgacode="+brokerCorp.getOrgaCode() + "&isauthbrokercorp=0&href=";
         String para = "http://" + serverName + ":" + serverPort + "/esp-war/";
         para = URLEncoder.encode(para);
         urlAddress+=para;

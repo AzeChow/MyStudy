@@ -31,10 +31,7 @@ import com.bestway.bcs.contractcav.entity.ContractImgCav;
 import com.bestway.bcs.contractexe.action.ContractExeAction;
 import com.bestway.bcs.contractexe.entity.BcsCustomsDeclaration;
 import com.bestway.bcus.checkcancel.action.CheckCancelAction;
-import com.bestway.bcus.checkcancel.entity.CancelCusCustomsDeclara;
-import com.bestway.bcus.checkcancel.entity.CancelCustomsDeclara;
 import com.bestway.bcus.checkcancel.entity.CancelHead;
-import com.bestway.bcus.checkcancel.entity.CancelOwnerCustomsDeclara;
 import com.bestway.bcus.checkcancel.entity.CheckExg;
 import com.bestway.bcus.checkcancel.entity.CheckHead;
 import com.bestway.bcus.checkcancel.entity.CheckImg;
@@ -92,7 +89,6 @@ import com.bestway.common.authority.action.AuthorityAction;
 import com.bestway.common.authority.entity.AclGroup;
 import com.bestway.common.authority.entity.AclUser;
 import com.bestway.common.constant.DeclareState;
-import com.bestway.common.constant.ImpExpFlag;
 import com.bestway.common.constant.ImpExpType;
 import com.bestway.common.fpt.action.FptManageAction;
 import com.bestway.common.materialbase.action.MaterialManageAction;
@@ -110,7 +106,7 @@ import com.bestway.dzsc.dzscmanage.action.DzscAction;
  * @author Administrator // change the template for this generated type comment
  *         go to Window - Preferences - Java - Code Style - Code Templates
  */
-@SuppressWarnings({"unchecked","serial"})
+@SuppressWarnings({ "unchecked", "serial" })
 public class CommonQuery {
 	private static CommonQuery commonQuery = null;
 
@@ -173,8 +169,8 @@ public class CommonQuery {
 		DgCommonQuery dgCommonQuery = new DgCommonQuery();
 		DataImportAction dataImportAction = (DataImportAction) CommonVars
 				.getApplicationContext().getBean("dataImportAction");
-		List list1 = dataImportAction.findDBView(new Request(CommonVars
-				.getCurrUser()), root);
+		List list1 = dataImportAction.findDBView(
+				new Request(CommonVars.getCurrUser()), root);
 		dgCommonQuery.setDataSource(list1);
 		dgCommonQuery.setTitle("选择源数据表");
 		dgCommonQuery.setVisible(true);
@@ -273,8 +269,9 @@ public class CommonQuery {
 		CommonBaseCodeAction commonBaseCodeAction = (CommonBaseCodeAction) CommonVars
 				.getApplicationContext().getBean("commonBaseCodeAction");
 		dataSource = commonBaseCodeAction
-				.findMaterielByTransferFactoryBillType(new Request(CommonVars
-						.getCurrUser(), true), materielType);
+				.findMaterielByTransferFactoryBillType(
+						new Request(CommonVars.getCurrUser(), true),
+						materielType);
 		String dialogTitle = "";
 		final DgCommonQuery dgCommonQuery = new DgCommonQuery();
 		if (materielType.equals(MaterielType.FINISHED_PRODUCT)) {
@@ -394,10 +391,10 @@ public class CommonQuery {
 		dgCommonQuery.addWindowListener(new java.awt.event.WindowAdapter() {
 			public void windowOpened(java.awt.event.WindowEvent e) {
 				JTable table = dgCommonQuery.getJTable();
-				table.getColumnModel().getColumn(9).setCellRenderer(
-						new checkBoxRenderer());
-				table.getColumnModel().getColumn(10).setCellRenderer(
-						new checkBoxRenderer());
+				table.getColumnModel().getColumn(9)
+						.setCellRenderer(new checkBoxRenderer());
+				table.getColumnModel().getColumn(10)
+						.setCellRenderer(new checkBoxRenderer());
 			}
 		});
 		DgCommonQuery.setSingleResult(false);
@@ -438,192 +435,227 @@ public class CommonQuery {
 			public JCheckBox jCheckBox = null;
 
 			boolean isShowAll = false;
+
 			@Override
 			// 设置9与10列为checkbox
 			public void doSomethingBeforeVisable(JTable table) {
-				table.getColumnModel().getColumn(12).setCellRenderer(
-						new checkBoxRenderer());
-				table.getColumnModel().getColumn(13).setCellRenderer(
-						new checkBoxRenderer());
+				table.getColumnModel().getColumn(12)
+						.setCellRenderer(new checkBoxRenderer());
+				table.getColumnModel().getColumn(13)
+						.setCellRenderer(new checkBoxRenderer());
 			}
-			//查询全部物料
+
+			// 查询全部物料
 			@Override
 			public List getDataSource(int index, int length, String property,
-					Object value, boolean isLike) {			
+					Object value, boolean isLike) {
+				if (isShowAll) {
+					List list = commonBaseCodeAction
+							.findMaterielByImpExpRequestBillType(new Request(
+									CommonVars.getCurrUser()), materielType,
+									billId, false);
+					System.out.println(getJCheckBox().isSelected() + ":---->a"
+							+ list.size());
+					return list;
+				} else {
+					CompanyOther other = CommonVars.getOther();
+					boolean isFilter = false;
+					if (Boolean.TRUE.equals(other.getIsFilter())) {
+						isFilter = true;
+					}
+					List list = commonBaseCodeAction
+							.findMaterielByImpExpRequestBillType(new Request(
+									CommonVars.getCurrUser()), materielType,
+									billId, isFilter);
+					System.out.println(getJCheckBox().isSelected() + ":---->b"
+							+ list.size());
+					return list;
+				}
+			}
+
+			// 根据查询条件，点击“查询”按钮查询物料
+			@Override
+			public List findMaterielByPara(int index, int length,
+					String property, Object value, boolean isLike) {
+				List list = new ArrayList();
+				List newList = new ArrayList();
+				if (property != null) {
 					if (isShowAll) {
-						List list = commonBaseCodeAction
-								.findMaterielByImpExpRequestBillType(new Request(
-										CommonVars.getCurrUser()), materielType,
-										billId, false);
-						System.out.println(getJCheckBox().isSelected() + ":---->a"
-								+ list.size());
-						return list;
+						list = commonBaseCodeAction
+								.findMaterielByImpExpRequestBillType(
+										new Request(CommonVars.getCurrUser()),
+										materielType, billId, false);
+						System.out.println(getJCheckBox().isSelected()
+								+ ":---->a" + list.size());
 					} else {
 						CompanyOther other = CommonVars.getOther();
 						boolean isFilter = false;
-						if(Boolean.TRUE.equals(other.getIsFilter())){
+						if (Boolean.TRUE.equals(other.getIsFilter())) {
 							isFilter = true;
 						}
-						List list = commonBaseCodeAction
-								.findMaterielByImpExpRequestBillType(new Request(
-										CommonVars.getCurrUser()), materielType,
-										billId, isFilter);
-						System.out.println(getJCheckBox().isSelected() + ":---->b"
-								+ list.size());
-						return list;
+						list = commonBaseCodeAction
+								.findMaterielByImpExpRequestBillType(
+										new Request(CommonVars.getCurrUser()),
+										materielType, billId, isFilter);
+						System.out.println(getJCheckBox().isSelected()
+								+ ":---->b" + list.size());
 					}
-			}
-			//根据查询条件，点击“查询”按钮查询物料
-			@Override
-			public List findMaterielByPara(int index, int length, String property,
-					Object value, boolean isLike) {
-					List list = new ArrayList();
-					List newList = new ArrayList();
-					if(property!=null){
-						if (isShowAll) {
-							list = commonBaseCodeAction
-									.findMaterielByImpExpRequestBillType(new Request(
-											CommonVars.getCurrUser()), materielType,
-											billId, false);
-							System.out.println(getJCheckBox().isSelected() + ":---->a"
-									+ list.size());
-						} else {
-							CompanyOther other = CommonVars.getOther();
-							boolean isFilter = false;
-							if(Boolean.TRUE.equals(other.getIsFilter())){
-								isFilter = true;
+					if (value != null) {
+						if ("materiel.ptNo".equals(property)) {
+							for (int i = 0; i < list.size(); i++) {
+								TempMateriel tempMateriel = (TempMateriel) list
+										.get(i);
+								if (tempMateriel.getMateriel().getPtNo()
+										.contains(value.toString())) {
+									newList.add(tempMateriel);
+								}
 							}
-							list = commonBaseCodeAction
-									.findMaterielByImpExpRequestBillType(new Request(
-											CommonVars.getCurrUser()), materielType,
-											billId, isFilter);
-							System.out.println(getJCheckBox().isSelected() + ":---->b"
-									+ list.size());
-						}
-						if(value!=null){
-							if("materiel.ptNo".equals(property)){
-								for (int i = 0; i < list.size(); i++) {
-									TempMateriel tempMateriel = (TempMateriel)list.get(i);
-									if(tempMateriel.getMateriel().getPtNo().contains(value.toString())){
+						} else if ("seqNum".equals(property)) {
+							for (int i = 0; i < list.size(); i++) {
+								TempMateriel tempMateriel = (TempMateriel) list
+										.get(i);
+								if (tempMateriel.getSeqNum() != null) {
+									if (tempMateriel.getSeqNum().toString()
+											.contains(value.toString())) {
 										newList.add(tempMateriel);
 									}
 								}
-							}else if("seqNum".equals(property)){
-								for (int i = 0; i < list.size(); i++) {
-									TempMateriel tempMateriel = (TempMateriel)list.get(i);
-									if(tempMateriel.getSeqNum()!=null){
-										if(tempMateriel.getSeqNum().toString().contains(value.toString())){
-											newList.add(tempMateriel);
-										}
-									}
-									
-								}
-							}else if("materiel.complex.code".equals(property)){
-								for (int i = 0; i < list.size(); i++) {
-									TempMateriel tempMateriel = (TempMateriel)list.get(i);
-									if(tempMateriel.getMateriel()!=null){
-										if(tempMateriel.getMateriel().getComplex()!=null){
-											if(tempMateriel.getMateriel().getComplex().getCode().contains(value.toString())){
-												newList.add(tempMateriel);
-											}
-										}
-									}
-								}
-							}else if("materiel.factoryName".equals(property)){
-								for (int i = 0; i < list.size(); i++) {
-									TempMateriel tempMateriel = (TempMateriel)list.get(i);
-									if(tempMateriel.getMateriel().getFactoryName()!=null){
-										if(tempMateriel.getMateriel().getFactoryName().contains(value.toString())){
-											newList.add(tempMateriel);
-										}
-									}
-							
-								}
-							}else if("materiel.factorySpec".equals(property)){
-								for (int i = 0; i < list.size(); i++) {
-									TempMateriel tempMateriel = (TempMateriel)list.get(i);
-									if(tempMateriel.getMateriel().getFactorySpec()!=null){
-										if(tempMateriel.getMateriel().getFactorySpec().contains(value.toString())){
+
+							}
+						} else if ("materiel.complex.code".equals(property)) {
+							for (int i = 0; i < list.size(); i++) {
+								TempMateriel tempMateriel = (TempMateriel) list
+										.get(i);
+								if (tempMateriel.getMateriel() != null) {
+									if (tempMateriel.getMateriel().getComplex() != null) {
+										if (tempMateriel.getMateriel()
+												.getComplex().getCode()
+												.contains(value.toString())) {
 											newList.add(tempMateriel);
 										}
 									}
 								}
-							}else if("materiel.calUnit.name".equals(property)){
-								for (int i = 0; i < list.size(); i++) {
-									TempMateriel tempMateriel = (TempMateriel)list.get(i);
-									if(tempMateriel.getMateriel().getCalUnit()!=null){
-										if(tempMateriel.getMateriel().getCalUnit().getName().contains(value.toString())){
-											newList.add(tempMateriel);
-										}	
-									}
-								}
-							}else if("afterTenName".equals(property)){
-								for (int i = 0; i < list.size(); i++) {
-									TempMateriel tempMateriel = (TempMateriel)list.get(i);
-									if(tempMateriel.getAfterTenName()!=null){
-										if(tempMateriel.getAfterTenName()!=null){
-											if(tempMateriel.getAfterTenName().contains(value.toString())){
-												newList.add(tempMateriel);
-											}
-										}
-									}
-								}
-							}else if("afterSpec".equals(property)){
-								for (int i = 0; i < list.size(); i++) {
-									TempMateriel tempMateriel = (TempMateriel)list.get(i);
-									if(tempMateriel.getAfterSpec()!=null){
-										if(tempMateriel.getAfterSpec().contains(value.toString())){
-											newList.add(tempMateriel);
-										}	
-									}
-								}
-							}else if("materiel.ptPrice".equals(property)){
-								for (int i = 0; i < list.size(); i++) {
-									TempMateriel tempMateriel = (TempMateriel)list.get(i);
-									if(tempMateriel.getMateriel().getPtPrice()!=null){
-										if(tempMateriel.getMateriel().getPtPrice().toString().contains(value.toString())){
-											newList.add(tempMateriel);
-										}
-									}
-								}
-							}else if("afterUnit".equals(property)){
-								for (int i = 0; i < list.size(); i++) {
-									TempMateriel tempMateriel = (TempMateriel)list.get(i);
-									if(tempMateriel.getAfterUnit().contains(value.toString())){
+							}
+						} else if ("materiel.factoryName".equals(property)) {
+							for (int i = 0; i < list.size(); i++) {
+								TempMateriel tempMateriel = (TempMateriel) list
+										.get(i);
+								if (tempMateriel.getMateriel().getFactoryName() != null) {
+									if (tempMateriel.getMateriel()
+											.getFactoryName()
+											.contains(value.toString())) {
 										newList.add(tempMateriel);
 									}
 								}
-							}else if("materiel.ptNetWeight".equals(property)){
-								for (int i = 0; i < list.size(); i++) {
-									TempMateriel tempMateriel = (TempMateriel)list.get(i);
-									if(tempMateriel.getMateriel().getPtNetWeight()!=null){
-										if(tempMateriel.getMateriel().getPtNetWeight().toString().contains(value.toString())){
-											newList.add(tempMateriel);
-										}
-									}
-								}
-							}else if("isMemo".equals(property)){
-								for (int i = 0; i < list.size(); i++) {
-									TempMateriel tempMateriel = (TempMateriel)list.get(i);
-									if(tempMateriel.getIsMemo().toString().contains(value.toString())){
-										newList.add(tempMateriel);
-									}
-								}
-							}else if("isEmsRecords".equals(property)){
-								for (int i = 0; i < list.size(); i++) {
-									TempMateriel tempMateriel = (TempMateriel)list.get(i);
-									if(tempMateriel.getIsEmsRecords().toString().contains(value.toString())){
+
+							}
+						} else if ("materiel.factorySpec".equals(property)) {
+							for (int i = 0; i < list.size(); i++) {
+								TempMateriel tempMateriel = (TempMateriel) list
+										.get(i);
+								if (tempMateriel.getMateriel().getFactorySpec() != null) {
+									if (tempMateriel.getMateriel()
+											.getFactorySpec()
+											.contains(value.toString())) {
 										newList.add(tempMateriel);
 									}
 								}
 							}
-						}else{
-							newList = list;
+						} else if ("materiel.calUnit.name".equals(property)) {
+							for (int i = 0; i < list.size(); i++) {
+								TempMateriel tempMateriel = (TempMateriel) list
+										.get(i);
+								if (tempMateriel.getMateriel().getCalUnit() != null) {
+									if (tempMateriel.getMateriel().getCalUnit()
+											.getName()
+											.contains(value.toString())) {
+										newList.add(tempMateriel);
+									}
+								}
+							}
+						} else if ("afterTenName".equals(property)) {
+							for (int i = 0; i < list.size(); i++) {
+								TempMateriel tempMateriel = (TempMateriel) list
+										.get(i);
+								if (tempMateriel.getAfterTenName() != null) {
+									if (tempMateriel.getAfterTenName() != null) {
+										if (tempMateriel.getAfterTenName()
+												.contains(value.toString())) {
+											newList.add(tempMateriel);
+										}
+									}
+								}
+							}
+						} else if ("afterSpec".equals(property)) {
+							for (int i = 0; i < list.size(); i++) {
+								TempMateriel tempMateriel = (TempMateriel) list
+										.get(i);
+								if (tempMateriel.getAfterSpec() != null) {
+									if (tempMateriel.getAfterSpec().contains(
+											value.toString())) {
+										newList.add(tempMateriel);
+									}
+								}
+							}
+						} else if ("materiel.ptPrice".equals(property)) {
+							for (int i = 0; i < list.size(); i++) {
+								TempMateriel tempMateriel = (TempMateriel) list
+										.get(i);
+								if (tempMateriel.getMateriel().getPtPrice() != null) {
+									if (tempMateriel.getMateriel().getPtPrice()
+											.toString()
+											.contains(value.toString())) {
+										newList.add(tempMateriel);
+									}
+								}
+							}
+						} else if ("afterUnit".equals(property)) {
+							for (int i = 0; i < list.size(); i++) {
+								TempMateriel tempMateriel = (TempMateriel) list
+										.get(i);
+								if (tempMateriel.getAfterUnit().contains(
+										value.toString())) {
+									newList.add(tempMateriel);
+								}
+							}
+						} else if ("materiel.ptNetWeight".equals(property)) {
+							for (int i = 0; i < list.size(); i++) {
+								TempMateriel tempMateriel = (TempMateriel) list
+										.get(i);
+								if (tempMateriel.getMateriel().getPtNetWeight() != null) {
+									if (tempMateriel.getMateriel()
+											.getPtNetWeight().toString()
+											.contains(value.toString())) {
+										newList.add(tempMateriel);
+									}
+								}
+							}
+						} else if ("isMemo".equals(property)) {
+							for (int i = 0; i < list.size(); i++) {
+								TempMateriel tempMateriel = (TempMateriel) list
+										.get(i);
+								if (tempMateriel.getIsMemo().toString()
+										.contains(value.toString())) {
+									newList.add(tempMateriel);
+								}
+							}
+						} else if ("isEmsRecords".equals(property)) {
+							for (int i = 0; i < list.size(); i++) {
+								TempMateriel tempMateriel = (TempMateriel) list
+										.get(i);
+								if (tempMateriel.getIsEmsRecords().toString()
+										.contains(value.toString())) {
+									newList.add(tempMateriel);
+								}
+							}
 						}
+					} else {
+						newList = list;
 					}
-					return newList;
 				}
-					
+				return newList;
+			}
+
 			@Override
 			protected JToolBar getJToolBar() {
 				if (jToolBar == null) {
@@ -640,14 +672,17 @@ public class CommonQuery {
 					jCheckBox = new JCheckBox("是否过滤");
 					jCheckBox.setVisible(false);
 					CompanyOther other = CommonVars.getOther();
-					jCheckBox.setSelected(Boolean.TRUE.equals(other.getIsFilter()));					
-					jCheckBox.addActionListener(new java.awt.event.ActionListener() {
-						public void actionPerformed(java.awt.event.ActionEvent e) {
-							isShowAll = !isShowAll;
-							newpnCommonQueryPage.setInitState();
-							doSomethingBeforeVisable(getJTable());
-						}
-					});
+					jCheckBox.setSelected(Boolean.TRUE.equals(other
+							.getIsFilter()));
+					jCheckBox
+							.addActionListener(new java.awt.event.ActionListener() {
+								public void actionPerformed(
+										java.awt.event.ActionEvent e) {
+									isShowAll = !isShowAll;
+									newpnCommonQueryPage.setInitState();
+									doSomethingBeforeVisable(getJTable());
+								}
+							});
 				}
 				return jCheckBox;
 			}
@@ -663,7 +698,7 @@ public class CommonQuery {
 		return null;
 
 	}
-	
+
 	/**
 	 * 获得对照表的物料对象(SMD)
 	 * 
@@ -671,8 +706,8 @@ public class CommonQuery {
 	 * @param materielType
 	 * @return
 	 */
-	public List getMaterielByTypeBcusSMD(String title, final String materielType,
-			final String billId) {
+	public List getMaterielByTypeBcusSMD(String title,
+			final String materielType, final String billId) {
 		List<JTableListColumn> list = new ArrayList<JTableListColumn>();
 		list.add(new JTableListColumn("料号", "materiel.ptNo", 100));
 		list.add(new JTableListColumn("序号", "seqNum", 50, Integer.class));
@@ -698,18 +733,18 @@ public class CommonQuery {
 			@Override
 			// 设置9与10列为checkbox
 			public void doSomethingBeforeVisable(JTable table) {
-				table.getColumnModel().getColumn(12).setCellRenderer(
-						new checkBoxRenderer());
-				table.getColumnModel().getColumn(13).setCellRenderer(
-						new checkBoxRenderer());
+				table.getColumnModel().getColumn(12)
+						.setCellRenderer(new checkBoxRenderer());
+				table.getColumnModel().getColumn(13)
+						.setCellRenderer(new checkBoxRenderer());
 			}
 
 			@Override
 			public List getDataSource(int index, int length, String property,
 					Object value, boolean isLike) {
 				List list = null;
-//				if(value==null || value.equals("")) return list;
-				
+				// if(value==null || value.equals("")) return list;
+
 				if (isShowAll) {
 					list = commonBaseCodeAction
 							.findMaterielByImpExpRequestBillType(new Request(
@@ -805,8 +840,9 @@ public class CommonQuery {
 		List dataSource = null;
 		FptManageAction fptManageAction = (FptManageAction) CommonVars
 				.getApplicationContext().getBean("fptManageAction");
-		dataSource = fptManageAction.findEmsMateriel(new Request(CommonVars
-				.getCurrUser(), true), emsHeadH2k, parentId);
+		dataSource = fptManageAction.findEmsMateriel(
+				new Request(CommonVars.getCurrUser(), true), emsHeadH2k,
+				parentId);
 		List list = new Vector();
 		list.add(new JTableListColumn("成品序号", "seqNum", 50));
 		list.add(new JTableListColumn("商品编码", "complex.code", 80));
@@ -932,14 +968,14 @@ public class CommonQuery {
 	 * 获得物流客户/供应商外键--关务海关注册公司对象
 	 */
 	public Object getCustomBrief(Object object) {
-//		DgCommonQuery dgCommonQuery = new DgCommonQuery();
-//		dgCommonQuery.setDataSource(CustomBaseList.getInstance().getBriefs());
-//		dgCommonQuery.setSelectedRow(object);
-//		dgCommonQuery.setVisible(true);
-//		if (dgCommonQuery.isOk()) {
-//			return dgCommonQuery.getReturnValue();
-//		}
-//		return null;
+		// DgCommonQuery dgCommonQuery = new DgCommonQuery();
+		// dgCommonQuery.setDataSource(CustomBaseList.getInstance().getBriefs());
+		// dgCommonQuery.setSelectedRow(object);
+		// dgCommonQuery.setVisible(true);
+		// if (dgCommonQuery.isOk()) {
+		// return dgCommonQuery.getReturnValue();
+		// }
+		// return null;
 		List<JTableListColumn> list = new Vector<JTableListColumn>();
 		list.add(new JTableListColumn("编码", "code", 100));
 		list.add(new JTableListColumn("名称", "name", 150));
@@ -951,12 +987,12 @@ public class CommonQuery {
 					Object value, boolean isLike) {
 				//
 				// 分页查询的方法
-				//			
+				//
 				CustomBaseAction customBaseAction = (CustomBaseAction) CommonVars
 						.getApplicationContext().getBean("customBaseAction");
-				return customBaseAction.findPageBriefList(new Request(CommonVars
-						.getCurrUser(), true), index, length, property, value,
-						isLike);
+				return customBaseAction.findPageBriefList(new Request(
+						CommonVars.getCurrUser(), true), index, length,
+						property, value, isLike);
 			}
 		};
 
@@ -974,13 +1010,13 @@ public class CommonQuery {
 	}
 
 	public List getCustomBriefs() {
-//		DgCommonQuery dgCommonQuery = new DgCommonQuery();
-//		dgCommonQuery.setDataSource(CustomBaseList.getInstance().getBriefs());
-//		dgCommonQuery.setVisible(true);
-//		if (dgCommonQuery.isOk()) {
-//			return dgCommonQuery.getReturnList();
-//		}
-//		return null;
+		// DgCommonQuery dgCommonQuery = new DgCommonQuery();
+		// dgCommonQuery.setDataSource(CustomBaseList.getInstance().getBriefs());
+		// dgCommonQuery.setVisible(true);
+		// if (dgCommonQuery.isOk()) {
+		// return dgCommonQuery.getReturnList();
+		// }
+		// return null;
 		List<JTableListColumn> list = new Vector<JTableListColumn>();
 		list.add(new JTableListColumn("编码", "code", 100));
 		list.add(new JTableListColumn("名称", "name", 150));
@@ -992,12 +1028,12 @@ public class CommonQuery {
 					Object value, boolean isLike) {
 				//
 				// 分页查询的方法
-				//			
+				//
 				CustomBaseAction customBaseAction = (CustomBaseAction) CommonVars
 						.getApplicationContext().getBean("customBaseAction");
-				return customBaseAction.findPageBriefList(new Request(CommonVars
-						.getCurrUser(), true), index, length, property, value,
-						isLike);
+				return customBaseAction.findPageBriefList(new Request(
+						CommonVars.getCurrUser(), true), index, length,
+						property, value, isLike);
 			}
 		};
 
@@ -1081,12 +1117,12 @@ public class CommonQuery {
 					Object value, boolean isLike) {
 				//
 				// 分页查询的方法
-				//			
+				//
 				CustomBaseAction customBaseAction = (CustomBaseAction) CommonVars
 						.getApplicationContext().getBean("customBaseAction");
-				return customBaseAction.findComplex(new Request(CommonVars
-						.getCurrUser(), true), index, length, property, value,
-						isLike);
+				return customBaseAction.findComplex(
+						new Request(CommonVars.getCurrUser(), true), index,
+						length, property, value, isLike);
 			}
 		};
 
@@ -1115,7 +1151,7 @@ public class CommonQuery {
 					Object value, boolean isLike) {
 				//
 				// 分页查询的方法
-				//			
+				//
 				CustomBaseAction customBaseAction = (CustomBaseAction) CommonVars
 						.getApplicationContext().getBean("customBaseAction");
 				return customBaseAction.findWrap();
@@ -1131,12 +1167,12 @@ public class CommonQuery {
 		return null;
 
 	}
-	
-	
+
 	/**
 	 * 获得 工厂BOM管理版本资料
 	 */
-	public Object getEnterpriseBomVersion(final String parentNo, final int bomStructureType) {
+	public Object getEnterpriseBomVersion(final String parentNo,
+			final int bomStructureType) {
 		List<JTableListColumn> list = new Vector<JTableListColumn>();
 		list.add(new JTableListColumn("料号", "parentNo", 100));
 		list.add(new JTableListColumn("版本", "version", 150));
@@ -1149,11 +1185,13 @@ public class CommonQuery {
 					Object value, boolean isLike) {
 				//
 				// 分页查询的方法
-				//			
+				//
 				MaterialManageAction action = (MaterialManageAction) CommonVars
-						.getApplicationContext().getBean("materialManageAction");
-				return action.findEnterpriseBomVersion(new Request(CommonVars.getCurrUser(), true),
-						parentNo, bomStructureType);
+						.getApplicationContext()
+						.getBean("materialManageAction");
+				return action.findEnterpriseBomVersion(
+						new Request(CommonVars.getCurrUser(), true), parentNo,
+						bomStructureType);
 			}
 		};
 
@@ -1193,7 +1231,7 @@ public class CommonQuery {
 					Object value, boolean isLike) {
 				//
 				// 分页查询的方法
-				//			
+				//
 				CustomBaseAction customBaseAction = (CustomBaseAction) CommonVars
 						.getApplicationContext().getBean("customBaseAction");
 				return customBaseAction.findComplexBcsTenInnerMerge(
@@ -1273,7 +1311,7 @@ public class CommonQuery {
 					Object value, boolean isLike) {
 				//
 				// 分页查询的方法
-				//			
+				//
 				EncAction encAction = (EncAction) CommonVars
 						.getApplicationContext().getBean("encAction");
 				// System.out.println("------------------"
@@ -1281,9 +1319,10 @@ public class CommonQuery {
 				// (new Request(CommonVars.getCurrUser(), true)),
 				// projectType, index, length, property, value,
 				// isLike).size());
-				return encAction.getInnerDateForSpeFix((new Request(CommonVars
-						.getCurrUser(), true)), projectType, index, length,
-						property, value, isLike, isImport);
+				return encAction.getInnerDateForSpeFix(
+						(new Request(CommonVars.getCurrUser(), true)),
+						projectType, index, length, property, value, isLike,
+						isImport);
 			}
 		};
 
@@ -1547,7 +1586,7 @@ public class CommonQuery {
 					Object value, boolean isLike) {
 				//
 				// 分页查询的方法
-				//			
+				//
 				CommonBaseCodeAction commonBaseCodeAction = (CommonBaseCodeAction) CommonVars
 						.getApplicationContext()
 						.getBean("commonBaseCodeAction");
@@ -1589,7 +1628,7 @@ public class CommonQuery {
 					Object value, boolean isLike) {
 				//
 				// 分页查询的方法
-				//			
+				//
 				CommonBaseCodeAction commonBaseCodeAction = (CommonBaseCodeAction) CommonVars
 						.getApplicationContext()
 						.getBean("commonBaseCodeAction");
@@ -1652,7 +1691,7 @@ public class CommonQuery {
 					Object value, boolean isLike) {
 				//
 				// 分页查询的方法
-				//			
+				//
 				CommonBaseCodeAction commonBaseCodeAction = (CommonBaseCodeAction) CommonVars
 						.getApplicationContext()
 						.getBean("commonBaseCodeAction");
@@ -1718,7 +1757,7 @@ public class CommonQuery {
 					Object value, boolean isLike) {
 				//
 				// 分页查询的方法
-				//			
+				//
 				CommonBaseCodeAction commonBaseCodeAction = (CommonBaseCodeAction) CommonVars
 						.getApplicationContext()
 						.getBean("commonBaseCodeAction");
@@ -1794,12 +1833,13 @@ public class CommonQuery {
 			emsEdiMerger.setName((String) obj[2]);
 			emsEdiMerger.setSpec((String) obj[3]);
 			emsEdiMerger.setUnit((Unit) obj[4]);
-			
+
 			emsEdiMerger.setLegalUnitGene((Double) obj[7]);
 			emsEdiMerger.setLegalUnit2Gene((Double) obj[8]);
 			emsEdiMerger.setWeigthUnitGene((Double) obj[9]);
-			if((Boolean) obj[10] != null)
-				{emsEdiMerger.setIsMainImg((Boolean) obj[10]);}
+			if ((Boolean) obj[10] != null) {
+				emsEdiMerger.setIsMainImg((Boolean) obj[10]);
+			}
 			/*
 			 * emsEdiMerger.setLegalUnit((Unit) obj[5]);
 			 * emsEdiMerger.setLegalUnit2((Unit) obj[6]);
@@ -1866,10 +1906,10 @@ public class CommonQuery {
 			emsEdiMerger.setName((String) obj[2]);
 			emsEdiMerger.setSpec((String) obj[3]);
 			emsEdiMerger.setUnit((Unit) obj[4]);
-			
+
 			emsEdiMerger.setLegalUnitGene((Double) obj[7]);
 			emsEdiMerger.setLegalUnit2Gene((Double) obj[8]);
-			
+
 			emsEdiMerger.setWeigthUnitGene((Double) obj[9]);
 			/*
 			 * emsEdiMerger.setLegalUnit((Unit) obj[5]);
@@ -2073,8 +2113,8 @@ public class CommonQuery {
 			emsH2kImg
 					.setMaxApprSpace(((EmsEdiMergerImgAfter) emsH2kList.get(i))
 							.getMaxApprSpace());
-			emsH2kImg.setIsMainImg(((EmsEdiMergerImgAfter) emsH2kList
-					.get(i)).getIsMainImg());
+			emsH2kImg.setIsMainImg(((EmsEdiMergerImgAfter) emsH2kList.get(i))
+					.getIsMainImg());
 			emsH2kImg.setLevyMode(other == null ? null : other.getLevyMode());
 			emsEdiMergers.add(emsH2kImg);
 		}
@@ -2410,103 +2450,113 @@ public class CommonQuery {
 	 **************************************************************************/
 	public Object getCustomsDeclara(boolean single, CancelHead cancelHead,
 			boolean isOwner) {
-		
-		DgQueryCustomsDeclara dg = new DgQueryCustomsDeclara(single,cancelHead,isOwner);
+
+		DgQueryCustomsDeclara dg = new DgQueryCustomsDeclara(single,
+				cancelHead, isOwner);
 		dg.setVisible(true);
 		return dg.getSelectList();
-//		CheckCancelAction checkCancelAction = (CheckCancelAction) CommonVars
-//				.getApplicationContext().getBean("checkCancelAction");
-//
-//		final DgCommonQuery dgCommonQuery = new DgCommonQuery();
-//		List list = checkCancelAction.findCustomsDeclaration(new Request(
-//				CommonVars.getCurrUser(), true), cancelHead, isOwner,cancelHead.getBeginDate(),cancelHead.getEndDate());
-//		List cancelCustomsDeclaras = new Vector();
-//		if (list != null && !list.isEmpty()) {
-//			for (int i = 0; i < list.size(); i++) {
-//				CancelCustomsDeclara cancelCustomsDeclara = null;
-//				if (isOwner) {
-//					cancelCustomsDeclara = new CancelOwnerCustomsDeclara();
-//				} else {
-//					cancelCustomsDeclara = new CancelCusCustomsDeclara();
-//				}
-//				cancelCustomsDeclara.setCustomNo(((CustomsDeclaration) list
-//						.get(i)).getCustomsDeclarationCode());
-//				cancelCustomsDeclara.setCustom(((CustomsDeclaration) list
-//						.get(i)).getDeclarationCustoms());
-//				cancelCustomsDeclara.setTradeMode(((CustomsDeclaration) list
-//						.get(i)).getTradeMode());
-//				cancelCustomsDeclara.setDeclareDate(((CustomsDeclaration) list
-//						.get(i)).getDeclarationDate());
-//				cancelCustomsDeclara
-//						.setInOutportDate(((CustomsDeclaration) list.get(i))
-//								.getImpExpDate());
-//				cancelCustomsDeclara.setNote(((CustomsDeclaration) list.get(i))
-//						.getMemos());
-//				cancelCustomsDeclara
-//						.setInOutportType(((CustomsDeclaration) list.get(i))
-//								.getImpExpType().intValue());
-//
-//				if (((CustomsDeclaration) list.get(i)).getImpExpFlag() != null
-//						&& ((CustomsDeclaration) list.get(i)).getImpExpFlag()
-//								.equals(ImpExpFlag.IMPORT)) {
-//					cancelCustomsDeclara.setInOutportFlat("I");
-//
-//				} else if (((CustomsDeclaration) list.get(i)).getImpExpFlag() != null
-//						&& ((CustomsDeclaration) list.get(i)).getImpExpFlag()
-//								.equals(ImpExpFlag.EXPORT)) {
-//					cancelCustomsDeclara.setInOutportFlat("E");
-//				} else if (((CustomsDeclaration) list.get(i)).getImpExpType() != null
-//						&& EncCommon
-//								.isImport(((CustomsDeclaration) list.get(i))
-//										.getImpExpType().intValue())
-//						&& ((CustomsDeclaration) list.get(i)).getImpExpFlag()
-//								.equals(ImpExpFlag.SPECIAL)) {
-//					cancelCustomsDeclara.setInOutportFlat("I");
-//				} else if (((CustomsDeclaration) list.get(i)).getImpExpType() != null
-//						&& !EncCommon.isImport(((CustomsDeclaration) list
-//								.get(i)).getImpExpType().intValue())
-//						&& ((CustomsDeclaration) list.get(i)).getImpExpFlag()
-//								.equals(ImpExpFlag.SPECIAL)) {
-//					cancelCustomsDeclara.setInOutportFlat("E");
-//				}
-//				cancelCustomsDeclaras.add(cancelCustomsDeclara);
-//			}
-//		}
-//		dgCommonQuery.setDataSource(cancelCustomsDeclaras);
-//		List tableColumns = new Vector();
-//		tableColumns.add(new JTableListColumn("报关单号", "customNo", 100));
-//		tableColumns.add(new JTableListColumn("进出口类型", "inOutportFlat", 100));
-//		tableColumns.add(new JTableListColumn("报关地", "custom.name", 80));
-//		tableColumns.add(new JTableListColumn("申报日期", "declareDate", 100));
-//		tableColumns.add(new JTableListColumn("进出口日期", "inOutportDate", 100));
-//		tableColumns.add(new JTableListColumn("贸易方式", "tradeMode.name", 100));
-//		DgCommonQuery.setTableColumns(tableColumns);
-//		DgCommonQuery.setSingleResult(single);
-//		/*
-//		 * dgCommonQuery.addWindowListener(new java.awt.event.WindowAdapter() {
-//		 * public void windowOpened(java.awt.event.WindowEvent e) { JTable table
-//		 * = dgCommonQuery.getJTable();
-//		 * table.getColumnModel().getColumn(2).setCellRenderer( new
-//		 * DefaultTableCellRenderer() { public Component
-//		 * getTableCellRendererComponent( JTable table, Object value, boolean
-//		 * isSelected, boolean hasFocus, int row, int column) {
-//		 * super.getTableCellRendererComponent(table, value, isSelected,
-//		 * hasFocus, row, column); String str = ""; if (value != null) { String
-//		 * tempStr = value.toString(); if
-//		 * (String.valueOf(value).trim().equals("")) { str = ""; } if
-//		 * (value.equals(String.valueOf(ImpExpFlag.IMPORT))) { str = "I"; } else
-//		 * if (value.equals(String.valueOf(ImpExpFlag.EXPORT))) { str = "E"; } }
-//		 * this.setText(str); return this; } }); } });
-//		 */
-//		dgCommonQuery.setVisible(true);
-//		if (dgCommonQuery.isOk()) {
-//			if (single) {
-//				return dgCommonQuery.getReturnValue();
-//			} else {
-//				return dgCommonQuery.getReturnList();
-//			}
-//		}
-//		return null;
+		// CheckCancelAction checkCancelAction = (CheckCancelAction) CommonVars
+		// .getApplicationContext().getBean("checkCancelAction");
+		//
+		// final DgCommonQuery dgCommonQuery = new DgCommonQuery();
+		// List list = checkCancelAction.findCustomsDeclaration(new Request(
+		// CommonVars.getCurrUser(), true), cancelHead,
+		// isOwner,cancelHead.getBeginDate(),cancelHead.getEndDate());
+		// List cancelCustomsDeclaras = new Vector();
+		// if (list != null && !list.isEmpty()) {
+		// for (int i = 0; i < list.size(); i++) {
+		// CancelCustomsDeclara cancelCustomsDeclara = null;
+		// if (isOwner) {
+		// cancelCustomsDeclara = new CancelOwnerCustomsDeclara();
+		// } else {
+		// cancelCustomsDeclara = new CancelCusCustomsDeclara();
+		// }
+		// cancelCustomsDeclara.setCustomNo(((CustomsDeclaration) list
+		// .get(i)).getCustomsDeclarationCode());
+		// cancelCustomsDeclara.setCustom(((CustomsDeclaration) list
+		// .get(i)).getDeclarationCustoms());
+		// cancelCustomsDeclara.setTradeMode(((CustomsDeclaration) list
+		// .get(i)).getTradeMode());
+		// cancelCustomsDeclara.setDeclareDate(((CustomsDeclaration) list
+		// .get(i)).getDeclarationDate());
+		// cancelCustomsDeclara
+		// .setInOutportDate(((CustomsDeclaration) list.get(i))
+		// .getImpExpDate());
+		// cancelCustomsDeclara.setNote(((CustomsDeclaration) list.get(i))
+		// .getMemos());
+		// cancelCustomsDeclara
+		// .setInOutportType(((CustomsDeclaration) list.get(i))
+		// .getImpExpType().intValue());
+		//
+		// if (((CustomsDeclaration) list.get(i)).getImpExpFlag() != null
+		// && ((CustomsDeclaration) list.get(i)).getImpExpFlag()
+		// .equals(ImpExpFlag.IMPORT)) {
+		// cancelCustomsDeclara.setInOutportFlat("I");
+		//
+		// } else if (((CustomsDeclaration) list.get(i)).getImpExpFlag() != null
+		// && ((CustomsDeclaration) list.get(i)).getImpExpFlag()
+		// .equals(ImpExpFlag.EXPORT)) {
+		// cancelCustomsDeclara.setInOutportFlat("E");
+		// } else if (((CustomsDeclaration) list.get(i)).getImpExpType() != null
+		// && EncCommon
+		// .isImport(((CustomsDeclaration) list.get(i))
+		// .getImpExpType().intValue())
+		// && ((CustomsDeclaration) list.get(i)).getImpExpFlag()
+		// .equals(ImpExpFlag.SPECIAL)) {
+		// cancelCustomsDeclara.setInOutportFlat("I");
+		// } else if (((CustomsDeclaration) list.get(i)).getImpExpType() != null
+		// && !EncCommon.isImport(((CustomsDeclaration) list
+		// .get(i)).getImpExpType().intValue())
+		// && ((CustomsDeclaration) list.get(i)).getImpExpFlag()
+		// .equals(ImpExpFlag.SPECIAL)) {
+		// cancelCustomsDeclara.setInOutportFlat("E");
+		// }
+		// cancelCustomsDeclaras.add(cancelCustomsDeclara);
+		// }
+		// }
+		// dgCommonQuery.setDataSource(cancelCustomsDeclaras);
+		// List tableColumns = new Vector();
+		// tableColumns.add(new JTableListColumn("报关单号", "customNo", 100));
+		// tableColumns.add(new JTableListColumn("进出口类型", "inOutportFlat",
+		// 100));
+		// tableColumns.add(new JTableListColumn("报关地", "custom.name", 80));
+		// tableColumns.add(new JTableListColumn("申报日期", "declareDate", 100));
+		// tableColumns.add(new JTableListColumn("进出口日期", "inOutportDate",
+		// 100));
+		// tableColumns.add(new JTableListColumn("贸易方式", "tradeMode.name",
+		// 100));
+		// DgCommonQuery.setTableColumns(tableColumns);
+		// DgCommonQuery.setSingleResult(single);
+		// /*
+		// * dgCommonQuery.addWindowListener(new java.awt.event.WindowAdapter()
+		// {
+		// * public void windowOpened(java.awt.event.WindowEvent e) { JTable
+		// table
+		// * = dgCommonQuery.getJTable();
+		// * table.getColumnModel().getColumn(2).setCellRenderer( new
+		// * DefaultTableCellRenderer() { public Component
+		// * getTableCellRendererComponent( JTable table, Object value, boolean
+		// * isSelected, boolean hasFocus, int row, int column) {
+		// * super.getTableCellRendererComponent(table, value, isSelected,
+		// * hasFocus, row, column); String str = ""; if (value != null) {
+		// String
+		// * tempStr = value.toString(); if
+		// * (String.valueOf(value).trim().equals("")) { str = ""; } if
+		// * (value.equals(String.valueOf(ImpExpFlag.IMPORT))) { str = "I"; }
+		// else
+		// * if (value.equals(String.valueOf(ImpExpFlag.EXPORT))) { str = "E"; }
+		// }
+		// * this.setText(str); return this; } }); } });
+		// */
+		// dgCommonQuery.setVisible(true);
+		// if (dgCommonQuery.isOk()) {
+		// if (single) {
+		// return dgCommonQuery.getReturnValue();
+		// } else {
+		// return dgCommonQuery.getReturnList();
+		// }
+		// }
+		// return null;
 	}
 
 	/**
@@ -2542,10 +2592,10 @@ public class CommonQuery {
 		dgCommonQuery.addWindowListener(new java.awt.event.WindowAdapter() {
 			public void windowOpened(java.awt.event.WindowEvent e) {
 				JTable table = dgCommonQuery.getJTable();
-				table.getColumnModel().getColumn(1).setCellRenderer(
-						new checkBoxRenderer());
-				table.getColumnModel().getColumn(9).setCellRenderer(
-						new DefaultTableCellRenderer() {
+				table.getColumnModel().getColumn(1)
+						.setCellRenderer(new checkBoxRenderer());
+				table.getColumnModel().getColumn(9)
+						.setCellRenderer(new DefaultTableCellRenderer() {
 							public Component getTableCellRendererComponent(
 									JTable table, Object value,
 									boolean isSelected, boolean hasFocus,
@@ -2586,13 +2636,11 @@ public class CommonQuery {
 			String contractNo, String emsType, boolean isMaterial) {
 		List list = new Vector();
 		list.add(new JTableListColumn("商品编码", "complex.code", 80));
-		if(isMaterial) {
-			list
-			.add(new JTableListColumn("料件序号", "emsSerialNo", 60,
+		if (isMaterial) {
+			list.add(new JTableListColumn("料件序号", "emsSerialNo", 60,
 					Integer.class));
 		} else {
-			list
-			.add(new JTableListColumn("成品序号", "emsSerialNo", 60,
+			list.add(new JTableListColumn("成品序号", "emsSerialNo", 60,
 					Integer.class));
 		}
 		list.add(new JTableListColumn("商品名称", "name", 200));
@@ -2629,9 +2677,7 @@ public class CommonQuery {
 	public List getBcusBatchUpdateComplex(String emsType, boolean isMaterial) {
 		List list = new Vector();
 		list.add(new JTableListColumn("商品编码", "complex.code", 80));
-		list
-				.add(new JTableListColumn("帐册序号", "emsSerialNo", 60,
-						Integer.class));
+		list.add(new JTableListColumn("帐册序号", "emsSerialNo", 60, Integer.class));
 		list.add(new JTableListColumn("商品名称", "name", 200));
 		list.add(new JTableListColumn("法定单位", "legalUnit.name", 70));
 		list.add(new JTableListColumn("法定单位二", "legalUnit2.name", 70));
@@ -2639,8 +2685,9 @@ public class CommonQuery {
 		List lsDataSource = new ArrayList();
 		EncAction encAction = (EncAction) CommonVars.getApplicationContext()
 				.getBean("encAction");
-		lsDataSource = encAction.getBatchUpdateComplex(new Request(CommonVars
-				.getCurrUser(), true), emsType, isMaterial);
+		lsDataSource = encAction.getBatchUpdateComplex(
+				new Request(CommonVars.getCurrUser(), true), emsType,
+				isMaterial);
 		final DgCommonQuery dgCommonQuery = new DgCommonQuery();
 		dgCommonQuery.setDataSource(lsDataSource);
 		dgCommonQuery.setLike(false);// 默认按精确查找
@@ -2663,8 +2710,9 @@ public class CommonQuery {
 		ManualDeclareAction manualDecleareAction = (ManualDeclareAction) CommonVars
 				.getApplicationContext().getBean("manualdeclearAction");
 		String isQuery = null;
-		isQuery = manualDecleareAction.getBpara(new Request(CommonVars
-				.getCurrUser()), BcusParameter.BGD_ISQUERY);
+		isQuery = manualDecleareAction.getBpara(
+				new Request(CommonVars.getCurrUser()),
+				BcusParameter.BGD_ISQUERY);
 		if (isQuery != null && "1".equals(isQuery)) {
 			return getTempCustomsDeclarationCommInfoByPage(isMaterial,
 					customsDeclaration);
@@ -2677,9 +2725,7 @@ public class CommonQuery {
 	public List getTempCustomsDeclarationCommInfoNoPage(boolean isMaterial,
 			BaseCustomsDeclaration customsDeclaration) {
 		List list = new Vector();
-		list
-				.add(new JTableListColumn("帐册序号", "emsSerialNo", 60,
-						Integer.class));
+		list.add(new JTableListColumn("帐册序号", "emsSerialNo", 60, Integer.class));
 		if (customsDeclaration instanceof CustomsDeclaration
 				&& !EncCommon.isMaterial(customsDeclaration.getImpExpType())) {
 			list.add(new JTableListColumn("版本号", "version", 80));
@@ -2714,8 +2760,9 @@ public class CommonQuery {
 			DzscContractExeAction dzscContractExeAction = (DzscContractExeAction) CommonVars
 					.getApplicationContext().getBean("dzscContractExeAction");
 			lsDataSource = dzscContractExeAction
-					.getTempCustomsDeclarationCommInfo(new Request(CommonVars
-							.getCurrUser(), true), isMaterial,
+					.getTempCustomsDeclarationCommInfo(
+							new Request(CommonVars.getCurrUser(), true),
+							isMaterial,
 							(DzscCustomsDeclaration) customsDeclaration);
 		}
 		final DgCommonQuery dgCommonQuery = new DgCommonQuery();
@@ -2739,8 +2786,7 @@ public class CommonQuery {
 			final boolean isMaterial,
 			final BaseCustomsDeclaration customsDeclaration) {
 		List list = new Vector();
-		list.add(new JTableListColumn("帐册序号", "emsSerialNo", 60,
-						Integer.class));
+		list.add(new JTableListColumn("帐册序号", "emsSerialNo", 60, Integer.class));
 		if (customsDeclaration instanceof CustomsDeclaration
 				&& !EncCommon.isMaterial(customsDeclaration.getImpExpType())) {
 			list.add(new JTableListColumn("版本号", "version", 80));
@@ -2764,7 +2810,7 @@ public class CommonQuery {
 				public List getDataSource(String sfield, Object values) {
 					//
 					// 查询的方法
-					//			
+					//
 					EncAction encAction = (EncAction) CommonVars
 							.getApplicationContext().getBean("encAction");
 					List list = encAction.getTempCustomsDeclarationCommInfo(
@@ -2803,8 +2849,9 @@ public class CommonQuery {
 			DzscContractExeAction dzscContractExeAction = (DzscContractExeAction) CommonVars
 					.getApplicationContext().getBean("dzscContractExeAction");
 			lsDataSource = dzscContractExeAction
-					.getTempCustomsDeclarationCommInfo(new Request(CommonVars
-							.getCurrUser(), true), isMaterial,
+					.getTempCustomsDeclarationCommInfo(
+							new Request(CommonVars.getCurrUser(), true),
+							isMaterial,
 							(DzscCustomsDeclaration) customsDeclaration);
 			final DgCommonQuery dgCommonQuery = new DgCommonQuery();
 			dgCommonQuery.setDataSource(lsDataSource);
@@ -2850,17 +2897,13 @@ public class CommonQuery {
 		list.add(new JTableListColumn("工厂料号", "materiel.ptNo", 80));
 		list.add(new JTableListColumn("归并前品名", "materiel.ptName", 80));
 		list.add(new JTableListColumn("归并前规格", "materiel.ptSpec", 80));
-		list
-				.add(new JTableListColumn("归并前法定单位", "hsBeforeLegalUnit.name",
-						100));
+		list.add(new JTableListColumn("归并前法定单位", "hsBeforeLegalUnit.name", 100));
 		list.add(new JTableListColumn("归并前企业单位", "hsBeforeEnterpriseUnit.name",
 				100));
 		list.add(new JTableListColumn("十位备案序号", "hsAfterTenMemoNo", 80));
 		list.add(new JTableListColumn("十位商品名称", "hsAfterMaterielTenName", 80));
 		list.add(new JTableListColumn("十位商品编码", "hsAfterComplex.code", 80));
-		list
-				.add(new JTableListColumn("十位商品规格型号", "hsAfterMaterielTenSpec",
-						100));
+		list.add(new JTableListColumn("十位商品规格型号", "hsAfterMaterielTenSpec", 100));
 		list.add(new JTableListColumn("四位备案序号", "hsFourNo", 80));
 		list.add(new JTableListColumn("四位商品名称", "hsFourMaterielName", 100));
 		list.add(new JTableListColumn("四位商品编码", "hsFourCode", 80));
@@ -3135,8 +3178,8 @@ public class CommonQuery {
 		dgCommonQuery.addWindowListener(new java.awt.event.WindowAdapter() {
 			public void windowOpened(java.awt.event.WindowEvent e) {
 				JTable table = dgCommonQuery.getJTable();
-				table.getColumnModel().getColumn(2).setCellRenderer(
-						new checkBoxRenderer());
+				table.getColumnModel().getColumn(2)
+						.setCellRenderer(new checkBoxRenderer());
 			}
 		});
 
@@ -3231,9 +3274,7 @@ public class CommonQuery {
 	 */
 	public List getBeCommissionedLotCommodity(List dataSource) {
 		List list = new Vector();
-		list
-				.add(new JTableListColumn("来源单号", "beCommissionedLot.billCode",
-						60));
+		list.add(new JTableListColumn("来源单号", "beCommissionedLot.billCode", 60));
 		list.add(new JTableListColumn("父料号", "parentCommCode", 80));
 		list.add(new JTableListColumn("料号", "commCode", 60));
 		list.add(new JTableListColumn("物料名称", "commName", 50));
@@ -3279,9 +3320,7 @@ public class CommonQuery {
 	 */
 	public List getBeCommissionedLotCommodityInfo(List dataSource) {
 		List list = new Vector();
-		list
-				.add(new JTableListColumn("来源单号", "beCommissionedLot.billCode",
-						60));
+		list.add(new JTableListColumn("来源单号", "beCommissionedLot.billCode", 60));
 		list.add(new JTableListColumn("货号", "commCode", 80));
 		list.add(new JTableListColumn("货物名字", "commName", 60));
 		list.add(new JTableListColumn("单价", "unitPrice", 80));
@@ -3379,9 +3418,7 @@ public class CommonQuery {
 		List list = new Vector();
 		list.add(new JTableListColumn("十位备案序号", "hsAfterTenMemoNo", 100));
 		list.add(new JTableListColumn("10位商品编码", "hsAfterComplex.code", 80));
-		list
-				.add(new JTableListColumn("归并后商品名称", "hsAfterMaterielTenName",
-						100));
+		list.add(new JTableListColumn("归并后商品名称", "hsAfterMaterielTenName", 100));
 		list.add(new JTableListColumn("规格,型号", "hsAfterMaterielTenSpec", 100));
 		list.add(new JTableListColumn("备案单位", "hsAfterMemoUnit.name", 50));
 		list.add(new JTableListColumn("第一法定单位", "hsAfterLegalUnit.name", 50));
@@ -3431,7 +3468,7 @@ public class CommonQuery {
 					Object value, boolean isLike) {
 				//
 				// 分页查询的方法
-				//			
+				//
 				CommonBaseCodeAction commonBaseCodeAction = (CommonBaseCodeAction) CommonVars
 						.getApplicationContext()
 						.getBean("commonBaseCodeAction");
@@ -3561,7 +3598,8 @@ public class CommonQuery {
 			emsH2kImg.setCurr(emsEdiTrHead.getCurr());
 			emsH2kImg.setMaxApprSpace(Double.valueOf(0));
 			emsH2kImg.setWeigthUnitGene((Double) (obj[7]));
-			emsH2kImg.setIsMainImg(obj[8]==null?false:Boolean.parseBoolean(obj[8].toString()));
+			emsH2kImg.setIsMainImg(obj[8] == null ? false : Boolean
+					.parseBoolean(obj[8].toString()));
 			emsH2kImg.setLevyMode(other == null ? null : other.getLevyMode());
 			if (map2.get((Integer) (obj[0])) == null) {
 				emsEdiMergers.add(emsH2kImg);
@@ -3786,10 +3824,10 @@ public class CommonQuery {
 		dgCommonQuery.addWindowListener(new java.awt.event.WindowAdapter() {
 			public void windowOpened(java.awt.event.WindowEvent e) {
 				JTable table = dgCommonQuery.getJTable();
-				table.getColumnModel().getColumn(18).setCellRenderer(
-						new TableCheckBoxRender());
-				table.getColumnModel().getColumn(16).setCellRenderer(
-						new DefaultTableCellRenderer() {
+				table.getColumnModel().getColumn(18)
+						.setCellRenderer(new TableCheckBoxRender());
+				table.getColumnModel().getColumn(16)
+						.setCellRenderer(new DefaultTableCellRenderer() {
 							public Component getTableCellRendererComponent(
 									JTable table, Object value,
 									boolean isSelected, boolean hasFocus,
@@ -3848,8 +3886,8 @@ public class CommonQuery {
 		dgCommonQuery.addWindowListener(new java.awt.event.WindowAdapter() {
 			public void windowOpened(java.awt.event.WindowEvent e) {
 				JTable table = dgCommonQuery.getJTable();
-				table.getColumnModel().getColumn(1).setCellRenderer(
-						new DefaultTableCellRenderer() {
+				table.getColumnModel().getColumn(1)
+						.setCellRenderer(new DefaultTableCellRenderer() {
 							public Component getTableCellRendererComponent(
 									JTable table, Object value,
 									boolean isSelected, boolean hasFocus,
@@ -4000,8 +4038,8 @@ public class CommonQuery {
 		List lsDataSource = new ArrayList();
 		DzscAction dzscAction = (DzscAction) CommonVars.getApplicationContext()
 				.getBean("dzscAction");
-		lsDataSource = dzscAction.getTempContractForBid(new Request(CommonVars
-				.getCurrUser()), isMaterial, emsNo);
+		lsDataSource = dzscAction.getTempContractForBid(
+				new Request(CommonVars.getCurrUser()), isMaterial, emsNo);
 		final DgCommonQuery dgCommonQuery = new DgCommonQuery();
 		dgCommonQuery.setDataSource(lsDataSource);
 		DgCommonQuery.setSingleResult(false);
@@ -4159,50 +4197,64 @@ public class CommonQuery {
 	 * 获得授权公司
 	 */
 	public Company getManufacturer() {
+
 		List<JTableListColumn> list = new Vector<JTableListColumn>();
+
 		list.add(new JTableListColumn("单位编码", "code", 100));
+
 		list.add(new JTableListColumn("单位名称", "name", 200));
+
 		final DgCommonQuery dgCommonQuery = new DgCommonQuery();
+
 		DgCommonQuery.setTableColumns(list);
+
 		try {
+
 			SystemAction service = (SystemAction) CommonVars
 					.getApplicationContext().getBean("systemAction");
+
 			dgCommonQuery.setDataSource(service.findCompanies());
+
 		} catch (UndeclaredThrowableException e) {
 			e.printStackTrace();
-			// System.out.println(e.getCause().getMessage());
-			// TODO: handle exception
+
 		}
 
 		dgCommonQuery.setTitle("生产厂家选择");
+
 		DgCommonQuery.setSingleResult(true);
+
 		dgCommonQuery.setVisible(true);
+
 		if (dgCommonQuery.isOk()) {
 			return (Company) dgCommonQuery.getReturnValue();
 		}
 		return null;
 	}
+
 	/**
-	 *  取得物料与报关对应表中料件
-	 * @param isMaterial 是否料件
+	 * 取得物料与报关对应表中料件
+	 * 
+	 * @param isMaterial
+	 *            是否料件
 	 * @return
 	 */
 	public List getTempMaterielByTypeBcs(boolean isMaterial) {
 		List list = new Vector();
 		list.add(new JTableListColumn("归并序号", "bcsTenInnerMerge.seqNum", 100));
 		list.add(new JTableListColumn("料号", "materiel.ptNo", 100));
-		list.add(new JTableListColumn("商品编码", "materiel.complex.code",100));
-		list.add(new JTableListColumn("商品名称", "materiel.factoryName",200));
-		list.add(new JTableListColumn("型号规格", "materiel.factorySpec",200));
-		list.add(new JTableListColumn("单位", "materiel.calUnit.name",50));
+		list.add(new JTableListColumn("商品编码", "materiel.complex.code", 100));
+		list.add(new JTableListColumn("商品名称", "materiel.factoryName", 200));
+		list.add(new JTableListColumn("型号规格", "materiel.factorySpec", 200));
+		list.add(new JTableListColumn("单位", "materiel.calUnit.name", 50));
 		list.add(new JTableListColumn("单价", "materiel.ptPrice", 50));
-		list.add(new JTableListColumn("净重", "materiel.ptNetWeight",50));
+		list.add(new JTableListColumn("净重", "materiel.ptNetWeight", 50));
 		DgCommonQuery.setTableColumns(list);
 		List lsDataSource = new ArrayList();
 		ContractExeAction contractExeAction = (ContractExeAction) CommonVars
-		.getApplicationContext().getBean("contractExeAction");
-		lsDataSource = contractExeAction.getTempMaterielByTypeBcs(
-				new Request(CommonVars.getCurrUser()), isMaterial);
+				.getApplicationContext().getBean("contractExeAction");
+		lsDataSource = contractExeAction.getTempMaterielByTypeBcs(new Request(
+				CommonVars.getCurrUser()), isMaterial);
 		final DgCommonQuery dgCommonQuery = new DgCommonQuery();
 		dgCommonQuery.setDataSource(lsDataSource);
 		DgCommonQuery.setSingleResult(false);
@@ -4212,5 +4264,5 @@ public class CommonQuery {
 		}
 		return null;
 	}
-	
+
 }

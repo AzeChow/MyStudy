@@ -2424,7 +2424,7 @@ public abstract class FmBaseImportCustomsDeclaration extends JInternalFrameBase 
 	}
 
 	/**
-	 * 导入进口报关单
+	 * 导入进口报关单 直接导入
 	 * 
 	 * @param importFromFile
 	 */
@@ -2434,32 +2434,49 @@ public abstract class FmBaseImportCustomsDeclaration extends JInternalFrameBase 
 			return;
 		}
 		try {
+
 			ImportBGDCondition condition = null;
+
 			DgInputBGDFromQP dg = new DgInputBGDFromQP();
+
 			dg.setBaseEncAction(baseEncAction);
+
 			dg.setProjectType(projectType);
+
 			dg.setImportBGD(true);
+
 			dg.setSpecialDeclaration(false);
+
 			dg.setVisible(true);
 
 			if (dg.isOK()) {
+
 				condition = dg.getCondition();
 			} else {
 				return;
 			}
+
 			Map mapBGD = baseEncAction.loadBGDFromQPDirect(new Request(
 					CommonVars.getCurrUser()), condition);
+
 			initTable(getDataSource());
+
 			setState();
+
 			List lsSuccess = (List) mapBGD.get(0);
+
 			List lsError = (List) mapBGD.get(-1);
+
 			if ((lsSuccess == null || lsSuccess.size() <= 0)
 					&& (lsError == null || lsError.size() <= 0)) {
+
 				JOptionPane.showMessageDialog(
 						FmBaseImportCustomsDeclaration.this, "没有导入任何报关单！",
 						"提示", JOptionPane.INFORMATION_MESSAGE);
 				return;
+
 			} else {
+
 				DgImportedBGDInfo dgImportedBGDInfo = new DgImportedBGDInfo();
 				dgImportedBGDInfo.setLsSuccess(lsSuccess);
 				dgImportedBGDInfo.setLsError(lsError);

@@ -15,7 +15,6 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.util.Assert;
-import org.springframework.util.StringUtils;
 
 import com.bestway.bcus.client.authority.FmLogin;
 import com.bestway.bcus.client.common.CommonVars;
@@ -52,14 +51,6 @@ public class ApplicationLauncher {
 
 	private void launch(String startupContextPath, String[] contextPaths) {
 		logger.info("Launching Application...");
-		try {
-			if (StringUtils.hasText(startupContextPath)) {
-				ApplicationContext startupContext = new ClassPathXmlApplicationContext(
-						startupContextPath);
-			}
-		} catch (RuntimeException e) {
-			logger.warn("Exception occured initializing context.", e);
-		}
 
 		try {
 

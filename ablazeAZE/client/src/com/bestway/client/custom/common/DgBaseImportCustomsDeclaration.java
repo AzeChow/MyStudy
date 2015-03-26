@@ -57,6 +57,8 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.bestway.bcs.client.contractexe.DgMakeBcsCustomsDeclaration;
 import com.bestway.bcs.contractexe.entity.BcsCustomsDeclaration;
 import com.bestway.bcus.client.common.CommonProgress;
@@ -486,6 +488,7 @@ public abstract class DgBaseImportCustomsDeclaration extends JDialogBase {
 		components.add(this.tfAllContainerNum);
 		components.add(this.btnSave);
 		this.setComponentFocusList(components);
+
 	}
 
 	/**
@@ -509,6 +512,7 @@ public abstract class DgBaseImportCustomsDeclaration extends JDialogBase {
 		tfCreateDate.setFocusable(false);
 		tfCreateDate.getJTextField().setFocusable(false);
 		tfCreateDate.getCalendarPanel().setFocusable(false);
+
 	}
 
 	public void setVisible(boolean b) {
@@ -523,10 +527,7 @@ public abstract class DgBaseImportCustomsDeclaration extends JDialogBase {
 			}
 			initUIComponents();
 			this.showPrimalData();
-			this.containers = this.baseEncAction
-					.findContainerByCustomsDeclaration(
-							new Request(CommonVars.getCurrUser()),
-							this.customsDeclaration);
+
 			setState();
 			addListeners();
 			if (commInfoModel == null) {
@@ -1112,15 +1113,22 @@ public abstract class DgBaseImportCustomsDeclaration extends JDialogBase {
 	 * @return
 	 */
 	protected String getContia() {
+
 		String contain = "";
+
 		List list = baseEncAction.findContainerByCustomsDeclaration(
 				new Request(CommonVars.getCurrUser()), customsDeclaration);
+
 		if (list != null && list.size() > 0) {
+
 			for (int i = 0; i < list.size(); i++) {
+
 				String xs = ((BaseCustomsDeclarationContainer) list.get(i))
 						.getContainerCode();
+
 				if (!xs.equals(customsDeclaration.getContainerNum().substring(
 						0, 11))) {
+
 					contain = contain + xs + " ";
 				}
 			}
@@ -1810,6 +1818,7 @@ public abstract class DgBaseImportCustomsDeclaration extends JDialogBase {
 					int addDigit = other.getTransportTool() == null ? 14
 							: (other.getTransportTool() + 1);
 					System.out.println("运输工具额外位数：" + addDigit);
+
 					if (tfConveyance.getText().length() > 0) {
 						String conveyance = tfConveyance.getText().substring(0,
 								1);
@@ -2235,11 +2244,25 @@ public abstract class DgBaseImportCustomsDeclaration extends JDialogBase {
 					dg.setImpExpType(impExpType);
 					dg.setContainerNum(tfContainerNum.getText().trim());
 					dg.setVisible(true);
+
 					if (dg.isOk()) {
+
+						// 回传的备注信息
 						tfMemos.setText(dg.returnMemoValue());
+
+						// 填写备注
 						customsDeclaration.setMemos(tfMemos.getText());
+
+						// 设值随附单证
 						customsDeclaration.setCertificateCode(dg
 								.returnCertificateCodeValue());
+
+						// 随附单证信息
+						String attachedBillCodes = dg.returnAttachedBillCode();
+
+						tfAttachedBill.setText(attachedBillCodes);
+
+						customsDeclaration.setAttachedBill(attachedBillCodes);
 					}
 				}
 			});
@@ -2320,15 +2343,24 @@ public abstract class DgBaseImportCustomsDeclaration extends JDialogBase {
 			btnContainer.addKeyListener(new FocusActionListner(getBtnSave()));
 			btnContainer.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
+
 					DgCustomsDeclarationContainer dg = new DgCustomsDeclarationContainer();
+
 					dg.setBaseCustomsDeclaration(DgBaseImportCustomsDeclaration.this.customsDeclaration);
+
 					dg.setCustomsDeclarationDataState(dataState);
+
 					dg.setContainers(containers);
+
 					dg.setBaseEncAction(baseEncAction);
+
 					dg.setVisible(true);
+
 					containers = dg.getResultContainer();
+
 					tfAllContainerNum.setText(Container
 							.getAllContainerCode(containers));
+
 					tfContainerNum.setText(Container
 							.getAllConvertToContainerCode(containers));
 					//
@@ -2947,11 +2979,27 @@ public abstract class DgBaseImportCustomsDeclaration extends JDialogBase {
 		} else {
 			this.tfManageCompany.setText("");
 		}
-		if (this.customsDeclaration.getContainerNum() != null) {
+
+		if (containers == null) {
+
+			this.containers = this.baseEncAction
+					.findContainerByCustomsDeclaration(
+							new Request(CommonVars.getCurrUser()),
+							this.customsDeclaration);
+
+		}
+
+		// 集装箱号
+		if (StringUtils.isNotBlank(customsDeclaration.getContainerNum())) {
+
 			this.tfContainerNum.setText(this.customsDeclaration
 					.getContainerNum());
+
 		} else {
-			this.tfContainerNum.setText("");
+
+			tfContainerNum.setText(Container
+					.getAllConvertToContainerCode(containers));
+
 		}
 		if (this.customsDeclaration.getContract() != null) {
 			this.tfContract.setText(this.customsDeclaration.getContract());
@@ -3201,13 +3249,20 @@ public abstract class DgBaseImportCustomsDeclaration extends JDialogBase {
 		}
 		cbbUses.setSelectedItem(this.customsDeclaration.getUses());
 		cbbWrapType.setSelectedItem(this.customsDeclaration.getWrapType());
-		if (this.customsDeclaration.getAllContainerNumLong() != null) {
-			this.tfAllContainerNum.setText(this.customsDeclaration
+
+		// 所有集装箱号信息
+		if (StringUtils.isNotBlank(customsDeclaration.getAllContainerNumLong())) {
+
+			tfAllContainerNum.setText(customsDeclaration
 					.getAllContainerNumLong());
+
 		} else {
-			this.tfAllContainerNum.setText("");
+
+			tfAllContainerNum
+					.setText(Container.getAllContainerCode(containers));
+
 		}
-		// this.tfContainerNum.setText(getAllConvertToContainerCode());
+
 		if (this.customsDeclaration.getCustomser() != null) {
 			this.jComboBox.setSelectedItem(this.customsDeclaration
 					.getCustomser().toString());
@@ -3359,10 +3414,10 @@ public abstract class DgBaseImportCustomsDeclaration extends JDialogBase {
 				.setCustomsDeclarationCode(this.tfCustomsDeclarationCode
 						.getText().trim());
 		// 原代码 2014/11/29
-		// if (this.tfVoyageNo.getText() != null) {
-		// this.customsDeclaration.setVoyageNo(this.tfVoyageNo.getText()
-		// .trim());
-		// }
+		if (this.tfVoyageNo.getText() != null) {
+			this.customsDeclaration.setVoyageNo(this.tfVoyageNo.getText()
+					.trim());
+		}
 
 		// SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		// if (this.cbbImpExpDate.getDate() != null) {
@@ -3602,12 +3657,12 @@ public abstract class DgBaseImportCustomsDeclaration extends JDialogBase {
 			isSend = customsDeclaration.getIsSend() == null ? false
 					: customsDeclaration.getIsSend().booleanValue();
 		}
-		btnAdd.setEnabled(dataState == DataState.BROWSE // jTabbedPane.getSelectedIndex()
-				// == 0 && dataState ==
-				// DataState.BROWSE ||
-				&& index == 1 && !isEffective);
-		btnEdit.setEnabled(dataState == DataState.BROWSE && !isEffective
-				&& !isSend);
+		btnAdd.setEnabled(dataState == DataState.BROWSE && index == 1
+				&& !isEffective);
+
+		// 2015-3-23 : 暂时不判断 申报状态 来控制 修改按钮 是否可用 by zcj
+		btnEdit.setEnabled(dataState == DataState.BROWSE && !isEffective);
+
 		jButton.setEnabled(dataState == DataState.BROWSE && !isEffective);
 		jButton1.setEnabled(dataState == DataState.BROWSE && !isEffective);
 		jButton7.setEnabled(dataState == DataState.BROWSE && !isEffective);
@@ -4212,41 +4267,56 @@ public abstract class DgBaseImportCustomsDeclaration extends JDialogBase {
 			btnTransferCustoms
 					.addActionListener(new java.awt.event.ActionListener() {
 						public void actionPerformed(java.awt.event.ActionEvent e) {
+
 							if (tfConveyance.getText().equals("")) {
+
 								JOptionPane.showMessageDialog(null,
 										"运输工具栏目中不能为空!!", "提示",
 										JOptionPane.INFORMATION_MESSAGE);
 								return;
 							}
+
 							if (!tfConveyance.getText().substring(0, 1).trim()
 									.equals("@")) {
+
 								JOptionPane.showMessageDialog(null,
 										"运输工具栏目中第一个字符不是 \"@\" !!", "提示",
 										JOptionPane.INFORMATION_MESSAGE);
 								return;
 							}
+
 							if (cbbTransferMode.getSelectedItem() == null) {// customsDeclaration.getTransferMode()
 								JOptionPane.showMessageDialog(null,
 										"使用'转关附加'时'运输方式'不能为空", "提示",
 										JOptionPane.INFORMATION_MESSAGE);
 								return;
 							}
+
 							DgTransferCustomsConveyance dg = new DgTransferCustomsConveyance();
+
 							dg.setBaseEncAction(baseEncAction);
+
 							dg.setCustomsDeclaration(customsDeclaration);
+
 							// 如果是汽车运输或江海运输
 							if (cbbTransferMode.getSelectedItem() != null) {
 
 								Transf transf = customBaseAction.findTransf();
+
 								if (customsDeclaration
 										.getDomesticTransferMode() != null) {
+
 									dg.setTransf(customsDeclaration
 											.getDomesticTransferMode());
+
 								} else {
+
 									dg.setTransf(transf);// 汽车运输
+
 								}
 
 								Calendar calendar = cbbImpExpDate.getCalendar();
+
 								dg.setImportDate(String.valueOf(calendar
 										.get(Calendar.YEAR))
 										+ "-"
@@ -4255,9 +4325,12 @@ public abstract class DgBaseImportCustomsDeclaration extends JDialogBase {
 										+ "-"
 										+ String.valueOf(calendar
 												.get(Calendar.DAY_OF_MONTH)));
+
 								dg.setNumberPlate(tfBillOfLading.getText());
+
 								dg.setTruckTransfer(true);
 							}
+
 							dg.setVisible(true);
 						}
 					});
@@ -4519,9 +4592,11 @@ public abstract class DgBaseImportCustomsDeclaration extends JDialogBase {
 			}
 		}
 
-		if (checkData() && (!checkindex())) {
+		if (checkData() && (!checkindex()) && checkCustomsTransmitPlus()) {
+
 			JOptionPane.showMessageDialog(DgBaseImportCustomsDeclaration.this,
 					"数据检查成功，没有错误！", "提示", JOptionPane.INFORMATION_MESSAGE);
+
 			customsDeclaration.setIsCheck(true);
 			String containerNum = tfContainerNum.getText().trim();
 			String note = tfMemos.getText().trim();
@@ -4548,15 +4623,7 @@ public abstract class DgBaseImportCustomsDeclaration extends JDialogBase {
 			saveData();
 			showData();
 		}
-		// if (jTabbedPane.getSelectedIndex() == 0) {
-		//
-		//
-		// } else if (jTabbedPane.getSelectedIndex() == 1) {
-		// if (!checkindex()) {
-		// JOptionPane.showMessageDialog(null, "数据检查成功，没有错误！", "提示",
-		// JOptionPane.INFORMATION_MESSAGE);
-		// }
-		// }
+
 	}
 
 	/**
@@ -4567,6 +4634,62 @@ public abstract class DgBaseImportCustomsDeclaration extends JDialogBase {
 	protected String checkCurrentRemainAmount() {
 		String str = "";
 		return str;
+	}
+
+	/**
+	 * 检查报关单转关附加
+	 * 
+	 * @see 如果 有 转关附加 则 检查提运单号 是否 与 境外、境内运输工具名称 一致
+	 * @see 不一致 则提示是否通过保存和通过检查
+	 * @return
+	 */
+	private boolean checkCustomsTransmitPlus() {
+
+		/*
+		 * 判断 是否 带有 转关附加 "@" 开头代表带有 转关附加
+		 */
+		if (StringUtils.isEmpty(tfConveyance.getText())
+				|| !tfConveyance.getText().substring(0, 1).trim().equals("@")) {
+
+			return true;
+		}
+
+		String overseasConveyanceBillOfLading = customsDeclaration
+				.getOverseasConveyanceBillOfLading();
+
+		String overseasConveyanceName = customsDeclaration
+				.getOverseasConveyanceName();
+
+		String domesticConveyanceName = customsDeclaration
+				.getDomesticConveyanceName();
+
+		// 提运单号
+		String billOfLading = customsDeclaration.getBillOfLading();
+
+		// 检查 是否 一致
+		if (StringUtils.equalsIgnoreCase(billOfLading, overseasConveyanceName)
+				&& StringUtils.equalsIgnoreCase(billOfLading,
+						domesticConveyanceName)
+				&& StringUtils.equalsIgnoreCase(billOfLading,
+						overseasConveyanceBillOfLading)) {
+
+			return true;
+
+		} else {
+
+			if (JOptionPane.showConfirmDialog(
+					DgBaseImportCustomsDeclaration.this,
+					"系统提示:提运单号与转关附加中境外或境内运输工具不一致,确定继续保存和通过检查吗?", "提示",
+					JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
+
+				return true;
+
+			}
+
+			return false;
+
+		}
+
 	}
 
 	/**
@@ -6812,4 +6935,5 @@ public abstract class DgBaseImportCustomsDeclaration extends JDialogBase {
 		}
 		return tfVoyageNo;
 	}
+
 }

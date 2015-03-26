@@ -47,7 +47,6 @@ import com.bestway.bcus.manualdeclare.entity.RestirictCommodity;
 import com.bestway.bcus.system.entity.CompanyOther;
 import com.bestway.bcus.system.entity.CustomsDeclarationSet;
 import com.bestway.client.util.JTableListModel;
-import com.bestway.common.CommonUtils;
 import com.bestway.common.MaterielType;
 import com.bestway.common.Request;
 import com.bestway.common.constant.ImpExpType;
@@ -170,7 +169,7 @@ public class DgBaseImportCustomsDeclarationCommInfo extends JDialogBase {
 	private JComboBox cbbWrapType = null;
 
 	CustomsDeclarationSet other1;
-	
+
 	private DgBaseImportCustomsDeclaration dgBase = null;
 
 	/**
@@ -222,9 +221,11 @@ public class DgBaseImportCustomsDeclarationCommInfo extends JDialogBase {
 		impCustomsAuthorityAction = (ImpCustomsAuthorityAction) CommonVars
 				.getApplicationContext().getBean("impCustomsAuthorityAction");
 		bCSImpCustomsAuthorityAction = (BCSImpCustomsAuthorityAction) CommonVars
-			.getApplicationContext().getBean("bCSImpCustomsAuthorityAction");
+				.getApplicationContext()
+				.getBean("bCSImpCustomsAuthorityAction");
 		dZSCImpCustomsAuthorityAction = (DZSCImpCustomsAuthorityAction) CommonVars
-			.getApplicationContext().getBean("dZSCImpCustomsAuthorityAction");
+				.getApplicationContext().getBean(
+						"dZSCImpCustomsAuthorityAction");
 		materialManageAction = (MaterialManageAction) CommonVars
 				.getApplicationContext().getBean("materialManageAction");
 		customBaseAction = (CustomBaseAction) CommonVars
@@ -257,8 +258,7 @@ public class DgBaseImportCustomsDeclarationCommInfo extends JDialogBase {
 	 * @return void
 	 */
 	protected void initialize() {
-		this
-				.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+		this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		this.setEffective(false);
 		this.setTitle("进口报关单商品信息编辑");
 		this.setContentPane(getJContentPane());
@@ -282,14 +282,12 @@ public class DgBaseImportCustomsDeclarationCommInfo extends JDialogBase {
 			lbSeqNum = new JLabel();
 			lbSeqNum.setBounds(new java.awt.Rectangle(281, 9, 81, 21));
 			lbSeqNum.setForeground(java.awt.Color.red);
-			lbSeqNum
-					.setFont(new java.awt.Font("Dialog", java.awt.Font.BOLD, 14));
+			lbSeqNum.setFont(new java.awt.Font("Dialog", java.awt.Font.BOLD, 14));
 			lbSeqNum.setText("");
 			lbSeqNo = new JLabel();
 			lbSeqNo.setBounds(new java.awt.Rectangle(226, 9, 49, 21));
 			lbSeqNo.setForeground(java.awt.Color.red);
-			lbSeqNo
-					.setFont(new java.awt.Font("Dialog", java.awt.Font.BOLD, 14));
+			lbSeqNo.setFont(new java.awt.Font("Dialog", java.awt.Font.BOLD, 14));
 			lbSeqNo.setText("序号：");
 			lbCurrItemNum = new JLabel();
 			lbCurrItemNo = new JLabel();
@@ -484,8 +482,7 @@ public class DgBaseImportCustomsDeclarationCommInfo extends JDialogBase {
 			tfLegalAmount.setValue(customsDeclarationCommInfo
 					.getLegalUnitGene() == null ? 0.0
 					: customsDeclarationCommInfo.getLegalUnitGene()
-							.doubleValue()
-							* Double.valueOf(amount));
+							.doubleValue() * Double.valueOf(amount));
 		}
 		if (unit.equals(secondUnit)) {
 			tfSecondLegalAmount.setValue(Double.valueOf(amount));
@@ -498,8 +495,7 @@ public class DgBaseImportCustomsDeclarationCommInfo extends JDialogBase {
 			tfSecondLegalAmount.setValue(customsDeclarationCommInfo
 					.getLegalUnit2Gene() == null ? 0.0
 					: customsDeclarationCommInfo.getLegalUnit2Gene()
-							.doubleValue()
-							* Double.valueOf(amount));
+							.doubleValue() * Double.valueOf(amount));
 		}
 	}
 
@@ -556,8 +552,10 @@ public class DgBaseImportCustomsDeclarationCommInfo extends JDialogBase {
 			JOptionPane.showMessageDialog(this, "版本号应该为数字型", "提示", 0);
 			return true;
 		}
-		List list = materialManageAction.findVersionNo(new Request(CommonVars
-				.getCurrUser()),Integer.valueOf(lbSeqNum.getText()),Integer.valueOf(tfVersion.getText()));
+		List list = materialManageAction.findVersionNo(
+				new Request(CommonVars.getCurrUser()),
+				Integer.valueOf(lbSeqNum.getText()),
+				Integer.valueOf(tfVersion.getText()));
 		if (list != null && list.size() > 0 && list.get(0) != null) {
 
 		} else {
@@ -594,18 +592,20 @@ public class DgBaseImportCustomsDeclarationCommInfo extends JDialogBase {
 		if (commodity != null) {
 			// 得到报关单中的数量
 			Double DeclarationCommInfo = materialManageAction
-					.findCustomsDeclarationCommInfo(new Request(CommonVars
-							.getCurrUser()), isMaterial, lbSeqNum.getText()
-							.toString(), customsDeclarationCommInfo);
+					.findCustomsDeclarationCommInfo(
+							new Request(CommonVars.getCurrUser()), isMaterial,
+							lbSeqNum.getText().toString(),
+							customsDeclarationCommInfo);
 			Amount = DeclarationCommInfo
 					+ Double.valueOf(tfCommAmount.getText().toString());
 			if (commodity.getAmount() != null
 					&& !commodity.getAmount().equals("")) {
 				aamount = Double.parseDouble(commodity.getAmount().toString());
 				if (Amount > aamount) {
-					JOptionPane.showMessageDialog(this, "备案号："
-							+ lbSeqNum.getText() + "已进数量[" + Amount
-							+ "] 超出了限制类商品中备的数量[" + aamount + "]!\n", "提示", 0);
+					JOptionPane.showMessageDialog(this,
+							"备案号：" + lbSeqNum.getText() + "已进数量[" + Amount
+									+ "] 超出了限制类商品中备的数量[" + aamount + "]!\n",
+							"提示", 0);
 					tfCommAmount.requestFocus();
 					return true;
 				}
@@ -667,14 +667,15 @@ public class DgBaseImportCustomsDeclarationCommInfo extends JDialogBase {
 			btnSave.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					if (projectType == ProjectType.BCUS) {
-						impCustomsAuthorityAction.saveCommodity(new Request(CommonVars
-								.getCurrUser()));
+						impCustomsAuthorityAction.saveCommodity(new Request(
+								CommonVars.getCurrUser()));
 					} else if (projectType == ProjectType.DZSC) {
-						dZSCImpCustomsAuthorityAction.saveCommodity(new Request(CommonVars
-								.getCurrUser()));
+						dZSCImpCustomsAuthorityAction
+								.saveCommodity(new Request(CommonVars
+										.getCurrUser()));
 					} else if (projectType == ProjectType.BCS) {
-						bCSImpCustomsAuthorityAction.saveCommodity(new Request(CommonVars
-								.getCurrUser()));
+						bCSImpCustomsAuthorityAction.saveCommodity(new Request(
+								CommonVars.getCurrUser()));
 					}
 					if (checkNull()) {
 						return;
@@ -748,13 +749,13 @@ public class DgBaseImportCustomsDeclarationCommInfo extends JDialogBase {
 	 * @return
 	 */
 	public boolean checkNull() {
-		
-//		if (this.tfDeclareSpec.getText().trim().equals("")) {
-//			JOptionPane.showMessageDialog(null, "规范申报规格不能为空!", "提示!!",
-//					JOptionPane.INFORMATION_MESSAGE);
-//			return true;
-//		}
-		
+
+		// if (this.tfDeclareSpec.getText().trim().equals("")) {
+		// JOptionPane.showMessageDialog(null, "规范申报规格不能为空!", "提示!!",
+		// JOptionPane.INFORMATION_MESSAGE);
+		// return true;
+		// }
+
 		if (cbbProduceCountry.getSelectedItem() == null) {
 			JOptionPane.showMessageDialog(this, "最终目的国不能为空！", "提示！", 0);
 			cbbProduceCountry.requestFocus();
@@ -1107,22 +1108,22 @@ public class DgBaseImportCustomsDeclarationCommInfo extends JDialogBase {
 					this.tfCommAmount, 4);
 		}
 		// 第一法定数量
-//		if (other != null) {
-//			CustomFormattedTextFieldUtils.setFormatterFactory(
-//					this.tfLegalAmount, other.getCustomAmountNum());
-//		} 
-//		else {
-			CustomFormattedTextFieldUtils.setFormatterFactory(
-					this.tfLegalAmount, 4);
-//		}
+		// if (other != null) {
+		// CustomFormattedTextFieldUtils.setFormatterFactory(
+		// this.tfLegalAmount, other.getCustomAmountNum());
+		// }
+		// else {
+		CustomFormattedTextFieldUtils
+				.setFormatterFactory(this.tfLegalAmount, 4);
+		// }
 		// 第二法定数量
-//		if (other != null) {
-//			CustomFormattedTextFieldUtils.setFormatterFactory(
-//					this.tfSecondLegalAmount, other.getCustomAmountNum());
-//		} else {
-			CustomFormattedTextFieldUtils.setFormatterFactory(
-					this.tfSecondLegalAmount, 4);
-//		}
+		// if (other != null) {
+		// CustomFormattedTextFieldUtils.setFormatterFactory(
+		// this.tfSecondLegalAmount, other.getCustomAmountNum());
+		// } else {
+		CustomFormattedTextFieldUtils.setFormatterFactory(
+				this.tfSecondLegalAmount, 4);
+		// }
 		// 单价
 		if (other != null) {
 			CustomFormattedTextFieldUtils.setFormatterFactory(
@@ -1163,7 +1164,7 @@ public class DgBaseImportCustomsDeclarationCommInfo extends JDialogBase {
 
 		tfDeclareSpec.setEditable(dataState != DataState.BROWSE
 				&& !this.isEffective);
-		
+
 		// 根据参数设置纸质手册报关单中的单价状态
 		if (projectType == ProjectType.BCS) {
 			if (CommonVars.getIsCanModifyUnitPrice()) {
@@ -1232,21 +1233,22 @@ public class DgBaseImportCustomsDeclarationCommInfo extends JDialogBase {
 	 * 数据显示
 	 */
 	protected void showData() {
-		if(other1 != null && customsDeclarationCommInfo != null) {
+		if (other1 != null && customsDeclarationCommInfo != null) {
 			// 默认用途--取报关单参数设置
-			if(customsDeclarationCommInfo.getUses() == null) {
+			if (customsDeclarationCommInfo.getUses() == null) {
 				customsDeclarationCommInfo.setUses(other1.getUses());
 			}
 			// 减免方式--取报关单参数设置
-			if(customsDeclarationCommInfo.getLevyMode() == null) {
+			if (customsDeclarationCommInfo.getLevyMode() == null) {
 				customsDeclarationCommInfo.setLevyMode(other1.getLevyMode());
 			}
 			// 包装种类--取报关单参数设置
-			if(customsDeclarationCommInfo.getWrapType() == null) {
-				customsDeclarationCommInfo.setWrapType(other1.getCommWrapType());
+			if (customsDeclarationCommInfo.getWrapType() == null) {
+				customsDeclarationCommInfo
+						.setWrapType(other1.getCommWrapType());
 			}
 			// 原产国--取报关单参数设置
-			if(customsDeclarationCommInfo.getCountry() == null) {
+			if (customsDeclarationCommInfo.getCountry() == null) {
 				customsDeclarationCommInfo.setCountry(other1.getCountry());
 			}
 		}
@@ -1264,7 +1266,10 @@ public class DgBaseImportCustomsDeclarationCommInfo extends JDialogBase {
 		if (customsDeclarationCommInfo.getCommName() != null) {
 			this.tfCommName.setText(customsDeclarationCommInfo.getCommName());
 		}
+
+		// 手册里面的规格
 		this.tfCommSpec.setText(customsDeclarationCommInfo.getCommSpec());
+
 		this.tfCommAmount.setValue(customsDeclarationCommInfo.getCommAmount());
 		this.tfCommUnitPrice.setValue(customsDeclarationCommInfo
 				.getCommUnitPrice());
@@ -1325,12 +1330,13 @@ public class DgBaseImportCustomsDeclarationCommInfo extends JDialogBase {
 		this.cbbWrapType.setSelectedItem(customsDeclarationCommInfo
 				.getWrapType());
 		this.tfBoxNo.setText(customsDeclarationCommInfo.getBoxNo());
-//		List isSpecification = baseEncAction.findIsSpecification(new Request(CommonVars.getCurrUser()));
-//		Boolean blIsSpecification = (Boolean) isSpecification.get(0);
-//		// 规范申报规格
-//		if(blIsSpecification.equals(true)){
+		// List isSpecification = baseEncAction.findIsSpecification(new
+		// Request(CommonVars.getCurrUser()));
+		// Boolean blIsSpecification = (Boolean) isSpecification.get(0);
+		// // 规范申报规格
+		// if(blIsSpecification.equals(true)){
 		tfDeclareSpec.setText(customsDeclarationCommInfo.getDeclareSpec());
-//		}
+		// }
 	}
 
 	/**
@@ -1445,12 +1451,12 @@ public class DgBaseImportCustomsDeclarationCommInfo extends JDialogBase {
 				.getSelectedItem());
 
 		customsDeclarationCommInfo.setBoxNo(tfBoxNo.getText());
-		//第一次新增设置创建时间
+		// 第一次新增设置创建时间
 		if (customsDeclarationCommInfo.getCreateDate() == null
 				|| "".equals(customsDeclarationCommInfo.getCreateDate())) {
 			customsDeclarationCommInfo.setCreateDate(new Date());
 		}
-		
+
 		// 规范申报规格
 		customsDeclarationCommInfo.setDeclareSpec(tfDeclareSpec.getText());
 	}
@@ -1558,8 +1564,7 @@ public class DgBaseImportCustomsDeclarationCommInfo extends JDialogBase {
 			}
 			if (projectType == ProjectType.BCUS) {
 				if (customsDeclarationCommInfo != null) {
-					if (customsDeclarationCommInfo
-							.getBaseCustomsDeclaration()
+					if (customsDeclarationCommInfo.getBaseCustomsDeclaration()
 							.getImpExpType() != ImpExpType.BACK_FACTORY_REWORK) {
 						if (checkRerictCommodity()) {
 							return true;
@@ -1569,19 +1574,19 @@ public class DgBaseImportCustomsDeclarationCommInfo extends JDialogBase {
 						// 是退厂返工
 						//
 						if (checkCommodityForbid()) {
-//							tfVersion.setText("");
-//							tfVersion.requestFocus();
+							// tfVersion.setText("");
+							// tfVersion.requestFocus();
 							return true;
 						}
 					}
 				}
 			}
-//			if (checkRerictCommodity()) {
-//				return true;
-//			}
-//			if (checkCommodityForbid()) {
-//				return true;
-//			}
+			// if (checkRerictCommodity()) {
+			// return true;
+			// }
+			// if (checkCommodityForbid()) {
+			// return true;
+			// }
 			if (!checkAmount()) {
 				return true;
 			}
@@ -1592,8 +1597,9 @@ public class DgBaseImportCustomsDeclarationCommInfo extends JDialogBase {
 				return true;
 			}
 			customsDeclarationCommInfo = baseEncAction
-					.saveCustomsDeclarationCommInfo(new Request(CommonVars
-							.getCurrUser()), customsDeclarationCommInfo);
+					.saveCustomsDeclarationCommInfo(
+							new Request(CommonVars.getCurrUser()),
+							customsDeclarationCommInfo);
 			tableModel.updateRow(customsDeclarationCommInfo);
 		}
 		return false;
@@ -1845,6 +1851,7 @@ public class DgBaseImportCustomsDeclarationCommInfo extends JDialogBase {
 		}
 		return lblNewLabel;
 	}
+
 	private JTextField getTfDeclareSpec() {
 		if (tfDeclareSpec == null) {
 			tfDeclareSpec = new JTextField();

@@ -15,19 +15,20 @@ package com.bestway.bcus.client.cas.specificontrol;
  * 
  */
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.Rectangle;
 import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
 import java.util.Vector;
 
@@ -89,10 +90,6 @@ import com.bestway.common.materialbase.action.MaterialManageAction;
 import com.bestway.common.materialbase.entity.ScmCoc;
 import com.bestway.ui.winuicontrol.JFrameBase;
 import com.bestway.ui.winuicontrol.calendar.JCalendarComboBox;
-import java.awt.Font;
-import java.awt.Color;
-import java.awt.event.KeyEvent;
-import java.awt.Dimension;
 
 /**
  * @author ls
@@ -113,8 +110,8 @@ public class FmBillCorresponding extends JFrameBase {
 	private JPanel pn3 = null;
 
 	private ButtonGroup buttonGroup = null; // @jve:decl-index=0:
-	
-	private ButtonGroup buttonGroup2 =null;  //  @jve:decl-index=0:
+
+	private ButtonGroup buttonGroup2 = null; // @jve:decl-index=0:
 
 	private JPanel jPanel = null;
 
@@ -179,8 +176,8 @@ public class FmBillCorresponding extends JFrameBase {
 	private JLabel lbHsAmount = null;
 
 	private JLabel lbCustomAmount = null;
-	
-	private boolean isNameSpec = false;//判断是选择名称(true)还是名称+规格(false)
+
+	private boolean isNameSpec = false;// 判断是选择名称(true)还是名称+规格(false)
 
 	/**
 	 * 报关单商品信息数据模型
@@ -193,11 +190,11 @@ public class FmBillCorresponding extends JFrameBase {
 	private JTableListModel tableModelMakeBillCorrespondingInfo = null;
 
 	private JPopupMenu jPopupMenu1 = null;
-	
+
 	private JPopupMenu jPopupMenu2 = null;
 
 	private boolean isCopyMenuEnabled1 = false;
-	
+
 	private boolean isCopyMenuEnabled2 = false;
 
 	private boolean isCopyMenuEnabled3 = false;
@@ -211,14 +208,14 @@ public class FmBillCorresponding extends JFrameBase {
 			.getInOutMaximumFractionDigits() == null ? 6 : CasCommonVars
 			.getOtherOption().getInOutMaximumFractionDigits(); // @jve:decl-index=0:
 
-	//是否显示           对应记录 当单据对应时数量小于？时
+	// 是否显示 对应记录 当单据对应时数量小于？时
 	private boolean isShowBillCorrRecord = ErpBillParameterCommonVars
 			.getCasBillOption().getIsShowBillCorrRecord();
 
-	//小于多少时不显示？（大小）
-	private double noShowItemValue =  ErpBillParameterCommonVars
-	.getCasBillOption().getShowBillCorrRecord();
-	
+	// 小于多少时不显示？（大小）
+	private double noShowItemValue = ErpBillParameterCommonVars
+			.getCasBillOption().getShowBillCorrRecord();
+
 	/**
 	 * 是否需提示关封号不相同
 	 */
@@ -229,14 +226,21 @@ public class FmBillCorresponding extends JFrameBase {
 	 * 
 	 */
 	public FmBillCorresponding() {
+
 		super();
+
 		initialize();
+
 		materialManageAction = (MaterialManageAction) CommonVars
 				.getApplicationContext().getBean("materialManageAction");
+
 		casAction = (CasAction) CommonVars.getApplicationContext().getBean(
 				"casAction");
+
 		initUIComponents();
+
 		showBillCorrespondingOption();
+
 		setStatePn3(DataState.BROWSE);
 	}
 
@@ -246,8 +250,7 @@ public class FmBillCorresponding extends JFrameBase {
 	 * @return void
 	 */
 	private void initialize() {
-		this
-				.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+		this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		this.setTitle("单据对应");
 		this.setContentPane(getJContentPane());
 		this.setSize(835, 605);
@@ -263,6 +266,7 @@ public class FmBillCorresponding extends JFrameBase {
 		}
 		return buttonGroup;
 	}
+
 	private ButtonGroup getButtonGroup2() {
 		if (this.buttonGroup2 == null) {
 			buttonGroup2 = new ButtonGroup();
@@ -271,7 +275,6 @@ public class FmBillCorresponding extends JFrameBase {
 		}
 		return buttonGroup;
 	}
-	
 
 	/**
 	 * This method initializes jContentPane
@@ -385,15 +388,13 @@ public class FmBillCorresponding extends JFrameBase {
 			pn4 = new JPanel();
 			pn4.setLayout(null);
 			pn4.setBounds(new Rectangle(19, 13, 707, 158));
-			pn4
-					.setBorder(javax.swing.BorderFactory
-							.createTitledBorder(
-									javax.swing.BorderFactory
-											.createEtchedBorder(javax.swing.border.EtchedBorder.LOWERED),
-									"选项",
-									javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-									javax.swing.border.TitledBorder.DEFAULT_POSITION,
-									null, null));
+			pn4.setBorder(javax.swing.BorderFactory.createTitledBorder(
+					javax.swing.BorderFactory
+							.createEtchedBorder(javax.swing.border.EtchedBorder.LOWERED),
+					"选项",
+					javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
+					javax.swing.border.TitledBorder.DEFAULT_POSITION, null,
+					null));
 			pn4.add(getCbIsBillCorrespondingAffirm(), null);
 			pn4.add(getBtnSave(), null);
 			pn4.add(getBtnEdit(), null);
@@ -619,22 +620,13 @@ public class FmBillCorresponding extends JFrameBase {
 	}
 
 	/**
-	 * This method initializes jPanel1
-	 * 
-	 * @return javax.swing.JPanel
-	 */
-	// private JPanel getJPanel1() {
-	// if (jPanel1 == null) {
-	// jLabel3 = new JLabounds(new Rectangle(18, 50, 57, 23));
-	// }
-	// return jPanel1;
-	// }
-	/**
 	 * This method initializes cbbName
 	 * 
 	 * @return javax.swing.JComboBox
 	 */
-	private JComboBox getCbbName() {// 商品名称
+	private JComboBox getCbbName() {
+
+		// 商品名称
 		if (cbbName == null) {
 			cbbName = new JComboBox();
 			cbbName.setUI(new CustomBaseComboBoxUI(270));
@@ -761,75 +753,114 @@ public class FmBillCorresponding extends JFrameBase {
 	 */
 	private JTable getTb1() {
 		if (tb1 == null) {
-			tb1 = new JTable();
-			tb1.getSelectionModel().addListSelectionListener(
-					new ListSelectionListener() {
-						public void valueChanged(ListSelectionEvent e) {
-							if (e.getValueIsAdjusting()) {
-								return;
-							}
-							JTableListModel tableModel = (JTableListModel) tb1
-									.getModel();
-							if (tableModel == null) {
-								return;
-							}
-							try {
-								if (tableModel.getCurrentRow() != null) {
-									showTipMessage();
-								}
-							} catch (Exception cx) {
 
-							}
+			tb1 = new JTable();
+
+			tb1.getSelectionModel().addListSelectionListener(
+
+			new ListSelectionListener() {
+
+				public void valueChanged(ListSelectionEvent e) {
+
+					if (e.getValueIsAdjusting()) {
+						return;
+					}
+
+					JTableListModel tableModel = (JTableListModel) tb1
+							.getModel();
+
+					if (tableModel == null) {
+						return;
+
+					}
+					try {
+
+						if (tableModel.getCurrentRow() != null) {
+
+							// 显示对应的数量信息
+							showTipMessage();
+
 						}
-					});
+
+					} catch (Exception cx) {
+
+					}
+				}
+			});
+
 			tb1.addMouseListener(new java.awt.event.MouseAdapter() {
+
 				public void mouseClicked(MouseEvent e) {
+
 					if (e.getClickCount() >= 2) {
+
 						DgBillMaster dgBillMaster = new DgBillMaster(
 								FmBillCorresponding.this);
+
 						JTableListModel model = (JTableListModel) tb1
 								.getModel();
+
 						BillMaster temp = ((BillDetail) model.getCurrentRow())
 								.getBillMaster();
+
 						BillType billType = temp.getBillType();
+
 						dgBillMaster.setTableModel(model);
+
 						dgBillMaster.setBillType(billType);
+
 						dgBillMaster.setDataState(DataState.EDIT);
+
 						dgBillMaster.setValidDate(temp.getValidDate());
+
 						dgBillMaster.setVisible(true);
+
 						//
 						// 重新刷新本记录
 						//
 						NameSpecProperty nameSpec = (NameSpecProperty) cbbName
 								.getSelectedItem();
+
 						String nameSpecStr = "";
+
 						if (nameSpec != null) {
+
 							nameSpecStr = nameSpec.getNameSpec();
 						}
+
 						Integer impExpType = Integer
 								.valueOf(((ItemProperty) cbbImpExpType
 										.getSelectedItem()).getCode());
-						boolean isNameSpec = false;//判断是选择名称(true)还是名称+规格(false)查询
-						if(rbName.isSelected()){
-							 isNameSpec = true;
-						}else {
-							 isNameSpec = false;
+
+						boolean isNameSpec = false;// 判断是选择名称(true)还是名称+规格(false)查询
+
+						if (rbName.isSelected()) {
+
+							isNameSpec = true;
+
+						} else {
+							isNameSpec = false;
+
 						}
-						
+
 						final List<BillDetail> billDetailList = casAction
-								.findBillDetail(new Request(CommonVars
-										.getCurrUser()), impExpType,
+								.findBillDetail(
+										new Request(CommonVars.getCurrUser()),
+										impExpType,
 										(ScmCoc) cbbScmCoc.getSelectedItem(),
-										cbbBeginDate.getDate(), cbbEndDate
-												.getDate(), nameSpecStr,isNameSpec);
-						// filter
+										cbbBeginDate.getDate(),
+										cbbEndDate.getDate(), nameSpecStr,
+										isNameSpec);
+
+						// 过滤单据对应
 						filterBillDetailList(billDetailList);
+
 						SwingUtilities.invokeLater(new Runnable() {
 							public void run() {
 								initTb1(billDetailList);
 							}
 						});
-						// initTb1(billDetailList);
+
 					}
 				}
 
@@ -976,7 +1007,7 @@ public class FmBillCorresponding extends JFrameBase {
 						for (int i = 0; i < columns[0]; i++) {
 							selectStartPointX += tb2.getColumnModel()
 									.getColumn(i).getWidth()
-									+ tb2.getColumnModel().getColumnMargin();//单元格之间的宽度
+									+ tb2.getColumnModel().getColumnMargin();// 单元格之间的宽度
 						}
 						for (int i = 0; i <= columns[columns.length - 1]; i++) {
 							selectEndPointX += tb2.getColumnModel()
@@ -1022,7 +1053,7 @@ public class FmBillCorresponding extends JFrameBase {
 							}
 						}
 						if (hasTableContextPopupMenu == true) {
-							isCopyMenuEnabled2= false;
+							isCopyMenuEnabled2 = false;
 							getJPopupMenu2().show(tb2, e.getPoint().x,
 									e.getPoint().y);
 							return;
@@ -1148,20 +1179,37 @@ public class FmBillCorresponding extends JFrameBase {
 		}
 		return jPopupMenu1;
 	}
+
 	private JPopupMenu getJPopupMenu2() {
+
 		if (jPopupMenu2 == null) {
+
 			jPopupMenu2 = new JPopupMenu();
 		}
+
+		// 右键菜单
 		if (tableModelCustomsDeclarationCommInfo != null) {
+
 			jPopupMenu2.removeAll();
+
 			jPopupMenu2.add(getMiBillCorresponding());
+
 			getMiBillCorresponding().setEnabled(isCopyMenuEnabled2);
+
 			jPopupMenu2.addSeparator();
+
 			jPopupMenu2.add(tableModelCustomsDeclarationCommInfo.getMiCopy());
+
 			jPopupMenu2.add(tableModelCustomsDeclarationCommInfo.getMiSearch());
-			jPopupMenu2.add(tableModelCustomsDeclarationCommInfo.getMiSaveTableListToExcel());
-			jPopupMenu2.add(tableModelCustomsDeclarationCommInfo.getMiRenderColumn());
-			tableModelCustomsDeclarationCommInfo.getMiCopy().setEnabled(isCopyMenuEnabled2);
+
+			jPopupMenu2.add(tableModelCustomsDeclarationCommInfo
+					.getMiSaveTableListToExcel());
+
+			jPopupMenu2.add(tableModelCustomsDeclarationCommInfo
+					.getMiRenderColumn());
+
+			tableModelCustomsDeclarationCommInfo.getMiCopy().setEnabled(
+					isCopyMenuEnabled2);
 		}
 		return jPopupMenu2;
 	}
@@ -1270,107 +1318,150 @@ public class FmBillCorresponding extends JFrameBase {
 	}
 
 	/**
-	 * 初始化类型控件
-	 * 
+	 * 初始化类型控件 || 成品 -- 料件
 	 */
 	private void initBillTypeUI() {
 
 		if (this.rbMateriel.isSelected()) {
 			// 初始化 ----报关单---- 进口类型
 			this.cbbImpExpType.removeAllItems();
+
 			this.cbbImpExpType.addItem(new ItemProperty(Integer.valueOf(
 					ImpExpType.DIRECT_IMPORT).toString(), "直接进口"));
+
 			this.cbbImpExpType.addItem(new ItemProperty(Integer.valueOf(
 					ImpExpType.TRANSFER_FACTORY_IMPORT).toString(), "结转进口"));
+
 			this.cbbImpExpType.addItem(new ItemProperty(Integer.valueOf(
 					ImpExpType.MATERIAL_EXCHANGE).toString(), "料件退换"));
+
 			this.cbbImpExpType.addItem(new ItemProperty(Integer.valueOf(
 					ImpExpType.MATERIAL_REOUT).toString(), "料件复出"));
+
 			CustomBaseComboBoxEditor.getInstance().setComboBoxEditor(
 					this.cbbImpExpType);
+
 			this.cbbImpExpType.setRenderer(CustomBaseRender.getInstance()
 					.getRender());
+
 			materielType = MaterielType.MATERIEL;
+
 		} else if (this.rbProduct.isSelected()) {
+
 			// 初始化出口类型
 			this.cbbImpExpType.removeAllItems();
+
 			this.cbbImpExpType.addItem(new ItemProperty(Integer.valueOf(
 					ImpExpType.DIRECT_EXPORT).toString(), "直接出口"));
+
 			this.cbbImpExpType.addItem(new ItemProperty(Integer.valueOf(
 					ImpExpType.TRANSFER_FACTORY_EXPORT).toString(), "结转出口"));
+
 			this.cbbImpExpType.addItem(new ItemProperty(Integer.valueOf(
 					ImpExpType.BACK_FACTORY_REWORK).toString(), "退厂返工"));
+
 			this.cbbImpExpType.addItem(new ItemProperty(Integer.valueOf(
 					ImpExpType.REWORK_EXPORT).toString(), "返工复出"));
+
 			CustomBaseComboBoxEditor.getInstance().setComboBoxEditor(
 					this.cbbImpExpType);
+
 			this.cbbImpExpType.setRenderer(CustomBaseRender.getInstance()
 					.getRender());
+
 			materielType = MaterielType.FINISHED_PRODUCT;
 		}
-		//
+
 		// 初始化商品大类名称
-		//
 		List<Object[]> list = casAction.findStatCusNameRelationName(
 				new Request(CommonVars.getCurrUser(), true), materielType);
+
 		this.cbbName.removeAllItems();
-		
-		if(rbName.isSelected()){
+
+		if (rbName.isSelected()) {
+
 			List<String> tempList = new ArrayList<String>();
+
 			for (Object[] item : list) {
+
 				String name = item[0] == null ? "" : (String) item[0];
-				if(tempList.size()>0){
-					if(!tempList.contains(name)){
+
+				if (tempList.size() > 0) {
+
+					if (!tempList.contains(name)) {
+
 						tempList.add(name);
+
 					}
-				}else{
+
+				} else {
+
 					tempList.add(name);
 				}
 			}
 			for (Object item : tempList) {
+
+				// 内部类 用于 渲染数据
 				NameSpecProperty nameSpec;
+
 				String name = item == null ? "" : (String) item;
+
 				nameSpec = new NameSpecProperty(name);
+
 				this.cbbName.addItem(nameSpec);
 			}
-		}else{
+		} else {
+
 			for (Object[] item : list) {
+
 				NameSpecProperty nameSpec;
+
 				String name = item[0] == null ? "" : (String) item[0];
+
 				String spec = item[1] == null ? "" : (String) item[1];
+
 				nameSpec = new NameSpecProperty(name, spec);
+
 				this.cbbName.addItem(nameSpec);
 			}
 		}
+
 		CustomBaseComboBoxEditor.getInstance().setComboBoxEditor(cbbName,
 				"nameSpec", "nameSpec", 400);
+
 		this.cbbName.setRenderer(CustomBaseRender.getInstance().getRender(
 				"nameSpec", "nameSpec", 400, 0));
-		if(this.rbMateriel.isSelected()){
+
+		if (this.rbMateriel.isSelected()) {
+
+			// 查询 供应商 列表 ScmCoc
 			List list2 = casAction.findManufacturer(new Request(CommonVars
 					.getCurrUser(), true));
-		
+
 			this.cbbScmCoc.setModel(new DefaultComboBoxModel(list2.toArray()));
-			this.cbbScmCoc.setRenderer(CustomBaseRender.getInstance().getRender(
-					"code", "name", 65, 250));
+
+			this.cbbScmCoc.setRenderer(CustomBaseRender.getInstance()
+					.getRender("code", "name", 65, 250));
+
 			CustomBaseComboBoxEditor.getInstance().setComboBoxEditor(
 					this.cbbScmCoc, "code", "name", 315);
-			//this.cbbScmCoc.setSelectedItem(null);
-			}
-			else{
-				List list3 = casAction.findIsCustomer(new Request(CommonVars
-						.getCurrUser(), true));
-				
-				this.cbbScmCoc.setModel(new DefaultComboBoxModel(list3.toArray()));
-				this.cbbScmCoc.setRenderer(CustomBaseRender.getInstance().getRender(
-						"code", "name", 65, 250));
-				CustomBaseComboBoxEditor.getInstance().setComboBoxEditor(
-						this.cbbScmCoc, "code", "name", 315);
-			}
+
+		} else {
+
+			// 查询 客户 列表 ScmCoc
+			List list3 = casAction.findIsCustomer(new Request(CommonVars
+					.getCurrUser(), true));
+
+			this.cbbScmCoc.setModel(new DefaultComboBoxModel(list3.toArray()));
+
+			this.cbbScmCoc.setRenderer(CustomBaseRender.getInstance()
+					.getRender("code", "name", 65, 250));
+
+			CustomBaseComboBoxEditor.getInstance().setComboBoxEditor(
+					this.cbbScmCoc, "code", "name", 315);
+		}
 
 	}
-	
-	
 
 	public class NameSpecProperty {
 		private String nameSpec;
@@ -1383,9 +1474,11 @@ public class FmBillCorresponding extends JFrameBase {
 			this.spec = spec;
 			this.name = name;
 		}
+
 		public NameSpecProperty(String name) {
 			this.name = name;
 		}
+
 		public String toString() {
 			return name;
 		}
@@ -1419,35 +1512,46 @@ public class FmBillCorresponding extends JFrameBase {
 		}
 
 	}
-	
+
 	/**
 	 * 初始化数据
 	 * 
 	 */
 	private void initUIComponents() {
+
 		// 初始化客户commonBaseCodeAction
 		List list = materialManageAction.findScmCocs(new Request(CommonVars
 				.getCurrUser(), true));
+
 		this.cbbScmCoc.setModel(new DefaultComboBoxModel(list.toArray()));
+
 		this.cbbScmCoc.setRenderer(CustomBaseRender.getInstance().getRender(
 				"code", "name", 65, 250));
+
 		CustomBaseComboBoxEditor.getInstance().setComboBoxEditor(
 				this.cbbScmCoc, "code", "name", 315);
+
 		this.cbbScmCoc.setSelectedItem(null);
+
 		//
 		// 初始化类型
 		//
 		initBillTypeUI();
+
 		//
 		// 初始化日历控件
 		//
 		this.cbbBeginDate.setDate(null);
+
 		this.cbbEndDate.setDate(null);
-		//
-		// 初始化表1
-		//
+
+		// 左边列表1 -- 单据对应
 		initTb1(new ArrayList<BillDetail>());
+
+		// 右边列表2 -- 单据对应
 		initTb2(new ArrayList());
+
+		// 取消单据对应 列表
 		initTb3(new ArrayList());
 	}
 
@@ -1455,47 +1559,58 @@ public class FmBillCorresponding extends JFrameBase {
 	 * -- 单据查询 ---------
 	 */
 	private void search() {
-		/*if (cbbName.getSelectedItem() == null
-				|| cbbName.getSelectedItem().equals("")) {
-			JOptionPane.showMessageDialog(this, "请选择名称/规格!!", "提示",
-					JOptionPane.INFORMATION_MESSAGE);
-			return;
-		}*/
+
 		Date beginDate = this.cbbBeginDate.getDate();
+
 		Date endDate = this.cbbEndDate.getDate();
+
 		beginDate = CommonUtils.getBeginDate(beginDate);
+
 		endDate = CommonUtils.getEndDate(endDate);
+
+		// 判断起始日期 是否 大于 结束日期
 		if (beginDate != null && endDate != null) {
+
 			if (beginDate.after(endDate)) {
 				JOptionPane.showMessageDialog(this, "开始日期大于结束日期!!", "提示",
 						JOptionPane.INFORMATION_MESSAGE);
 				return;
 			}
 		}
+
 		if (this.cbbImpExpType.getSelectedItem() == null) {
 			JOptionPane.showMessageDialog(this, "请选择要查询的单据类型!!", "提示",
 					JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
 
+		// 单据类型代码
 		Integer impExpType = Integer.valueOf(((ItemProperty) this.cbbImpExpType
-				.getSelectedItem()).getCode());// 单据类型代码
-		
-		if(ImpExpType.TRANSFER_FACTORY_IMPORT == impExpType 
-					&& ImpExpType.TRANSFER_FACTORY_EXPORT == impExpType){
+				.getSelectedItem()).getCode());
+
+		// 转厂信息 提示
+		if (ImpExpType.TRANSFER_FACTORY_IMPORT == impExpType
+				&& ImpExpType.TRANSFER_FACTORY_EXPORT == impExpType) {
+
 			isWarnEnvelopNo = true;
-		}else{
+		} else {
+
 			isWarnEnvelopNo = false;
 		}
-		
-		if (this.jTabbedPane.getSelectedIndex() == 0) {// 单据对应
+
+		// 单据对应
+		if (this.jTabbedPane.getSelectedIndex() == 0) {
+
 			if (this.cbbScmCoc.getSelectedItem() == null) {
+
 				if (JOptionPane.showConfirmDialog(this,
 						"如果不选择客户供应商,可能会出现对应不合规范!!\n确定要继续吗??", "警告!!!",
 						JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) != JOptionPane.YES_OPTION) {
 					return;
 				}
 			}
+
+			// 检验数据的合法性
 			if (vaildate() == false) {
 				return;
 			}
@@ -1535,69 +1650,90 @@ public class FmBillCorresponding extends JFrameBase {
 
 		@Override
 		public void run() {
+
 			Map<String, Object> map = new HashMap<String, Object>();
 			//
 			// 用于标识这个对话框的ID
 			//
 			UUID uuid = UUID.randomUUID();
+
 			final String flag = uuid.toString();
+
 			try {
+
 				btnSearch.setEnabled(false);
+
 				String info = "";
+
 				long beginTime = System.currentTimeMillis();
+
 				ProgressTask progressTask = new ProgressTask() {
+
 					protected void setClientTipMessage() {
-						// String tipMessage = casAction
-						// .getClientTipMessageByBalanceInfo(new Request(
-						// CommonVars.getCurrUser(), true));
-						// CommonProgress.setMessage(flag, tipMessage);
+
 					}
 				};
+
 				CommonProgress.showProgressDialog(flag,
 						FmBillCorresponding.this, false, progressTask, 5000);
+
 				CommonProgress.setMessage(flag, "系统正在获取数据，请稍后...");
+
 				String name = "";
+
 				String spec = "";
+
 				String nameSpecStr = "";
+
 				NameSpecProperty nameSpec = (NameSpecProperty) cbbName
-				.getSelectedItem();
+						.getSelectedItem();
+
 				if (nameSpec != null) {
+
 					name = nameSpec.getName();
+
 					spec = nameSpec.getSpec();
+
 					nameSpecStr = nameSpec.getNameSpec();
 				}
-				if (jTabbedPane.getSelectedIndex() == 0) {// 单据对应
-					if(rbName.isSelected()){
-						 isNameSpec = true;
-					}else {
-						 isNameSpec = false;
-					}
-					//1.查找符合条件的单据体（符合条件的所有条）
-					final List<BillDetail> billDetailList = casAction
-							.findBillDetail(new Request(CommonVars
-									.getCurrUser()), impExpType,
-									(ScmCoc) cbbScmCoc.getSelectedItem(),
-									beginDate, endDate, nameSpecStr,isNameSpec);
 
-					//依照设置的参数   进行    过滤
-					filterBillDetailList(billDetailList);//这里会把退货的  折算报关数量   改成负数
+				// 单据对应
+				if (jTabbedPane.getSelectedIndex() == 0) {
+
+					if (rbName.isSelected()) {
+
+						isNameSpec = true;
+					} else {
+						isNameSpec = false;
+					}
+
+					// 1.查找符合条件的单据体（符合条件的所有条）
+					final List<BillDetail> billDetailList = casAction
+							.findBillDetail(
+									new Request(CommonVars.getCurrUser()),
+									impExpType,
+									(ScmCoc) cbbScmCoc.getSelectedItem(),
+									beginDate, endDate, nameSpecStr, isNameSpec);
+
+					// 依照设置的参数 进行 过滤
+					filterBillDetailList(billDetailList);// 这里会把退货的 折算报关数量 改成负数
 
 					SwingUtilities.invokeLater(new Runnable() {
 						public void run() {
 							initTb1(billDetailList);
 						}
 					});
-					//未对应的  报关单商品信息与海关帐单据的对应 
+					// 未对应的 报关单商品信息与海关帐单据的对应
 					final List tempList = casAction
 							.findCustomsDeclarationCommInfoBillCorresponding(
 									new Request(CommonVars.getCurrUser()),
-									impExpType, (ScmCoc) cbbScmCoc
-											.getSelectedItem(), beginDate,
-									endDate, name, spec,isNameSpec);
-					
+									impExpType,
+									(ScmCoc) cbbScmCoc.getSelectedItem(),
+									beginDate, endDate, name, spec, isNameSpec);
+
 					for (int i = tempList.size() - 1; i >= 0; i--) {
-						CustomsDeclarationCommInfoBillCorresponding item = 
-								(CustomsDeclarationCommInfoBillCorresponding) tempList.get(i);
+						CustomsDeclarationCommInfoBillCorresponding item = (CustomsDeclarationCommInfoBillCorresponding) tempList
+								.get(i);
 
 						if (isShowBillCorrRecord
 								&& item.getNoCorrespondingAmount() < noShowItemValue) {
@@ -1610,21 +1746,21 @@ public class FmBillCorresponding extends JFrameBase {
 						}
 					});
 
-					 System.out.println("tempList.size() = "+tempList.size());
+					System.out.println("tempList.size() = " + tempList.size());
 					// initTb2(tempList);// 初始化报关单
 
 				} else if (jTabbedPane.getSelectedIndex() == 1) { // 取消对应
-					if(rbName.isSelected()){
-						 isNameSpec = true;
-					}else {
-						 isNameSpec = false;
+					if (rbName.isSelected()) {
+						isNameSpec = true;
+					} else {
+						isNameSpec = false;
 					}
-					//生产单据对应的中间信息
+					// 生产单据对应的中间信息
 					final List tempList = casAction
 							.findMakeBillCorrespondingInfo(new Request(
 									CommonVars.getCurrUser()), impExpType,
 									(ScmCoc) cbbScmCoc.getSelectedItem(),
-									beginDate, endDate, nameSpecStr,isNameSpec);
+									beginDate, endDate, nameSpecStr, isNameSpec);
 					SwingUtilities.invokeLater(new Runnable() {
 						public void run() {
 							initTb3(tempList);
@@ -1649,50 +1785,83 @@ public class FmBillCorresponding extends JFrameBase {
 
 	}
 
+	/*
+	 * 过滤单据 如果是退货的话 那么 就显示成 负数
+	 */
 	private void filterBillDetailList(final List<BillDetail> billDetailList) {
-		NameSpecProperty ns = (NameSpecProperty) cbbName
-				.getSelectedItem();
+
+		NameSpecProperty ns = (NameSpecProperty) cbbName.getSelectedItem();
+
 		if (billDetailList != null && billDetailList.size() != 0) {
+
 			for (int i = billDetailList.size() - 1; i >= 0; i--) {
+
 				BillDetail item = billDetailList.get(i);
+
 				item.setUnitConvert((item.getHsAmount() == null ? 0.0 : item
 						.getHsAmount())
 						/ (item.getPtAmount() == null ? 0.0 : item
 								.getPtAmount()));
+
 				String typeCode = item.getBillMaster().getBillType().getCode()
 						.trim();
-				//1106结转料件退货单    2009结转成品退货单,1016已转厂为收货期初单,2012已结转未交货期初单
+
+				// 1106结转料件退货单 2009结转成品退货单,1016已转厂为收货期初单,2012已结转未交货期初单
 				if (typeCode.equals("1106") || typeCode.equals("2009")
-						|| typeCode.equals("1016")|| typeCode.equals("2012")) {
+						|| typeCode.equals("1016") || typeCode.equals("2012")) {
+
+					// 工厂数量
+					Double ptAmount = item.getPtAmount() == null ? Double
+							.valueOf(0.0) : item.getPtAmount();
+
+					// 折算数量
 					double hsAmount = (item.getHsAmount() == null ? 0.0 : item
 							.getHsAmount());
-					item.setHsAmount(hsAmount == 0.0 ? 0.0 : -hsAmount);//在这里改成负数了（退的）
+
+					// 在这里改成负数了（退的）
+					item.setHsAmount(hsAmount == 0.0 ? 0.0 : -hsAmount);
+
+					item.setPtAmount(ptAmount == 0.0 ? 0.0 : -ptAmount);
+
 					if (isShowBillCorrRecord
-						&& item.getNoCustomNum() > -noShowItemValue) {
+							&& item.getNoCustomNum() > -noShowItemValue) {
+
 						billDetailList.remove(i);
 					}
+
 				} else {
 					if (isShowBillCorrRecord
 							&& item.getNoCustomNum() < noShowItemValue) {
+
 						billDetailList.remove(i);
 					}
 				}
-				if(ns != null ) {
+
+				if (ns != null) {
+
 					String commName;
 					String commSpec;
-					if(rbName.isSelected()){
-						 commName = item.getHsName()==null?"":item.getHsName();
-						 commSpec = "";
-					}else{
-						 commName = item.getHsName()==null?"":item.getHsName();
-						 commSpec = item.getHsSpec()==null?"":item.getHsSpec();
+
+					if (rbName.isSelected()) {
+
+						commName = item.getHsName() == null ? "" : item
+								.getHsName();
+						commSpec = "";
+					} else {
+
+						commName = item.getHsName() == null ? "" : item
+								.getHsName();
+						commSpec = item.getHsSpec() == null ? "" : item
+								.getHsSpec();
 					}
-					String nameSpec = ns == null ? "": ((ns.name==null?"":ns.name) + "/" + (ns.spec==null?"":ns.spec));				
+					String nameSpec = ns == null ? ""
+							: ((ns.name == null ? "" : ns.name) + "/" + (ns.spec == null ? ""
+									: ns.spec));
 					String matchStr = commName + "/" + commSpec;
-					if(matchStr.equals(nameSpec)
-							||matchStr.equals(nameSpec+"/")
-							||matchStr.equals(nameSpec+"//")){
-						continue;				
+					if (matchStr.equals(nameSpec)
+							|| matchStr.equals(nameSpec + "/")
+							|| matchStr.equals(nameSpec + "//")) {
+						continue;
 					} else {
 						billDetailList.remove(i);
 					}
@@ -1702,8 +1871,7 @@ public class FmBillCorresponding extends JFrameBase {
 	}
 
 	/**
-	 * 初始化表1
-	 * 装的是单据体（BillDetail）
+	 * 初始化表1 装的是单据体（BillDetail）
 	 */
 	private void initTb1(List<BillDetail> list) {
 		tableModelBillDetail = new JTableListModel(tb1, list,
@@ -1718,9 +1886,7 @@ public class FmBillCorresponding extends JFrameBase {
 						list.add(addColumn("已对应报关数量", "customNum", 120));
 						list.add(addColumn("未对应报关数量", "noCustomNum", 120));
 						list.add(addColumn("报关单价", "hsPrice", 80));
-						list
-								.add(addColumn("生效时间", "billMaster.validDate",
-										100));
+						list.add(addColumn("生效时间", "billMaster.validDate", 100));
 						list.add(addColumn("商品料号", "ptPart", 100));
 						list.add(addColumn("商品名称", "ptName", 100));
 						list.add(addColumn("商品规格", "ptSpec", 100));
@@ -1731,32 +1897,36 @@ public class FmBillCorresponding extends JFrameBase {
 						list.add(addColumn("报关商品名称", "hsName", 120));
 						list.add(addColumn("报关商品规格 ", "hsSpec", 120));
 						list.add(addColumn("折算报关系数", "unitConvert", 120));
-						
 
-						//wss2010.09.20添加关封号
-						if(cbbImpExpType != null && cbbImpExpType.getSelectedItem() != null){
-							String s = ((ItemProperty) cbbImpExpType.getSelectedItem()).getCode();
-							if(s.equals(Integer.valueOf(ImpExpType.TRANSFER_FACTORY_EXPORT).toString())
-									|| s.equals(Integer.valueOf(ImpExpType.TRANSFER_FACTORY_IMPORT).toString())){
-								list.add(addColumn("关封号", "billMaster.envelopNo", 150));
+						// wss2010.09.20添加关封号
+						if (cbbImpExpType != null
+								&& cbbImpExpType.getSelectedItem() != null) {
+							String s = ((ItemProperty) cbbImpExpType
+									.getSelectedItem()).getCode();
+							if (s.equals(Integer.valueOf(
+									ImpExpType.TRANSFER_FACTORY_EXPORT)
+									.toString())
+									|| s.equals(Integer.valueOf(
+											ImpExpType.TRANSFER_FACTORY_IMPORT)
+											.toString())) {
+								list.add(addColumn("关封号",
+										"billMaster.envelopNo", 150));
 
 							}
 						}
-						
-						
+
 						return list;
 					}
 				});
+
 		deleteCommonTableContextPopupEventMouseListener(tb1);
+
 		tb1.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		// List<JTableListColumn> xs = tableModelBillDetail.getColumns();
-		// xs.get(5).setFractionCount(2);
+
 	}
 
 	/**
-	 * 初始化表2
-	 * 装的是 报关单商品信息与海关帐单据的对应 
-	 * 	（CustomsDeclarationCommInfoBillCorresponding）
+	 * 初始化表2 装的是 报关单商品信息与海关帐单据的对应 （CustomsDeclarationCommInfoBillCorresponding）
 	 */
 	private void initTb2(List list) {
 		tableModelCustomsDeclarationCommInfo = new JTableListModel(tb2, list,
@@ -1790,18 +1960,23 @@ public class FmBillCorresponding extends JFrameBase {
 						list.add(addColumn("第二法定单位", "secondLegalUnit.name",
 								100));
 						list.add(addColumn("版本号", "version", 50));
-						
-						
-						//wss2010.09.20添加关封号
-						if(cbbImpExpType != null && cbbImpExpType.getSelectedItem() != null){
-							String s = ((ItemProperty) cbbImpExpType.getSelectedItem()).getCode();
-							if(s.equals(Integer.valueOf(ImpExpType.TRANSFER_FACTORY_EXPORT).toString())
-									|| s.equals(Integer.valueOf(ImpExpType.TRANSFER_FACTORY_IMPORT).toString())){
+
+						// wss2010.09.20添加关封号
+						if (cbbImpExpType != null
+								&& cbbImpExpType.getSelectedItem() != null) {
+							String s = ((ItemProperty) cbbImpExpType
+									.getSelectedItem()).getCode();
+							if (s.equals(Integer.valueOf(
+									ImpExpType.TRANSFER_FACTORY_EXPORT)
+									.toString())
+									|| s.equals(Integer.valueOf(
+											ImpExpType.TRANSFER_FACTORY_IMPORT)
+											.toString())) {
 								list.add(addColumn("关封号", "envelopNo", 150));
 
 							}
 						}
-						
+
 						return list;
 					}
 				});
@@ -1812,9 +1987,7 @@ public class FmBillCorresponding extends JFrameBase {
 	}
 
 	/**
-	 * 初始化表3
-	 * 生产单据对应的中间信息 
-	 * （MakeBillCorrespondingInfoBase）
+	 * 初始化表3 生产单据对应的中间信息 （MakeBillCorrespondingInfoBase）
 	 */
 	private void initTb3(List list) {
 		tableModelMakeBillCorrespondingInfo = new JTableListModel(tb3, list,
@@ -1969,8 +2142,8 @@ public class FmBillCorresponding extends JFrameBase {
 
 				List<MakeBillCorrespondingInfoBase> list = tableModelMakeBillCorrespondingInfo
 						.getCurrentRows();
-				casAction.cancelCorresponding(new Request(CommonVars
-						.getCurrUser()), list);
+				casAction.cancelCorresponding(
+						new Request(CommonVars.getCurrUser()), list);
 				tableModelMakeBillCorrespondingInfo.deleteRows(list);
 
 				CommonProgress.closeProgressDialog(flag);
@@ -1995,56 +2168,57 @@ public class FmBillCorresponding extends JFrameBase {
 	 * 
 	 */
 	private void billCorresponding() {
-		
-		//选取的单据体
+
+		// 选取的单据体
 		List<BillDetail> listBill = tableModelBillDetail.getCurrentRows();
 		if (listBill.isEmpty()) {
 			JOptionPane.showMessageDialog(this, "请选择要对应单据信息!!", "提示",
 					JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
-		
-		//第二个表的信息
+
+		// 第二个表的信息
 		List<CustomsDeclarationCommInfoBillCorresponding> listC = tableModelCustomsDeclarationCommInfo
 				.getCurrentRows();
 		Map<String, CustomsDeclarationCommInfoBillCorresponding> mapC = new HashMap<String, CustomsDeclarationCommInfoBillCorresponding>();
-		
+
 		if (listC.isEmpty()) {
 			JOptionPane.showMessageDialog(this, "请选择要对应的报关商品信息!!", "提示",
 					JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
-		
-		//wss2010.09.20
-		if(isWarnEnvelopNo){
-			for(int i=0;i<listBill.size();i++){
+
+		// wss2010.09.20
+		if (isWarnEnvelopNo) {
+			for (int i = 0; i < listBill.size(); i++) {
 				BillDetail bill = listBill.get(i);
-				String billEnvelopNo = bill.getBillMaster().getEnvelopNo() == null ? "":
-														bill.getBillMaster().getEnvelopNo();
+				String billEnvelopNo = bill.getBillMaster().getEnvelopNo() == null ? ""
+						: bill.getBillMaster().getEnvelopNo();
 				String commEnvelopNo = "";
-				for(int j=0;j<listC.size();j++){
+				for (int j = 0; j < listC.size(); j++) {
 					commEnvelopNo = listC.get(j).getEnvelopNo() == null ? ""
-														:listC.get(j).getEnvelopNo();
-					
-					if(!commEnvelopNo.equals(bill.getBillMaster().getEnvelopNo())) {
-						if (JOptionPane.showConfirmDialog(this, "单据中的关封号与报关单中的关封号不符" + " \n"
-								 + "\n 是否继续？", "提示",
-								JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+							: listC.get(j).getEnvelopNo();
+
+					if (!commEnvelopNo.equals(bill.getBillMaster()
+							.getEnvelopNo())) {
+						if (JOptionPane.showConfirmDialog(this,
+								"单据中的关封号与报关单中的关封号不符" + " \n" + "\n 是否继续？",
+								"提示", JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
 							return;
 						}
 					}
 				}
 			}
 		}
-		
-		
+
 		// 单据参数设置
-		if (b.getIsBillCorrespondingAffirm()) {//如果单据对应须确认
+		if (b.getIsBillCorrespondingAffirm()) {// 如果单据对应须确认
 			String customsDeclarationCode = "";
 			for (int i = 0; i < listC.size(); i++) {
 				CustomsDeclarationCommInfoBillCorresponding c = listC.get(i);
-				//key为：报关单编号 + 报关商品编号
-				String key = c.getCustomsDeclarationId() + c.getCustomsDeclarationCommInfoId();
+				// key为：报关单编号 + 报关商品编号
+				String key = c.getCustomsDeclarationId()
+						+ c.getCustomsDeclarationCommInfoId();
 				mapC.put(key, c);
 				int oldSplit = customsDeclarationCode.length() % 350;
 				if (i == listC.size() - 1) {
@@ -2058,23 +2232,25 @@ public class FmBillCorresponding extends JFrameBase {
 					customsDeclarationCode += "\n";
 				}
 			}
-			String message="";
-			if(listC.size()>7)
-				message="\n建议一条单据对应报关单数不要超过7张，否则单据表体的 “对应报关单号”栏位会截取前7张!是否继续执行？";
+			String message = "";
+			if (listC.size() > 7)
+				message = "\n建议一条单据对应报关单数不要超过7张，否则单据表体的 “对应报关单号”栏位会截取前7张!是否继续执行？";
 			if (JOptionPane.showConfirmDialog(this, "是否确定单据选中的记录与" + " \n"
-					+ customsDeclarationCode + "\n 号报关单生成对应!"+message, "提示",
+					+ customsDeclarationCode + "\n 号报关单生成对应!" + message, "提示",
 					JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
 				return;
 			}
 		} else {
 			for (int i = 0; i < listC.size(); i++) {
 				CustomsDeclarationCommInfoBillCorresponding c = listC.get(i);
-				//key为：报关单编号 + 报关商品编号
-				String key = c.getCustomsDeclarationId() + c.getCustomsDeclarationCommInfoId();
-				mapC.put(key, c);//value为  CustomsDeclarationCommInfoBillCorresponding
+				// key为：报关单编号 + 报关商品编号
+				String key = c.getCustomsDeclarationId()
+						+ c.getCustomsDeclarationCommInfoId();
+				mapC.put(key, c);// value为
+									// CustomsDeclarationCommInfoBillCorresponding
 			}
 		}
-		new BillCorrespondingThread(listC, mapC,listBill).start();
+		new BillCorrespondingThread(listC, mapC, listBill).start();
 
 	}
 
@@ -2089,7 +2265,7 @@ public class FmBillCorresponding extends JFrameBase {
 		List<CustomsDeclarationCommInfoBillCorresponding> listC = null;
 
 		Map<String, CustomsDeclarationCommInfoBillCorresponding> mapC = null;
-		
+
 		List<BillDetail> listBill = null;
 
 		public BillCorrespondingThread(
@@ -2102,11 +2278,11 @@ public class FmBillCorresponding extends JFrameBase {
 		}
 
 		public void run() {
-			
+
 			// 用于标识这个对话框的ID
 			UUID uuid = UUID.randomUUID();
 			final String flag = uuid.toString();
-			
+
 			try {
 				getMiBillCorresponding().setEnabled(false);
 				btnCorresponding.setEnabled(false);
@@ -2124,69 +2300,87 @@ public class FmBillCorresponding extends JFrameBase {
 						FmBillCorresponding.this, false, progressTask, 5000);
 				CommonProgress.setMessage(flag, "系统正在进行单据对应，请稍后...");
 
-				System.out.println("hcl1111");
-				
-				//中间信息
+				// 中间信息
 				TempResult tempResult = casAction.billCorresponding(
-							new Request(CommonVars.getCurrUser()), listC, listBill);
-				System.out.println("hcl2222");
+						new Request(CommonVars.getCurrUser()), listC, listBill);
+
 				// 修改单据与报关单对应中间表
-				List<CustomsDeclarationCommInfoBillCorresponding> lsC = tempResult.getC();
+				List<CustomsDeclarationCommInfoBillCorresponding> lsC = tempResult
+						.getC();
+
 				List<BillDetail> lsBillDetails = tempResult.getBillDetail();
+
 				for (int i = 0; i < lsC.size(); i++) {
 					// getAlreadyCorrespondingAmount:已对应报关数量
-					CustomsDeclarationCommInfoBillCorresponding tempC = lsC.get(i);
+					CustomsDeclarationCommInfoBillCorresponding tempC = lsC
+							.get(i);
 					String key = tempC.getCustomsDeclarationId()
 							+ tempC.getCustomsDeclarationCommInfoId();
 					// System.out.println(tempC.getCustomsDeclarationId()+"/"
 					// + tempC.getCustomsDeclarationCommInfoId());
-					
-					Double alreadyCorrespondingAmount = getDigi(tempC.getAlreadyCorrespondingAmount(),8);
-					Double commAmount = getDigi(tempC.getCommAmount(),8);
-					System.out.println("tempC.getAlreadyCorrespondingAmount() == " + alreadyCorrespondingAmount);
-					System.out.println("tempC.getCommAmount() == " + commAmount);
-					
-					//如果已对应报关数量 > 报关数量
+
+					Double alreadyCorrespondingAmount = getDigi(
+							tempC.getAlreadyCorrespondingAmount(), 8);
+					Double commAmount = getDigi(tempC.getCommAmount(), 8);
+					System.out
+							.println("tempC.getAlreadyCorrespondingAmount() == "
+									+ alreadyCorrespondingAmount);
+					System.out
+							.println("tempC.getCommAmount() == " + commAmount);
+
+					// 如果已对应报关数量 > 报关数量
 					if (alreadyCorrespondingAmount >= commAmount
 							|| (isShowBillCorrRecord && tempC
 									.getNoCorrespondingAmount() < noShowItemValue)) {
-//						tempC = mapC.get(key); 
-						tableModelCustomsDeclarationCommInfo.deleteRow(mapC.get(key));
-						
-						System.out.println("delete ok == " + tempC.getCommName());						
-					} 
-					//更新
-					else {						
-						CustomsDeclarationCommInfoBillCorresponding temp = mapC.get(key);
+						// tempC = mapC.get(key);
+						tableModelCustomsDeclarationCommInfo.deleteRow(mapC
+								.get(key));
+
+						System.out.println("delete ok == "
+								+ tempC.getCommName());
+					}
+					// 更新
+					else {
+						CustomsDeclarationCommInfoBillCorresponding temp = mapC
+								.get(key);
 						try {
 							PropertyUtils.copyProperties(temp, tempC);
-							tableModelCustomsDeclarationCommInfo.updateRow(temp);	
-							
-							System.out.println("update ok == " + tempC.getCommName());	
+							tableModelCustomsDeclarationCommInfo
+									.updateRow(temp);
+
+							System.out.println("update ok == "
+									+ tempC.getCommName());
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
 					}
 				}
-				System.out.println("hcl3333");
+
 				Map<String, BillDetail> map = new HashMap<String, BillDetail>();
+
 				for (int i = 0; i < listBill.size(); i++) {
+
 					BillDetail temp = listBill.get(i);
+
 					map.put(temp.getId(), temp);
 				}
+
 				for (int i = 0; i < lsBillDetails.size(); i++) {
+
 					BillDetail tempBillDetail1 = lsBillDetails.get(i);
-					
-					//如果     已对应报关数量  > 折算报关数量
+
+					// 如果 已对应报关数量 > 折算报关数量
 					if (tempBillDetail1.getCustomNum() >= tempBillDetail1
 							.getHsAmount()
 							|| (isShowBillCorrRecord && tempBillDetail1
 									.getNoCustomNum() < noShowItemValue)) {
+
 						tempBillDetail1 = map.get(tempBillDetail1.getId());
+
 						tableModelBillDetail.deleteRow(tempBillDetail1);
-						
+
 					}
-					//更新行
+					// 更新行
 					else {
 						BillDetail temp = map.get(tempBillDetail1.getId());
 						try {
@@ -2220,52 +2414,76 @@ public class FmBillCorresponding extends JFrameBase {
 	 * 
 	 */
 	private void showTipMessage() {
+
 		double billDetailAmount = 0.0;
+
 		double customsAmount = 0.0;
-		double ptAmount = 0.0;//工厂数量
+
+		// 工厂数量
+		double ptAmount = 0.0;
+
 		List<BillDetail> list = tableModelBillDetail.getCurrentRows();
+
 		for (int i = 0; i < list.size(); i++) {
+
 			BillDetail temp = list.get(i);
+
 			billDetailAmount += temp.getNoCustomNum();
+
 			ptAmount += temp.getPtAmount();
 		}
+
 		//
 		// 建义从数据库里来解决之根本,不建义在这里去解决问题.
 		//
 		billDetailAmount = getDigi(billDetailAmount, 8);
+
 		List<CustomsDeclarationCommInfoBillCorresponding> listC = tableModelCustomsDeclarationCommInfo
 				.getCurrentRows();
+
 		for (int i = 0; i < listC.size(); i++) {
+
 			CustomsDeclarationCommInfoBillCorresponding c = listC.get(i);
+
 			customsAmount += c.getNoCorrespondingAmount();
+
 		}
-		 customsAmount = getDigi(customsAmount,8);
+
+		customsAmount = getDigi(customsAmount, 8);
+
 		this.lbHsAmount.setText("  选中单据未对应总数量   [ " + billDetailAmount + " ]");
+
 		this.lbPtAmount.setText("  选中单据工厂数量   [ " + ptAmount + " ]");
+
 		this.lbCustomAmount.setText("  选中报关单未对应总数量 [ " + customsAmount + " ]");
+
 	}
 
 	/**
-	 * 取消对应
-	 * 
+	 * 取消对应 根据所选择的面板 判断哪些组件需要启动或关闭
 	 */
 	private void setState() {
+
 		if (this.jTabbedPane.getSelectedIndex() == 0) {
+
 			this.btnCancelCorresponding.setEnabled(false);
 			this.btnCorresponding.setEnabled(true);
 			this.btnSearch.setEnabled(true);
 			this.lbHsAmount.setEnabled(true);
 			this.lbCustomAmount.setEnabled(true);
 			this.lbPtAmount.setEnabled(true);
+
 		} else if (this.jTabbedPane.getSelectedIndex() == 1) {
+
 			this.btnCancelCorresponding.setEnabled(true);
 			this.btnCorresponding.setEnabled(false);
 			this.btnSearch.setEnabled(true);
 			this.lbHsAmount.setEnabled(false);
 			this.lbCustomAmount.setEnabled(false);
 			this.lbPtAmount.setEnabled(true);
+
 		} else if (this.jTabbedPane.getSelectedIndex() == 2) {
-			// b = CasCommonVars.getBillCorrespondingOption();
+
 			this.btnCancelCorresponding.setEnabled(false);
 			this.btnCorresponding.setEnabled(false);
 			this.btnSearch.setEnabled(false);
@@ -2281,7 +2499,9 @@ public class FmBillCorresponding extends JFrameBase {
 	 * @param table
 	 */
 	private void deleteCommonTableContextPopupEventMouseListener(JTable table) {
+
 		MouseListener[] mouseListeners = table.getMouseListeners();
+
 		for (int i = 0; i < mouseListeners.length; i++) {
 			if (mouseListeners[i] instanceof CommonTableContextPopupEvent) {
 				table.removeMouseListener(mouseListeners[i]);
@@ -2299,23 +2519,6 @@ public class FmBillCorresponding extends JFrameBase {
 					.getIsBillCorrespondingAffirm() == null ? false : b
 					.getIsBillCorrespondingAffirm());
 		}
-		// this.cbIsCalculatePrice
-		// .setSelected(b.getIsCalculatePrice() == null ? false : b
-		// .getIsCalculatePrice());
-		// this.cbIsOverYear.setSelected(b.getIsOverYear() == null ? false : b
-		// .getIsOverYear());
-		// this.cbIsNoNameMatching
-		// .setSelected(b.getIsNoNameMatching() == null ? false : b
-		// .getIsNoNameMatching());
-		// this.cbIsNamePartMatching
-		// .setSelected(b.getIsNamePartMatching() == null ? false : b
-		// .getIsNamePartMatching());
-		// this.cbIsNoSpecMatching
-		// .setSelected(b.getIsNoSpecMatching() == null ? false : b
-		// .getIsNoSpecMatching());
-		// this.cbIsNoUnitMatching
-		// .setSelected(b.getIsNoUnitMatching() == null ? false : b
-		// .getIsNoUnitMatching());
 
 	}
 
@@ -2328,12 +2531,7 @@ public class FmBillCorresponding extends JFrameBase {
 			b.setIsBillCorrespondingAffirm(this.cbIsBillCorrespondingAffirm
 					.isSelected());
 		}
-		// b.setIsCalculatePrice(this.cbIsCalculatePrice.isSelected());
-		// b.setIsOverYear(this.cbIsOverYear.isSelected());
-		// b.setIsNoNameMatching(this.cbIsNoNameMatching.isSelected());
-		// b.setIsNamePartMatching(this.cbIsNamePartMatching.isSelected());
-		// b.setIsNoSpecMatching(this.cbIsNoSpecMatching.isSelected());
-		// b.setIsNoUnitMatching(this.cbIsNoUnitMatching.isSelected());
+
 	}
 
 	/**
@@ -2342,8 +2540,8 @@ public class FmBillCorresponding extends JFrameBase {
 	 */
 	private void saveBillCorrespondingOption() {
 		fillBillCorrespondingOption();
-		b = casAction.saveBillCorrespondingOption(new Request(CommonVars
-				.getCurrUser()), b);
+		b = casAction.saveBillCorrespondingOption(
+				new Request(CommonVars.getCurrUser()), b);
 		setStatePn3(DataState.BROWSE);
 	}
 
@@ -2353,26 +2551,10 @@ public class FmBillCorresponding extends JFrameBase {
 	 * @param dataState
 	 */
 	private void setStatePn3(int dataState) {
+
 		this.cbIsBillCorrespondingAffirm
 				.setEnabled(dataState != DataState.BROWSE);
-		// this.cbIsCalculatePrice.setEnabled(dataState != DataState.BROWSE);
-		// this.cbIsOverYear.setEnabled(dataState != DataState.BROWSE);
-		// this.cbIsNoNameMatching.setEnabled(dataState != DataState.BROWSE);
-		// this.cbIsNamePartMatching.setEnabled(dataState != DataState.BROWSE);
-		// this.cbIsNoSpecMatching.setEnabled(dataState != DataState.BROWSE);
-		// this.cbIsNoUnitMatching.setEnabled(dataState != DataState.BROWSE);
-		// if (CasCommonVars.getBillCorrespondingControl().getIsSpecialControl()
-		// == true) {
-		// this.cbIsNoNameMatching.setEnabled(true);
-		// this.cbIsNamePartMatching.setEnabled(true);
-		// this.cbIsNoSpecMatching.setEnabled(true);
-		// this.cbIsNoUnitMatching.setEnabled(true);
-		// } else {
-		// this.cbIsNoNameMatching.setEnabled(false);
-		// this.cbIsNamePartMatching.setEnabled(false);
-		// this.cbIsNoSpecMatching.setEnabled(false);
-		// this.cbIsNoUnitMatching.setEnabled(false);
-		// }
+
 	}
 
 	/**
@@ -2381,17 +2563,21 @@ public class FmBillCorresponding extends JFrameBase {
 	 * @return
 	 */
 	private boolean vaildate() {// 为 False 返回
+
 		BillCorrespondingControl billControl = CasCommonVars
 				.getBillCorrespondingControl();
-		if (billControl.getIsSystemControl() == true) {// 系统自动控制
-			// String name = (String) this.cbbName.getSelectedItem();
+
+		// 系统自动控制
+		if (billControl.getIsSystemControl() == true) {
+
 			if (this.cbbName.getSelectedItem() == null) {
 				JOptionPane.showMessageDialog(this, "当你选择的单据对应是自动对应时,名称不可为空!!",
 						"提示", JOptionPane.INFORMATION_MESSAGE);
 				return false;
 			}
 
-		} else if (billControl.getIsSpecialControl() == true) {// 特殊控制
+			// 特殊控制
+		} else if (billControl.getIsSpecialControl() == true) {
 			// 所有控制代码写在服务器端
 		}
 		return true;
@@ -2403,9 +2589,9 @@ public class FmBillCorresponding extends JFrameBase {
 	}
 
 	/**
-	 * This method initializes rbName	
-	 * 	
-	 * @return javax.swing.JRadioButton	
+	 * This method initializes rbName
+	 * 
+	 * @return javax.swing.JRadioButton
 	 */
 	private JRadioButton getRbName() {
 		if (rbName == null) {
@@ -2417,7 +2603,10 @@ public class FmBillCorresponding extends JFrameBase {
 			rbName.setText("名称");
 			rbName.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-					initBillTypeUI();// 初始化 类型与报关名称 控件
+
+					// 初始化 类型与报关名称 控件
+					initBillTypeUI();
+
 				}
 			});
 		}
@@ -2425,9 +2614,9 @@ public class FmBillCorresponding extends JFrameBase {
 	}
 
 	/**
-	 * This method initializes rbNameSpec	
-	 * 	
-	 * @return javax.swing.JRadioButton	
+	 * This method initializes rbNameSpec
+	 * 
+	 * @return javax.swing.JRadioButton
 	 */
 	private JRadioButton getRbNameSpec() {
 		if (rbNameSpec == null) {
@@ -2438,7 +2627,10 @@ public class FmBillCorresponding extends JFrameBase {
 			rbNameSpec.setText("名称+规格");
 			rbNameSpec.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-					initBillTypeUI();// 初始化 类型与报关名称 控件
+
+					// 初始化 类型与报关名称 控件
+					initBillTypeUI();
+
 				}
 			});
 		}

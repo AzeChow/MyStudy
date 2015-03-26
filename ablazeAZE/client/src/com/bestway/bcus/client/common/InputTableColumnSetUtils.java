@@ -56,7 +56,7 @@ public class InputTableColumnSetUtils {
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
-						
+
 						lsResult.add(tempColumn);
 						break;
 					}
@@ -76,9 +76,7 @@ public class InputTableColumnSetUtils {
 		}
 		for (int i = 0; i < lsResult.size(); i++) {
 			JTableListColumn column = (JTableListColumn) lsResult.get(i);
-			column
-					.setCaption(String.valueOf(i + 1) + ":"
-							+ column.getCaption());
+			column.setCaption(String.valueOf(i + 1) + ":" + column.getCaption());
 		}
 		JTableListColumn column = new JTableListColumn();
 		column.setCaption("错误信息");
@@ -95,8 +93,10 @@ public class InputTableColumnSetUtils {
 	 * @return
 	 */
 	public static List<String> getColumnFieldIndex(String tableFlag) {
+
 		List lsDestColumnSet = systemAction.findInputTableColumnSet(
 				new Request(CommonVars.getCurrUser()), tableFlag);
+
 		if (lsDestColumnSet.isEmpty()) {
 			lsDestColumnSet = columnCache.get(tableFlag);
 		}
@@ -119,6 +119,5 @@ public class InputTableColumnSetUtils {
 		}
 		return lsIndex;
 	}
-
 
 }

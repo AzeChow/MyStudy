@@ -8,11 +8,13 @@ package com.bestway.bcs.client.bcsinnermerge;
 
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.LayoutManager;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -21,13 +23,12 @@ import javax.swing.SwingConstants;
 import com.bestway.bcus.client.common.CommonVars;
 import com.bestway.ui.winuicontrol.drawflow.FlowButton;
 import com.bestway.ui.winuicontrol.drawflow.FlowLine;
-import java.awt.Font;
 
 /**
  * @author xxm
  * 
- * // change the template for this generated type comment go to Window -
- * Preferences - Java - Code Style - Code Templates
+ *         // change the template for this generated type comment go to Window -
+ *         Preferences - Java - Code Style - Code Templates
  */
 public class PnContractFlow extends JPanel {
 
@@ -339,6 +340,10 @@ public class PnContractFlow extends JPanel {
 	private FlowButton getFlowButton() {
 		if (flowButton == null) {
 			flowButton = new FlowButton();
+			flowButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				}
+			});
 			flowButton.setBounds(new Rectangle(28, 91, 166, 33));
 			flowButton
 					.setActionCommand("com.bestway.bcs.client.bcsinnermerge.FmBcsTenInnerMerge");
@@ -499,6 +504,10 @@ public class PnContractFlow extends JPanel {
 	private FlowButton getFlowButton13() {
 		if (flowButton13 == null) {
 			flowButton13 = new FlowButton();
+			flowButton13.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				}
+			});
 			flowButton13.setBounds(new Rectangle(28, 186, 166, 33));
 			flowButton13.setText("工厂与报关对比");
 			flowButton13
@@ -524,31 +533,33 @@ public class PnContractFlow extends JPanel {
 	}
 
 	/**
-	 * This method initializes flowButton1111	
-	 * 	
-	 * @return com.bestway.ui.winuicontrol.drawflow.FlowButton	
+	 * This method initializes flowButton1111
+	 * 
+	 * @return com.bestway.ui.winuicontrol.drawflow.FlowButton
 	 */
 	private FlowButton getFlowButton1111() {
 		if (flowButton1111 == null) {
 			flowButton1111 = new FlowButton();
 			flowButton1111.setBounds(new Rectangle(270, 291, 133, 30));
 			flowButton1111.setText("统计报表");
-			flowButton1111.setActionCommand("com.bestway.bcs.client.contractstat.FmContractReport");
+			flowButton1111
+					.setActionCommand("com.bestway.bcs.client.contractstat.FmContractReport");
 		}
 		return flowButton1111;
 	}
 
 	/**
-	 * This method initializes flowButton1112	
-	 * 	
-	 * @return com.bestway.ui.winuicontrol.drawflow.FlowButton	
+	 * This method initializes flowButton1112
+	 * 
+	 * @return com.bestway.ui.winuicontrol.drawflow.FlowButton
 	 */
 	private FlowButton getFlowButton1112() {
 		if (flowButton1112 == null) {
 			flowButton1112 = new FlowButton();
 			flowButton1112.setBounds(new Rectangle(270, 329, 133, 30));
 			flowButton1112.setText("报关分析");
-			flowButton1112.setActionCommand("com.bestway.bcs.client.contractanalyse.FmCustomsAnalyse");
+			flowButton1112
+					.setActionCommand("com.bestway.bcs.client.contractanalyse.FmCustomsAnalyse");
 		}
 		return flowButton1112;
 	}

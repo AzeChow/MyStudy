@@ -33,9 +33,8 @@ import com.bestway.customs.common.entity.BaseCustomsDeclaration;
 import com.bestway.customs.common.entity.BaseCustomsDeclarationCommInfo;
 
 /**
- * @author Administrator
- *  // change the template for this generated type comment go to Window -
- * Preferences - Java - Code Style - Code Templates
+ * @author Administrator // change the template for this generated type comment
+ *         go to Window - Preferences - Java - Code Style - Code Templates
  */
 public class DgBcsExportCustomsDeclaration extends
 		DgBaseExportCustomsDeclaration {
@@ -47,15 +46,9 @@ public class DgBcsExportCustomsDeclaration extends
 		projectType = ProjectType.BCS;
 		lbCompanyEmsNo.setVisible(false);
 		tfCompanyEmsNo.setVisible(false);
-		tfEmsNo.setBounds(213, 21, 206, 19);
+		tfEmsNo.setBounds(239, 10, 150, 21);
 	}
 
-	// @Override
-	// protected void initUIComponents() {
-	// super.initUIComponents();
-	// this.cbbImpExpType.addItem(new ItemProperty(Integer.valueOf(
-	// ImpExpType.REMAIN_FORWARD).toString(), "余料结转"));
-	// }
 	/**
 	 * 当新增或删除时，显示最初数据
 	 */
@@ -71,7 +64,8 @@ public class DgBcsExportCustomsDeclaration extends
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.bestway.client.custom.common.DgBaseImportCustomsDeclaration#newCustomsDeclaration()
+	 * @see com.bestway.client.custom.common.DgBaseImportCustomsDeclaration#
+	 * newCustomsDeclaration()
 	 */
 	protected BaseCustomsDeclaration newCustomsDeclaration() {
 		return new BcsCustomsDeclaration();
@@ -88,20 +82,26 @@ public class DgBcsExportCustomsDeclaration extends
 	}
 
 	protected void lookFromMateriel() {
+
 		if (commInfoModel.getCurrentRow() == null) {
 			return;
 		}
+
 		BcsCustomsFromMateriel obj = null;
+
 		BaseCustomsDeclarationCommInfo info = (BaseCustomsDeclarationCommInfo) commInfoModel
 				.getCurrentRow();
-		List list = baseEncAction.getMaterielByCustoms(new Request(CommonVars
-				.getCurrUser()), info);
+
+		List list = baseEncAction.getMaterielByCustoms(
+				new Request(CommonVars.getCurrUser()), info);
+
 		if (list != null && list.size() > 0) {
 			obj = (BcsCustomsFromMateriel) list.get(0);
 		}
 		if (obj == null) {
 			return;
 		}
+
 		DgFromMaterielEdit dg = new DgFromMaterielEdit();
 		dg.setProjectType(ProjectType.BCS);
 		dg.setMateriel(obj.getMateriel());
@@ -126,41 +126,46 @@ public class DgBcsExportCustomsDeclaration extends
 		dg.setTradeCode(tradeCode);
 		return dg;
 	}
+
 	/**
 	 * 检查商品明细与当前余量
+	 * 
 	 * @return
 	 */
 	@Override
 	protected String checkCurrentRemainAmount() {
-		String str ="";
+		String str = "";
 		Integer impExpType = customsDeclaration.getImpExpType();
 		boolean isMaterial = EncCommon.isMaterial(impExpType);
 		String tradeCode = customsDeclaration.getTradeCode();
-		Contract contract =(Contract) emsHead;
-		boolean isTrue = false;//是否存在数量大于当前余量的
+		Contract contract = (Contract) emsHead;
+		boolean isTrue = false;// 是否存在数量大于当前余量的
 		str = "报关单商品序号:";
-		//出口报关单，且报关单类型不等于海关批准内销的报关单，进行控制
+		// 出口报关单，且报关单类型不等于海关批准内销的报关单，进行控制
 		List<BaseCustomsDeclarationCommInfo> commInfo = commInfoModel.getList();
 		if (commInfo == null) {
 			return str;
 		}
 		for (int i = 0; i < commInfo.size(); i++) {
-			BaseCustomsDeclarationCommInfo customsDeclarationCommInfo = (BaseCustomsDeclarationCommInfo) commInfo.get(i);
-		    BcsContractExeInfo info = null;
-			info = ((ContractExeAction) this.baseEncAction).findBcsContractExeInfo(
-					new Request(CommonVars.getCurrUser(), true), isMaterial,
-					impExpType, tradeCode, contract, customsDeclarationCommInfo
-							.getCommSerialNo().toString(),
-					customsDeclarationCommInfo.getBaseCustomsDeclaration()
-							.getCustomsEnvelopBillNo());
-			
+			BaseCustomsDeclarationCommInfo customsDeclarationCommInfo = (BaseCustomsDeclarationCommInfo) commInfo
+					.get(i);
+			BcsContractExeInfo info = null;
+			info = ((ContractExeAction) this.baseEncAction)
+					.findBcsContractExeInfo(
+							new Request(CommonVars.getCurrUser(), true),
+							isMaterial, impExpType, tradeCode, contract,
+							customsDeclarationCommInfo.getCommSerialNo()
+									.toString(), customsDeclarationCommInfo
+									.getBaseCustomsDeclaration()
+									.getCustomsEnvelopBillNo());
+
 			info.setCurrentRemain(info.getCurrentRemain()
 					+ (customsDeclarationCommInfo.getCommAmount() == null ? 0.0
 							: customsDeclarationCommInfo.getCommAmount()));
-			
+
 			double commAmount = customsDeclarationCommInfo.getCommAmount();
 			if (commAmount > info.getCurrentRemain()) {
-				str += customsDeclarationCommInfo.getCommSerialNo()+",";
+				str += customsDeclarationCommInfo.getCommSerialNo() + ",";
 				isTrue = true;
 			}
 		}
@@ -170,22 +175,22 @@ public class DgBcsExportCustomsDeclaration extends
 			str += "数量不能大于可余料转出数";
 		} else if (impExpType == ImpExpType.REWORK_EXPORT) {// 返工复出
 			str += "数量不能大于可返工复出量";
-		}  else {
+		} else {
 			str += "数量不能大于当前余量";
 		}
-		if(isTrue){
+		if (isTrue) {
 			return str;
-		}else{
+		} else {
 			return "";
 		}
 	}
-	
+
 	@Override
 	protected boolean saveCustom() {
 		Date declareDate = this.cbbDeclarationDate.getDate();
 		Date beginDate = ((Contract) emsHead).getBeginDate();
 		Date endDate = ((Contract) emsHead).getEndDate();
-//		Date deferDate = ((Contract) emsHead).getDeferDate();
+		// Date deferDate = ((Contract) emsHead).getDeferDate();
 		if (declareDate != null) {
 			if (declareDate.compareTo(beginDate) < 0) {
 				JOptionPane.showMessageDialog(
@@ -194,14 +199,14 @@ public class DgBcsExportCustomsDeclaration extends
 				return false;
 			}
 		}
-//		if (deferDate != null) {
-//			if (declareDate != null && declareDate.compareTo(deferDate) > 0) {
-//				JOptionPane.showMessageDialog(
-//						DgBcsExportCustomsDeclaration.this, "申报日期不能大于合同延期期限",
-//						"提示", JOptionPane.INFORMATION_MESSAGE);
-//				return false;
-//			}
-//		} else 
+		// if (deferDate != null) {
+		// if (declareDate != null && declareDate.compareTo(deferDate) > 0) {
+		// JOptionPane.showMessageDialog(
+		// DgBcsExportCustomsDeclaration.this, "申报日期不能大于合同延期期限",
+		// "提示", JOptionPane.INFORMATION_MESSAGE);
+		// return false;
+		// }
+		// } else
 		if (endDate != null) {
 			if (declareDate != null && declareDate.compareTo(endDate) > 0) {
 				JOptionPane.showMessageDialog(

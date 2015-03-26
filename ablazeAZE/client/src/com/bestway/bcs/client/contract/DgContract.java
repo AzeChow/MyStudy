@@ -83,9 +83,9 @@ import com.bestway.bcus.client.common.CustomBaseRender;
 import com.bestway.bcus.client.common.CustomReportDataSource;
 import com.bestway.bcus.client.common.DataState;
 import com.bestway.bcus.client.common.DgReportViewer;
-import com.bestway.bcus.client.common.InitialFocusSetter.MyOwnFocusTraversalPolicy;
 import com.bestway.bcus.client.common.ItemProperty;
 import com.bestway.bcus.client.common.TableCheckBoxRender;
+import com.bestway.bcus.client.common.InitialFocusSetter.MyOwnFocusTraversalPolicy;
 import com.bestway.bcus.client.common.tableeditor.JNumberForcedTableCellRenderer;
 import com.bestway.bcus.client.common.tableeditor.JNumberTableCellEditor;
 import com.bestway.bcus.client.common.tableeditor.TableCellEditorEnableListener;
@@ -3048,21 +3048,49 @@ public class DgContract extends JDialogBase {
 			btnAmountToInteger
 					.addActionListener(new java.awt.event.ActionListener() {
 						public void actionPerformed(java.awt.event.ActionEvent e) {
+
 							if (tableModelImg == null
 									|| tableModelImg.getList().size() <= 0) {
 								return;
 							}
+
 							List list = tableModelImg.getList();
+
 							if (list.size() <= 0) {
 								return;
 							}
+
+							/*
+							 * @see 只针对 新增和已修改的标记料件进行数量取整
+							 */
 							if (JOptionPane.showConfirmDialog(DgContract.this,
-									"是否将所有记录的数量取整!!!", "提示",
+									"是否将所有【新增,已修改】标记记录的数量取整 ?", "提示",
 									JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+
+								List changeIntImgAmountList = new ArrayList();
+
+								for (int i = 0; i < list.size(); i++) {
+
+									ContractImg img = (ContractImg) list.get(i);
+
+									String modifyMark = img.getModifyMark();
+
+									if (StringUtils.isNotBlank(modifyMark)
+											&& (modifyMark.equals("1") || modifyMark
+													.equals("3"))) {
+
+										changeIntImgAmountList.add(img);
+
+									}
+
+								}
+
 								list = contractAction
 										.saveContractImgAmountInteger(
 												new Request(CommonVars
-														.getCurrUser()), list);
+														.getCurrUser()),
+												changeIntImgAmountList);
+
 								tableModelImg.updateRows(list);
 							}
 						}

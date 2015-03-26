@@ -11,11 +11,11 @@ import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeModel;
 
 import com.bestway.bcus.client.common.CommonVars;
+import com.bestway.client.windows.form.FmMain.MenuActionListener;
 import com.bestway.client.windows.form.JModuleMenu;
 import com.bestway.client.windows.form.JModuleMenuItem;
 import com.bestway.client.windows.form.LoadPlugin;
 import com.bestway.client.windows.form.ModuleTreeNode;
-import com.bestway.client.windows.form.FmMain.MenuActionListener;
 import com.bestway.common.Request;
 import com.bestway.common.tools.action.ToolsAction;
 import com.bestway.common.tools.entity.PluginInfoClient;
@@ -44,7 +44,7 @@ public class LoadPluginImpl implements LoadPlugin {
 
 	//
 	// key == fileName + length(file size)
-	//	
+	//
 	Map<String, String> plugMap = null;
 
 	/**
@@ -59,18 +59,26 @@ public class LoadPluginImpl implements LoadPlugin {
 				.loadClientPlugin(new Request(CommonVars.getCurrUser()));
 
 		DefaultTreeModel model = (DefaultTreeModel) jtree.getModel();
+
 		ModuleTreeNode root = (ModuleTreeNode) model.getRoot();
+
 		Map map = putFullCaptionInMap(null, root);
+
 		for (PluginInfoClient pluginIn : pluginInfoClients) {
 			// -------------------------------------------------------
 			// 这段代码是为了替换
 			boolean isreplace = (pluginIn.getReplace() != null && pluginIn
 					.getReplace().equals("true")) ? true : false;
+
 			String paranet = pluginIn.getReplacePath();
+
 			if (map.containsKey(paranet) && isreplace) {
+
 				ModuleTreeNode oldNode = (ModuleTreeNode) map.get(paranet);
+
 				if (pluginIn.getReplaceform() != null
 						&& !pluginIn.getReplaceform().equals("")) {
+
 					oldNode.setTargetForm(pluginIn.getReplaceform());
 				}
 			}
@@ -225,8 +233,8 @@ public class LoadPluginImpl implements LoadPlugin {
 			List<ModuleTreeNode> returnList) {
 		for (int i = 0; i < pluginTreeNodeList.size(); i++) {
 			PluginTreeNode item = pluginTreeNodeList.get(i);
-			ModuleTreeNode node = new ModuleTreeNode(item.getCaption(), item
-					.getIsshow(), item.getTargetForm());
+			ModuleTreeNode node = new ModuleTreeNode(item.getCaption(),
+					item.getIsshow(), item.getTargetForm());
 			returnList.add(node);
 			createNewChilderNode(item.getList(), node);
 		}
@@ -237,8 +245,8 @@ public class LoadPluginImpl implements LoadPlugin {
 			ModuleTreeNode parentNode) {
 		for (int i = 0; i < pluginTreeNodeList.size(); i++) {
 			PluginTreeNode item = pluginTreeNodeList.get(i);
-			ModuleTreeNode node = new ModuleTreeNode(item.getCaption(), item
-					.getIsshow(), item.getTargetForm());
+			ModuleTreeNode node = new ModuleTreeNode(item.getCaption(),
+					item.getIsshow(), item.getTargetForm());
 			parentNode.add(node);
 			createNewChilderNode(item.getList(), node);
 		}
@@ -300,8 +308,8 @@ public class LoadPluginImpl implements LoadPlugin {
 			List<JModuleMenu> returnList) {
 		for (int i = 0; i < pluginTreeNodeList.size(); i++) {
 			PluginTreeNode item = pluginTreeNodeList.get(i);
-			JModuleMenu node = new JModuleMenu("", item.getCaption(), item
-					.getIsshow(), item.getTargetForm(), null);
+			JModuleMenu node = new JModuleMenu("", item.getCaption(),
+					item.getIsshow(), item.getTargetForm(), null);
 			returnList.add(node);
 			createNewChilderMenu(item.getList(), node);
 		}
@@ -313,14 +321,14 @@ public class LoadPluginImpl implements LoadPlugin {
 		for (int i = 0; i < pluginTreeNodeList.size(); i++) {
 			PluginTreeNode item = pluginTreeNodeList.get(i);
 			if (item.getList().size() > 0) {
-				JModuleMenu node = new JModuleMenu("", item.getCaption(), item
-						.getIsshow(), item.getTargetForm(), null);
+				JModuleMenu node = new JModuleMenu("", item.getCaption(),
+						item.getIsshow(), item.getTargetForm(), null);
 				parentNode.add(node);
 				createNewChilderMenu(item.getList(), node);
 			} else {
-				JModuleMenuItem node = new JModuleMenuItem("", item
-						.getCaption(), item.getIsshow(), item.getTargetForm(),
-						null);
+				JModuleMenuItem node = new JModuleMenuItem("",
+						item.getCaption(), item.getIsshow(),
+						item.getTargetForm(), null);
 				parentNode.add(node);
 			}
 		}
@@ -376,7 +384,7 @@ public class LoadPluginImpl implements LoadPlugin {
 				String fileName = f.getName();
 				//
 				// 打包的文件才可以
-				//			
+				//
 				if (f.isDirectory() == true || !fileName.endsWith(".jar")) {
 					continue;
 				}

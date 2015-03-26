@@ -467,7 +467,7 @@ public class DgCompanyOther extends JDialogBase {
 		/**
 		 * 2015-1-19当报关单（打印）默认为空时，打印的出口发票发运港为进出口岸
 		 */
-//		tfSendCustoms.setEnabled(false);
+		// tfSendCustoms.setEnabled(false);
 	}
 
 	private void fillWondow() {
@@ -654,11 +654,12 @@ public class DgCompanyOther extends JDialogBase {
 			this.tfSendCustoms.setText("东莞");
 		}
 		if (this.companyOther.getInvoiceAddress() != null) {
-			this.tfInvoiceAddress.setText(this.companyOther.getInvoiceAddress());
+			this.tfInvoiceAddress
+					.setText(this.companyOther.getInvoiceAddress());
 		} else {
 			this.tfInvoiceAddress.setText("太平");
 		}
-		
+
 		this.tfSendMail.setText(this.companyOther.getSendMail());
 		this.jCheckBox4
 				.setSelected(this.companyOther.getIsManualPreCode() == null ? false
@@ -1776,7 +1777,8 @@ public class DgCompanyOther extends JDialogBase {
 	private JTextField getTfPreCustomsDeclarationCodes() {
 		if (tfPreCustomsDeclarationCodes == null) {
 			tfPreCustomsDeclarationCodes = new JTextField();
-			tfPreCustomsDeclarationCodes.setBounds(new Rectangle(205, 153, 163, 20));
+			tfPreCustomsDeclarationCodes.setBounds(new Rectangle(205, 153, 163,
+					20));
 		}
 		return tfPreCustomsDeclarationCodes;
 	}
@@ -2280,7 +2282,8 @@ public class DgCompanyOther extends JDialogBase {
 	private JCheckBox getCbIsCustomAutoAttachedBill() {
 		if (cbIsCustomAutoAttachedBill == null) {
 			cbIsCustomAutoAttachedBill = new JCheckBox();
-			cbIsCustomAutoAttachedBill.setBounds(new Rectangle(356, 235, 204, 20));
+			cbIsCustomAutoAttachedBill.setBounds(new Rectangle(356, 235, 204,
+					20));
 			cbIsCustomAutoAttachedBill.setText("报关单自动带监管证件代码");
 		}
 		return cbIsCustomAutoAttachedBill;
@@ -2432,7 +2435,8 @@ public class DgCompanyOther extends JDialogBase {
 			cbIsExportPackinglistOrInvoice = new JCheckBox();
 			cbIsExportPackinglistOrInvoice
 					.setText("【出口装箱单(包装种类在明细及商品编码)/出口加工发票】打印显示购货单位/发货单位");
-			cbIsExportPackinglistOrInvoice.setBounds(new Rectangle(45, 454, 559, 20));
+			cbIsExportPackinglistOrInvoice.setBounds(new Rectangle(45, 454,
+					559, 20));
 		}
 		return cbIsExportPackinglistOrInvoice;
 	}
@@ -2506,7 +2510,8 @@ public class DgCompanyOther extends JDialogBase {
 	private JCheckBox getCbIsAllowBGDDetailExceed20() {
 		if (cbIsAllowBGDDetailExceed20 == null) {
 			cbIsAllowBGDDetailExceed20 = new JCheckBox();
-			cbIsAllowBGDDetailExceed20.setBounds(new Rectangle(356, 310, 189, 20));
+			cbIsAllowBGDDetailExceed20.setBounds(new Rectangle(356, 310, 189,
+					20));
 			cbIsAllowBGDDetailExceed20.setText("报关单明细允许超过20项");
 		}
 		return cbIsAllowBGDDetailExceed20;
@@ -2628,7 +2633,8 @@ public class DgCompanyOther extends JDialogBase {
 	private JCheckBox getCbIsSaveCustomsEnvelopBillNo() {
 		if (cbIsSaveCustomsEnvelopBillNo == null) {
 			cbIsSaveCustomsEnvelopBillNo = new JCheckBox();
-			cbIsSaveCustomsEnvelopBillNo.setBounds(new Rectangle(356, 335, 254, 20));
+			cbIsSaveCustomsEnvelopBillNo.setBounds(new Rectangle(356, 335, 254,
+					20));
 			cbIsSaveCustomsEnvelopBillNo.setText("进出口报关单转厂业务是否强制检查关封号");
 		}
 		return cbIsSaveCustomsEnvelopBillNo;
@@ -2887,7 +2893,7 @@ public class DgCompanyOther extends JDialogBase {
 		if (cbIsTransadd == null) {
 			cbIsTransadd = new JCheckBox();
 			cbIsTransadd.setBounds(new Rectangle(45, 471, 455, 26));
-			cbIsTransadd.setText("打印报关单不显示【转关附加】信息");
+			cbIsTransadd.setText("打印报关单不显示【转关附加】信息和税费征收情况");
 		}
 		return cbIsTransadd;
 	}
@@ -2963,6 +2969,7 @@ public class DgCompanyOther extends JDialogBase {
 		}
 		return btnPisTest;
 	}
+
 	private JLabel getLabel_7() {
 		if (label_7 == null) {
 			label_7 = new JLabel();
@@ -2971,6 +2978,7 @@ public class DgCompanyOther extends JDialogBase {
 		}
 		return label_7;
 	}
+
 	private JTextField getTfInvoiceAddress() {
 		if (tfInvoiceAddress == null) {
 			tfInvoiceAddress = new JTextField();

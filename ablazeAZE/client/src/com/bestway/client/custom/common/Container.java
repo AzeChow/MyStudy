@@ -43,7 +43,9 @@ public final class Container {
 					}
 					BaseCustomsDeclarationContainer obj = (BaseCustomsDeclarationContainer) containers
 							.get(i);
+
 					int count = getStandardCaptionCountByContainer(obj);
+
 					// 21位的字符串,集装箱编号+集装箱标识个数+集装箱代码+车架号如果不够21位补空字符
 					String temp = obj.getContainerCode().trim()
 							+ count
@@ -54,21 +56,7 @@ public final class Container {
 					temp += repeatStr(" ", 21 - temp.length()) + ",";
 					returnStr += temp;
 				}
-				// Iterator iterator = containers.iterator();
-				// while (iterator.hasNext()) {
-				// BaseCustomsDeclarationContainer obj =
-				// (BaseCustomsDeclarationContainer) iterator
-				// .next();
-				// int count = getStandardCaptionCountByContainer(obj);
-				// // 21位的字符串,集装箱编号+集装箱标识个数+集装箱代码+车架号如果不够21位补空字符
-				// String temp = obj.getContainerCode().trim()
-				// + count
-				// + obj.getSrtJzx().getCode().trim()
-				// + (obj.getSrttj() == null ? "" : obj.getSrttj()
-				// .getCode().trim());
-				// temp += repeatStr(" ", 21 - temp.length()) + ",";
-				// returnStr += temp;
-				// }
+
 				returnStr = returnStr.substring(0, returnStr.length() - 1);
 			}
 		}
@@ -115,8 +103,8 @@ public final class Container {
 				|| obj.getSrtJzx().getName().length() < 2) {
 			return 0;
 		}
-		int temp = Integer.parseInt(obj.getSrtJzx().getName().trim().substring(
-				0, 2));
+		int temp = Integer.parseInt(obj.getSrtJzx().getName().trim()
+				.substring(0, 2));
 		return temp / 20 + (temp % 20 > 0 ? 1 : 0);
 	}
 
@@ -132,8 +120,8 @@ public final class Container {
 				|| obj.getSrtJzx().getName().length() < 2) {
 			return 0;
 		}
-		int temp = Integer.parseInt(obj.getSrtJzx().getName().trim().substring(
-				0, 2));
+		int temp = Integer.parseInt(obj.getSrtJzx().getName().trim()
+				.substring(0, 2));
 		return temp / 20 /* + (temp % 20 > 0 ? 1 : 0) */;
 	}
 

@@ -26,9 +26,8 @@ import com.bestway.bcus.custombase.entity.parametercode.LicenseDocu;
 import com.bestway.ui.winuicontrol.JDialogBase;
 
 /**
- * @author bsway
- *  // change the template for this generated type comment go to Window -
- * Preferences - Java - Code Style - Code Templates
+ * @author bsway // change the template for this generated type comment go to
+ *         Window - Preferences - Java - Code Style - Code Templates
  */
 public class DgAttachedBill extends JDialogBase {
 
@@ -48,9 +47,8 @@ public class DgAttachedBill extends JDialogBase {
 	public DgAttachedBill() {
 		super();
 		initialize();
-		this.initComponents();
-		this
-				.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+		initComponents();
+		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 	}
 
 	public void setVisible(boolean isFalg) {
@@ -199,13 +197,23 @@ public class DgAttachedBill extends JDialogBase {
 		this.fillJList();
 	}
 
+	/*
+	 * 填充列表 所有的随附单证 代码 + 名称
+	 */
 	private void fillJList() {
+
 		Vector vector = new Vector();
+
+		// 获取所有的随附单证 类型
 		List list = CustomBaseList.getInstance().getLicensedocus();
+
 		for (int i = 0; i < list.size(); i++) {
+
 			LicenseDocu obj = (LicenseDocu) list.get(i);
+
 			CheckableItem item = new CheckableItem(obj.getCode() == null ? ""
 					: obj.getCode(), obj.getName() == null ? "" : obj.getName());
+
 			vector.add(item);
 		}
 		this.jList.setListData(vector);
@@ -223,8 +231,7 @@ public class DgAttachedBill extends JDialogBase {
 				if (item.isSelected) {
 					continue;
 				}
-				if (String.valueOf(chars[i]).equals(
-						item.getCode().trim())) {
+				if (String.valueOf(chars[i]).equals(item.getCode().trim())) {
 					item.setSelected(true);
 				}
 			}

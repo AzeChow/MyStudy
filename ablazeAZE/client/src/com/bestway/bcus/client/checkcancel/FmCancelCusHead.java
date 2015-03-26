@@ -8,7 +8,9 @@ package com.bestway.bcus.client.checkcancel;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -18,6 +20,7 @@ import java.util.List;
 import java.util.Vector;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -38,7 +41,6 @@ import com.bestway.bcus.client.message.DgRecvProcessMessage;
 import com.bestway.bcus.manualdeclare.action.ManualDeclareAction;
 import com.bestway.bcus.manualdeclare.entity.EmsHeadH2k;
 import com.bestway.bcus.message.action.MessageAction;
-import com.bestway.client.custom.common.DgCommonErrorMessage;
 import com.bestway.client.util.JTableListModel;
 import com.bestway.client.util.JTableListModelAdapter;
 import com.bestway.common.ErrorMessage;
@@ -47,13 +49,6 @@ import com.bestway.common.constant.DeclareState;
 import com.bestway.common.constant.ModifyMarkState;
 import com.bestway.common.constant.RrportDelcareType;
 import com.bestway.ui.winuicontrol.JInternalFrameBase;
-
-import javax.swing.JLabel;
-
-import org.apache.tools.ant.taskdefs.optional.sitraka.CovReport.ReportType;
-
-import java.awt.Font;
-import java.awt.Dimension;
 
 /**
  * @author Administrator // change the template for this generated type comment
@@ -79,7 +74,7 @@ public class FmCancelCusHead extends JInternalFrameBase {
 
 	private JScrollPane jScrollPane = null;
 
-	private CheckHead checkHead = null;  //  @jve:decl-index=0:
+	private CheckHead checkHead = null; // @jve:decl-index=0:
 
 	private CheckCancelAction checkCancelAction = null; // @jve:decl-index=0:
 
@@ -127,13 +122,13 @@ public class FmCancelCusHead extends JInternalFrameBase {
 	 * @return void
 	 */
 	private void initialize() {
-		this.setSize(709, 377);
+		this.setSize(919, 377);
 		this.setTitle("核销计算-表头");
 		this.setContentPane(getJContentPane());
 
 		List dataSource = null;
-		dataSource = checkCancelAction.findCancelHead(new Request(CommonVars
-				.getCurrUser()), false);
+		dataSource = checkCancelAction.findCancelHead(
+				new Request(CommonVars.getCurrUser()), false);
 		if (dataSource == null) {
 			dataSource = new Vector();
 		}
@@ -162,8 +157,8 @@ public class FmCancelCusHead extends JInternalFrameBase {
 						return list;
 					}
 				});
-		jTable.getColumnModel().getColumn(2).setCellRenderer(
-				new DefaultTableCellRenderer() {
+		jTable.getColumnModel().getColumn(2)
+				.setCellRenderer(new DefaultTableCellRenderer() {
 					public Component getTableCellRendererComponent(
 							JTable table, Object value, boolean isSelected,
 							boolean hasFocus, int row, int column) {
@@ -186,8 +181,8 @@ public class FmCancelCusHead extends JInternalFrameBase {
 						return returnValue;
 					}
 				});
-		jTable.getColumnModel().getColumn(4).setCellRenderer(
-				new DefaultTableCellRenderer() {
+		jTable.getColumnModel().getColumn(4)
+				.setCellRenderer(new DefaultTableCellRenderer() {
 					public Component getTableCellRendererComponent(
 							JTable table, Object value, boolean isSelected,
 							boolean hasFocus, int row, int column) {
@@ -285,7 +280,7 @@ public class FmCancelCusHead extends JInternalFrameBase {
 		String defaultDate = bartDateFormat.format(now);
 		SimpleDateFormat formatHour = new SimpleDateFormat("HH:mm:ss");
 		CancelHead maxObj = checkCancelAction.findMaxCancelTimesCancelHead(
-				new Request(CommonVars.getCurrUser()), false,null);
+				new Request(CommonVars.getCurrUser()), false, null);
 		if (maxObj != null) {
 			Date d = maxObj.getEndDate();
 			if (d != null) {
@@ -324,9 +319,9 @@ public class FmCancelCusHead extends JInternalFrameBase {
 			jButton.addActionListener(new java.awt.event.ActionListener() {
 
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-					
-					checkCancelAuthorityAction.addDataCancel(new Request(CommonVars
-									.getCurrUser()));
+
+					checkCancelAuthorityAction.addDataCancel(new Request(
+							CommonVars.getCurrUser()));
 					List list = checkCancelAction.findCancelHeadByType(
 							new Request(CommonVars.getCurrUser()),
 							RrportDelcareType.BEGINDELCARE, false);
@@ -337,9 +332,8 @@ public class FmCancelCusHead extends JInternalFrameBase {
 					}
 
 					List emsH2kList = null;
-					emsH2kList = checkCancelAction
-							.findEmsHeadH2k(new Request(CommonVars
-									.getCurrUser()));
+					emsH2kList = checkCancelAction.findEmsHeadH2k(new Request(
+							CommonVars.getCurrUser()));
 					if (emsH2kList.isEmpty())
 						return;
 					else {
@@ -348,8 +342,9 @@ public class FmCancelCusHead extends JInternalFrameBase {
 						fillCancelHead(cancelHead, emsHeadh2k);
 
 						cancelHead = (CancelCusHead) checkCancelAction
-								.saveCancelHead(new Request(CommonVars
-										.getCurrUser()), cancelHead);
+								.saveCancelHead(
+										new Request(CommonVars.getCurrUser()),
+										cancelHead);
 						tableModel.addRow(cancelHead);
 						setState();
 					}
@@ -500,8 +495,9 @@ public class FmCancelCusHead extends JInternalFrameBase {
 						cancelHead.setDeclareType(RrportDelcareType.DELCARE);// 正式报核
 						cancelHead.setDeclareState(DeclareState.APPLY_POR); // 正在预录入
 						cancelHead = (CancelCusHead) checkCancelAction
-								.saveCancelHead(new Request(CommonVars
-										.getCurrUser()), cancelHead);
+								.saveCancelHead(
+										new Request(CommonVars.getCurrUser()),
+										cancelHead);
 						tableModel.updateRow(cancelHead);
 						setState();
 					}
@@ -514,11 +510,12 @@ public class FmCancelCusHead extends JInternalFrameBase {
 
 	private void setState() {
 		jButton1.setEnabled(tableModel.getRowCount() > 0); // 修改
-//		jButton2.setEnabled(tableModel.getRowCount() > 0); // 删除
-		if(tableModel!=null&&tableModel.getCurrentRow()!=null){
+		// jButton2.setEnabled(tableModel.getRowCount() > 0); // 删除
+		if (tableModel != null && tableModel.getCurrentRow() != null) {
 			CancelCusHead cancelHead = (CancelCusHead) tableModel
 					.getCurrentRow();
-			jButton2.setEnabled(DeclareState.APPLY_POR.equals(cancelHead.getDeclareState()));
+			jButton2.setEnabled(DeclareState.APPLY_POR.equals(cancelHead
+					.getDeclareState()));
 		}
 		jButton4.setEnabled(tableModel.getRowCount() > 0); // 正式报核
 		btnDeclare.setEnabled(tableModel.getRowCount() > 0); // 海关申报
@@ -572,19 +569,20 @@ public class FmCancelCusHead extends JInternalFrameBase {
 					}
 				}
 			});
-			
+
 			jTable.getSelectionModel().addListSelectionListener(
-				new ListSelectionListener() {
-					@Override
-					public void valueChanged(ListSelectionEvent e) {
-						if(tableModel!=null&&tableModel.getCurrentRow()!=null){
-							CancelCusHead cancelHead = (CancelCusHead) tableModel
-									.getCurrentRow();
-							jButton2.setEnabled(DeclareState.APPLY_POR.equals(cancelHead.getDeclareState()));
+					new ListSelectionListener() {
+						@Override
+						public void valueChanged(ListSelectionEvent e) {
+							if (tableModel != null
+									&& tableModel.getCurrentRow() != null) {
+								CancelCusHead cancelHead = (CancelCusHead) tableModel
+										.getCurrentRow();
+								jButton2.setEnabled(DeclareState.APPLY_POR
+										.equals(cancelHead.getDeclareState()));
+							}
 						}
-					}
-				}
-			);
+					});
 
 			jTable.addKeyListener(new java.awt.event.KeyAdapter() {
 				public void keyPressed(java.awt.event.KeyEvent e) {
@@ -606,8 +604,9 @@ public class FmCancelCusHead extends JInternalFrameBase {
 									.setDeclareType(RrportDelcareType.BEGINDELCARE);
 						}
 						cancelHead = (CancelCusHead) checkCancelAction
-								.saveCancelHead(new Request(CommonVars
-										.getCurrUser()), cancelHead);
+								.saveCancelHead(
+										new Request(CommonVars.getCurrUser()),
+										cancelHead);
 						tableModel.updateRow(cancelHead);
 					} else if (e.isControlDown() == true
 							&& e.getKeyCode() == KeyEvent.VK_P) {
@@ -643,8 +642,9 @@ public class FmCancelCusHead extends JInternalFrameBase {
 						}
 
 						cancelHead = (CancelCusHead) checkCancelAction
-								.saveCancelHead(new Request(CommonVars
-										.getCurrUser()), cancelHead);
+								.saveCancelHead(
+										new Request(CommonVars.getCurrUser()),
+										cancelHead);
 						tableModel.updateRow(cancelHead);
 					}
 				}
@@ -739,11 +739,13 @@ public class FmCancelCusHead extends JInternalFrameBase {
 						return;
 					}
 					cancelHead = (CancelCusHead) tableModel.getCurrentRow();
-					if(cancelHead.getDeclareType().equals(RrportDelcareType.DELCARE)){
-						//海关申报逻辑检查
+					if (cancelHead.getDeclareType().equals(
+							RrportDelcareType.DELCARE)) {
+						// 海关申报逻辑检查
 						List<ErrorMessage> listError = checkCancelAction
-								.checkCancelData(new Request(CommonVars
-										.getCurrUser()), cancelHead);
+								.checkCancelData(
+										new Request(CommonVars.getCurrUser()),
+										cancelHead);
 						if (listError != null && listError.size() > 0) {
 							DgCancelErrorMessage dg = new DgCancelErrorMessage();
 							dg.setList(listError);
@@ -751,26 +753,26 @@ public class FmCancelCusHead extends JInternalFrameBase {
 							listError = dg.getJTableListModel().getList();
 							boolean result = false;
 							for (ErrorMessage em : listError) {
-								if(em.getIsAllow()){
+								if (em.getIsAllow()) {
 									result = true;
-								}else{
+								} else {
 									result = false;
 									break;
 								}
 							}
-							if(!result){
+							if (!result) {
 								return;
-								}
+							}
 						}
 					}
 					HashMap<String, Boolean> parameter = new HashMap<String, Boolean>();
 					if (cancelHead.getDeclareType().equals(
-							RrportDelcareType.DELCARE)) {//正式报核
+							RrportDelcareType.DELCARE)) {// 正式报核
 						DgCancelSelectDeclare dgSelectDeclare = new DgCancelSelectDeclare();
 						dgSelectDeclare.setVisible(true);
 						if (dgSelectDeclare.isSelectOk()) {
-							parameter = dgSelectDeclare.getParameter();	
-						}else{
+							parameter = dgSelectDeclare.getParameter();
+						} else {
 							return;
 						}
 					}

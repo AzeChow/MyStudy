@@ -10,6 +10,8 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -38,11 +40,8 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 
-import com.bestway.bcs.client.contract.BcsClientHelper;
-import com.bestway.bcs.client.contract.DgContract;
 import com.bestway.bcus.client.common.CommonProgress;
 import com.bestway.bcus.client.common.CommonVars;
-import com.bestway.bcus.client.common.CustomBaseComboBoxUI;
 import com.bestway.bcus.client.common.CustomBaseList;
 import com.bestway.bcus.client.common.CustomReportDataSource;
 import com.bestway.bcus.client.common.DgReportViewer;
@@ -61,7 +60,6 @@ import com.bestway.common.constant.DeclareState;
 import com.bestway.common.constant.DelcareType;
 import com.bestway.common.constant.EdiType;
 import com.bestway.common.constant.ModifyMarkState;
-import com.bestway.dzsc.dzscmanage.entity.DzscEmsPorHead;
 import com.bestway.ui.winuicontrol.JInternalFrameBase;
 
 /**
@@ -69,6 +67,14 @@ import com.bestway.ui.winuicontrol.JInternalFrameBase;
  *         go to Window - Preferences - Java - Code Style - Code Templates
  */
 public class FmEmsEdiMerger extends JInternalFrameBase {
+
+	// 变更次数
+	private static int MODIFY_TIME = 0;
+
+	// 变更日期
+	private static int MODIFY_DATE = 1;
+
+	private JMenuItem monthChangegCount;
 
 	private javax.swing.JPanel jContentPane = null;
 
@@ -142,6 +148,8 @@ public class FmEmsEdiMerger extends JInternalFrameBase {
 					.setBorder(javax.swing.BorderFactory
 							.createEtchedBorder(javax.swing.border.EtchedBorder.LOWERED));
 			jPopupMenuPrint.add(getMiChangegCount());
+			jPopupMenuPrint.add(getMonthChangegCount());
+
 		}
 		return jPopupMenuPrint;
 	}
@@ -183,11 +191,33 @@ public class FmEmsEdiMerger extends JInternalFrameBase {
 			miChangegCount
 					.addActionListener(new java.awt.event.ActionListener() {
 						public void actionPerformed(java.awt.event.ActionEvent e) {
-							printReport();
+							printReport(MODIFY_TIME);
 						}
 					});
 		}
 		return miChangegCount;
+	}
+
+	private JMenuItem getMonthChangegCount() {
+
+		if (monthChangegCount == null) {
+
+			monthChangegCount = new JMenuItem();
+
+			monthChangegCount.setText("[按变更日期]归并关系清单");
+
+			monthChangegCount.setSize(new Dimension(100, 30));
+
+			monthChangegCount
+					.addActionListener(new java.awt.event.ActionListener() {
+						public void actionPerformed(java.awt.event.ActionEvent e) {
+
+							printReport(MODIFY_DATE);
+
+						}
+					});
+		}
+		return monthChangegCount;
 	}
 
 	/**
@@ -196,7 +226,7 @@ public class FmEmsEdiMerger extends JInternalFrameBase {
 	 * @return void
 	 */
 	private void initialize() {
-		this.setSize(855, 572);
+		this.setSize(1073, 572);
 		this.setTitle("归并关系-表头");
 		this.setContentPane(getJContentPane());
 		List dataSource = null;
@@ -603,16 +633,18 @@ public class FmEmsEdiMerger extends JInternalFrameBase {
 					}
 					EmsEdiMergerHead isEmsEdiMergerHead = (EmsEdiMergerHead) tableModel
 							.getCurrentRow();
-					EmsEdiMergerHead newEmsEdiMergerHead = manualDeclearAction.findNewEmsEdiMergerHeadById(new Request(
-									CommonVars.getCurrUser()), isEmsEdiMergerHead.getId());
-					
-					if (newEmsEdiMergerHead.getDeclareState()
-							.equals(DeclareState.WAIT_EAA)) {
+					EmsEdiMergerHead newEmsEdiMergerHead = manualDeclearAction
+							.findNewEmsEdiMergerHeadById(
+									new Request(CommonVars.getCurrUser()),
+									isEmsEdiMergerHead.getId());
+
+					if (newEmsEdiMergerHead.getDeclareState().equals(
+							DeclareState.WAIT_EAA)) {
 						JOptionPane.showMessageDialog(FmEmsEdiMerger.this,
 								"审批状态为“等待审批”，不允许再次申报", "提示！", 0);
 						return;
 					}
-				
+
 					if (JOptionPane.showConfirmDialog(FmEmsEdiMerger.this,
 							"是否确定要将【归并关系】向海关申报吗？", "确认", 0) == 0) {
 						if (dataCheck()) { // 数据检查
@@ -952,6 +984,11 @@ public class FmEmsEdiMerger extends JInternalFrameBase {
 	private JButton getJButton7() {
 		if (jButton7 == null) {
 			jButton7 = new JButton();
+			jButton7.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+
+				}
+			});
 			jButton7.setPreferredSize(new Dimension(60, 30));
 			jButton7.setVisible(false);
 			jButton7.setText("打印");
@@ -1217,15 +1254,22 @@ public class FmEmsEdiMerger extends JInternalFrameBase {
 	 */
 	private JButton getBtnPrint() {
 		if (btnPrint == null) {
+
 			btnPrint = new JButton();
+
 			btnPrint.setPreferredSize(new Dimension(60, 30));
+
 			btnPrint.setText("打印");
+
 			btnPrint.setBounds(new Rectangle(125, 1, 66, 28));
+
 			btnPrint.addActionListener(new java.awt.event.ActionListener() {
+
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					// printReport();
 					getJPopupMenuPrint()
 							.show(btnPrint, 0, btnPrint.getHeight());
+
 				}
 			});
 		}
@@ -1233,141 +1277,218 @@ public class FmEmsEdiMerger extends JInternalFrameBase {
 	}
 
 	/**
-	 * 打印报表
+	 * 打印
 	 * 
+	 * @param modifyParam
+	 *            变更参数
 	 */
-	private void printReport() {
-		// if (this.cbbPrintParam.getSelectedItem() == null) {
-		// JOptionPane.showMessageDialog(null, "请选择要打印的项目!!", "提示",
-		// JOptionPane.INFORMATION_MESSAGE);
-		// return;
-		// }
-		List list = new ArrayList();
+	private void printReport(int modifyParam) {
+
 		EmsEdiMergerHead emsEdiMergerHead = (EmsEdiMergerHead) tableModel
 				.getCurrentRow();
-		if (emsEdiMergerHead != null) {
-			list.add(emsEdiMergerHead);
-		} else {
+
+		if (emsEdiMergerHead == null) {
+
 			JOptionPane.showMessageDialog(this, "请选择归并关系表头记录！", "提示",
 					JOptionPane.YES_NO_OPTION);
+
 			return;
 		}
-		// case 0:// 打印完整归并关系
-		// // printAllEms(emsEdiMergerHead);
-		// // break;
-		// case 1:// [按变更次数] 归并关系变更清单
+
 		try {
-			DgEmsPrintTime dg = new DgEmsPrintTime();
-			dg.setVisible(true);
-			if (!dg.isOk()) {
-				return;
+
+			Integer time = null;
+
+			Date beginDate = null;
+
+			Date endDate = null;
+
+			switch (modifyParam) {
+
+			// 变更次数
+			case 0:
+
+				DgEmsPrintTime dg = new DgEmsPrintTime();
+
+				dg.setVisible(true);
+
+				if (!dg.isOk()) {
+					return;
+				}
+
+				time = dg.getTime();
+
+				if (time <= -1) {
+					return;
+				}
+
+				break;
+
+			// 变更日期
+			case 1:
+
+				DgEmsPrintMonth dgEmsPrintMonth = new DgEmsPrintMonth();
+
+				dgEmsPrintMonth.setVisible(true);
+
+				if (!dgEmsPrintMonth.isOk()) {
+
+					return;
+				}
+
+				beginDate = dgEmsPrintMonth.getBeginDate();
+
+				endDate = dgEmsPrintMonth.getEndDate();
+
+				break;
+
+			default:
+				break;
 			}
-			int time = dg.getTime();
-			if (time <= -1) {
-				return;
-			}
+
 			Map<String, Object> parameters = new HashMap<String, Object>();
+
 			parameters.put("emsNo", emsEdiMergerHead.getEmsNo() == null ? ""
 					: emsEdiMergerHead.getEmsNo());
+
 			parameters.put("tradeName",
 					emsEdiMergerHead.getTradeName() == null ? ""
 							: emsEdiMergerHead.getTradeName());
+
 			parameters.put("tradeCode",
 					emsEdiMergerHead.getTradeCode() == null ? ""
 							: emsEdiMergerHead.getTradeCode());
+
 			parameters.put("machCode",
 					emsEdiMergerHead.getMachCode() == null ? ""
 							: emsEdiMergerHead.getMachCode());
+
 			parameters.put("machName",
 					emsEdiMergerHead.getMachName() == null ? ""
 							: emsEdiMergerHead.getMachName());
+
 			parameters.put("copEmsNo",
 					emsEdiMergerHead.getCopEmsNo() == null ? ""
 							: emsEdiMergerHead.getCopEmsNo());
+
 			parameters.put("sancEmsNo",
 					emsEdiMergerHead.getSancEmsNo() == null ? ""
 							: emsEdiMergerHead.getSancEmsNo());
+
 			parameters.put("emsApprNo",
 					emsEdiMergerHead.getSancEmsNo() == null ? ""
 							: emsEdiMergerHead.getEmsApprNo());
+
 			parameters.put("machAbility",
 					emsEdiMergerHead.getSancEmsNo() == null ? ""
 							: emsEdiMergerHead.getMachAbility());
 			parameters.put("maxTurnMoney",
 					emsEdiMergerHead.getSancEmsNo() == null ? ""
 							: emsEdiMergerHead.getMaxTurnMoney());
+
 			parameters.put("tel", emsEdiMergerHead.getSancEmsNo() == null ? ""
 					: emsEdiMergerHead.getTel());
+
 			parameters.put("address",
 					emsEdiMergerHead.getSancEmsNo() == null ? ""
 							: emsEdiMergerHead.getAddress());
 			//
-			// 料件明细子报表
+			// 料件明细子报表-----------------------------------------------
 			//
 			List ListfindemsEdiMergerHeadImgChange = manualDeclearAction
 					.findemsEdiMergerHeadImgChange(
 							new Request(CommonVars.getCurrUser()),
-							emsEdiMergerHead, time);
+							emsEdiMergerHead, time, beginDate, endDate);
+
 			CustomReportDataSource dimg = new CustomReportDataSource(
 					ListfindemsEdiMergerHeadImgChange);
+
 			InputStream ImgFinishedProductSubReportStream = FmEmsEdiMerger.class
 					.getResourceAsStream("report/EmsMergerChangeImgSubList.jasper");
+
 			JasperReport imgFinishedProductSubReport = (JasperReport) JRLoader
 					.loadObject(ImgFinishedProductSubReportStream);
 			// 主表
 			parameters.put("imgFinishedProductSubReport",
 					imgFinishedProductSubReport);
+
 			parameters.put("subReportDataSource", dimg);
 
 			List<EmsEdiMergerHead> EmsList = new ArrayList<EmsEdiMergerHead>();
+
 			EmsList.add(emsEdiMergerHead);
+
 			CustomReportDataSource ds = new CustomReportDataSource(EmsList);
+
 			InputStream masterReportStream = FmEmsEdiMerger.class
 					.getResourceAsStream("report/EmsMergerChangeList.jasper");
+
 			JasperPrint jasperPrint = JasperFillManager.fillReport(
 					masterReportStream, parameters, ds);
-			// 显示成品
+
+			// 显示成品---------------------------------------------------------------
 			List finishedProductDataSource = manualDeclearAction
 					.findemsEdiMergerHeadExgChange(
 							new Request(CommonVars.getCurrUser()),
-							emsEdiMergerHead, time);
+							emsEdiMergerHead, time, beginDate, endDate);
+
 			CustomReportDataSource finishedProductDataSourceds = new CustomReportDataSource(
 					finishedProductDataSource);
+
 			Map<String, Object> exgMap = new HashMap<String, Object>();
+
 			exgMap.put("beforePageCount", jasperPrint.getPages().size());
+
 			InputStream exportFinishedProductSubReportStream = FmEmsEdiMerger.class
 					.getResourceAsStream("report/EmsMergerChangeExgList.jasper");
+
 			JasperPrint jasperPrintContractExg = JasperFillManager.fillReport(
 					exportFinishedProductSubReportStream, exgMap,
 					finishedProductDataSourceds);
+
 			int count = jasperPrintContractExg.getPages().size();
+
 			for (int i = 0; i < count; i++) {
+
 				jasperPrint.addPage((JRPrintPage) jasperPrintContractExg
 						.getPages().get(i));
+
 			}
-			// 显示Bom
+
+			// 显示Bom==================================================
 			List finishedUnitWasteDataSource = manualDeclearAction
 					.findemsEdiMergerHeadBomChange(
 							new Request(CommonVars.getCurrUser()),
-							emsEdiMergerHead, time);
+							emsEdiMergerHead, time, beginDate, endDate);
+
 			CustomReportDataSource EmsUnitWasteReportStreamds = new CustomReportDataSource(
 					finishedUnitWasteDataSource);
+
 			Map<String, Object> BomMap = new HashMap<String, Object>();
+
 			BomMap.put("beforePageCount", jasperPrint.getPages().size());
+
 			InputStream contractUnitWasteReportStream = FmEmsEdiMerger.class
 					.getResourceAsStream("report/EmsMergerChangeBomList.jasper");
+
 			JasperPrint jasperPrintContractUnitWaste = JasperFillManager
 					.fillReport(contractUnitWasteReportStream, BomMap,
 							EmsUnitWasteReportStreamds);
+
 			int size = jasperPrintContractUnitWaste.getPages().size();
+
 			for (int i = 0; i < size; i++) {
+
 				jasperPrint.addPage((JRPrintPage) jasperPrintContractUnitWaste
 						.getPages().get(i));
+
 			}
+
 			//
 			// 显示所有报表
 			//
 			DgReportViewer viewer = new DgReportViewer(jasperPrint);
+
 			viewer.setVisible(true);
 
 		} catch (Exception ex) {

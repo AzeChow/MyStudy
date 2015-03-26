@@ -41,8 +41,8 @@ import com.bestway.ui.winuicontrol.JDialogBase;
 /**
  * @author Administrator
  * 
- * // change the template for this generated type comment go to Window -
- * Preferences - Java - Code Style - Code Templates
+ *         // change the template for this generated type comment go to Window -
+ *         Preferences - Java - Code Style - Code Templates
  */
 @SuppressWarnings("unchecked")
 public class DgCommonQuery extends JDialogBase {
@@ -77,7 +77,7 @@ public class DgCommonQuery extends JDialogBase {
 
 	protected JTableListModel tableModel = null;
 
-	protected List dataSource = null;  //  @jve:decl-index=0:
+	protected List dataSource = null; // @jve:decl-index=0:
 
 	private static boolean singleResult = true;
 
@@ -214,8 +214,7 @@ public class DgCommonQuery extends JDialogBase {
 	 */
 	private void initialize() {
 		this.setTitle("查询");
-		this
-				.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+		this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		this.setContentPane(getJContentPane());
 		this.setSize(670, 418);
 		group.add(jRadioButton1);
@@ -458,32 +457,49 @@ public class DgCommonQuery extends JDialogBase {
 	 * 
 	 */
 	private void getResult() {
-		if (this.getSingleResult()) {// 当没有选择到数据时,按"确定"或"Enter"时默认取第一条数据
+
+		if (this.getSingleResult()) {
+
+			// 当没有选择到数据时,按"确定"或"Enter"时默认取第一条数据
 			if (((JTableListModel) tableModel).getRowCount() > 0) {
+
 				int size = ((JTableListModel) getJTable().getModel())
 						.getRowCount();
+
 				List list = ((JTableListModel) tableModel).getCurrentRows();
+
 				if (size > 0 && !tfQueryValue.getText().equals("")
 						&& list.isEmpty()) {
 					jTable.getSelectionModel()
 							.setSelectionInterval(0, size - 1);
+
 				}
+
 				list = ((JTableListModel) tableModel).getCurrentRows();
+
 				if (list.size() > 0) {
+
 					setReturnValue(list.get(0));
 				} else {
 					setReturnValue(((JTableListModel) tableModel).getValueAt(0));
 				}
 
 			}
-		} else {// 当没有选择到数据时,按"确定"或"Enter"时默认取显示的全部数据
+
+			// 当没有选择到数据时,按"确定"或"Enter"时默认取显示的全部数据
+		} else {
+
 			int size = ((JTableListModel) tableModel).getRowCount();
+
 			List list = ((JTableListModel) tableModel).getCurrentRows();
+
 			if (size > 0 && !tfQueryValue.getText().equals("")
 					&& list.isEmpty()) {
 				jTable.getSelectionModel().setSelectionInterval(0, size - 1);
 			}
+
 			list = ((JTableListModel) tableModel).getCurrentRows();
+
 			setReturnList(list);
 		}
 		this.setOk(true);
@@ -513,9 +529,9 @@ public class DgCommonQuery extends JDialogBase {
 			getJTable().requestFocus();
 		}
 
-		//		
-		//		
-		//		
+		//
+		//
+		//
 		// if (((JTableListModel) getJTable().getModel()).getColumnCount() > 0)
 		// {
 		// ((JTableListModel) getJTable().getModel()).setSelectRow(0);
@@ -733,7 +749,7 @@ public class DgCommonQuery extends JDialogBase {
 			// for (int i = 1; i < columnCount; i++) {
 			// getCbbQueryField().addItem(tableModel.getColumnName(i));
 			// }
-			//			
+			//
 
 			getCbbQueryField().setSelectedIndex(0);
 		}
@@ -758,8 +774,8 @@ public class DgCommonQuery extends JDialogBase {
 			int count = this.jTable.getColumnCount() - 1;
 			int eachColumnWidth = width / count;
 			for (int i = 1; i <= count; i++) {
-				jTable.getColumnModel().getColumn(i).setPreferredWidth(
-						eachColumnWidth);
+				jTable.getColumnModel().getColumn(i)
+						.setPreferredWidth(eachColumnWidth);
 			}
 			jScrollPane.setViewportView(getJTable());
 		}

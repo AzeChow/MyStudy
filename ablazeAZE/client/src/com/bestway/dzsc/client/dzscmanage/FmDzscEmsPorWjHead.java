@@ -19,8 +19,11 @@ import java.util.List;
 import java.util.Vector;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JToolBar;
@@ -35,18 +38,14 @@ import com.bestway.client.util.JTableListColumn;
 import com.bestway.client.util.JTableListModel;
 import com.bestway.client.util.JTableListModelAdapter;
 import com.bestway.common.Request;
-import com.bestway.common.constant.DzscBusinessType;
 import com.bestway.common.constant.DeclareFileInfo;
+import com.bestway.common.constant.DzscBusinessType;
 import com.bestway.common.constant.DzscEmsType;
 import com.bestway.common.constant.DzscState;
 import com.bestway.dzsc.client.message.DzscCommon;
 import com.bestway.dzsc.dzscmanage.action.DzscAction;
 import com.bestway.dzsc.dzscmanage.entity.DzscEmsPorWjHead;
 import com.bestway.ui.winuicontrol.JInternalFrameBase;
-
-import javax.swing.JCheckBox;
-import javax.swing.JPopupMenu;
-import javax.swing.JMenuItem;
 
 /**
  * @author Administrator
@@ -132,8 +131,8 @@ public class FmDzscEmsPorWjHead extends JInternalFrameBase {
 
 	private void initTable() {
 		List dataSourceWj = null;
-		dataSourceWj = dzscAction.findDzscEmsPorWjHead(new Request(CommonVars
-				.getCurrUser()), cbIsCancel.isSelected());
+		dataSourceWj = dzscAction.findDzscEmsPorWjHead(
+				new Request(CommonVars.getCurrUser()), cbIsCancel.isSelected());
 		if (dataSourceWj != null && dataSourceWj.size() > 0) {
 			initTableWj(dataSourceWj);
 		} else {
@@ -188,8 +187,8 @@ public class FmDzscEmsPorWjHead extends JInternalFrameBase {
 						return list;
 					}
 				});
-		tbWj.getColumnModel().getColumn(4).setCellRenderer(
-				new DefaultTableCellRenderer() {
+		tbWj.getColumnModel().getColumn(4)
+				.setCellRenderer(new DefaultTableCellRenderer() {
 					public Component getTableCellRendererComponent(
 							JTable table, Object value, boolean isSelected,
 							boolean hasFocus, int row, int column) {
@@ -218,8 +217,8 @@ public class FmDzscEmsPorWjHead extends JInternalFrameBase {
 						return returnValue;
 					}
 				});
-		tbWj.getColumnModel().getColumn(5).setCellRenderer(
-				new DefaultTableCellRenderer() {
+		tbWj.getColumnModel().getColumn(5)
+				.setCellRenderer(new DefaultTableCellRenderer() {
 					public Component getTableCellRendererComponent(
 							JTable table, Object value, boolean isSelected,
 							boolean hasFocus, int row, int column) {
@@ -376,8 +375,8 @@ public class FmDzscEmsPorWjHead extends JInternalFrameBase {
 							"确定要删除该合同吗?", "提示", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 						DzscEmsPorWjHead head = (DzscEmsPorWjHead) tableModelWj
 								.getCurrentRow();
-						dzscAction.deleteAllEmsPorWj(new Request(CommonVars
-								.getCurrUser()), head);
+						dzscAction.deleteAllEmsPorWj(
+								new Request(CommonVars.getCurrUser()), head);
 						dzscAction.deleteDzscEmsPorWjHead(new Request(
 								CommonVars.getCurrUser()), head);
 						tableModelWj.deleteRow(head);
@@ -689,15 +688,28 @@ public class FmDzscEmsPorWjHead extends JInternalFrameBase {
 							setState();
 						}
 					});
+
 			tbWj.addMouseListener(new java.awt.event.MouseAdapter() {
 
 				public void mouseClicked(java.awt.event.MouseEvent e) {
 
 					if (e.getClickCount() == 2) {
-						//
+
+						if (tableModelWj.getCurrentRow() == null) {
+							JOptionPane.showMessageDialog(
+									FmDzscEmsPorWjHead.this, "请选中要显示的合同！",
+									"提示", 2);
+							return;
+						}
+						DgDzscEmsPorWj dg = new DgDzscEmsPorWj();
+						dg.setDataState(DataState.BROWSE);
+						dg.setTableModelHead(tableModelWj);
+						dg.setVisible(true);
+
 					}
 				}
 			});
+
 		}
 		return tbWj;
 	}
@@ -925,103 +937,120 @@ public class FmDzscEmsPorWjHead extends JInternalFrameBase {
 			miImportFromQP
 					.addActionListener(new java.awt.event.ActionListener() {
 						public void actionPerformed(java.awt.event.ActionEvent e) {
-//							List lsExistEmsNo = new ArrayList();
-//							List listWjHead = tableModelWj.getList();
-//							for (int i = 0; i < listWjHead.size(); i++) {
-//								DzscEmsPorWjHead wjHead = (DzscEmsPorWjHead) listWjHead
-//										.get(i);
-//								if (DzscState.EXECUTE.equals(wjHead
-//										.getDeclareState())) {
-//									lsExistEmsNo.add(wjHead.getCorrEmsNo());
-//								}
-//							}
-//							DgDzscQPEmsPorWjHead dg = new DgDzscQPEmsPorWjHead();
-//							dg.setLsExistEmsNo(lsExistEmsNo);
-//							dg.setVisible(true);
-//							List list = dg.getLsResult();
-//							boolean isOverWrite = dg.isOverWrite();
-//							if (list != null && !list.isEmpty()) {
-//								dzscAction.importDzscEmsPorWjFromQP(
-//										new Request(CommonVars.getCurrUser(),
-//												true), list, isOverWrite);
-//								initTable();
-//								setState(); /com/bestway/dzsc/client/dzscmanage/importDzscEmsPorBill.py
-//							}
-							
-//							InputStream in= FmDzscEmsPorWjHead.class.getClassLoader().getResourceAsStream("/com/bestway/dzsc/client/dzscmanage/importDzscEmsPorBill.py");
-							
-							// 1.创建py文件
-					        File dir = new File(System.getProperty("java.io.tmpdir") + File.separator + "pytemp");
-					        if (!dir.isDirectory()) {
-					            dir.mkdirs();
-					        }
-							
-							String path = "/com/bestway/dzsc/client/dzscmanage/importDzscEmsPorWj.py";
-							InputStream in= FmDzscEmsPorWjHead.class.getResourceAsStream(path);
+							// List lsExistEmsNo = new ArrayList();
+							// List listWjHead = tableModelWj.getList();
+							// for (int i = 0; i < listWjHead.size(); i++) {
+							// DzscEmsPorWjHead wjHead = (DzscEmsPorWjHead)
+							// listWjHead
+							// .get(i);
+							// if (DzscState.EXECUTE.equals(wjHead
+							// .getDeclareState())) {
+							// lsExistEmsNo.add(wjHead.getCorrEmsNo());
+							// }
+							// }
+							// DgDzscQPEmsPorWjHead dg = new
+							// DgDzscQPEmsPorWjHead();
+							// dg.setLsExistEmsNo(lsExistEmsNo);
+							// dg.setVisible(true);
+							// List list = dg.getLsResult();
+							// boolean isOverWrite = dg.isOverWrite();
+							// if (list != null && !list.isEmpty()) {
+							// dzscAction.importDzscEmsPorWjFromQP(
+							// new Request(CommonVars.getCurrUser(),
+							// true), list, isOverWrite);
+							// initTable();
+							// setState();
+							// /com/bestway/dzsc/client/dzscmanage/importDzscEmsPorBill.py
+							// }
 
-					        // 3.写入文件
+							// InputStream in=
+							// FmDzscEmsPorWjHead.class.getClassLoader().getResourceAsStream("/com/bestway/dzsc/client/dzscmanage/importDzscEmsPorBill.py");
+
+							// 1.创建py文件
+							File dir = new File(System
+									.getProperty("java.io.tmpdir")
+									+ File.separator + "pytemp");
+							if (!dir.isDirectory()) {
+								dir.mkdirs();
+							}
+
+							String path = "/com/bestway/dzsc/client/dzscmanage/importDzscEmsPorWj.py";
+							InputStream in = FmDzscEmsPorWjHead.class
+									.getResourceAsStream(path);
+
+							// 3.写入文件
 							FileOutputStream out = null;
-							File fileTmp  = null;
+							File fileTmp = null;
 							try {
-								fileTmp  = File.createTempFile("importDzscEmsPorWj", ".py", dir);
+								fileTmp = File.createTempFile(
+										"importDzscEmsPorWj", ".py", dir);
 								out = new FileOutputStream(fileTmp);
 								byte[] bytes = new byte[2048];
 								int len = -1;
-								while((len = in.read(bytes)) > 0){
-									out.write(bytes,0,len);
+								while ((len = in.read(bytes)) > 0) {
+									out.write(bytes, 0, len);
 								}
 								out.flush();
 							} catch (FileNotFoundException e1) {
 								e1.printStackTrace();
 							} catch (IOException e1) {
 								e1.printStackTrace();
-							}finally{
+							} finally {
 								try {
 									out.close();
 									in.close();
 								} catch (IOException e1) {
 									e1.printStackTrace();
 								}
-								
+
 							}
 							int exitVal = 1;
-					        // 4.执行py文件
-					        File f=new File("C:\\\\Python27\\python.exe");
-					         String cmd="";
-					         if(f.exists()){
-					             cmd = "C:\\\\Python27\\python.exe  \"" +fileTmp.getAbsolutePath() + "\"";
-					         }else{
-					             cmd = "python  \"" + fileTmp.getAbsolutePath() + "\"";
-					         }
-					        String resultStr = "";
-					        String resultErrorStr = "";
-					        try {
-					            Runtime rt = Runtime.getRuntime();
-					            Process subprocess = rt.exec(cmd);               
-					            
-					            BufferedReader br = new BufferedReader(new InputStreamReader(subprocess.getInputStream()));
-					            BufferedReader ebr = new BufferedReader(new InputStreamReader(subprocess.getErrorStream()));
-					            String line = null;
-					            while ((line = br.readLine()) != null) {
-					                resultStr += line;
-					            }
-					            
-					            line = null;
-					            while ((line = ebr.readLine()) != null) {
-					                resultErrorStr += line;
-					            }
-					            exitVal = subprocess.waitFor();
-					            System.out.println("Process exitValue: " + exitVal);
-					            System.out.println("resultErrorStr----->"+resultErrorStr);
-					            System.out.println("resultStr------->" + resultStr);
-					        } catch (Exception ex) {
-					            ex.printStackTrace();				                
-					        }
+							// 4.执行py文件
+							File f = new File("C:\\\\Python27\\python.exe");
+							String cmd = "";
+							if (f.exists()) {
+								cmd = "C:\\\\Python27\\python.exe  \""
+										+ fileTmp.getAbsolutePath() + "\"";
+							} else {
+								cmd = "python  \"" + fileTmp.getAbsolutePath()
+										+ "\"";
+							}
+							String resultStr = "";
+							String resultErrorStr = "";
+							try {
+								Runtime rt = Runtime.getRuntime();
+								Process subprocess = rt.exec(cmd);
+
+								BufferedReader br = new BufferedReader(
+										new InputStreamReader(subprocess
+												.getInputStream()));
+								BufferedReader ebr = new BufferedReader(
+										new InputStreamReader(subprocess
+												.getErrorStream()));
+								String line = null;
+								while ((line = br.readLine()) != null) {
+									resultStr += line;
+								}
+
+								line = null;
+								while ((line = ebr.readLine()) != null) {
+									resultErrorStr += line;
+								}
+								exitVal = subprocess.waitFor();
+								System.out.println("Process exitValue: "
+										+ exitVal);
+								System.out.println("resultErrorStr----->"
+										+ resultErrorStr);
+								System.out.println("resultStr------->"
+										+ resultStr);
+							} catch (Exception ex) {
+								ex.printStackTrace();
+							}
 
 							if (!resultStr.isEmpty()) {
 								dzscAction.importDzscEmsPorWjFromQP(
 										new Request(CommonVars.getCurrUser(),
-												true), resultStr);//--------------
+												true), resultStr);// --------------
 								initTable();
 								setState();
 							}
@@ -1031,9 +1060,9 @@ public class FmDzscEmsPorWjHead extends JInternalFrameBase {
 		}
 		return miImportFromQP;
 	}
-	
+
 	private void importQP() {
-		
+
 	}
 
 }

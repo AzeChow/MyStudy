@@ -602,7 +602,7 @@ public class DgShowEmsUnitWaste extends JDialogBase {
 							- Integer.valueOf(beginSeq);
 
 					// 开始序号 不能 大于等于 结束序号 否则就提示一下用户
-					if (dvalue <= 0) {
+					if (dvalue < 0) {
 
 						return;
 
@@ -1047,7 +1047,7 @@ public class DgShowEmsUnitWaste extends JDialogBase {
 		int dvalue = Integer.valueOf(endSeq) - Integer.valueOf(beginSeq);
 
 		// 开始序号 不能 大于等于 结束序号 否则就提示一下用户
-		if (dvalue <= 0) {
+		if (dvalue < 0) {
 
 			return true;
 

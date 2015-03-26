@@ -18,7 +18,6 @@ import java.util.Vector;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
@@ -47,6 +46,7 @@ import com.bestway.bcus.client.common.CustomReportDataSource;
 import com.bestway.bcus.client.common.DataState;
 import com.bestway.bcus.client.common.DgReportViewer;
 import com.bestway.bcus.client.license.LicenseClient;
+import com.bestway.bcus.custombase.entity.parametercode.Transf;
 import com.bestway.client.util.JTableListColumn;
 import com.bestway.client.util.JTableListModel;
 import com.bestway.client.util.JTableListModelAdapter;
@@ -61,10 +61,8 @@ import com.bestway.common.fpt.action.FptManageAction;
 import com.bestway.common.fpt.action.FptMessageAction;
 import com.bestway.common.fpt.entity.FptAppHead;
 import com.bestway.common.fpt.entity.FptBillHead;
-import com.bestway.common.fpt.entity.FptBillItem;
 import com.bestway.common.fpt.entity.FptCancelBill;
 import com.bestway.common.fpt.entity.FptParameterSet;
-import com.bestway.common.fpt.entity.PrintFptBillHead;
 import com.bestway.common.materialbase.entity.ScmCoc;
 import com.bestway.ui.winuicontrol.calendar.JCalendarComboBox;
 
@@ -85,7 +83,7 @@ public class FmFptImgBillHead extends FmCommon {
 
 	private FptBillHead billHead = null;
 
-//	private JTableListModel tableModelImEx = null;
+	// private JTableListModel tableModelImEx = null;
 	/**
 	 * 收货tableModel
 	 */
@@ -93,11 +91,11 @@ public class FmFptImgBillHead extends FmCommon {
 	/**
 	 * 资料下载tableModel
 	 */
-//	private JTableListModel tableModelDown = null;
+	// private JTableListModel tableModelDown = null;
 	/**
 	 * 撤消tableModel
 	 */
-//	private JTableListModel tableModelCancel = null;
+	// private JTableListModel tableModelCancel = null;
 
 	private JButton btnAdd = null;
 	private JButton btnEdit = null;
@@ -141,7 +139,7 @@ public class FmFptImgBillHead extends FmCommon {
 	private String billType = null; // @jve:decl-index=0:
 
 	private FptMessageAction fptMessageAction = null;
-	
+
 	private PnFptDownData pnFptDownData = null;
 
 	private JButton btnResend = null;
@@ -149,7 +147,7 @@ public class FmFptImgBillHead extends FmCommon {
 	private FptParameterSet parameterSet = null;
 
 	private Integer projectType = null;
-	
+
 	private JButton btnPrint = null;
 	private JPopupMenu pmPrint = null;
 
@@ -160,9 +158,7 @@ public class FmFptImgBillHead extends FmCommon {
 	private final static int PRINT_STYPE_B = 2;
 	private final static int PRINT_STYPE_C = 3;
 	private JButton btnReceipt;
-	private List subReportData = null;  //  @jve:decl-index=0:
-	
-	
+	private List subReportData = null; // @jve:decl-index=0:
 
 	public FmFptImgBillHead() {
 		super();
@@ -173,7 +169,8 @@ public class FmFptImgBillHead extends FmCommon {
 		parameterSet = fptManageAction.findTransParameterSet(new Request(
 				CommonVars.getCurrUser(), true));
 		projectType = parameterSet.getProjectType();
-		fptManageAction.permissionCheckInBillGlance(new Request(CommonVars.getCurrUser()));
+		fptManageAction.permissionCheckInBillGlance(new Request(CommonVars
+				.getCurrUser()));
 		initialize();
 		this.cbbBeginDate.setDate(CommonVars.getBeginDate());
 		this.cbbEndDate.setDate(new Date());
@@ -229,11 +226,11 @@ public class FmFptImgBillHead extends FmCommon {
 	 * 设置状态
 	 */
 	private void setState() {
-//		if (tpnPane.getSelectedIndex() == 0) {
-			setStateInorOut();
-//		} else if (tpnPane.getSelectedIndex() == 1) {// 资料下载
-//			setStateDown();
-//		}
+		// if (tpnPane.getSelectedIndex() == 0) {
+		setStateInorOut();
+		// } else if (tpnPane.getSelectedIndex() == 1) {// 资料下载
+		// setStateDown();
+		// }
 	}
 
 	/**
@@ -273,36 +270,37 @@ public class FmFptImgBillHead extends FmCommon {
 	 * 
 	 * @return
 	 */
-//	private void setStateDown() {
-//		// 屏闭一些按钮
-//		btnCopy.setVisible(false);
-//		this.btnShow.setVisible(false);
-//		btnOther.setVisible(false);
-//		pn3.setVisible(false);
-//		cbbIsCancel.setVisible(false);
-//
-//		tableModelImEx = tableModelDown;
-//		FptDownData c = (FptDownData) tableModelImEx.getCurrentRow();
-//		if (c == null) {
-//			return;
-//		}
-//		boolean isProcessExe = (c.getDeclareState() != null && c
-//				.getDeclareState().equals(DeclareState.PROCESS_EXE));
-//		btnDelete.setEnabled(DeclareState.APPLY_POR.equals(c.getDeclareState())
-//				|| DeclareState.CHANGING_EXE.equals(c.getDeclareState()));
-//		btnEdit.setEnabled(!isProcessExe
-//				&& (DeclareState.APPLY_POR.equals(c.getDeclareState()) || DeclareState.CHANGING_EXE
-//						.equals(c.getDeclareState())));
-//		this.btnApply.setEnabled((DeclareState.APPLY_POR.equals(c
-//				.getDeclareState()) || DeclareState.CHANGING_EXE.equals(c
-//				.getDeclareState())));
-//		this.btnProcess.setEnabled(DeclareState.WAIT_EAA.equals(c
-//				.getDeclareState()));
-//		btnChange.setEnabled(isProcessExe);
-//
-//		btnApply.setText("申请下载");
-//
-//	}
+	// private void setStateDown() {
+	// // 屏闭一些按钮
+	// btnCopy.setVisible(false);
+	// this.btnShow.setVisible(false);
+	// btnOther.setVisible(false);
+	// pn3.setVisible(false);
+	// cbbIsCancel.setVisible(false);
+	//
+	// tableModelImEx = tableModelDown;
+	// FptDownData c = (FptDownData) tableModelImEx.getCurrentRow();
+	// if (c == null) {
+	// return;
+	// }
+	// boolean isProcessExe = (c.getDeclareState() != null && c
+	// .getDeclareState().equals(DeclareState.PROCESS_EXE));
+	// btnDelete.setEnabled(DeclareState.APPLY_POR.equals(c.getDeclareState())
+	// || DeclareState.CHANGING_EXE.equals(c.getDeclareState()));
+	// btnEdit.setEnabled(!isProcessExe
+	// && (DeclareState.APPLY_POR.equals(c.getDeclareState()) ||
+	// DeclareState.CHANGING_EXE
+	// .equals(c.getDeclareState())));
+	// this.btnApply.setEnabled((DeclareState.APPLY_POR.equals(c
+	// .getDeclareState()) || DeclareState.CHANGING_EXE.equals(c
+	// .getDeclareState())));
+	// this.btnProcess.setEnabled(DeclareState.WAIT_EAA.equals(c
+	// .getDeclareState()));
+	// btnChange.setEnabled(isProcessExe);
+	//
+	// btnApply.setText("申请下载");
+	//
+	// }
 
 	/**
 	 * 设置撤消的状态
@@ -329,8 +327,8 @@ public class FmFptImgBillHead extends FmCommon {
 		this.btnApply.setEnabled((DeclareState.APPLY_POR.equals(c
 				.getDeclareState()) || DeclareState.CHANGING_EXE.equals(c
 				.getDeclareState())));
-//		this.btnProcess.setEnabled(DeclareState.WAIT_EAA.equals(c
-//				.getDeclareState()));
+		// this.btnProcess.setEnabled(DeclareState.WAIT_EAA.equals(c
+		// .getDeclareState()));
 		btnChange.setEnabled(isProcessExe);
 
 	}
@@ -360,8 +358,8 @@ public class FmFptImgBillHead extends FmCommon {
 		list = fptManageAction.findInOutFptBillHeadByType(new Request(
 				CommonVars.getCurrUser()), FptInOutFlag.IN,
 				FptBusinessType.FPT_BILL, this.cbbBeginDate.getDate(),
-				this.cbbEndDate.getDate(), null, null, null,  (ScmCoc) this.cbbCustomer
-						.getSelectedItem()); // 转入--收货
+				this.cbbEndDate.getDate(), null, null, null,
+				(ScmCoc) this.cbbCustomer.getSelectedItem()); // 转入--收货
 
 		// }
 		return list;
@@ -525,72 +523,72 @@ public class FmFptImgBillHead extends FmCommon {
 				});
 	}
 
-//	/**
-//	 * 初始化下载资料table
-//	 */
-//	public void ininTableDown() {
-//		String downLoadState = "C";
-//		List list = this.fptManageAction.findRecordationDataDownLoad(
-//				new Request(CommonVars.getCurrUser()), downLoadState,
-//				FptInOutFlag.IN);
-//		tableModelDown = new JTableListModel(tbDown, list,
-//				new JTableListModelAdapter() {
-//					public List InitColumns() {
-//						List list = new Vector();
-//						list.add(addColumn("电子口岸统一编号", "seqNo", 150));
-//						list.add(addColumn("申报状态", "declareState", 60));
-//						list.add(addColumn("企业编号", "tradeCode", 100));
-//						list.add(addColumn("申请单编号", "appNo", 100));
-//						list.add(addColumn("转出企业内部编号", "outCopNo", 150));
-//						list.add(addColumn("下载类型", "downLoadState", 60));
-//						list.add(addColumn("备注", "note", 150));
-//						return list;
-//					}
-//				});
-//		tbDown.getColumnModel().getColumn(2)
-//				.setCellRenderer(new DefaultTableCellRenderer() {
-//					public Component getTableCellRendererComponent(
-//							JTable table, Object value, boolean isSelected,
-//							boolean hasFocus, int row, int column) {
-//						super.getTableCellRendererComponent(table, value,
-//								isSelected, hasFocus, row, column);
-//						super.setText((value == null) ? "" : castValue(value));
-//						return this;
-//					}
-//
-//					private String castValue(Object value) {
-//						return DeclareState.getDeclareStateSpec(value
-//								.toString());
-//					}
-//				});
-//		tbDown.getColumnModel().getColumn(6)
-//				.setCellRenderer(new DefaultTableCellRenderer() {
-//					public Component getTableCellRendererComponent(
-//							JTable table, Object value, boolean isSelected,
-//							boolean hasFocus, int row, int column) {
-//						super.getTableCellRendererComponent(table, value,
-//								isSelected, hasFocus, row, column);
-//						super.setText((value == null) ? "" : castValue(value));
-//						return this;
-//					}
-//
-//					private String castValue(Object value) {
-//						return DownLoadState.getDownLoadStateSpec(value
-//								.toString());
-//					}
-//				});
-//	}
+	// /**
+	// * 初始化下载资料table
+	// */
+	// public void ininTableDown() {
+	// String downLoadState = "C";
+	// List list = this.fptManageAction.findRecordationDataDownLoad(
+	// new Request(CommonVars.getCurrUser()), downLoadState,
+	// FptInOutFlag.IN);
+	// tableModelDown = new JTableListModel(tbDown, list,
+	// new JTableListModelAdapter() {
+	// public List InitColumns() {
+	// List list = new Vector();
+	// list.add(addColumn("电子口岸统一编号", "seqNo", 150));
+	// list.add(addColumn("申报状态", "declareState", 60));
+	// list.add(addColumn("企业编号", "tradeCode", 100));
+	// list.add(addColumn("申请单编号", "appNo", 100));
+	// list.add(addColumn("转出企业内部编号", "outCopNo", 150));
+	// list.add(addColumn("下载类型", "downLoadState", 60));
+	// list.add(addColumn("备注", "note", 150));
+	// return list;
+	// }
+	// });
+	// tbDown.getColumnModel().getColumn(2)
+	// .setCellRenderer(new DefaultTableCellRenderer() {
+	// public Component getTableCellRendererComponent(
+	// JTable table, Object value, boolean isSelected,
+	// boolean hasFocus, int row, int column) {
+	// super.getTableCellRendererComponent(table, value,
+	// isSelected, hasFocus, row, column);
+	// super.setText((value == null) ? "" : castValue(value));
+	// return this;
+	// }
+	//
+	// private String castValue(Object value) {
+	// return DeclareState.getDeclareStateSpec(value
+	// .toString());
+	// }
+	// });
+	// tbDown.getColumnModel().getColumn(6)
+	// .setCellRenderer(new DefaultTableCellRenderer() {
+	// public Component getTableCellRendererComponent(
+	// JTable table, Object value, boolean isSelected,
+	// boolean hasFocus, int row, int column) {
+	// super.getTableCellRendererComponent(table, value,
+	// isSelected, hasFocus, row, column);
+	// super.setText((value == null) ? "" : castValue(value));
+	// return this;
+	// }
+	//
+	// private String castValue(Object value) {
+	// return DownLoadState.getDownLoadStateSpec(value
+	// .toString());
+	// }
+	// });
+	// }
 
 	/**
 	 * 删除
 	 */
 	private void deleteData() {
-//		if (tpnPane.getSelectedIndex() == 0) {// 收货
-//			tableModelImEx = tableModelImport;
-			deleteInorOutData();
-//		} else if (tpnPane.getSelectedIndex() == 1) {// 资料下载
-//			deleteDownData();
-//		}
+		// if (tpnPane.getSelectedIndex() == 0) {// 收货
+		// tableModelImEx = tableModelImport;
+		deleteInorOutData();
+		// } else if (tpnPane.getSelectedIndex() == 1) {// 资料下载
+		// deleteDownData();
+		// }
 	}
 
 	/**
@@ -613,36 +611,36 @@ public class FmFptImgBillHead extends FmCommon {
 	/**
 	 * 删除资料下载
 	 */
-//	private void deleteDownData() {
-//		if (tableModelImEx.getCurrentRow() == null) {
-//			JOptionPane.showMessageDialog(null, "请选择要删除的资料!", "提示", 0);
-//			return;
-//		}
-//		if (JOptionPane.showConfirmDialog(this, "是否确定删除数据!!!", "提示", 0) != 0) {
-//			return;
-//		}
-//		FptDownData data = (FptDownData) tableModelImEx.getCurrentRow();
-//		fptManageAction.deleteRecordationDataDownLoad(
-//				new Request(CommonVars.getCurrUser()), data);
-//		tableModelImEx.deleteRow(data);
-//	}
+	// private void deleteDownData() {
+	// if (tableModelImEx.getCurrentRow() == null) {
+	// JOptionPane.showMessageDialog(null, "请选择要删除的资料!", "提示", 0);
+	// return;
+	// }
+	// if (JOptionPane.showConfirmDialog(this, "是否确定删除数据!!!", "提示", 0) != 0) {
+	// return;
+	// }
+	// FptDownData data = (FptDownData) tableModelImEx.getCurrentRow();
+	// fptManageAction.deleteRecordationDataDownLoad(
+	// new Request(CommonVars.getCurrUser()), data);
+	// tableModelImEx.deleteRow(data);
+	// }
 
 	/**
 	 * 删除撤消
 	 */
-//	private void deleteCancelData() {
-//		if (tableModelImEx.getCurrentRow() == null) {
-//			JOptionPane.showMessageDialog(null, "请选择要删除的资料!", "提示", 0);
-//			return;
-//		}
-//		if (JOptionPane.showConfirmDialog(this, "是否确定删除数据!!!", "提示", 0) != 0) {
-//			return;
-//		}
-//		FptCancelBill data = (FptCancelBill) tableModelImEx.getCurrentRow();
-//		fptManageAction.deleteFptCancelBill(
-//				new Request(CommonVars.getCurrUser()), data);
-//		tableModelImEx.deleteRow(data);
-//	}
+	// private void deleteCancelData() {
+	// if (tableModelImEx.getCurrentRow() == null) {
+	// JOptionPane.showMessageDialog(null, "请选择要删除的资料!", "提示", 0);
+	// return;
+	// }
+	// if (JOptionPane.showConfirmDialog(this, "是否确定删除数据!!!", "提示", 0) != 0) {
+	// return;
+	// }
+	// FptCancelBill data = (FptCancelBill) tableModelImEx.getCurrentRow();
+	// fptManageAction.deleteFptCancelBill(
+	// new Request(CommonVars.getCurrUser()), data);
+	// tableModelImEx.deleteRow(data);
+	// }
 
 	/**
 	 * This method initializes tbBarTop
@@ -669,8 +667,10 @@ public class FmFptImgBillHead extends FmCommon {
 		}
 		return tbBarTop;
 	}
+
 	/**
 	 * 报表打印
+	 * 
 	 * @return
 	 */
 	private JButton getBtnPrint() {
@@ -685,37 +685,36 @@ public class FmFptImgBillHead extends FmCommon {
 		}
 		return btnPrint;
 	}
-	
-	//打印弹出菜单
+
+	// 打印弹出菜单
 	private JPopupMenu getPmPrint() {
 		if (pmPrint == null) {
 			pmPrint = new JPopupMenu();
 			pmPrint.setBorder(javax.swing.BorderFactory
 					.createEtchedBorder(javax.swing.border.EtchedBorder.LOWERED));
-			//pmPrint.add(getMiPrintTrue());
+			// pmPrint.add(getMiPrintTrue());
 			Separator separator0 = new Separator();
 			separator0.setForeground(Color.gray);
 			pmPrint.add(getMiPrintFalse());
 		}
 		return pmPrint;
 	}
-	
-	 
-	//打印弹出子菜单套打
+
+	// 打印弹出子菜单套打
 	private JMenuItem getMiPrintTrue() {
 		if (getMiPrintTrue == null) {
 			getMiPrintTrue = new JMenuItem();
 			getMiPrintTrue.setText("套打料件收货单");
 			getMiPrintTrue.addActionListener(new ActionListener() {
-						public void actionPerformed(ActionEvent e) {
-							printReport(FmFptImgBillHead.PRINT_STYPE_A,false);
-						}
-					});
+				public void actionPerformed(ActionEvent e) {
+					printReport(FmFptImgBillHead.PRINT_STYPE_A, false);
+				}
+			});
 		}
 		return getMiPrintTrue;
 	}
-	
-	//打印弹出子菜单非套打
+
+	// 打印弹出子菜单非套打
 	private JMenuItem getMiPrintFalse() {
 		if (getMiPrintFalse == null) {
 			getMiPrintFalse = new JMenuItem();
@@ -723,96 +722,110 @@ public class FmFptImgBillHead extends FmCommon {
 			getMiPrintFalse.addActionListener(new ActionListener() {
 
 				public void actionPerformed(ActionEvent e) {
-					printReport(FmFptImgBillHead.PRINT_STYPE_A,true);
+					printReport(FmFptImgBillHead.PRINT_STYPE_A, true);
 				}
 			});
 		}
 		return getMiPrintFalse;
 	}
-	
+
 	/**
 	 * 报表打印
 	 * 
-	 * 发货 tableModelExport
-	 * 撤消 tableModelCancel
-	 * 非套打:printType = true  套打:false
+	 * 发货 tableModelExport 撤消 tableModelCancel 非套打:printType = true 套打:false
 	 */
 	@SuppressWarnings("rawtypes")
-	private void printReport(int flag,Boolean printType) {
+	private void printReport(int flag, Boolean printType) {
 		if (this.tableModelImport.getCurrentRow() == null) {
 			JOptionPane.showMessageDialog(null, "请选择要打印的收发货单!!", "提示",
 					JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
-		FptBillHead fptBillHead = (FptBillHead) this.tableModelImport.getCurrentRow();
+		FptBillHead fptBillHead = (FptBillHead) this.tableModelImport
+				.getCurrentRow();
 		List list = new ArrayList();
-        list.add(this.tableModelImport.getCurrentRow());
+		list.add(this.tableModelImport.getCurrentRow());
 		CustomReportDataSource ds = new CustomReportDataSource(list);
-		printFptInOutBillReport(ds,fptBillHead);
+		printFptInOutBillReport(ds, fptBillHead);
 	}
 
-	
 	/**
 	 * 深加工结转收发货单
 	 */
 	private void printFptInOutBillReport(CustomReportDataSource ds,
 			FptBillHead fptBillHead) {
 		try {
-		    InputStream reportStream = null;
-            InputStream fptInBillSubReportStream = null;
-            InputStream fptOutBillSubReportStream = null;
-	        List items= null;
+			InputStream reportStream = null;
+			InputStream fptInBillSubReportStream = null;
+			InputStream fptOutBillSubReportStream = null;
+			List items = null;
 			if (fptBillHead != null) {
-					items = this.fptManageAction.findTransferFactoryCommodityInfo(new Request(CommonVars
-								.getCurrUser()),fptBillHead.getId());
-					subReportData=items;
+				items = this.fptManageAction.findTransferFactoryCommodityInfo(
+						new Request(CommonVars.getCurrUser()),
+						fptBillHead.getId());
+				subReportData = items;
 			}
 			CustomsEnvelopSubReportDataSource
 					.setSubReportData(this.subReportData);
-            reportStream = FmFptExgBillHead.class
-                    .getResourceAsStream("report/FptInOutBillReport.jasper");
-            fptInBillSubReportStream = FmFptExgBillHead.class
-      					.getResourceAsStream("report/FptInOutBillReportIn.jasper");
-            fptOutBillSubReportStream = FmFptExgBillHead.class
-  					.getResourceAsStream("report/FptInOutBillReportOut.jasper");
-            JasperReport fptInBillSubReport = (JasperReport) JRLoader
+			reportStream = FmFptExgBillHead.class
+					.getResourceAsStream("report/FptInOutBillReport.jasper");
+			fptInBillSubReportStream = FmFptExgBillHead.class
+					.getResourceAsStream("report/FptInOutBillReportIn.jasper");
+			fptOutBillSubReportStream = FmFptExgBillHead.class
+					.getResourceAsStream("report/FptInOutBillReportOut.jasper");
+			JasperReport fptInBillSubReport = (JasperReport) JRLoader
 					.loadObject(fptInBillSubReportStream);
 			JasperReport fptOutBillSubReport = (JasperReport) JRLoader
 					.loadObject(fptOutBillSubReportStream);
-            Map<String, Object> parameters = new HashMap<String, Object>();
-            FptReportUtils.getParamMapFromBean(parameters, fptBillHead, "");
-            FptAppHead fptAppHead = fptManageAction.findFptAppHeadAppNo(
-					new Request(CommonVars.getCurrUser()),FptInOutFlag.IN,fptBillHead.getAppNo());
-            if(fptAppHead!=null){
-            	  parameters.put("contrNo", fptAppHead.getContrNo()==null?"":fptAppHead.getContrNo());
-            }
-            parameters.put("dsOut", FptInOutFlag.OUT);
+			Map<String, Object> parameters = new HashMap<String, Object>();
+			FptReportUtils.getParamMapFromBean(parameters, fptBillHead, "");
+			FptAppHead fptAppHead = fptManageAction.findFptAppHeadAppNo(
+					new Request(CommonVars.getCurrUser()), FptInOutFlag.IN,
+					fptBillHead.getAppNo());
+			if (fptAppHead != null) {
+				parameters.put("contrNo", fptAppHead.getContrNo() == null ? ""
+						: fptAppHead.getContrNo());
+			}
+			parameters.put("dsOut", FptInOutFlag.OUT);
+
 			parameters.put("dsIn", FptInOutFlag.IN);
-            parameters.put("fptInBillSubReport", fptInBillSubReport);
-            parameters.put("fptOutBillSubReport", fptOutBillSubReport);
-            JasperPrint jasperPrint = JasperFillManager.fillReport(
-                    reportStream, parameters, ds);
-            DgReportViewer viewer = new DgReportViewer(jasperPrint);
-            viewer.setVisible(true);
+
+			Transf transportToolTypenew = fptBillHead.getTransportToolTypenew();
+
+			parameters.put(
+					"transportToolTypenew",
+					transportToolTypenew == null ? "" : transportToolTypenew
+							.getName());
+
+			parameters.put("fptInBillSubReport", fptInBillSubReport);
+
+			parameters.put("fptOutBillSubReport", fptOutBillSubReport);
+
+			JasperPrint jasperPrint = JasperFillManager.fillReport(
+					reportStream, parameters, ds);
+
+			DgReportViewer viewer = new DgReportViewer(jasperPrint);
+
+			viewer.setVisible(true);
+
 		} catch (Exception e) {
 			e.printStackTrace();
-			// TODO: handle exception
+
 		}
 	}
-	
-	
+
 	/**
-	 * 料件打印收(退)货登记  明天要修改的
+	 * 料件打印收(退)货登记 明天要修改的
 	 */
 	private void printReportByCustomsEnvelopForOld(CustomReportDataSource ds,
-			boolean isCustomsEnvelopNoPrint, boolean isOverprint,Object object) {
-		  
-		try {
-			 
-			InputStream masterReportStream = FmFptExgBillHead.
-					class.getResourceAsStream("report/FptImgInOutBillHeadRecordReport.jasper");
+			boolean isCustomsEnvelopNoPrint, boolean isOverprint, Object object) {
 
-			FptBillHead fptBillHead = (FptBillHead)object;
+		try {
+
+			InputStream masterReportStream = FmFptExgBillHead.class
+					.getResourceAsStream("report/FptImgInOutBillHeadRecordReport.jasper");
+
+			FptBillHead fptBillHead = (FptBillHead) object;
 			Map<String, Object> parameters = new HashMap<String, Object>();
 			parameters.put("isOverPrint", new Boolean(isOverprint));
 			parameters.put("isHead", new Boolean(true));
@@ -820,21 +833,27 @@ public class FmFptImgBillHead extends FmCommon {
 			parameters.put("billNo", fptBillHead.getBillNo());
 			parameters.put("issueTradeCod", fptBillHead.getIssueTradeCod());
 			parameters.put("issueTradeName", fptBillHead.getIssueTradeName());
-//			parameters.put("issueDate", fptBillHead.getIssueDate() == null ? " ":fptBillHead.getReceiveDate().toString());
-			parameters.put("issueDate", fptBillHead.getReceiveDate() == null ? " " : new SimpleDateFormat("yyyy-MM-dd").format(fptBillHead.getReceiveDate()));
+			// parameters.put("issueDate", fptBillHead.getIssueDate() == null ?
+			// " ":fptBillHead.getReceiveDate().toString());
+			parameters.put(
+					"issueDate",
+					fptBillHead.getReceiveDate() == null ? " "
+							: new SimpleDateFormat("yyyy-MM-dd")
+									.format(fptBillHead.getReceiveDate()));
 			parameters.put("outEmsNo", fptBillHead.getOutEmsNo());
-		
+
 			JasperPrint jasperPrint = JasperFillManager.fillReport(
 					masterReportStream, parameters, ds);
 			DgReportViewer viewer = new DgReportViewer(jasperPrint);
-		
+
 			viewer.setVisible(true);
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			// TODO: handle exception
 		}
 	}
+
 	/**
 	 * This method initializes btnAdd
 	 * 
@@ -846,7 +865,8 @@ public class FmFptImgBillHead extends FmCommon {
 			btnAdd.setText("新增");
 			btnAdd.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-					fptManageAction.permissionCheckInBillAdd(new Request(CommonVars.getCurrUser()));
+					fptManageAction.permissionCheckInBillAdd(new Request(
+							CommonVars.getCurrUser()));
 					addData();
 				}
 			});
@@ -861,11 +881,11 @@ public class FmFptImgBillHead extends FmCommon {
 		// if (tpnPane.getSelectedIndex() == 0) {// 转出
 		// addInOrOutData();
 		// } else
-//		if (tpnPane.getSelectedIndex() == 0) {
-			addInOrOutData();
-//		} else if (tpnPane.getSelectedIndex() == 1) {// 资料下载
-//			addDownData();
-//		}
+		// if (tpnPane.getSelectedIndex() == 0) {
+		addInOrOutData();
+		// } else if (tpnPane.getSelectedIndex() == 1) {// 资料下载
+		// addDownData();
+		// }
 		// else if (tpnPane.getSelectedIndex() == 2) {// 撤消
 		// addCancelData();
 		// }
@@ -901,13 +921,13 @@ public class FmFptImgBillHead extends FmCommon {
 	/**
 	 * 增加下载资料
 	 */
-//	private void addDownData() {
-//		DgFptDownData dg = new DgFptDownData(FptBusinessType.FPT_BILL,
-//				FptInOutFlag.IN);
-//		dg.setTableModel(this.tableModelDown);
-//		dg.setDataState(DataState.ADD);
-//		dg.setVisible(true);
-//	}
+	// private void addDownData() {
+	// DgFptDownData dg = new DgFptDownData(FptBusinessType.FPT_BILL,
+	// FptInOutFlag.IN);
+	// dg.setTableModel(this.tableModelDown);
+	// dg.setDataState(DataState.ADD);
+	// dg.setVisible(true);
+	// }
 
 	// /**
 	// * 增加撤消资料
@@ -955,7 +975,8 @@ public class FmFptImgBillHead extends FmCommon {
 			btnEdit.setText("修改");
 			btnEdit.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-					fptManageAction.permissionCheckInBillEdit(new Request(CommonVars.getCurrUser()));
+					fptManageAction.permissionCheckInBillEdit(new Request(
+							CommonVars.getCurrUser()));
 					editData();
 				}
 			});
@@ -967,13 +988,13 @@ public class FmFptImgBillHead extends FmCommon {
 	 * 修改数据
 	 */
 	public void editData() {
-//		if (tpnPane.getSelectedIndex() == 0) {// 转入
-//			tableModelImEx = tableModelImport;
-			editinorOutData();
-//		} else if (tpnPane.getSelectedIndex() == 1) {// 资料下载
-//			tableModelImEx = tableModelDown;
-//			editDownData();
-//		}
+		// if (tpnPane.getSelectedIndex() == 0) {// 转入
+		// tableModelImEx = tableModelImport;
+		editinorOutData();
+		// } else if (tpnPane.getSelectedIndex() == 1) {// 资料下载
+		// tableModelImEx = tableModelDown;
+		// editDownData();
+		// }
 		// else if (tpnPane.getSelectedIndex() == 2) {// 撤消
 		// tableModelImEx = tableModelCancel;
 		// editCancelData();
@@ -1009,25 +1030,25 @@ public class FmFptImgBillHead extends FmCommon {
 	/**
 	 * 修改资料下载数据
 	 */
-//	public void editDownData() {
-//		if (tableModelImEx.getCurrentRow() == null) {
-//			JOptionPane.showMessageDialog(FmFptInBillHead.this, "请选择要修改的数据",
-//					"提示", 0);
-//			return;
-//		}
-//		DgFptDownData dg = new DgFptDownData(FptBusinessType.FPT_BILL,
-//				FptInOutFlag.IN);
-//		FptDownData DownData = (FptDownData) tableModelImEx.getCurrentRow();
-//		if (DownData.getDeclareState().equals(DeclareState.PROCESS_EXE)
-//				|| DownData.getDeclareState().equals(DeclareState.WAIT_EAA)) {
-//			dg.setDataState(DataState.BROWSE);
-//		} else {
-//			dg.setDataState(DataState.EDIT);
-//		}
-//		dg.setTableModel(tableModelImEx);
-//		dg.setVisible(true);
-//		dg.setVisible(true);
-//	}
+	// public void editDownData() {
+	// if (tableModelImEx.getCurrentRow() == null) {
+	// JOptionPane.showMessageDialog(FmFptInBillHead.this, "请选择要修改的数据",
+	// "提示", 0);
+	// return;
+	// }
+	// DgFptDownData dg = new DgFptDownData(FptBusinessType.FPT_BILL,
+	// FptInOutFlag.IN);
+	// FptDownData DownData = (FptDownData) tableModelImEx.getCurrentRow();
+	// if (DownData.getDeclareState().equals(DeclareState.PROCESS_EXE)
+	// || DownData.getDeclareState().equals(DeclareState.WAIT_EAA)) {
+	// dg.setDataState(DataState.BROWSE);
+	// } else {
+	// dg.setDataState(DataState.EDIT);
+	// }
+	// dg.setTableModel(tableModelImEx);
+	// dg.setVisible(true);
+	// dg.setVisible(true);
+	// }
 
 	// /**
 	// * 修改撤消数据
@@ -1055,7 +1076,8 @@ public class FmFptImgBillHead extends FmCommon {
 			btnDelete.setText("删除");
 			btnDelete.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-					fptManageAction.permissionCheckInBillDel(new Request(CommonVars.getCurrUser()));
+					fptManageAction.permissionCheckInBillDel(new Request(
+							CommonVars.getCurrUser()));
 					deleteData();
 				}
 			});
@@ -1077,7 +1099,7 @@ public class FmFptImgBillHead extends FmCommon {
 					// if (tpnPane.getSelectedIndex() == 0) {// 转出
 					// tableModelImEx = tableModelExport;
 					// } else {
-//					tableModelImEx = tableModelImport;
+					// tableModelImEx = tableModelImport;
 					// }
 					if (tableModelImport.getCurrentRow() == null) {
 						JOptionPane.showMessageDialog(FmFptImgBillHead.this,
@@ -1114,7 +1136,8 @@ public class FmFptImgBillHead extends FmCommon {
 			btnApply.setText("海关申报");
 			btnApply.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-					fptManageAction.permissionCheckApply(new Request(CommonVars.getCurrUser()));
+					fptManageAction.permissionCheckApply(new Request(CommonVars
+							.getCurrUser()));
 					apply();
 				}
 			});
@@ -1135,9 +1158,8 @@ public class FmFptImgBillHead extends FmCommon {
 				"提示", JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
 			return;
 		}
-			applyFptBill();
+		applyFptBill();
 
-		
 	}
 
 	/**
@@ -1145,13 +1167,13 @@ public class FmFptImgBillHead extends FmCommon {
 	 */
 	private void applyFptBill() {
 		// 判断归并后的资料是否是按申请表序号与交易单位来进行合并
-//		tableModelImEx = tableModelImport;
-//		if (isMergerCheck()) {
-//			JOptionPane.showMessageDialog(FmFptImgBillHead.this,
-//					"当申请表序号与交易单位都一致时，应该合并成归并后的一条!", "提示",
-//					JOptionPane.INFORMATION_MESSAGE);
-//			return;
-//		}
+		// tableModelImEx = tableModelImport;
+		// if (isMergerCheck()) {
+		// JOptionPane.showMessageDialog(FmFptImgBillHead.this,
+		// "当申请表序号与交易单位都一致时，应该合并成归并后的一条!", "提示",
+		// JOptionPane.INFORMATION_MESSAGE);
+		// return;
+		// }
 		FptBillHead head = (FptBillHead) tableModelImport.getCurrentRow();
 		head = fptManageAction.findFptBillHeadById(
 				new Request(CommonVars.getCurrUser()), head.getId());
@@ -1163,31 +1185,31 @@ public class FmFptImgBillHead extends FmCommon {
 	/**
 	 * 海关申报资料下载
 	 */
-//	private void applyDown() {
-//		tableModelImEx = tableModelDown;
-//		FptDownData head = (FptDownData) tableModelImEx.getCurrentRow();
-//		head = fptManageAction.findFptDownDataById(
-//				new Request(CommonVars.getCurrUser()), head.getId());
-//		tableModelImEx.updateRow(head);
-//		new ApplyDownThread().start();
-//	}
+	// private void applyDown() {
+	// tableModelImEx = tableModelDown;
+	// FptDownData head = (FptDownData) tableModelImEx.getCurrentRow();
+	// head = fptManageAction.findFptDownDataById(
+	// new Request(CommonVars.getCurrUser()), head.getId());
+	// tableModelImEx.updateRow(head);
+	// new ApplyDownThread().start();
+	// }
 
-//	/**
-//	 * 海关申报撤消
-//	 */
-//	private void applyCancel() {
-//		tableModelImEx = tableModelCancel;
-//		FptCancelBill head = (FptCancelBill) tableModelImEx.getCurrentRow();
-//		if (head.getNote() == null || "".equals(head.getNote().trim())) {
-//			JOptionPane.showMessageDialog(FmFptInBillHead.this,
-//					"备注栏为空，请输入单据撤销原因!", "提示", JOptionPane.INFORMATION_MESSAGE);
-//		}
-//
-//		head = fptManageAction.findFptCancelBillById(
-//				new Request(CommonVars.getCurrUser()), head.getId());
-//		tableModelImEx.updateRow(head);
-//		new ApplyCancelThread().start();
-//	}
+	// /**
+	// * 海关申报撤消
+	// */
+	// private void applyCancel() {
+	// tableModelImEx = tableModelCancel;
+	// FptCancelBill head = (FptCancelBill) tableModelImEx.getCurrentRow();
+	// if (head.getNote() == null || "".equals(head.getNote().trim())) {
+	// JOptionPane.showMessageDialog(FmFptInBillHead.this,
+	// "备注栏为空，请输入单据撤销原因!", "提示", JOptionPane.INFORMATION_MESSAGE);
+	// }
+	//
+	// head = fptManageAction.findFptCancelBillById(
+	// new Request(CommonVars.getCurrUser()), head.getId());
+	// tableModelImEx.updateRow(head);
+	// new ApplyCancelThread().start();
+	// }
 
 	/**
 	 * 判断归并后的资料是否是按申请表序号与交易单位来进行合并
@@ -1195,20 +1217,20 @@ public class FmFptImgBillHead extends FmCommon {
 	 * @author ower
 	 * 
 	 */
-//	private boolean isMergerCheck() {
-//		String inOutFlag = FptInOutFlag.IN;
-//		String sysType = FptBusinessType.FPT_BILL;
-//		// if (tpnPane.getSelectedIndex() == 0) {// 转出
-//		// inOutFlag = "0";
-//		// tableModelImEx = tableModelExport;
-//		// } else {
-//		// inOutFlag = "1";
-////		tableModelImEx = tableModelImport;
-//		// }
-//		FptBillHead c = (FptBillHead) tableModelImport.getCurrentRow();
-//		return this.fptManageAction.isMergerCheckFptBillDictItem(new Request(
-//				CommonVars.getCurrUser(), true), inOutFlag, c.getId(), sysType);
-//	}
+	// private boolean isMergerCheck() {
+	// String inOutFlag = FptInOutFlag.IN;
+	// String sysType = FptBusinessType.FPT_BILL;
+	// // if (tpnPane.getSelectedIndex() == 0) {// 转出
+	// // inOutFlag = "0";
+	// // tableModelImEx = tableModelExport;
+	// // } else {
+	// // inOutFlag = "1";
+	// // tableModelImEx = tableModelImport;
+	// // }
+	// FptBillHead c = (FptBillHead) tableModelImport.getCurrentRow();
+	// return this.fptManageAction.isMergerCheckFptBillDictItem(new Request(
+	// CommonVars.getCurrUser(), true), inOutFlag, c.getId(), sysType);
+	// }
 
 	/**
 	 * 海关申报转出转入线程
@@ -1224,7 +1246,8 @@ public class FmFptImgBillHead extends FmCommon {
 				CommonStepProgress.setStepMessage("系统正获取数据，请稍后...");
 				Request request = new Request(CommonVars.getCurrUser());
 				request.setTaskId(taskId);
-				FptBillHead head = (FptBillHead) tableModelImport.getCurrentRow();
+				FptBillHead head = (FptBillHead) tableModelImport
+						.getCurrentRow();
 				try {
 					DeclareFileInfo fileInfo = fptManageAction.applyFptBill(
 							new Request(CommonVars.getCurrUser()), head);
@@ -1279,63 +1302,62 @@ public class FmFptImgBillHead extends FmCommon {
 	 * @author ower
 	 * 
 	 */
-//	class ApplyDownThread extends Thread {
-//		public void run() {
-//			try {
-//				String taskId = CommonStepProgress.getExeTaskId();
-//				CommonStepProgress.showStepProgressDialog(taskId);
-//				CommonStepProgress.setStepMessage("系统正获取数据，请稍后...");
-//				Request request = new Request(CommonVars.getCurrUser());
-//				request.setTaskId(taskId);
-//				FptDownData head = (FptDownData) tableModelImEx.getCurrentRow();
-//				try {
-//					DeclareFileInfo fileInfo = fptManageAction
-//							.applyFptDownData(
-//									new Request(CommonVars.getCurrUser()), head);
-//					head = fptManageAction.findFptDownDataById(new Request(
-//							CommonVars.getCurrUser()), head.getId());
-//					if (head != null) {
-//						tableModelImEx.updateRow(head);
-//					}
-//					CommonStepProgress.closeStepProgressDialog();
-//					JOptionPane.showMessageDialog(null,
-//							fileInfo.getFileInfoSpec(), "提示", 1);
-//				} catch (Exception ex) {
-//					CommonStepProgress.closeStepProgressDialog();
-//					throw new RuntimeException("系统申报失败！", ex);
-//				}
-//				setState();
-//			} catch (Exception ex) {
-//				throw new RuntimeException("系统申报失败！", ex);
-//			} finally {
-//				CommonStepProgress.closeStepProgressDialog();
-//			}
-//			int count = 0;
-//
-//			try {
-//				// 上传文件
-//				if (FptQuery.getInstance().isFtpUpload()) {
-//					count = fptMessageAction.ftpUpload(new Request(CommonVars
-//							.getCurrUser()));
-//
-//					if (count == 0) {
-//						JOptionPane.showMessageDialog(FmFptInBillHead.this,
-//								"系统报文发送失败，请重新发送", "确认", 1);
-//					} else {
-//						JOptionPane.showMessageDialog(FmFptInBillHead.this,
-//								"系统报文发送成功!", "确认", 1);
-//					}
-//				}
-//			} catch (RuntimeException e) {
-//				CommonStepProgress.closeStepProgressDialog();
-//				JOptionPane.showMessageDialog(FmFptInBillHead.this,
-//						"系统报文发送失败，请重新发送 " + e.getMessage(), "确认", 1);
-//			}
-//			JOptionPane.showMessageDialog(FmFptInBillHead.this, "系统报文已生成成功! ",
-//					"确认", 1);
-//		}
-//	}
-
+	// class ApplyDownThread extends Thread {
+	// public void run() {
+	// try {
+	// String taskId = CommonStepProgress.getExeTaskId();
+	// CommonStepProgress.showStepProgressDialog(taskId);
+	// CommonStepProgress.setStepMessage("系统正获取数据，请稍后...");
+	// Request request = new Request(CommonVars.getCurrUser());
+	// request.setTaskId(taskId);
+	// FptDownData head = (FptDownData) tableModelImEx.getCurrentRow();
+	// try {
+	// DeclareFileInfo fileInfo = fptManageAction
+	// .applyFptDownData(
+	// new Request(CommonVars.getCurrUser()), head);
+	// head = fptManageAction.findFptDownDataById(new Request(
+	// CommonVars.getCurrUser()), head.getId());
+	// if (head != null) {
+	// tableModelImEx.updateRow(head);
+	// }
+	// CommonStepProgress.closeStepProgressDialog();
+	// JOptionPane.showMessageDialog(null,
+	// fileInfo.getFileInfoSpec(), "提示", 1);
+	// } catch (Exception ex) {
+	// CommonStepProgress.closeStepProgressDialog();
+	// throw new RuntimeException("系统申报失败！", ex);
+	// }
+	// setState();
+	// } catch (Exception ex) {
+	// throw new RuntimeException("系统申报失败！", ex);
+	// } finally {
+	// CommonStepProgress.closeStepProgressDialog();
+	// }
+	// int count = 0;
+	//
+	// try {
+	// // 上传文件
+	// if (FptQuery.getInstance().isFtpUpload()) {
+	// count = fptMessageAction.ftpUpload(new Request(CommonVars
+	// .getCurrUser()));
+	//
+	// if (count == 0) {
+	// JOptionPane.showMessageDialog(FmFptInBillHead.this,
+	// "系统报文发送失败，请重新发送", "确认", 1);
+	// } else {
+	// JOptionPane.showMessageDialog(FmFptInBillHead.this,
+	// "系统报文发送成功!", "确认", 1);
+	// }
+	// }
+	// } catch (RuntimeException e) {
+	// CommonStepProgress.closeStepProgressDialog();
+	// JOptionPane.showMessageDialog(FmFptInBillHead.this,
+	// "系统报文发送失败，请重新发送 " + e.getMessage(), "确认", 1);
+	// }
+	// JOptionPane.showMessageDialog(FmFptInBillHead.this, "系统报文已生成成功! ",
+	// "确认", 1);
+	// }
+	// }
 
 	/**
 	 * 海关申报单据撤消线程
@@ -1344,64 +1366,63 @@ public class FmFptImgBillHead extends FmCommon {
 	 * 
 	 */
 
-//	class ApplyCancelThread extends Thread {
-//		public void run() {
-//			try {
-//				String taskId = CommonStepProgress.getExeTaskId();
-//				CommonStepProgress.showStepProgressDialog(taskId);
-//				CommonStepProgress.setStepMessage("系统正获取数据，请稍后...");
-//				Request request = new Request(CommonVars.getCurrUser());
-//				request.setTaskId(taskId);
-//				FptCancelBill head = (FptCancelBill) tableModelImEx
-//						.getCurrentRow();
-//				try {
-//					DeclareFileInfo fileInfo = fptManageAction
-//							.applyFptCancelBill(
-//									new Request(CommonVars.getCurrUser()), head);
-//					head = fptManageAction.findFptCancelBillById(new Request(
-//							CommonVars.getCurrUser()), head.getId());
-//					if (head != null) {
-//						tableModelImEx.updateRow(head);
-//					}
-//					CommonStepProgress.closeStepProgressDialog();
-//					JOptionPane.showMessageDialog(null,
-//							fileInfo.getFileInfoSpec(), "提示", 1);
-//				} catch (Exception ex) {
-//					CommonStepProgress.closeStepProgressDialog();
-//					throw new RuntimeException("系统申报失败！", ex);
-//				}
-//				setState();
-//			} catch (Exception ex) {
-//				throw new RuntimeException("系统申报失败！", ex);
-//			} finally {
-//				CommonStepProgress.closeStepProgressDialog();
-//			}
-//			int count = 0;
-//
-//			try {
-//				// 上传文件
-//				if (FptQuery.getInstance().isFtpUpload()) {
-//					count = fptMessageAction.ftpUpload(new Request(CommonVars
-//							.getCurrUser()));
-//
-//					if (count == 0) {
-//						JOptionPane.showMessageDialog(FmFptInBillHead.this,
-//								"系统报文发送失败，请重新发送", "确认", 1);
-//					} else {
-//						JOptionPane.showMessageDialog(FmFptInBillHead.this,
-//								"系统报文发送成功!", "确认", 1);
-//					}
-//				}
-//			} catch (RuntimeException e) {
-//				CommonStepProgress.closeStepProgressDialog();
-//				JOptionPane.showMessageDialog(FmFptInBillHead.this,
-//						"系统报文发送失败，请重新发送 " + e.getMessage(), "确认", 1);
-//			}
-//			JOptionPane.showMessageDialog(FmFptInBillHead.this, "系统报文已生成成功! ",
-//					"确认", 1);
-//		}
-//	}
-
+	// class ApplyCancelThread extends Thread {
+	// public void run() {
+	// try {
+	// String taskId = CommonStepProgress.getExeTaskId();
+	// CommonStepProgress.showStepProgressDialog(taskId);
+	// CommonStepProgress.setStepMessage("系统正获取数据，请稍后...");
+	// Request request = new Request(CommonVars.getCurrUser());
+	// request.setTaskId(taskId);
+	// FptCancelBill head = (FptCancelBill) tableModelImEx
+	// .getCurrentRow();
+	// try {
+	// DeclareFileInfo fileInfo = fptManageAction
+	// .applyFptCancelBill(
+	// new Request(CommonVars.getCurrUser()), head);
+	// head = fptManageAction.findFptCancelBillById(new Request(
+	// CommonVars.getCurrUser()), head.getId());
+	// if (head != null) {
+	// tableModelImEx.updateRow(head);
+	// }
+	// CommonStepProgress.closeStepProgressDialog();
+	// JOptionPane.showMessageDialog(null,
+	// fileInfo.getFileInfoSpec(), "提示", 1);
+	// } catch (Exception ex) {
+	// CommonStepProgress.closeStepProgressDialog();
+	// throw new RuntimeException("系统申报失败！", ex);
+	// }
+	// setState();
+	// } catch (Exception ex) {
+	// throw new RuntimeException("系统申报失败！", ex);
+	// } finally {
+	// CommonStepProgress.closeStepProgressDialog();
+	// }
+	// int count = 0;
+	//
+	// try {
+	// // 上传文件
+	// if (FptQuery.getInstance().isFtpUpload()) {
+	// count = fptMessageAction.ftpUpload(new Request(CommonVars
+	// .getCurrUser()));
+	//
+	// if (count == 0) {
+	// JOptionPane.showMessageDialog(FmFptInBillHead.this,
+	// "系统报文发送失败，请重新发送", "确认", 1);
+	// } else {
+	// JOptionPane.showMessageDialog(FmFptInBillHead.this,
+	// "系统报文发送成功!", "确认", 1);
+	// }
+	// }
+	// } catch (RuntimeException e) {
+	// CommonStepProgress.closeStepProgressDialog();
+	// JOptionPane.showMessageDialog(FmFptInBillHead.this,
+	// "系统报文发送失败，请重新发送 " + e.getMessage(), "确认", 1);
+	// }
+	// JOptionPane.showMessageDialog(FmFptInBillHead.this, "系统报文已生成成功! ",
+	// "确认", 1);
+	// }
+	// }
 
 	/**
 	 * This method initializes btnProcess
@@ -1414,7 +1435,8 @@ public class FmFptImgBillHead extends FmCommon {
 			btnProcess.setText("回执处理");
 			btnProcess.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-					fptManageAction.permissionCheckProcess(new Request(CommonVars.getCurrUser()));
+					fptManageAction.permissionCheckProcess(new Request(
+							CommonVars.getCurrUser()));
 					processFptBill();
 				}
 			});
@@ -1422,42 +1444,51 @@ public class FmFptImgBillHead extends FmCommon {
 		return btnProcess;
 	}
 
-	  /**
-     * 回执处理
-     */
-    private void processFptBill() {
-        int processCount = 0;
-        int waitCount = 0;
-        StringBuffer noReceipt = new StringBuffer();;
-        List list = tableModelImport.getList();
-        for (int i = 0; i < list.size(); i++) {
-            FptBillHead fptBillHead = (FptBillHead) list.get(i);
-            fptBillHead = fptManageAction.findFptBillHeadById(new Request(CommonVars.getCurrUser()), fptBillHead.getId());
-            if (DeclareState.WAIT_EAA.equals(fptBillHead.getAppState())) {
-                waitCount++;
-                FptBillHead result = processSingleFptBill(fptBillHead);
-                if (result != null) {
-                    processCount++;
-                } else {
-                    noReceipt.append(fptBillHead.getReceiveCopBillNo()).append("\r\n");
-                }
-            }
-        }
-        setState();
-        if (waitCount > 0) {
-            if (processCount > 0) {
-                JOptionPane.showMessageDialog(this, "有" + processCount + "笔发货单收到回执，请点击查看按钮查看回执明细内容。"+ ("".equals(noReceipt.toString().trim()) ? ""
-						: "\r\n内部编号是：\r\n" + noReceipt
-						+ "的收货单没有回执。"), "提示", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(this, "内部编号是：\r\n" + noReceipt + "的收货单没有回执。", "提示", JOptionPane.INFORMATION_MESSAGE);
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "没有需要回执处理的收货单。", "提示", JOptionPane.INFORMATION_MESSAGE);
-        }
-    }
-    
-
+	/**
+	 * 回执处理
+	 */
+	private void processFptBill() {
+		int processCount = 0;
+		int waitCount = 0;
+		StringBuffer noReceipt = new StringBuffer();
+		;
+		List list = tableModelImport.getList();
+		for (int i = 0; i < list.size(); i++) {
+			FptBillHead fptBillHead = (FptBillHead) list.get(i);
+			fptBillHead = fptManageAction.findFptBillHeadById(new Request(
+					CommonVars.getCurrUser()), fptBillHead.getId());
+			if (DeclareState.WAIT_EAA.equals(fptBillHead.getAppState())) {
+				waitCount++;
+				FptBillHead result = processSingleFptBill(fptBillHead);
+				if (result != null) {
+					processCount++;
+				} else {
+					noReceipt.append(fptBillHead.getReceiveCopBillNo()).append(
+							"\r\n");
+				}
+			}
+		}
+		setState();
+		if (waitCount > 0) {
+			if (processCount > 0) {
+				JOptionPane.showMessageDialog(
+						this,
+						"有"
+								+ processCount
+								+ "笔发货单收到回执，请点击查看按钮查看回执明细内容。"
+								+ ("".equals(noReceipt.toString().trim()) ? ""
+										: "\r\n内部编号是：\r\n" + noReceipt
+												+ "的收货单没有回执。"), "提示",
+						JOptionPane.INFORMATION_MESSAGE);
+			} else {
+				JOptionPane.showMessageDialog(this, "内部编号是：\r\n" + noReceipt
+						+ "的收货单没有回执。", "提示", JOptionPane.INFORMATION_MESSAGE);
+			}
+		} else {
+			JOptionPane.showMessageDialog(this, "没有需要回执处理的收货单。", "提示",
+					JOptionPane.INFORMATION_MESSAGE);
+		}
+	}
 
 	/**
 	 * 回执处理转入转出
@@ -1476,9 +1507,11 @@ public class FmFptImgBillHead extends FmCommon {
 			JOptionPane.showMessageDialog(FmFptImgBillHead.this,
 					"下载回执失败！可能原因：1、网络不通、连接不到远程ftp。2、ftp参数配置错误");
 		}
-//		lsReturnFile = FptMessageHelper.getInstance().showBcsReceiptFile(
-//				FptBusinessType.FPT_BILL, copBillNo);
-		lsReturnFile.addAll(fptMessageAction.findNotProcessReturnFile(new Request(CommonVars.getCurrUser()), FptBusinessType.FPT_BILL, copBillNo));
+		// lsReturnFile = FptMessageHelper.getInstance().showBcsReceiptFile(
+		// FptBusinessType.FPT_BILL, copBillNo);
+		lsReturnFile.addAll(fptMessageAction.findNotProcessReturnFile(
+				new Request(CommonVars.getCurrUser()),
+				FptBusinessType.FPT_BILL, copBillNo));
 		if (lsReturnFile.size() <= 0) {
 			return null;
 		}
@@ -1489,102 +1522,102 @@ public class FmFptImgBillHead extends FmCommon {
 					new Request(CommonVars.getCurrUser()), head.getId());
 			tableModelImport.updateRow(head);
 			return head;
-//			JOptionPane.showMessageDialog(FmFptImgBillHead.this, "回执处理成功！\n"
-//					+ result, "提示", JOptionPane.INFORMATION_MESSAGE);
+			// JOptionPane.showMessageDialog(FmFptImgBillHead.this, "回执处理成功！\n"
+			// + result, "提示", JOptionPane.INFORMATION_MESSAGE);
 		} catch (Exception ex) {
 			JOptionPane.showMessageDialog(FmFptImgBillHead.this,
 					"回执处理失败" + ex.getMessage(), "提示",
 					JOptionPane.INFORMATION_MESSAGE);
 			return null;
 		}
-//		setState();
+		// setState();
 
 	}
 
-//	/**
-//	 * 回执处理资料下载
-//	 */
-//	private void processDown() {
-//
-//		if (tableModelImEx.getCurrentRow() == null) {
-//			JOptionPane.showMessageDialog(this, "请选择要回执处理的下载数据", "提示", 2);
-//			return;
-//		}
-//		FptDownData head = (FptDownData) tableModelImEx.getCurrentRow();
-//		try {
-//			if (FptQuery.getInstance().isFtpUpload()) {
-//				// 下载回执,通过服务器下载
-//				fptMessageAction.ftpDownload(
-//						new Request(CommonVars.getCurrUser()),
-//						head.getOutCopNo());
-//			}
-//		} catch (RuntimeException e) {
-//			JOptionPane.showMessageDialog(FmFptInBillHead.this,
-//					"下载报文失败！可能原因：1、网络不通、连接不到远程ftp。2、ftp参数配置错误");
-//		}
-//		List lsReturnFile = FptMessageHelper.getInstance().showBcsReceiptFile(
-//				FptBusinessType.FPT_DOWN_DATA, head.getOutCopNo());
-//		if (lsReturnFile.size() <= 0) {
-//			return;
-//		}
-//		try {
-//			String result = fptManageAction.processFptDownData(new Request(
-//					CommonVars.getCurrUser()), head, lsReturnFile);
-//			head = fptManageAction.findFptDownDataById(
-//					new Request(CommonVars.getCurrUser()), head.getId());
-//			tableModelImEx.updateRow(head);
-//			JOptionPane.showMessageDialog(this, "回执处理成功！\n" + result, "提示",
-//					JOptionPane.INFORMATION_MESSAGE);
-//		} catch (Exception ex) {
-//			JOptionPane.showMessageDialog(this, "回执处理失败" + ex.getMessage(),
-//					"提示", JOptionPane.INFORMATION_MESSAGE);
-//			return;
-//		}
-//		setState();
-//
-//	}
-//
-//	/**
-//	 * 回执处理撤消
-//	 */
-//	private void processCancel() {
-//
-//		if (tableModelImEx.getCurrentRow() == null) {
-//			JOptionPane.showMessageDialog(this, "请选择要单据撤消的数据", "提示", 2);
-//			return;
-//		}
-//		FptCancelBill head = (FptCancelBill) tableModelImEx.getCurrentRow();
-//		try {
-//			if (FptQuery.getInstance().isFtpUpload()) {
-//				// 下载回执,通过服务器下载
-//				fptMessageAction.ftpDownload(
-//						new Request(CommonVars.getCurrUser()), head.getCopNo());
-//			}
-//		} catch (RuntimeException e) {
-//			JOptionPane.showMessageDialog(FmFptInBillHead.this,
-//					"下载报文失败！可能原因：1、网络不通、连接不到远程ftp。2、ftp参数配置错误");
-//		}
-//		List lsReturnFile = FptMessageHelper.getInstance().showBcsReceiptFile(
-//				FptBusinessType.FPT_CANCEL_BILL, head.getCopNo());
-//		if (lsReturnFile.size() <= 0) {
-//			return;
-//		}
-//		try {
-//			String result = fptManageAction.processFptCancelBill(new Request(
-//					CommonVars.getCurrUser()), head, lsReturnFile);
-//			head = fptManageAction.findFptCancelBillById(
-//					new Request(CommonVars.getCurrUser()), head.getId());
-//			tableModelImEx.updateRow(head);
-//			JOptionPane.showMessageDialog(this, "回执处理成功！\n" + result, "提示",
-//					JOptionPane.INFORMATION_MESSAGE);
-//		} catch (Exception ex) {
-//			JOptionPane.showMessageDialog(this, "回执处理失败" + ex.getMessage(),
-//					"提示", JOptionPane.INFORMATION_MESSAGE);
-//			return;
-//		}
-//		setState();
-//
-//	}
+	// /**
+	// * 回执处理资料下载
+	// */
+	// private void processDown() {
+	//
+	// if (tableModelImEx.getCurrentRow() == null) {
+	// JOptionPane.showMessageDialog(this, "请选择要回执处理的下载数据", "提示", 2);
+	// return;
+	// }
+	// FptDownData head = (FptDownData) tableModelImEx.getCurrentRow();
+	// try {
+	// if (FptQuery.getInstance().isFtpUpload()) {
+	// // 下载回执,通过服务器下载
+	// fptMessageAction.ftpDownload(
+	// new Request(CommonVars.getCurrUser()),
+	// head.getOutCopNo());
+	// }
+	// } catch (RuntimeException e) {
+	// JOptionPane.showMessageDialog(FmFptInBillHead.this,
+	// "下载报文失败！可能原因：1、网络不通、连接不到远程ftp。2、ftp参数配置错误");
+	// }
+	// List lsReturnFile = FptMessageHelper.getInstance().showBcsReceiptFile(
+	// FptBusinessType.FPT_DOWN_DATA, head.getOutCopNo());
+	// if (lsReturnFile.size() <= 0) {
+	// return;
+	// }
+	// try {
+	// String result = fptManageAction.processFptDownData(new Request(
+	// CommonVars.getCurrUser()), head, lsReturnFile);
+	// head = fptManageAction.findFptDownDataById(
+	// new Request(CommonVars.getCurrUser()), head.getId());
+	// tableModelImEx.updateRow(head);
+	// JOptionPane.showMessageDialog(this, "回执处理成功！\n" + result, "提示",
+	// JOptionPane.INFORMATION_MESSAGE);
+	// } catch (Exception ex) {
+	// JOptionPane.showMessageDialog(this, "回执处理失败" + ex.getMessage(),
+	// "提示", JOptionPane.INFORMATION_MESSAGE);
+	// return;
+	// }
+	// setState();
+	//
+	// }
+	//
+	// /**
+	// * 回执处理撤消
+	// */
+	// private void processCancel() {
+	//
+	// if (tableModelImEx.getCurrentRow() == null) {
+	// JOptionPane.showMessageDialog(this, "请选择要单据撤消的数据", "提示", 2);
+	// return;
+	// }
+	// FptCancelBill head = (FptCancelBill) tableModelImEx.getCurrentRow();
+	// try {
+	// if (FptQuery.getInstance().isFtpUpload()) {
+	// // 下载回执,通过服务器下载
+	// fptMessageAction.ftpDownload(
+	// new Request(CommonVars.getCurrUser()), head.getCopNo());
+	// }
+	// } catch (RuntimeException e) {
+	// JOptionPane.showMessageDialog(FmFptInBillHead.this,
+	// "下载报文失败！可能原因：1、网络不通、连接不到远程ftp。2、ftp参数配置错误");
+	// }
+	// List lsReturnFile = FptMessageHelper.getInstance().showBcsReceiptFile(
+	// FptBusinessType.FPT_CANCEL_BILL, head.getCopNo());
+	// if (lsReturnFile.size() <= 0) {
+	// return;
+	// }
+	// try {
+	// String result = fptManageAction.processFptCancelBill(new Request(
+	// CommonVars.getCurrUser()), head, lsReturnFile);
+	// head = fptManageAction.findFptCancelBillById(
+	// new Request(CommonVars.getCurrUser()), head.getId());
+	// tableModelImEx.updateRow(head);
+	// JOptionPane.showMessageDialog(this, "回执处理成功！\n" + result, "提示",
+	// JOptionPane.INFORMATION_MESSAGE);
+	// } catch (Exception ex) {
+	// JOptionPane.showMessageDialog(this, "回执处理失败" + ex.getMessage(),
+	// "提示", JOptionPane.INFORMATION_MESSAGE);
+	// return;
+	// }
+	// setState();
+	//
+	// }
 
 	/**
 	 * This method initializes btnOther
@@ -1597,7 +1630,8 @@ public class FmFptImgBillHead extends FmCommon {
 			btnOther.setText("其它功能");
 			btnOther.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-					fptManageAction.permissionCheckOther(new Request(CommonVars.getCurrUser()));
+					fptManageAction.permissionCheckOther(new Request(CommonVars
+							.getCurrUser()));
 					getPmOther().show(getBtnOther(), 0,
 							getBtnOther().getHeight());
 				}
@@ -1706,15 +1740,14 @@ public class FmFptImgBillHead extends FmCommon {
 					// if (tpnPane.getSelectedIndex() == 0) {// 转出
 					// tableModelImEx = tableModelExport;
 					// } else {
-					fptManageAction.permissionCheckCopy(new Request(CommonVars.getCurrUser()));
-//					tableModelImEx = tableModelImport;
+					fptManageAction.permissionCheckCopy(new Request(CommonVars
+							.getCurrUser()));
+					// tableModelImEx = tableModelImport;
 					// }
 					if (tableModelImport.getCurrentRow() != null) {
-						List<FptBillHead> list = fptManageAction
-								.copyFptBillHead(
-										new Request(CommonVars.getCurrUser()),
-										tableModelImport.getCurrentRows(),
-										1,0);
+						List<FptBillHead> list = fptManageAction.copyFptBillHead(
+								new Request(CommonVars.getCurrUser()),
+								tableModelImport.getCurrentRows(), 1, 0);
 						tableModelImport.addRows(list);
 					} else {
 						JOptionPane.showMessageDialog(FmFptImgBillHead.this,
@@ -1764,7 +1797,7 @@ public class FmFptImgBillHead extends FmCommon {
 						initTableImport(getDataSource());
 						initCustomer();
 					} else if (tpnPane.getSelectedIndex() == 1) {// 资料下载
-//						ininTableDown();
+						// ininTableDown();
 						pnFptDownData.queryData();
 					}
 					setState();
@@ -1779,11 +1812,12 @@ public class FmFptImgBillHead extends FmCommon {
 	 */
 	public PnFptDownData getPnFptDownData() {
 		if (pnFptDownData == null) {
-			pnFptDownData = new PnFptDownData(DownLoadState.FPT_BILL,FptInOutFlag.IN);
+			pnFptDownData = new PnFptDownData(DownLoadState.FPT_BILL,
+					FptInOutFlag.IN);
 		}
 		return pnFptDownData;
 	}
-	
+
 	/**
 	 * This method initializes btnChange
 	 * 
@@ -1814,7 +1848,7 @@ public class FmFptImgBillHead extends FmCommon {
 		// if (tpnPane.getSelectedIndex() == 0) {// 转出
 		// tableModelImEx = tableModelExport;
 		// } else {
-//		tableModelImEx = tableModelImport;
+		// tableModelImEx = tableModelImport;
 		// }
 		if (tableModelImport.getCurrentRow() != null) {
 			if (JOptionPane.showConfirmDialog(this, "是否确定变更单据!", "提示",
@@ -2014,7 +2048,6 @@ public class FmFptImgBillHead extends FmCommon {
 		return btSreach;
 	}
 
-	
 	/**
 	 * This method initializes spn5
 	 * 
@@ -2072,74 +2105,74 @@ public class FmFptImgBillHead extends FmCommon {
 	/**
 	 * 下载明细
 	 */
-//	private void DownloadDetail() {
-//		// if (tpnPane.getSelectedIndex() == 0) {// 转出
-//		// tableModelImEx = tableModelExport;
-//		// } else
-//		if (tpnPane.getSelectedIndex() == 0) {
-//			tableModelImEx = tableModelImport;
-//		}
-//		if (tableModelImEx.getCurrentRow() != null) {
-//			if (JOptionPane.showConfirmDialog(this, "是否确定下载对方明细数据?", "提示",
-//					JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
-//				return;
-//			}
-//			FptBillHead fptBillHead = (FptBillHead) tableModelImEx
-//					.getCurrentRow();
-//			if (fptBillHead != null) {
-//				boolean isOut = true;
-//				if (FptInOutFlag.IN.equals(fptBillHead.getBillSort())) {
-//					isOut = false;
-//				}
-//				DownloadDetailTask task = new DownloadDetailTask(fptBillHead,
-//						isOut);
-//				task.execute();
-//			}
-//		} else {
-//			JOptionPane.showMessageDialog(this, "请选择要下载对方明细的表头!", "提示",
-//					JOptionPane.INFORMATION_MESSAGE);
-//		}
-//	}
+	// private void DownloadDetail() {
+	// // if (tpnPane.getSelectedIndex() == 0) {// 转出
+	// // tableModelImEx = tableModelExport;
+	// // } else
+	// if (tpnPane.getSelectedIndex() == 0) {
+	// tableModelImEx = tableModelImport;
+	// }
+	// if (tableModelImEx.getCurrentRow() != null) {
+	// if (JOptionPane.showConfirmDialog(this, "是否确定下载对方明细数据?", "提示",
+	// JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+	// return;
+	// }
+	// FptBillHead fptBillHead = (FptBillHead) tableModelImEx
+	// .getCurrentRow();
+	// if (fptBillHead != null) {
+	// boolean isOut = true;
+	// if (FptInOutFlag.IN.equals(fptBillHead.getBillSort())) {
+	// isOut = false;
+	// }
+	// DownloadDetailTask task = new DownloadDetailTask(fptBillHead,
+	// isOut);
+	// task.execute();
+	// }
+	// } else {
+	// JOptionPane.showMessageDialog(this, "请选择要下载对方明细的表头!", "提示",
+	// JOptionPane.INFORMATION_MESSAGE);
+	// }
+	// }
 
-//	class DownloadDetailTask extends SwingWorker {
-//		FptBillHead fptBillHead = null;
-//		boolean isOut = true;
-//
-//		public DownloadDetailTask(FptBillHead fptBillHead, boolean isOut) {
-//			this.fptBillHead = fptBillHead;
-//			this.isOut = isOut;
-//		}
-//
-//		@Override
-//		protected Object doInBackground() throws Exception {
-//			List items = new ArrayList();
-//			try {
-//				String taskId = CommonStepProgress.getExeTaskId();
-//				CommonStepProgress.showStepProgressDialog(taskId);
-//				CommonStepProgress.setStepMessage("系统正获取数据，请稍后...");
-//				Request request = new Request(CommonVars.getCurrUser());
-//				request.setTaskId(taskId);
-//				if (isOut) {
-//					items = fptManageAction.downloadFptBillItemsOutByQp(
-//							new Request(CommonVars.getCurrUser()), taskId,
-//							fptBillHead);
-//				} else {
-//					items = fptManageAction.downloadFptBillItemsInByQp(
-//							new Request(CommonVars.getCurrUser()), taskId,
-//							fptBillHead);
-//				}
-//				CommonStepProgress.closeStepProgressDialog();
-//
-//			} catch (Exception ex) {
-//				CommonStepProgress.closeStepProgressDialog();
-//				JOptionPane.showMessageDialog(FmFptInBillHead.this, "下载失败 "
-//						+ ex.getMessage(), "确认", 1);
-//			} finally {
-//				CommonStepProgress.closeStepProgressDialog();
-//			}
-//			return items;
-//		}
-//	}
+	// class DownloadDetailTask extends SwingWorker {
+	// FptBillHead fptBillHead = null;
+	// boolean isOut = true;
+	//
+	// public DownloadDetailTask(FptBillHead fptBillHead, boolean isOut) {
+	// this.fptBillHead = fptBillHead;
+	// this.isOut = isOut;
+	// }
+	//
+	// @Override
+	// protected Object doInBackground() throws Exception {
+	// List items = new ArrayList();
+	// try {
+	// String taskId = CommonStepProgress.getExeTaskId();
+	// CommonStepProgress.showStepProgressDialog(taskId);
+	// CommonStepProgress.setStepMessage("系统正获取数据，请稍后...");
+	// Request request = new Request(CommonVars.getCurrUser());
+	// request.setTaskId(taskId);
+	// if (isOut) {
+	// items = fptManageAction.downloadFptBillItemsOutByQp(
+	// new Request(CommonVars.getCurrUser()), taskId,
+	// fptBillHead);
+	// } else {
+	// items = fptManageAction.downloadFptBillItemsInByQp(
+	// new Request(CommonVars.getCurrUser()), taskId,
+	// fptBillHead);
+	// }
+	// CommonStepProgress.closeStepProgressDialog();
+	//
+	// } catch (Exception ex) {
+	// CommonStepProgress.closeStepProgressDialog();
+	// JOptionPane.showMessageDialog(FmFptInBillHead.this, "下载失败 "
+	// + ex.getMessage(), "确认", 1);
+	// } finally {
+	// CommonStepProgress.closeStepProgressDialog();
+	// }
+	// return items;
+	// }
+	// }
 
 	private JButton getBtnResend() {
 		if (btnResend == null) {
@@ -2147,15 +2180,17 @@ public class FmFptImgBillHead extends FmCommon {
 			btnResend.setText("补发报文");
 			btnResend.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-					fptManageAction.permissionCheckResend(new Request(CommonVars.getCurrUser()));
+					fptManageAction.permissionCheckResend(new Request(
+							CommonVars.getCurrUser()));
 					int count = 0;
 					try {
 						// 上传文件
 						count = fptMessageAction.httpUpload(new Request(
 								CommonVars.getCurrUser()));
 						if (count == 0) {
-							JOptionPane.showMessageDialog(FmFptImgBillHead.this,
-									"上传目录为空，没有可上传的报文", "确认", 1);
+							JOptionPane.showMessageDialog(
+									FmFptImgBillHead.this, "上传目录为空，没有可上传的报文",
+									"确认", 1);
 						}
 					} catch (Exception ex) {
 						CommonStepProgress.closeStepProgressDialog();
@@ -2170,6 +2205,7 @@ public class FmFptImgBillHead extends FmCommon {
 		}
 		return btnResend;
 	}
+
 	private JButton getBtnReceipt() {
 		if (btnReceipt == null) {
 			btnReceipt = new JButton("查看回执");
@@ -2181,15 +2217,18 @@ public class FmFptImgBillHead extends FmCommon {
 		}
 		return btnReceipt;
 	}
-	 private void showReceiptResult() {
-	        String sysType = FptBusinessType.FPT_BILL;
-	        if (tableModelImport.getCurrentRow() == null) {
-	            JOptionPane.showMessageDialog(this, "请选择要查看回执的收货单",
-	                    "提示", JOptionPane.INFORMATION_MESSAGE);
-	            return;
-	        }
-	        FptBillHead fptBillHead = (FptBillHead) tableModelImport.getCurrentRow();
-	        String copNo = fptBillHead.getReceiveCopBillNo();
-	        FptMessageHelper.getInstance().showFptReceiptResult(sysType, FptInOutFlag.IN,copNo);
-	    }
+
+	private void showReceiptResult() {
+		String sysType = FptBusinessType.FPT_BILL;
+		if (tableModelImport.getCurrentRow() == null) {
+			JOptionPane.showMessageDialog(this, "请选择要查看回执的收货单", "提示",
+					JOptionPane.INFORMATION_MESSAGE);
+			return;
+		}
+		FptBillHead fptBillHead = (FptBillHead) tableModelImport
+				.getCurrentRow();
+		String copNo = fptBillHead.getReceiveCopBillNo();
+		FptMessageHelper.getInstance().showFptReceiptResult(sysType,
+				FptInOutFlag.IN, copNo);
+	}
 } // @jve:decl-index=0:visual-constraint="10,10"

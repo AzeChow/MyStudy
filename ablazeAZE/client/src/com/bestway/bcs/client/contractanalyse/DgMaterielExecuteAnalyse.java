@@ -12,6 +12,7 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -73,32 +74,23 @@ import com.bestway.common.constant.ImpExpType;
 import com.bestway.common.constant.SearchType;
 import com.bestway.ui.winuicontrol.JInternalFrameBase;
 import com.bestway.ui.winuicontrol.calendar.JCalendarComboBox;
-import java.awt.GridLayout;
 
 /**
  * @author ls
  *  // change the template for this generated type comment go to Window -
  * Preferences - Java - Code Style - Code Templates
  */
-/**查询条件是针对一本或多本合同相同(商编＋商品名称＋商品规格＋单位)的统计
-   合同总定量=所有合同的进口料件总量
-   总进口量=料件进口总量 +转厂进口总量 - 退料出口+余料结转转入
-   大单进口量=料件进口总量 +转厂进口总量
-   料件进口总量=所有进口报关单进口类型为料件进口之和
-   转厂进口总量=所有进口报关单进口类型为转厂进口之和
-   退料出口总量=退料复出 + 退料退换出口
-   退料复出总量＝所有进口报关单 [退料出口类型] 并且贸易方式为 来料料件复出,进料料件复出
-   退料退换总量(退换出口量)＝所有出口报关单 [退料出口类型] 并且贸易方式为 来料料件退换,进料料件退换
-   退换进口量＝所有进口报关单 [直接进口类型] 并且贸易方式为 来料料件退换,进料料件退换
-   本期内销数量＝进口报关单中进口类型为海关批准内销,贸易方式为0644，0245的数量(没有计算)
-   出口成品使用总量＝总出口量*单耗/((1-损耗)*0.01)
-   余料情况＝总进口量-成品使用量 (与进口料件情况统计表中的计算不统一)
-   库存数量＝余料数量 - 余料转出
-   可进口总量＝合同总定量－总进口量
-   余料结转转出＝所有出口报关单 [余料结转类型] 并且贸易方式为 来料余料结转,进料余料结转
-   余料结转转入＝所有进口报关单 [料件进口类型] 并且贸易方式为 来料余料结转,进料余料结转
-   关封余量＝关封管理明细中的进货本厂数量—转厂进口量(没有计算)
-   可直接进口量＝可进口数量-关封余量 
+/**
+ * 查询条件是针对一本或多本合同相同(商编＋商品名称＋商品规格＋单位)的统计 合同总定量=所有合同的进口料件总量 总进口量=料件进口总量 +转厂进口总量 -
+ * 退料出口+余料结转转入 大单进口量=料件进口总量 +转厂进口总量 料件进口总量=所有进口报关单进口类型为料件进口之和
+ * 转厂进口总量=所有进口报关单进口类型为转厂进口之和 退料出口总量=退料复出 + 退料退换出口 退料复出总量＝所有进口报关单 [退料出口类型]
+ * 并且贸易方式为 来料料件复出,进料料件复出 退料退换总量(退换出口量)＝所有出口报关单 [退料出口类型] 并且贸易方式为 来料料件退换,进料料件退换
+ * 退换进口量＝所有进口报关单 [直接进口类型] 并且贸易方式为 来料料件退换,进料料件退换
+ * 本期内销数量＝进口报关单中进口类型为海关批准内销,贸易方式为0644，0245的数量(没有计算)
+ * 出口成品使用总量＝总出口量*单耗/((1-损耗)*0.01) 余料情况＝总进口量-成品使用量 (与进口料件情况统计表中的计算不统一) 库存数量＝余料数量
+ * - 余料转出 可进口总量＝合同总定量－总进口量 余料结转转出＝所有出口报关单 [余料结转类型] 并且贸易方式为 来料余料结转,进料余料结转
+ * 余料结转转入＝所有进口报关单 [料件进口类型] 并且贸易方式为 来料余料结转,进料余料结转 关封余量＝关封管理明细中的进货本厂数量—转厂进口量(没有计算)
+ * 可直接进口量＝可进口数量-关封余量
  * 
  */
 public class DgMaterielExecuteAnalyse extends JInternalFrameBase {
@@ -221,7 +213,7 @@ public class DgMaterielExecuteAnalyse extends JInternalFrameBase {
 
 	private JTableListModel tableModelTbFirst2 = null;
 
-	private JTableListModel tableModelTbFour3 = null;  //  @jve:decl-index=0:visual-constraint="778,213"
+	private JTableListModel tableModelTbFour3 = null; // @jve:decl-index=0:visual-constraint="778,213"
 
 	private JTableListModel tableModelTbFour2 = null;
 
@@ -473,9 +465,8 @@ public class DgMaterielExecuteAnalyse extends JInternalFrameBase {
 			GridBagConstraints gridBagConstraints1 = new GridBagConstraints();
 			jPanel2 = new JPanel();
 			jPanel2.setLayout(new GridBagLayout());
-			jPanel2
-					.setBorder(javax.swing.BorderFactory
-							.createEtchedBorder(javax.swing.border.EtchedBorder.LOWERED));
+			jPanel2.setBorder(javax.swing.BorderFactory
+					.createEtchedBorder(javax.swing.border.EtchedBorder.LOWERED));
 			jPanel2.setBounds(new Rectangle(-20, 27, 185, 51));
 			gridBagConstraints1.gridx = 0;
 			gridBagConstraints1.gridy = 0;
@@ -591,15 +582,14 @@ public class DgMaterielExecuteAnalyse extends JInternalFrameBase {
 		if (jPanel == null) {
 			jPanel = new JPanel();
 			jPanel.setLayout(null);
-			jPanel
-					.setBorder(javax.swing.BorderFactory
-							.createEtchedBorder(javax.swing.border.EtchedBorder.LOWERED));
+			jPanel.setBorder(javax.swing.BorderFactory
+					.createEtchedBorder(javax.swing.border.EtchedBorder.LOWERED));
 			jPanel.setPreferredSize(new Dimension(755, 40));
 			jPanel.add(getBtnExit1(), null);
 			jPanel.add(getBtnRefresh1(), null);
 			jPanel.add(getBtnPrint1(), null);
 			jPanel.add(getJPanel4(), null);
-			//jPanel.add(getBtnFormulasearch(), null);
+			// jPanel.add(getBtnFormulasearch(), null);
 		}
 		return jPanel;
 	}
@@ -796,8 +786,7 @@ public class DgMaterielExecuteAnalyse extends JInternalFrameBase {
 							if (beginDate == null) {
 								beginDate = contract.getBeginDate();
 							} else {
-								if (beginDate
-										.compareTo(contract.getBeginDate()) > 0) {
+								if (beginDate.compareTo(contract.getBeginDate()) > 0) {
 									beginDate = contract.getBeginDate();
 								}
 							}
@@ -823,9 +812,8 @@ public class DgMaterielExecuteAnalyse extends JInternalFrameBase {
 			jLabel1 = new JLabel();
 			jPanel3 = new JPanel();
 			jPanel3.setLayout(null);
-			jPanel3
-					.setBorder(javax.swing.BorderFactory
-							.createEtchedBorder(javax.swing.border.EtchedBorder.LOWERED));
+			jPanel3.setBorder(javax.swing.BorderFactory
+					.createEtchedBorder(javax.swing.border.EtchedBorder.LOWERED));
 			jPanel3.setPreferredSize(new Dimension(725, 106));
 			jLabel1.setBounds(14, 75, 83, 23);
 			jLabel1.setText("按时间段查询");
@@ -892,24 +880,17 @@ public class DgMaterielExecuteAnalyse extends JInternalFrameBase {
 										Integer seqNum = contractImg
 												.getSeqNum();
 										if (impExpType == ALL_SELECT_ITEM) {
-											list = contractAnalyseAction
-													.findImpMaterielExeDetail(
-															new Request(
-																	CommonVars
-																			.getCurrUser()),
-															contractImg, -1,
-															beginDate, endDate,
-															state);
+											list = contractAnalyseAction.findImpMaterielExeDetail(
+													new Request(CommonVars
+															.getCurrUser()),
+													contractImg, -1, beginDate,
+													endDate, state);
 										} else {
-											list = contractAnalyseAction
-													.findImpMaterielExeDetail(
-															new Request(
-																	CommonVars
-																			.getCurrUser()),
-															contractImg,
-															impExpType,
-															beginDate, endDate,
-															state);
+											list = contractAnalyseAction.findImpMaterielExeDetail(
+													new Request(CommonVars
+															.getCurrUser()),
+													contractImg, impExpType,
+													beginDate, endDate, state);
 										}
 									}
 
@@ -949,9 +930,8 @@ public class DgMaterielExecuteAnalyse extends JInternalFrameBase {
 			jPanel5 = new JPanel();
 			jPanel5.setLayout(null);
 			jPanel5.setBounds(2, 429, 741, 50);
-			jPanel5
-					.setBorder(javax.swing.BorderFactory
-							.createEtchedBorder(javax.swing.border.EtchedBorder.LOWERED));
+			jPanel5.setBorder(javax.swing.BorderFactory
+					.createEtchedBorder(javax.swing.border.EtchedBorder.LOWERED));
 			jLabel7.setText("报关日期范围");
 			jLabel7.setBounds(7, 14, 81, 24);
 			jLabel8.setBounds(167, 13, 17, 24);
@@ -1058,15 +1038,13 @@ public class DgMaterielExecuteAnalyse extends JInternalFrameBase {
 		if (jPanel7 == null) {
 			jPanel7 = new JPanel();
 			jPanel7.setLayout(null);
-			jPanel7
-					.setBorder(javax.swing.BorderFactory
-							.createTitledBorder(
-									javax.swing.BorderFactory
-											.createEtchedBorder(javax.swing.border.EtchedBorder.LOWERED),
-									"料件查询条件",
-									javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-									javax.swing.border.TitledBorder.DEFAULT_POSITION,
-									null, null));
+			jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(
+					javax.swing.BorderFactory
+							.createEtchedBorder(javax.swing.border.EtchedBorder.LOWERED),
+					"料件查询条件",
+					javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
+					javax.swing.border.TitledBorder.DEFAULT_POSITION, null,
+					null));
 			jPanel7.setBounds(new Rectangle(12, 3, 724, 61));
 			jPanel7.add(getRbMaterielName(), null);
 			jPanel7.add(getRbMaterielNameSpec(), null);
@@ -1559,7 +1537,7 @@ public class DgMaterielExecuteAnalyse extends JInternalFrameBase {
 		// ImpExpType.DIRECT_EXPORT).toString(), "成品出口"));
 		// this.cbbImpExpType.addItem(new ItemProperty(Integer.valueOf(
 		// ImpExpType.TRANSFER_FACTORY_EXPORT).toString(), "转厂出口"));
-		//        
+		//
 		// this.cbbImpExpType.addItem(new ItemProperty(Integer.valueOf(
 		// ImpExpType.REWORK_EXPORT).toString(), "返工复出"));
 		// this.cbbImpExpType.addItem(new ItemProperty(Integer.valueOf(
@@ -1582,7 +1560,7 @@ public class DgMaterielExecuteAnalyse extends JInternalFrameBase {
 	 * 查询
 	 */
 	private void search() {
-		//料件执行情况
+		// 料件执行情况
 		if (this.jTabbedPane.getSelectedIndex() == 0) {
 			List contracts = jList11.getSelectedContracts();
 			if (contracts.size() <= 0) {
@@ -1600,19 +1578,25 @@ public class DgMaterielExecuteAnalyse extends JInternalFrameBase {
 						JOptionPane.INFORMATION_MESSAGE);
 				return;
 			}
+
+			/*
+			 * 选择的 状态 (生效，未生效，全部)
+			 */
 			int state = -1;
 			if (jRadioButton.isSelected()) {
+
 				state = CustomsDeclarationState.EFFECTIVED;
+
 			} else if (jRadioButton1.isSelected()) {
 				state = CustomsDeclarationState.NOT_EFFECTIVED;
 			} else if (jRadioButton2.isSelected()) {
-				state = state = CustomsDeclarationState.ALL;
+				state = CustomsDeclarationState.ALL;
 			}
 			List list = this.contractAnalyseAction.findImpMaterielExeState(
 					new Request(CommonVars.getCurrUser()), contracts,
 					tempContractImg, state);
 			initTbFrist2(list);
-		} else if (this.jTabbedPane.getSelectedIndex() == 1) {//进口料件统计
+		} else if (this.jTabbedPane.getSelectedIndex() == 1) {// 进口料件统计
 			List contracts = jListSecond.getSelectedContracts();
 			if (contracts.size() <= 0) {
 				CommonProgress.closeProgressDialog();
@@ -1634,7 +1618,7 @@ public class DgMaterielExecuteAnalyse extends JInternalFrameBase {
 			list = this.contractAnalyseAction.findImpMaterielExeStat(
 					new Request(CommonVars.getCurrUser()), contracts,
 					beginDate, endDate, SEARCH_TYPE, state);
-			
+
 			initTbSecond(list);
 		}
 
@@ -1678,8 +1662,7 @@ public class DgMaterielExecuteAnalyse extends JInternalFrameBase {
 						list.add(addColumn("商品编码", "complexCode", 100));
 						list.add(addColumn("品名规格", "nameSpec", 100));
 						list.add(addColumn("单位", "unit.name", 100));
-						list.add(addColumn("合同总定量", "contractTotalAmount",
-										100));
+						list.add(addColumn("合同总定量", "contractTotalAmount", 100));
 						list.add(addColumn("总进口量", "totalImpAmount", 100));
 						list.add(addColumn("大单进口量", "orderImpAmount", 100));
 						list.add(addColumn("料件进口总量", "materielImpAmount", 100));
@@ -1692,8 +1675,8 @@ public class DgMaterielExecuteAnalyse extends JInternalFrameBase {
 						list.add(addColumn("退换进口量", "backMaterielExchangeImp",
 								100));
 						list.add(addColumn("本期内销数量", "saleInAmount", 100));
-//						list.add(addColumn("出口成品使用总量",
-//								"expFinishProductAmount", 100));
+						// list.add(addColumn("出口成品使用总量",
+						// "expFinishProductAmount", 100));
 						list.add(addColumn("本期出口成品使用总量",
 								"expProductStat.expTotalAmont", 100));
 						list.add(addColumn("直接出口使用量",
@@ -1701,10 +1684,10 @@ public class DgMaterielExecuteAnalyse extends JInternalFrameBase {
 						list.add(addColumn("转厂出口使用量",
 								"expProductStat.transferFactoryExport", 100));
 						list.add(addColumn("退厂返工使用量",
-								"expProductStat.backFactoryRework", 100));						
+								"expProductStat.backFactoryRework", 100));
 						list.add(addColumn("返工复出使用量",
 								"expProductStat.reworkExport", 100));
-						
+
 						list.add(addColumn("余料情况", "remainStat", 100));
 						list.add(addColumn("库存数量", "storeAmount", 100));
 						// list.add(addColumn("缺料情况", "lackStat", 100));
@@ -1717,8 +1700,7 @@ public class DgMaterielExecuteAnalyse extends JInternalFrameBase {
 								100));
 						list.add(addColumn("关封余量",
 								"CustomsEnvelopRemainAmount", 100));
-						list.add(addColumn("可直接进口量", "canDirectImpAmount",
-										100));
+						list.add(addColumn("可直接进口量", "canDirectImpAmount", 100));
 						list.add(addColumn("完成百分比", "completeScale", 60));//
 						return list;
 					}
@@ -1726,8 +1708,7 @@ public class DgMaterielExecuteAnalyse extends JInternalFrameBase {
 
 		// 截取小数位
 		Integer decimalLength = 5;
-		if (parameterSet != null
-				&& parameterSet.getCountBit() != null)
+		if (parameterSet != null && parameterSet.getCountBit() != null)
 			decimalLength = parameterSet.getCountBit();
 		tableModelTbSecond.setAllColumnsFractionCount(decimalLength);
 		CompanyOther other = CommonVars.getOther();
@@ -1737,29 +1718,29 @@ public class DgMaterielExecuteAnalyse extends JInternalFrameBase {
 		tableModelTbSecond.setAllColumnsshowThousandthsign(other
 				.getIsAutoshowThousandthsign() == null ? false : other
 				.getIsAutoshowThousandthsign());
-//
-//		List<JTableListColumn> cm = tableModelTbSecond.getColumns();
-//		cm.get(4).setFractionCount(decimalLength);
-//		cm.get(5).setFractionCount(decimalLength);
-//		cm.get(6).setFractionCount(decimalLength);
-//		cm.get(7).setFractionCount(decimalLength);
-//		cm.get(8).setFractionCount(decimalLength);
-//		cm.get(9).setFractionCount(decimalLength);
-//		cm.get(10).setFractionCount(decimalLength);
-//		cm.get(11).setFractionCount(decimalLength);
-//		cm.get(12).setFractionCount(decimalLength);
-//		cm.get(13).setFractionCount(decimalLength);
-//		cm.get(14).setFractionCount(decimalLength);
-//		cm.get(15).setFractionCount(decimalLength);
-//		cm.get(16).setFractionCount(decimalLength);
-//		cm.get(17).setFractionCount(decimalLength);
-//		cm.get(19).setFractionCount(decimalLength);
-//		cm.get(20).setFractionCount(decimalLength);
-//		cm.get(21).setFractionCount(decimalLength);
-//		cm.get(22).setFractionCount(decimalLength);
+		//
+		// List<JTableListColumn> cm = tableModelTbSecond.getColumns();
+		// cm.get(4).setFractionCount(decimalLength);
+		// cm.get(5).setFractionCount(decimalLength);
+		// cm.get(6).setFractionCount(decimalLength);
+		// cm.get(7).setFractionCount(decimalLength);
+		// cm.get(8).setFractionCount(decimalLength);
+		// cm.get(9).setFractionCount(decimalLength);
+		// cm.get(10).setFractionCount(decimalLength);
+		// cm.get(11).setFractionCount(decimalLength);
+		// cm.get(12).setFractionCount(decimalLength);
+		// cm.get(13).setFractionCount(decimalLength);
+		// cm.get(14).setFractionCount(decimalLength);
+		// cm.get(15).setFractionCount(decimalLength);
+		// cm.get(16).setFractionCount(decimalLength);
+		// cm.get(17).setFractionCount(decimalLength);
+		// cm.get(19).setFractionCount(decimalLength);
+		// cm.get(20).setFractionCount(decimalLength);
+		// cm.get(21).setFractionCount(decimalLength);
+		// cm.get(22).setFractionCount(decimalLength);
 
-		TableColorRender.setTableRowColor(tbSecond, tableModelTbSecond
-				.getRowCount() - 1);
+		TableColorRender.setTableRowColor(tbSecond,
+				tableModelTbSecond.getRowCount() - 1);
 	}
 
 	/**
@@ -1794,12 +1775,12 @@ public class DgMaterielExecuteAnalyse extends JInternalFrameBase {
 		tableModelTbFirst2.setAllColumnsshowThousandthsign(other
 				.getIsAutoshowThousandthsign() == null ? false : other
 				.getIsAutoshowThousandthsign());
-//		List<JTableListColumn> cm = tableModelTbFirst2.getColumns();
-//		cm.get(6).setFractionCount(decimalLength);
-//		cm.get(7).setFractionCount(decimalLength);
+		// List<JTableListColumn> cm = tableModelTbFirst2.getColumns();
+		// cm.get(6).setFractionCount(decimalLength);
+		// cm.get(7).setFractionCount(decimalLength);
 
-		tbFirst2.getColumnModel().getColumn(4).setCellRenderer(
-				new DefaultTableCellRenderer() {
+		tbFirst2.getColumnModel().getColumn(4)
+				.setCellRenderer(new DefaultTableCellRenderer() {
 					public Component getTableCellRendererComponent(
 							JTable table, Object value, boolean isSelected,
 							boolean hasFocus, int row, int column) {
@@ -1857,9 +1838,9 @@ public class DgMaterielExecuteAnalyse extends JInternalFrameBase {
 		tableModelTbFour3.setAllColumnsshowThousandthsign(other
 				.getIsAutoshowThousandthsign() == null ? false : other
 				.getIsAutoshowThousandthsign());
-//		List<JTableListColumn> cm = tableModelTbFour3.getColumns();
-//		cm.get(4).setFractionCount(decimalLength);
-//		cm.get(5).setFractionCount(decimalLength);
+		// List<JTableListColumn> cm = tableModelTbFour3.getColumns();
+		// cm.get(4).setFractionCount(decimalLength);
+		// cm.get(5).setFractionCount(decimalLength);
 
 		tbFour3.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		if (list.size() > 0) {
@@ -1970,7 +1951,7 @@ public class DgMaterielExecuteAnalyse extends JInternalFrameBase {
 		this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
 		int flag = this.jTabbedPane.getSelectedIndex();
 		switch (flag) {
-		case 0: // 
+		case 0: //
 			try {
 				//
 				// 合同报表
@@ -2013,9 +1994,9 @@ public class DgMaterielExecuteAnalyse extends JInternalFrameBase {
 				List<TempContractImg> TempContractImgList = new ArrayList<TempContractImg>();
 				TempContractImgList.add(tempContractImg);
 				List<TempFinishProduct> subList = this.contractAnalyseAction
-						.findContractBomByContractImg(new Request(CommonVars
-								.getCurrUser()), TempContractImgList,
-								listContract);
+						.findContractBomByContractImg(
+								new Request(CommonVars.getCurrUser()),
+								TempContractImgList, listContract);
 
 				InputStream subReportStream = DgMaterielExecuteAnalyse.class
 						.getResourceAsStream("report/MaterielExecuteAnalyse1SubReport.jasper");
@@ -2034,8 +2015,8 @@ public class DgMaterielExecuteAnalyse extends JInternalFrameBase {
 				parameters.put("company", company);
 
 				if (tempContractImg != null) {
-					parameters.put("complexCode", tempContractImg
-							.getComplexCode());
+					parameters.put("complexCode",
+							tempContractImg.getComplexCode());
 					parameters.put("name", tempContractImg.getName());
 					parameters.put("spce", tempContractImg.getSpec());
 				}
@@ -2100,10 +2081,10 @@ public class DgMaterielExecuteAnalyse extends JInternalFrameBase {
 				parameters.put("contractSubReport", tempContractNoSubReport);
 				parameters.put("contractSubReportDataSource", contractDs);
 				parameters.put("company", company);
-				parameters.put("searchBeginDate", CommonVars
-						.dateToString(cbbBeginDate2.getDate()));
-				parameters.put("searchEndDate", CommonVars
-						.dateToString(cbbEndDate2.getDate()));
+				parameters.put("searchBeginDate",
+						CommonVars.dateToString(cbbBeginDate2.getDate()));
+				parameters.put("searchEndDate",
+						CommonVars.dateToString(cbbEndDate2.getDate()));
 				List list = tableModelTbSecond.getList();
 				if (list.size() <= 0) {
 					JOptionPane.showMessageDialog(this, "没有数据可打印!", "提示",
@@ -2132,14 +2113,14 @@ public class DgMaterielExecuteAnalyse extends JInternalFrameBase {
 				Contract contract = (Contract) tableModelTbFour3
 						.getCurrentRow();
 				if (contract != null) {
-					parameters.put("beginDate", CommonVars
-							.dateToString(contract.getBeginDate()));
+					parameters.put("beginDate",
+							CommonVars.dateToString(contract.getBeginDate()));
 					parameters.put("contractAmount",
 							contract.getImgAmount() == null ? "" : contract
 									.getImgAmount().toString());
 					parameters.put("contractNo", contract.getImpContractNo());
-					parameters.put("effectiveDate", CommonVars
-							.dateToString(contract.getEndDate()));
+					parameters.put("effectiveDate",
+							CommonVars.dateToString(contract.getEndDate()));
 					parameters.put("emsNo", contract.getEmsNo());
 				}
 				parameters.put("companyName", company);
@@ -2170,10 +2151,10 @@ public class DgMaterielExecuteAnalyse extends JInternalFrameBase {
 				}
 				// paramters 还要改一下
 
-				parameters.put("searchBeginDate", CommonVars
-						.dateToString(cbbBeginDate4.getDate()));
-				parameters.put("searchEndDate", CommonVars
-						.dateToString(cbbEndDate4.getDate()));
+				parameters.put("searchBeginDate",
+						CommonVars.dateToString(cbbBeginDate4.getDate()));
+				parameters.put("searchEndDate",
+						CommonVars.dateToString(cbbEndDate4.getDate()));
 				List list = tableModelTbFour2.getList();
 				if (list == null || list.size() <= 0) {
 					JOptionPane.showMessageDialog(
@@ -2488,7 +2469,8 @@ public class DgMaterielExecuteAnalyse extends JInternalFrameBase {
 			jRadioButton11.addItemListener(new java.awt.event.ItemListener() {
 				public void itemStateChanged(java.awt.event.ItemEvent e) {
 					if (jRadioButton11.isSelected()) {
-						for (int i = 0; i < getJListSecond().getModel().getSize(); i++) {
+						for (int i = 0; i < getJListSecond().getModel()
+								.getSize(); i++) {
 							Contract contract = (Contract) jListSecond
 									.getModel().getElementAt(i);
 							contract.setSelected(true);
@@ -2514,7 +2496,8 @@ public class DgMaterielExecuteAnalyse extends JInternalFrameBase {
 			jRadioButton12.addItemListener(new java.awt.event.ItemListener() {
 				public void itemStateChanged(java.awt.event.ItemEvent e) {
 					if (jRadioButton12.isSelected()) {
-						for (int i = 0; i < getJListSecond().getModel().getSize(); i++) {
+						for (int i = 0; i < getJListSecond().getModel()
+								.getSize(); i++) {
 							Contract contract = (Contract) jListSecond
 									.getModel().getElementAt(i);
 							contract.setSelected(false);
@@ -2623,9 +2606,9 @@ public class DgMaterielExecuteAnalyse extends JInternalFrameBase {
 	}
 
 	/**
-	 * This method initializes jPanel12	
-	 * 	
-	 * @return javax.swing.JPanel	
+	 * This method initializes jPanel12
+	 * 
+	 * @return javax.swing.JPanel
 	 */
 	private JPanel getJPanel12() {
 		if (jPanel12 == null) {
@@ -2638,9 +2621,9 @@ public class DgMaterielExecuteAnalyse extends JInternalFrameBase {
 	}
 
 	/**
-	 * This method initializes jSplitPane3	
-	 * 	
-	 * @return javax.swing.JSplitPane	
+	 * This method initializes jSplitPane3
+	 * 
+	 * @return javax.swing.JSplitPane
 	 */
 	private JSplitPane getJSplitPane3() {
 		if (jSplitPane3 == null) {
@@ -2654,85 +2637,79 @@ public class DgMaterielExecuteAnalyse extends JInternalFrameBase {
 	}
 
 	/**
-	 * This method initializes cbContractExe1	
-	 * 	
-	 * @return javax.swing.JCheckBox	
+	 * This method initializes cbContractExe1
+	 * 
+	 * @return javax.swing.JCheckBox
 	 */
 	private JCheckBox getCbContractExe1() {
 		if (cbContractExe1 == null) {
 			cbContractExe1 = new JCheckBox();
-			cbContractExe1.setText("\u6b63\u5728\u6267\u884c\u7684\u5408\u540c");
+			cbContractExe1
+					.setText("\u6b63\u5728\u6267\u884c\u7684\u5408\u540c");
 			cbContractExe1.setSelected(true);
 			cbContractExe1
-			.addActionListener(new java.awt.event.ActionListener() {
-				public void actionPerformed(java.awt.event.ActionEvent e) {
-					if (cbContractExe1.isSelected()
-							&& cbContractCancel1.isSelected()) {
-						jList11.showContractData(true, true);
-					} else if (cbContractExe1.isSelected()
-							&& !cbContractCancel1.isSelected()) {
-						jList11.showContractData(true, false);
-					} else if (!cbContractExe1.isSelected()
-							&& cbContractCancel1.isSelected()) {
-						jList11.showContractData(false, true);
-					} else {
-						jList11.showContractData(false, false);
-					}
-				}
-			});
+					.addActionListener(new java.awt.event.ActionListener() {
+						public void actionPerformed(java.awt.event.ActionEvent e) {
+							if (cbContractExe1.isSelected()
+									&& cbContractCancel1.isSelected()) {
+								jList11.showContractData(true, true);
+							} else if (cbContractExe1.isSelected()
+									&& !cbContractCancel1.isSelected()) {
+								jList11.showContractData(true, false);
+							} else if (!cbContractExe1.isSelected()
+									&& cbContractCancel1.isSelected()) {
+								jList11.showContractData(false, true);
+							} else {
+								jList11.showContractData(false, false);
+							}
+						}
+					});
 		}
 		return cbContractExe1;
 	}
 
 	/**
-	 * This method initializes cbContractCancel1	
-	 * 	
-	 * @return javax.swing.JCheckBox	
+	 * This method initializes cbContractCancel1
+	 * 
+	 * @return javax.swing.JCheckBox
 	 */
 	private JCheckBox getCbContractCancel1() {
 		if (cbContractCancel1 == null) {
 			cbContractCancel1 = new JCheckBox();
 			cbContractCancel1.setText("\u6838\u9500\u7684\u5408\u540c");
 			cbContractCancel1
-			.addActionListener(new java.awt.event.ActionListener() {
-				public void actionPerformed(java.awt.event.ActionEvent e) {
-					if (cbContractExe1.isSelected()
-							&& cbContractCancel1.isSelected()) {
-						jList11.showContractData(true, true);
-					} else if (cbContractExe1.isSelected()
-							&& !cbContractCancel1.isSelected()) {
-						jList11.showContractData(true, false);
-					} else if (!cbContractExe1.isSelected()
-							&& cbContractCancel1.isSelected()) {
-						jList11.showContractData(false, true);
-					} else {
-						jList11.showContractData(false, false);
-					}
-				}
-			});
+					.addActionListener(new java.awt.event.ActionListener() {
+						public void actionPerformed(java.awt.event.ActionEvent e) {
+							if (cbContractExe1.isSelected()
+									&& cbContractCancel1.isSelected()) {
+								jList11.showContractData(true, true);
+							} else if (cbContractExe1.isSelected()
+									&& !cbContractCancel1.isSelected()) {
+								jList11.showContractData(true, false);
+							} else if (!cbContractExe1.isSelected()
+									&& cbContractCancel1.isSelected()) {
+								jList11.showContractData(false, true);
+							} else {
+								jList11.showContractData(false, false);
+							}
+						}
+					});
 		}
 		return cbContractCancel1;
 	}
 
 	/**
-	 * This method initializes btnFormulasearch	
-	 * 	
-	 * @return javax.swing.JButton	
+	 * This method initializes btnFormulasearch
+	 * 
+	 * @return javax.swing.JButton
 	 */
-	/*private JButton getBtnFormulasearch() {
-		if (btnFormulasearch == null) {
-			btnFormulasearch = new JButton();
-			btnFormulasearch.setBounds(new Rectangle(389, 6, 101, 28));
-			btnFormulasearch.setText("公式查询");
-			btnFormulasearch.addActionListener(new java.awt.event.ActionListener()
-			{
-					public void actionPerformed(java.awt.event.ActionEvent e)
-					{
-						    Formulasearch f=new Formulasearch();
-						    f.setVisible(true);
-					}
-			});
-		}
-		return btnFormulasearch;
-	}*/
+	/*
+	 * private JButton getBtnFormulasearch() { if (btnFormulasearch == null) {
+	 * btnFormulasearch = new JButton(); btnFormulasearch.setBounds(new
+	 * Rectangle(389, 6, 101, 28)); btnFormulasearch.setText("公式查询");
+	 * btnFormulasearch.addActionListener(new java.awt.event.ActionListener() {
+	 * public void actionPerformed(java.awt.event.ActionEvent e) { Formulasearch
+	 * f=new Formulasearch(); f.setVisible(true); } }); } return
+	 * btnFormulasearch; }
+	 */
 } // @jve:decl-index=0:visual-constraint="12,46"

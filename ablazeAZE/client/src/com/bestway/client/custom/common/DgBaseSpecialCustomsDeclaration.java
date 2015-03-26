@@ -57,6 +57,8 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.bestway.bcs.contract.entity.Contract;
 import com.bestway.bcus.client.common.CommonQuery;
 import com.bestway.bcus.client.common.CommonQueryPage;
@@ -514,7 +516,7 @@ public abstract class DgBaseSpecialCustomsDeclaration extends JDialogBase {
 		this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		this.setTitle("特殊报关单编辑");
 		this.setContentPane(getJContentPane());
-		this.setSize(707, 543);
+		this.setSize(707, 606);
 
 	}
 
@@ -1180,6 +1182,7 @@ public abstract class DgBaseSpecialCustomsDeclaration extends JDialogBase {
 			pnBaseInfo.add(getTfCarNumber(), null);
 			pnBaseInfo.add(jLabel431, null);
 			pnBaseInfo.add(getTfexpAndImpNumber(), null);
+
 		}
 		return pnBaseInfo;
 	}
@@ -2251,12 +2254,29 @@ public abstract class DgBaseSpecialCustomsDeclaration extends JDialogBase {
 		} else {
 			this.tfManageCompany.setText("");
 		}
-		if (this.customsDeclaration.getContainerNum() != null) {
+
+		if (containers == null) {
+
+			this.containers = this.baseEncAction
+					.findContainerByCustomsDeclaration(
+							new Request(CommonVars.getCurrUser()),
+							this.customsDeclaration);
+
+		}
+
+		// 集装箱号
+		if (StringUtils.isNotBlank(customsDeclaration.getContainerNum())) {
+
 			this.tfContainerNum.setText(this.customsDeclaration
 					.getContainerNum());
+
 		} else {
-			this.tfContainerNum.setText("");
+
+			tfContainerNum.setText(Container
+					.getAllConvertToContainerCode(containers));
+
 		}
+
 		if (this.customsDeclaration.getContract() != null) {
 			this.tfContract.setText(this.customsDeclaration.getContract());
 		} else {
@@ -2464,12 +2484,27 @@ public abstract class DgBaseSpecialCustomsDeclaration extends JDialogBase {
 		}
 		cbbUses.setSelectedItem(this.customsDeclaration.getUses());
 		cbbWrapType.setSelectedItem(this.customsDeclaration.getWrapType());
-		if (this.customsDeclaration.getAllContainerNum() != null) {
+
+		// 所有集装箱号信息
+		if (StringUtils.isNotBlank(customsDeclaration.getAllContainerNumLong())) {
+
 			this.tfAllContainerNum.setText(this.customsDeclaration
-					.getAllContainerNum());
+					.getAllContainerNumLong());
+
 		} else {
-			this.tfAllContainerNum.setText("");
+
+			if (containers != null) {
+
+				tfAllContainerNum.setText(Container
+						.getAllContainerCode(containers));
+
+			} else {
+
+				this.tfAllContainerNum.setText("");
+
+			}
 		}
+
 		if (this.customsDeclaration.getInvoiceCode() != null) {
 			this.tfInvoiceCode
 					.setText(this.customsDeclaration.getInvoiceCode());
@@ -2864,8 +2899,10 @@ public abstract class DgBaseSpecialCustomsDeclaration extends JDialogBase {
 				: customsDeclaration.getIsSend().booleanValue();
 		btnAdd.setEnabled(index == 0 && dataState == DataState.BROWSE
 				|| dataState == DataState.BROWSE && index == 1 && !isEffective);
-		btnEdit.setEnabled(dataState == DataState.BROWSE && !isEffective
-				&& !isSend);
+
+		// 2015-3-23 : 暂时不判断 申报状态 来控制 修改按钮 是否可用 by zcj
+		btnEdit.setEnabled(dataState == DataState.BROWSE && !isEffective);
+
 		jButton.setEnabled(dataState == DataState.BROWSE && !isEffective);
 		btnDelete.setEnabled(dataState == DataState.BROWSE && !isEffective);
 		btnSave.setEnabled(dataState != DataState.BROWSE && !isEffective);

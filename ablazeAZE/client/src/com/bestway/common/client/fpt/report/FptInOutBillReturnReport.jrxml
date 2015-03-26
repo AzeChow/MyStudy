@@ -72,6 +72,10 @@
 	<parameter name="conveNo" isForPrompting="false" class="java.lang.String">
 		<parameterDescription><![CDATA[conveNo]]></parameterDescription>
 	</parameter>
+	<parameter name="transportToolTypenew" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["com.bestway.bcus.custombase.entity.parametercode.Transf.getName()"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="transportToolNumber" isForPrompting="false" class="java.lang.String"/>
 	<queryString><![CDATA[select * from fptbillitem]]></queryString>
 
 	<field name="serialNumber" class="java.lang.String">
@@ -466,7 +470,7 @@
 					<textElement verticalAlignment="Middle">
 						<font fontName="宋体" pdfFontName="STSong-Light" size="8" isBold="false" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{conveType}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{transportToolTypenew}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -480,7 +484,7 @@
 					<textElement verticalAlignment="Middle">
 						<font fontName="宋体" pdfFontName="STSong-Light" size="8" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{conveNo}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{transportToolNumber}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement

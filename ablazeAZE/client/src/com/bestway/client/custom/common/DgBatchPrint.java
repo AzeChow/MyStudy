@@ -8,7 +8,6 @@ import java.awt.event.ActionEvent;
 import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -16,6 +15,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
+
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellRenderer;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRPrintPage;
@@ -40,6 +50,7 @@ import com.bestway.bcus.enc.action.EncAction;
 import com.bestway.bcus.manualdeclare.action.ManualDeclareAction;
 import com.bestway.bcus.manualdeclare.entity.BcusParameter;
 import com.bestway.bcus.system.entity.Company;
+import com.bestway.bcus.system.entity.CompanyOther;
 import com.bestway.client.custom.common.report.CustomsDeclarationSubReportDataSource;
 import com.bestway.client.custom.common.report.DgImportInvoiceMergerReportSet;
 import com.bestway.client.util.JTableListColumn;
@@ -53,12 +64,12 @@ import com.bestway.common.Request;
 import com.bestway.common.constant.ImpExpFlag;
 import com.bestway.common.constant.ImpExpType;
 import com.bestway.common.constant.ProjectType;
-import com.bestway.customs.common.entity.BaseCustomsDeclaration;
-import com.bestway.customs.common.entity.BaseCustomsDeclarationCommInfo;
-import com.bestway.customs.common.entity.BaseCustomsDeclarationContainer;
 import com.bestway.common.materialbase.action.MaterialManageAction;
 import com.bestway.common.materialbase.entity.MotorCode;
 import com.bestway.common.materialbase.entity.ScmCoc;
+import com.bestway.customs.common.entity.BaseCustomsDeclaration;
+import com.bestway.customs.common.entity.BaseCustomsDeclarationCommInfo;
+import com.bestway.customs.common.entity.BaseCustomsDeclarationContainer;
 import com.bestway.dzsc.dzscmanage.entity.DzscEmsExgBill;
 import com.bestway.dzsc.message.action.DzscMessageAction;
 import com.bestway.dzsc.message.entity.DzscParameterSet;
@@ -66,17 +77,6 @@ import com.bestway.ui.editor.CheckBoxEditor;
 import com.bestway.ui.render.CheckBoxRender;
 import com.bestway.ui.winuicontrol.JDialogBase;
 import com.bestway.ui.winuicontrol.calendar.JCalendarComboBox;
-
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableCellRenderer;
 
 public class DgBatchPrint extends JDialogBase {
 
@@ -369,11 +369,11 @@ public class DgBatchPrint extends JDialogBase {
 		System.out.println(list.size());
 		for (int i = 0; i < list.size(); i++) {
 			BaseCustomsDeclaration customDec = list.get(i);
-//			if (customDec.getConveyance() == null
-//					|| "".equals(customDec.getConveyance().trim())
-//					|| customDec.getConveyance().indexOf("@") != -1) {
-				returnList.add(customDec);
-//			}
+			// if (customDec.getConveyance() == null
+			// || "".equals(customDec.getConveyance().trim())
+			// || customDec.getConveyance().indexOf("@") != -1) {
+			returnList.add(customDec);
+			// }
 		}
 		return returnList;
 	}
@@ -564,8 +564,11 @@ public class DgBatchPrint extends JDialogBase {
 
 	// 得到要打印的报关单
 	private List getCusDecs() {
+
 		List res = new ArrayList();
+
 		List<BaseCustomsDeclaration> list = showTableModel.getList();
+
 		for (int i = 0; i < list.size(); i++) {
 			if (list.get(i) != null && list.get(i).getIsSelected()) {
 				res.add(list.get(i));
@@ -575,10 +578,14 @@ public class DgBatchPrint extends JDialogBase {
 
 	}
 
+	/**
+	 * 打印
+	 */
 	public void doPrint() {
 
 		// 准备要导出的报关单数据
 		List<BaseCustomsDeclaration> list = getCusDecs();
+
 		if (list.size() <= 0) {
 			JOptionPane.showMessageDialog(DgBatchPrint.this, "请先选择要打印的报关单!");
 			return;
@@ -613,25 +620,40 @@ public class DgBatchPrint extends JDialogBase {
 	}
 
 	/**
-	 * 进口报关单
+	 * 进口报关单--打印
 	 */
 	public JasperPrint printImpCustoms(boolean isTD, int ImpExpFlag,
 			List listBase, boolean noTaoda, List listInfo) {
+
 		// 非套打报关单
 		CustomReportDataSource ds = new CustomReportDataSource(listBase);
+
 		BaseCustomsDeclaration customsDeclaration = (BaseCustomsDeclaration) listBase
 				.get(0);
+
 		String attachedBillName = customsDeclaration.getAttachedBill();
 
 		DzscParameterSet dzscParameterSet = dzscMessageAction
 				.findDzscMessageDirSet1(new Request(CommonVars.getCurrUser(),
 						true));
+
+		// 获取系统其他参数设置
+		CompanyOther other = CommonVars.getOther();
+
+		// null 时候打印 true 打印
+		Boolean isAdd = other.getIsTransitadd() == null ? Boolean.FALSE : other
+				.getIsTransitadd() ? Boolean.FALSE : Boolean.TRUE;
+
 		if (noTaoda) {
+
 			try {
+
 				List contianList = encAction.findContainerByCustomsDeclaration(
 						new Request(CommonVars.getCurrUser()),
 						customsDeclaration);
+
 				if (contianList.size() != 0) {
+
 					if (JOptionPane.showConfirmDialog(FmMain.getInstance(),
 							"是否打印集装箱及托架?", "", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 						CustomsDeclarationSubReportDataSource
@@ -647,40 +669,90 @@ public class DgBatchPrint extends JDialogBase {
 
 				CustomsDeclarationSubReportDataSource
 						.setSubReportData(listInfo);
+
 				InputStream masterReportStream = null;
-				if (customsDeclaration.getEmsHeadH2k() != null
-						&& !"".equals(customsDeclaration.getEmsHeadH2k())
-						&& customsDeclaration.getEmsHeadH2k().substring(0, 1)
-								.equals("H")) {
-					masterReportStream = DgBaseImportCustomsDeclaration.class
-							.getResourceAsStream("report/ImportCustomsHEmsDeclarationReport.jasper");
+
+				// 打印附加信息
+				if (isAdd) {
+
+					// 电子帐册
+					if (customsDeclaration.getEmsHeadH2k() != null
+							&& !"".equals(customsDeclaration.getEmsHeadH2k())
+							&& customsDeclaration.getEmsHeadH2k()
+									.substring(0, 1).equals("H")) {
+
+						masterReportStream = DgBaseImportCustomsDeclaration.class
+								.getResourceAsStream("report/ImportCustomsHEmsDeclarationReport.jasper");
+
+						// 非电子账册
+					} else {
+
+						masterReportStream = DgBaseImportCustomsDeclaration.class
+								.getResourceAsStream("report/ImportCustomsDeclarationReport.jasper");
+
+					}
+
+					// 不打印附加信息
 				} else {
-					masterReportStream = DgBaseImportCustomsDeclaration.class
-							.getResourceAsStream("report/ImportCustomsDeclarationReport.jasper");
+
+					if (customsDeclaration.getEmsHeadH2k() != null
+							&& !"".equals(customsDeclaration.getEmsHeadH2k())
+							&& customsDeclaration.getEmsHeadH2k()
+									.substring(0, 1).equals("H")) {
+
+						masterReportStream = DgBaseImportCustomsDeclaration.class
+								.getResourceAsStream("report/ImportCustomsHEmsDeclarationReportNoadd.jasper");
+
+					} else {
+
+						masterReportStream = DgBaseImportCustomsDeclaration.class
+								.getResourceAsStream("report/ImportCustomsDeclarationReportNoadd.jasper");
+
+					}
+
 				}
+
 				InputStream commInfoReportStream = DgBaseImportCustomsDeclaration.class
 						.getResourceAsStream("report/ImportCustomsDeclarationCommInfoReport.jasper");
+
 				JasperReport commInfoReport = (JasperReport) JRLoader
 						.loadObject(commInfoReportStream);
+
 				InputStream containerReportStream = DgBaseImportCustomsDeclaration.class
 						.getResourceAsStream("report/CustomsDeclarationContainerReport.jasper");
+
 				JasperReport containerReport = (JasperReport) JRLoader
 						.loadObject(containerReportStream);
+
 				Map<String, Object> parameters = new HashMap<String, Object>();
+
 				parameters.put("contia", getContia(customsDeclaration));
-				parameters.put("projectType", String.valueOf(projectType));// 只有是BCUS有需要才打印版本栏位
+
+				// 只有是BCUS有需要才打印版本栏位
+				parameters.put("projectType", String.valueOf(projectType));
+
 				parameters.put("commInfoReport", commInfoReport);
+
 				parameters.put("containerReport", containerReport);
+
 				parameters.put("overprint", new Boolean(false));
+
 				Company company = (Company) customsDeclaration.getCompany();
+
 				parameters.put("linkMan", company.getLinkman());
+
 				parameters.put("linkTel", company.getTel());
+
 				parameters.put("tradeFlat", company.getCounFlag());
+
 				parameters.put("coFlat", company.getOwnercounFlag());
+
 				parameters.put("isPrintNo", dzscParameterSet.getIsPrintNo()
 						.toString());// 是否打印航次
+
 				parameters.put("isPrintToolCode", dzscParameterSet
 						.getIsPrintToolCode().toString());// 是否打印航次
+
 				parameters
 						.put("grossWeight",
 								customsDeclaration.getGrossWeight() != null ? cutString(customsDeclaration
@@ -689,16 +761,28 @@ public class DgBatchPrint extends JDialogBase {
 						.put("netWeight",
 								customsDeclaration.getNetWeight() != null ? cutString(customsDeclaration
 										.getNetWeight().toString()) : "0");
+
+				// 关封号码
+				parameters
+						.put("customsEnvelopBillNo",
+								customsDeclaration.getCustomsEnvelopBillNo() != null ? customsDeclaration
+										.getCustomsEnvelopBillNo() : "");
+
 				String isPrintCustomWithVersion = manualDecleareAction
 						.getBpara(new Request(CommonVars.getCurrUser()),
 								BcusParameter.PrintCustomWithVersion);
+
 				if (isPrintCustomWithVersion == null)
 					isPrintCustomWithVersion = "0";
+
 				parameters.put("isPrintCustomWithVersion",
 						isPrintCustomWithVersion);// 用来控制是否显示版本栏位
+
 				parameters.put("attachedBillName", attachedBillName);
+
 				JasperPrint jasperPrint = JasperFillManager.fillReport(
 						masterReportStream, parameters, ds);
+
 				return jasperPrint;
 			} catch (JRException e1) {
 				e1.printStackTrace();
@@ -707,13 +791,58 @@ public class DgBatchPrint extends JDialogBase {
 			try {
 				CustomsDeclarationSubReportDataSource
 						.setSubReportData(listInfo);
-				InputStream masterReportStream = DgBaseImportCustomsDeclaration.class
-						.getResourceAsStream("report/ImportCustomsDeclarationReport.jasper");
+
+				InputStream masterReportStream = null;
+
+				if (isAdd) {
+
+					// 电子帐册
+					if (customsDeclaration.getEmsHeadH2k() != null
+							&& !"".equals(customsDeclaration.getEmsHeadH2k())
+							&& customsDeclaration.getEmsHeadH2k()
+									.substring(0, 1).equals("H")) {
+
+						masterReportStream = DgBaseImportCustomsDeclaration.class
+								.getResourceAsStream("report/ImportCustomsHEmsDeclarationReport.jasper");
+
+						// 非电子账册
+					} else {
+
+						masterReportStream = DgBaseImportCustomsDeclaration.class
+								.getResourceAsStream("report/ImportCustomsDeclarationReport.jasper");
+
+					}
+
+					// 不带附加信息
+				} else {
+
+					// 电子帐册
+					if (customsDeclaration.getEmsHeadH2k() != null
+							&& !"".equals(customsDeclaration.getEmsHeadH2k())
+							&& customsDeclaration.getEmsHeadH2k()
+									.substring(0, 1).equals("H")) {
+
+						masterReportStream = DgBaseImportCustomsDeclaration.class
+								.getResourceAsStream("report/ImportCustomsHEmsDeclarationReportNoadd.jasper");
+
+						// 非电子账册
+					} else {
+
+						masterReportStream = DgBaseImportCustomsDeclaration.class
+								.getResourceAsStream("report/ImportCustomsDeclarationReportNoadd.jasper");
+
+					}
+
+				}
+
 				InputStream commInfoReportStream = DgBaseImportCustomsDeclaration.class
 						.getResourceAsStream("report/ImportCustomsDeclarationCommInfoReport.jasper");
+
 				JasperReport commInfoReport = (JasperReport) JRLoader
 						.loadObject(commInfoReportStream);
+
 				Map<String, Object> parameters = new HashMap<String, Object>();
+
 				parameters.put("contia", getContia(customsDeclaration));
 				parameters.put("projectType", String.valueOf(projectType));// 只有是BCUS有需要才打印版本栏位
 				parameters.put("commInfoReport", commInfoReport);
@@ -735,13 +864,25 @@ public class DgBatchPrint extends JDialogBase {
 						.put("netWeight",
 								customsDeclaration.getNetWeight() != null ? cutString(customsDeclaration
 										.getNetWeight().toString()) : "0");
+
+				// 关封号码
+				parameters
+						.put("customsEnvelopBillNo",
+								customsDeclaration.getCustomsEnvelopBillNo() != null ? customsDeclaration
+										.getCustomsEnvelopBillNo() : "");
+
 				String isPrintCustomWithVersion = manualDecleareAction
 						.getBpara(new Request(CommonVars.getCurrUser()),
 								BcusParameter.PrintCustomWithVersion);
-				if (isPrintCustomWithVersion == null)
+
+				if (isPrintCustomWithVersion == null) {
 					isPrintCustomWithVersion = "0";
+				}
+
+				// 用来控制是否显示版本栏位
 				parameters.put("isPrintCustomWithVersion",
-						isPrintCustomWithVersion);// 用来控制是否显示版本栏位
+						isPrintCustomWithVersion);
+
 				parameters.put("attachedBillName", attachedBillName);
 				JasperPrint jasperPrint = JasperFillManager.fillReport(
 						masterReportStream, parameters, ds);
@@ -754,18 +895,31 @@ public class DgBatchPrint extends JDialogBase {
 	}
 
 	/**
-	 * 出口报关单
+	 * 出口报关单 -- 打印
 	 */
 	public JasperPrint printExpCustoms(boolean isTD, int ImpExpFlag,
 			List listBase, boolean noTaoda, List listInfo) {
+
 		CustomReportDataSource ds = new CustomReportDataSource(listBase);
+
 		BaseCustomsDeclaration customsDeclaration = (BaseCustomsDeclaration) listBase
 				.get(0);
+
 		CustomsDeclarationSubReportDataSource.setSubReportData(listInfo);
+
 		String attachedBillName = customsDeclaration.getAttachedBill();
+
 		DzscParameterSet dzscParameterSet = dzscMessageAction
 				.findDzscMessageDirSet1(new Request(CommonVars.getCurrUser(),
 						true));
+
+		// 获取系统其他参数设置
+		CompanyOther other = CommonVars.getOther();
+
+		Boolean isAdd = other.getIsTransitadd() == null ? Boolean.FALSE : other
+				.getIsTransitadd() ? Boolean.FALSE : Boolean.TRUE;
+
+		// 非套打
 		if (noTaoda) {
 			try {
 				List contianList = encAction.findContainerByCustomsDeclaration(
@@ -787,16 +941,36 @@ public class DgBatchPrint extends JDialogBase {
 				CustomsDeclarationSubReportDataSource
 						.setSubReportData(listInfo);
 				InputStream masterReportStream = null;
-				if (customsDeclaration.getEmsHeadH2k() != null
-						&& !"".equals(customsDeclaration.getEmsHeadH2k())
-						&& customsDeclaration.getEmsHeadH2k().substring(0, 1)
-								.equals("H")) {
-					masterReportStream = DgBaseImportCustomsDeclaration.class
-							.getResourceAsStream("report/ExportCustomsHEmsDeclarationReport.jasper");
+
+				if (isAdd) {
+
+					if (customsDeclaration.getEmsHeadH2k() != null
+							&& !"".equals(customsDeclaration.getEmsHeadH2k())
+							&& customsDeclaration.getEmsHeadH2k()
+									.substring(0, 1).equals("H")) {
+						masterReportStream = DgBaseImportCustomsDeclaration.class
+								.getResourceAsStream("report/ExportCustomsHEmsDeclarationReport.jasper");
+					} else {
+						masterReportStream = DgBaseImportCustomsDeclaration.class
+								.getResourceAsStream("report/ExportCustomsDeclarationReport.jasper");
+					}
+
+					// 不带附加信息
 				} else {
-					masterReportStream = DgBaseImportCustomsDeclaration.class
-							.getResourceAsStream("report/ExportCustomsDeclarationReport.jasper");
+
+					if (customsDeclaration.getEmsHeadH2k() != null
+							&& !"".equals(customsDeclaration.getEmsHeadH2k())
+							&& customsDeclaration.getEmsHeadH2k()
+									.substring(0, 1).equals("H")) {
+						masterReportStream = DgBaseImportCustomsDeclaration.class
+								.getResourceAsStream("report/ExportCustomsHEmsDeclarationReportNoadd.jasper");
+					} else {
+						masterReportStream = DgBaseImportCustomsDeclaration.class
+								.getResourceAsStream("report/ExportCustomsDeclarationReportNoadd.jasper");
+					}
+
 				}
+
 				InputStream commInfoReportStream = DgBaseImportCustomsDeclaration.class
 						.getResourceAsStream("report/ExportCustomsDeclarationCommInfoReport.jasper");
 				JasperReport commInfoReport = (JasperReport) JRLoader
@@ -829,13 +1003,27 @@ public class DgBatchPrint extends JDialogBase {
 						.put("netWeight",
 								customsDeclaration.getNetWeight() != null ? cutString(customsDeclaration
 										.getNetWeight().toString()) : "0");
+
+				// 关封号码
+				parameters
+						.put("customsEnvelopBillNo",
+								customsDeclaration.getCustomsEnvelopBillNo() != null ? customsDeclaration
+										.getCustomsEnvelopBillNo() : "");
+
 				String isPrintCustomWithVersion = manualDecleareAction
 						.getBpara(new Request(CommonVars.getCurrUser()),
 								BcusParameter.PrintCustomWithVersion);
-				if (isPrintCustomWithVersion == null)
+
+				if (isPrintCustomWithVersion == null) {
+
 					isPrintCustomWithVersion = "0";
+
+				}
+
+				// 用来控制是否显示版本栏位
 				parameters.put("isPrintCustomWithVersion",
-						isPrintCustomWithVersion);// 用来控制是否显示版本栏位
+						isPrintCustomWithVersion);
+
 				parameters.put("attachedBillName", attachedBillName);
 				JasperPrint jasperPrint = JasperFillManager.fillReport(
 						masterReportStream, parameters, ds);
@@ -843,12 +1031,45 @@ public class DgBatchPrint extends JDialogBase {
 			} catch (JRException e1) {
 				e1.printStackTrace();
 			}
+
+			// 套打
 		} else {
 			try {
 				CustomsDeclarationSubReportDataSource
 						.setSubReportData(listInfo);
-				InputStream masterReportStream = DgBaseImportCustomsDeclaration.class
-						.getResourceAsStream("report/ExportCustomsDeclarationReport.jasper");
+
+				InputStream masterReportStream = null;
+
+				// 添加打印附加信息
+				if (isAdd) {
+
+					if (customsDeclaration.getEmsHeadH2k() != null
+							&& !"".equals(customsDeclaration.getEmsHeadH2k())
+							&& customsDeclaration.getEmsHeadH2k()
+									.substring(0, 1).equals("H")) {
+						masterReportStream = DgBaseImportCustomsDeclaration.class
+								.getResourceAsStream("report/ExportCustomsHEmsDeclarationReport.jasper");
+					} else {
+						masterReportStream = DgBaseImportCustomsDeclaration.class
+								.getResourceAsStream("report/ExportCustomsDeclarationReport.jasper");
+					}
+
+					// 不带附加信息
+				} else {
+
+					if (customsDeclaration.getEmsHeadH2k() != null
+							&& !"".equals(customsDeclaration.getEmsHeadH2k())
+							&& customsDeclaration.getEmsHeadH2k()
+									.substring(0, 1).equals("H")) {
+						masterReportStream = DgBaseImportCustomsDeclaration.class
+								.getResourceAsStream("report/ExportCustomsHEmsDeclarationReportNoadd.jasper");
+					} else {
+						masterReportStream = DgBaseImportCustomsDeclaration.class
+								.getResourceAsStream("report/ExportCustomsDeclarationReportNoadd.jasper");
+					}
+
+				}
+
 				InputStream commInfoReportStream = DgBaseImportCustomsDeclaration.class
 						.getResourceAsStream("report/ExportCustomsDeclarationCommInfoReport.jasper");
 				JasperReport commInfoReport = (JasperReport) JRLoader
@@ -879,12 +1100,23 @@ public class DgBatchPrint extends JDialogBase {
 						.put("netWeight",
 								customsDeclaration.getNetWeight() != null ? cutString(customsDeclaration
 										.getNetWeight().toString()) : "0");
+
+				// 关封号码
+				parameters
+						.put("customsEnvelopBillNo",
+								customsDeclaration.getCustomsEnvelopBillNo() != null ? customsDeclaration
+										.getCustomsEnvelopBillNo() : "");
+
 				String isPrintCustomWithVersion = "0";
+
 				parameters.put("isPrintCustomWithVersion",
 						isPrintCustomWithVersion);// 用来控制是否显示版本栏位
+
 				parameters.put("attachedBillName", attachedBillName);
+
 				JasperPrint jasperPrint = JasperFillManager.fillReport(
 						masterReportStream, parameters, ds);
+
 				return jasperPrint;
 			} catch (JRException e1) {
 				e1.printStackTrace();
@@ -899,7 +1131,16 @@ public class DgBatchPrint extends JDialogBase {
 	public JasperPrint printSpecCustoms(boolean isTD, int ImpExpFlag,
 			List listBase, boolean noTaoda, List listInfo) {
 		String type = ((ItemProperty) (cbbType.getSelectedItem())).getCode();
+
+		// 获取系统其他参数设置
+		CompanyOther other = CommonVars.getOther();
+
+		// 获取是否打印附加信息
+		Boolean isAdd = other.getIsTransitadd() == null ? Boolean.FALSE : other
+				.getIsTransitadd() ? Boolean.FALSE : Boolean.TRUE;
+
 		if ("0".equals(type)) {
+
 			CustomReportDataSource ds = new CustomReportDataSource(listBase);
 			BaseCustomsDeclaration customsDeclaration = (BaseCustomsDeclaration) listBase
 					.get(0);
@@ -908,6 +1149,7 @@ public class DgBatchPrint extends JDialogBase {
 			DzscParameterSet dzscParameterSet = dzscMessageAction
 					.findDzscMessageDirSet1(new Request(CommonVars
 							.getCurrUser(), true));
+
 			if (noTaoda) {
 				try {
 					List contianList = encAction
@@ -931,16 +1173,39 @@ public class DgBatchPrint extends JDialogBase {
 					CustomsDeclarationSubReportDataSource
 							.setSubReportData(listInfo);
 					InputStream masterReportStream = null;
-					if (customsDeclaration.getEmsHeadH2k() != null
-							&& !"".equals(customsDeclaration.getEmsHeadH2k())
-							&& customsDeclaration.getEmsHeadH2k()
-									.substring(0, 1).equals("H")) {
-						masterReportStream = DgBaseImportCustomsDeclaration.class
-								.getResourceAsStream("report/ImportCustomsHEmsDeclarationReport.jasper");
+
+					// 添加打印附加信息
+					if (isAdd) {
+
+						if (customsDeclaration.getEmsHeadH2k() != null
+								&& !"".equals(customsDeclaration
+										.getEmsHeadH2k())
+								&& customsDeclaration.getEmsHeadH2k()
+										.substring(0, 1).equals("H")) {
+							masterReportStream = DgBaseImportCustomsDeclaration.class
+									.getResourceAsStream("report/ImportCustomsHEmsDeclarationReport.jasper");
+						} else {
+							masterReportStream = DgBaseImportCustomsDeclaration.class
+									.getResourceAsStream("report/ImportCustomsDeclarationReport.jasper");
+						}
+
+						// 不添加 打印附加信息
 					} else {
-						masterReportStream = DgBaseImportCustomsDeclaration.class
-								.getResourceAsStream("report/ImportCustomsDeclarationReport.jasper");
+
+						if (customsDeclaration.getEmsHeadH2k() != null
+								&& !"".equals(customsDeclaration
+										.getEmsHeadH2k())
+								&& customsDeclaration.getEmsHeadH2k()
+										.substring(0, 1).equals("H")) {
+							masterReportStream = DgBaseImportCustomsDeclaration.class
+									.getResourceAsStream("report/ImportCustomsHEmsDeclarationReportNoadd.jasper");
+						} else {
+							masterReportStream = DgBaseImportCustomsDeclaration.class
+									.getResourceAsStream("report/ImportCustomsDeclarationReportNoadd.jasper");
+						}
+
 					}
+
 					InputStream commInfoReportStream = DgBaseImportCustomsDeclaration.class
 							.getResourceAsStream("report/ImportCustomsDeclarationCommInfoReport.jasper");
 					JasperReport commInfoReport = (JasperReport) JRLoader
@@ -972,6 +1237,14 @@ public class DgBatchPrint extends JDialogBase {
 							.put("netWeight",
 									customsDeclaration.getNetWeight() != null ? cutString(customsDeclaration
 											.getNetWeight().toString()) : "0");
+
+					// 关封号码
+					parameters
+							.put("customsEnvelopBillNo",
+									customsDeclaration
+											.getCustomsEnvelopBillNo() != null ? customsDeclaration
+											.getCustomsEnvelopBillNo() : "");
+
 					String isPrintCustomWithVersion = manualDecleareAction
 							.getBpara(new Request(CommonVars.getCurrUser()),
 									BcusParameter.PrintCustomWithVersion);
@@ -986,12 +1259,46 @@ public class DgBatchPrint extends JDialogBase {
 				} catch (JRException e1) {
 					e1.printStackTrace();
 				}
-			} else {// 套打报关单
+
+				// 套打报关单
+			} else {
 				try {
+
 					CustomsDeclarationSubReportDataSource
 							.setSubReportData(listInfo);
-					InputStream masterReportStream = DgBaseImportCustomsDeclaration.class
-							.getResourceAsStream("report/ImportCustomsDeclarationReport.jasper");
+
+					InputStream masterReportStream = null;
+
+					if (isAdd) {
+
+						if (customsDeclaration.getEmsHeadH2k() != null
+								&& !"".equals(customsDeclaration
+										.getEmsHeadH2k())
+								&& customsDeclaration.getEmsHeadH2k()
+										.substring(0, 1).equals("H")) {
+							masterReportStream = DgBaseImportCustomsDeclaration.class
+									.getResourceAsStream("report/ImportCustomsHEmsDeclarationReport.jasper");
+						} else {
+							masterReportStream = DgBaseImportCustomsDeclaration.class
+									.getResourceAsStream("report/ImportCustomsDeclarationReport.jasper");
+						}
+
+					} else {
+
+						if (customsDeclaration.getEmsHeadH2k() != null
+								&& !"".equals(customsDeclaration
+										.getEmsHeadH2k())
+								&& customsDeclaration.getEmsHeadH2k()
+										.substring(0, 1).equals("H")) {
+							masterReportStream = DgBaseImportCustomsDeclaration.class
+									.getResourceAsStream("report/ImportCustomsHEmsDeclarationReportNoadd.jasper");
+						} else {
+							masterReportStream = DgBaseImportCustomsDeclaration.class
+									.getResourceAsStream("report/ImportCustomsDeclarationReportNoadd.jasper");
+						}
+
+					}
+
 					InputStream commInfoReportStream = DgBaseImportCustomsDeclaration.class
 							.getResourceAsStream("report/ImportCustomsDeclarationCommInfoReport.jasper");
 					JasperReport commInfoReport = (JasperReport) JRLoader
@@ -1018,6 +1325,14 @@ public class DgBatchPrint extends JDialogBase {
 							.put("netWeight",
 									customsDeclaration.getNetWeight() != null ? cutString(customsDeclaration
 											.getNetWeight().toString()) : "0");
+
+					// 关封号码
+					parameters
+							.put("customsEnvelopBillNo",
+									customsDeclaration
+											.getCustomsEnvelopBillNo() != null ? customsDeclaration
+											.getCustomsEnvelopBillNo() : "");
+
 					String isPrintCustomWithVersion = manualDecleareAction
 							.getBpara(new Request(CommonVars.getCurrUser()),
 									BcusParameter.PrintCustomWithVersion);
@@ -1064,16 +1379,37 @@ public class DgBatchPrint extends JDialogBase {
 					CustomsDeclarationSubReportDataSource
 							.setSubReportData(listInfo);
 					InputStream masterReportStream = null;
-					if (customsDeclaration.getEmsHeadH2k() != null
-							&& !"".equals(customsDeclaration.getEmsHeadH2k())
-							&& customsDeclaration.getEmsHeadH2k()
-									.substring(0, 1).equals("H")) {
-						masterReportStream = DgBaseImportCustomsDeclaration.class
-								.getResourceAsStream("report/ExportCustomsHEmsDeclarationReport.jasper");
+
+					if (isAdd) {
+
+						if (customsDeclaration.getEmsHeadH2k() != null
+								&& !"".equals(customsDeclaration
+										.getEmsHeadH2k())
+								&& customsDeclaration.getEmsHeadH2k()
+										.substring(0, 1).equals("H")) {
+							masterReportStream = DgBaseImportCustomsDeclaration.class
+									.getResourceAsStream("report/ExportCustomsHEmsDeclarationReport.jasper");
+						} else {
+							masterReportStream = DgBaseImportCustomsDeclaration.class
+									.getResourceAsStream("report/ExportCustomsDeclarationReport.jasper");
+						}
+
 					} else {
-						masterReportStream = DgBaseImportCustomsDeclaration.class
-								.getResourceAsStream("report/ExportCustomsDeclarationReport.jasper");
+
+						if (customsDeclaration.getEmsHeadH2k() != null
+								&& !"".equals(customsDeclaration
+										.getEmsHeadH2k())
+								&& customsDeclaration.getEmsHeadH2k()
+										.substring(0, 1).equals("H")) {
+							masterReportStream = DgBaseImportCustomsDeclaration.class
+									.getResourceAsStream("report/ExportCustomsHEmsDeclarationReportNoadd.jasper");
+						} else {
+							masterReportStream = DgBaseImportCustomsDeclaration.class
+									.getResourceAsStream("report/ExportCustomsDeclarationReportNoadd.jasper");
+						}
+
 					}
+
 					InputStream commInfoReportStream = DgBaseImportCustomsDeclaration.class
 							.getResourceAsStream("report/ExportCustomsDeclarationCommInfoReport.jasper");
 					JasperReport commInfoReport = (JasperReport) JRLoader
@@ -1106,6 +1442,7 @@ public class DgBatchPrint extends JDialogBase {
 							.put("netWeight",
 									customsDeclaration.getNetWeight() != null ? cutString(customsDeclaration
 											.getNetWeight().toString()) : "0");
+
 					String isPrintCustomWithVersion = manualDecleareAction
 							.getBpara(new Request(CommonVars.getCurrUser()),
 									BcusParameter.PrintCustomWithVersion);
@@ -1124,8 +1461,39 @@ public class DgBatchPrint extends JDialogBase {
 				try {
 					CustomsDeclarationSubReportDataSource
 							.setSubReportData(listInfo);
-					InputStream masterReportStream = DgBaseImportCustomsDeclaration.class
-							.getResourceAsStream("report/ExportCustomsDeclarationReport.jasper");
+					InputStream masterReportStream = null;
+
+					if (isAdd) {
+
+						if (customsDeclaration.getEmsHeadH2k() != null
+								&& !"".equals(customsDeclaration
+										.getEmsHeadH2k())
+								&& customsDeclaration.getEmsHeadH2k()
+										.substring(0, 1).equals("H")) {
+							masterReportStream = DgBaseImportCustomsDeclaration.class
+									.getResourceAsStream("report/ExportCustomsHEmsDeclarationReport.jasper");
+						} else {
+							masterReportStream = DgBaseImportCustomsDeclaration.class
+									.getResourceAsStream("report/ExportCustomsDeclarationReport.jasper");
+						}
+
+						// 特殊报关单 不添加附加信息
+					} else {
+
+						if (customsDeclaration.getEmsHeadH2k() != null
+								&& !"".equals(customsDeclaration
+										.getEmsHeadH2k())
+								&& customsDeclaration.getEmsHeadH2k()
+										.substring(0, 1).equals("H")) {
+							masterReportStream = DgBaseImportCustomsDeclaration.class
+									.getResourceAsStream("report/ExportCustomsHEmsDeclarationReportNoadd.jasper");
+						} else {
+							masterReportStream = DgBaseImportCustomsDeclaration.class
+									.getResourceAsStream("report/ExportCustomsDeclarationReportNoadd.jasper");
+						}
+
+					}
+
 					InputStream commInfoReportStream = DgBaseImportCustomsDeclaration.class
 							.getResourceAsStream("report/ExportCustomsDeclarationCommInfoReport.jasper");
 					JasperReport commInfoReport = (JasperReport) JRLoader
@@ -1156,6 +1524,7 @@ public class DgBatchPrint extends JDialogBase {
 							.put("netWeight",
 									customsDeclaration.getNetWeight() != null ? cutString(customsDeclaration
 											.getNetWeight().toString()) : "0");
+
 					String isPrintCustomWithVersion = "0";
 					parameters.put("isPrintCustomWithVersion",
 							isPrintCustomWithVersion);// 用来控制是否显示版本栏位
@@ -1640,8 +2009,9 @@ public class DgBatchPrint extends JDialogBase {
 				// pageCount = 2;
 				if (allList != null) {
 					Integer count = allList.size();
-					//计算载货清单的页数 第一页显示6条，第二页以后均18条每页显示
-					pageCount = count <= 6 ? 1 : 1 + (int)Math.ceil((count -6)/18.0);
+					// 计算载货清单的页数 第一页显示6条，第二页以后均18条每页显示
+					pageCount = count <= 6 ? 1 : 1 + (int) Math
+							.ceil((count - 6) / 18.0);
 				}
 
 				parameters.put("pageCount", pageCount.toString());
@@ -1858,8 +2228,9 @@ public class DgBatchPrint extends JDialogBase {
 				// pageCount = 2;
 				if (allList != null) {
 					Integer count = allList.size();
-					//计算载货清单的页数 第一页显示6条，第二页以后均18条每页显示
-					pageCount = count <= 6 ? 1 : 1 + (int)Math.ceil((count -6)/18.0);
+					// 计算载货清单的页数 第一页显示6条，第二页以后均18条每页显示
+					pageCount = count <= 6 ? 1 : 1 + (int) Math
+							.ceil((count - 6) / 18.0);
 				}
 
 				parameters.put("pageCount", pageCount.toString());
@@ -2135,8 +2506,9 @@ public class DgBatchPrint extends JDialogBase {
 				// pageCount = 2;
 				if (allList != null) {
 					Integer count = allList.size();
-					//计算载货清单的页数 第一页显示6条，第二页及以上页面均每页显示18条
-					pageCount = count <= 6 ? 1 : 1 + (int)Math.ceil((count - 6) / 18.0d);
+					// 计算载货清单的页数 第一页显示6条，第二页及以上页面均每页显示18条
+					pageCount = count <= 6 ? 1 : 1 + (int) Math
+							.ceil((count - 6) / 18.0d);
 				}
 
 				parameters.put("pageCount", pageCount.toString());
@@ -2395,8 +2767,9 @@ public class DgBatchPrint extends JDialogBase {
 				// pageCount = 2;
 				if (allList != null) {
 					Integer count = allList.size();
-					//计算载货清单的页数 第一页显示6条，第二页及以上页面均每页显示18条
-					pageCount = count <= 6 ? 1 : 1 + (int)Math.ceil((count - 6) / 18.0d);
+					// 计算载货清单的页数 第一页显示6条，第二页及以上页面均每页显示18条
+					pageCount = count <= 6 ? 1 : 1 + (int) Math
+							.ceil((count - 6) / 18.0d);
 				}
 
 				parameters.put("pageCount", pageCount.toString());
@@ -2634,8 +3007,9 @@ public class DgBatchPrint extends JDialogBase {
 					// pageCount = 2;
 					if (allList != null) {
 						Integer count = allList.size();
-						//计算载货清单的页数 第一页显示6条，第二页及以上页面均每页显示18条
-						pageCount = count <= 6 ? 1 : 1 + (int)Math.ceil((count - 6) / 18.0d);
+						// 计算载货清单的页数 第一页显示6条，第二页及以上页面均每页显示18条
+						pageCount = count <= 6 ? 1 : 1 + (int) Math
+								.ceil((count - 6) / 18.0d);
 					}
 
 					parameters.put("pageCount", pageCount.toString());
@@ -2857,8 +3231,9 @@ public class DgBatchPrint extends JDialogBase {
 					// pageCount = 2;
 					if (allList != null) {
 						Integer count = allList.size();
-						//计算载货清单的页数 第一页显示6条，第二页及以上页面均每页显示18条
-						pageCount = count <= 6 ? 1 : 1 + (int)Math.ceil((count - 6) / 18.0d);
+						// 计算载货清单的页数 第一页显示6条，第二页及以上页面均每页显示18条
+						pageCount = count <= 6 ? 1 : 1 + (int) Math
+								.ceil((count - 6) / 18.0d);
 					}
 
 					parameters.put("pageCount", pageCount.toString());
@@ -3131,8 +3506,9 @@ public class DgBatchPrint extends JDialogBase {
 					// pageCount = 2;
 					if (allList != null) {
 						Integer count = allList.size();
-						//计算载货清单的页数 第一页显示6条，第二页及以上页面均每页显示18条
-						pageCount = count <= 6 ? 1 : 1 + (int)Math.ceil((count - 6) / 18.0d);
+						// 计算载货清单的页数 第一页显示6条，第二页及以上页面均每页显示18条
+						pageCount = count <= 6 ? 1 : 1 + (int) Math
+								.ceil((count - 6) / 18.0d);
 					}
 
 					parameters.put("pageCount", pageCount.toString());
@@ -3396,8 +3772,9 @@ public class DgBatchPrint extends JDialogBase {
 					// pageCount = 2;
 					if (allList != null) {
 						Integer count = allList.size();
-						//计算载货清单的页数 第一页显示6条，第二页及以上页面均每页显示18条
-						pageCount = count <= 6 ? 1 : 1 + (int)Math.ceil((count - 6) / 18.0d);
+						// 计算载货清单的页数 第一页显示6条，第二页及以上页面均每页显示18条
+						pageCount = count <= 6 ? 1 : 1 + (int) Math
+								.ceil((count - 6) / 18.0d);
 					}
 
 					parameters.put("pageCount", pageCount.toString());
@@ -3507,29 +3884,46 @@ public class DgBatchPrint extends JDialogBase {
 	 */
 	public void batchPrintDriversPaper(List<BaseCustomsDeclaration> list,
 			Boolean noTaoda) {
+
 		Map<String, List> map = (Map<String, List>) encAction
 				.findCustomsDeclarationInfos(
 						new Request(CommonVars.getCurrUser()), getBaseId(list),
 						projectType);
+
 		BaseCustomsDeclaration customsDeclaration = null;
+
 		JasperPrint jasperPrint = null;
+
 		try {
+
 			List<BaseCustomsDeclaration> listBase = new ArrayList<BaseCustomsDeclaration>();
+
 			listBase.add(list.get(0));
+
 			List<BaseCustomsDeclarationCommInfo> listInfo = map.get(list.get(0)
 					.getId());
+
 			if (listInfo == null || listInfo.size() < 1) {
+
 				listInfo = new ArrayList<BaseCustomsDeclarationCommInfo>();
 			}
+
 			jasperPrint = getJasperPrint(listBase, noTaoda, listInfo);
 
 			for (int n = 1; n < list.size(); n++) {
+
 				List<JRPrintPage> pages = null;
+
 				customsDeclaration = list.get(n);
+
 				listBase.clear();
+
 				listBase.add(customsDeclaration);
+
 				listInfo.clear();
+
 				if (map.get(list.get(n).getId()) != null) {
+
 					listInfo.addAll(map.get(list.get(n).getId()));
 				}
 				// if(impExpFlag==ImpExpFlag.IMPORT){
@@ -3545,11 +3939,16 @@ public class DgBatchPrint extends JDialogBase {
 				// pages = jp.getPages();
 				// }
 				// }
+
+				// 这里开始打印
 				JasperPrint jp = getJasperPrint(listBase, noTaoda, listInfo);
+
 				if (jp != null) {
 					pages = jp.getPages();
 				}
+
 				if (pages != null && jasperPrint != null) {
+
 					for (JRPrintPage printPage : pages) {
 						jasperPrint.addPage(printPage);
 					}
@@ -3568,6 +3967,15 @@ public class DgBatchPrint extends JDialogBase {
 		}
 	}
 
+	/**
+	 * 获取 jasperPrint对象
+	 * 
+	 * @param listBase
+	 * @param noTaoda
+	 * @param listInfo
+	 * @see 根据进出口标记 判断报关单类型
+	 * @return
+	 */
 	private JasperPrint getJasperPrint(List listBase, Boolean noTaoda,
 			List listInfo) {
 
@@ -3575,26 +3983,45 @@ public class DgBatchPrint extends JDialogBase {
 				.getCode();
 
 		JasperPrint jasperPrint = null;
+
+		// 进口报关单
 		if (impExpFlag == ImpExpFlag.IMPORT) {
+
+			// "0" 代表的是报关单
 			if ("0".equals(type)) {
+
 				jasperPrint = printImpCustoms(false, ImpExpFlag.IMPORT,
 						listBase, noTaoda, listInfo);
+
+				// "1" 代表的是 司机纸
 			} else if ("1".equals(type)) {
+
 				jasperPrint = printImpDriversPaper(false, ImpExpFlag.IMPORT,
 						listBase, noTaoda, listInfo);
 			}
+
+			// 出口报关单
 		} else if (impExpFlag == ImpExpFlag.EXPORT) {
+
 			if ("0".equals(type)) {
+
 				jasperPrint = printExpCustoms(false, ImpExpFlag.EXPORT,
 						listBase, noTaoda, listInfo);
+
 			} else if ("1".equals(type)) {
+
 				jasperPrint = printExpDriversPaper(false, ImpExpFlag.EXPORT,
 						listBase, noTaoda, listInfo);
 			} else {
+
 				printExpInvoice(listBase, noTaoda, listInfo);
 			}
+
+			// 特殊报关单
 		} else if (impExpFlag == ImpExpFlag.SPECIAL) {
+
 			if ("0".equals(type)) {
+
 				jasperPrint = printSpecCustoms(false, ImpExpFlag.SPECIAL,
 						listBase, noTaoda, listInfo);
 			} else if ("1".equals(type)) {
@@ -3689,5 +4116,5 @@ public class DgBatchPrint extends JDialogBase {
 		}
 		return list;
 	}
-	
+
 }

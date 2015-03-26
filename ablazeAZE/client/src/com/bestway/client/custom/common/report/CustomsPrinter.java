@@ -194,6 +194,7 @@ public class CustomsPrinter {
 				List contianList = baseEncAction
 						.findContainerByCustomsDeclaration(new Request(
 								CommonVars.getCurrUser()), customsDeclaration);
+
 				if (contianList.size() != 0) {
 					if (JOptionPane.showConfirmDialog(FmMain.getInstance(),
 							"是否打印集装箱及托架?", "", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
@@ -241,7 +242,7 @@ public class CustomsPrinter {
 									.substring(0, 1).equals("H")) {
 
 						masterReportStream = DgBaseImportCustomsDeclaration.class
-								.getResourceAsStream("report/ImportCustomsHEmsDeclarationReport.jasper");
+								.getResourceAsStream("report/ImportCustomsHEmsDeclarationReportNoadd.jasper");
 
 					} else {
 
@@ -269,6 +270,11 @@ public class CustomsPrinter {
 
 				// 只有是BCUS有需要才打印版本栏位
 				parameters.put("projectType", String.valueOf(projectType));
+
+				parameters
+						.put("memos", StringUtils.isNotBlank(customsDeclaration
+								.getMemos()) ? customsDeclaration.getMemos()
+								: "");
 
 				parameters.put("commInfoReport", commInfoReport);
 
@@ -404,7 +410,7 @@ public class CustomsPrinter {
 									.substring(0, 1).equals("H")) {
 
 						masterReportStream = DgBaseImportCustomsDeclaration.class
-								.getResourceAsStream("report/ImportCustomsHEmsDeclarationReport.jasper");
+								.getResourceAsStream("report/ImportCustomsHEmsDeclarationReportNoadd.jasper");
 
 					} else {
 
@@ -2910,7 +2916,7 @@ public class CustomsPrinter {
 									.substring(0, 1).equals("H")) {
 
 						masterReportStream = DgBaseImportCustomsDeclaration.class
-								.getResourceAsStream("report/ExportCustomsHEmsDeclarationReport.jasper");
+								.getResourceAsStream("report/ExportCustomsHEmsDeclarationReportNoadd.jasper");
 
 					} else {
 
@@ -3078,7 +3084,7 @@ public class CustomsPrinter {
 									.substring(0, 1).equals("H")) {
 
 						masterReportStream = DgBaseImportCustomsDeclaration.class
-								.getResourceAsStream("report/ExportCustomsHEmsDeclarationReport.jasper");
+								.getResourceAsStream("report/ExportCustomsHEmsDeclarationReportNoadd.jasper");
 
 					} else {
 

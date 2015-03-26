@@ -3,6 +3,9 @@ package com.bestway.bcs.client.contractstat;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Rectangle;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
@@ -14,6 +17,7 @@ import java.util.Vector;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -54,17 +58,9 @@ import com.bestway.common.constant.CustomsDeclarationState;
 import com.bestway.common.constant.ImpExpType;
 import com.bestway.ui.winuicontrol.JInternalFrameBase;
 
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import java.awt.GridLayout;
-
-import javax.swing.JCheckBox;
-
 /**
- * @author Administrator
- *  // change the template for this generated type comment go to Window -
- * Preferences - Java - Code Style - Code Templates
+ * @author Administrator // change the template for this generated type comment
+ *         go to Window - Preferences - Java - Code Style - Code Templates
  */
 public class DgExpProductList extends JInternalFrameBase {
 
@@ -127,7 +123,7 @@ public class DgExpProductList extends JInternalFrameBase {
 	private JCheckBox cbContractExe = null;
 
 	private JCheckBox cbContractCancel = null;
-	
+
 	private SystemAction systemAction = null;
 
 	/**
@@ -140,7 +136,7 @@ public class DgExpProductList extends JInternalFrameBase {
 		contractAction = (ContractAction) CommonVars.getApplicationContext()
 				.getBean("contractAction");
 		systemAction = (SystemAction) CommonVars.getApplicationContext()
-		.getBean("systemAction");
+				.getBean("systemAction");
 		initialize();
 		getButtonGroup();
 		getButtonGroup1();
@@ -155,6 +151,9 @@ public class DgExpProductList extends JInternalFrameBase {
 			initTable(list);
 			initcbbContract();
 			jSplitPane.setDividerLocation(0.8);
+
+			jList11.showContractData(true, false);
+
 		}
 		super.setVisible(b);
 	}
@@ -182,8 +181,7 @@ public class DgExpProductList extends JInternalFrameBase {
 	 * @return void
 	 */
 	private void initialize() {
-		this
-				.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+		this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		this.setTitle("出口成品报关登记表");
 		this.setSize(785, 509);
 		this.setContentPane(getJContentPane());
@@ -277,7 +275,8 @@ public class DgExpProductList extends JInternalFrameBase {
 					dg.setVisible(true);
 					List list = dg.getLsResult();
 					if (list != null) {
-						list = contractStatAction.getTotal(new Request(CommonVars.getCurrUser()), list);
+						list = contractStatAction.getTotal(new Request(
+								CommonVars.getCurrUser()), list);
 						initTable(list);
 					}
 				}
@@ -310,11 +309,11 @@ public class DgExpProductList extends JInternalFrameBase {
 							.getList();
 					List dsList = new ArrayList();
 					for (ImpExpCustomsDeclarationCommInfo data : dlist) {
-						if(data.getBaseCustomsDeclaration()!=null){
-							if (data.getBaseCustomsDeclaration().getEmsHeadH2k()
-									.equals(
-											((Contract) cbbContract
-													.getSelectedItem()).getEmsNo())) {
+						if (data.getBaseCustomsDeclaration() != null) {
+							if (data.getBaseCustomsDeclaration()
+									.getEmsHeadH2k()
+									.equals(((Contract) cbbContract
+											.getSelectedItem()).getEmsNo())) {
 								dsList.add(data);
 							}
 						}
@@ -336,10 +335,12 @@ public class DgExpProductList extends JInternalFrameBase {
 					parameters.put("isImport", new Boolean(false));
 					parameters.put("contractNo", contract.getExpContractNo());
 					parameters.put("emsNo", contract.getEmsNo());
-					parameters.put("beginDate",
+					parameters.put(
+							"beginDate",
 							contract.getBeginDate() == null ? "" : dateFormat
 									.format(contract.getBeginDate()));
-					parameters.put("effectiveDate",
+					parameters.put(
+							"effectiveDate",
 							contract.getEndDate() == null ? "" : dateFormat
 									.format(contract.getEndDate()));
 					parameters.put("companyName", CommonVars.getCurrUser()
@@ -391,214 +392,324 @@ public class DgExpProductList extends JInternalFrameBase {
 					public List InitColumns() {
 						List<JTableListColumn> list = new Vector<JTableListColumn>();
 						list.add(addColumn("手册编号",
-								"baseCustomsDeclaration.emsHeadH2k", 100));//1
-						list.add(addColumn("合同号", "baseCustomsDeclaration.contract", 100));//2
-						list.add(addColumn("备案序号", "commSerialNo", 100));//3
+								"baseCustomsDeclaration.emsHeadH2k", 100));// 1
+						list.add(addColumn("合同号",
+								"baseCustomsDeclaration.contract", 100));// 2
+						list.add(addColumn("备案序号", "commSerialNo", 100));// 3
 						list.add(addColumn("报关日期",
-								"baseCustomsDeclaration.declarationDate", 100));//4
+								"baseCustomsDeclaration.declarationDate", 100));// 4
 						list.add(addColumn("运输工具名称",
-								"baseCustomsDeclaration.conveyance", 100));//5
-						list
-						.add(addColumn(
+								"baseCustomsDeclaration.conveyance", 100));// 5
+						list.add(addColumn(
 								"报关单号",
 								"baseCustomsDeclaration.customsDeclarationCode",
-								100));//6
+								100));// 6
 						list.add(addColumn("报关单流水号",
-								"baseCustomsDeclaration.serialNumber", 100));//7
-//						list.add(addColumn("报关单份数", "bgdNum", 80,
-//								Integer.class));//customsPiece
-						list.add(addColumn("商品项号", "serialNumber", 100));//8
-						list.add(addColumn("商品编码", "complex.code", 100));//9
-						list.add(addColumn("品名", "commName", 100));//10
-						list.add(addColumn("规格", "commSpec", 100));//11
-						list.add(addColumn("规范申报规格", "declareSpec", 100));//12
-						list.add(addColumn("单位", "unit.name", 50));//13
-						list.add(addColumn("币制", "baseCustomsDeclaration.currency", 50));//14
-						list.add(addColumn("合同金额", "dollarTotalPrice", 100));//15
-						list.add(addColumn("数量", "commAmount", 100));//16
-						list.add(addColumn("价值", "commTotalPrice", 100));//17
-						list.add(addColumn("数量累计", "commAddUpAmount", 100));//18
-						list.add(addColumn("目的国", "country.name", 100));//19
+								"baseCustomsDeclaration.serialNumber", 100));// 7
+						// list.add(addColumn("报关单份数", "bgdNum", 80,
+						// Integer.class));//customsPiece
+						list.add(addColumn("商品项号", "serialNumber", 100));// 8
+						list.add(addColumn("商品编码", "complex.code", 100));// 9
+						list.add(addColumn("品名", "commName", 100));// 10
+						list.add(addColumn("规格", "commSpec", 100));// 11
+						list.add(addColumn("规范申报规格", "declareSpec", 100));// 12
+						list.add(addColumn("单位", "unit.name", 50));// 13
+						list.add(addColumn("币制",
+								"baseCustomsDeclaration.currency", 50));// 14
+						list.add(addColumn("合同金额", "dollarTotalPrice", 100));// 15
+						list.add(addColumn("数量", "commAmount", 100));// 16
+						list.add(addColumn("价值", "commTotalPrice", 100));// 17
+						list.add(addColumn("数量累计", "commAddUpAmount", 100));// 18
+						list.add(addColumn("目的国", "country.name", 100));// 19
 						list.add(addColumn("进出口类型",
-								"baseCustomsDeclaration.impExpType", 100));//20
+								"baseCustomsDeclaration.impExpType", 100));// 20
 						list.add(addColumn("贸易方式",
-								"baseCustomsDeclaration.tradeMode.name", 100));//21
-						
+								"baseCustomsDeclaration.tradeMode.name", 100));// 21
+
 						list.add(addColumn("客户名称",
-								"baseCustomsDeclaration.customer.name", 100));//22
-						list.add(addColumn("法定数量", "firstAmount", 100));//23
-						list.add(addColumn("法定单位", "legalUnit.name", 100));//24
-						list.add(addColumn("报关单单价", "commUnitPrice", 100));//25
-						list.add(addColumn("毛重", "grossWeight", 100));//26
-						list.add(addColumn("净重", "netWeight", 100));//27
-						list.add(addColumn("总重量", "grossWeight", 100));//28
-						list.add(addColumn("车牌号", "baseCustomsDeclaration.billOfLading", 100));//29
-						list.add(addColumn("合同单价", "contractUnitPrice", 100));//30
+								"baseCustomsDeclaration.customer.name", 100));// 22
+						list.add(addColumn("法定数量", "firstAmount", 100));// 23
+						list.add(addColumn("法定单位", "legalUnit.name", 100));// 24
+						list.add(addColumn("报关单单价", "commUnitPrice", 100));// 25
+						list.add(addColumn("毛重", "grossWeight", 100));// 26
+						list.add(addColumn("净重", "netWeight", 100));// 27
+						list.add(addColumn("总重量", "grossWeight", 100));// 28
+						list.add(addColumn("车牌号",
+								"baseCustomsDeclaration.billOfLading", 100));// 29
+						list.add(addColumn("合同单价", "contractUnitPrice", 100));// 30
 						list.add(addColumn("统一编号",
-								"baseCustomsDeclaration.unificationCode", 100));//31
-						List lists = systemAction.findReportControl(new Request(
-								CommonVars.getCurrUser()));
-						System.out.println("登记表lists="+lists.size());
-						if(lists != null && lists.size() > 0){
-							ReportControl reportControl =null;
-							for(int i=0;i<lists.size();i++){
+								"baseCustomsDeclaration.unificationCode", 100));// 31
+						List lists = systemAction
+								.findReportControl(new Request(CommonVars
+										.getCurrUser()));
+						System.out.println("登记表lists=" + lists.size());
+						if (lists != null && lists.size() > 0) {
+							ReportControl reportControl = null;
+							for (int i = 0; i < lists.size(); i++) {
 								reportControl = (ReportControl) lists.get(0);
 							}
-							if(reportControl.getSecondLegalUnit()!=null
-									&&reportControl.getSecondLegalUnit().equals(new Boolean(true))){
-								list.add(addColumn("第二法定单位", "secondLegalUnit.name", 100));//27
+							if (reportControl.getSecondLegalUnit() != null
+									&& reportControl.getSecondLegalUnit()
+											.equals(new Boolean(true))) {
+								list.add(addColumn("第二法定单位",
+										"secondLegalUnit.name", 100));// 27
 							}
-							if(reportControl.getSecondAmount()!=null
-									&&reportControl.getSecondAmount().equals(new Boolean(true))){
-								list.add(addColumn("第二法定数量", "secondAmount", 100));//28
-							}
-							if(reportControl.getUses()!=null
-									&&reportControl.getUses().equals(new Boolean(true))){
-								list.add(addColumn("用途", "uses.name", 100));//29
-							}
-							if(reportControl.getDeclarationCustoms()!=null
-									&&reportControl.getDeclarationCustoms().equals(new Boolean(true))){
-								list.add(addColumn("报送海关", "baseCustomsDeclaration.declarationCustoms.name", 100));//30
-							}
-							if(reportControl.getLevyMode()!=null
-									&&reportControl.getLevyMode().equals(new Boolean(true))){
-								list.add(addColumn("征减免税方式", "levyMode.name", 100));//30
-							}
-							if(reportControl.getPieces()!=null
-									&&reportControl.getPieces().equals(new Boolean(true))){
-								list.add(addColumn("件数", "pieces", 100));//30
-							}
-							if(reportControl.getWrapType()!=null
-									&&reportControl.getWrapType().equals(new Boolean(true))){
-								list.add(addColumn("包装方式(头)", "baseCustomsDeclaration.wrapType.name", 100));//30
-							}
-							if(reportControl.getWrapTypeDetail()!=null
-									&&reportControl.getWrapTypeDetail().equals(new Boolean(true))){
-								list.add(addColumn("包装方式(体)", "wrapType.name", 100));//30
-							}
-							if(reportControl.getCertificateCode()!=null
-									&&reportControl.getCertificateCode().equals(new Boolean(true))){
-								list.add(addColumn("备注证件代码", "baseCustomsDeclaration.certificateCode", 100));//30
-							}
-							if(reportControl.getCustoms()!=null
-									&&reportControl.getCustoms().equals(new Boolean(true))){
-								list.add(addColumn("进出口口岸", "baseCustomsDeclaration.customs.name", 100));//30
-							}
-							if(reportControl.getImpExpDate()!=null
-									&&reportControl.getImpExpDate().equals(new Boolean(true))){
-								list.add(addColumn("进出口日期", "baseCustomsDeclaration.impExpDate", 100));//30
-							}
-							if(reportControl.getTransferMode()!=null
-									&&reportControl.getTransferMode().equals(new Boolean(true))){
-								list.add(addColumn("运输方式", "baseCustomsDeclaration.transferMode.name", 100));//30
-							}
-							if(reportControl.getMemos()!=null
-									&&reportControl.getMemos().equals(new Boolean(true))){
-								list.add(addColumn("备注其他说明", "baseCustomsDeclaration.memos", 100));//30
-							}
-							if(reportControl.getLevyKind()!=null
-									&&reportControl.getLevyKind().equals(new Boolean(true))){
-								list.add(addColumn("征免性质", "baseCustomsDeclaration.levyKind.name", 100));//30
-							}
-							if(reportControl.getLicense()!=null
-									&&reportControl.getLicense().equals(new Boolean(true))){
-								list.add(addColumn("许可证号", "baseCustomsDeclaration.license", 100));//30
-							}
-							if(reportControl.getCountryOfLoadingOrUnloading()!=null
-									&&reportControl.getCountryOfLoadingOrUnloading().equals(new Boolean(true))){
-								list.add(addColumn("起运国/运抵国", "baseCustomsDeclaration.countryOfLoadingOrUnloading.name", 100));//30
-							}
-							if(reportControl.getPredock()!=null
-									&&reportControl.getPredock().equals(new Boolean(true))){
-								list.add(addColumn("码头", "baseCustomsDeclaration.predock.name", 100));//30
-							}
-							
-							if(reportControl.getDomesticDestinationOrSource()!=null
-									&&reportControl.getDomesticDestinationOrSource().equals(new Boolean(true))){
-								list.add(addColumn("境内目的地", "baseCustomsDeclaration.domesticDestinationOrSource.name", 100));//30
-							}
-							if(reportControl.getPortOfLoadingOrUnloading()!=null
-									&&reportControl.getPortOfLoadingOrUnloading().equals(new Boolean(true))){
-								list.add(addColumn("装货港/指运港", "baseCustomsDeclaration.portOfLoadingOrUnloading.name", 100));//30
-							}
-							if(reportControl.getAuthorizeFile()!=null
-									&&reportControl.getAuthorizeFile().equals(new Boolean(true))){
-								list.add(addColumn("核销单号", "baseCustomsDeclaration.authorizeFile", 100));//30
-							}
-							if(reportControl.getBondedWarehouse()!=null
-									&&reportControl.getBondedWarehouse().equals(new Boolean(true))){
-								list.add(addColumn("保税仓库", "baseCustomsDeclaration.bondedWarehouse", 100));//30
-							}
-							if(reportControl.getTransac()!=null
-									&&reportControl.getTransac().equals(new Boolean(true))){
-								list.add(addColumn("成交方式", "baseCustomsDeclaration.transac.name", 100));//30
-							}
-							if(reportControl.getGrossWeight()!=null
-									&&reportControl.getGrossWeight().equals(new Boolean(true))){
-								list.add(addColumn("总毛重", "baseCustomsDeclaration.grossWeight", 100));//30
-							}
-							if(reportControl.getNetWeight()!=null
-									&&reportControl.getNetWeight().equals(new Boolean(true))){
-								list.add(addColumn("总净重", "baseCustomsDeclaration.netWeight", 100));//30
-							}
-							if(reportControl.getRelativeManualNo()!=null
-									&&reportControl.getRelativeManualNo().equals(new Boolean(true))){
-								list.add(addColumn("关联手册号", "baseCustomsDeclaration.relativeManualNo", 100));//30
-							}
-							if(reportControl.getCommodityNum()!=null
-									&&reportControl.getCommodityNum().equals(new Boolean(true))){
-								list.add(addColumn("总件数", "baseCustomsDeclaration.commodityNum", 100));//30
-							}
-							if(reportControl.getContainerNum()!=null
-									&&reportControl.getContainerNum().equals(new Boolean(true))){
-								list.add(addColumn("集装箱号", "baseCustomsDeclaration.containerNum", 100));//30
-							}
-							if(reportControl.getAttachedBill()!=null
-									&&reportControl.getAttachedBill().equals(new Boolean(true))){
-								list.add(addColumn("随附单据", "baseCustomsDeclaration.attachedBill", 100));//30
-							}
-							if(reportControl.getRelativeId()!=null
-									&&reportControl.getRelativeId().equals(new Boolean(true))){
-								list.add(addColumn("关联报关单号", "baseCustomsDeclaration.relativeId", 100));//30
-							}
-							if(reportControl.getRelativeId()!=null
-									&&reportControl.getRelativeId().equals(new Boolean(true))){
-								list.add(addColumn("关封号", "baseCustomsDeclaration.customsEnvelopBillNo", 100));//30
-							}
-							if(reportControl.getInvoiceCode()!=null
-									&&reportControl.getInvoiceCode().equals(new Boolean(true))){
-								list.add(addColumn("发票号", "baseCustomsDeclaration.invoiceCode", 100));//30
-							}
-							
-							if (reportControl.getPreCustomsDeclarationCode() != null
-									&& reportControl.getPreCustomsDeclarationCode().equals(
+							if (reportControl.getSecondAmount() != null
+									&& reportControl.getSecondAmount().equals(
 											new Boolean(true))) {
-								list.add(addColumn("预录入号",
-										"baseCustomsDeclaration.preCustomsDeclarationCode", 100));
+								list.add(addColumn("第二法定数量", "secondAmount",
+										100));// 28
+							}
+							if (reportControl.getUses() != null
+									&& reportControl.getUses().equals(
+											new Boolean(true))) {
+								list.add(addColumn("用途", "uses.name", 100));// 29
+							}
+							if (reportControl.getDeclarationCustoms() != null
+									&& reportControl.getDeclarationCustoms()
+											.equals(new Boolean(true))) {
+								list.add(addColumn(
+										"报送海关",
+										"baseCustomsDeclaration.declarationCustoms.name",
+										100));// 30
+							}
+							if (reportControl.getLevyMode() != null
+									&& reportControl.getLevyMode().equals(
+											new Boolean(true))) {
+								list.add(addColumn("征减免税方式", "levyMode.name",
+										100));// 30
+							}
+							if (reportControl.getPieces() != null
+									&& reportControl.getPieces().equals(
+											new Boolean(true))) {
+								list.add(addColumn("件数", "pieces", 100));// 30
+							}
+							if (reportControl.getWrapType() != null
+									&& reportControl.getWrapType().equals(
+											new Boolean(true))) {
+								list.add(addColumn("包装方式(头)",
+										"baseCustomsDeclaration.wrapType.name",
+										100));// 30
+							}
+							if (reportControl.getWrapTypeDetail() != null
+									&& reportControl.getWrapTypeDetail()
+											.equals(new Boolean(true))) {
+								list.add(addColumn("包装方式(体)", "wrapType.name",
+										100));// 30
+							}
+							if (reportControl.getCertificateCode() != null
+									&& reportControl.getCertificateCode()
+											.equals(new Boolean(true))) {
+								list.add(addColumn(
+										"备注证件代码",
+										"baseCustomsDeclaration.certificateCode",
+										100));// 30
+							}
+							if (reportControl.getCustoms() != null
+									&& reportControl.getCustoms().equals(
+											new Boolean(true))) {
+								list.add(addColumn("进出口口岸",
+										"baseCustomsDeclaration.customs.name",
+										100));// 30
+							}
+							if (reportControl.getImpExpDate() != null
+									&& reportControl.getImpExpDate().equals(
+											new Boolean(true))) {
+								list.add(addColumn("进出口日期",
+										"baseCustomsDeclaration.impExpDate",
+										100));// 30
+							}
+							if (reportControl.getTransferMode() != null
+									&& reportControl.getTransferMode().equals(
+											new Boolean(true))) {
+								list.add(addColumn(
+										"运输方式",
+										"baseCustomsDeclaration.transferMode.name",
+										100));// 30
+							}
+							if (reportControl.getMemos() != null
+									&& reportControl.getMemos().equals(
+											new Boolean(true))) {
+								list.add(addColumn("备注其他说明",
+										"baseCustomsDeclaration.memos", 100));// 30
+							}
+							if (reportControl.getLevyKind() != null
+									&& reportControl.getLevyKind().equals(
+											new Boolean(true))) {
+								list.add(addColumn("征免性质",
+										"baseCustomsDeclaration.levyKind.name",
+										100));// 30
+							}
+							if (reportControl.getLicense() != null
+									&& reportControl.getLicense().equals(
+											new Boolean(true))) {
+								list.add(addColumn("许可证号",
+										"baseCustomsDeclaration.license", 100));// 30
+							}
+							if (reportControl.getCountryOfLoadingOrUnloading() != null
+									&& reportControl
+											.getCountryOfLoadingOrUnloading()
+											.equals(new Boolean(true))) {
+								list.add(addColumn(
+										"起运国/运抵国",
+										"baseCustomsDeclaration.countryOfLoadingOrUnloading.name",
+										100));// 30
+							}
+							if (reportControl.getPredock() != null
+									&& reportControl.getPredock().equals(
+											new Boolean(true))) {
+								list.add(addColumn("码头",
+										"baseCustomsDeclaration.predock.name",
+										100));// 30
+							}
+
+							if (reportControl.getDomesticDestinationOrSource() != null
+									&& reportControl
+											.getDomesticDestinationOrSource()
+											.equals(new Boolean(true))) {
+								list.add(addColumn(
+										"境内目的地",
+										"baseCustomsDeclaration.domesticDestinationOrSource.name",
+										100));// 30
+							}
+							if (reportControl.getPortOfLoadingOrUnloading() != null
+									&& reportControl
+											.getPortOfLoadingOrUnloading()
+											.equals(new Boolean(true))) {
+								list.add(addColumn(
+										"装货港/指运港",
+										"baseCustomsDeclaration.portOfLoadingOrUnloading.name",
+										100));// 30
+							}
+							if (reportControl.getAuthorizeFile() != null
+									&& reportControl.getAuthorizeFile().equals(
+											new Boolean(true))) {
+								list.add(addColumn("核销单号",
+										"baseCustomsDeclaration.authorizeFile",
+										100));// 30
+							}
+							if (reportControl.getBondedWarehouse() != null
+									&& reportControl.getBondedWarehouse()
+											.equals(new Boolean(true))) {
+								list.add(addColumn(
+										"保税仓库",
+										"baseCustomsDeclaration.bondedWarehouse",
+										100));// 30
+							}
+							if (reportControl.getTransac() != null
+									&& reportControl.getTransac().equals(
+											new Boolean(true))) {
+								list.add(addColumn("成交方式",
+										"baseCustomsDeclaration.transac.name",
+										100));// 30
+							}
+							if (reportControl.getGrossWeight() != null
+									&& reportControl.getGrossWeight().equals(
+											new Boolean(true))) {
+								list.add(addColumn("总毛重",
+										"baseCustomsDeclaration.grossWeight",
+										100));// 30
+							}
+							if (reportControl.getNetWeight() != null
+									&& reportControl.getNetWeight().equals(
+											new Boolean(true))) {
+								list.add(addColumn("总净重",
+										"baseCustomsDeclaration.netWeight", 100));// 30
+							}
+							if (reportControl.getRelativeManualNo() != null
+									&& reportControl.getRelativeManualNo()
+											.equals(new Boolean(true))) {
+								list.add(addColumn(
+										"关联手册号",
+										"baseCustomsDeclaration.relativeManualNo",
+										100));// 30
+							}
+							if (reportControl.getCommodityNum() != null
+									&& reportControl.getCommodityNum().equals(
+											new Boolean(true))) {
+								list.add(addColumn("总件数",
+										"baseCustomsDeclaration.commodityNum",
+										100));// 30
+							}
+							if (reportControl.getContainerNum() != null
+									&& reportControl.getContainerNum().equals(
+											new Boolean(true))) {
+								list.add(addColumn("集装箱号",
+										"baseCustomsDeclaration.containerNum",
+										100));// 30
+							}
+							if (reportControl.getAttachedBill() != null
+									&& reportControl.getAttachedBill().equals(
+											new Boolean(true))) {
+								list.add(addColumn("随附单据",
+										"baseCustomsDeclaration.attachedBill",
+										100));// 30
+							}
+							if (reportControl.getRelativeId() != null
+									&& reportControl.getRelativeId().equals(
+											new Boolean(true))) {
+								list.add(addColumn("关联报关单号",
+										"baseCustomsDeclaration.relativeId",
+										100));// 30
+							}
+							if (reportControl.getRelativeId() != null
+									&& reportControl.getRelativeId().equals(
+											new Boolean(true))) {
+								list.add(addColumn(
+										"关封号",
+										"baseCustomsDeclaration.customsEnvelopBillNo",
+										100));// 30
+							}
+							if (reportControl.getInvoiceCode() != null
+									&& reportControl.getInvoiceCode().equals(
+											new Boolean(true))) {
+								list.add(addColumn("发票号",
+										"baseCustomsDeclaration.invoiceCode",
+										100));// 30
+							}
+
+							if (reportControl.getPreCustomsDeclarationCode() != null
+									&& reportControl
+											.getPreCustomsDeclarationCode()
+											.equals(new Boolean(true))) {
+								list.add(addColumn(
+										"预录入号",
+										"baseCustomsDeclaration.preCustomsDeclarationCode",
+										100));
 							}
 							if (reportControl.getCustomdeclarationMun() != null
-									&& reportControl.getCustomdeclarationMun().equals(
+									&& reportControl.getCustomdeclarationMun()
+											.equals(new Boolean(true))) {
+								list.add(addColumn("报关单份数", "bgdNum", 80,
+										Integer.class));
+							}
+							if (reportControl.getCreater() != null
+									&& reportControl.getCreater().equals(
 											new Boolean(true))) {
-								list.add(addColumn("报关单份数",
-										"bgdNum", 80,Integer.class));
+								list.add(addColumn(
+										"录入员",
+										"baseCustomsDeclaration.creater.userName",
+										80));
+
 							}
-							if(reportControl.getCreater() != null
-									&& reportControl.getCreater().equals(new Boolean(true))){
-								list.add(addColumn("录入员","baseCustomsDeclaration.creater.userName",80));
-								
+							if (reportControl.getDetailNote() != null
+									&& reportControl.getDetailNote().equals(
+											new Boolean(true))) {
+								list.add(addColumn("表体备注", "detailNote", 100));// 30
 							}
-							if(reportControl.getDetailNote()!=null
-									&&reportControl.getDetailNote().equals(new Boolean(true))){
-								list.add(addColumn("表体备注", "detailNote", 100));//30
+							if (Boolean.TRUE.equals(reportControl
+									.getCustomerCode())) {
+								int index = findIxdex(list, "客户名称");
+								list.add(
+										index,
+										addColumn(
+												"客户名称代码",
+												"baseCustomsDeclaration.customer.code",
+												100));
 							}
-							if(Boolean.TRUE.equals(reportControl.getCustomerCode())){
-								int index = findIxdex(list,"客户名称");
-								list.add(index,addColumn("客户名称代码",
-										"baseCustomsDeclaration.customer.code", 100));
-							}
-							
+
 						}
-						
+
 						return list;
 					}
 				});
@@ -609,17 +720,20 @@ public class DgExpProductList extends JInternalFrameBase {
 				&& parameterSet.getReportDecimalLength() != null)
 			decimalLength = parameterSet.getReportDecimalLength();
 		tableModel.setAllColumnsFractionCount(decimalLength);
-//		CommonVars.castMultiplicationValue(jTable, 14, 13, 23, decimalLength);
-//		CommonVars.castMultiplicationValue(jTable, 27, 25, 13, decimalLength);
-//		CommonVars.castMultiplicationValue(jTable, 28, 26, 13, decimalLength);
+		// CommonVars.castMultiplicationValue(jTable, 14, 13, 23,
+		// decimalLength);
+		// CommonVars.castMultiplicationValue(jTable, 27, 25, 13,
+		// decimalLength);
+		// CommonVars.castMultiplicationValue(jTable, 28, 26, 13,
+		// decimalLength);
 		CompanyOther other = CommonVars.getOther();
 		if (other != null) {
 			tableModel.setAllColumnsshowThousandthsign(other
 					.getIsAutoshowThousandthsign() == null ? false : other
 					.getIsAutoshowThousandthsign());
 		}
-		jTable.getColumnModel().getColumn(20).setCellRenderer(
-				new DefaultTableCellRenderer() {
+		jTable.getColumnModel().getColumn(20)
+				.setCellRenderer(new DefaultTableCellRenderer() {
 					public Component getTableCellRendererComponent(
 							JTable table, Object value, boolean isSelected,
 							boolean hasFocus, int row, int column) {
@@ -638,19 +752,21 @@ public class DgExpProductList extends JInternalFrameBase {
 		// this.tableModel.setExcelFileName(this.contract.getEmsNo());
 
 	}
-	
+
 	/**
 	 * 查找列的位置,找不到时,返回list.size
+	 * 
 	 * @param list
-	 * @param caption 列名
+	 * @param caption
+	 *            列名
 	 * @return
 	 */
-	private int findIxdex(List<JTableListColumn> list,String caption){
+	private int findIxdex(List<JTableListColumn> list, String caption) {
 		int index = list.size();
 		for (int i = 0; i < list.size(); i++) {
 			JTableListColumn column = list.get(i);
-			if(column.getCaption().equals(caption)){
-				return i+1;
+			if (column.getCaption().equals(caption)) {
+				return i + 1;
 			}
 		}
 		return index;
@@ -923,9 +1039,9 @@ public class DgExpProductList extends JInternalFrameBase {
 	}
 
 	/**
-	 * This method initializes jPanel2	
-	 * 	
-	 * @return javax.swing.JPanel	
+	 * This method initializes jPanel2
+	 * 
+	 * @return javax.swing.JPanel
 	 */
 	private JPanel getJPanel2() {
 		if (jPanel2 == null) {
@@ -938,54 +1054,48 @@ public class DgExpProductList extends JInternalFrameBase {
 	}
 
 	/**
-	 * This method initializes cbContractExe	
-	 * 	
-	 * @return javax.swing.JCheckBox	
+	 * This method initializes cbContractExe
+	 * 
+	 * @return javax.swing.JCheckBox
 	 */
 	private JCheckBox getCbContractExe() {
 		if (cbContractExe == null) {
 			cbContractExe = new JCheckBox();
 			cbContractExe.setSelected(true);
 			cbContractExe.setText("正在执行的合同");
-			cbContractExe.addActionListener(new java.awt.event.ActionListener() {
-				public void actionPerformed(java.awt.event.ActionEvent e) {
-					if(cbContractExe.isSelected() && cbContractCancel.isSelected()){
-						jList11.showContractData(true, true);
-					}else if(cbContractExe.isSelected() && !cbContractCancel.isSelected()){
-						jList11.showContractData(true, false);
-					}else if(!cbContractExe.isSelected() && cbContractCancel.isSelected()){
-						jList11.showContractData(false, true);
-					}else{
-						jList11.showContractData(false, false);
-					}
-				}
-			});
+			cbContractExe
+					.addActionListener(new java.awt.event.ActionListener() {
+						public void actionPerformed(java.awt.event.ActionEvent e) {
+
+							jList11.showContractData(
+									cbContractExe.isSelected(),
+									cbContractCancel.isSelected());
+
+						}
+					});
 		}
 		return cbContractExe;
 	}
 
 	/**
-	 * This method initializes cbContractCancel	
-	 * 	
-	 * @return javax.swing.JCheckBox	
+	 * This method initializes cbContractCancel
+	 * 
+	 * @return javax.swing.JCheckBox
 	 */
 	private JCheckBox getCbContractCancel() {
 		if (cbContractCancel == null) {
 			cbContractCancel = new JCheckBox();
 			cbContractCancel.setText("\u6838\u9500\u7684\u5408\u540c");
-			cbContractCancel.addActionListener(new java.awt.event.ActionListener() {
-				public void actionPerformed(java.awt.event.ActionEvent e) {
-					if(cbContractExe.isSelected() && cbContractCancel.isSelected()){
-						jList11.showContractData(true, true);
-					}else if(cbContractExe.isSelected() && !cbContractCancel.isSelected()){
-						jList11.showContractData(true, false);
-					}else if(!cbContractExe.isSelected() && cbContractCancel.isSelected()){
-						jList11.showContractData(false, true);
-					}else{
-						jList11.showContractData(false, false);
-					}
-				}
-			});
+			cbContractCancel
+					.addActionListener(new java.awt.event.ActionListener() {
+						public void actionPerformed(java.awt.event.ActionEvent e) {
+
+							jList11.showContractData(
+									cbContractExe.isSelected(),
+									cbContractCancel.isSelected());
+
+						}
+					});
 		}
 		return cbContractCancel;
 	}

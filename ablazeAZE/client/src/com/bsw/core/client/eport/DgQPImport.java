@@ -10,10 +10,8 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -27,7 +25,7 @@ import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
 import javax.swing.UIManager;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 
 import com.bestway.bcs.contractexe.action.ContractExeAction;
 import com.bestway.bcus.client.common.CommonProgress;
@@ -195,14 +193,6 @@ public class DgQPImport extends JDialogBase {
 		}
 		return label;
 	}
-
-	// private JComboBox getCbbUserType() {
-	// if (cbbUserType == null) {
-	// cbbUserType = new JComboBox();
-	// cbbUserType.setBounds(337, 23, 142, 21);
-	// }
-	// return cbbUserType;
-	// }
 
 	private JLabel getLabel_1() {
 		if (label_1 == null) {
@@ -500,14 +490,6 @@ public class DgQPImport extends JDialogBase {
 
 				List errors = new ArrayList();
 
-				// 查询
-				List declaration = baseEncAction.findAllCustomsDeclaration(
-						CommonVars.getRequst(), projectType, null);
-
-				Set<String> setDeclaration = new HashSet<String>();
-
-				setDeclaration.addAll(declaration);
-
 				// 从QP下载数据
 				DownloadDataFromEport dataExchange = DataExchangeFactory
 						.getInstance().getDownloadDataFormEport(
@@ -526,7 +508,12 @@ public class DgQPImport extends JDialogBase {
 
 				List params = getParams();
 
-				Map<String, Integer> checkSameCode = new HashMap<String, Integer>();
+				Map<String, String> checkSameCode = new HashMap<String, String>();
+
+				Gson gson = new Gson();
+
+				// 用于判断单份导入的标记
+				boolean flag = true;
 
 				for (int j = 0; j < params.size(); j++) {
 
@@ -534,13 +521,24 @@ public class DgQPImport extends JDialogBase {
 					String data = dataExchange
 							.download((Map<String, Object>) params.get(j));
 
-					System.out.println("全部数据：" + data);
+					System.out.println("全部数据    ：" + data);
 
 					if (data == null || "".equals(data.trim())) {
+
+						if (cbByCustomsDeclarationCodeImport.isSelected()
+								&& flag) {
+
+							// 只传一个报关单号
+							String cdCode = tfCustomsDeclarationCode.getText();
+
+							errors.add(new Object[] { cdCode, "QP不存在此份报关单." });
+
+							flag = false;
+
+						}
+
 						continue;
 					}
-
-					Gson gson = new Gson();
 
 					List list = gson.fromJson(data, List.class);
 
@@ -559,63 +557,48 @@ public class DgQPImport extends JDialogBase {
 
 						String customsDeclarationCode = bgdhead.get("海关编号");
 
-						// 先判断是否为空
-						if (checkSameCode.get(customsDeclarationCode) == null) {
+						checkSameCode.put(customsDeclarationCode, stringGson);
 
-							checkSameCode.put(customsDeclarationCode,
-									Integer.valueOf(0));
+					}
+				}
 
-						} else {
+				// 这时候开始进行处理 stringGsons : 已去除下载重复的报关单号
+				List stringGsons = new ArrayList(checkSameCode.values());
 
-							Integer count = checkSameCode
-									.get(customsDeclarationCode);
+				for (int i = 0; i < stringGsons.size(); i++) {
 
-							count++;
+					String stringGson = (String) stringGsons.get(i);
 
-							System.out.println("重复的次数是    :  " + count);
+					System.out.println("单份报关单数据：" + stringGson);
 
-							if (count != Integer.valueOf(0)) {
-								continue;
-							}
+					// 一份报关单 用于提取 报关单号
+					Map oneDer = gson.fromJson(stringGson, Map.class);
 
-						}
+					Map<String, String> bgdhead = (Map<String, String>) oneDer
+							.get("报关单表头");
 
-						if (customsDeclarationCode == null) {
+					System.out.println(bgdhead);
 
-							System.out.println("报关单号为空");
+					String customsDeclarationCode = bgdhead.get("海关编号");
 
-						} else if (!setDeclaration
-								.contains(customsDeclarationCode)) {
+					CommonProgress.setMessage("系统正在导入报关单,请稍后...");
 
-							CommonProgress.setMessage("系统正在导入报关单号为："
-									+ customsDeclarationCode + "的报关单,请稍后...");
+					try {
 
-							try {
+						baseEncAction.transferImportDeclaration(
+								CommonVars.getRequst(), stringGson, impExpFlag,
+								projectType);
 
-								baseEncAction.transferImportDeclaration(
-										CommonVars.getRequst(), stringGson,
-										impExpFlag, projectType);
+						errors.add(new Object[] { customsDeclarationCode,
+								"报关单导入成功" });
 
-								System.out.println("导入成功报关单号："
-										+ customsDeclarationCode);
+					} catch (Exception e) {
 
-							} catch (Exception e) {
-								e.printStackTrace();
+						e.printStackTrace();
 
-								errors.add(new Object[] {
-										customsDeclarationCode, e.getMessage() });
+						errors.add(new Object[] { customsDeclarationCode,
+								e.getMessage() + ", 忽略导入此份报关单.." });
 
-							}
-
-						} else {
-
-							if (StringUtils.isNotBlank(customsDeclarationCode)) {
-
-								errors.add(new Object[] {
-										customsDeclarationCode, "报关单号已经存在" });
-
-							}
-						}
 					}
 
 				}
@@ -641,11 +624,11 @@ public class DgQPImport extends JDialogBase {
 			public List<JTableListColumn> getTableColumns() {
 				List<JTableListColumn> list = new ArrayList<JTableListColumn>();
 				list.add(new JTableListColumn("报关单号", "", 130));
-				list.add(new JTableListColumn("导入失败原因", "", 300));
+				list.add(new JTableListColumn("导入汇总信息", "", 300));
 				return list;
 			}
 		};
-		dg.setTitle("报关单导入错误信息");
+		dg.setTitle("报关单导入信息");
 		dg.initTable(list);
 		dg.setVisible(true);
 	}

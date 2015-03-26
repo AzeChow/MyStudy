@@ -160,26 +160,26 @@ public class FmPisSync extends JInternalFrameBase {
 
 		findPisSyncAclUser();
 
-		findPisSyncAgentCorp();
+//		findPisSyncAgentCorp();
 
-		findEspAuthorityBrokerCorp();
+//		findEspAuthorityBrokerCorp();
 
-		tbAuthorityBrokerCorp.getSelectionModel().addListSelectionListener(
-				new ListSelectionListener() {
-					@Override
-					public void valueChanged(ListSelectionEvent e) {
-						if (e.getValueIsAdjusting()) {
-							return;
-						}
-						if (tableModelAuthorityBrokerCorp.getCurrentRow() != null) {
-
-							EspAuthorityBrokerCorp corp = (EspAuthorityBrokerCorp) tableModelAuthorityBrokerCorp
-									.getCurrentRow();
-							findEspAuthorityBrokerCorpItem(corp);
-						}
-						setItemStatus(DataState.BROWSE);
-					}
-				});
+//		tbAuthorityBrokerCorp.getSelectionModel().addListSelectionListener(
+//				new ListSelectionListener() {
+//					@Override
+//					public void valueChanged(ListSelectionEvent e) {
+//						if (e.getValueIsAdjusting()) {
+//							return;
+//						}
+//						if (tableModelAuthorityBrokerCorp.getCurrentRow() != null) {
+//
+//							EspAuthorityBrokerCorp corp = (EspAuthorityBrokerCorp) tableModelAuthorityBrokerCorp
+//									.getCurrentRow();
+//							findEspAuthorityBrokerCorpItem(corp);
+//						}
+//						setItemStatus(DataState.BROWSE);
+//					}
+//				});
 	}
 
 	public void findBrokerCorp() {
@@ -575,7 +575,8 @@ public class FmPisSync extends JInternalFrameBase {
 			splitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
 			splitPane.setLeftComponent(getPanel());
 			splitPane.setRightComponent(getTabbedPane());
-			splitPane.setDividerLocation(160);
+			splitPane.setDividerLocation(0);
+			splitPane.setDividerSize(0);
 		}
 		return splitPane;
 	}
@@ -637,8 +638,11 @@ public class FmPisSync extends JInternalFrameBase {
 	}
 
 	private JLabel getLblcis() {
+
 		if (lblcis == null) {
+
 			lblcis = new JLabel("将运维平台代理公司、服务器地址、电话、联系人等资料同步至JBCUS；");
+
 			lblcis.setBounds(216, 32, 407, 15);
 		}
 		return lblcis;
@@ -646,15 +650,17 @@ public class FmPisSync extends JInternalFrameBase {
 
 	private JLabel getLblcisesp() {
 		if (lblcisesp == null) {
-			lblcisesp = new JLabel("将JBCUS用户账号同步至ESP；");
-			lblcisesp.setBounds(216, 57, 175, 15);
+			lblcisesp = new JLabel("将JBCUS授权代理公司同步至ESP；");
+
+			lblcisesp.setBounds(216, 57, 207, 15);
 		}
 		return lblcisesp;
 	}
 
 	private JLabel getLblcisesp_1() {
 		if (lblcisesp_1 == null) {
-			lblcisesp_1 = new JLabel("将JBCUS申报单位同步至ESP；");
+
+			lblcisesp_1 = new JLabel("将JBCUS用户账号同步至ESP；");
 			lblcisesp_1.setBounds(216, 82, 175, 15);
 		}
 		return lblcisesp_1;
@@ -662,7 +668,9 @@ public class FmPisSync extends JInternalFrameBase {
 
 	private JLabel getLblcisesp_2() {
 		if (lblcisesp_2 == null) {
-			lblcisesp_2 = new JLabel("将JBCUS授权代理公司同步至ESP；");
+
+			// 将JBCUS授权代理公司同步至ESP；
+			lblcisesp_2 = new JLabel("将JBCUS申报单位同步至ESP；");
 			lblcisesp_2.setBounds(216, 107, 260, 15);
 		}
 		return lblcisesp_2;
@@ -681,7 +689,7 @@ public class FmPisSync extends JInternalFrameBase {
 		if (label_4 == null) {
 			label_4 = new JLabel("(必做)");
 			label_4.setForeground(Color.RED);
-			label_4.setBounds(396, 57, 50, 15);
+			label_4.setBounds(433, 57, 43, 15);
 		}
 		return label_4;
 	}
@@ -698,10 +706,10 @@ public class FmPisSync extends JInternalFrameBase {
 	private JTabbedPane getTabbedPane() {
 		if (tabbedPane == null) {
 			tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-			tabbedPane.addTab("①同步代理公司(必做)", null, getPanel_1(), null);
-			tabbedPane.addTab("②同步授权代理公司(必做)", null, getPanel_2(), null);
-			tabbedPane.addTab("③同步企业登录账号(必做)", null, getPanel_3(), null);
-			tabbedPane.addTab("④同步代理公司的申报单位", null, getPanel_4(), null);
+			tabbedPane.addTab("①同步企业登录账号(必做)", null, getPanel_3(), null);
+			tabbedPane.addTab("②查看代理公司(必做)", null, getPanel_1(), null);
+//			tabbedPane.addTab("③同步授权代理公司(必做)", null, getPanel_2(), null);
+//			tabbedPane.addTab("④同步代理公司的申报单位", null, getPanel_4(), null);
 		}
 		return tabbedPane;
 	}
@@ -711,7 +719,7 @@ public class FmPisSync extends JInternalFrameBase {
 			panel_1 = new JPanel();
 			panel_1.setToolTipText("");
 			panel_1.setLayout(new BorderLayout(0, 0));
-			panel_1.add(getToolBar(), BorderLayout.NORTH);
+//			panel_1.add(getToolBar(), BorderLayout.NORTH);
 			panel_1.add(getScrollPane(), BorderLayout.CENTER);
 		}
 		return panel_1;
@@ -749,7 +757,7 @@ public class FmPisSync extends JInternalFrameBase {
 	private JToolBar getToolBar() {
 		if (toolBar == null) {
 			toolBar = new JToolBar();
-			toolBar.add(getBtnExecute());
+//			toolBar.add(getBtnExecute());
 		}
 		return toolBar;
 	}
@@ -1107,6 +1115,11 @@ public class FmPisSync extends JInternalFrameBase {
 					pisVerificationAuthority.checkExecuteSyncUser(request);
 					executeSyncUser();
 					findPisSyncAclUser();
+					
+					//
+					pisVerificationAuthority.checkExecute(request);
+					executeGetBrokerCorp();
+					findBrokerCorp();
 				}
 			});
 		}
@@ -1539,8 +1552,8 @@ public class FmPisSync extends JInternalFrameBase {
 							new Request(CommonVars.getCurrUser()), serverMap,
 							agtCompanyList);
 
-					JOptionPane.showMessageDialog(FmPisSync.this, msg, "执行成功！",
-							JOptionPane.INFORMATION_MESSAGE);
+//					JOptionPane.showMessageDialog(FmPisSync.this, msg, "执行成功！",
+//							JOptionPane.INFORMATION_MESSAGE);
 
 				}
 			}

@@ -8,6 +8,9 @@ package com.bestway.bcs.client.contractstat;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Rectangle;
 import java.io.InputStream;
 import java.math.BigDecimal;
@@ -21,6 +24,7 @@ import java.util.Vector;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -31,12 +35,12 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
+import javax.swing.SwingConstants;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.util.JRLoader;
 
 import com.bestway.bcs.client.contractanalyse.JContractList;
 import com.bestway.bcs.contract.action.ContractAction;
@@ -58,30 +62,17 @@ import com.bestway.common.Request;
 import com.bestway.common.constant.CustomsDeclarationState;
 import com.bestway.ui.winuicontrol.JInternalFrameBase;
 import com.bestway.ui.winuicontrol.calendar.JCalendarComboBox;
-import javax.swing.JCheckBox;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridLayout;
-import javax.swing.SwingConstants;
 
 /**
  * @author Administrator // change the template for this generated type comment
  *         go to Window - Preferences - Java - Code Style - Code Templates
  */
 /**
- * 各栏位计算公式 
- * 合同定量=合同中对应成品备案的数量 
- * 总出口量=直接出口总量＋转厂出口总量-退厂返工总量+返工复出总量
- * 本期总出口量=本期直接出口量＋本期深加工结转量-本期退厂返工量+本期返工复出量 
- * 本期直接出口量=出口报关单中出口类型为直接出口的数量
- * 本期深加工结转量=出口报关单中出口类型为转厂出口的数量 
- * 本期退厂返工量=出口报关单中出口类型为退厂返工的数量
- * 本期返工复出量=出口报关单中出口类型为返工复出的数量 
- * 可出口量＝合同定量-本期总出口量
- * 加工费单价=合同中的加工费单价
- * 加工费总价=本期总出口量*加工费单价 
- * 关封余量=关封管理明细中的进货本厂数量—转厂出口量
- * 可直接出口量=可出口量-关封余量
+ * 各栏位计算公式 合同定量=合同中对应成品备案的数量 总出口量=直接出口总量＋转厂出口总量-退厂返工总量+返工复出总量
+ * 本期总出口量=本期直接出口量＋本期深加工结转量-本期退厂返工量+本期返工复出量 本期直接出口量=出口报关单中出口类型为直接出口的数量
+ * 本期深加工结转量=出口报关单中出口类型为转厂出口的数量 本期退厂返工量=出口报关单中出口类型为退厂返工的数量
+ * 本期返工复出量=出口报关单中出口类型为返工复出的数量 可出口量＝合同定量-本期总出口量 加工费单价=合同中的加工费单价
+ * 加工费总价=本期总出口量*加工费单价 关封余量=关封管理明细中的进货本厂数量—转厂出口量 可直接出口量=可出口量-关封余量
  * 未转报关单数量＝申请单中的出口口送货单转报关单的数量（风岗嘉辉嘉安进出货单据转报关单）
  * 
  * 
@@ -192,8 +183,13 @@ public class DgExpProductStat extends JInternalFrameBase {
 
 	public void setVisible(boolean b) {
 		if (b) {
+
 			initTable(new Vector());
+
 			jSplitPane.setDividerLocation(0.8);
+
+			jList11.showContractData(true, false);
+
 		}
 		super.setVisible(b);
 	}
@@ -204,8 +200,7 @@ public class DgExpProductStat extends JInternalFrameBase {
 	 * @return void
 	 */
 	private void initialize() {
-		this
-				.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+		this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		this.setTitle("出口成品情况统计表");
 		this.setSize(849, 510);
 		this.setContentPane(getJContentPane());
@@ -247,29 +242,26 @@ public class DgExpProductStat extends JInternalFrameBase {
 									return;
 								}
 								ExpProductStatResult statResult = contractStatAction
-										.expProductStat(new Request(CommonVars
-												.getCurrUser()), tableModel
-												.getList());
-								tfContractExpTotalMoney
-										.setText(statResult.getContractMoney() == null
-												|| statResult
-														.getContractMoney() == 0 ? ""
-												: formatBig(statResult
-														.getContractMoney()
-														.toString(), 3, false));
-								tfExpTotalMoney
-										.setText(statResult.getExpTotalMoney() == null
-												|| statResult
-														.getExpTotalMoney() == 0 ? ""
-												: formatBig(statResult
-														.getExpTotalMoney()
-														.toString(), 3, false));
-								tfExpScale
-										.setText(statResult.getScale() == null
-												|| statResult.getScale() == 0 ? ""
-												: formatBig(statResult
-														.getScale().toString(),
-														3, false));
+										.expProductStat(
+												new Request(CommonVars
+														.getCurrUser()),
+												tableModel.getList());
+								tfContractExpTotalMoney.setText(statResult
+										.getContractMoney() == null
+										|| statResult.getContractMoney() == 0 ? ""
+										: formatBig(statResult
+												.getContractMoney().toString(),
+												3, false));
+								tfExpTotalMoney.setText(statResult
+										.getExpTotalMoney() == null
+										|| statResult.getExpTotalMoney() == 0 ? ""
+										: formatBig(statResult
+												.getExpTotalMoney().toString(),
+												3, false));
+								tfExpScale.setText(statResult.getScale() == null
+										|| statResult.getScale() == 0 ? ""
+										: formatBig(statResult.getScale()
+												.toString(), 3, false));
 							}
 						}
 					});
@@ -442,20 +434,20 @@ public class DgExpProductStat extends JInternalFrameBase {
 					state = CustomsDeclarationState.EFFECTIVED;
 				}
 				List contracts = jList11.getSelectedContracts();
-				//判断手册成品在备案库是否存在;
-				Boolean ischeck = contractStatAction.ischeckImgExg(contracts,MaterielType.FINISHED_PRODUCT);
-				if(ischeck){
+				// 判断手册成品在备案库是否存在;
+				Boolean ischeck = contractStatAction.ischeckImgExg(contracts,
+						MaterielType.FINISHED_PRODUCT);
+				if (ischeck) {
 					CommonProgress.closeProgressDialog();
-					JOptionPane.showMessageDialog(DgExpProductStat.this, "所查询的合同中，有成品记录号在备案资料库中不存在，请检查更新");
+					JOptionPane.showMessageDialog(DgExpProductStat.this,
+							"所查询的合同中，有成品记录号在备案资料库中不存在，请检查更新");
 					return;
 				}
-				list = contractStatAction
-						.findExpProductStatByContracts(new Request(CommonVars
-								.getCurrUser()), contracts, CommonVars
-								.dateToStandDate(cbbBeginDate.getDate()),
-								CommonVars
-										.dateToStandDate(cbbEndDate.getDate()),
-								state,cbDetachCompute.isSelected());
+				list = contractStatAction.findExpProductStatByContracts(
+						new Request(CommonVars.getCurrUser()), contracts,
+						CommonVars.dateToStandDate(cbbBeginDate.getDate()),
+						CommonVars.dateToStandDate(cbbEndDate.getDate()),
+						state, cbDetachCompute.isSelected());
 
 				CommonProgress.closeProgressDialog();
 			} catch (Exception e) {
@@ -516,12 +508,10 @@ public class DgExpProductStat extends JInternalFrameBase {
 				new JTableListModelAdapter() {
 					public List InitColumns() {
 						List<JTableListColumn> list = new Vector<JTableListColumn>();
-						list
-								.add(addColumn("序号", "serialNo", 60,
-										Integer.class));
+						list.add(addColumn("序号", "serialNo", 60, Integer.class));
 						// list.add(addColumn("手册号", "emsNo", 100));
-						list.add(addColumn("手册号", "emsNo",100));
-						list.add(addColumn("合同号", "impContractNo",100));
+						list.add(addColumn("手册号", "emsNo", 100));
+						list.add(addColumn("合同号", "impContractNo", 100));
 						list.add(addColumn("商品编码", "complex.code", 100));
 						list.add(addColumn("品名", "commName", 100));
 						list.add(addColumn("规格", "commSpec", 100));
@@ -534,9 +524,7 @@ public class DgExpProductStat extends JInternalFrameBase {
 						// list.add(addColumn("比例", "scale", 100));
 						list.add(addColumn("本期深加工结转量", "transferFactoryExport",
 								100));
-						list
-								.add(addColumn("本期退厂返工量", "backFactoryRework",
-										100));
+						list.add(addColumn("本期退厂返工量", "backFactoryRework", 100));
 						list.add(addColumn("本期返工复出量", "reworkExport", 100));
 						list.add(addColumn("本期未返工复出量", "reworkNoExport", 100));
 						list.add(addColumn("可出口量", "canExportAmount", 100));
@@ -550,17 +538,15 @@ public class DgExpProductStat extends JInternalFrameBase {
 						// list.add(addColumn("单位毛重", "unitGrossWeight", 100));
 						// list.add(addColumn("单位净重", "unitNetWeight", 100));
 						// list.add(addColumn("征减免税方式", "levyMode.name", 100));
-						list
-								.add(addColumn("关封余量", "customsEnvelopRemain",
-										100));
+						list.add(addColumn("关封余量", "customsEnvelopRemain", 100));
 						list.add(addColumn("可直接出口量", "canDirectExportAmount",
 								100));
 						list.add(addColumn("单价", "unitPrice", 100));
 						list.add(addColumn("未转报关单数量", "noTranCustomsNum", 120));
 						list.add(addColumn("记录号", "credenceNo", 60,
 								Integer.class));
-						list.add(addColumn("完成百分比", "completeScale", 60));//35
-						list.add(addColumn("归并序号", "innerMergeSeqNum", 60));//36;
+						list.add(addColumn("完成百分比", "completeScale", 60));// 35
+						list.add(addColumn("归并序号", "innerMergeSeqNum", 60));// 36;
 						return list;
 					}
 				});
@@ -577,7 +563,7 @@ public class DgExpProductStat extends JInternalFrameBase {
 					.getIsAutoshowThousandthsign() == null ? false : other
 					.getIsAutoshowThousandthsign());
 		}
-		
+
 	}
 
 	/**
@@ -747,10 +733,8 @@ public class DgExpProductStat extends JInternalFrameBase {
 	private JContractList getJList11() {
 		if (jList11 == null) {
 			jList11 = new JContractList();
-			jList11.addMouseListener(new java.awt.event.MouseAdapter() 
-			{
-				public void mouseClicked(java.awt.event.MouseEvent e)
-				{
+			jList11.addMouseListener(new java.awt.event.MouseAdapter() {
+				public void mouseClicked(java.awt.event.MouseEvent e) {
 					cbbBeginDate.setDate(findBeginDate());
 					cbbEndDate.setDate(findEndDate());
 				}
@@ -759,34 +743,27 @@ public class DgExpProductStat extends JInternalFrameBase {
 		}
 		return jList11;
 	}
+
 	/**
 	 * 找出合同中最靠前的日期
 	 * 
 	 * @return
 	 */
-	public Date findBeginDate()
-	{
+	public Date findBeginDate() {
 		List<Date> list = new ArrayList<Date>();
 		Date date = null;
-		for(int i = 0;i < jList11.getModel().getSize();i++)
-		{
+		for (int i = 0; i < jList11.getModel().getSize(); i++) {
 			Contract contract = (Contract) jList11.getModel().getElementAt(i);
-			if(contract.getIsSelected() == null || !contract.getIsSelected())
-			{
+			if (contract.getIsSelected() == null || !contract.getIsSelected()) {
 				continue;
 			}
-			if(contract.getBeginDate() == null)
-			{
+			if (contract.getBeginDate() == null) {
 				continue;
 			}
-			if(date==null)
-			{
+			if (date == null) {
 				date = contract.getBeginDate();
-			}
-			else
-			{
-				if(contract.getBeginDate().before(date))
-				{
+			} else {
+				if (contract.getBeginDate().before(date)) {
 					date = contract.getBeginDate();
 				}
 			}
@@ -799,36 +776,27 @@ public class DgExpProductStat extends JInternalFrameBase {
 	 * 
 	 * @return
 	 */
-	public Date findEndDate()
-	{
+	public Date findEndDate() {
 		List<Date> list = new ArrayList<Date>();
 		Date date = null;
-		for(int i = 0;i < jList11.getModel().getSize();i++)
-		{
+		for (int i = 0; i < jList11.getModel().getSize(); i++) {
 			Contract contract = (Contract) jList11.getModel().getElementAt(i);
-			if(contract.getIsSelected() == null || !contract.getIsSelected())
-			{
+			if (contract.getIsSelected() == null || !contract.getIsSelected()) {
 				continue;
 			}
-			if(contract.getEndDate() == null)
-			{
+			if (contract.getEndDate() == null) {
 				continue;
 			}
-			if(date==null)
-			{
+			if (date == null) {
 				date = contract.getEndDate();
-			}
-			else
-			{
-				if(contract.getEndDate().after(date))
-				{
+			} else {
+				if (contract.getEndDate().after(date)) {
 					date = contract.getEndDate();
 				}
 			}
 		}
 		return date;
 	}
-	
 
 	/**
 	 * This method initializes jPanel10
@@ -955,39 +923,44 @@ public class DgExpProductStat extends JInternalFrameBase {
 					List<Contract> contracts = jList11.getSelectedContracts();
 					CustomReportDataSource ds = new CustomReportDataSource(
 							dlist);
-					String subContactEmss ="";
-					String subContact="";
-					for(Contract c : contracts){
-						subContactEmss+=c.getEmsNo()+"\n";
-						subContact+=c.getImpContractNo()+"\n";
+					String subContactEmss = "";
+					String subContact = "";
+					for (Contract c : contracts) {
+						subContactEmss += c.getEmsNo() + "\n";
+						subContact += c.getImpContractNo() + "\n";
 					}
-//					CustomReportDataSource subds = new CustomReportDataSource(
-//							contracts);
+					// CustomReportDataSource subds = new
+					// CustomReportDataSource(
+					// contracts);
 					InputStream reportStream = DgImpExpScheduleDetail.class
 							.getResourceAsStream("report/ExpProductStat.jasper");
-//					InputStream subreportStream = DgImpExpScheduleDetail.class
-//							.getResourceAsStream("report/ExportProductStatSub.jasper");
+					// InputStream subreportStream =
+					// DgImpExpScheduleDetail.class
+					// .getResourceAsStream("report/ExportProductStatSub.jasper");
 					Map<String, Object> parameters = new HashMap<String, Object>();
-//					try {
-//						tempContractNoSubReport = (JasperReport) JRLoader
-//								.loadObject(subreportStream);
-//					} catch (JRException e2) {
-//						e2.printStackTrace();
-//					}
+					// try {
+					// tempContractNoSubReport = (JasperReport) JRLoader
+					// .loadObject(subreportStream);
+					// } catch (JRException e2) {
+					// e2.printStackTrace();
+					// }
 					// parameters.put("contractNo",
 					// contract.getImpContractNo());
 					// parameters.put("emsNo", contract.getEmsNo());
-					parameters.put("beginDate",
+					parameters.put(
+							"beginDate",
 							cbbBeginDate.getDate() == null ? ""
 									: (new SimpleDateFormat("yyyy-MM-dd"))
 											.format(cbbBeginDate.getDate()));
-					parameters.put("endDate", cbbEndDate.getDate() == null ? ""
-							: (new SimpleDateFormat("yyyy-MM-dd"))
-									.format(cbbEndDate.getDate()));
+					parameters.put(
+							"endDate",
+							cbbEndDate.getDate() == null ? ""
+									: (new SimpleDateFormat("yyyy-MM-dd"))
+											.format(cbbEndDate.getDate()));
 					// parameters.put("companyName", contract.getCompany()
 					// .getName());
-//					parameters.put("subData", subds);
-//					parameters.put("sub", tempContractNoSubReport);
+					// parameters.put("subData", subds);
+					// parameters.put("sub", tempContractNoSubReport);
 					parameters.put("subContactEmss", subContactEmss);
 					parameters.put("subContact", subContact);
 					putPrintParameters(parameters);
@@ -1009,21 +982,23 @@ public class DgExpProductStat extends JInternalFrameBase {
 	private void putPrintParameters(Map map) {
 		ExpProductStatResult statResult = contractStatAction.expProductStat(
 				new Request(CommonVars.getCurrUser()), tableModel.getList());
-		map.put("ContractExpTotalMoney", statResult.getContractMoney() == null
-				|| statResult.getContractMoney() == 0 ? "" : formatBig(
-				statResult.getContractMoney().toString(), 3, false));
+		map.put("ContractExpTotalMoney",
+				statResult.getContractMoney() == null
+						|| statResult.getContractMoney() == 0 ? "" : formatBig(
+						statResult.getContractMoney().toString(), 3, false));
 		// tfContractExpTotalMoney.setText(statResult.getContractMoney() == null
 		// || statResult.getContractMoney() == 0 ? "" : formatBig(
 		// statResult.getContractMoney().toString(), 3, false));
-		map.put("ExpTotalMoney", statResult.getExpTotalMoney() == null
-				|| statResult.getExpTotalMoney() == 0 ? "" : formatBig(
-				statResult.getExpTotalMoney().toString(), 3, false));
+		map.put("ExpTotalMoney",
+				statResult.getExpTotalMoney() == null
+						|| statResult.getExpTotalMoney() == 0 ? "" : formatBig(
+						statResult.getExpTotalMoney().toString(), 3, false));
 		// tfExpTotalMoney.setText(statResult.getExpTotalMoney() == null
 		// || statResult.getExpTotalMoney() == 0 ? "" : formatBig(
 		// statResult.getExpTotalMoney().toString(), 3, false));
-		map.put("ExpScale", statResult.getScale() == null
-				|| statResult.getScale() == 0 ? "" : formatBig(statResult
-				.getScale().toString(), 3, false));
+		map.put("ExpScale",
+				statResult.getScale() == null || statResult.getScale() == 0 ? ""
+						: formatBig(statResult.getScale().toString(), 3, false));
 		// tfExpScale.setText(statResult.getScale() == null
 		// || statResult.getScale() == 0 ? "" : formatBig(statResult
 		// .getScale().toString(), 3, false));
@@ -1031,9 +1006,9 @@ public class DgExpProductStat extends JInternalFrameBase {
 	}
 
 	/**
-	 * This method initializes cbDetachCompute	
-	 * 	
-	 * @return javax.swing.JCheckBox	
+	 * This method initializes cbDetachCompute
+	 * 
+	 * @return javax.swing.JCheckBox
 	 */
 	private JCheckBox getCbDetachCompute() {
 		if (cbDetachCompute == null) {
@@ -1045,9 +1020,9 @@ public class DgExpProductStat extends JInternalFrameBase {
 	}
 
 	/**
-	 * This method initializes jPanel3	
-	 * 	
-	 * @return javax.swing.JPanel	
+	 * This method initializes jPanel3
+	 * 
+	 * @return javax.swing.JPanel
 	 */
 	private JPanel getJPanel3() {
 		if (jPanel3 == null) {
@@ -1060,56 +1035,48 @@ public class DgExpProductStat extends JInternalFrameBase {
 	}
 
 	/**
-	 * This method initializes cbContractExe	
-	 * 	
-	 * @return javax.swing.JCheckBox	
+	 * This method initializes cbContractExe
+	 * 
+	 * @return javax.swing.JCheckBox
 	 */
 	private JCheckBox getCbContractExe() {
 		if (cbContractExe == null) {
 			cbContractExe = new JCheckBox();
 			cbContractExe.setSelected(true);
 			cbContractExe.setText("正在执行的合同");
-			cbContractExe.addActionListener(new java.awt.event.ActionListener() {
-				public void actionPerformed(java.awt.event.ActionEvent e) {
-					if(cbContractExe.isSelected() && cbContractCancel.isSelected()){
-						jList11.showContractData(true, true);
-					}else if(cbContractExe.isSelected() && !cbContractCancel.isSelected()){
-						jList11.showContractData(true, false);
-					}else if(!cbContractExe.isSelected() && cbContractCancel.isSelected()){
-						jList11.showContractData(false, true);
-					}else{
-						jList11.showContractData(false, false);
-					}
-				}
-			});
+			cbContractExe
+					.addActionListener(new java.awt.event.ActionListener() {
+						public void actionPerformed(java.awt.event.ActionEvent e) {
+
+							jList11.showContractData(
+									cbContractExe.isSelected(),
+									cbContractCancel.isSelected());
+
+						}
+					});
 			cbContractExe.setSelected(true);
-			
+
 		}
 		return cbContractExe;
 	}
 
 	/**
-	 * This method initializes cbContractCancel	
-	 * 	
-	 * @return javax.swing.JCheckBox	
+	 * This method initializes cbContractCancel
+	 * 
+	 * @return javax.swing.JCheckBox
 	 */
 	private JCheckBox getCbContractCancel() {
 		if (cbContractCancel == null) {
 			cbContractCancel = new JCheckBox();
 			cbContractCancel.setText("核销的合同");
-			cbContractCancel.addActionListener(new java.awt.event.ActionListener() {
-				public void actionPerformed(java.awt.event.ActionEvent e) {
-					if(cbContractExe.isSelected() && cbContractCancel.isSelected()){
-						jList11.showContractData(true, true);
-					}else if(cbContractExe.isSelected() && !cbContractCancel.isSelected()){
-						jList11.showContractData(true, false);
-					}else if(!cbContractExe.isSelected() && cbContractCancel.isSelected()){
-						jList11.showContractData(false, true);
-					}else{
-						jList11.showContractData(false, false);
-					}
-				}
-			});
+			cbContractCancel
+					.addActionListener(new java.awt.event.ActionListener() {
+						public void actionPerformed(java.awt.event.ActionEvent e) {
+							jList11.showContractData(
+									cbContractExe.isSelected(),
+									cbContractCancel.isSelected());
+						}
+					});
 		}
 		return cbContractCancel;
 	}

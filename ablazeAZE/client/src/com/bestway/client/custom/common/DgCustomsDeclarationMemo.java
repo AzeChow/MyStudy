@@ -18,9 +18,14 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.bestway.bcus.client.common.CommonVars;
+import com.bestway.bcus.custombase.entity.parametercode.LicenseDocu;
 import com.bestway.common.constant.ImpExpType;
 import com.bestway.ui.winuicontrol.JDialogBase;
+import com.bestway.util.RegexUtil;
+import com.bsw.core.client.eport.QueryBaseList;
 
 /**
  * @author bsway
@@ -30,6 +35,9 @@ import com.bestway.ui.winuicontrol.JDialogBase;
  */
 @SuppressWarnings("serial")
 public class DgCustomsDeclarationMemo extends JDialogBase {
+
+	private String codes;
+
 	private JPanel jContentPane = null;
 	private JPanel jPanel = null;
 	private JButton btnOk = null;
@@ -170,9 +178,12 @@ public class DgCustomsDeclarationMemo extends JDialogBase {
 			btnOk.setBounds(215, 290, 64, 25);
 			btnOk.setText("确定");
 			btnOk.addActionListener(new java.awt.event.ActionListener() {
-				public void actionPerformed(java.awt.event.ActionEvent e) { // 给予提示：
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+
+					// 给予提示：
 					if (impExpType != null
 							&& (impExpType == ImpExpType.TRANSFER_FACTORY_IMPORT || impExpType == ImpExpType.TRANSFER_FACTORY_EXPORT)) {
+
 					} else {
 
 						if (containerNum != null
@@ -180,17 +191,20 @@ public class DgCustomsDeclarationMemo extends JDialogBase {
 								&& !(CommonVars.substring(
 										jEditorPane.getText(), 0, 2))
 										.equals("#1")) {
+
 							if (JOptionPane
 									.showConfirmDialog(
 											DgCustomsDeclarationMemo.this,
 											"系统提示：集装箱数为'0'\n是否在说明字符串前加 '#1' ?",
 											"提示", 0) == 0) {
+
 								jEditorPane.setText("#1 "
 										+ jEditorPane.getText());
 								return;
 							}
 						}
 					}
+
 					if (checkEnterSymbol(jEditorPane.getText())) {
 						JOptionPane.showMessageDialog(
 								DgCustomsDeclarationMemo.this,
@@ -261,19 +275,51 @@ public class DgCustomsDeclarationMemo extends JDialogBase {
 	 * @return
 	 */
 	public String returnCertificateCodeValue() {
-		String returnValue = "";
+
+		StringBuffer returnValue = new StringBuffer();
+
 		String s = this.jEditorPane1.getText();
+
+		codes = "";
+
 		if (!"".equals(s)) {
+
 			String[] yy = s.split("\n");
+
 			for (int i = 0; i < yy.length; i++) {
-				if (i == 0) {
-					returnValue = yy[i].trim();
-				} else {
-					returnValue = returnValue + "," + yy[i].trim();
+
+				String everyStrArr = yy[i].trim();
+
+				// 一个随附单证 的 代码对应 号码 e.g. A:123456
+				String[] oneCodeValue = everyStrArr.split(":");
+
+				codes += oneCodeValue[0];
+
+				if (StringUtils.isNotBlank(everyStrArr)) {
+
+					if (i != (yy.length - 1)) {
+
+						returnValue.append(everyStrArr);
+
+						returnValue.append(",");
+
+					} else {
+
+						returnValue.append(everyStrArr);
+
+					}
+
 				}
+
 			}
 		}
-		return returnValue;
+		return returnValue.toString();
+	}
+
+	public String returnAttachedBillCode() {
+
+		return codes;
+
 	}
 
 	public String repeatStr(String str, int count) {
@@ -285,29 +331,59 @@ public class DgCustomsDeclarationMemo extends JDialogBase {
 	}
 
 	private void initComponent() {
-		if (this.memoStr != null && !this.memoStr.equals("")) {
+		if (StringUtils.isNotBlank(memoStr)) {
 			this.jEditorPane.setText(memoStr);
 		}
 		String s = "";
-		if (this.certificateCode != null && !this.certificateCode.equals("")) {
+
+		if (StringUtils.isNotBlank(certificateCode)) {
+
+			// 用于检查是否包含 中文字 如果没有中文字就 跳过循环不处理替换字符串
+			int count = RegexUtil.match("[\u4e00-\u9fa5]", certificateCode);
+
+			if (certificateCode.contains(";")) {
+
+				certificateCode = certificateCode.replaceAll(";", ",");
+
+			}
+
 			// 证件代码
 			String[] certificates = certificateCode.split(",");
+
+			// 所有随附单证类型
+			QueryBaseList licenseDocus = QueryBaseList.LICENSE_DOCU;
+
 			for (int i = 0; i < certificates.length; i++) {
+
 				String str = certificates[i];
+
+				// 如果包含 中文 字符 , 那么就开始处理掉中文
+				if (count != 0) {
+
+					String codition = str.substring(0, str.indexOf(":"));
+
+					// 取得左段替换成 随附单据代码 而不是使用 中文:12346这种形式
+					String code = licenseDocus.findMatchName(codition,
+							LicenseDocu.class);
+
+					if (StringUtils.isNotBlank(code)) {
+
+						str = str.replaceFirst(codition, code);
+
+					}
+
+				}
+
 				if (i == 0) {
+
 					s = str;
+
 				} else {
 					s = s + "\n" + str;
 				}
-				/*
-				 * int j = str.indexOf("*") > 0 ? str.indexOf("*") : str
-				 * .indexOf(":"); if (j < 0) { j = 1; } String code =
-				 * str.substring(0, j + 1); String name = str.substring(j + 1,
-				 * str.length()); Certificate c = new Certificate(code, name);
-				 * list.add(c);
-				 */
+
 			}
-			// this.fillListData(list, jList);
+
 			this.jEditorPane1.setText(s);
 		}
 	}
@@ -363,8 +439,7 @@ public class DgCustomsDeclarationMemo extends JDialogBase {
 		if (jPanel1 == null) {
 			jLabel = new JLabel();
 			jLabel.setBounds(new Rectangle(13, 0, 319, 35));
-			jLabel
-					.setText("<html>证件代码=代码+分隔符+号码,如 A:12345678或A*123<br/>如果多个代码用回车或者半角逗号隔开。如A:666666,B:888<html/>");
+			jLabel.setText("<html>证件代码=代码+分隔符+号码,如 A:12345678或A*123<br/>如果多个代码用回车或者半角逗号隔开。如A:666666,B:888<html/>");
 			jPanel1 = new JPanel();
 			jPanel1.setLayout(null);
 			jPanel1.setBounds(18, 7, 347, 135);
@@ -454,16 +529,9 @@ public class DgCustomsDeclarationMemo extends JDialogBase {
 	private JEditorPane getJEditorPane1() {
 		if (jEditorPane1 == null) {
 			jEditorPane1 = new JEditorPane();
-			/*
-			 * jEditorPane1.setDocument(new PlainDocument() { public void
-			 * insertString(int offs, String str, AttributeSet a) throws
-			 * BadLocationException { if (str == null) { return; } if
-			 * (jEditorPane1.getText().getBytes().length >= 32 ||
-			 * str.getBytes().length > 32 ||
-			 * jEditorPane1.getText().getBytes().length + str.getBytes().length
-			 * > 32) { return; } super.insertString(offs, str, a); } });
-			 */
+
 		}
 		return jEditorPane1;
 	}
+
 }

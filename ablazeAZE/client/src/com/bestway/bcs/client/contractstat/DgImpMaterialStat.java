@@ -76,28 +76,19 @@ import com.bestway.ui.winuicontrol.calendar.JCalendarComboBox;
  *         go to Window - Preferences - Java - Code Style - Code Templates
  */
 /**
- * 各栏位计算公式 
- * 合同定量= 合同中对应料件备案的数量 总进口量=料件直接进口总量+料件转厂总量+料件总余料转入量-总退换出口量
- * 本期总进口量=本期直接进口量+本期转厂量+本期余料转入量-本期退换出口量 
- * 本期直接进口量=进口报关单中进口类型为直接进口的数量
+ * 各栏位计算公式 合同定量= 合同中对应料件备案的数量 总进口量=料件直接进口总量+料件转厂总量+料件总余料转入量-总退换出口量
+ * 本期总进口量=本期直接进口量+本期转厂量+本期余料转入量-本期退换出口量 本期直接进口量=进口报关单中进口类型为直接进口的数量
  * 本期料件转厂量=进口报关单中进口类型为转厂进口的数量 本期余料转入量=进口报关单中进口类型为余料结转的数量
  * 本期余料转出量=出口报关单中出口类型为余料结转的数量 本期退换进口量=进口报关单中进口类型为直接进口，贸易方式为0300，0700的数量
  * 本期退换出口量=出口报关单中出口类型为退料出口,贸易方式为0300，0700的数量
  * 本期料件复出量=出口报关单中出口类型为退料出口,贸易方式为0265，0664的数量
- * 本期料件内销量=进口报关单中进口类型为海关批准内销,贸易方式为0644，0245的数量 
- * 本期总边角料数量=本期成品使用量*(损耗*0.01)
+ * 本期料件内销量=进口报关单中进口类型为海关批准内销,贸易方式为0644，0245的数量 本期总边角料数量=本期成品使用量*(损耗*0.01)
  * 本期边角料内销量=进口报关单中进口类型为海关批准内销,贸易方式为0844，0845的数量
- * 本期边角料复出量=进口报关单中进口类型为海关批准内销,贸易方式为0864，0865的数量 
- * 本期边角料余量=本期总边角料数量-本期边角料复出-本期边角料内销
- * 本期成品使用量=本期总出口量*单耗/((1-损耗)*0.01) 
- * 本期成品使用金额=本期成品使用量*合同单价
- * 余料情况=本期总进口量－本期料件复出数量（进料料件复出0664／来料料件复出0265）-成品使用量-料件内销 
- * 库存量=余料-余料结转出口
- * 可进口量=合同定量-本期总进口量 
- * 关封余量=关封管理明细中的本厂数量—转厂进口量 
- * 可直接进口量=可进口量-关封余量
- * 未转报关单数量=申请单中的送货单转报关单的数量（风岗嘉辉嘉安进出货单据转报关单）
- * 可签关封数量=合同定量-已签关数量
+ * 本期边角料复出量=进口报关单中进口类型为海关批准内销,贸易方式为0864，0865的数量 本期边角料余量=本期总边角料数量-本期边角料复出-本期边角料内销
+ * 本期成品使用量=本期总出口量*单耗/((1-损耗)*0.01) 本期成品使用金额=本期成品使用量*合同单价
+ * 余料情况=本期总进口量－本期料件复出数量（进料料件复出0664／来料料件复出0265）-成品使用量-料件内销 库存量=余料-余料结转出口
+ * 可进口量=合同定量-本期总进口量 关封余量=关封管理明细中的本厂数量—转厂进口量 可直接进口量=可进口量-关封余量
+ * 未转报关单数量=申请单中的送货单转报关单的数量（风岗嘉辉嘉安进出货单据转报关单） 可签关封数量=合同定量-已签关数量
  */
 @SuppressWarnings("unchecked")
 public class DgImpMaterialStat extends JInternalFrameBase {
@@ -175,7 +166,11 @@ public class DgImpMaterialStat extends JInternalFrameBase {
 	public void setVisible(boolean b) {
 		if (b) {
 			initTable(new ArrayList());
+
 			jSplitPane.setDividerLocation(0.8);
+
+			lsContract.showContractData(true, false);
+
 		}
 		super.setVisible(b);
 	}
@@ -186,8 +181,7 @@ public class DgImpMaterialStat extends JInternalFrameBase {
 	 * @return void
 	 */
 	private void initialize() {
-		this
-				.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+		this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		this.setTitle("进口料件情况统计表");
 		this.setSize(868, 538);
 		this.setContentPane(getJContentPane());
@@ -444,12 +438,8 @@ public class DgImpMaterialStat extends JInternalFrameBase {
 							list.add(addColumn("规格", "commSpec", 100));// 6
 							list.add(addColumn("单位", "unit.name", 50));// 7
 							list.add(addColumn("合同定量", "contractAmount", 100));// 8
-							list
-									.add(addColumn("总进口量", "allImpTotalAmont",
-											100));// 9
-							list
-									.add(addColumn("本期总进口金额", "impTotalMoney",
-											100));// 10
+							list.add(addColumn("总进口量", "allImpTotalAmont", 100));// 9
+							list.add(addColumn("本期总进口金额", "impTotalMoney", 100));// 10
 							list.add(addColumn("本期总进口量", "impTotalAmont", 100));// 11
 							// list.add(addColumn("报关单进口量", "impCDAmount",
 							// 100));
@@ -457,20 +447,12 @@ public class DgImpMaterialStat extends JInternalFrameBase {
 							list.add(addColumn("本期料件转厂量",
 									"transferFactoryImport", 100));// 13
 							list.add(addColumn("本期余料转入量", "remainImport", 100));// 14
-							list
-									.add(addColumn("本期余料转出量", "remainForward",
-											100));// 15
-							list
-									.add(addColumn("本期退换进口量", "exchangeImport",
-											100));// 16
-							list
-									.add(addColumn("本期退换出口量", "exchangeExport",
-											100));// 17
+							list.add(addColumn("本期余料转出量", "remainForward", 100));// 15
+							list.add(addColumn("本期退换进口量", "exchangeImport", 100));// 16
+							list.add(addColumn("本期退换出口量", "exchangeExport", 100));// 17
 							list.add(addColumn("本期料件复出量", "backMaterialReturn",
 									100));// 18
-							list
-									.add(addColumn("本期料件内销量", "internalAmount",
-											100));// 19
+							list.add(addColumn("本期料件内销量", "internalAmount", 100));// 19
 							list.add(addColumn("本期总边角料数量",
 									"allTotalleftovermaterial", 100));// 20
 							list.add(addColumn("本期边角料内销量", "leftovermaterial",
@@ -501,11 +483,13 @@ public class DgImpMaterialStat extends JInternalFrameBase {
 							list.add(addColumn("发票数量", "invoiceNum", 80));// 33
 							list.add(addColumn("记录号", "credenceNo", 80,
 									Integer.class));// 34
-							list.add(addColumn("完成百分比", "completeScale", 60));//35
-							list.add(addColumn("可签关封", "commodityInfoRemain", 60));//36;
-							list.add(addColumn("归并序号", "innerMergeSeqNum", 60));//37;
-							list.add(addColumn("预计边角料征税量", "estimateOvermaterial", 100));//37;
-							list.add(addColumn("合同料件表备注", "note", 120));//38;
+							list.add(addColumn("完成百分比", "completeScale", 60));// 35
+							list.add(addColumn("可签关封", "commodityInfoRemain",
+									60));// 36;
+							list.add(addColumn("归并序号", "innerMergeSeqNum", 60));// 37;
+							list.add(addColumn("预计边角料征税量",
+									"estimateOvermaterial", 100));// 37;
+							list.add(addColumn("合同料件表备注", "note", 120));// 38;
 							return list;
 						}
 					});
@@ -524,8 +508,8 @@ public class DgImpMaterialStat extends JInternalFrameBase {
 						.getIsAutoshowThousandthsign() == null ? false : other
 						.getIsAutoshowThousandthsign());
 			}
-			jTable.getColumnModel().getColumn(24).setCellRenderer(
-					new DefaultTableCellRenderer() {
+			jTable.getColumnModel().getColumn(24)
+					.setCellRenderer(new DefaultTableCellRenderer() {
 						/**
 						 * 
 						 */
@@ -1087,15 +1071,18 @@ public class DgImpMaterialStat extends JInternalFrameBase {
 					// parameters.put("contractNo",
 					// contract.getImpContractNo());
 					// parameters.put("emsNo", contract.getEmsNo());
-					parameters.put("beginDate",
+					parameters.put(
+							"beginDate",
 							cbbBeginDate.getDate() == null ? ""
 									: (new SimpleDateFormat("yyyy-MM-dd"))
 											.format(cbbBeginDate.getDate()));
 					// cbbBeginDate.setDate(findBeginData());
 					// System.out.println("begin="+findBeginData());
-					parameters.put("endDate", cbbEndDate.getDate() == null ? ""
-							: (new SimpleDateFormat("yyyy-MM-dd"))
-									.format(cbbEndDate.getDate()));
+					parameters.put(
+							"endDate",
+							cbbEndDate.getDate() == null ? ""
+									: (new SimpleDateFormat("yyyy-MM-dd"))
+											.format(cbbEndDate.getDate()));
 					// parameters.put("companyName", contract.getCompany()
 					// .getName());
 					// parameters.put("sub", tempContractNoSubReport);
@@ -1127,33 +1114,38 @@ public class DgImpMaterialStat extends JInternalFrameBase {
 		ImpMaterialStatResult statResult = contractStatAction.impMaterialStat(
 				new Request(CommonVars.getCurrUser()), tableModel.getList());
 		DecimalFormat myformat1 = new DecimalFormat("#.###");
-		map.put("ContractImpTotalMoney", statResult.getContractMoney() == null
-				|| statResult.getContractMoney() == 0 ? "" : myformat1.format(
-				statResult.getContractMoney()).toString());
+		map.put("ContractImpTotalMoney",
+				statResult.getContractMoney() == null
+						|| statResult.getContractMoney() == 0 ? "" : myformat1
+						.format(statResult.getContractMoney()).toString());
 		// tfContractImpTotalMoney.setText(statResult.getContractMoney() == null
 		// || statResult.getContractMoney() == 0 ? "" : myformat1.format(
 		// statResult.getContractMoney()).toString());
-		map.put("ImpTotalMoney", statResult.getImpTotalMoney() == null
-				|| statResult.getImpTotalMoney() == 0 ? "" : myformat1.format(
-				statResult.getImpTotalMoney()).toString());
+		map.put("ImpTotalMoney",
+				statResult.getImpTotalMoney() == null
+						|| statResult.getImpTotalMoney() == 0 ? "" : myformat1
+						.format(statResult.getImpTotalMoney()).toString());
 		// tfImpTotalMoney.setText(statResult.getImpTotalMoney() == null
 		// || statResult.getImpTotalMoney() == 0 ? "" : myformat1.format(
 		// statResult.getImpTotalMoney()).toString());
-		map.put("ImpScale", statResult.getImpTotalScale() == null
-				|| statResult.getImpTotalScale() == 0 ? "" : myformat1.format(
-				statResult.getImpTotalScale()).toString());
+		map.put("ImpScale",
+				statResult.getImpTotalScale() == null
+						|| statResult.getImpTotalScale() == 0 ? "" : myformat1
+						.format(statResult.getImpTotalScale()).toString());
 		// tfImpScale.setText(statResult.getImpTotalScale() == null
 		// || statResult.getImpTotalScale() == 0 ? "" : myformat1.format(
 		// statResult.getImpTotalScale()).toString());
-		map.put("RemainMoney", statResult.getRemainMoney() == null
-				|| statResult.getRemainMoney() == 0 ? "" : myformat1.format(
-				statResult.getRemainMoney()).toString());
+		map.put("RemainMoney",
+				statResult.getRemainMoney() == null
+						|| statResult.getRemainMoney() == 0 ? "" : myformat1
+						.format(statResult.getRemainMoney()).toString());
 		// tfRemainMoney.setText(statResult.getRemainMoney() == null
 		// || statResult.getRemainMoney() == 0 ? "" : myformat1.format(
 		// statResult.getRemainMoney()).toString());
-		map.put("RemainMoneyScale", statResult.getRemainScale() == null
-				|| statResult.getRemainScale() == 0 ? "" : myformat1.format(
-				statResult.getRemainScale()).toString());
+		map.put("RemainMoneyScale",
+				statResult.getRemainScale() == null
+						|| statResult.getRemainScale() == 0 ? "" : myformat1
+						.format(statResult.getRemainScale()).toString());
 		// tfRemainMoneyScale.setText(statResult.getRemainScale() == null
 		// || statResult.getRemainScale() == 0 ? "" : myformat1.format(
 		// statResult.getRemainScale()).toString());
@@ -1180,16 +1172,18 @@ public class DgImpMaterialStat extends JInternalFrameBase {
 				CommonProgress.showProgressDialog();
 				CommonProgress.setMessage("系统正获取数据，请稍后...");
 				List contracts = lsContract.getSelectedContracts();
-				//判断手册料件在备案库是否存在;
-				Boolean ischeck = contractStatAction.ischeckImgExg(contracts,MaterielType.MATERIEL);
-				if(ischeck){
-					JOptionPane.showMessageDialog(DgImpMaterialStat.this, "所查询的合同中，有料件记录号在备案资料库中不存在，请检查更新");
+				// 判断手册料件在备案库是否存在;
+				Boolean ischeck = contractStatAction.ischeckImgExg(contracts,
+						MaterielType.MATERIEL);
+				if (ischeck) {
+					JOptionPane.showMessageDialog(DgImpMaterialStat.this,
+							"所查询的合同中，有料件记录号在备案资料库中不存在，请检查更新");
 				}
 				list = findImpMaterialStatByContracts(contracts,
 						cbbBeginDate.getDate(), cbbEndDate.getDate(), state,
-						getCbStatInvoice().isSelected(), cbDetachCompute
-								.isSelected());
-				
+						getCbStatInvoice().isSelected(),
+						cbDetachCompute.isSelected());
+
 				if (list == null) {
 					tfContractImpTotalMoney.setText("");
 					tfImpTotalMoney.setText("");
@@ -1199,53 +1193,27 @@ public class DgImpMaterialStat extends JInternalFrameBase {
 					return;
 				}
 				ImpMaterialStatResult statResult = contractStatAction
-						.impMaterialStat(new Request(CommonVars
-								.getCurrUser()), list);
-				DecimalFormat myformat1 = new DecimalFormat(
-						"#.###");
+						.impMaterialStat(new Request(CommonVars.getCurrUser()),
+								list);
+				DecimalFormat myformat1 = new DecimalFormat("#.###");
 				tfContractImpTotalMoney
 						.setText(statResult.getContractMoney() == null
-								|| statResult
-										.getContractMoney() == 0 ? ""
-								: myformat1
-										.format(
-												statResult
-														.getContractMoney())
+								|| statResult.getContractMoney() == 0 ? ""
+								: myformat1.format(
+										statResult.getContractMoney())
 										.toString());
-				tfImpTotalMoney
-						.setText(statResult.getImpTotalMoney() == null
-								|| statResult
-										.getImpTotalMoney() == 0 ? ""
-								: myformat1
-										.format(
-												statResult
-														.getImpTotalMoney())
-										.toString());
-				tfImpScale
-						.setText(statResult.getImpTotalScale() == null
-								|| statResult
-										.getImpTotalScale() == 0 ? ""
-								: myformat1
-										.format(
-												statResult
-														.getImpTotalScale())
-										.toString());
-				tfRemainMoney
-						.setText(statResult.getRemainMoney() == null
-								|| statResult.getRemainMoney() == 0 ? ""
-								: myformat1
-										.format(
-												statResult
-														.getRemainMoney())
-										.toString());
-				tfRemainMoneyScale
-						.setText(statResult.getRemainScale() == null
-								|| statResult.getRemainScale() == 0 ? ""
-								: myformat1
-										.format(
-												statResult
-														.getRemainScale())
-										.toString());
+				tfImpTotalMoney.setText(statResult.getImpTotalMoney() == null
+						|| statResult.getImpTotalMoney() == 0 ? "" : myformat1
+						.format(statResult.getImpTotalMoney()).toString());
+				tfImpScale.setText(statResult.getImpTotalScale() == null
+						|| statResult.getImpTotalScale() == 0 ? "" : myformat1
+						.format(statResult.getImpTotalScale()).toString());
+				tfRemainMoney.setText(statResult.getRemainMoney() == null
+						|| statResult.getRemainMoney() == 0 ? "" : myformat1
+						.format(statResult.getRemainMoney()).toString());
+				tfRemainMoneyScale.setText(statResult.getRemainScale() == null
+						|| statResult.getRemainScale() == 0 ? "" : myformat1
+						.format(statResult.getRemainScale()).toString());
 				CommonProgress.closeProgressDialog();
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -1285,18 +1253,14 @@ public class DgImpMaterialStat extends JInternalFrameBase {
 			cbContractExe
 					.addActionListener(new java.awt.event.ActionListener() {
 						public void actionPerformed(java.awt.event.ActionEvent e) {
-							if (cbContractExe.isSelected()
-									&& cbContractCancel.isSelected()) {
-								lsContract.showContractData(true, true);
-							} else if (cbContractExe.isSelected()
-									&& !cbContractCancel.isSelected()) {
-								lsContract.showContractData(true, false);
-							} else if (!cbContractExe.isSelected()
-									&& cbContractCancel.isSelected()) {
-								lsContract.showContractData(false, true);
-							} else {
-								lsContract.showContractData(false, false);
-							}
+
+							/*
+							 * 根据所选的状态 初始化所有合同号
+							 */
+							lsContract.showContractData(
+									cbContractExe.isSelected(),
+									cbContractCancel.isSelected());
+
 						}
 					});
 		}
@@ -1361,7 +1325,7 @@ public class DgImpMaterialStat extends JInternalFrameBase {
 		}
 		return cbDetachCompute;
 	}
-	
+
 	public List<ImpMaterialStat> findImpMaterialStatByContracts(List contracts,
 			Date beginDate, Date endDate, int state, boolean isCountInvoice,
 			boolean isDetachCompute) {
@@ -1369,10 +1333,12 @@ public class DgImpMaterialStat extends JInternalFrameBase {
 			System.out.println("分开统计工作");
 			List<ImpMaterialStat> lsResult = new ArrayList<ImpMaterialStat>();
 			for (int i = 0; i < contracts.size(); i++) {
-				CommonProgress.setMessage("统计" + contracts.size() + "本合同中的第" + (i + 1)+"本");
+				CommonProgress.setMessage("统计" + contracts.size() + "本合同中的第"
+						+ (i + 1) + "本");
 				Contract contract = (Contract) contracts.get(i);
-				List<ImpMaterialStat> lsData = contractStatAction.findImpMaterialStat(contract,
-						beginDate, endDate, state, isCountInvoice);
+				List<ImpMaterialStat> lsData = contractStatAction
+						.findImpMaterialStat(contract, beginDate, endDate,
+								state, isCountInvoice);
 				for (ImpMaterialStat ims : lsData) {
 					ims.setEmsNo(contract.getEmsNo());
 					ims.setImpContractNo(contract.getImpContractNo());
@@ -1383,8 +1349,9 @@ public class DgImpMaterialStat extends JInternalFrameBase {
 		} else {
 			if (contracts.size() == 1) {
 				Contract contract = (Contract) contracts.get(0);
-				List<ImpMaterialStat> lsData = contractStatAction.findImpMaterialStatForOne(
-						contract, beginDate, endDate, state, isCountInvoice);
+				List<ImpMaterialStat> lsData = contractStatAction
+						.findImpMaterialStatForOne(contract, beginDate,
+								endDate, state, isCountInvoice);
 				for (ImpMaterialStat ims : lsData) {
 					ims.setEmsNo("");
 				}
@@ -1392,10 +1359,12 @@ public class DgImpMaterialStat extends JInternalFrameBase {
 			} else {
 				Map map = new HashMap();
 				for (int i = 0; i < contracts.size(); i++) {
-					CommonProgress.setMessage("统计" + contracts.size() + "本合同中的第" + (i + 1)+"本");
+					CommonProgress.setMessage("统计" + contracts.size()
+							+ "本合同中的第" + (i + 1) + "本");
 					Contract contract = (Contract) contracts.get(i);
-					List<ImpMaterialStat> lsData = contractStatAction.findImpMaterialStat(
-							contract, beginDate, endDate, state, isCountInvoice);
+					List<ImpMaterialStat> lsData = contractStatAction
+							.findImpMaterialStat(contract, beginDate, endDate,
+									state, isCountInvoice);
 					for (ImpMaterialStat newData : lsData) {
 						newData.setEmsNo("");
 						String key = (newData.getComplex().getCode().trim())
@@ -1409,8 +1378,7 @@ public class DgImpMaterialStat extends JInternalFrameBase {
 						newData.setCommodityInfoRemain(null);
 						// newData.setCredenceNo(null);
 						/**
-						 * 进口料件情况统计表单独查询一本手册，或者查询多
-						 * 本手册但是分开统计时，可以带出手册里面料件的说明栏位
+						 * 进口料件情况统计表单独查询一本手册，或者查询多 本手册但是分开统计时，可以带出手册里面料件的说明栏位
 						 * 所以多本查询时，去掉备注
 						 */
 						newData.setNote("");
@@ -1425,21 +1393,18 @@ public class DgImpMaterialStat extends JInternalFrameBase {
 							/**
 							 * 未转报关单数量
 							 */
-							oldData
-									.setNoTranCustomsNum((oldData
-											.getNoTranCustomsNum() == null ? 0.0
-											: oldData.getNoTranCustomsNum())
-											+ (newData.getNoTranCustomsNum() == null ? 0.0
-													: newData
-															.getNoTranCustomsNum()));
+							oldData.setNoTranCustomsNum((oldData
+									.getNoTranCustomsNum() == null ? 0.0
+									: oldData.getNoTranCustomsNum())
+									+ (newData.getNoTranCustomsNum() == null ? 0.0
+											: newData.getNoTranCustomsNum()));
 							/**
 							 * 余料进口
 							 */
-							oldData
-									.setRemainImport((oldData.getRemainImport() == null ? 0.0
-											: oldData.getRemainImport())
-											+ (newData.getRemainImport() == null ? 0.0
-													: newData.getRemainImport()));
+							oldData.setRemainImport((oldData.getRemainImport() == null ? 0.0
+									: oldData.getRemainImport())
+									+ (newData.getRemainImport() == null ? 0.0
+											: newData.getRemainImport()));
 							/**
 							 * 余料转出
 							 */
@@ -1451,131 +1416,103 @@ public class DgImpMaterialStat extends JInternalFrameBase {
 							/**
 							 * 内销数量
 							 */
-							oldData
-									.setInternalAmount((oldData
-											.getInternalAmount() == null ? 0.0
-											: oldData.getInternalAmount())
-											+ (newData.getInternalAmount() == null ? 0.0
-													: newData
-															.getInternalAmount()));
+							oldData.setInternalAmount((oldData
+									.getInternalAmount() == null ? 0.0
+									: oldData.getInternalAmount())
+									+ (newData.getInternalAmount() == null ? 0.0
+											: newData.getInternalAmount()));
 							/**
 							 * 料件退换进口数
 							 */
-							oldData
-									.setExchangeImport((oldData
-											.getExchangeImport() == null ? 0.0
-											: oldData.getExchangeImport())
-											+ (newData.getExchangeImport() == null ? 0.0
-													: newData
-															.getExchangeImport()));
+							oldData.setExchangeImport((oldData
+									.getExchangeImport() == null ? 0.0
+									: oldData.getExchangeImport())
+									+ (newData.getExchangeImport() == null ? 0.0
+											: newData.getExchangeImport()));
 							/**
 							 * 边角料复出
 							 */
-							oldData
-									.setLeftovermaterialExport((oldData
-											.getLeftovermaterialExport() == null ? 0.0
-											: oldData
-													.getLeftovermaterialExport())
-											+ (newData
-													.getLeftovermaterialExport() == null ? 0.0
-													: newData
-															.getLeftovermaterialExport()));
+							oldData.setLeftovermaterialExport((oldData
+									.getLeftovermaterialExport() == null ? 0.0
+									: oldData.getLeftovermaterialExport())
+									+ (newData.getLeftovermaterialExport() == null ? 0.0
+											: newData
+													.getLeftovermaterialExport()));
 							/**
 							 * 边角料内销
 							 */
-							oldData
-									.setLeftovermaterial((oldData
-											.getLeftovermaterial() == null ? 0.0
-											: oldData.getLeftovermaterial())
-											+ (newData.getLeftovermaterial() == null ? 0.0
-													: newData
-															.getLeftovermaterial()));
+							oldData.setLeftovermaterial((oldData
+									.getLeftovermaterial() == null ? 0.0
+									: oldData.getLeftovermaterial())
+									+ (newData.getLeftovermaterial() == null ? 0.0
+											: newData.getLeftovermaterial()));
 							/**
 							 * 总边角料内销
 							 */
-							oldData
-									.setAllTotalleftovermaterial((oldData
-											.getAllTotalleftovermaterial() == null ? 0.0
-											: oldData
-													.getAllTotalleftovermaterial())
-											+ (newData
-													.getAllTotalleftovermaterial() == null ? 0.0
-													: newData
-															.getAllTotalleftovermaterial()));
+							oldData.setAllTotalleftovermaterial((oldData
+									.getAllTotalleftovermaterial() == null ? 0.0
+									: oldData.getAllTotalleftovermaterial())
+									+ (newData.getAllTotalleftovermaterial() == null ? 0.0
+											: newData
+													.getAllTotalleftovermaterial()));
 							/**
 							 * 总边角料余量
 							 */
-							oldData
-									.setLeftovermaterialremain((oldData
-											.getLeftovermaterialremain() == null ? 0.0
-											: oldData
-													.getLeftovermaterialremain())
-											+ (newData
-													.getLeftovermaterialremain() == null ? 0.0
-													: newData
-															.getLeftovermaterialremain()));
+							oldData.setLeftovermaterialremain((oldData
+									.getLeftovermaterialremain() == null ? 0.0
+									: oldData.getLeftovermaterialremain())
+									+ (newData.getLeftovermaterialremain() == null ? 0.0
+											: newData
+													.getLeftovermaterialremain()));
 							/**
 							 * 退换出口量
 							 */
-							oldData
-									.setExchangeExport((oldData
-											.getExchangeExport() == null ? 0.0
-											: oldData.getExchangeExport())
-											+ (newData.getExchangeExport() == null ? 0.0
-													: newData
-															.getExchangeExport()));
+							oldData.setExchangeExport((oldData
+									.getExchangeExport() == null ? 0.0
+									: oldData.getExchangeExport())
+									+ (newData.getExchangeExport() == null ? 0.0
+											: newData.getExchangeExport()));
 							/**
 							 * 成品使用金额
 							 */
-							oldData
-									.setProductUseMoney((oldData
-											.getProductUseMoney() == null ? 0.0
-											: oldData.getProductUseMoney())
-											+ (newData.getProductUseMoney() == null ? 0.0
-													: newData
-															.getProductUseMoney()));
+							oldData.setProductUseMoney((oldData
+									.getProductUseMoney() == null ? 0.0
+									: oldData.getProductUseMoney())
+									+ (newData.getProductUseMoney() == null ? 0.0
+											: newData.getProductUseMoney()));
 							/**
 							 * 关封余量
 							 */
-							oldData
-									.setCustomsEnvelopRemain((oldData
-											.getCustomsEnvelopRemain() == null ? 0.0
-											: oldData.getCustomsEnvelopRemain())
-											+ (newData
-													.getCustomsEnvelopRemain() == null ? 0.0
-													: newData
-															.getCustomsEnvelopRemain()));
+							oldData.setCustomsEnvelopRemain((oldData
+									.getCustomsEnvelopRemain() == null ? 0.0
+									: oldData.getCustomsEnvelopRemain())
+									+ (newData.getCustomsEnvelopRemain() == null ? 0.0
+											: newData.getCustomsEnvelopRemain()));
 							/**
 							 * 可直接进口量
 							 */
-							oldData
-									.setCanDirectImportAmount((oldData
-											.getCanDirectImportAmount() == null ? 0.0
-											: oldData
-													.getCanDirectImportAmount())
-											+ (newData
-													.getCanDirectImportAmount() == null ? 0.0
-													: newData
-															.getCanDirectImportAmount()));
+							oldData.setCanDirectImportAmount((oldData
+									.getCanDirectImportAmount() == null ? 0.0
+									: oldData.getCanDirectImportAmount())
+									+ (newData.getCanDirectImportAmount() == null ? 0.0
+											: newData
+													.getCanDirectImportAmount()));
 							/**
 							 * 总进口量
 							 */
-							oldData
-									.setAllImpTotalAmont(oldData
-											.getAllImpTotalAmont() == null ? 0.0
-											: oldData.getAllImpTotalAmont()
-													+ (newData
-															.getAllImpTotalAmont() == null ? 0.0
-															: newData
-																	.getAllImpTotalAmont()));
+							oldData.setAllImpTotalAmont(oldData
+									.getAllImpTotalAmont() == null ? 0.0
+									: oldData.getAllImpTotalAmont()
+											+ (newData.getAllImpTotalAmont() == null ? 0.0
+													: newData
+															.getAllImpTotalAmont()));
 							/**
 							 * 合同定量
 							 */
-							oldData
-									.setContractAmount(checkNullForDouble(oldData
-											.getContractAmount())
-											+ checkNullForDouble(newData
-													.getContractAmount()));
+							oldData.setContractAmount(checkNullForDouble(oldData
+									.getContractAmount())
+									+ checkNullForDouble(newData
+											.getContractAmount()));
 							/**
 							 * 本期总进口量
 							 */
@@ -1605,36 +1542,32 @@ public class DgImpMaterialStat extends JInternalFrameBase {
 							/**
 							 * 转厂进口量
 							 */
-							oldData
-									.setTransferFactoryImport(checkNullForDouble(oldData
-											.getTransferFactoryImport())
-											+ checkNullForDouble(newData
-													.getTransferFactoryImport()));
+							oldData.setTransferFactoryImport(checkNullForDouble(oldData
+									.getTransferFactoryImport())
+									+ checkNullForDouble(newData
+											.getTransferFactoryImport()));
 
 							/**
 							 * 退料退换量
 							 */
-							oldData
-									.setBackMaterialExchange(checkNullForDouble(oldData
-											.getBackMaterialExchange())
-											+ checkNullForDouble(newData
-													.getBackMaterialExchange()));
+							oldData.setBackMaterialExchange(checkNullForDouble(oldData
+									.getBackMaterialExchange())
+									+ checkNullForDouble(newData
+											.getBackMaterialExchange()));
 							/**
 							 * 退料复出量
 							 */
-							oldData
-									.setBackMaterialReturn(checkNullForDouble(oldData
-											.getBackMaterialReturn())
-											+ checkNullForDouble(newData
-													.getBackMaterialReturn()));
+							oldData.setBackMaterialReturn(checkNullForDouble(oldData
+									.getBackMaterialReturn())
+									+ checkNullForDouble(newData
+											.getBackMaterialReturn()));
 							/**
 							 * 退料出口量
 							 */
-							oldData
-									.setBackMaterialExport(checkNullForDouble(oldData
-											.getBackMaterialExport())
-											+ checkNullForDouble(newData
-													.getBackMaterialExport()));
+							oldData.setBackMaterialExport(checkNullForDouble(oldData
+									.getBackMaterialExport())
+									+ checkNullForDouble(newData
+											.getBackMaterialExport()));
 							/**
 							 * 成品使用量
 							 */
@@ -1665,24 +1598,23 @@ public class DgImpMaterialStat extends JInternalFrameBase {
 							/**
 							 * 可进口量
 							 */
-							oldData
-									.setCanImportAmount(checkNullForDouble(oldData
-											.getCanImportAmount())
-											+ checkNullForDouble(newData
-													.getCanImportAmount()));
+							oldData.setCanImportAmount(checkNullForDouble(oldData
+									.getCanImportAmount())
+									+ checkNullForDouble(newData
+											.getCanImportAmount()));
 							/**
 							 * 预计边角料征税量=总边角料数量*（总进口数量/总出口成品使用量）
 							 */
-							if(oldData
-									.getProductUse() != 0.0){
-							oldData.setEstimateOvermaterial(CommonUtils
-									.getDoubleExceptNull(oldData
-											.getAllTotalleftovermaterial())
-									* (CommonUtils.getDoubleExceptNull(oldData
-											.getImpTotalAmont())
-									/ CommonUtils.getDoubleExceptNull(oldData
-											.getProductUse())));
-							}else{
+							if (oldData.getProductUse() != 0.0) {
+								oldData.setEstimateOvermaterial(CommonUtils
+										.getDoubleExceptNull(oldData
+												.getAllTotalleftovermaterial())
+										* (CommonUtils
+												.getDoubleExceptNull(oldData
+														.getImpTotalAmont()) / CommonUtils
+												.getDoubleExceptNull(oldData
+														.getProductUse())));
+							} else {
 								oldData.setEstimateOvermaterial(0.0);
 							}
 							/**
@@ -1705,6 +1637,7 @@ public class DgImpMaterialStat extends JInternalFrameBase {
 			}
 		}
 	}
+
 	/**
 	 * 检查是否为空，如果是则返回0
 	 * 

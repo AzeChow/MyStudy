@@ -27,6 +27,8 @@ import javax.swing.event.DocumentListener;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.NumberFormatter;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.bestway.bcus.client.common.AutoCalcListener;
 import com.bestway.bcus.client.common.CommonQuery;
 import com.bestway.bcus.client.common.CommonVars;
@@ -65,6 +67,10 @@ import com.bestway.ui.winuicontrol.JDialogBase;
  */
 public abstract class DgBaseSpecialCustomsDeclarationCommInfo extends
 		JDialogBase {
+
+	protected JLabel lbTax;
+
+	protected JTextField tfTax;
 
 	protected JPanel jContentPane = null;
 
@@ -225,7 +231,7 @@ public abstract class DgBaseSpecialCustomsDeclarationCommInfo extends
 		this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		this.setTitle("特殊报关单商品信息编辑");
 		this.setContentPane(getJContentPane());
-		this.setSize(510, 501);
+		this.setSize(510, 536);
 	}
 
 	/**
@@ -464,8 +470,39 @@ public abstract class DgBaseSpecialCustomsDeclarationCommInfo extends
 			jPanel.add(getTfBoxNo(), null);
 			jPanel.add(getLblNewLabel());
 			jPanel.add(getTfDeclareSpec());
+
+			jPanel.add(getLbTax(), null);
+
+			jPanel.add(getTfTax(), null);
+
 		}
 		return jPanel;
+	}
+
+	protected JTextField getTfTax() {
+
+		if (tfTax == null) {
+
+			tfTax = new JTextField();
+
+			tfTax.setBounds(303, 109, 115, 21);
+
+		}
+
+		return tfTax;
+	}
+
+	protected JLabel getLbTax() {
+
+		if (lbTax == null) {
+
+			lbTax = new JLabel("税金");
+
+			lbTax.setBounds(252, 109, 48, 20);
+
+		}
+
+		return lbTax;
 	}
 
 	/**
@@ -1102,16 +1139,26 @@ public abstract class DgBaseSpecialCustomsDeclarationCommInfo extends
 	 * 设置组件状态
 	 */
 	protected void setState() {
+
 		jButton.setEnabled(rowCount > 0);
+
 		jButton1.setEnabled(rowCount < totalCount - 1);
+
 		this.btnOk.setEnabled(dataState != DataState.BROWSE && !effective);// 保存
+
 		jButton2.setEnabled(dataState == DataState.BROWSE && !effective); // 修改
+
 		btnCancel.setEnabled(dataState != DataState.BROWSE && !effective); // 取消
+
 		this.btnComplex.setEnabled(dataState != DataState.BROWSE && !effective);
+
 		setContainerEnabled(jPanel, dataState != DataState.BROWSE && !effective);
+
 		this.jComboBox.setEnabled(dataState != DataState.BROWSE
 				&& !this.effective); // 事业部
+
 		jComboBox.setVisible(projectType == ProjectType.BCUS);
+
 		jLabel21.setVisible(projectType == ProjectType.BCUS);
 
 	}
@@ -1302,6 +1349,10 @@ public abstract class DgBaseSpecialCustomsDeclarationCommInfo extends
 			// 规范申报规格
 			tfDeclareSpec.setText(customsDeclarationCommInfo.getDeclareSpec());
 
+			tfTax.setText(customsDeclarationCommInfo.getTax() == null ? ""
+					: customsDeclarationCommInfo.getTax().toString().equals("") ? ""
+							: customsDeclarationCommInfo.getTax().toString());
+
 			showPrintData();
 		}
 
@@ -1429,6 +1480,11 @@ public abstract class DgBaseSpecialCustomsDeclarationCommInfo extends
 
 		// 规范申报规格
 		customsDeclarationCommInfo.setDeclareSpec(tfDeclareSpec.getText());
+
+		// 税金
+		customsDeclarationCommInfo.setTax(tfTax.getText().equals("") ? null
+				: Double.valueOf(tfTax.getText()));
+
 	}
 
 	protected void emptyData() {
@@ -1457,6 +1513,7 @@ public abstract class DgBaseSpecialCustomsDeclarationCommInfo extends
 		this.cbbUses.setSelectedItem(null);
 		this.cbbLevyMode.setSelectedItem(null);
 		this.tfBoxNo.setText(null);
+		tfTax.setText("");
 	}
 
 	protected boolean validateIsNull() {
@@ -1512,6 +1569,16 @@ public abstract class DgBaseSpecialCustomsDeclarationCommInfo extends
 					JOptionPane.INFORMATION_MESSAGE);
 			return true;
 		}
+
+		if (!StringUtils.isNumeric(tfTax.getText())) {
+
+			JOptionPane.showMessageDialog(null, "税金包含非数字!", "提示!!",
+					JOptionPane.INFORMATION_MESSAGE);
+
+			return true;
+
+		}
+
 		return false;
 	}
 
@@ -1818,6 +1885,7 @@ public abstract class DgBaseSpecialCustomsDeclarationCommInfo extends
 	protected CustomsDeclarationSet other1; // @jve:decl-index=0:
 	private JLabel lblNewLabel;
 	private JTextField tfDeclareSpec;
+	private JTextField textField;
 
 	public CustomsDeclarationSet getOther1() {
 		return other1;

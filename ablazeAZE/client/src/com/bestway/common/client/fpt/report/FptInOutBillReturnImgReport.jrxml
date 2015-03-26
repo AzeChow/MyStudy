@@ -2,7 +2,7 @@
 <!-- Created with iReport - A designer for JasperReports -->
 <!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
 <jasperReport
-		 name="FptInOutBillReturnReport"
+		 name="FptInOutBillReturnImgReport"
 		 columnCount="1"
 		 printOrder="Vertical"
 		 orientation="Landscape"
@@ -71,6 +71,12 @@
 	</parameter>
 	<parameter name="conveNo" isForPrompting="false" class="java.lang.String">
 		<parameterDescription><![CDATA[conveNo]]></parameterDescription>
+	</parameter>
+	<parameter name="transportToolTypenew" isForPrompting="false" class="java.lang.String">
+		<parameterDescription><![CDATA[transportToolTypenew]]></parameterDescription>
+	</parameter>
+	<parameter name="transportToolNumber" isForPrompting="false" class="java.lang.String">
+		<parameterDescription><![CDATA[transportToolNumber]]></parameterDescription>
 	</parameter>
 	<queryString><![CDATA[select * from fptbillitem]]></queryString>
 
@@ -466,7 +472,7 @@
 					<textElement verticalAlignment="Middle">
 						<font fontName="宋体" pdfFontName="STSong-Light" size="8" isBold="false" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{conveType}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{transportToolTypenew}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -480,7 +486,7 @@
 					<textElement verticalAlignment="Middle">
 						<font fontName="宋体" pdfFontName="STSong-Light" size="8" isPdfEmbedded ="true" pdfEncoding ="UniGB-UCS2-H"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{conveNo}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{transportToolNumber}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
