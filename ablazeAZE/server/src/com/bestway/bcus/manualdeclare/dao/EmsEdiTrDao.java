@@ -3740,13 +3740,42 @@ public class EmsEdiTrDao extends BaseDao {
 	 * @return
 	 */
 	public List findemsEdiMergerHeadImgChange(
-			EmsEdiMergerHead emsEdiMergerHead, Integer modifyTimes) {
-		return this
-				.find("select a from EmsEdiMergerImgBefore a left outer join  a.emsEdiMergerImgAfter where  "
-						+ "  a.emsEdiMergerImgAfter.emsEdiMergerHead.id=? and a.company.id= ? "
-						+ "   and  a.modifyTimes= ? order by a.seqNum",
-						new Object[] { emsEdiMergerHead.getId(),
-								CommonUtils.getCompany().getId(), modifyTimes });
+			EmsEdiMergerHead emsEdiMergerHead, Integer modifyTimes,
+			Date beginDate, Date endDate) {
+
+		List params = new ArrayList();
+
+		params.add(emsEdiMergerHead.getId());
+
+		params.add(CommonUtils.getCompany().getId());
+
+		StringBuffer hql = new StringBuffer(
+				"select a from EmsEdiMergerImgBefore a left outer join  a.emsEdiMergerImgAfter where  "
+						+ "  a.emsEdiMergerImgAfter.emsEdiMergerHead.id=? and a.company.id= ?");
+
+		if (modifyTimes != null) {
+
+			params.add(modifyTimes);
+
+			hql.append(" and a.modifyTimes= ? ");
+
+		}
+
+		if (beginDate != null && endDate != null) {
+
+			params.add(beginDate);
+
+			params.add(endDate);
+
+			hql.append(" and a.changeDate >= ? ");
+
+			hql.append(" and a.changeDate <= ? ");
+
+		}
+
+		hql.append(" order by a.seqNum");
+
+		return find(hql.toString(), params.toArray());
 	}
 
 	/**
@@ -3759,13 +3788,42 @@ public class EmsEdiTrDao extends BaseDao {
 	 * @return
 	 */
 	public List findemsEdiMergerHeadExgChange(
-			EmsEdiMergerHead emsEdiMergerHead, Integer modifyTimes) {
-		return this
-				.find("select a from EmsEdiMergerExgBefore a left outer join  a.emsEdiMergerExgAfter where  "
-						+ "  a.emsEdiMergerExgAfter.emsEdiMergerHead.id=? and a.company.id= ? "
-						+ "   and  a.modifyTimes= ? order by a.seqNum",
-						new Object[] { emsEdiMergerHead.getId(),
-								CommonUtils.getCompany().getId(), modifyTimes });
+			EmsEdiMergerHead emsEdiMergerHead, Integer modifyTimes,
+			Date beginDate, Date endDate) {
+
+		List params = new ArrayList();
+
+		params.add(emsEdiMergerHead.getId());
+
+		params.add(CommonUtils.getCompany().getId());
+
+		StringBuffer hql = new StringBuffer(
+				"select a from EmsEdiMergerExgBefore a left outer join  a.emsEdiMergerExgAfter where  "
+						+ "  a.emsEdiMergerExgAfter.emsEdiMergerHead.id=? and a.company.id= ?");
+
+		if (modifyTimes != null) {
+
+			params.add(modifyTimes);
+
+			hql.append(" and a.modifyTimes= ? ");
+
+		}
+
+		if (beginDate != null && endDate != null) {
+
+			params.add(beginDate);
+
+			params.add(endDate);
+
+			hql.append(" and a.changeDate >= ? ");
+
+			hql.append(" and a.changeDate <= ? ");
+
+		}
+
+		hql.append(" order by a.seqNum");
+
+		return find(hql.toString(), params.toArray());
 	}
 
 	/**
@@ -3778,13 +3836,41 @@ public class EmsEdiTrDao extends BaseDao {
 	 * @return
 	 */
 	public List findemsEdiMergerHeadBomChange(
-			EmsEdiMergerHead emsEdiMergerHead, Integer modifyTimes) {
-		return this
-				.find("select a from EmsEdiMergerExgBom a left outer join  a.emsEdiMergerVersion "
-						+ "  where a.company.id= ? and a.modifyTimes= ? "
-						+ " order by a.emsEdiMergerVersion.emsEdiMergerBefore.seqNum,a.emsEdiMergerVersion.version",
-						new Object[] { CommonUtils.getCompany().getId(),
-								modifyTimes });
+			EmsEdiMergerHead emsEdiMergerHead, Integer modifyTimes,
+			Date beginDate, Date endDate) {
+
+		List params = new ArrayList();
+
+		params.add(CommonUtils.getCompany().getId());
+
+		StringBuffer hql = new StringBuffer(
+				"select a from EmsEdiMergerExgBom a left outer join  a.emsEdiMergerVersion where  "
+						+ " a.company.id= ? ");
+
+		if (modifyTimes != null) {
+
+			params.add(modifyTimes);
+
+			hql.append(" and a.modifyTimes= ? ");
+
+		}
+
+		if (beginDate != null && endDate != null) {
+
+			params.add(beginDate);
+
+			params.add(endDate);
+
+			hql.append(" and a.changeDate >= ? ");
+
+			hql.append(" and a.changeDate <= ? ");
+
+		}
+
+		hql.append(" order by a.emsEdiMergerVersion.emsEdiMergerBefore.seqNum,a.emsEdiMergerVersion.version");
+
+		return find(hql.toString(), params.toArray());
+
 	}
 
 	/**
@@ -4942,13 +5028,10 @@ public class EmsEdiTrDao extends BaseDao {
 	 * @return
 	 */
 	public String getBpara(int type) {
-		
 		List list = find(
 				"select a from BcusParameter a where a.type = ? and a.company.id = ?",
 				new Object[] { type, CommonUtils.getCompany().getId() });
-		
 		if (list != null && list.size() > 0) {
-		
 			BcusParameter obj = (BcusParameter) list.get(0);
 			return obj.getStrValue();
 		}

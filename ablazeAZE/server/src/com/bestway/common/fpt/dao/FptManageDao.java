@@ -14,6 +14,7 @@ import com.bestway.bcus.cas.specificontrol.entity.MakeBillCorrespondingInfoBase;
 import com.bestway.bcus.custombase.entity.countrycode.Customs;
 import com.bestway.bcus.custombase.entity.countrycode.District;
 import com.bestway.bcus.custombase.entity.hscode.Complex;
+import com.bestway.bcus.custombase.entity.parametercode.Transf;
 import com.bestway.bcus.custombase.entity.parametercode.Unit;
 import com.bestway.bcus.innermerge.entity.InnerMergeData;
 import com.bestway.bcus.manualdeclare.entity.BcusParameter;
@@ -423,7 +424,20 @@ public class FptManageDao extends BaseDao {
 			return null;
 		}
 	}
-
+	/**
+	 * 查找运输方式
+	 * @param name
+	 * @return
+	 */
+	public Transf findTransfByCode(String name) {
+		List list = this.find("select a from Transf as a where a.code = ? ",
+				new Object[] { name });
+		if (list.size() > 0) {
+			return (Transf) list.get(0);
+		} else {
+			return null;
+		}
+	}
 	/**
 	 * 获得关封申请单数据来来自选定用客户，且生效、存在未转关封单据的商品 的单据 CEB 代表 customsEnvelopBill 关封单据
 	 * 

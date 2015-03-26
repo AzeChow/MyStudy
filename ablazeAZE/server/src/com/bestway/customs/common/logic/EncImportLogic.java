@@ -7,9 +7,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.lang.StringUtils;
+
 import com.bestway.bcs.contractexe.entity.BcsCustomsDeclaration;
 import com.bestway.bcs.contractexe.entity.BcsCustomsDeclarationCommInfo;
 import com.bestway.bcs.contractexe.entity.BcsCustomsDeclarationContainer;
+import com.bestway.bcus.custombase.entity.basecode.Brief;
 import com.bestway.bcus.custombase.entity.countrycode.Country;
 import com.bestway.bcus.custombase.entity.countrycode.Customs;
 import com.bestway.bcus.custombase.entity.countrycode.District;
@@ -108,6 +112,7 @@ public class EncImportLogic {
 	 * @param projectType
 	 */
 	public void importQp(String json, Integer impExpFlag, Integer projectType) {
+
 		if (json == null || "".equals(json.trim())) {
 			throw new RuntimeException("进口报关单内容为空");
 		}
@@ -131,12 +136,26 @@ public class EncImportLogic {
 
 		Map<String, String> bgdhead = (Map<String, String>) map.get("报关单表头");// 报关单表头
 
+		// 根据报关单号码，从后台查询报关单，如果有的话，就不再继续
+		this.baseEncDao.projectType = projectType;
+
+		List foundCustomsDeclaration = baseEncDao
+				.findCustomsDeclarationByCode(bgdhead.get("海关编号").trim());
+
+		if (foundCustomsDeclaration.size() != 0) {
+			System.out.println("执行这里报关单在数据库里有重复");
+			throw new RuntimeException("进口报关单已存在");
+
+		}
+
+		// 开始导入报关单表头
 		BaseCustomsDeclaration head = this.importbgdhead(bgdhead, impExpFlag,
 				projectType);
 
 		List<Map<String, String>> SFDZ = (List<Map<String, String>>) map
 				.get("随附单证");// 随附单证
 
+		// 导入随附单证
 		if (SFDZ != null && SFDZ.size() > 0) {
 			this.importbgdsfdz(head, SFDZ);
 		}
@@ -144,23 +163,35 @@ public class EncImportLogic {
 		List<Map<String, String>> bgdItems = (List<Map<String, String>>) map
 				.get("报关单表体");// 报关单表体
 
+		// 缓存规格 手册里面的
 		Map<Integer, String> mapSpec = getCommSpec(projectType, head);
 
 		for (int j = 0; j < bgdItems.size(); j++) {
+
 			BaseCustomsDeclarationCommInfo bgdBaseCustomsDeclarationCommInfo = null;
+
 			Map<String, String> bgdItem = bgdItems.get(j);
+
 			if (projectType == ProjectType.BCUS) {
+
 				bgdBaseCustomsDeclarationCommInfo = new CustomsDeclarationCommInfo();
+
 			} else if (projectType == ProjectType.BCS) {
+
 				bgdBaseCustomsDeclarationCommInfo = new BcsCustomsDeclarationCommInfo();
+
 			} else if (projectType == ProjectType.DZSC) {
+
 				bgdBaseCustomsDeclarationCommInfo = new DzscCustomsDeclarationCommInfo();
 
 			}
+
+			// 开始导入商品信息
 			this.importbgditems(bgdItem, ComplexMap, CustomsComplexMap,
 					bgdBaseCustomsDeclarationCommInfo, head, MapUnit,
 					mapLevyMode, mapSpec);
 		}
+
 		if (bgdItems != null && bgdItems.size() > 0) {
 			Map<String, String> bgdItem = bgdItems.get(0);
 			head.setCurrency((Curr) this.baseEncDao.findCustomBaseEntity(
@@ -168,7 +199,7 @@ public class EncImportLogic {
 			this.baseEncDao.saveOrUpdate(head);
 		}
 		List<Map<String, String>> JZXH = (List<Map<String, String>>) map
-				.get("集装箱号");// 集装箱号
+				.get("集装箱");// 集装箱号
 		if (JZXH == null) {
 			JZXH = new ArrayList();
 		}
@@ -197,50 +228,78 @@ public class EncImportLogic {
 	 */
 	private BaseCustomsDeclaration importbgdhead(Map<String, String> bgdhead,
 			Integer impExpFlag, Integer projectType) {
-		// initTrademap();
+
 		BaseCustomsDeclaration bgdBaseCustomsDeclaration = null;
+
 		String ContractName = "";
+
+		// 电子帐册
 		if (projectType == ProjectType.BCUS) {
 			bgdBaseCustomsDeclaration = new CustomsDeclaration();
 			ContractName = "EmsHeadH2k";
+
+			// 电子化手册
 		} else if (projectType == ProjectType.BCS) {
+
 			bgdBaseCustomsDeclaration = new BcsCustomsDeclaration();
 			ContractName = "Contract";
+
+			// 电子手册
 		} else if (projectType == ProjectType.DZSC) {
+
 			ContractName = "DzscEmsPorHead";
+
 			bgdBaseCustomsDeclaration = new DzscCustomsDeclaration();
 		}
+
 		bgdBaseCustomsDeclaration.setImpExpFlag(impExpFlag);
 
 		if (bgdhead == null) {
 			throw new RuntimeException("从远程服务中抓取的报关单表头为空");
 		}
+
 		String value = bgdhead.get("备案号");
+
 		value = (value == null ? "" : value.trim());
+
+		// 判断是否正常 进出口报关单
 		if (!value.isEmpty()) {
+
 			BaseEmsHead contract = (BaseEmsHead) this.baseEncDao
 					.findCustomBaseEntity(ContractName, "emsNo", value);// 手册号
+
 			if (contract != null) {
+
 				bgdBaseCustomsDeclaration.setEmsHeadH2k(value);
 			} else {
 				throw new RuntimeException("系统中不存在" + value + "备案号!");
 			}
+
+			// 特殊报关单
 		} else {
+
 			impExpFlag = ImpExpFlag.SPECIAL;
 			bgdBaseCustomsDeclaration.setImpExpFlag(ImpExpFlag.SPECIAL);
-			// throw new RuntimeException("报关单号为:" + value + "的备案号为空!");
+
 		}
+
 		value = bgdhead.get("征税比例");
+
 		value = (value == null ? "" : value.trim());
+
 		if (!value.isEmpty()) {
 			bgdBaseCustomsDeclaration.setPerTax(Double.valueOf(value));
 		}
+
 		value = bgdhead.get("报关单类型");
+
 		value = (value == null ? "" : value.trim());
+
 		if (!value.isEmpty()) {
 			bgdBaseCustomsDeclaration.setTcsEntryType(value);
 		}
 		value = bgdhead.get("经营单位编码");
+
 		value = (value == null ? "" : value.trim());
 		if (!value.isEmpty()) {
 			bgdBaseCustomsDeclaration.setTradeCode(value);
@@ -250,11 +309,16 @@ public class EncImportLogic {
 		if (!value.isEmpty()) {
 			bgdBaseCustomsDeclaration.setMemos(value);
 		}
+
+		// 随附单证 -- QP导入
 		value = bgdhead.get("随附单证");
+
 		value = (value == null ? "" : value.trim());
+
 		if (!value.isEmpty()) {
 			bgdBaseCustomsDeclaration.setAttachedBill(value);
 		}
+
 		value = bgdhead.get("集装箱号");
 		value = (value == null ? "" : value.trim());
 		if (!value.isEmpty()) {
@@ -287,7 +351,9 @@ public class EncImportLogic {
 			bgdBaseCustomsDeclaration.setTransac((Transac) this.baseEncDao
 					.findCustomBaseEntity("Transac", "name", value));
 		}
+
 		value = bgdhead.get("监管方式");
+
 		value = (value == null ? "" : value.trim());
 		if (!value.isEmpty()) {
 			bgdBaseCustomsDeclaration.setTradeMode((Trade) this.baseEncDao
@@ -295,9 +361,12 @@ public class EncImportLogic {
 			if (value.equals("一般贸易")) {
 				value = value + "进口";
 			}
+
+			// 根据对应表所查出的进出口类型设值
 			bgdBaseCustomsDeclaration.setImpExpType(MapTrade.getImpExpType(
 					value, impExpFlag));
 		}
+
 		value = bgdhead.get("批准文号");
 		value = (value == null ? "" : value.trim());
 		if (!value.isEmpty()) {
@@ -340,6 +409,7 @@ public class EncImportLogic {
 		if (!value.isEmpty()) {
 			bgdBaseCustomsDeclaration.setConveyance(value);
 		}
+
 		value = bgdhead.get("运输方式");
 		value = (value == null ? "" : value.trim());
 		if (!value.isEmpty()) {
@@ -387,7 +457,7 @@ public class EncImportLogic {
 		if (!value.isEmpty()) {
 			bgdBaseCustomsDeclaration.setUnificationCode(value);
 		}
-		value = bgdhead.get("许可证编号");
+		value = bgdhead.get("许可证号");
 		value = (value == null ? "" : value.trim());
 		if (!value.isEmpty()) {
 			bgdBaseCustomsDeclaration.setLicense(value);
@@ -531,13 +601,14 @@ public class EncImportLogic {
 		if (bgdhead.get("航次号") != null && !bgdhead.get("航次号").trim().isEmpty()) {
 			bgdBaseCustomsDeclaration.setVoyageNo(bgdhead.get("航次号").trim());
 		}
-		// System.out.println(">>>>>>>>>>>>>>>>>>>>>" +
-		// bgdBaseCustomsDeclaration);
+
 		bgdBaseCustomsDeclaration.setSerialNumber(this.baseEncDao
 				.getCustomsDeclarationSerialNumber(
 						bgdBaseCustomsDeclaration.getImpExpFlag(),
 						bgdBaseCustomsDeclaration.getEmsHeadH2k()));
+
 		this.baseEncDao.saveCustomsDeclaration(bgdBaseCustomsDeclaration);
+
 		return bgdBaseCustomsDeclaration;
 	}
 
@@ -557,9 +628,13 @@ public class EncImportLogic {
 			BaseCustomsDeclarationCommInfo info, BaseCustomsDeclaration head,
 			Map<String, Unit> mapUnit, Map<String, LevyMode> mapLevyMode,
 			Map<Integer, String> mapSpec) {
+
 		String exceptionMessger = null;
+
 		info.setBaseCustomsDeclaration(head);
+
 		String value = bgditem.get("商品名称");
+
 		value = (value == null ? "" : value.trim());
 		if (!value.isEmpty()) {
 			info.setCommName(bgditem.get("商品名称").toString());
@@ -586,18 +661,35 @@ public class EncImportLogic {
 				&& !bgditem.get("法定单位").toString().trim().isEmpty()) {
 			info.setLegalUnit(mapUnit.get(bgditem.get("法定单位").trim()));
 		}
+
+		// 商品备案序号
 		if (bgditem.get("备案序号") != null
 				&& !bgditem.get("备案序号").toString().trim().isEmpty()) {
+
 			info.setCommSerialNo(Integer.parseInt(bgditem.get("备案序号")
 					.toString()));
 		}
+
+		// 申报规格型号
 		if (bgditem.get("规格型号") != null
 				&& !bgditem.get("规格型号").toString().trim().isEmpty()) {
 			info.setDeclareSpec(bgditem.get("规格型号").toString());
 		}
+
+		// 手册里面的规格型号 (商品信息 --商品序号) 上文已经设了值
 		if (info.getCommSerialNo() != null
 				&& mapSpec.get(info.getCommSerialNo()) != null) {
-			info.setCommSpec(mapSpec.get(info.getCommSerialNo()));
+
+			// 这里是判断 是不是特殊报关单 如果不是报关单就正常取值
+			if (head.getImpExpFlag() != ImpExpFlag.SPECIAL) {
+
+				info.setCommSpec(mapSpec.get(info.getCommSerialNo()));
+
+			} else {
+
+				info.setCommSpec(info.getDeclareSpec());
+			}
+
 		}
 
 		if (bgditem.get("商品编号") != null && bgditem.get("附加编号") != null
@@ -661,26 +753,33 @@ public class EncImportLogic {
 	 */
 	private void importbgdsfdz(BaseCustomsDeclaration baseCustomsDeclaration,
 			List<Map<String, String>> sfdz) {
-		StringBuffer codes = new StringBuffer();
-		if (sfdz == null || sfdz.size() == 0 || sfdz.get(0) == null) {
-			baseCustomsDeclaration.setCertificateCode("");
-		} else {
-			Map<String, String> mapImg = (Map) sfdz.get(0);
-			boolean has = false;
-			if (mapImg.get("代码") != null && !mapImg.get("代码").trim().isEmpty()) {
-				codes.append(mapImg.get("代码").trim() + ":");
-				has = true;
+
+		StringBuffer codes = new StringBuffer("");
+
+		for (int i = 0; i < sfdz.size(); i++) {
+
+			Map<String, String> oneBill = sfdz.get(i);
+
+			if (StringUtils.isNotBlank(oneBill.get("代码"))) {
+
+				codes.append(oneBill.get("代码").trim() + ":");
+
 			}
-			if (mapImg.get("随附单证编号") != null
-					&& !mapImg.get("随附单证编号").trim().isEmpty()) {
-				codes.append(mapImg.get("随附单证编号").trim());
-				has = true;
+			if (StringUtils.isNotBlank(oneBill.get("随附单证编号"))) {
+
+				codes.append(oneBill.get("随附单证编号").trim());
+
 			}
-			if (has) {
-				codes.append(";");
+
+			if (i != (sfdz.size() - 1)) {
+
+				codes.append(",");
 			}
-			baseCustomsDeclaration.setCertificateCode(codes.toString().trim());
+
 		}
+
+		baseCustomsDeclaration.setCertificateCode(codes.toString().trim());
+
 		this.baseEncDao.saveCustomsDeclaration(baseCustomsDeclaration);
 	}
 
@@ -695,24 +794,25 @@ public class EncImportLogic {
 	private void importbgdjzxh(Map<String, String> jzxh,
 			BaseCustomsDeclarationContainer bgdBaseCustomsDeclarationContainer,
 			BaseCustomsDeclaration head) {
+
 		bgdBaseCustomsDeclarationContainer.setBaseCustomsDeclaration(head);
 
 		if (jzxh.get("集装箱号") != null && !jzxh.get("集装箱号").trim().isEmpty()) {
 			bgdBaseCustomsDeclarationContainer.setContainerCode(jzxh
 					.get("集装箱号"));
 		}
-		if (jzxh.get("规格") != null && !jzxh.get("规格").trim().isEmpty()) {
-			if (jzxh.get("规格").equals("L")) {
+		if (jzxh.get("集装箱规格") != null && !jzxh.get("集装箱规格").trim().isEmpty()) {
+			if (jzxh.get("集装箱规格").equals("L")) {
 				bgdBaseCustomsDeclarationContainer
 						.setSrtJzx((SrtJzx) this.baseEncDao
 								.findCustomBaseEntity("SrtJzx", "name", jzxh
-										.get("规格").trim()));
+										.get("集装箱规格").trim()));
 			}
-			if (jzxh.get("规格").equals("S")) {
+			if (jzxh.get("集装箱规格").equals("S")) {
 				bgdBaseCustomsDeclarationContainer
 						.setSrtJzx((SrtJzx) this.baseEncDao
 								.findCustomBaseEntity("SrtJzx", "name", jzxh
-										.get("规格").trim()));
+										.get("集装箱规格").trim()));
 			}
 		}
 		this.baseEncDao
@@ -785,30 +885,54 @@ public class EncImportLogic {
 	 */
 	public List importExportQp(String json, Integer impExpFlag,
 			Integer projectType) {
-		if (projectType != null) {
-			this.baseEncDao.setProjectType(projectType);
-		}
 
 		if (json == null || "".equals(json.trim())) {
 			throw new RuntimeException("出口报关单内容为空");
 		}
+
+		if (projectType != null) {
+			this.baseEncDao.setProjectType(projectType);
+		}
+
 		Map<String, Complex> complexMap = initCustomsBase("Complex", "code");
+
 		Map<String, CustomsComplex> customsComplexMap = initCustomsBase(
 				"CustomsComplex", "code");
+
 		Map<String, Unit> mapUnit = initCustomsBase("Unit", "name");
+
 		Map<String, LevyMode> mapLevyMode = initCustomsBase("LevyMode", "name");
+
 		Gson gson = new Gson();
+
 		Map map = (Map) gson.fromJson(json, Map.class);
+
 		Map<String, String> bgdhead = (Map<String, String>) map.get("报关单表头");// 报关单表头
+
+		// 查询是否存在报关单
+		List foundCustomsDeclaration = baseEncDao
+				.findCustomsDeclarationByCode(bgdhead.get("海关编号").trim());
+
+		if (foundCustomsDeclaration.size() != 0) {
+			throw new RuntimeException("出口报关单已存在");
+		}
+
+		// 开始导入报关单表头
 		BaseCustomsDeclaration head = this.importExportbgdHead(bgdhead,
 				impExpFlag, projectType);
 
+		// 报关单表体
 		List<Map<String, String>> bgdItems = (List<Map<String, String>>) map
-				.get("报关单表体");// 报关单表体
+				.get("报关单表体");
+
 		Map<Integer, String> mapSpec = getCommSpec(projectType, head);
+
 		for (int j = 0; j < bgdItems.size(); j++) {
+
 			BaseCustomsDeclarationCommInfo bgdBaseExportCustomsDeclarationCommInfo = null;
+
 			Map<String, String> bgdItem = bgdItems.get(j);
+
 			if (projectType == ProjectType.BCUS) {
 				bgdBaseExportCustomsDeclarationCommInfo = new CustomsDeclarationCommInfo();
 			} else if (projectType == ProjectType.BCS) {
@@ -816,6 +940,7 @@ public class EncImportLogic {
 			} else if (projectType == ProjectType.DZSC) {
 				bgdBaseExportCustomsDeclarationCommInfo = new DzscCustomsDeclarationCommInfo();
 			}
+
 			this.importExportbgdItems(bgdItem, complexMap, customsComplexMap,
 					bgdBaseExportCustomsDeclarationCommInfo, head, mapUnit,
 					mapLevyMode, mapSpec);
@@ -835,14 +960,20 @@ public class EncImportLogic {
 		}
 
 		List<Map<String, String>> JZXH = (List<Map<String, String>>) map
-				.get("集装箱号");// 集装箱号
+				.get("集装箱");// 集装箱号
+
 		if (JZXH != null) {
 			for (int k = 0; k < JZXH.size(); k++) {
+
 				BaseCustomsDeclarationContainer bgdBaseExportCustomsDeclarationContainer = null;
+
 				Map<String, String> jzxh = JZXH.get(k);
+
 				if (projectType == ProjectType.BCUS) {
+
 					bgdBaseExportCustomsDeclarationContainer = new CustomsDeclarationContainer();
 				} else if (projectType == ProjectType.BCS) {
+
 					bgdBaseExportCustomsDeclarationContainer = new BcsCustomsDeclarationContainer();
 				} else if (projectType == ProjectType.DZSC) {
 					bgdBaseExportCustomsDeclarationContainer = new DzscCustomsDeclarationContainer();
@@ -862,7 +993,9 @@ public class EncImportLogic {
 	 */
 	private BaseCustomsDeclaration importExportbgdHead(
 			Map<String, String> bgdhead, Integer impExpFlag, Integer projectType) {
+
 		BaseCustomsDeclaration bgdBaseExportCustomsDeclaration = null;
+
 		String ContractName = "";
 		if (projectType == ProjectType.BCUS) {
 			bgdBaseExportCustomsDeclaration = new CustomsDeclaration();
@@ -874,12 +1007,17 @@ public class EncImportLogic {
 			ContractName = "DzscEmsPorHead";
 			bgdBaseExportCustomsDeclaration = new DzscCustomsDeclaration();
 		}
+
 		bgdBaseExportCustomsDeclaration.setImpExpFlag(impExpFlag);
+
 		if (bgdhead == null) {
 			throw new RuntimeException("从远程服务中抓取的报关单表头为空");
 		}
+
 		String emsHeadH2k = bgdhead.get("备案号");
+
 		if (emsHeadH2k != null && !emsHeadH2k.trim().isEmpty()) {
+
 			BaseEmsHead contract = (BaseEmsHead) this.baseEncDao
 					.findCustomBaseEntity(ContractName, "emsNo", emsHeadH2k);
 			if (contract != null) {
@@ -887,7 +1025,9 @@ public class EncImportLogic {
 			} else {
 				throw new RuntimeException("系统中不存在" + emsHeadH2k + "备案号");
 			}
+
 		} else {
+
 			impExpFlag = ImpExpFlag.SPECIAL;
 			bgdBaseExportCustomsDeclaration.setImpExpFlag(ImpExpFlag.SPECIAL);
 			// throw new RuntimeException("备案号为空!");
@@ -929,13 +1069,18 @@ public class EncImportLogic {
 		}
 		if (bgdhead.get("监管方式") != null
 				&& !bgdhead.get("监管方式").trim().isEmpty()) {
+
 			bgdBaseExportCustomsDeclaration
 					.setTradeMode((Trade) this.baseEncDao.findCustomBaseEntity(
 							"Trade", "name", bgdhead.get("监管方式").trim()));
+
 			String impExpType = bgdhead.get("监管方式");
+
 			if (impExpType.equals("一般贸易")) {
 				impExpType = impExpType + "出口";
 			}
+
+			// 这里设置进出口类型 -- 根据对应表设值
 			bgdBaseExportCustomsDeclaration.setImpExpType(MapTrade
 					.getImpExpType(impExpType, impExpFlag));
 		}
@@ -1029,12 +1174,14 @@ public class EncImportLogic {
 					.setTransac((Transac) this.baseEncDao.findCustomBaseEntity(
 							"Transac", "name", bgdhead.get("成交方式").trim()));
 		}
-		if (bgdhead.get("监管方式") != null
-				&& !bgdhead.get("监管方式").trim().isEmpty()) {
-			bgdBaseExportCustomsDeclaration
-					.setTradeMode((Trade) this.baseEncDao.findCustomBaseEntity(
-							"Trade", "name", bgdhead.get("监管方式").trim()));
-		}
+
+		// 多余出来的设值
+		// if (bgdhead.get("监管方式") != null
+		// && !bgdhead.get("监管方式").trim().isEmpty()) {
+		// bgdBaseExportCustomsDeclaration
+		// .setTradeMode((Trade) this.baseEncDao.findCustomBaseEntity(
+		// "Trade", "name", bgdhead.get("监管方式").trim()));
+		// }
 		if (bgdhead.get("批准文号") != null
 				&& !bgdhead.get("批准文号").trim().isEmpty()) {
 			bgdBaseExportCustomsDeclaration.setAuthorizeFile(bgdhead
@@ -1046,12 +1193,12 @@ public class EncImportLogic {
 							.findCustomBaseEntity("PortLin", "name", bgdhead
 									.get("指运港").trim()));
 		}
-		if (bgdhead.get("境内货源地") != null
-				&& !bgdhead.get("境内货源地").trim().isEmpty()) {
+		if (bgdhead.get("境内货原地") != null
+				&& !bgdhead.get("境内货原地").trim().isEmpty()) {
 			bgdBaseExportCustomsDeclaration
 					.setDomesticDestinationOrSource((District) this.baseEncDao
 							.findCustomBaseEntity("District", "name", bgdhead
-									.get("境内货源地").trim()));
+									.get("境内货原地").trim()));
 		}
 		if (bgdhead.get("运抵国") != null && !bgdhead.get("运抵国").trim().isEmpty()) {
 			bgdBaseExportCustomsDeclaration
@@ -1088,14 +1235,24 @@ public class EncImportLogic {
 			bgdBaseExportCustomsDeclaration
 					.setConveyance(bgdhead.get("运输工具名称"));
 		}
-		if (bgdhead.get("收货单位编码") != null
-				&& !bgdhead.get("收货单位编码").trim().isEmpty()) {
-			bgdBaseExportCustomsDeclaration.setMachCode(bgdhead.get("收货单位编码"));
+		if (bgdhead.get("发货单位编码") != null
+				&& !bgdhead.get("发货单位编码").trim().isEmpty()) {
+			bgdBaseExportCustomsDeclaration.setMachCode(bgdhead.get("发货单位编码"));
 		}
-		if (bgdhead.get("收货单位名称") != null
-				&& !bgdhead.get("收货单位名称").trim().isEmpty()) {
-			bgdBaseExportCustomsDeclaration.setMachName(bgdhead.get("收货单位名称"));
+
+		if (bgdhead.get("发货单位名称") != null
+				&& !bgdhead.get("发货单位名称").trim().isEmpty()) {
+
+			bgdBaseExportCustomsDeclaration.setMachName(bgdhead.get("发货单位名称"));
+
+		} else {
+
+			// 如果发货单位名称 为空 的话 那么就取当前公司
+			bgdBaseExportCustomsDeclaration.setMachName(CommonUtils
+					.getCompany().getName());
+
 		}
+
 		if (bgdhead.get("运输方式") != null
 				&& !bgdhead.get("运输方式").trim().isEmpty()) {
 			bgdBaseExportCustomsDeclaration
@@ -1196,17 +1353,23 @@ public class EncImportLogic {
 			BaseCustomsDeclarationCommInfo info, BaseCustomsDeclaration head,
 			Map<String, Unit> mapUnit, Map<String, LevyMode> mapLevyMode,
 			Map<Integer, String> mapSpec) {
+
 		String exceptionMessger = null;
+
 		info.setBaseCustomsDeclaration(head);
+
 		if (bgditem.get("商品名称") != null
 				&& !bgditem.get("商品名称").toString().trim().isEmpty()) {
 			info.setCommName(bgditem.get("商品名称").toString());
 		}
+
 		if (bgditem.get("目的地") != null
 				&& !bgditem.get("目的地").toString().trim().isEmpty()) {
+
 			info.setCountry((Country) this.baseEncDao.findCustomBaseEntity(
 					"Country", "name", bgditem.get("目的地").toString().trim()));
 		}
+
 		if (bgditem.get("用途") != null
 				&& !bgditem.get("用途").toString().trim().isEmpty()) {
 			info.setUses((Uses) this.baseEncDao.findCustomBaseEntity("Uses",
@@ -1230,10 +1393,14 @@ public class EncImportLogic {
 			info.setCommSerialNo(Integer.parseInt(bgditem.get("备案序号")
 					.toString()));
 		}
+
+		// QP的规格型号
 		if (bgditem.get("规格型号") != null
 				&& !bgditem.get("规格型号").toString().trim().isEmpty()) {
 			info.setDeclareSpec(bgditem.get("规格型号").toString());
 		}
+
+		// 手册的规格型号
 		if (info.getCommSerialNo() != null
 				&& mapSpec.get(info.getCommSerialNo()) != null) {
 			info.setCommSpec(mapSpec.get(info.getCommSerialNo()));
@@ -1288,7 +1455,20 @@ public class EncImportLogic {
 		if (bgditem.get("征免") != null && !bgditem.get("征免").trim().isEmpty()) {
 			info.setLevyMode(mapLevyMode.get(bgditem.get("征免").trim()));
 		}
+
+		// 生产厂家 -- 导入
+		if (StringUtils.isNotBlank(bgditem.get("生产厂家"))) {
+
+			// 查询是否存在这个生产厂家
+			Brief manufacturer = (Brief) baseEncDao.findCustomBaseEntity(
+					"Brief", "name", bgditem.get("生产厂家").trim());
+
+			head.setManufacturer(manufacturer);
+
+		}
+
 		this.baseEncDao.saveCustomsDeclarationCommInfo(info);
+
 		info.setSerialNumber(this.baseEncDao
 				.getCustomsDeclarationCommInfoSerialNumber(info
 						.getBaseCustomsDeclaration().getId()));
@@ -1341,22 +1521,25 @@ public class EncImportLogic {
 			BaseCustomsDeclaration head) {
 		bgdBaseExportCustomsDeclarationContainer
 				.setBaseCustomsDeclaration(head);
+
 		if (jzxh.get("集装箱号") != null && !jzxh.get("集装箱号").trim().isEmpty()) {
 			bgdBaseExportCustomsDeclarationContainer.setContainerCode(jzxh
 					.get("集装箱号"));
 		}
-		if (jzxh.get("规格") != null && !jzxh.get("规格").trim().isEmpty()) {
-			if (jzxh.get("规格").equals("L")) {
+
+		if (jzxh.get("集装箱规格") != null && !jzxh.get("集装箱规格").trim().isEmpty()) {
+
+			if (jzxh.get("集装箱规格").equals("L")) {
 				bgdBaseExportCustomsDeclarationContainer
 						.setSrtJzx((SrtJzx) this.baseEncDao
 								.findCustomBaseEntity("SrtJzx", "name", jzxh
-										.get("规格").trim()));
+										.get("集装箱规格").trim()));
 			}
-			if (jzxh.get("规格").equals("S")) {
+			if (jzxh.get("集装箱规格").equals("S")) {
 				bgdBaseExportCustomsDeclarationContainer
 						.setSrtJzx((SrtJzx) this.baseEncDao
 								.findCustomBaseEntity("SrtJzx", "name", jzxh
-										.get("规格").trim()));
+										.get("集装箱规格").trim()));
 			}
 		}
 
@@ -1364,15 +1547,17 @@ public class EncImportLogic {
 				.saveCustomsDeclarationContainer(bgdBaseExportCustomsDeclarationContainer);
 	}
 
-	public Object transferImportDeclaration(String execResult,
-			Integer impExpFlag, Integer projectType) {
-		importQp(execResult, impExpFlag, projectType);
+	public Object transferImportDeclaration(String json, Integer impExpFlag,
+			Integer projectType) {
+
+		importQp(json, impExpFlag, projectType);
+
 		return null;
 	}
 
-	public Object transferExportDeclaration(String execResult,
-			Integer impExpFlag, Integer projectType) {
-		importExportQp(execResult, impExpFlag, projectType);
+	public Object transferExportDeclaration(String json, Integer impExpFlag,
+			Integer projectType) {
+		importExportQp(json, impExpFlag, projectType);
 		return null;
 	}
 
@@ -1401,25 +1586,50 @@ public class EncImportLogic {
 		return baseEncDao.findAllCustomsDeclaration(projectType, impExpFlag);
 	}
 
+	/**
+	 * 查询所有的手册规格
+	 * 
+	 * @param projectType
+	 * @param bgdhead
+	 * @return
+	 */
 	public Map<Integer, String> getCommSpec(Integer projectType,
 			BaseCustomsDeclaration bgdhead) {
+
 		Map<Integer, String> map = new HashMap<Integer, String>();
+
 		List list = baseEncDao.findContractHead(projectType, bgdhead);
+
 		if (list != null && list.size() > 0) {
-			BaseEmsHead baseContractHead = (BaseEmsHead) list.get(0);// 获取通关备案表头
+
+			// 获取通关备案表头
+			BaseEmsHead baseContractHead = (BaseEmsHead) list.get(0);
+
 			boolean boo = isMaterial(bgdhead.getImpExpType());// 判断是料件还是成品：true
 																// 为料件 false 为成品
 			List ls = null;
+
 			if (boo) {
-				ls = baseEncDao.findBaseEmsImg(projectType, baseContractHead);// 获取料架数据
+
+				// 获取料架数据
+				ls = baseEncDao.findBaseEmsImg(projectType, baseContractHead);
+
 			} else {
-				ls = baseEncDao.findBaseEmsExg(projectType, baseContractHead);// 获取成品数据
+
+				// 获取成品数据
+				ls = baseEncDao.findBaseEmsExg(projectType, baseContractHead);
 			}
+
 			System.out.println((boo == true ? "料件数量：" : "成品数量：") + ls.size());
+
 			for (int i = 0; i < ls.size(); i++) {
+
 				Integer key = null;
 				String value = null;
+
+				// 如果是料件
 				if (boo) {
+
 					if (ls.get(i) instanceof BaseEmsImg) {
 
 						BaseEmsImg baseEmsImg = (BaseEmsImg) ls.get(i);
@@ -1427,16 +1637,22 @@ public class EncImportLogic {
 						value = baseEmsImg.getSpec();
 
 					} else {
+
 						DzscEmsImgBill emsImg = (DzscEmsImgBill) ls.get(i);
 						key = emsImg.getSeqNum();
 						value = emsImg.getSpec();
 					}
+
 				} else {
+
 					if (ls.get(i) instanceof BaseEmsExg) {
+
 						BaseEmsExg baseEmsExg = (BaseEmsExg) ls.get(i);
 						key = baseEmsExg.getSeqNum();
 						value = baseEmsExg.getSpec();
+
 					} else {
+
 						DzscEmsExgBill emsExg = (DzscEmsExgBill) ls.get(i);
 						key = emsExg.getSeqNum();
 						value = emsExg.getSpec();
@@ -1458,12 +1674,17 @@ public class EncImportLogic {
 	 * @return
 	 */
 	public boolean isMaterial(int impExpType) {
+
 		boolean isMaterial = false;
+
 		int materielType = getMaterielTypeByBillType(impExpType);
+
 		if (materielType == Integer.parseInt(MaterielType.MATERIEL)) {
 			isMaterial = true;
+
 		} else if (materielType == Integer
 				.parseInt(MaterielType.FINISHED_PRODUCT)) {
+
 			isMaterial = false;
 		}
 		return isMaterial;
@@ -1473,8 +1694,11 @@ public class EncImportLogic {
 	 * 获得料件成品标识来自进出口申请单类型
 	 */
 	public int getMaterielTypeByBillType(int billType) {
+
 		int temp = Integer.parseInt(MaterielType.MATERIEL);
+
 		switch (billType) {
+
 		case ImpExpType.DIRECT_IMPORT:
 		case ImpExpType.TRANSFER_FACTORY_IMPORT:
 		case ImpExpType.GENERAL_TRADE_IMPORT:
@@ -1482,13 +1706,16 @@ public class EncImportLogic {
 		case ImpExpType.REMIAN_MATERIAL_BACK_PORT:
 		case ImpExpType.REMIAN_MATERIAL_DOMESTIC_SALES:
 		case ImpExpType.REMAIN_FORWARD_EXPORT:
+
 			temp = Integer.parseInt(MaterielType.MATERIEL);
 			break;
+
 		case ImpExpType.BACK_FACTORY_REWORK:
 		case ImpExpType.DIRECT_EXPORT:
 		case ImpExpType.TRANSFER_FACTORY_EXPORT:
 		case ImpExpType.REWORK_EXPORT:
 		case ImpExpType.GENERAL_TRADE_EXPORT:
+
 			temp = Integer.parseInt(MaterielType.FINISHED_PRODUCT);
 			break;
 		}

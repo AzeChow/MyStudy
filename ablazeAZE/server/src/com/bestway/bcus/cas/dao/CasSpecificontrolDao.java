@@ -2,16 +2,12 @@ package com.bestway.bcus.cas.dao;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import com.bestway.bcs.bcsinnermerge.entity.BcsInnerMergeDataOrder;
 import com.bestway.bcus.cas.bill.entity.BillDetail;
 import com.bestway.bcus.cas.bill.entity.BillMaster;
 import com.bestway.bcus.cas.bill.entity.BillUtil;
 import com.bestway.bcus.cas.bill.entity.CasInnerMergeDataOrder;
-import com.bestway.bcus.cas.entity.FactoryAndFactualCustomsRalation;
 import com.bestway.bcus.cas.specificontrol.entity.CustomsDeclarationCommInfoBillCorresponding;
 import com.bestway.bcus.cas.specificontrol.entity.MakeBillCorrespondingInfoBase;
 import com.bestway.bcus.cas.specificontrol.entity.TempBillCorrespondingSearch;
@@ -27,6 +23,7 @@ import com.bestway.common.materialbase.entity.WareSet;
 
 /**
  * 海关帐特殊控制 Dao
+ * 
  * @author luosheng 2009/09/07
  */
 public class CasSpecificontrolDao extends BaseDao {
@@ -324,11 +321,11 @@ public class CasSpecificontrolDao extends BaseDao {
 					// 1004 结转进口
 					// 1106 结转料件退货单
 					//
-					hsql += "and ( a.billMaster.billType.code = ? or  a.billMaster.billType.code = ? " +
-							"or  a.billMaster.billType.code = ? or  a.billMaster.billType.code = ? ) ";
+					hsql += "and ( a.billMaster.billType.code = ? or  a.billMaster.billType.code = ? "
+							+ "or  a.billMaster.billType.code = ? or  a.billMaster.billType.code = ? ) ";
 					parameters.add("1004");
 					parameters.add("1106");
-					
+
 					parameters.add("1015");
 					parameters.add("1016");
 
@@ -339,11 +336,11 @@ public class CasSpecificontrolDao extends BaseDao {
 					// 2102 结转出口
 					// 2009 结转成品退货单
 					//
-					hsql += "and ( a.billMaster.billType.code = ? or   a.billMaster.billType.code = ? " +
-							"or   a.billMaster.billType.code = ? or   a.billMaster.billType.code = ? ) ";
+					hsql += "and ( a.billMaster.billType.code = ? or   a.billMaster.billType.code = ? "
+							+ "or   a.billMaster.billType.code = ? or   a.billMaster.billType.code = ? ) ";
 					parameters.add("2102");
 					parameters.add("2009");
-					
+
 					parameters.add("2011");
 					parameters.add("2012");
 
@@ -352,20 +349,20 @@ public class CasSpecificontrolDao extends BaseDao {
 			}
 		} else {
 			if (impExpType != null && impExpType != -1) {
-				
-				if(impExpType==ImpExpType.TRANSFER_FACTORY_IMPORT){//结转进口（1015+）（1016-）
-					hsql+="and (a.billMaster.billType.code = ? or a.billMaster.billType.code = ?" +
-							"or a.billMaster.billType.code = ? )";
+
+				if (impExpType == ImpExpType.TRANSFER_FACTORY_IMPORT) {// 结转进口（1015+）（1016-）
+					hsql += "and (a.billMaster.billType.code = ? or a.billMaster.billType.code = ?"
+							+ "or a.billMaster.billType.code = ? )";
 					parameters.add("1004");
 					parameters.add("1015");
 					parameters.add("1016");
-				}else if(impExpType==ImpExpType.TRANSFER_FACTORY_EXPORT){//结转进口（2011+）（2012-）
-					hsql+="and (a.billMaster.billType.code = ? or a.billMaster.billType.code = ?" +
-					"or a.billMaster.billType.code = ? )";
+				} else if (impExpType == ImpExpType.TRANSFER_FACTORY_EXPORT) {// 结转进口（2011+）（2012-）
+					hsql += "and (a.billMaster.billType.code = ? or a.billMaster.billType.code = ?"
+							+ "or a.billMaster.billType.code = ? )";
 					parameters.add("2102");
 					parameters.add("2011");
 					parameters.add("2012");
-				}else{
+				} else {
 					hsql += "and a.billMaster.billType.code = ? ";
 					parameters.add(getBillCode(impExpType));
 				}
@@ -879,12 +876,6 @@ public class CasSpecificontrolDao extends BaseDao {
 		return this.find(hsql, parameters.toArray());
 	}
 
-	
-	
-	
-	
-	
-	
 	/**
 	 * 查找报关单商品信息与海关帐单据的对应
 	 * 
@@ -955,44 +946,37 @@ public class CasSpecificontrolDao extends BaseDao {
 	 * @return 与物料类型匹配的商品大类名称
 	 */
 	public List findStatCusNameRelationName(String materielType) {
+
 		List<Object[]> list = super
-				.find(
-						"select distinct a.statCusNameRelationHsn.cusName,a.statCusNameRelationHsn.cusSpec from FactoryAndFactualCustomsRalation a "
-								+ "	where a.company.id = ? and a.statCusNameRelationHsn.materielType = ? ",
+				.find("select distinct a.statCusNameRelationHsn.cusName,a.statCusNameRelationHsn.cusSpec from FactoryAndFactualCustomsRalation a "
+						+ "	where a.company.id = ? and a.statCusNameRelationHsn.materielType = ? ",
 						new Object[] { CommonUtils.getCompany().getId(),
 								materielType });
-		// List returnList = new ArrayList();
-		// for (Object[] item : list) {
-		// String tmp = "";
-		// if (item[0] != null)
-		// tmp = (String) item[0];
-		// if (item[1] != null)
-		// tmp = tmp + "/" + (String) item[1];
-		// returnList.add(tmp);
-		// }
-		return list;
-	}
-    /**
-     * 查找客户列表
-     */ 
-	public List findIsCustomer() {
-		List<Object[]> list = super
-				.find("select a  from ScmCoc a  where a.company.id = ? and isCustomer='1'",
-						new Object[] { CommonUtils.getCompany().getId()
-								 });
 
 		return list;
 	}
+
+	/**
+	 * 查找客户列表
+	 */
+	public List findIsCustomer() {
+		List<Object[]> list = super
+				.find("select a  from ScmCoc a  where a.company.id = ? and isCustomer='1'",
+						new Object[] { CommonUtils.getCompany().getId() });
+
+		return list;
+	}
+
 	/**
 	 * 查找供应商列表
 	 */
-	public List findIsManufacturer(){
+	public List findIsManufacturer() {
 		List<Object[]> list = super
-		.find("select a  from ScmCoc a  where a.company.id = ? and isManufacturer='1'",
-				new Object[] { CommonUtils.getCompany().getId()
-						 });
+				.find("select a  from ScmCoc a  where a.company.id = ? and isManufacturer='1'",
+						new Object[] { CommonUtils.getCompany().getId() });
 		return list;
 	}
+
 	/**
 	 * 查找对应表商品大类名称 注意：必须Distinct 因为名称有可能会重复。
 	 * 
@@ -1002,9 +986,8 @@ public class CasSpecificontrolDao extends BaseDao {
 	 */
 	public List findStatCusNameRelationName2(String materielType) {
 		return super
-				.find(
-						"select distinct a.statCusNameRelationHsn.cusName from FactoryAndFactualCustomsRalation a "
-								+ "	where a.company.id = ? and a.statCusNameRelationHsn.materielType = ? ",
+				.find("select distinct a.statCusNameRelationHsn.cusName from FactoryAndFactualCustomsRalation a "
+						+ "	where a.company.id = ? and a.statCusNameRelationHsn.materielType = ? ",
 						new Object[] { CommonUtils.getCompany().getId(),
 								materielType });
 
@@ -1021,9 +1004,8 @@ public class CasSpecificontrolDao extends BaseDao {
 	 */
 	public List findStatCusNameRelationSpec(String materielType, String cusName) {
 		return super
-				.find(
-						"select distinct a.cusSpec from StatCusNameRelationHsn a "
-								+ "	where a.cusName = ? and a.company.id = ? and a.materielType = ?",
+				.find("select distinct a.cusSpec from StatCusNameRelationHsn a "
+						+ "	where a.cusName = ? and a.company.id = ? and a.materielType = ?",
 						new Object[] { cusName,
 								CommonUtils.getCompany().getId(), materielType });
 	}
@@ -1141,10 +1123,9 @@ public class CasSpecificontrolDao extends BaseDao {
 			return new ArrayList();
 		}
 		return this
-				.find(
-						"select a from "
-								+ tableName
-								+ " a where a.company= ? and a.keepAccounts = ? and a.isValid = ?  ",
+				.find("select a from "
+						+ tableName
+						+ " a where a.company= ? and a.keepAccounts = ? and a.isValid = ?  ",
 						new Object[] { CommonUtils.getCompany(), isEffective,
 								true });
 	}
@@ -1413,8 +1394,6 @@ public class CasSpecificontrolDao extends BaseDao {
 		// }
 		return this.find(hsql, parameters.toArray());
 	}
-
-
 
 	/**
 	 * 查询已对应的单据与报关单信息

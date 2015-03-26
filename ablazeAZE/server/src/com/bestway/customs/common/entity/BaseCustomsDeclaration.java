@@ -46,7 +46,7 @@ public class BaseCustomsDeclaration extends BaseScmEntity {
 	/**
 	 * 保费率
 	 */
-	
+
 	public static final int INSURANCE_RATE = 1;
 
 	/**
@@ -84,8 +84,8 @@ public class BaseCustomsDeclaration extends BaseScmEntity {
 	 * 料件退换 ---料件 MATERIAL_REOUT = 19; 料件复出 ---料件 All_Type = 20;
 	 * 所有（注意：不存在这样的类型，方便在参数设置中使用到） IMPORT_EXG_BACK = 25; 进料成品退换 ---成品
 	 * IMPORT_REPAIR_MATERIAL = 26; 修理物品 ---成品 EXPORT_MATERIAL_REBACK = 27;
-	 * 修理物品复出 ---成品 EXPORT_EXG_REBACK = 28; 进料成品退换复出 ---成品 REMAIN_FORWARD_IMPORT =
-	 * 21; 余料结转(进口报关单)
+	 * 修理物品复出 ---成品 EXPORT_EXG_REBACK = 28; 进料成品退换复出 ---成品 REMAIN_FORWARD_IMPORT
+	 * = 21; 余料结转(进口报关单)
 	 */
 	private Integer impExpType;
 
@@ -262,8 +262,8 @@ public class BaseCustomsDeclaration extends BaseScmEntity {
 	private Transac transac;
 
 	/**
-	 * 运费类型 FREIGHT_RATE = 1; 运费率 FREIGHT_UNITPRICE = 2; 运费单价 FREIGHT_TOTALPRICE =
-	 * 3; 运费总价
+	 * 运费类型 FREIGHT_RATE = 1; 运费率 FREIGHT_UNITPRICE = 2; 运费单价 FREIGHT_TOTALPRICE
+	 * = 3; 运费总价
 	 */
 	private Integer freightageType;
 
@@ -334,7 +334,7 @@ public class BaseCustomsDeclaration extends BaseScmEntity {
 	private String containerNum;
 
 	/**
-	 * 随附单据
+	 * 随附单据 <所有的单证代码组合>
 	 */
 	private String attachedBill;
 
@@ -568,13 +568,8 @@ public class BaseCustomsDeclaration extends BaseScmEntity {
 	private Date tcsResultTime;
 
 	/**
-	 * 操作类型 
-	 * A：报关单上载 
-	 * B：报关单、转关单上载 
-	 * C：报关单申报 
-	 * D：报关单、转关单申报
-	 * E：电子手册报关单上载（此种操作类型的报关单上载时不作非空和逻辑校验） 
-	 * G：报关单暂存
+	 * 操作类型 A：报关单上载 B：报关单、转关单上载 C：报关单申报 D：报关单、转关单申报
+	 * E：电子手册报关单上载（此种操作类型的报关单上载时不作非空和逻辑校验） G：报关单暂存
 	 */
 	private String operType;
 
@@ -611,7 +606,7 @@ public class BaseCustomsDeclaration extends BaseScmEntity {
 	 * 补充报关单类型
 	 */
 	private Integer supplmentType;
-	
+
 	/**
 	 * 深加工结转业务key
 	 */
@@ -624,23 +619,23 @@ public class BaseCustomsDeclaration extends BaseScmEntity {
 	/**
 	 * 报关代理公司
 	 */
-    private BrokerCorp brokerCorp;
-    
-    /**
-     * 航次号
-     */
-    private String voyageNo;
-    
-    /**
-     * 航次号
-     */
-    public String getVoyageNo() {
+	private BrokerCorp brokerCorp;
+
+	/**
+	 * 航次号
+	 */
+	private String voyageNo;
+
+	/**
+	 * 航次号
+	 */
+	public String getVoyageNo() {
 		return voyageNo;
 	}
 
-    /**
-     * 航次号
-     */
+	/**
+	 * 航次号
+	 */
 	public void setVoyageNo(String voyageNo) {
 		this.voyageNo = voyageNo;
 	}
@@ -667,7 +662,8 @@ public class BaseCustomsDeclaration extends BaseScmEntity {
 	}
 
 	/**
-	 * @param declaraCustomsBroker the declaraCustomsBroker to set
+	 * @param declaraCustomsBroker
+	 *            the declaraCustomsBroker to set
 	 */
 	public void setDeclaraCustomsBroker(String declaraCustomsBroker) {
 		this.declaraCustomsBroker = declaraCustomsBroker;
@@ -748,7 +744,7 @@ public class BaseCustomsDeclaration extends BaseScmEntity {
 	// public String getTcsResult() {
 	// return tcsResult;
 	// }
-	//	
+	//
 	// public void setTcsResult(String tcsResult) {
 	// this.tcsResult = tcsResult;
 	// }
@@ -863,26 +859,25 @@ public class BaseCustomsDeclaration extends BaseScmEntity {
 	public String getAllContainerNum() {
 		return (allContainerNum0 == null ? ""
 				: allContainerNum0.contains(",") ? (allContainerNum0.substring(
-						0, 11) + allContainerNum0.substring(allContainerNum0
-						.indexOf(','), allContainerNum0.indexOf(',') + 12))
-						: allContainerNum0
-								.substring(0,
-										allContainerNum0.length() > 11 ? 11
-												: allContainerNum0.length()))
+						0, 11) + allContainerNum0.substring(
+						allContainerNum0.indexOf(','),
+						allContainerNum0.indexOf(',') + 12)) : allContainerNum0
+						.substring(0, allContainerNum0.length() > 11 ? 11
+								: allContainerNum0.length()))
 				+ (allContainerNum1 == null ? ""
 						: allContainerNum1.contains(",") ? (allContainerNum1
 								.substring(0, 11) + allContainerNum1.substring(
-								allContainerNum1.indexOf(','), allContainerNum1
-										.indexOf(',') + 12)) : allContainerNum1
-								.substring(0,
+								allContainerNum1.indexOf(','),
+								allContainerNum1.indexOf(',') + 12))
+								: allContainerNum1.substring(0,
 										allContainerNum1.length() > 11 ? 11
 												: allContainerNum1.length()))
 				+ (allContainerNum2 == null ? ""
 						: allContainerNum2.contains(",") ? (allContainerNum2
 								.substring(0, 11) + allContainerNum2.substring(
-								allContainerNum2.indexOf(','), allContainerNum2
-										.indexOf(',') + 12)) : allContainerNum2
-								.substring(0,
+								allContainerNum2.indexOf(','),
+								allContainerNum2.indexOf(',') + 12))
+								: allContainerNum2.substring(0,
 										allContainerNum2.length() > 11 ? 11
 												: allContainerNum2.length()));
 	}
@@ -2466,6 +2461,7 @@ public class BaseCustomsDeclaration extends BaseScmEntity {
 		super();
 		this.setId(id);
 	}
+
 	public String getEspTaskId() {
 		return espTaskId;
 	}
@@ -2473,12 +2469,12 @@ public class BaseCustomsDeclaration extends BaseScmEntity {
 	public void setEspTaskId(String espTaskId) {
 		this.espTaskId = espTaskId;
 	}
-	
-	public BaseCustomsDeclaration(String id, Integer impExpFlag, Integer impExpType,
-			Integer serialNumber, String emsHeadH2k, String tradeCode,
-			String billListId, String preCustomsDeclarationCode,
-			Boolean effective, String customsDeclarationCode, Date impExpDate,
-			Date declarationDate) {
+
+	public BaseCustomsDeclaration(String id, Integer impExpFlag,
+			Integer impExpType, Integer serialNumber, String emsHeadH2k,
+			String tradeCode, String billListId,
+			String preCustomsDeclarationCode, Boolean effective,
+			String customsDeclarationCode, Date impExpDate, Date declarationDate) {
 		super();
 		this.setId(id);
 		this.impExpFlag = impExpFlag;
@@ -2493,6 +2489,5 @@ public class BaseCustomsDeclaration extends BaseScmEntity {
 		this.impExpDate = impExpDate;
 		this.declarationDate = declarationDate;
 	}
-	
-	
+
 }

@@ -1195,7 +1195,18 @@ public class ContractActionImpl extends BaseActionImpl implements
 	 */
 	public List saveContractImgAmountInteger(Request request,
 			List<ContractImg> list) {
+
 		this.contractLogic.saveContractImgAmountInteger(list);
+
+		if (list.size() != 0) {
+
+			ContractImg contractImg = list.get(0);
+
+			list = findContractImgByParentId(request, contractImg.getContract()
+					.getId());
+
+		}
+
 		return list;
 	}
 

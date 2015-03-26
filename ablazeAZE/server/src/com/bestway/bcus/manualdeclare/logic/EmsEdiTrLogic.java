@@ -31,6 +31,13 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.Vector;
 
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.beanutils.PropertyUtils;
+import org.jdom.Document;
+import org.jdom.Element;
+import org.jdom.JDOMException;
+import org.jdom.input.SAXBuilder;
+
 import com.bestway.bcs.contract.entity.ContractUnitWaste;
 import com.bestway.bcus.cas.entity.BillTemp;
 import com.bestway.bcus.custombase.entity.CustomBaseEntity;
@@ -3455,8 +3462,9 @@ public class EmsEdiTrLogic {
 				.findEmsEdiMergerImgBeforeByPtNo(emsEdiMergerHead);
 		for (int i = 0; i < list.size(); i++) {
 			EmsEdiMergerImgBefore obj = (EmsEdiMergerImgBefore) list.get(i);
-			if (hsImg.get(obj.getPtNo().trim()) == null) {
-				hsImg.put(obj.getPtNo().trim(), obj);
+			// 2015-2-10企业手工新增物料时，存在空格现象，且后续多个方法调用也是没有去除前后空格的，这样导致Null料号的问题，所以这里去掉trim函数
+			if (hsImg.get(obj.getPtNo()) == null) {
+				hsImg.put(obj.getPtNo(), obj);
 			}
 		}
 		return hsImg;
@@ -3672,26 +3680,40 @@ public class EmsEdiTrLogic {
 					newCount++;
 				}
 			} else { // 变更
+
 				if (m != null) {// 存在该料件
+
 					if (isChange) { // 存在料件是否覆盖
+
+						// 如果< 单损耗 >对比不一致进行修改
 						if (!e.getUnitWaste().equals(m.getUnitWaste())
 								|| !e.getWaste().equals(m.getWaste())) {
+
 							m.setUnitWaste(e.getUnitWaste());
+
 							m.setWaste(e.getWaste());
+
 							if (m.getModifyMark().equals(
 									ModifyMarkState.UNCHANGE)) {
+
 								m.setModifyMark(ModifyMarkState.MODIFIED);// 已修改
+
 								if (isSendSign != null
 										&& "1".equals(isSendSign)) {
+
 									m.setSendState(Integer
 											.valueOf(SendState.WAIT_SEND));
 								}
 							}
 							emsEdiTrDao.saveEmsEdiMergerExgBom(m);
+
 							changeCount++;
+
 						} else {
+
 							nochangeCount++;
 						}
+
 					} else {
 						nochangeCount++;
 					}
@@ -4160,21 +4182,13 @@ public class EmsEdiTrLogic {
 	 * 保存导入电子帐册文本导入 -- 普通
 	 * 
 	 * @param emsHeadH2k
-	 *            电子账册表头
-	 * 
 	 * @param list
-	 *            文件导入后已处理的列表
-	 * 
 	 * @param cbIsOverwrite
-	 *            是否覆盖导入
-	 * 
-	 * @return 处理的结果内容
+	 * @return
 	 */
 	public int[] saveToEmsHeadH2k(EmsHeadH2k emsHeadH2k,
 			List<EmsEdiHeadH2kBomFrom> list, boolean cbIsOverwrite) {
-
 		long begin = System.currentTimeMillis();
-
 		/*
 		 * 1、 准备辅助数据
 		 */
@@ -4229,7 +4243,7 @@ public class EmsEdiTrLogic {
 	}
 
 	/**
-	 * 建立数据为了保存到电子账册
+	 * <生成所需处理的数据> Object[] 包含的信息是 返回客户端的信息，需保存的列表
 	 * 
 	 * @param emsHeadH2k
 	 * @param list
@@ -4247,7 +4261,6 @@ public class EmsEdiTrLogic {
 			Map<String, EmsHeadH2kVersion> versionMap,
 			Map<Integer, EmsHeadH2kImg> imgMap) {
 
-		//
 		List<EmsHeadH2kVersion> versionSaveList = new ArrayList<EmsHeadH2kVersion>();
 
 		List<EmsHeadH2kBom> bomSaveList = new ArrayList<EmsHeadH2kBom>();
@@ -4255,68 +4268,107 @@ public class EmsEdiTrLogic {
 		String isEmsH2kSendSign = emsEdiTrDao
 				.getBpara(BcusParameter.EmsEdiH2kSend_Sign);
 
-		int totalcount = 0; // 总记录数
-		int noImportCount = 0;// 没导入记录数
-		int changeCount = 0;// 变更记录数
-		int newCount = 0; // 新增记录数
-		int noversionCount = 0;// 不存在版本号
-		int nochangeCount = 0; // 存在但无任何变化
+		// 总记录数
+		int totalcount = 0;
+
+		// 没导入记录数
+		int noImportCount = 0;
+
+		// 变更记录数
+		int changeCount = 0;
+
+		// 新增记录数
+		int newCount = 0;
+
+		// 不存在版本号
+		int noversionCount = 0;
+
+		// 存在但无任何变化
+		int nochangeCount = 0;
 
 		EmsEdiHeadH2kBomFrom obj = null;
-		EmsHeadH2kBom m = null;// 表中bom
+
+		// 表中bom
+		EmsHeadH2kBom m = null;
+
 		EmsHeadH2kBom e = null;// 导入bom
 
 		Integer exgSeqNum = null;// 成品序号
+
 		Integer version = null;// 版本号
+
 		Integer imgSeqNum = null;// 料件序号
+
 		String key = null;// 料件序号 + 版本号 + 成品序号
+
 		String vkey = null;// 版本号 + 成品序号
 
 		EmsHeadH2kExg exg = null; // 成品
+
 		EmsHeadH2kVersion v = null;// 版本
+
 		EmsHeadH2kImg img = null;// 料件
+
 		for (int i = 0; i < list.size(); i++) {
+
 			totalcount++;
+
 			obj = list.get(i);
 
 			if (obj.getErrinfo() != null && !obj.getErrinfo().equals("")) {
+
 				noImportCount++;
+
 				continue;
 			}
 
 			e = obj.getBom();
+
 			e.setUnitWear(CommonUtils.getDoubleByDigit(e.getUnitWear(), 9));
+
 			e.setWear(CommonUtils.getDoubleByDigit(e.getWear(), 5));
 
 			exgSeqNum = obj.getSeqNum();
+
 			version = obj.getVersion();
+
 			imgSeqNum = e.getSeqNum();
 
 			// 料件序号 + / + 版本号 + / + 成品序号
 			key = imgSeqNum + "/" + version + "/" + exgSeqNum;
+
 			// 版本号 + / + 成品序号
 			vkey = version + "/" + exgSeqNum;
 
 			exg = exgMap.get(exgSeqNum);
+
 			// 成品不存在
 			if (exg == null) {
+
 				nochangeCount++;
+
 				continue;
 			}
 
 			v = versionMap.get(vkey);
+
 			if (v != null) { // 存在版本
 
 				// 判断在当前版本下是否存在该料件
 				m = emsBomMap.get(key);
 
 				if (emsHeadH2k.getDeclareType().equals("1")) {// 备案状态
+
 					if (m != null) {// 该版本存在该料件作为子件的bom
+
 						if ((!e.getUnitWear().equals(m.getUnitWear()) || !e
 								.getWear().equals(m.getWear()))
 								&& m.getModifyMark().equals(3)) {// 并且bom为新增状态
+
 							m.setUnitWear(e.getUnitWear());
+
 							m.setWear(e.getWear());
+
 							m.setModifyTimes(emsHeadH2k.getModifyTimes());// 修改次数
 
 							// 记录修改料件
@@ -4474,19 +4526,16 @@ public class EmsEdiTrLogic {
 		EmsEdiHeadH2kBomFrom bomFrom = null;
 
 		for (int i = 0; i < size; i++) {
-
 			bomFrom = list.get(i);
 
 			// 记录成品序号
 			seqNum = bomFrom.getSeqNum();
-
 			if (!seqNumList.contains(seqNum)) {
 				seqNumList.add(seqNum);
 			}
 
 			// 记录料件序号
 			imgSeqNum = bomFrom.getBom().getSeqNum();
-
 			if (!imgSeqNumList.contains(imgSeqNum)) {
 				imgSeqNumList.add(imgSeqNum);
 			}
@@ -4502,7 +4551,9 @@ public class EmsEdiTrLogic {
 		EmsHeadH2kBom b = null;
 
 		for (int i = 0; i < emsBomList.size(); i++) {
+
 			b = emsBomList.get(i);
+
 			// 料件序号 + 版本号 + 成品序号
 			key = b.getSeqNum() + "/" + b.getEmsHeadH2kVersion().getVersion()
 					+ "/" + b.getEmsHeadH2kExg().getSeqNum();
@@ -4543,7 +4594,9 @@ public class EmsEdiTrLogic {
 
 		// 4.2 把versionList转化为exgMap
 		String vkey = null;
+
 		EmsHeadH2kVersion v = null;
+
 		for (int i = 0; i < versionList.size(); i++) {
 			v = versionList.get(i);
 

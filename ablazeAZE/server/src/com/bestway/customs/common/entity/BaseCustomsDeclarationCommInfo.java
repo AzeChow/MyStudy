@@ -1,7 +1,6 @@
 package com.bestway.customs.common.entity;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import com.bestway.bcus.custombase.entity.countrycode.Country;
 import com.bestway.bcus.custombase.entity.hscode.Complex;
@@ -54,7 +53,7 @@ public class BaseCustomsDeclarationCommInfo extends BaseScmEntity {
 	 * 商品规格
 	 */
 	private String commSpec;
-	
+
 	/**
 	 * 规范申报规格
 	 */
@@ -79,7 +78,7 @@ public class BaseCustomsDeclarationCommInfo extends BaseScmEntity {
 	 * 商品总价
 	 */
 	private Double commTotalPrice;
-	
+
 	/**
 	 * 工缴费(加工费总价)
 	 */
@@ -113,7 +112,7 @@ public class BaseCustomsDeclarationCommInfo extends BaseScmEntity {
 	 * 第二法定数量
 	 */
 	private Double secondAmount;
-	
+
 	/**
 	 * 第二法定比例因子
 	 */
@@ -170,6 +169,11 @@ public class BaseCustomsDeclarationCommInfo extends BaseScmEntity {
 	private String addType;
 
 	/**
+	 * 税金
+	 */
+	private Double tax;
+
+	/**
 	 * 申报单位
 	 */
 	private Company declarationCompany;
@@ -190,7 +194,7 @@ public class BaseCustomsDeclarationCommInfo extends BaseScmEntity {
 	/**
 	 * 箱号
 	 */
-	private String boxNo;	
+	private String boxNo;
 	/**
 	 * 料号
 	 */
@@ -199,23 +203,22 @@ public class BaseCustomsDeclarationCommInfo extends BaseScmEntity {
 	 * 备注
 	 */
 	private String memo;
-	
+
 	/**
 	 * 扩展字段1 港芝插件用于打印载货清单,包装种类全部取表体,当多个商品合并存放多个包装种类
 	 */
 	private String extendField1;
-	
+
 	/**
 	 * 技嘉出口财务报表
 	 */
 	private ExItemCode exItemCode;
-	
 
 	/**
 	 * 扩展字段2 港芝插件
 	 */
 	private HashMap extendKeyValue;
-	
+
 	public String getBoxNo() {
 		return boxNo;
 	}
@@ -717,8 +720,7 @@ public class BaseCustomsDeclarationCommInfo extends BaseScmEntity {
 		if (this.getBaseCustomsDeclaration() != null && rate != null
 				&& rate > 0.0) {
 			return (this.getCommTotalPrice() == null ? Double.valueOf(0) : this
-					.getCommTotalPrice())
-					* rate;
+					.getCommTotalPrice()) * rate;
 		}
 		return this.getCommTotalPrice();
 	}
@@ -777,6 +779,7 @@ public class BaseCustomsDeclarationCommInfo extends BaseScmEntity {
 	public void setWrapType(Wrap wrapType) {
 		this.wrapType = wrapType;
 	}
+
 	public Double getWorkUsd() {
 		return workUsd;
 	}
@@ -784,18 +787,19 @@ public class BaseCustomsDeclarationCommInfo extends BaseScmEntity {
 	public void setWorkUsd(Double workUsd) {
 		this.workUsd = workUsd;
 	}
-    /**
-     * 得到连接数量及单位后的字符串
-     */
-	public String getUnitAddcommAmount()
-	{
-		    String commAmount1=String.valueOf(commAmount);
-		    String sum=commAmount1+" "+unit.getName();
-		    return sum;
+
+	/**
+	 * 得到连接数量及单位后的字符串
+	 */
+	public String getUnitAddcommAmount() {
+		String commAmount1 = String.valueOf(commAmount);
+		String sum = commAmount1 + " " + unit.getName();
+		return sum;
 	}
 
 	/**
 	 * 获取 料号
+	 * 
 	 * @return
 	 */
 	public String getPtNo() {
@@ -804,6 +808,7 @@ public class BaseCustomsDeclarationCommInfo extends BaseScmEntity {
 
 	/**
 	 * 设置 料号
+	 * 
 	 * @param ptNo
 	 */
 	public void setPtNo(String ptNo) {
@@ -812,12 +817,13 @@ public class BaseCustomsDeclarationCommInfo extends BaseScmEntity {
 
 	/**
 	 * 获取 备注
+	 * 
 	 * @return
 	 */
 	public String getMemo() {
 		return memo;
 	}
-	
+
 	public ExItemCode getExItemCode() {
 		return exItemCode;
 	}
@@ -825,9 +831,10 @@ public class BaseCustomsDeclarationCommInfo extends BaseScmEntity {
 	public void setExItemCode(ExItemCode exItemCode) {
 		this.exItemCode = exItemCode;
 	}
-	
+
 	/**
 	 * 设置 备注
+	 * 
 	 * @param memo
 	 */
 	public void setMemo(String memo) {
@@ -850,6 +857,14 @@ public class BaseCustomsDeclarationCommInfo extends BaseScmEntity {
 		this.extendKeyValue = extendKeyValue;
 	}
 
+	public Double getTax() {
+		return tax;
+	}
+
+	public void setTax(Double tax) {
+		this.tax = tax;
+	}
+
 	/**
 	 * @return the declareSpec
 	 */
@@ -858,12 +873,11 @@ public class BaseCustomsDeclarationCommInfo extends BaseScmEntity {
 	}
 
 	/**
-	 * @param declareSpec the declareSpec to set
+	 * @param declareSpec
+	 *            the declareSpec to set
 	 */
 	public void setDeclareSpec(String declareSpec) {
 		this.declareSpec = declareSpec;
 	}
-	
-	
-	
+
 }

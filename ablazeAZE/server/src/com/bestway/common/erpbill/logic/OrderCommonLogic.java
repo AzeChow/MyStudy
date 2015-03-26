@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.bestway.bcs.bcsinnermerge.entity.BcsInnerMerge;
 import com.bestway.bcs.contract.dao.ContractDao;
 import com.bestway.bcs.contract.entity.BcsParameterSet;
@@ -19,7 +21,6 @@ import com.bestway.bcs.contract.entity.Contract;
 import com.bestway.bcs.contract.entity.ContractBom;
 import com.bestway.bcs.contract.entity.ContractExg;
 import com.bestway.bcs.contract.entity.ContractImg;
-import com.bestway.bcs.contractexe.entity.TempBcsImpExpCommodityInfo;
 import com.bestway.bcs.dictpor.entity.BcsDictPorExg;
 import com.bestway.bcs.dictpor.entity.BcsDictPorImg;
 import com.bestway.bcus.cas.entity.BillTemp;
@@ -29,7 +30,6 @@ import com.bestway.bcus.custombase.entity.hscode.Complex;
 import com.bestway.bcus.custombase.entity.parametercode.Curr;
 import com.bestway.bcus.custombase.entity.parametercode.LevyMode;
 import com.bestway.bcus.custombase.entity.parametercode.Unit;
-import com.bestway.bcus.enc.entity.ImpExpRequestBill;
 import com.bestway.common.CaleUtil;
 import com.bestway.common.CommonUtils;
 import com.bestway.common.MaterielType;
@@ -549,8 +549,9 @@ public class OrderCommonLogic {
 
 				tempOrderBom.setNotContractNum(notContractNum);
 
-				tempOrderBom.setAmount(CommonUtils.getDoubleByDigit(CommonUtils
-						.getDoubleExceptNull(amount * unitUsed), decimalSize));
+				tempOrderBom.setAmount(CommonUtils.getDoubleByDigit(
+						CommonUtils.getDoubleExceptNull(amount * unitUsed),
+						decimalSize));
 				Double ptPrice = customOrderDetail.getUnitPrice() == null ? 0.0
 						: customOrderDetail.getUnitPrice();
 				tempOrderBom.setPtPrice(ptPrice);
@@ -700,9 +701,9 @@ public class OrderCommonLogic {
 				// 成品数量*单项用量=料件数量
 				// 单项用量（总耗）=单耗/（1-损耗）
 
-				Double amount = CommonUtils.getDoubleByDigit(CommonUtils
-						.getDoubleExceptNull(customOrderDetail.getAmount()
-								* unitUsed), decimalSize);
+				Double amount = CommonUtils.getDoubleByDigit(
+						CommonUtils.getDoubleExceptNull(customOrderDetail
+								.getAmount() * unitUsed), decimalSize);
 
 				tempOrderBom.setAmount(amount);
 				/**
@@ -779,8 +780,9 @@ public class OrderCommonLogic {
 						: materialBomDetail.getUnitWaste();
 				Double unitUsed = materialBomDetail.getUnitUsed() == null ? 1.0
 						: materialBomDetail.getUnitUsed();
-				Double waste = CommonUtils.getDoubleByDigit(CommonUtils
-						.getDoubleExceptNull(1 - unitWaste / unitUsed), 9);
+				Double waste = CommonUtils.getDoubleByDigit(
+						CommonUtils.getDoubleExceptNull(1 - unitWaste
+								/ unitUsed), 9);
 
 				unitWaste = (tempOrderBom.getUnitWaste() + unitWaste) / 2;
 				tempOrderBom.setUnitWaste(unitWaste);
@@ -943,18 +945,18 @@ public class OrderCommonLogic {
 				/**
 				 * 数量
 				 */
-				Double amount = CommonUtils.getDoubleByDigit(CommonUtils
-						.getDoubleExceptNull(tob.getAmount() * unitConvert),
-						decimalSize);
+				Double amount = CommonUtils.getDoubleByDigit(
+						CommonUtils.getDoubleExceptNull(tob.getAmount()
+								* unitConvert), decimalSize);
 
 				customOrderBom.setAmount(amount);
 
 				/**
 				 * 已转厂数量
 				 */
-				Double transNum = CommonUtils.getDoubleByDigit(CommonUtils
-						.getDoubleExceptNull(tob.getTransNum() * unitConvert),
-						decimalSize);
+				Double transNum = CommonUtils.getDoubleByDigit(
+						CommonUtils.getDoubleExceptNull(tob.getTransNum()
+								* unitConvert), decimalSize);
 
 				customOrderBom.setTransNum(transNum);
 
@@ -985,8 +987,8 @@ public class OrderCommonLogic {
 				/**
 				 * 总金额
 				 */
-				Double totalPrice = CommonUtils.getDoubleByDigit(CommonUtils
-						.getDoubleExceptNull(declarePrice * amount),
+				Double totalPrice = CommonUtils.getDoubleByDigit(
+						CommonUtils.getDoubleExceptNull(declarePrice * amount),
 						decimalSize);
 
 				customOrderBom.setTotalPrice(totalPrice);
@@ -1083,18 +1085,18 @@ public class OrderCommonLogic {
 				/**
 				 * 数量
 				 */
-				Double amount = CommonUtils.getDoubleByDigit(CommonUtils
-						.getDoubleExceptNull(tob.getAmount() * unitConvert),
-						decimalSize);
+				Double amount = CommonUtils.getDoubleByDigit(
+						CommonUtils.getDoubleExceptNull(tob.getAmount()
+								* unitConvert), decimalSize);
 
 				customOrderBom.setAmount(amount);
 
 				/**
 				 * 已转厂数量
 				 */
-				Double transNum = CommonUtils.getDoubleByDigit(CommonUtils
-						.getDoubleExceptNull(tob.getTransNum() * unitConvert),
-						decimalSize);
+				Double transNum = CommonUtils.getDoubleByDigit(
+						CommonUtils.getDoubleExceptNull(tob.getTransNum()
+								* unitConvert), decimalSize);
 
 				customOrderBom.setTransNum(transNum);
 
@@ -1130,8 +1132,8 @@ public class OrderCommonLogic {
 				/**
 				 * 总金额
 				 */
-				Double totalPrice = CommonUtils.getDoubleByDigit(CommonUtils
-						.getDoubleExceptNull(declarePrice * amount),
+				Double totalPrice = CommonUtils.getDoubleByDigit(
+						CommonUtils.getDoubleExceptNull(declarePrice * amount),
 						decimalSize);
 
 				customOrderBom.setTotalPrice(totalPrice);
@@ -1240,9 +1242,9 @@ public class OrderCommonLogic {
 				/**
 				 * 总金额
 				 */
-				Double totalPrice = CommonUtils.getDoubleByDigit(CommonUtils
-						.getDoubleExceptNull(customOrderExg.getUnitPrice()
-								* orderAmount), decimalSize);
+				Double totalPrice = CommonUtils.getDoubleByDigit(
+						CommonUtils.getDoubleExceptNull(customOrderExg
+								.getUnitPrice() * orderAmount), decimalSize);
 
 				customOrderExg.setTotalPrice(totalPrice);
 				/**
@@ -1257,8 +1259,8 @@ public class OrderCommonLogic {
 				 */
 				Double processTotalPrice = CommonUtils.getDoubleByDigit(
 						CommonUtils.getDoubleExceptNull(customOrderExg
-								.getProcessUnitPrice()
-								* orderAmount), decimalSize);
+								.getProcessUnitPrice() * orderAmount),
+						decimalSize);
 
 				customOrderExg.setProcessTotalPrice(processTotalPrice);
 				/**
@@ -1321,17 +1323,17 @@ public class OrderCommonLogic {
 				/**
 				 * 总金额
 				 */
-				Double totalPrice = CommonUtils.getDoubleByDigit(CommonUtils
-						.getDoubleExceptNull(customOrderExg.getUnitPrice()
-								* orderAmount), decimalSize);
+				Double totalPrice = CommonUtils.getDoubleByDigit(
+						CommonUtils.getDoubleExceptNull(customOrderExg
+								.getUnitPrice() * orderAmount), decimalSize);
 
 				/**
 				 * 加工费总价
 				 */
 				Double processTotalPrice = CommonUtils.getDoubleByDigit(
 						CommonUtils.getDoubleExceptNull(customOrderExg
-								.getProcessUnitPrice()
-								* orderAmount), decimalSize);
+								.getProcessUnitPrice() * orderAmount),
+						decimalSize);
 
 				// customOrderExgMap.remove(customOrderExg);
 				customOrderExg.setProcessTotalPrice(processTotalPrice);
@@ -1349,9 +1351,9 @@ public class OrderCommonLogic {
 				if (customOrderExg.getTotalPrice() != null
 						&& customOrderExg.getAmount() != null
 						&& customOrderExg.getAmount() != 0.0) {
-					price = CommonUtils.getDoubleByDigit(customOrderExg
-							.getTotalPrice()
-							/ customOrderExg.getAmount(), decimalSize);
+					price = CommonUtils.getDoubleByDigit(
+							customOrderExg.getTotalPrice()
+									/ customOrderExg.getAmount(), decimalSize);
 
 				}
 				// Double unitPrice = (customOrderDetail.getUnitPrice() == null
@@ -1547,10 +1549,11 @@ public class OrderCommonLogic {
 					/**
 					 * 总金额
 					 */
-					Double totalPrice = CommonUtils.getDoubleByDigit(
-							CommonUtils.getDoubleExceptNull(customOrderExg
-									.getUnitPrice()
-									* orderAmount), decimalSize);
+					Double totalPrice = CommonUtils
+							.getDoubleByDigit(CommonUtils
+									.getDoubleExceptNull(customOrderExg
+											.getUnitPrice() * orderAmount),
+									decimalSize);
 
 					customOrderExg.setTotalPrice(totalPrice);
 					/**
@@ -1566,8 +1569,8 @@ public class OrderCommonLogic {
 					 */
 					Double processTotalPrice = CommonUtils.getDoubleByDigit(
 							CommonUtils.getDoubleExceptNull(customOrderExg
-									.getProcessUnitPrice()
-									* orderAmount), decimalSize);
+									.getProcessUnitPrice() * orderAmount),
+							decimalSize);
 					customOrderExg.setProcessTotalPrice(processTotalPrice);
 					/**
 					 * 单位净重
@@ -1645,17 +1648,17 @@ public class OrderCommonLogic {
 				/**
 				 * 总金额
 				 */
-				Double totalPrice = CommonUtils.getDoubleByDigit(CommonUtils
-						.getDoubleExceptNull(customOrderExg.getUnitPrice()
-								* orderAmount), decimalSize);
+				Double totalPrice = CommonUtils.getDoubleByDigit(
+						CommonUtils.getDoubleExceptNull(customOrderExg
+								.getUnitPrice() * orderAmount), decimalSize);
 
 				/**
 				 * 加工费总价
 				 */
 				Double processTotalPrice = CommonUtils.getDoubleByDigit(
 						CommonUtils.getDoubleExceptNull(customOrderExg
-								.getProcessUnitPrice()
-								* orderAmount), decimalSize);
+								.getProcessUnitPrice() * orderAmount),
+						decimalSize);
 				// customOrderExgMap.remove(customOrderExg);
 				customOrderExg.setProcessTotalPrice(processTotalPrice);
 				customOrderExg.setAmount(orderAmount);
@@ -1769,7 +1772,7 @@ public class OrderCommonLogic {
 				}
 			}
 
-		} else if (type == 2 || type == 3) {//为纸质手册或电子化手册
+		} else if (type == 2 || type == 3) {// 为纸质手册或电子化手册
 
 			for (int i = 0; i < list.size(); i++) {
 
@@ -1885,10 +1888,11 @@ public class OrderCommonLogic {
 						/**
 						 * 数量
 						 */
-						Double amount = CommonUtils.getDoubleByDigit(
-								CommonUtils.getDoubleExceptNull(customOrderExg
-										.getAmount()
-										* unitDosage), decimalSize);
+						Double amount = CommonUtils
+								.getDoubleByDigit(CommonUtils
+										.getDoubleExceptNull(customOrderExg
+												.getAmount() * unitDosage),
+										decimalSize);
 
 						customOrderBom.setAmount(amount);
 						/**
@@ -2095,9 +2099,10 @@ public class OrderCommonLogic {
 				/**
 				 * 单项用量
 				 */
-				Double wasteAmount = CommonUtils.getDoubleByDigit(CommonUtils
-						.getDoubleExceptNull(customOrderBom.getUnitWaste()
-								* customOrderBom.getAmount()), 9);
+				Double wasteAmount = CommonUtils.getDoubleByDigit(
+						CommonUtils.getDoubleExceptNull(customOrderBom
+								.getUnitWaste() * customOrderBom.getAmount()),
+						9);
 				customOrderImg.setWasteAmount(wasteAmount);
 				/**
 				 * 企业申报单价
@@ -2122,9 +2127,10 @@ public class OrderCommonLogic {
 				/**
 				 * 总金额
 				 */
-				Double totalPrice = CommonUtils.getDoubleByDigit(CommonUtils
-						.getDoubleExceptNull(customOrderImg.getUnitPrice()
-								* customOrderImg.getAmount()), decimalSize);
+				Double totalPrice = CommonUtils.getDoubleByDigit(
+						CommonUtils.getDoubleExceptNull(customOrderImg
+								.getUnitPrice() * customOrderImg.getAmount()),
+						decimalSize);
 				customOrderImg.setTotalPrice(totalPrice);
 				customOrderImgMap.put(key, customOrderImg);
 			} else {
@@ -2133,8 +2139,7 @@ public class OrderCommonLogic {
 				 * 损耗数量
 				 */
 				Double wasteAmount = (customOrderImg.getWasteAmount() + customOrderBom
-						.getUnitWaste()
-						* customOrderBom.getAmount()) / 2;
+						.getUnitWaste() * customOrderBom.getAmount()) / 2;
 
 				/**
 				 * 企业申报单价
@@ -2256,8 +2261,8 @@ public class OrderCommonLogic {
 
 				customOrderImg.setWasteAmount(CommonUtils.getDoubleByDigit(
 						CommonUtils.getDoubleExceptNull(customOrderBom
-								.getUnitWaste()
-								* customOrderBom.getAmount()), 9));
+								.getUnitWaste() * customOrderBom.getAmount()),
+						9));
 				/**
 				 * 单价
 				 */
@@ -2284,8 +2289,8 @@ public class OrderCommonLogic {
 
 				customOrderImg.setTotalPrice(CommonUtils.getDoubleByDigit(
 						CommonUtils.getDoubleExceptNull(customOrderImg
-								.getUnitPrice()
-								* customOrderImg.getAmount()), decimalSize));
+								.getUnitPrice() * customOrderImg.getAmount()),
+						decimalSize));
 				customOrderImgMap.put(key, customOrderImg);
 			} else {
 				customOrderImg = customOrderImgMap.get(key);
@@ -2293,8 +2298,7 @@ public class OrderCommonLogic {
 				 * 损耗数量
 				 */
 				Double wasteAmount = (customOrderImg.getWasteAmount() + customOrderBom
-						.getUnitWaste()
-						* customOrderBom.getAmount()) / 2;
+						.getUnitWaste() * customOrderBom.getAmount()) / 2;
 
 				/**
 				 * 单价
@@ -2717,10 +2721,15 @@ public class OrderCommonLogic {
 		}
 
 		Customparames customparames = this.orderCommonDao.findCustomparames();
+
 		Integer customType = customparames.getSetbgtype();
+
 		CustomOrderDetail customOrderDetail = null;
+
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
 		List<String> listKeyValue = new ArrayList<String>();
+
 		ProgressInfo info = ProcExeProgress.getInstance().getProgressInfo(
 				taskId);
 		if (info != null) {
@@ -2734,24 +2743,35 @@ public class OrderCommonLogic {
 		 */
 
 		Map<String, CustomOrder> existOrderMap = new HashMap<String, CustomOrder>();
+
 		List<String> listOrderNo = new ArrayList<String>();
+
 		listOrderNo.addAll(importOrderMap.values());
+
 		List<CustomOrder> existCustomOrderDataList = orderCommonDao
 				.findCustomOrder(customType, listOrderNo);
 
 		for (int i = 0, n = existCustomOrderDataList.size(); i < n; i++) {
+
 			CustomOrder temp = existCustomOrderDataList.get(i);
+
 			String scmCocName = temp.getCustomer() == null ? "" : temp
 					.getCustomer().getName();
+
 			String billCode = temp.getBillCode() == null ? "" : temp
 					.getBillCode();
+
 			// String ifOk = temp.getIfzc() == null
 			// || "false".equals(temp.getIfzc()) ? "false" :
 			// temp.getIfzc().toString();
+
 			Integer orderType = temp.getOrdertype();
+
 			String type = String.valueOf(temp.getCustomType());
+
 			String key = scmCocName + "/" + billCode + "/" + orderType + "/"
 					+ type;
+
 			existOrderMap.put(key, temp);
 
 		}
@@ -2768,21 +2788,30 @@ public class OrderCommonLogic {
 				.findCustomOrderDetail(customType, listOrderDetail);
 
 		for (int i = 0; i < existOrderDetailList.size(); i++) {
+
 			CustomOrderDetail cod = existOrderDetailList.get(i);
+
 			String orderERPId = cod.getOrderERPId();
+
 			String scmCocName = cod.getCustomOrder().getCustomer() == null ? ""
 					: cod.getCustomOrder().getCustomer().getName();
+
 			String billCode = cod.getCustomOrder().getBillCode() == null ? ""
 					: cod.getCustomOrder().getBillCode();
+
 			Integer orderType = cod.getCustomOrder().getOrdertype();
+
 			String type = String.valueOf(cod.getCustomOrder().getCustomType());
+
 			// key2=定单号＋客户＋料号＋订单类型＋报关类型＋
 			String key2 = billCode + "/" + scmCocName + "/"
 					+ cod.getMateriel().getPtNo() + "/" + orderType + "/"
 					+ type + "/" + cod.getAmount() + "/" + cod.getUnitPrice()
 					+ "/" + cod.getCalUnit().getName() + "/"
 					+ cod.getCurr().getName();
+
 			if (key2 != null && !key2.equals("")) {
+
 				existOrderDetailMap.put(key2, cod);
 			}
 
@@ -2935,8 +2964,10 @@ public class OrderCommonLogic {
 				/**
 				 * 币别
 				 */
-				Curr curr = orderCommonDao.findCurr(fileData.getCurr().trim());
-				if (curr != null) {
+				String fileDatasCurr = fileData.getCurr();
+
+				if (StringUtils.isNotBlank(fileDatasCurr)) {
+					Curr curr = orderCommonDao.findCurr(fileDatasCurr.trim());
 					cod.setCurr(curr);
 				}
 
@@ -2955,9 +2986,9 @@ public class OrderCommonLogic {
 				/**
 				 * 报关数量
 				 */
-				Double bgamount = CommonUtils.getDoubleByDigit(CommonUtils
-						.getDoubleExceptNull(unitConvert * cod.getAmount()),
-						decimalSize);
+				Double bgamount = CommonUtils.getDoubleByDigit(
+						CommonUtils.getDoubleExceptNull(unitConvert
+								* cod.getAmount()), decimalSize);
 				cod.setBgamount(bgamount);
 				/**
 				 * 未转合同数量
@@ -2970,10 +3001,9 @@ public class OrderCommonLogic {
 				/**
 				 * 总金额
 				 */
-				Double totalPrice = CommonUtils
-						.getDoubleByDigit(CommonUtils
-								.getDoubleExceptNull(unitPrice * bgamount),
-								decimalSize);
+				Double totalPrice = CommonUtils.getDoubleByDigit(
+						CommonUtils.getDoubleExceptNull(unitPrice * bgamount),
+						decimalSize);
 				cod.setTotalPrice(totalPrice);
 
 				/**
@@ -2995,7 +3025,7 @@ public class OrderCommonLogic {
 				} catch (ParseException e) {
 					e.printStackTrace();
 				}
-				System.out.println("ssssssssssssssssssssssssssssssssssss");
+
 				this.orderCommonDao.saveCustomOrderDetail(cod);
 
 			} else {
@@ -3006,10 +3036,9 @@ public class OrderCommonLogic {
 						.getBgAmount()));
 				Double amount = customOrderDetail.getAmount() == null ? 0.0
 						: customOrderDetail.getAmount();
-				Double bgAmount = CommonUtils
-						.getDoubleByDigit(CommonUtils
-								.getDoubleExceptNull(unitConvert * amount),
-								decimalSize);
+				Double bgAmount = CommonUtils.getDoubleByDigit(
+						CommonUtils.getDoubleExceptNull(unitConvert * amount),
+						decimalSize);
 				customOrderDetail.setBgamount(bgAmount);
 				Double contractNum = customOrderDetail.getContractNum();
 				if (bgAmount.doubleValue() >= contractNum.doubleValue()) {
@@ -3176,8 +3205,8 @@ public class OrderCommonLogic {
 						SimpleDateFormat dateFormat = new SimpleDateFormat(
 								"yyyy-MM-dd");
 						java.util.Date outDate = dateFormat.parse(orderDate);
-						java.sql.Date simpleDate = new java.sql.Date(outDate
-								.getTime());
+						java.sql.Date simpleDate = new java.sql.Date(
+								outDate.getTime());
 						orderDate = simpleDate.toString();
 					} catch (Exception f) {
 						temp.add(Integer.valueOf(OrderDate.order_orderDate));
@@ -3198,8 +3227,8 @@ public class OrderCommonLogic {
 						SimpleDateFormat dateFormat = new SimpleDateFormat(
 								"yyyy-MM-dd");
 						java.util.Date outDate = dateFormat.parse(salesDate);
-						java.sql.Date simpleDate = new java.sql.Date(outDate
-								.getTime());
+						java.sql.Date simpleDate = new java.sql.Date(
+								outDate.getTime());
 						salesDate = simpleDate.toString();
 					} catch (Exception f) {
 						temp.add(Integer.valueOf(OrderDate.order_salesDate));
@@ -3807,10 +3836,11 @@ public class OrderCommonLogic {
 				}
 
 				Double exportAmount = detailCount;
-				img.setAmount(CommonUtils.getDoubleByDigit(CommonUtils
-						.getDoubleExceptNull(exportAmount), countBit));
-				img.setTotalPrice(CommonUtils.getDoubleByDigit(CommonUtils
-						.getDoubleExceptNull(detailTotalPrice), countBit));
+				img.setAmount(CommonUtils.getDoubleByDigit(
+						CommonUtils.getDoubleExceptNull(exportAmount), countBit));
+				img.setTotalPrice(CommonUtils.getDoubleByDigit(
+						CommonUtils.getDoubleExceptNull(detailTotalPrice),
+						countBit));
 				img.setModifyMark(ModifyMarkState.ADDED);
 				img.setIsMainImg(bimimg.getBcsTenInnerMerge().getIsMainImg());
 				imgCommInfo.put(bimimg.getBcsTenInnerMerge().getSeqNum(), img);
@@ -3818,10 +3848,10 @@ public class OrderCommonLogic {
 			} else {
 				System.out.println("@@@@~~~~~~");
 				Double exportAmount = detailCount + img.getAmount();
-				img.setAmount(CommonUtils.getDoubleByDigit(CommonUtils
-						.getDoubleExceptNull(exportAmount), countBit));
-				img.setTotalPrice(CommonUtils.getDoubleByDigit(CommonUtils
-						.getDoubleExceptNull(img.getAmount()
+				img.setAmount(CommonUtils.getDoubleByDigit(
+						CommonUtils.getDoubleExceptNull(exportAmount), countBit));
+				img.setTotalPrice(CommonUtils.getDoubleByDigit(
+						CommonUtils.getDoubleExceptNull(img.getAmount()
 								* (img.getDeclarePrice() == null ? 0.0 : img
 										.getDeclarePrice())), countBit));
 				if (ModifyMarkState.UNCHANGE.equals(img.getModifyMark())) {
@@ -3861,10 +3891,12 @@ public class OrderCommonLogic {
 	 * @param emsNo
 	 * @param customType
 	 * @param contract
-	 * @param version 指定BOM版本号
+	 * @param version
+	 *            指定BOM版本号
 	 */
 	private void changeToContractBom(String emsNo, int customType,
-			ContractExg exg, Contract contract, Double detailCount, String ptNo, Integer version) {
+			ContractExg exg, Contract contract, Double detailCount,
+			String ptNo, Integer version) {
 		CustomBaseAction customBaseAction;
 		// customBaseAction.f
 		/**
@@ -3907,7 +3939,9 @@ public class OrderCommonLogic {
 				//
 				// 把子级料件转为十码资料
 				//
-				BcsInnerMerge bimmaterial = this.orderCommonDao.findBcsInnerMerge(materialBom.getMateriel().getPtNo(),"2");
+				BcsInnerMerge bimmaterial = this.orderCommonDao
+						.findBcsInnerMerge(materialBom.getMateriel().getPtNo(),
+								"2");
 				if (bimmaterial != null
 						&& bimmaterial.getBcsTenInnerMerge() != null
 						&& bimmaterial.getMateriel() != null) {
@@ -3930,14 +3964,16 @@ public class OrderCommonLogic {
 								.findBcsDictPorImg(bimmaterial
 										.getBcsTenInnerMerge().getSeqNum());
 						if (dictPorimg == null) {
-							System.out.println(materialBom.getMateriel().getPtNo()+"====================");
+							System.out.println(materialBom.getMateriel()
+									.getPtNo() + "====================");
 							throw new RuntimeException("成品料号["
 									+ ptNo
-									+"]耗用料件["+ materialBom.getMateriel().getPtNo()
+									+ "]耗用料件["
+									+ materialBom.getMateriel().getPtNo()
 									+ "]对应归并序号["
 									+ bimmaterial.getBcsTenInnerMerge()
 											.getSeqNum() + "]在备案资料库中不存在!");
-							
+
 						} else {
 							credenceNoImg = dictPorimg.getSeqNum();
 						}
@@ -3958,22 +3994,14 @@ public class OrderCommonLogic {
 						}
 						bom.setComplex(bimmaterial.getBcsTenInnerMerge()
 								.getComplex());
-						bom
-								.setName(bimmaterial.getBcsTenInnerMerge()
-										.getName());
-						bom
-								.setSpec(bimmaterial.getBcsTenInnerMerge()
-										.getSpec());
+						bom.setName(bimmaterial.getBcsTenInnerMerge().getName());
+						bom.setSpec(bimmaterial.getBcsTenInnerMerge().getSpec());
 						bom.setUnit(bimmaterial.getBcsTenInnerMerge()
 								.getComUnit());
-						bom
-								.setUnitWaste(materialBom.getUnitWaste() == null ? 0.0
-										: materialBom.getUnitWaste()
-												* unitConvert);
-						bom
-								.setUnitDosage(materialBom.getUnitUsed() == null ? 0.0
-										: materialBom.getUnitUsed()
-												* unitConvert);
+						bom.setUnitWaste(materialBom.getUnitWaste() == null ? 0.0
+								: materialBom.getUnitWaste() * unitConvert);
+						bom.setUnitDosage(materialBom.getUnitUsed() == null ? 0.0
+								: materialBom.getUnitUsed() * unitConvert);
 						Double waste = 0.0;
 						if (bom.getUnitDosage() != null
 								&& bom.getUnitDosage() != 0.0) {
@@ -3985,13 +4013,19 @@ public class OrderCommonLogic {
 						Double amount = exportAmount
 								* (bom.getUnitDosage() == null ? 0.0 : bom
 										.getUnitDosage());
-						bom.setAmount(CommonUtils.getDoubleByDigit(CommonUtils
-								.getDoubleExceptNull(amount), countBit));
+						bom.setAmount(CommonUtils.getDoubleByDigit(
+								CommonUtils.getDoubleExceptNull(amount),
+								countBit));
 						bom.setModifyMark(ModifyMarkState.ADDED);
-						bom.setDeclarePrice(bimmaterial.getBcsTenInnerMerge().getPrice());
-						bom.setTotalPrice(CaleUtil.multiply(bimmaterial.getBcsTenInnerMerge().getPrice(), bom.getAmount()));
-						bom.setIsMainImg(bimmaterial.getBcsTenInnerMerge().getIsMainImg());
-						bom.setCountry(bimmaterial.getBcsTenInnerMerge().getCountry());
+						bom.setDeclarePrice(bimmaterial.getBcsTenInnerMerge()
+								.getPrice());
+						bom.setTotalPrice(CaleUtil.multiply(bimmaterial
+								.getBcsTenInnerMerge().getPrice(), bom
+								.getAmount()));
+						bom.setIsMainImg(bimmaterial.getBcsTenInnerMerge()
+								.getIsMainImg());
+						bom.setCountry(bimmaterial.getBcsTenInnerMerge()
+								.getCountry());
 						bomMap.put(bomkey, bom);
 						this.contractDao.saveContractBom(bom);
 					} else {
@@ -4016,8 +4050,9 @@ public class OrderCommonLogic {
 						Double amount = exportAmount
 								* (bom.getUnitDosage() == null ? 0.0 : bom
 										.getUnitDosage());
-						bom.setAmount(CommonUtils.getDoubleByDigit(CommonUtils
-								.getDoubleExceptNull(amount), countBit));
+						bom.setAmount(CommonUtils.getDoubleByDigit(
+								CommonUtils.getDoubleExceptNull(amount),
+								countBit));
 
 						this.contractDao.saveContractBom(bom);
 						bomMap.put(bomkey, bom);
@@ -4025,15 +4060,17 @@ public class OrderCommonLogic {
 
 					Double amount = this.orderCommonDao.StateContractBomAmount(
 							customType, bimmaterial.getBcsTenInnerMerge()
-									.getSeqNum(),  contract.getId());
+									.getSeqNum(), contract.getId());
 					System.out.print("@@@" + amount);
 					// changeToContractImg(emsNo, customType, contract,
 					// materialBom.getMateriel().getPtNo(), amount, 0.0);
 					changeContractBomToContractImg(contract, bimmaterial,
 							emsNo, bimmaterial.getBcsTenInnerMerge()
 									.getSeqNum(), amount);
-				}else{
-					throw new RuntimeException("成品折料后，料件料号[" + materialBom.getMateriel().getPtNo()+ "]在【物料与报关对应表】中没有或不存在【当前使用的报关资料】!");
+				} else {
+					throw new RuntimeException("成品折料后，料件料号["
+							+ materialBom.getMateriel().getPtNo()
+							+ "]在【物料与报关对应表】中没有或不存在【当前使用的报关资料】!");
 				}
 
 			}
@@ -4074,10 +4111,10 @@ public class OrderCommonLogic {
 					.findContractImgByEmsNoAndSeqNum(emsNo, seqNum);
 			if (contractImgList != null && contractImgList.size() > 0) {
 				img = (ContractImg) contractImgList.get(0);
-				img.setAmount(CommonUtils.getDoubleByDigit(CommonUtils
-						.getDoubleExceptNull(amount), countBit));
-				img.setTotalPrice(CommonUtils.getDoubleByDigit(CommonUtils
-						.getDoubleExceptNull(img.getAmount()
+				img.setAmount(CommonUtils.getDoubleByDigit(
+						CommonUtils.getDoubleExceptNull(amount), countBit));
+				img.setTotalPrice(CommonUtils.getDoubleByDigit(
+						CommonUtils.getDoubleExceptNull(img.getAmount()
 								* (img.getDeclarePrice() == null ? 0.0 : img
 										.getDeclarePrice())), countBit));
 				if (ModifyMarkState.UNCHANGE.equals(img.getModifyMark())) {
@@ -4103,12 +4140,13 @@ public class OrderCommonLogic {
 				if (ls != null && ls.size() != 0) {
 					img.setLevyMode((LevyMode) ls.get(0));// 默认征免方式(LevyMode)
 				}
-				img.setAmount(CommonUtils.getDoubleByDigit(CommonUtils
-						.getDoubleExceptNull(amount), countBit));
+				img.setAmount(CommonUtils.getDoubleByDigit(
+						CommonUtils.getDoubleExceptNull(amount), countBit));
 				img.setTotalPrice(CaleUtil.multiply(
 						CommonUtils.getDoubleExceptNull(img.getDeclarePrice()),
 						CommonUtils.getDoubleExceptNull(img.getAmount())));
-				img.setTotalPrice(CommonUtils.getDoubleByDigit(img.getTotalPrice(),countBit));
+				img.setTotalPrice(CommonUtils.getDoubleByDigit(
+						img.getTotalPrice(), countBit));
 				img.setIsMainImg(bimimg.getBcsTenInnerMerge().getIsMainImg());
 				img.setModifyMark(ModifyMarkState.ADDED);
 			}
@@ -4126,7 +4164,7 @@ public class OrderCommonLogic {
 	 */
 	private ContractExg changeToContractExg(String emsNo, int customType,
 			Contract contract, String ptNo, Double detailCount,
-			Double detailTotalPrice,Integer version) {
+			Double detailTotalPrice, Integer version) {
 		ContractExg exg = null;
 		Map<Integer, ContractExg> exgCommInfo = new HashMap<Integer, ContractExg>();
 		/**
@@ -4189,13 +4227,14 @@ public class OrderCommonLogic {
 				exg.setComplex(bim.getBcsTenInnerMerge().getComplex());
 				exg.setUnit(bim.getBcsTenInnerMerge().getComUnit());
 				Double exportAmount = detailCount;
-				exg.setExportAmount(CommonUtils.getDoubleByDigit(CommonUtils
-						.getDoubleExceptNull(exportAmount), countBit));
-				exg.setTotalPrice(CommonUtils.getDoubleByDigit(CommonUtils
-						.getDoubleExceptNull(detailTotalPrice), moneyBit));
+				exg.setExportAmount(CommonUtils.getDoubleByDigit(
+						CommonUtils.getDoubleExceptNull(exportAmount), countBit));
+				exg.setTotalPrice(CommonUtils.getDoubleByDigit(
+						CommonUtils.getDoubleExceptNull(detailTotalPrice),
+						moneyBit));
 				// 通关手册 成品单价 = 总价/数量
-				exg.setUnitPrice(CommonUtils.getDoubleByDigit(CommonUtils
-						.getDoubleExceptNull(exg.getTotalPrice()
+				exg.setUnitPrice(CommonUtils.getDoubleByDigit(
+						CommonUtils.getDoubleExceptNull(exg.getTotalPrice()
 								/ exg.getExportAmount()), countBit));
 
 				exg.setModifyMark(ModifyMarkState.ADDED);
@@ -4204,19 +4243,16 @@ public class OrderCommonLogic {
 				this.contractDao.saveContractExg(exg);
 			} else {
 				Double exportAmount = exg.getExportAmount() + detailCount;
-				exg.setExportAmount(CommonUtils.getDoubleByDigit(CommonUtils
-						.getDoubleExceptNull(exportAmount), countBit));
-				exg
-						.setTotalPrice(CommonUtils.getDoubleByDigit(
-								CommonUtils.getDoubleExceptNull(exg
-										.getUnitPrice() == null ? 0.0 : exg
-										.getUnitPrice()
-										* exportAmount), moneyBit));
+				exg.setExportAmount(CommonUtils.getDoubleByDigit(
+						CommonUtils.getDoubleExceptNull(exportAmount), countBit));
+				exg.setTotalPrice(CommonUtils.getDoubleByDigit(CommonUtils
+						.getDoubleExceptNull(exg.getUnitPrice() == null ? 0.0
+								: exg.getUnitPrice() * exportAmount), moneyBit));
 				exg.setProcessTotalPrice(CommonUtils.getDoubleByDigit(
 						CommonUtils.getDoubleExceptNull(exg
 								.getProcessUnitPrice() == null ? 0.0 : exg
-								.getProcessUnitPrice()
-								* exportAmount), moneyBit));
+								.getProcessUnitPrice() * exportAmount),
+						moneyBit));
 				if (ModifyMarkState.UNCHANGE.equals(exg.getModifyMark())) {
 					exg.setModifyMark(ModifyMarkState.MODIFIED);
 				}
@@ -4227,8 +4263,8 @@ public class OrderCommonLogic {
 			//
 			// 转合同BOM
 			//
-			changeToContractBom(emsNo, customType, exg, contract, exg
-					.getExportAmount(), ptNo, version);
+			changeToContractBom(emsNo, customType, exg, contract,
+					exg.getExportAmount(), ptNo, version);
 
 		}
 		return exg;
@@ -4262,7 +4298,8 @@ public class OrderCommonLogic {
 					//
 					//
 					ContractExg exg = changeToContractExg(emsNo, customType,
-							contract, ptNo, detailCount, detailTotalPrice, customOrderDetail.getVersion());
+							contract, ptNo, detailCount, detailTotalPrice,
+							customOrderDetail.getVersion());
 					/**
 					 * 写订单转合同的中间过程表
 					 */
@@ -4496,10 +4533,13 @@ public class OrderCommonLogic {
 		List returnList = new ArrayList();
 		if (customType > 1) { // 电子化手册
 			for (int i = 0; i < list.size(); i++) {
-				CustomOrderDetail customOrderDetail = (CustomOrderDetail) list.get(i);
+				CustomOrderDetail customOrderDetail = (CustomOrderDetail) list
+						.get(i);
 				String ptNo = customOrderDetail.getMateriel().getPtNo();
-				Double detailCount = customOrderDetail.getNotContractNum() == null ? 0.0 : customOrderDetail.getNotContractNum();
-				Double detailTotalPrice = customOrderDetail.getTotalPrice() == null ? 0.0 : customOrderDetail.getTotalPrice();
+				Double detailCount = customOrderDetail.getNotContractNum() == null ? 0.0
+						: customOrderDetail.getNotContractNum();
+				Double detailTotalPrice = customOrderDetail.getTotalPrice() == null ? 0.0
+						: customOrderDetail.getTotalPrice();
 				if (customOrderDetail.getCustomOrder().getOrdertype() == 0) {
 					//
 					// 生成成品报关资料
@@ -4510,7 +4550,8 @@ public class OrderCommonLogic {
 					BcsInnerMerge bim = this.orderCommonDao.findBcsInnerMerge(
 							ptNo, "0");
 					if (bim == null || bim.getBcsTenInnerMerge() == null) {
-						throw new RuntimeException("成品料号[" + ptNo+ "]在【物料与报关对应表】中没有或不存在【当前使用的报关资料】!");
+						throw new RuntimeException("成品料号[" + ptNo
+								+ "]在【物料与报关对应表】中没有或不存在【当前使用的报关资料】!");
 					}
 					Integer version = orderCommonDao
 							.findMaterialBomDetailVersioId(ptNo);
@@ -4553,9 +4594,11 @@ public class OrderCommonLogic {
 					//
 					// 生成料件报关资料
 					//
-					BcsInnerMerge bimimg = this.orderCommonDao.findBcsInnerMerge(ptNo, "2");
+					BcsInnerMerge bimimg = this.orderCommonDao
+							.findBcsInnerMerge(ptNo, "2");
 					if (bimimg == null || bimimg.getBcsTenInnerMerge() == null) {
-						throw new RuntimeException("料件料号[" + ptNo+ "]在【物料与报关对应表】中没有或不存在【当前使用的报关资料】!");
+						throw new RuntimeException("料件料号[" + ptNo
+								+ "]在【物料与报关对应表】中没有或不存在【当前使用的报关资料】!");
 					}
 					if (bimimg != null && bimimg.getBcsTenInnerMerge() != null) {
 						String tenName = bimimg.getBcsTenInnerMerge().getName() == null ? ""
@@ -4650,8 +4693,8 @@ public class OrderCommonLogic {
 	public void getTotalPriceBExport(Contract contract) {
 		int moneyBit = getMoneyBitFromParaSet();
 		Double exgAmount = this.contractDao.getTotalPriceBExport(contract);
-		contract.setExgAmount(CommonUtils.getDoubleByDigit(CommonUtils
-				.getDoubleExceptNull(exgAmount), moneyBit));
+		contract.setExgAmount(CommonUtils.getDoubleByDigit(
+				CommonUtils.getDoubleExceptNull(exgAmount), moneyBit));
 		this.contractDao.saveOrUpdate(contract);
 
 	}
@@ -4665,8 +4708,8 @@ public class OrderCommonLogic {
 	public void getTotalPriceBImport(Contract contract) {
 		int moneyBit = getMoneyBitFromParaSet();
 		Double imgAmount = this.contractDao.getTotalPriceBImport(contract);
-		contract.setImgAmount(CommonUtils.getDoubleByDigit(CommonUtils
-				.getDoubleExceptNull(imgAmount), moneyBit));
+		contract.setImgAmount(CommonUtils.getDoubleByDigit(
+				CommonUtils.getDoubleExceptNull(imgAmount), moneyBit));
 		this.contractDao.saveOrUpdate(contract);
 	}
 
@@ -4738,8 +4781,7 @@ public class OrderCommonLogic {
 							countBit));
 					contractExg.setTotalPrice(CommonUtils.getDoubleByDigit(
 							CommonUtils.getDoubleExceptNull(contractExg
-									.getUnitPrice()
-									* exportAmount), moneyBit));
+									.getUnitPrice() * exportAmount), moneyBit));
 
 					contractExg.setProcessTotalPrice(CommonUtils
 							.getDoubleByDigit(CommonUtils
@@ -4774,8 +4816,8 @@ public class OrderCommonLogic {
 				Integer seqNum = contractImg.getSeqNum();
 				Double amount = this.orderCommonDao.StateContractBomAmount(
 						customType, seqNum, emsNo);
-				contractImg.setAmount(CommonUtils.getDoubleByDigit(CommonUtils
-						.getDoubleExceptNull(amount), countBit));
+				contractImg.setAmount(CommonUtils.getDoubleByDigit(
+						CommonUtils.getDoubleExceptNull(amount), countBit));
 				contractImg.setTotalPrice(CommonUtils.getDoubleByDigit(
 						CommonUtils.getDoubleExceptNull(amount
 								* contractImg.getDeclarePrice()), countBit));
@@ -4846,13 +4888,13 @@ public class OrderCommonLogic {
 							countBit));
 					contractExg.setMoney(CommonUtils.getDoubleByDigit(
 							CommonUtils.getDoubleExceptNull(contractExg
-									.getPrice()
-									* exportAmount), moneyBit));
+									.getPrice() * exportAmount), moneyBit));
 
-					contractExg.setMachinMoney(CommonUtils.getDoubleByDigit(
-							CommonUtils.getDoubleExceptNull(contractExg
-									.getMachinPrice()
-									* exportAmount), moneyBit));
+					contractExg
+							.setMachinMoney(CommonUtils.getDoubleByDigit(
+									CommonUtils.getDoubleExceptNull(contractExg
+											.getMachinPrice() * exportAmount),
+									moneyBit));
 
 					this.dzscDao.saveDzscEmsExgBill(contractExg);
 
@@ -4889,11 +4931,11 @@ public class OrderCommonLogic {
 				Double amount = this.orderCommonDao.StateContractBomAmount(
 						customType, seqNum, emsNo);
 
-				contractImg.setAmount(CommonUtils.getDoubleByDigit(CommonUtils
-						.getDoubleExceptNull(amount), countBit));
-				contractImg.setMoney(CommonUtils.getDoubleByDigit(CommonUtils
-						.getDoubleExceptNull(amount * contractImg.getPrice()),
-						moneyBit));
+				contractImg.setAmount(CommonUtils.getDoubleByDigit(
+						CommonUtils.getDoubleExceptNull(amount), countBit));
+				contractImg.setMoney(CommonUtils.getDoubleByDigit(
+						CommonUtils.getDoubleExceptNull(amount
+								* contractImg.getPrice()), moneyBit));
 				this.dzscDao.saveDzscEmsImgBill(contractImg);
 			}
 

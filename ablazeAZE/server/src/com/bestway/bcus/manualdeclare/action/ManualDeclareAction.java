@@ -368,19 +368,22 @@ public interface ManualDeclareAction {
 	 * 显示归并关系料件变更记录来自变更次数
 	 */
 	List findemsEdiMergerHeadImgChange(Request request,
-			EmsEdiMergerHead emsEdiMergerHead, Integer modifyTimes);
+			EmsEdiMergerHead emsEdiMergerHead, Integer modifyTimes,
+			Date beginDate, Date endDate);
 
 	/**
 	 * 显示归并关系成品变更记录来自变更次数
 	 */
 	List findemsEdiMergerHeadExgChange(Request request,
-			EmsEdiMergerHead emsEdiMergerHead, Integer modifyTimes);
+			EmsEdiMergerHead emsEdiMergerHead, Integer modifyTimes,
+			Date beginDate, Date endDate);
 
 	/**
 	 * 显示归并关系BOM变更记录来自变更次数
 	 */
 	List findemsEdiMergerHeadBomChange(Request request,
-			EmsEdiMergerHead emsEdiMergerHead, Integer modifyTimes);
+			EmsEdiMergerHead emsEdiMergerHead, Integer modifyTimes,
+			Date beginDate, Date endDate);
 
 	/**
 	 * 显示电子帐册料件变更记录来备案序号段

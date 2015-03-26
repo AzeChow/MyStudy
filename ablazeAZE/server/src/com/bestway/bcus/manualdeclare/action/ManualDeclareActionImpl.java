@@ -900,27 +900,30 @@ public class ManualDeclareActionImpl extends BaseActionImpl implements
 	 * 显示归并关系料件变更记录来自变更次数
 	 */
 	public List findemsEdiMergerHeadImgChange(Request request,
-			EmsEdiMergerHead EmsEdiMergerHead, Integer modifyTimes) {
+			EmsEdiMergerHead EmsEdiMergerHead, Integer modifyTimes,
+			Date beginDate, Date endDate) {
 		return this.emsEdiTrDao.findemsEdiMergerHeadImgChange(EmsEdiMergerHead,
-				modifyTimes);
+				modifyTimes, beginDate, endDate);
 	}
 
 	/**
 	 * 显示归并关系成品变更记录来自变更次数
 	 */
 	public List findemsEdiMergerHeadExgChange(Request request,
-			EmsEdiMergerHead EmsEdiMergerHead, Integer modifyTimes) {
+			EmsEdiMergerHead EmsEdiMergerHead, Integer modifyTimes,
+			Date beginDate, Date endDate) {
 		return this.emsEdiTrDao.findemsEdiMergerHeadExgChange(EmsEdiMergerHead,
-				modifyTimes);
+				modifyTimes, beginDate, endDate);
 	}
 
 	/**
 	 * 显示归并关系BOM变更记录来自变更次数
 	 */
 	public List findemsEdiMergerHeadBomChange(Request request,
-			EmsEdiMergerHead EmsEdiMergerHead, Integer modifyTimes) {
+			EmsEdiMergerHead EmsEdiMergerHead, Integer modifyTimes,
+			Date beginDate, Date endDate) {
 		return this.emsEdiTrDao.findemsEdiMergerHeadBomChange(EmsEdiMergerHead,
-				modifyTimes);
+				modifyTimes, beginDate, endDate);
 	}
 
 	/**

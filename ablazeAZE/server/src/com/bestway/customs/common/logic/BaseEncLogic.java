@@ -2354,19 +2354,28 @@ public abstract class BaseEncLogic {
 		// 反写关封的转厂报关单数量
 		if (baseCustomsDeclaration.getImpExpType() == 1
 				|| baseCustomsDeclaration.getImpExpType() == 5) {
+
+			// 查询 当前报关单 的所有商品信息
 			List list = baseEncDao
 					.findCustomsDeclarationCommInfoByNoEffective(baseCustomsDeclaration);
+
 			BaseCustomsDeclarationCommInfo customsDeclarationCommInfo;
+
 			for (int i = 0; i < list.size(); i++) {
+
 				customsDeclarationCommInfo = (BaseCustomsDeclarationCommInfo) list
 						.get(i);
+
 				this.updateCustomsEnvelopCommodityInfo(
 						customsDeclarationCommInfo, "DELETE");
+
 			}
 		}
+
 		// 反写关封自动结案
 		TransParameterSet transParameterSet = transferFactoryManageDao
 				.findTransParameterSet();
+
 		if (transParameterSet != null && transParameterSet.getIsAutoJieAn()) {// 自动结案
 			transferFactoryManageDao.unAutoJieAn(baseCustomsDeclaration);
 		}
@@ -2381,16 +2390,19 @@ public abstract class BaseEncLogic {
 	 */
 	private void writeBackStrikeImpCustomsDeclarationWhenUnreel(
 			BaseCustomsDeclaration baseCustomsDeclaration) {
+
 		if (baseCustomsDeclaration == null
 				|| baseCustomsDeclaration.getImpExpType() == null) {
 			return;
 		}
+
 		if (ImpExpType.GENERAL_TRADE_IMPORT == baseCustomsDeclaration
 				.getImpExpType()
 				|| ImpExpType.DIRECT_IMPORT == baseCustomsDeclaration
 						.getImpExpType()
 				|| ImpExpType.TRANSFER_FACTORY_IMPORT == baseCustomsDeclaration
 						.getImpExpType()) {
+
 			this.fecavDao.deleteImpCustomsDeclaration(baseCustomsDeclaration
 					.getId());
 		}
@@ -3376,14 +3388,19 @@ public abstract class BaseEncLogic {
 	 */
 	private List<Map<String, String>> loadXmlData(Element element,
 			String tagname) {
+
 		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
+
 		List<Element> childList = element.getChildren(tagname);
+
 		for (Element childElement : childList) {
+
 			List<Element> leafList = childElement.getChildren();
+
 			Map<String, String> map = new HashMap();
+
 			for (Element leafElement : leafList) {
-				// System.out.println(leafElement.getName() + ":"
-				// + leafElement.getTextTrim());
+
 				map.put(leafElement.getName(),
 						CommonServerBig5GBConverter.getInstance()
 								.big5ConvertToGB(leafElement.getTextTrim()));
@@ -3507,24 +3524,36 @@ public abstract class BaseEncLogic {
 			String freetxttagname, List<BaseLoadBGDFromQPXml> lsSuccess,
 			List<TempLoadBGDFromQPXmlErrorInfo> lsError,
 			ImportBGDCondition condition) {
+
 		Map<String, String> BGDHead = loadXMLHEADData(root, headtagname);
+
 		List<Map<String, String>> BGDDetails = loadXMLListData(root,
 				detailtagname);
+
 		Date pDate = null;
+
 		List customAmountOutList = baseEncDao
 				.findnameValues(ParameterType.CUSTOM_AMOUNT_OUT);
+
 		ParameterSet customAmountOut = (customAmountOutList.size() > 0 ? (ParameterSet) customAmountOutList
 				.get(0) : null);
+
 		if (BGDHead.get("P_DATE") != null
 				&& !"".equals(BGDHead.get("P_DATE").trim())) {
+
 			if (BGDHead.get("P_DATE").indexOf("-") > 0) {
+
 				try {
+
 					if (BGDHead.get("P_DATE")
 							.substring(0, BGDHead.get("P_DATE").indexOf('-'))
 							.length() > 2) {
+
 						pDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
 								.parse(BGDHead.get("P_DATE"));
+
 					} else {
+
 						pDate = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss")
 								.parse(BGDHead.get("P_DATE"));
 					}
@@ -3627,27 +3656,35 @@ public abstract class BaseEncLogic {
 					impExpFlag, "报关单号和报关单预录入号不能同时为空!"));
 			return;
 		}
+
 		String entryId = BGDHead.get("ENTRY_ID") == null ? "" : BGDHead.get(
 				"ENTRY_ID").trim();
+
 		if (condition != null && condition.getEntryId() != null) {
 			if (!condition.getEntryId().equals(entryId)) {
 				return;
 			}
 		}
+
 		/**
 		 * 新增报关单单头
 		 */
 		BaseCustomsDeclaration bgdhead = null;
+
 		List codelist = new ArrayList();
+
 		if (BGDHead.get("ENTRY_ID") != null
 				&& !"".equals(BGDHead.get("ENTRY_ID").trim())) {
 			codelist = this.baseEncDao.findCustomsDeclarationByCode(BGDHead
 					.get("ENTRY_ID").trim());
+
 		} else if (BGDHead.get("PRE_ENTRY_ID") != null
 				&& !"".equals(BGDHead.get("PRE_ENTRY_ID").trim())) {
+
 			codelist = this.baseEncDao.findCustomsDeclarationByPreCode(BGDHead
 					.get("PRE_ENTRY_ID").trim());
 		}
+
 		if (codelist.size() > 0) {
 			return;
 		} else {
@@ -4344,7 +4381,14 @@ public abstract class BaseEncLogic {
 
 			}
 
+			// 获取规格型号 对应的 Map
 			Map<Integer, String> map = getCommSpec(projectType, bgdhead);
+
+			System.out.println("对应规格 --- Map 这里 测试 所有的 规格数据 ------");
+
+			System.out.println(map);
+
+			System.out.println("----------------------------");
 
 			/**
 			 * 新增报关单表体
@@ -4357,6 +4401,15 @@ public abstract class BaseEncLogic {
 				 * 合同对应序号
 				 */
 				String strcontract_item = detailmap.get("CONTR_ITEM");
+
+				System.out.println("   合同序号 >>>>>>>>>>>>>>>>>>>>>>>");
+
+				System.out.println(" >>>>>>>  " + strcontract_item
+						+ "    <<<<<");
+
+				System.out.println(strcontract_item.length());
+
+				System.out.println(" ======= > 字符长度 检测 < ==========");
 
 				/**
 				 * 原产国
@@ -4373,6 +4426,7 @@ public abstract class BaseEncLogic {
 				// String version = detailmap.get("EXG_VERSION");
 				if (projectType == ProjectType.DZSC) {
 					bgddetailinfo = new DzscCustomsDeclarationCommInfo();
+
 				} else if (projectType == ProjectType.BCUS) {
 
 					bgddetailinfo = new CustomsDeclarationCommInfo();
@@ -4391,6 +4445,12 @@ public abstract class BaseEncLogic {
 					bgddetailinfo.setCommSerialNo(Integer
 							.valueOf(strcontract_item));
 				}
+
+				System.out.println(" 合同对应 序号   >>>>>>  "
+						+ bgddetailinfo.getCommSerialNo());
+
+				System.out.println("+++++++++++++++++++++++++++++++++++=");
+
 				/**
 				 * 项号
 				 */
@@ -4404,10 +4464,7 @@ public abstract class BaseEncLogic {
 				String CODE_S = detailmap.get("CODE_S");
 				String CODE_T = detailmap.get("CODE_T");
 				if (CODE_T == null || "".equals(CODE_T.trim())) {
-					// lsError.add(this.writeLoadBGDErrorInfo(projectType,
-					// seqNo,
-					// zDate, impExpFlag, "第" + (i + 1) + "项商品编码为空"));
-					// return;
+
 					throw new RuntimeException("第" + (i + 1) + "项商品编码为空");
 				}
 				if (!CODE_S.trim().equals("")) {
@@ -4448,7 +4505,7 @@ public abstract class BaseEncLogic {
 				bgddetailinfo.setCommName(detailmap.get("G_NAME"));
 
 				/**
-				 * 规格型号
+				 * 规格型号 --特殊报关单没有手册规格
 				 */
 				if (bgdhead.getImpExpFlag() == ImpExpFlag.SPECIAL) {
 					bgddetailinfo.setCommSpec(detailmap.get("G_MODEL"));
@@ -4456,6 +4513,9 @@ public abstract class BaseEncLogic {
 					bgddetailinfo.setCommSpec(map.get(bgddetailinfo
 							.getCommSerialNo()));
 				}
+
+				System.out.println("bgddetailinfo.getCommSerialNo()====="
+						+ bgddetailinfo.getCommSerialNo());
 
 				/**
 				 * 规范申报规格
@@ -4669,25 +4729,37 @@ public abstract class BaseEncLogic {
 				bgdhead.getSerialNumber()));
 	}
 
+	/**
+	 * 
+	 * @param projectType
+	 * @param bgdhead
+	 * @return
+	 */
 	public Map<Integer, String> getCommSpec(Integer projectType,
 			BaseCustomsDeclaration bgdhead) {
+
 		Map<Integer, String> map = new HashMap<Integer, String>();
+
 		List list = baseEncDao.findContractHead(projectType, bgdhead);
-		System.out.println("合同表头size：" + list.size());
+
 		if (list != null && list.size() > 0) {
+
 			BaseEmsHead baseContractHead = (BaseEmsHead) list.get(0);// 获取通关备案表头
+
 			boolean boo = isMaterial1(bgdhead.getImpExpType());// 判断是料件还是成品：true
 																// 为料件 false 为成品
 			List ls = null;
+
 			if (boo) {
 				ls = baseEncDao.findBaseEmsImg(projectType, baseContractHead);// 获取料架数据
 			} else {
 				ls = baseEncDao.findBaseEmsExg(projectType, baseContractHead);// 获取成品数据
 			}
-			System.out.println((boo == true ? "料件数量：" : "成品数量：") + ls.size());
+
 			for (int i = 0; i < ls.size(); i++) {
 				Integer key = null;
 				String value = null;
+
 				if (boo) {
 					if (ls.get(i) instanceof BaseEmsImg) {
 						BaseEmsImg baseEmsImg = (BaseEmsImg) ls.get(i);
@@ -4709,6 +4781,10 @@ public abstract class BaseEncLogic {
 						value = emsExg.getSpec();
 					}
 				}
+				System.out.println("key=======" + key + "     value====="
+						+ value);
+				System.out.println();
+
 				if (map.get(key) == null) {
 					map.put(key, value);
 				}
@@ -4725,14 +4801,25 @@ public abstract class BaseEncLogic {
 	 * @return
 	 */
 	public boolean isMaterial1(int impExpType) {
+
 		boolean isMaterial = false;
+
+		// 获取料件类型
 		int materielType = getMaterielTypeByBillType1(impExpType);
+
+		// 判断是否主料
 		if (materielType == Integer.parseInt(MaterielType.MATERIEL)) {
+
 			isMaterial = true;
+
+			// 判断是否成品
 		} else if (materielType == Integer
 				.parseInt(MaterielType.FINISHED_PRODUCT)) {
+
 			isMaterial = false;
 		}
+
+		// 不符合 主料或成品 就返回成品
 		return isMaterial;
 	}
 
@@ -4747,8 +4834,9 @@ public abstract class BaseEncLogic {
 		case ImpExpType.GENERAL_TRADE_IMPORT:
 		case ImpExpType.BACK_MATERIEL_EXPORT:
 		case ImpExpType.REMIAN_MATERIAL_BACK_PORT:
-		case ImpExpType.REMIAN_MATERIAL_DOMESTIC_SALES:
 		case ImpExpType.REMAIN_FORWARD_EXPORT:
+		case ImpExpType.REMIAN_MATERIAL_DOMESTIC_SALES:
+		case ImpExpType.REMAIN_FORWARD_IMPORT:
 			temp = Integer.parseInt(MaterielType.MATERIEL);
 			break;
 		case ImpExpType.BACK_FACTORY_REWORK:
@@ -4929,14 +5017,24 @@ public abstract class BaseEncLogic {
 	 * @return Map 导入日志信息
 	 */
 	public Map loadBGDFromQPDirect(ImportBGDCondition condition) {
+
 		int projectType = this.baseEncDao.getProjectType();
+
+		// 获取直接导入 参数
 		CspParameterSet paraSet = this.getCspParameterSet();
+
+		// 报关单 qp 执行对象
 		DecQpAction decQpAction = DecQpServiceClient.getDecQpAction(paraSet);
 
 		List<String> lsContents = new ArrayList<String>();
+
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
 		String ownerCode = ((Company) CommonUtils.getCompany()).getCode();
+
 		if (condition.isImportBGD()) {
+
+			// 下载 ------进口报关单
 			lsContents = decQpAction.download_I_Dec(
 					paraSet.getRemoteHostICPwd(),
 					ownerCode,
@@ -4944,7 +5042,10 @@ public abstract class BaseEncLogic {
 							.format(condition.getBeginDate()),
 					condition.getEndDate() == null ? null : dateFormat
 							.format(condition.getEndDate()));
+
 		} else {
+
+			// 下载 ------ 出口报关单
 			lsContents = decQpAction.download_E_Dec(
 					paraSet.getRemoteHostICPwd(),
 					ownerCode,
@@ -4953,39 +5054,70 @@ public abstract class BaseEncLogic {
 					condition.getEndDate() == null ? null : dateFormat
 							.format(condition.getEndDate()));
 		}
+
 		if (lsContents.size() > 0) {
+
 			// 判断远程服务是否发生错误
 			String info = lsContents.get(0);
+
 			if (info == null) {
 				throw new RuntimeException("从远程服务器读取的报关单内容为空");
 			}
+
 			if (info.indexOf("网络异常") >= 0) {
 				throw new RuntimeException("远程服务发生错误，错误信息如下：\n" + info);
 			}
 		}
+
+		for (int i = 0; i < lsContents.size(); i++) {
+
+			System.out
+					.println("------------------- 这里 显示 remote 导入的 xml 内容 ------------");
+
+			System.out.println(lsContents.get(i));
+
+			System.out
+					.println("================================================");
+
+		}
+
+		/*
+		 * 下载回来的报关单 : 是一份 xml 文件 解析xml文件导入
+		 */
 		List<BaseLoadBGDFromQPXml> lsSuccess = new ArrayList<BaseLoadBGDFromQPXml>();
+
 		List<TempLoadBGDFromQPXmlErrorInfo> lsError = new ArrayList<TempLoadBGDFromQPXmlErrorInfo>();
+
 		for (String content : lsContents) {
-			// System.out.println(content);
+
 			if (content == null || "".equals(content.trim())) {
 				continue;
 			}
+
 			if (!content.contains("<ROOT>")) {
 				throw new RuntimeException("下载的报关单报文有误，" + content);
 			}
 
 			SAXBuilder sax = new SAXBuilder();
+
 			InputStream inputStream = null;
+
 			try {
+
 				inputStream = new ByteArrayInputStream(filter(content.trim())
 						.getBytes("utf-8"));
+
 				Document doc = sax.build(inputStream);
+
 				Element root = doc.getRootElement();
+
 				if (condition.isImportBGD()) {
+
 					loadImpExpBGD(root, false, projectType, true, "DEC_I_HEAD",
 							"DEC_I_LIST", "DEC_I_CONTAINER",
 							"DEC_I_LICENSEDOCU", "DEC_I_FREETXT", lsSuccess,
 							lsError, condition);// 进口报关单
+
 				} else {
 					loadImpExpBGD(root, false, projectType, false,
 							"DEC_E_HEAD", "DEC_E_LIST", "DEC_E_CONTAINER",

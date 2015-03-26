@@ -2,6 +2,7 @@ package com.bestway.common.fpt.entity;
 
 import java.util.Date;
 
+import com.bestway.bcus.custombase.entity.parametercode.Transf;
 import com.bestway.common.BaseScmEntity;
 import com.bestway.common.CommonUtils;
 import com.bestway.common.authority.entity.AclUser;
@@ -172,10 +173,13 @@ public class FptBillHead extends BaseScmEntity {
 	private Boolean isCustomsDeclaration = false;
 
 	/**
-	 * 运输工具类型
+	 * 旧运输工具类型（无用字段）
 	 */
 	private String transportToolType;
-
+	/**
+	 * 新运输工具类型（现用字段）
+	 */
+	private Transf transportToolTypenew;
 	/**
 	 * 运输工具编号
 	 */
@@ -569,11 +573,15 @@ public class FptBillHead extends BaseScmEntity {
 	public void setSerialNumber(Integer serialNumber) {
 		this.serialNumber = serialNumber;
 	}
-
+	/**
+	 * 旧运输工具类型（无用字段）
+	 */
 	public String getTransportToolType() {
 		return transportToolType;
 	}
-
+	/**
+	 * 旧运输工具类型（无用字段）
+	 */
 	public void setTransportToolType(String transportToolType) {
 		this.transportToolType = transportToolType;
 	}
@@ -584,6 +592,18 @@ public class FptBillHead extends BaseScmEntity {
 
 	public void setTransportToolNumber(String transportToolNumber) {
 		this.transportToolNumber = transportToolNumber;
+	}
+	/**
+	 * 新运输工具类型（现用字段）
+	 */
+	public Transf getTransportToolTypenew() {
+		return transportToolTypenew;
+	}
+	/**
+	 * 新运输工具类型（现用字段）
+	 */
+	public void setTransportToolTypenew(Transf transportToolTypenew) {
+		this.transportToolTypenew = transportToolTypenew;
 	}
 
 }

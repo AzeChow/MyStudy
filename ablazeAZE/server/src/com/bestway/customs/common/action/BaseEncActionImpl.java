@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
-import com.bestway.bcs.contract.entity.Contract;
 import com.bestway.bcs.dictpor.entity.BcsDictPorHead;
 import com.bestway.bcus.custombase.entity.hscode.CheckupComplex;
 import com.bestway.bcus.custombase.entity.hscode.Complex;
@@ -48,7 +47,7 @@ public class BaseEncActionImpl extends BaseActionImpl implements BaseEncAction {
 	private BaseEncLogic baseEncLogic;
 
 	private BaseEncDao baseEncDao;
-	
+
 	private EncImportLogic encImportLogic;
 
 	/**
@@ -59,12 +58,12 @@ public class BaseEncActionImpl extends BaseActionImpl implements BaseEncAction {
 	public BaseEncLogic getBaseEncLogic() {
 		return baseEncLogic;
 	}
-	
+
 	public void setEncImportLogic(EncImportLogic encImportLogic) {
 		this.encImportLogic = encImportLogic;
 	}
 
-	public List getCustomsDeclaratn(){
+	public List getCustomsDeclaratn() {
 		return null;
 	}
 
@@ -103,7 +102,7 @@ public class BaseEncActionImpl extends BaseActionImpl implements BaseEncAction {
 	 * @see com.bestway.common.BaseAction#getAcl()
 	 */
 	public Acl getAcl() {
-		// 
+		//
 		return null;
 	}
 
@@ -113,7 +112,7 @@ public class BaseEncActionImpl extends BaseActionImpl implements BaseEncAction {
 	 * @see com.bestway.common.BaseAction#getModuleName()
 	 */
 	public String getModuleName() {
-		// 
+		//
 		return null;
 	}
 
@@ -123,7 +122,7 @@ public class BaseEncActionImpl extends BaseActionImpl implements BaseEncAction {
 	 * @see com.bestway.common.BaseAction#setModuleName(java.lang.String)
 	 */
 	public void setModuleName(String moduleName) {
-		// 
+		//
 
 	}
 
@@ -202,7 +201,8 @@ public class BaseEncActionImpl extends BaseActionImpl implements BaseEncAction {
 	// @AuthorityFunctionAnnotation(caption = "删除报关单(或一般作废)", index = 9)
 	public void deleteCustomsDeclaration(Request request,
 			BaseCustomsDeclaration baseCustomsDeclaration) {
-		this.baseEncLogic.deleteCustomsDeclaration(baseCustomsDeclaration,false);
+		this.baseEncLogic.deleteCustomsDeclaration(baseCustomsDeclaration,
+				false);
 	}
 
 	/**
@@ -219,10 +219,12 @@ public class BaseEncActionImpl extends BaseActionImpl implements BaseEncAction {
 		for (int i = 0; i < baseCustomsDeclarations.size(); i++) {
 			BaseCustomsDeclaration baseCustomsDeclaration = (BaseCustomsDeclaration) baseCustomsDeclarations
 					.get(i);
-			this.baseEncLogic.deleteCustomsDeclaration(baseCustomsDeclaration,false);
+			this.baseEncLogic.deleteCustomsDeclaration(baseCustomsDeclaration,
+					false);
 		}
 
 	}
+
 	/**
 	 * 删除报关单
 	 * 
@@ -233,14 +235,17 @@ public class BaseEncActionImpl extends BaseActionImpl implements BaseEncAction {
 	 */
 	// @AuthorityFunctionAnnotation(caption = "删除报关单(或一般作废)", index = 9)
 	public void deleteCustomsDeclaration(Request request,
-		BaseCustomsDeclaration baseCustomsDeclaration,boolean isCustomDelete) {
-		this.baseEncLogic.deleteCustomsDeclaration(baseCustomsDeclaration,isCustomDelete);
+			BaseCustomsDeclaration baseCustomsDeclaration,
+			boolean isCustomDelete) {
+		this.baseEncLogic.deleteCustomsDeclaration(baseCustomsDeclaration,
+				isCustomDelete);
 	}
-	
+
 	/**
 	 * 修改进出货转厂单据
 	 */
-	public void updateTransferFactoryBill(Request request, List baseCustomsDeclarations){
+	public void updateTransferFactoryBill(Request request,
+			List baseCustomsDeclarations) {
 		this.baseEncLogic.updateTransferFactoryBill(baseCustomsDeclarations);
 	}
 
@@ -450,14 +455,16 @@ public class BaseEncActionImpl extends BaseActionImpl implements BaseEncAction {
 	/**
 	 * 取得报关单明细
 	 * 
-	 * @param baseID 表头ID
+	 * @param baseID
+	 *            表头ID
 	 * @return 返回报关单明细列表
 	 */
-	public Map<String,List> findCustomsDeclarationInfos(Request request,
-			List<String> baseID,Integer projectType){
-		return this.baseEncLogic.findCustomsDeclarationInfos(baseID,projectType);
+	public Map<String, List> findCustomsDeclarationInfos(Request request,
+			List<String> baseID, Integer projectType) {
+		return this.baseEncLogic.findCustomsDeclarationInfos(baseID,
+				projectType);
 	}
-	
+
 	/**
 	 * 取得进口报关单表头
 	 * 
@@ -479,13 +486,15 @@ public class BaseEncActionImpl extends BaseActionImpl implements BaseEncAction {
 	public List getImportDataSource(Request request) {
 		return this.baseEncLogic.getImportDataSource();
 	}
-	
+
 	/**
 	 * 取得已生成taskId、未生效的报关单
+	 * 
 	 * @param request
 	 * @return
 	 */
-	public List<BaseCustomsDeclaration> findDeclarationHasTaskIdUnEffect(Request request) {
+	public List<BaseCustomsDeclaration> findDeclarationHasTaskIdUnEffect(
+			Request request) {
 		return baseEncDao.findDeclarationHasTaskIdUnEffect();
 	}
 
@@ -535,7 +544,7 @@ public class BaseEncActionImpl extends BaseActionImpl implements BaseEncAction {
 	public List findIsSpecification(Request request) {
 		return baseEncLogic.findIsSpecification();
 	}
-	
+
 	/**
 	 * 取得报关单商品临时信息(如果在报关单中已存在的话，将其过滤)
 	 * 
@@ -668,13 +677,14 @@ public class BaseEncActionImpl extends BaseActionImpl implements BaseEncAction {
 		return this.baseEncLogic
 				.findContainerByCustomsDeclaration(customsDeclaration);
 	}
-	
+
 	/**
-	 *查询报关行 
+	 * 查询报关行
 	 */
-	public List findcustomsbrokerList(Request request){
-			return this.baseEncLogic.findcustomsbrokerList();
+	public List findcustomsbrokerList(Request request) {
+		return this.baseEncLogic.findcustomsbrokerList();
 	}
+
 	/**
 	 * 取得报关单商品信息
 	 * 
@@ -908,7 +918,7 @@ public class BaseEncActionImpl extends BaseActionImpl implements BaseEncAction {
 	 * 
 	 * @param request
 	 *            请求控制
-	 *@param list
+	 * @param list
 	 *            报关单商品信息
 	 */
 	public void saveAtcMergeBeforeComInfo(Request request, Vector list) {
@@ -1139,6 +1149,7 @@ public class BaseEncActionImpl extends BaseActionImpl implements BaseEncAction {
 	public String getImpExpNoByBillNo(Request request, String billNo) {
 		return this.baseEncDao.getImpExpNoByBillNo(billNo);
 	}
+
 	/**
 	 * 得到多个申请单号通过报关清单号码
 	 * 
@@ -1148,7 +1159,7 @@ public class BaseEncActionImpl extends BaseActionImpl implements BaseEncAction {
 	 *            报关清单号码
 	 * @return 进出口申请单单据号
 	 */
-	public List getImpExpMultiNoByBillNo(Request request, String billNo){
+	public List getImpExpMultiNoByBillNo(Request request, String billNo) {
 		return this.baseEncDao.getImpExpMultiNoByBillNo(billNo);
 	}
 
@@ -1316,7 +1327,7 @@ public class BaseEncActionImpl extends BaseActionImpl implements BaseEncAction {
 	 *            请求控制
 	 * @param conveyance
 	 *            报关单表头
-	 *@param impExpFlag
+	 * @param impExpFlag
 	 *            进出口标志
 	 * @return 报关单商品信息
 	 */
@@ -1325,6 +1336,7 @@ public class BaseEncActionImpl extends BaseActionImpl implements BaseEncAction {
 		return this.baseEncDao.findCustomsDeclarationCommInfoByConveyance(
 				conveyance, impExpFlag);
 	}
+
 	/**
 	 * 取得报关单商品信息
 	 * 
@@ -1332,14 +1344,14 @@ public class BaseEncActionImpl extends BaseActionImpl implements BaseEncAction {
 	 *            请求控制
 	 * @param conveyance
 	 *            报关单表头
-	 *@param impExpFlag
+	 * @param impExpFlag
 	 *            进出口标志
 	 * @return 报关单商品信息
 	 */
 	public List findCustomsDeclarationCommInfoByConveyance(Request request,
-			String conveyance, Integer impExpFlag,Integer projectType) {
+			String conveyance, Integer impExpFlag, Integer projectType) {
 		return this.baseEncDao.findCustomsDeclarationCommInfoByConveyance(
-				conveyance, impExpFlag,projectType);
+				conveyance, impExpFlag, projectType);
 	}
 
 	/**
@@ -1380,7 +1392,7 @@ public class BaseEncActionImpl extends BaseActionImpl implements BaseEncAction {
 	 * 
 	 * @param request
 	 *            请求控制
-	 *@param impExpFlag
+	 * @param impExpFlag
 	 *            进出口标志
 	 * @return 指定报关单的报关商品信息的统计情况
 	 */
@@ -1405,7 +1417,7 @@ public class BaseEncActionImpl extends BaseActionImpl implements BaseEncAction {
 	 * 
 	 * @param request
 	 *            请求控制
-	 *@param isImportBGD
+	 * @param isImportBGD
 	 *            是进口或是出口报关单
 	 * @param beginDate
 	 *            开始日期
@@ -1421,14 +1433,14 @@ public class BaseEncActionImpl extends BaseActionImpl implements BaseEncAction {
 	 * 
 	 * @param request
 	 *            请求控制
-	 *@param isImportBGD
+	 * @param isImportBGD
 	 *            是进口或是出口报关单
 	 * @param beginDate
 	 *            开始日期
 	 * @param endDate
 	 *            结束日期
 	 */
-	public Map loadBGDFromQPDirect(Request request,ImportBGDCondition condition) {
+	public Map loadBGDFromQPDirect(Request request, ImportBGDCondition condition) {
 		return this.baseEncLogic.loadBGDFromQPDirect(condition);
 	}
 
@@ -1547,6 +1559,7 @@ public class BaseEncActionImpl extends BaseActionImpl implements BaseEncAction {
 	public List findEmsByProjectType(Request request, int type) {
 		return this.baseEncDao.findEmsByProjectType(type);
 	}
+
 	/**
 	 * 通过单据类型找正在执行的电子帐册资料
 	 * 
@@ -1556,9 +1569,10 @@ public class BaseEncActionImpl extends BaseActionImpl implements BaseEncAction {
 	 *            单据类型
 	 * @return
 	 */
-	public List findExcuteEmsByProjectType(Request request, int type){
+	public List findExcuteEmsByProjectType(Request request, int type) {
 		return this.baseEncDao.findExcuteEmsByProjectType(type);
 	}
+
 	/**
 	 * 返回相关表信息
 	 * 
@@ -1780,9 +1794,10 @@ public class BaseEncActionImpl extends BaseActionImpl implements BaseEncAction {
 	 * @param declareState
 	 * @return
 	 */
-	public List findContractByDeclareState(Request request,String declareState){
+	public List findContractByDeclareState(Request request, String declareState) {
 		return baseEncDao.findContractByDeclareState(declareState);
 	}
+
 	/**
 	 * 更新合同备案的商品编码
 	 * 
@@ -1791,10 +1806,10 @@ public class BaseEncActionImpl extends BaseActionImpl implements BaseEncAction {
 	 * @param seqNum
 	 */
 	public void updateAllContractComplex(Request request, String declareState,
-			Boolean isMaterial, Complex complex, String oldComplexId, Integer seqNum,
-			boolean isSendData, String contractId) {
-		baseEncDao.updateAllContractComplex(contractId, isMaterial, complex, oldComplexId,
-				seqNum, isSendData);
+			Boolean isMaterial, Complex complex, String oldComplexId,
+			Integer seqNum, boolean isSendData, String contractId) {
+		baseEncDao.updateAllContractComplex(contractId, isMaterial, complex,
+				oldComplexId, seqNum, isSendData);
 	}
 
 	/**
@@ -1805,13 +1820,14 @@ public class BaseEncActionImpl extends BaseActionImpl implements BaseEncAction {
 	 * @param seqNum
 	 */
 	public void updateAllBcsDictPorComplex(Request request,
-			String declareState, Boolean isMaterial, Complex complex, String oldComplexId,
-			Integer seqNum, boolean isSendData) {
+			String declareState, Boolean isMaterial, Complex complex,
+			String oldComplexId, Integer seqNum, boolean isSendData) {
 		List lbcs = baseEncDao.findBcsDictPorHeadByDeclareState(declareState);
 		for (int i = 0; i < lbcs.size(); i++) {
-			BcsDictPorHead bcsDictPorHead=(BcsDictPorHead)lbcs.get(i);
-		baseEncDao.updateAllBcsDictPorComplex(bcsDictPorHead.getId(), isMaterial,
-				complex, oldComplexId, seqNum, isSendData);}
+			BcsDictPorHead bcsDictPorHead = (BcsDictPorHead) lbcs.get(i);
+			baseEncDao.updateAllBcsDictPorComplex(bcsDictPorHead.getId(),
+					isMaterial, complex, oldComplexId, seqNum, isSendData);
+		}
 	}
 
 	/**
@@ -1821,8 +1837,9 @@ public class BaseEncActionImpl extends BaseActionImpl implements BaseEncAction {
 	 * @param seqNum
 	 */
 	public void updateAllBcsInnerMergeDataComplex(Request request,
-			Boolean isMaterial,Complex complex, Integer seqNum) {
-		baseEncDao.updateAllBcsInnerMergeDataComplex( isMaterial,complex, seqNum);
+			Boolean isMaterial, Complex complex, Integer seqNum) {
+		baseEncDao.updateAllBcsInnerMergeDataComplex(isMaterial, complex,
+				seqNum);
 	}
 
 	/**
@@ -1837,57 +1854,82 @@ public class BaseEncActionImpl extends BaseActionImpl implements BaseEncAction {
 				isMaterial, seqNum);
 	}
 
-	public List queryReturnImportReport(Request request, Date begin, 
-			Date end, int impExpType, int impExpFlag) {
+	public List queryReturnImportReport(Request request, Date begin, Date end,
+			int impExpType, int impExpFlag) {
 		return baseEncLogic.queryReturnImportReport(begin, end, impExpType);
 	}
-	
-	public List queryReturnImportReport(Request request, Date begin, 
-			Date end, int impExpType, int impExpFlag,String emsNo,int projectType) {
-		return baseEncLogic.queryReturnImportReport(begin, end, impExpType,emsNo,projectType);
+
+	public List queryReturnImportReport(Request request, Date begin, Date end,
+			int impExpType, int impExpFlag, String emsNo, int projectType) {
+		return baseEncLogic.queryReturnImportReport(begin, end, impExpType,
+				emsNo, projectType);
 	}
-	
-	public List queryReturnExportReport(Request request, Date begin, 
-			Date end, int impExpType, int impExpFlag) {
+
+	public List queryReturnExportReport(Request request, Date begin, Date end,
+			int impExpType, int impExpFlag) {
 		return baseEncLogic.queryReturnExportReport(begin, end, impExpType);
 	}
-	
-	public List queryReturnExportReport(Request request, Date begin, 
-			Date end, int impExpType, int impExpFlag , String emsHeadH2k,int projectType) {
-		return baseEncLogic.queryReturnExportReport(begin, end, impExpType,emsHeadH2k,projectType);
+
+	public List queryReturnExportReport(Request request, Date begin, Date end,
+			int impExpType, int impExpFlag, String emsHeadH2k, int projectType) {
+		return baseEncLogic.queryReturnExportReport(begin, end, impExpType,
+				emsHeadH2k, projectType);
 	}
+
 	/**
 	 * 查询统计未复出数据或未复进数据。
+	 * 
 	 * @param request
-	 * @param complexId 商品编号
-	 * @param impExpFlag 进出口标志
+	 * @param complexId
+	 *            商品编号
+	 * @param impExpFlag
+	 *            进出口标志
 	 * @return
 	 */
-	public Double countReturnNumbers(Request request, String complexId, boolean impExpFlag,String version,int commSerialNo) {
-		return baseEncLogic.countReturnNumbers(null, null, complexId, impExpFlag,version,commSerialNo);
+	public Double countReturnNumbers(Request request, String complexId,
+			boolean impExpFlag, String version, int commSerialNo) {
+		return baseEncLogic.countReturnNumbers(null, null, complexId,
+				impExpFlag, version, commSerialNo);
 	}
+
 	/**
 	 * 查询统计未复出数据或未复进数据。
+	 * 
 	 * @param request
-	 * @param complexId 商品编号
-	 * @param impExpFlag 进出口标志
-	 * @param emsHeadH2k 手册号
+	 * @param complexId
+	 *            商品编号
+	 * @param impExpFlag
+	 *            进出口标志
+	 * @param emsHeadH2k
+	 *            手册号
 	 * @return
 	 */
-	public Double countReturnNumbers(Request request,String emsHeadH2k, String complexId, boolean impExpFlag,String version,int commSerialNo){
-		return baseEncLogic.countReturnNumbers(null, null,emsHeadH2k,complexId, impExpFlag,version,commSerialNo);
+	public Double countReturnNumbers(Request request, String emsHeadH2k,
+			String complexId, boolean impExpFlag, String version,
+			int commSerialNo) {
+		return baseEncLogic.countReturnNumbers(null, null, emsHeadH2k,
+				complexId, impExpFlag, version, commSerialNo);
 	}
+
 	/**
-	 *查询统计可退换料件出口数或退厂返工可进口数
+	 * 查询统计可退换料件出口数或退厂返工可进口数
+	 * 
 	 * @param request
-	 * @param complexId 商品编号
-	 * @param impExpFlag 进出口标志
-	 * @param emsHeadH2k 手册号
+	 * @param complexId
+	 *            商品编号
+	 * @param impExpFlag
+	 *            进出口标志
+	 * @param emsHeadH2k
+	 *            手册号
 	 * @return
 	 */
-	public Double countRetreatNumbers(Request request, String emsHeadH2k,String complexId, boolean impExpFlag,String version,int commSerialNo) {
-		return baseEncLogic.countRetreatNumbers(null, null,emsHeadH2k, complexId, impExpFlag,version,commSerialNo);
+	public Double countRetreatNumbers(Request request, String emsHeadH2k,
+			String complexId, boolean impExpFlag, String version,
+			int commSerialNo) {
+		return baseEncLogic.countRetreatNumbers(null, null, emsHeadH2k,
+				complexId, impExpFlag, version, commSerialNo);
 	}
+
 	/**
 	 * 取得出口报关单
 	 * 
@@ -1897,15 +1939,13 @@ public class BaseEncActionImpl extends BaseActionImpl implements BaseEncAction {
 	 */
 	public BaseCustomsDeclaration findCustomsDeclarationByCustomsDeclarationCode(
 			Request request, String customsDeclarationCode, boolean impExpFlag) {
-		return baseEncLogic.findCustomsDeclarationByCustomsDeclarationCode(customsDeclarationCode, impExpFlag);
+		return baseEncLogic.findCustomsDeclarationByCustomsDeclarationCode(
+				customsDeclarationCode, impExpFlag);
 	}
 
 	/**
-	 * 根据 
-	 * 手册号,补充报关单类型,流水号,
-	 * 开始日期（进出口日期在该日期之后）,
-	 * 结束日期（进出口日期在该日期之前）, 
-	 * 查询报关单
+	 * 根据 手册号,补充报关单类型,流水号, 开始日期（进出口日期在该日期之后）, 结束日期（进出口日期在该日期之前）, 查询报关单
+	 * 
 	 * @param ems
 	 * @param supplmentType
 	 * @param serialNumber
@@ -1913,83 +1953,105 @@ public class BaseEncActionImpl extends BaseActionImpl implements BaseEncAction {
 	 * @param end
 	 * @return
 	 */
-	public List getCustomsDeclaration(Request request, String ems, Integer supplmentType, 
-			Integer serialNumber, Date begin, Date end) {
-		return baseEncDao.getCustomsDeclaration(ems, supplmentType, serialNumber, begin, end);
+	public List getCustomsDeclaration(Request request, String ems,
+			Integer supplmentType, Integer serialNumber, Date begin, Date end) {
+		return baseEncDao.getCustomsDeclaration(ems, supplmentType,
+				serialNumber, begin, end);
 	}
+
 	/**
 	 * 保存补充报关单信息
+	 * 
 	 * @param decSupplementList
 	 */
-	public String saveDecSupplementList(DecSupplementList decSupplementList){
-	    return baseEncDao.saveDecSupplementList(decSupplementList);
+	public String saveDecSupplementList(DecSupplementList decSupplementList) {
+		return baseEncDao.saveDecSupplementList(decSupplementList);
 	}
-	public List getDecSupplementList(String supType,String baseCustomsDeclarationCommInfo){
-		return baseEncDao.getDecSupplementList(supType, baseCustomsDeclarationCommInfo);
+
+	public List getDecSupplementList(String supType,
+			String baseCustomsDeclarationCommInfo) {
+		return baseEncDao.getDecSupplementList(supType,
+				baseCustomsDeclarationCommInfo);
 	}
+
 	/**
 	 * 通过报关单id获得报关单底下的补充报关单信息列表
+	 * 
 	 * @param request
 	 * @param decSupplementList
 	 * @return
 	 */
-	public List getDecSupplementList(Request request, String baseCustomsDeclarationId){
+	public List getDecSupplementList(Request request,
+			String baseCustomsDeclarationId) {
 		return baseEncDao.getDecSupplementList(baseCustomsDeclarationId);
 	}
+
 	/**
 	 * 根据时间 补充报关单
+	 * 
 	 * @param request
 	 * @param begin
 	 * @param end
 	 * @return
 	 */
-	public List queryDecSupplementList(Request request, Date begin, Date end){
-		return baseEncDao.queryDecSupplementList(begin,end);
+	public List queryDecSupplementList(Request request, Date begin, Date end) {
+		return baseEncDao.queryDecSupplementList(begin, end);
 	}
+
 	/**
 	 * 根据全部补充报关单
+	 * 
 	 * @param request
 	 * @param begin
 	 * @param end
 	 * @return
 	 */
-	public List queryDecSupplementListAll(Request request){
+	public List queryDecSupplementListAll(Request request) {
 		return baseEncDao.queryDecSupplementListAll();
 	}
+
 	/**
 	 * 删除补充报关单
+	 * 
 	 * @param request
 	 * @param date
 	 * @return
 	 */
-	public void deleteDecSupplementList(Request request,String id){
+	public void deleteDecSupplementList(Request request, String id) {
 		this.baseEncDao.deleteDecSupplementList(id);
 	}
+
 	/**
 	 * 根据ID查找补充报关单
+	 * 
 	 * @param request
 	 * @param date
 	 * @return
 	 */
-	public List getDecSupplementListById(Request request,String id){
+	public List getDecSupplementListById(Request request, String id) {
 		return this.baseEncDao.getDecSupplementListById(id);
 	}
+
 	/**
 	 * 根据ID查找内部商品新增补充报关单表体
+	 * 
 	 * @param request
 	 * @param date
 	 * @return
 	 */
-	public BaseCustomsDeclarationCommInfo getBaseCustomsDeclarationCommInfoById(String id){
+	public BaseCustomsDeclarationCommInfo getBaseCustomsDeclarationCommInfoById(
+			String id) {
 		return this.baseEncDao.getBaseCustomsDeclarationCommInfoById(id);
 	}
+
 	/**
 	 * 查找所有未发送的补充申报单
+	 * 
 	 * @param request
 	 * @param isSend
 	 * @return
 	 */
-	public List findDecSupplementListByIsSend(Request request,String isSend){
+	public List findDecSupplementListByIsSend(Request request, String isSend) {
 		return this.baseEncDao.findDecSupplementListByIsSend(isSend);
 	}
 
@@ -2003,69 +2065,89 @@ public class BaseEncActionImpl extends BaseActionImpl implements BaseEncAction {
 	 * @return 报关清单内容
 	 */
 	public List findImpExpCommodityInfoByCustomsInfo(Request request,
-			BaseCustomsDeclarationCommInfo customs){
+			BaseCustomsDeclarationCommInfo customs) {
 		return this.baseEncDao.findImpExpCommodityInfoByCustomsInfo(customs);
 	}
+
 	/**
 	 * 获得多个申请单,报关单通过申请单转报关单中间表获得申请单
-	 * @param custom 报关单
+	 * 
+	 * @param custom
+	 *            报关单
 	 * @return 申请单
 	 */
 	public List getMultiImpExpBillByCustomsDeclaration(Request request,
-			BaseCustomsDeclaration custom){
+			BaseCustomsDeclaration custom) {
 		return this.baseEncDao.getMultiImpExpBillByCustomsDeclaration(custom);
 	}
-	
-	
-//	public List importQp(Request request, String json) {
-//		
-////		return encImportLogic.importQp(json);
-//		encImportLogic.chooseImportOrExport(json);
-//		return  null;
-//	}
-	
-	public Object transferImportDeclaration(Request request,String gson,Integer impExpFlag,Integer projectType){
-		if(ImpExpFlag.IMPORT==impExpFlag){
-			return encImportLogic.transferImportDeclaration(gson,impExpFlag,projectType);
-		}else{
-			return encImportLogic.transferExportDeclaration(gson,impExpFlag,projectType);
+
+	public Object transferImportDeclaration(Request request, String srcJSON,
+			Integer impExpFlag, Integer projectType) {
+
+		if (ImpExpFlag.IMPORT == impExpFlag) {
+
+			encImportLogic.transferImportDeclaration(srcJSON, impExpFlag,
+					projectType);
+		} else {
+
+			encImportLogic.transferExportDeclaration(srcJSON, impExpFlag,
+					projectType);
 		}
-	}
-	
-	public Object transferExportDeclaration(Request request,String gson,Integer impExpFlag,Integer projectType){
-		return encImportLogic.transferExportDeclaration(gson,impExpFlag,projectType);
-	}
-	public List findCustomsDeclaration(Request request,Integer projectType,Date date,Integer impExpFlag){
-		return encImportLogic.findCustomsDeclaration(projectType,date,impExpFlag);
-	}
-	
-	public List<BaseCustomsDeclaration> findCustomsDeclaration(Request request,Integer impExpFlag,Date beginDate,Date endDate,String customsDecCode,Integer projectType,String emsNo,List impExpTypeList){
-		return encImportLogic.findCustomsDeclaration(impExpFlag,beginDate,endDate,customsDecCode,projectType,emsNo,impExpTypeList);
-	}
-	
-	public List<BaseCustomsDeclaration> findCustomsDeclaration(Request request,Integer impExpFlag,Date beginDate,Date endDate,String customsDecCode,Integer projectType,String emsNo){
-		return encImportLogic.findCustomsDeclaration(impExpFlag,beginDate,endDate,customsDecCode,projectType,emsNo);
-	}
 
-    public List findAllCustomsDeclaration(Request request,Integer projectType,Integer impExpFlag){
-    	return encImportLogic.findAllCustomsDeclaration(projectType,impExpFlag);
-    }
-	@Override
-	public List importQp(Request request, String json) {
-		// TODO Auto-generated method stub
 		return null;
+
 	}
 
-	public String getReceiverUnit(Request request){
+	public Object transferExportDeclaration(Request request, String srcJSON,
+			Integer impExpFlag, Integer projectType) {
+		return encImportLogic.transferExportDeclaration(srcJSON, impExpFlag,
+				projectType);
+	}
+
+	public List findCustomsDeclaration(Request request, Integer projectType,
+			Date date, Integer impExpFlag) {
+		return encImportLogic.findCustomsDeclaration(projectType, date,
+				impExpFlag);
+	}
+
+	public List<BaseCustomsDeclaration> findCustomsDeclaration(Request request,
+			Integer impExpFlag, Date beginDate, Date endDate,
+			String customsDecCode, Integer projectType, String emsNo,
+			List impExpTypeList) {
+		return encImportLogic.findCustomsDeclaration(impExpFlag, beginDate,
+				endDate, customsDecCode, projectType, emsNo, impExpTypeList);
+	}
+
+	public List<BaseCustomsDeclaration> findCustomsDeclaration(Request request,
+			Integer impExpFlag, Date beginDate, Date endDate,
+			String customsDecCode, Integer projectType, String emsNo) {
+		return encImportLogic.findCustomsDeclaration(impExpFlag, beginDate,
+				endDate, customsDecCode, projectType, emsNo);
+	}
+
+	public List findAllCustomsDeclaration(Request request, Integer projectType,
+			Integer impExpFlag) {
+		return encImportLogic
+				.findAllCustomsDeclaration(projectType, impExpFlag);
+	}
+
+	public String getReceiverUnit(Request request) {
 		return this.baseEncDao.getReceiverUnit();
 	}
-	
+
 	/**
 	 * 查询是否显示出口装箱单或者发票
 	 */
 	public List findExportPackinglistOrInvoice(Request request) {
 		return this.baseEncDao.findExportPackinglistOrInvoice();
 	}
-	
+
+	@Override
+	public Map<Integer, String> getCommSpec(Integer projectType,
+			BaseCustomsDeclaration bgdhead) {
+
+		return this.baseEncLogic.getCommSpec(projectType, bgdhead);
+
+	}
 
 }

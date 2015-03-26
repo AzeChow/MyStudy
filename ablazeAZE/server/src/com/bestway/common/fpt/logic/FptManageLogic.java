@@ -56,6 +56,7 @@ import com.bestway.bcus.custombase.entity.basecode.Brief;
 import com.bestway.bcus.custombase.entity.countrycode.Customs;
 import com.bestway.bcus.custombase.entity.countrycode.District;
 import com.bestway.bcus.custombase.entity.hscode.Complex;
+import com.bestway.bcus.custombase.entity.parametercode.Transf;
 import com.bestway.bcus.custombase.entity.parametercode.Unit;
 import com.bestway.bcus.enc.dao.EncDao;
 import com.bestway.bcus.enc.entity.CustomsDeclaration;
@@ -5705,6 +5706,11 @@ public class FptManageLogic {
 			// 备注
 			String note = mapBillHeadData.get("OUT_NOTE");
 			fptBillHead.setReceiveNote(note);
+			//运输工具类别
+			String  transportToolTypenew = mapBillHeadData.get("CONVEY_TYPE");
+			Transf transportToolType = this.fptManageDao.findTransfByCode(transportToolTypenew);
+			fptBillHead.setTransportToolTypenew(transportToolType);
+			
 			System.out.println("-----------save fptbillhead" + fptBillHead);
 			// 保存表头
 			this.fptManageDao.saveFptBillHead(fptBillHead);
@@ -5988,6 +5994,11 @@ public class FptManageLogic {
 			// 备注
 			String note = mapBillHeadData.get("IN_NOTE");
 			fptBillHead.setReceiveNote(note);
+			//运输工具类别
+			String  transportToolTypenew = mapBillHeadData.get("CONVEY_TYPE");
+			Transf transportToolType = this.fptManageDao.findTransfByCode(transportToolTypenew);
+			fptBillHead.setTransportToolTypenew(transportToolType);
+			
 			this.fptManageDao.saveFptBillHead(fptBillHead);
 			List listFptBillItem = this.fptManageDao
 					.findFptBillItemCommodityInfo(fptBillHead.getId(),

@@ -18,6 +18,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.beanutils.PropertyUtils;
 import org.hibernate.CacheMode;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -33,6 +34,7 @@ import org.springframework.util.Assert;
 import com.bestway.bcus.custombase.entity.CustomBaseEntity;
 import com.bestway.bcus.custombase.entity.hscode.Complex;
 import com.bestway.common.materialbase.entity.EnterpriseMaterial;
+import com.bestway.jptds.common.AppException;
 
 /**
  * @author bsway // change the template for this generated type comment go to
@@ -43,7 +45,6 @@ public class BaseDao extends HibernateDaoSupport {
 
 	protected void initDao() throws Exception {
 		super.initDao();
-
 		this.getHibernateTemplate().setCacheQueries(false);
 	}
 
@@ -358,7 +359,7 @@ public class BaseDao extends HibernateDaoSupport {
 			final Object[] objParams) {
 		Transaction tx = this.getSessionFactory().openSession()
 				.beginTransaction();
-		Connection con = this.getSessionFactory().openSession().disconnect();
+		Connection con = this.getSessionFactory().openSession().connection();
 		PreparedStatement stmt;
 		try {
 			stmt = con.prepareStatement(hsql);
@@ -394,7 +395,7 @@ public class BaseDao extends HibernateDaoSupport {
 							throws HibernateException {
 						Connection connection = null;
 						try {
-							connection = session.disconnect();
+							connection = session.connection();
 							// connection.setAutoCommit(true);
 							PreparedStatement stmt = connection
 									.prepareStatement(sql);

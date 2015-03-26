@@ -280,16 +280,24 @@ public class TransferFactoryManageDao extends BaseDao {
 	 * @param no
 	 */
 	public void unAutoJieAn(BaseCustomsDeclaration baseCustomsDeclaration) {
+
 		if (baseCustomsDeclaration.getCustomsEnvelopBillNo() == null
 				|| "".equals(baseCustomsDeclaration.getCustomsEnvelopBillNo())) {
 			return;
 		}
+
+		// 取得关封号
 		CustomsEnvelopBill bill = findCustomsEnvelopBillByCode(baseCustomsDeclaration
 				.getCustomsEnvelopBillNo());
+
 		if (bill != null) {
+
 			bill.setIsEndCase(false);
+
 			bill.setEndCaseDate(null);
+
 		}
+
 		this.saveCustomsEnvelopBill(bill);
 	}
 

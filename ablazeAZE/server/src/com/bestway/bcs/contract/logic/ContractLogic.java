@@ -1480,27 +1480,39 @@ public class ContractLogic {
 	 *            是ContractImg型，合同料件
 	 */
 	public void saveContractImgAmountInteger(List<ContractImg> list) {
+
 		for (int i = 0; i < list.size(); i++) {
+
 			ContractImg contractImg = (ContractImg) list.get(i);
+
 			if (contractImg.getAmount() != null) {
+
 				Double amount = Double.valueOf(String.valueOf(Math
 						.round(contractImg.getAmount())));
+
 				contractImg.setAmount(amount);
+
 			}
+
 			contractImg.setTotalPrice(CommonUtils
 					.getDoubleExceptNull(contractImg.getAmount())
 					* CommonUtils.getDoubleExceptNull(contractImg
 							.getDeclarePrice()));
+
 			// // if (contractImg.getTotalPrice() != null) {
 			// // Double totalPrice = Double.valueOf(String.valueOf(Math
 			// // .round(contractImg.getTotalPrice())));
 			// // contractImg.setTotalPrice(totalPrice);
 			// // }
 			// this.contractDao.saveContractImg(contractImg);
+
 			this.saveContractImg(contractImg);
 		}
+
 		if (list.size() > 0) {
+
 			Contract contract = list.get(0).getContract();
+
 			this.statContractImgMoney(contract);
 		}
 	}

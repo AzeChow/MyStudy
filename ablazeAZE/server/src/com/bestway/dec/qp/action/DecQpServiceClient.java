@@ -40,30 +40,38 @@ public class DecQpServiceClient {
 	 * @return
 	 */
 	public static DecQpAction getDecQpAction(CspParameterSet paraSet) {
+
 		if (paraSet == null) {
 			paraSet = new CspParameterSet();
 		}
+
 		if (paraSet.getRemoteHostAddress() == null
 				|| "".equals(paraSet.getRemoteHostAddress().trim())) {
 			throw new RuntimeException("请先设定好远程服务地址");
 		} else {
 			log.info("Common QP 服务器在  " + paraSet.getRemoteHostAddress());
 		}
+
 		SysQpAction sysQpAction = SysQpServiceClient.getSysQpAction(paraSet);
+
 		if (!sysQpAction.checkAllowInvoke(((Company) CommonUtils.getCompany())
 				.getCode())) {
 			throw new RuntimeException("禁止访问远程服务器！");
 		}
+
 		if (decQpAction == null
 				|| !paraSet.getRemoteHostAddress().equals(
 						DecQpServiceClient.paraSet.getRemoteHostAddress())
 				|| !paraSet.getRemoteHostPort().equals(
 						DecQpServiceClient.paraSet.getRemoteHostPort())) {
 			try {
+
 				String url = serverUrl.replace("IP",
 						paraSet.getRemoteHostAddress()).replace("PORT",
 						paraSet.getRemoteHostPort());
+
 				log.info("Common QP 服务器 URL = " + url);
+
 				decQpAction = (DecQpAction) factory.create(DecQpAction.class,
 						url);
 				//

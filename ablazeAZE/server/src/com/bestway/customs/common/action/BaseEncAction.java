@@ -66,18 +66,18 @@ public interface BaseEncAction {
 	 */
 	public BaseCustomsDeclaration findCustomsDeclarationById(Request request,
 			String id);
-	
+
 	/**
 	 * 取得出口报关单
 	 * 
 	 * @param customsDeclarationCode
-	 *            报关单号 customsDeclarationCode 
+	 *            报关单号 customsDeclarationCode
 	 * @param impExpFlag
-	 * 			  进出口标志
+	 *            进出口标志
 	 * @return 返回报关单表头
 	 */
-	public BaseCustomsDeclaration findCustomsDeclarationByCustomsDeclarationCode(Request request,
-			String customsDeclarationCode, boolean impExpFlag);
+	public BaseCustomsDeclaration findCustomsDeclarationByCustomsDeclarationCode(
+			Request request, String customsDeclarationCode, boolean impExpFlag);
 
 	/**
 	 * 取得报关单明细
@@ -87,15 +87,16 @@ public interface BaseEncAction {
 	 */
 	public List findCustomsDeclarationInfo(Request request,
 			BaseCustomsDeclaration master);
-	
+
 	/**
 	 * 取得报关单明细
 	 * 
-	 * @param baseID 表头ID
+	 * @param baseID
+	 *            表头ID
 	 * @return 返回报关单明细列表
 	 */
-	public Map<String,List> findCustomsDeclarationInfos(Request request,
-			List<String> baseID,Integer projectType);
+	public Map<String, List> findCustomsDeclarationInfos(Request request,
+			List<String> baseID, Integer projectType);
 
 	/**
 	 * 删除报关单
@@ -107,6 +108,7 @@ public interface BaseEncAction {
 	 */
 	void deleteCustomsDeclaration(Request request,
 			BaseCustomsDeclaration baseCustomsDeclaration);
+
 	/**
 	 * 删除报关单
 	 * 
@@ -116,7 +118,8 @@ public interface BaseEncAction {
 	 *            报关单表头Base
 	 */
 	public void deleteCustomsDeclaration(Request request,
-			BaseCustomsDeclaration baseCustomsDeclaration,boolean isCustomDelete);
+			BaseCustomsDeclaration baseCustomsDeclaration,
+			boolean isCustomDelete);
 
 	/**
 	 * 删除报关单
@@ -130,6 +133,7 @@ public interface BaseEncAction {
 	 * 修改进出货转厂单据
 	 */
 	void updateTransferFactoryBill(Request request, List baseCustomsDeclarations);
+
 	/**
 	 * 查询结转报关单已经与海关单据对应
 	 * 
@@ -275,11 +279,12 @@ public interface BaseEncAction {
 
 	/**
 	 * 查询是否选中规范申报规格
+	 * 
 	 * @param request
 	 * @return
 	 */
 	List findIsSpecification(Request request);
-	
+
 	/**
 	 * 取得报关单商品临时信息(如果在报关单中已存在的话，将其过滤)
 	 * 
@@ -367,10 +372,12 @@ public interface BaseEncAction {
 	 */
 	List findContainerByCustomsDeclaration(Request request,
 			BaseCustomsDeclaration customsDeclaration);
+
 	/**
 	 * 查询报关行
 	 */
 	List findcustomsbrokerList(Request request);
+
 	/**
 	 * 查询海关删单的报关单
 	 * 
@@ -706,9 +713,7 @@ public interface BaseEncAction {
 	 */
 	public List findAppFromMaterielByCustomsInfo(Request request,
 			BaseCustomsDeclarationCommInfo customs);
-	
-	
-	
+
 	/**
 	 * 申请单商品信息来自申请单转报关单中间表
 	 * 
@@ -759,7 +764,7 @@ public interface BaseEncAction {
 	 * @return 进出口申请单单据号
 	 */
 	public String getImpExpNoByBillNo(Request request, String billNo);
-	
+
 	/**
 	 * 得到多个申请单号通过报关清单号码
 	 * 
@@ -770,6 +775,7 @@ public interface BaseEncAction {
 	 * @return 进出口申请单单据号
 	 */
 	public List getImpExpMultiNoByBillNo(Request request, String billNo);
+
 	/**
 	 * 计算申请单物料的仓库总毛重、仓库总净重
 	 * 
@@ -856,13 +862,15 @@ public interface BaseEncAction {
 	 * @return List 是TempCustomsMessage型，存放还没被选择的报关单表头信息
 	 */
 	public List getImportDataSource(Request request);
-	
+
 	/**
 	 * 取得已生成taskId、未生效的报关单
+	 * 
 	 * @param request
 	 * @return
 	 */
-	public List<BaseCustomsDeclaration> findDeclarationHasTaskIdUnEffect(Request request);
+	public List<BaseCustomsDeclaration> findDeclarationHasTaskIdUnEffect(
+			Request request);
 
 	/**
 	 * 得到要申报的特殊报关单表头，已检查但未生效的报关单表头
@@ -959,7 +967,7 @@ public interface BaseEncAction {
 	 */
 	List findCustomsDeclarationCommInfoByConveyance(Request request,
 			String conveyance, int impExpFlag);
-	
+
 	/**
 	 * 取得报关单商品信息
 	 * 
@@ -968,7 +976,7 @@ public interface BaseEncAction {
 	 * @return 报关单商品信息
 	 */
 	List findCustomsDeclarationCommInfoByConveyance(Request request,
-			String conveyance, Integer impExpFlag,Integer projectType);
+			String conveyance, Integer impExpFlag, Integer projectType);
 
 	/**
 	 * 取得报关单商品信息
@@ -1123,9 +1131,9 @@ public interface BaseEncAction {
 	 * @return
 	 */
 	public List findEmsByProjectType(Request request, int type);
-	
+
 	/**
-	 *通过单据类型找正在执行的电子帐册资料
+	 * 通过单据类型找正在执行的电子帐册资料
 	 * 
 	 * @param request
 	 *            请求控制
@@ -1134,6 +1142,7 @@ public interface BaseEncAction {
 	 * @return
 	 */
 	public List findExcuteEmsByProjectType(Request request, int type);
+
 	/**
 	 * 找出成品或料件
 	 * 
@@ -1265,7 +1274,8 @@ public interface BaseEncAction {
 	 * @param declareState
 	 * @return
 	 */
-	public List findContractByDeclareState(Request request,String declareState);
+	public List findContractByDeclareState(Request request, String declareState);
+
 	/**
 	 * 取得大批量修改商品编的备案资料
 	 * 
@@ -1282,8 +1292,9 @@ public interface BaseEncAction {
 	 * @param complex
 	 * @param seqNum
 	 */
-	public void updateAllContractComplex(Request request, String declareState,Boolean isMaterial,
-			Complex complex, String oldComplexId, Integer seqNum, boolean isSendData, String contractId);
+	public void updateAllContractComplex(Request request, String declareState,
+			Boolean isMaterial, Complex complex, String oldComplexId,
+			Integer seqNum, boolean isSendData, String contractId);
 
 	/**
 	 * 更新所有备案资料库的商品编码
@@ -1292,8 +1303,9 @@ public interface BaseEncAction {
 	 * @param complex
 	 * @param seqNum
 	 */
-	public void updateAllBcsDictPorComplex(Request request, String declareState,Boolean isMaterial,
-			Complex complex, String oldComplexId, Integer seqNum, boolean isSendData);
+	public void updateAllBcsDictPorComplex(Request request,
+			String declareState, Boolean isMaterial, Complex complex,
+			String oldComplexId, Integer seqNum, boolean isSendData);
 
 	/**
 	 * 更新所有内部归并的商品编码
@@ -1302,94 +1314,110 @@ public interface BaseEncAction {
 	 * @param seqNum
 	 */
 	public void updateAllBcsInnerMergeDataComplex(Request request,
-			Boolean isMaterial,Complex complex, Integer seqNum);
+			Boolean isMaterial, Complex complex, Integer seqNum);
+
 	/**
 	 * 取得备案资料库的归并关系
 	 * 
-	 * @param isMaterial 
+	 * @param isMaterial
 	 * @return
 	 */
-	public List findBcsDictPorImgOrExgInnerMergeSeqNum(Request request,String declareState,
-			Boolean isMaterial,Integer seqNum);
-	
+	public List findBcsDictPorImgOrExgInnerMergeSeqNum(Request request,
+			String declareState, Boolean isMaterial, Integer seqNum);
+
 	/**
 	 * 查询未复进数据报表。
+	 * 
 	 * @param request
 	 * @return
 	 */
-	public List<Map<String,Object>> queryReturnImportReport(Request request, Date begin, 
-			Date end, int queryType, int impExpFlag);
-	
+	public List<Map<String, Object>> queryReturnImportReport(Request request,
+			Date begin, Date end, int queryType, int impExpFlag);
+
 	/**
 	 * 查询未复进数据报表。
+	 * 
 	 * @param request
 	 * @return
 	 */
-	public List<Map<String,Object>> queryReturnImportReport(Request request, Date begin, 
-			Date end, int queryType, int impExpFlag,String emsNo,int projectType);
+	public List<Map<String, Object>> queryReturnImportReport(Request request,
+			Date begin, Date end, int queryType, int impExpFlag, String emsNo,
+			int projectType);
+
 	/**
 	 * 查询未复出数据报表。
+	 * 
 	 * @param request
 	 * @return
 	 */
-	public List<Map<String,Object>> queryReturnExportReport(Request request, Date begin, 
-			Date end, int queryType, int impExpFlag);
-	
+	public List<Map<String, Object>> queryReturnExportReport(Request request,
+			Date begin, Date end, int queryType, int impExpFlag);
+
 	/**
 	 * 查询未复出数据报表。
+	 * 
 	 * @param request
 	 * @return
 	 */
-	public List<Map<String,Object>> queryReturnExportReport(Request request, Date begin, 
-			Date end, int queryType, int impExpFlag , String emsHeadH2k,int projectType);
+	public List<Map<String, Object>> queryReturnExportReport(Request request,
+			Date begin, Date end, int queryType, int impExpFlag,
+			String emsHeadH2k, int projectType);
+
 	/**
 	 * 查询统计未复出数据或未复进数据。
+	 * 
 	 * @param request
-	 * @param complexId 商品编号
-	 * @param impExpFlag 进出口标志
+	 * @param complexId
+	 *            商品编号
+	 * @param impExpFlag
+	 *            进出口标志
 	 * @return
 	 */
-	public Double countReturnNumbers(Request request, String complexId, boolean impExpFlag,String version,int commSerialNo);
+	public Double countReturnNumbers(Request request, String complexId,
+			boolean impExpFlag, String version, int commSerialNo);
+
 	/**
 	 * 查询统计未复出数据或未复进数据。
+	 * 
 	 * @param request
-	 * @param complexId 商品编号
-	 * @param impExpFlag 进出口标志
-	 * @param emsHeadH2k 手册号
+	 * @param complexId
+	 *            商品编号
+	 * @param impExpFlag
+	 *            进出口标志
+	 * @param emsHeadH2k
+	 *            手册号
 	 * @return
 	 */
-	public Double countReturnNumbers(Request request,String emsHeadH2k, String complexId, boolean impExpFlag,String version,int commSerialNo);
+	public Double countReturnNumbers(Request request, String emsHeadH2k,
+			String complexId, boolean impExpFlag, String version,
+			int commSerialNo);
+
 	/**
 	 * 查询统计可退换料件出口数或退厂返工可进口数
+	 * 
 	 * @param request
-	 * @param complexId 商品编号
-	 * @param impExpFlag 进出口标志
-	 * @param emsHeadH2k 手册号
+	 * @param complexId
+	 *            商品编号
+	 * @param impExpFlag
+	 *            进出口标志
+	 * @param emsHeadH2k
+	 *            手册号
 	 * @return
 	 */
-	public Double countRetreatNumbers(Request request, String emsHeadH2k, String complexId, boolean impExpFlag,String version,int commSerialNo);
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	public Double countRetreatNumbers(Request request, String emsHeadH2k,
+			String complexId, boolean impExpFlag, String version,
+			int commSerialNo);
+
 	/**
 	 * 补充申报基础接口
+	 * 
 	 * @author chl
 	 *
 	 */
-	
+
 	/**
-	 * 根据 
-	 * 手册号,补充报关单类型,流水号,
-	 * 开始日期（进出口日期在该日期之后）,
-	 * 结束日期（进出口日期在该日期之前）, 
-	 * 查询报关单
+	 * 根据 手册号,补充报关单类型,流水号, 开始日期（进出口日期在该日期之后）, 结束日期（进出口日期在该日期之前）, 查询报关单
+	 * 
 	 * @param request
 	 * @param ems
 	 * @param supplmentType
@@ -1398,149 +1426,184 @@ public interface BaseEncAction {
 	 * @param end
 	 * @return
 	 */
-	public List getCustomsDeclaration(Request request, String ems, Integer supplmentType, 
-			Integer serialNumber, Date begin, Date end);
+	public List getCustomsDeclaration(Request request, String ems,
+			Integer supplmentType, Integer serialNumber, Date begin, Date end);
+
 	/**
 	 * 保存补充报关单信息
+	 * 
 	 * @param decSupplementList
 	 */
 	public String saveDecSupplementList(DecSupplementList decSupplementList);
-	public List getDecSupplementList(String supType,String baseCustomsDeclarationCommInfo);
-	
+
+	public List getDecSupplementList(String supType,
+			String baseCustomsDeclarationCommInfo);
+
 	/**
 	 * 通过报关单id获得报关单底下的补充报关单信息列表
+	 * 
 	 * @param request
 	 * @param decSupplementList
 	 * @return
 	 */
-	public List getDecSupplementList(Request request, String baseCustomsDeclarationId);
+	public List getDecSupplementList(Request request,
+			String baseCustomsDeclarationId);
+
 	/**
 	 * 根据时间 补充报关单
+	 * 
 	 * @param request
 	 * @param begin
 	 * @param end
 	 * @return
 	 */
 	public List queryDecSupplementList(Request request, Date begin, Date end);
+
 	/**
 	 * 根据全部补充报关单
+	 * 
 	 * @param request
 	 * @return
 	 */
 	public List queryDecSupplementListAll(Request request);
-	
+
 	/**
 	 * 删除补充报关单
+	 * 
 	 * @param request
 	 * @param id
 	 * @return
 	 */
-	public void deleteDecSupplementList(Request request,String id);
+	public void deleteDecSupplementList(Request request, String id);
+
 	/**
 	 * 根据ID查找补充报关单
+	 * 
 	 * @param request
 	 * @param id
 	 * @return
 	 */
-	public List getDecSupplementListById(Request request,String id);
+	public List getDecSupplementListById(Request request, String id);
+
 	/**
-	 * 根据ID查找内部商品新增补充报关单表体 发送状态为未发送 
+	 * 根据ID查找内部商品新增补充报关单表体 发送状态为未发送
+	 * 
 	 * @param request
 	 * @param date
 	 * @return
 	 */
-	public BaseCustomsDeclarationCommInfo getBaseCustomsDeclarationCommInfoById(String id);
-	
+	public BaseCustomsDeclarationCommInfo getBaseCustomsDeclarationCommInfoById(
+			String id);
+
 	/**
 	 * 查找所有未发送的补充申报单
+	 * 
 	 * @param request
 	 * @param isSend
 	 * @return
 	 */
-	public List findDecSupplementListByIsSend(Request request,String isSend);
+	public List findDecSupplementListByIsSend(Request request, String isSend);
+
 	/**
 	 * 获得多个申请单,报关单通过申请单转报关单中间表获得申请单
-	 * @param custom 报关单
+	 * 
+	 * @param custom
+	 *            报关单
 	 * @return 申请单
 	 */
 	public List getMultiImpExpBillByCustomsDeclaration(Request request,
 			BaseCustomsDeclaration custom);
-	
-	
-	List importQp(Request request, String json);
-	
+
 	/**
 	 * 将数据传到服务端
+	 * 
 	 * @param request
 	 * @param json
 	 * @param impExpFlag
 	 * @param projectType
 	 * @return
 	 */
-	Object transferImportDeclaration(Request request,String json,Integer impExpFlag,Integer projectType);
-	
+	Object transferImportDeclaration(Request request, String srcJSON,
+			Integer impExpFlag, Integer projectType);
+
 	/**
 	 * 将数据传到服务端
+	 * 
 	 * @param request
 	 * @param json
 	 * @param impExpFlag
 	 * @param projectType
 	 * @return
 	 */
-	Object transferExportDeclaration(Request request,String json,Integer impExpFlag,Integer projectType);
+	Object transferExportDeclaration(Request request, String srcJSON,
+			Integer impExpFlag, Integer projectType);
 
 	/**
 	 * 查询所有当天的报关单号
+	 * 
 	 * @param request
 	 * @param projectType
 	 * @param date
 	 * @param impExpFlag
 	 * @return
 	 */
-	List findCustomsDeclaration(Request request,Integer projectType,Date date,Integer impExpFlag);
-	
+	List findCustomsDeclaration(Request request, Integer projectType,
+			Date date, Integer impExpFlag);
+
 	/**
 	 * 查询所有的报关单
+	 * 
 	 * @param request
 	 * @param projectType
 	 * @param date
 	 * @param impExpFlag
 	 * @return
 	 */
-	List<BaseCustomsDeclaration> findCustomsDeclaration(Request request,Integer impExpFlag,Date beginDate,Date endDate,String customsDecCode,Integer projectType,String emsNo,List impExpTypeList);
-	
+	List<BaseCustomsDeclaration> findCustomsDeclaration(Request request,
+			Integer impExpFlag, Date beginDate, Date endDate,
+			String customsDecCode, Integer projectType, String emsNo,
+			List impExpTypeList);
+
 	/**
 	 * 查询所有的报关单
+	 * 
 	 * @param request
 	 * @param projectType
 	 * @param date
 	 * @param impExpFlag
 	 * @return
 	 */
-	List<BaseCustomsDeclaration> findCustomsDeclaration(Request request,Integer impExpFlag,Date beginDate,Date endDate,String customsDecCode,Integer projectType,String emsNo);
-	
+	List<BaseCustomsDeclaration> findCustomsDeclaration(Request request,
+			Integer impExpFlag, Date beginDate, Date endDate,
+			String customsDecCode, Integer projectType, String emsNo);
+
 	/**
 	 * 查询所有报关单号
+	 * 
 	 * @param request
 	 * @param projectType
 	 * @param impExpFlag
 	 * @return
 	 */
-	List findAllCustomsDeclaration(Request request,Integer projectType,Integer impExpFlag);
-	
+	List findAllCustomsDeclaration(Request request, Integer projectType,
+			Integer impExpFlag);
+
 	/**
 	 * 得到收获单位
+	 * 
 	 * @param request
 	 * @return
 	 */
 	public String getReceiverUnit(Request request);
-	
+
 	/**
 	 * 查询是否显示出口装箱单或者发票
 	 * 
 	 * @param parameter
 	 */
 	List findExportPackinglistOrInvoice(Request request);
-}
 
-	
+	public Map<Integer, String> getCommSpec(Integer projectType,
+			BaseCustomsDeclaration bgdhead);
+
+}

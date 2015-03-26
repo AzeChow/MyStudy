@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate3.HibernateOptimisticLockingFailureException;
 
@@ -5945,16 +5945,21 @@ public class BaseEncDao extends BaseDao {
 		String hql = "";
 		List params = new ArrayList();
 		if (projectType == ProjectType.BCS) {
-			hql = "select a from Contract a where a.company.id = ? and a.declareState = ? and a.emsNo = ?";
+
+			hql = "select a from Contr act a where a.company.id = ? and a.declareState = ? and a.emsNo = ?";
 			params.add(CommonUtils.getCompany().getId());
 			params.add(DeclareState.PROCESS_EXE);
 			params.add(bgdhead.getEmsHeadH2k());
+
 		} else if (projectType == ProjectType.DZSC) {
+
 			hql = "select a from DzscEmsPorHead a where a.company.id = ? and a.declareState = ? and a.emsNo = ?";
 			params.add(CommonUtils.getCompany().getId());
 			params.add(DeclareState.PROCESS_EXE);
 			params.add(bgdhead.getEmsHeadH2k());
+
 		} else if (projectType == ProjectType.BCUS) {
+
 			hql = "select a from EmsHeadH2k a where a.company.id = ? and a.historyState=?  and a.emsNo = ? order by a.modifyTimes DESC";
 			params.add(CommonUtils.getCompany().getId());
 			params.add(new Boolean(false));

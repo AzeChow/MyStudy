@@ -3359,6 +3359,7 @@ public class CasBillLogic {
 		// 工厂和实际客户对应
 		FactoryAndFactualCustomsRalation fileData = null;
 		
+		
 		/*
 		 * 显示进度信息
 		 */
@@ -4405,7 +4406,7 @@ public class CasBillLogic {
 								existF.setUnitConvert(uc);
 								existF.setCreateDate(createDate);
 							}
-							
+							existF.setRemark(obj.getRemark());
 							existF.setCompany(CommonUtils.getCompany());
 							ffcSaveList.add(existF);
 						} else { // 不覆盖就新增

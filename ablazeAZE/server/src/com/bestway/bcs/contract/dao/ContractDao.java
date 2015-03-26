@@ -298,15 +298,6 @@ public class ContractDao extends BaseDao {
 	 */
 	public List findContractByProcessExe() {
 
-		String hql = "select a from Contract a where a.company.id=  "
-				+ CommonUtils.getCompany().getId() + "and ( a.isCancel= "
-				+ false + " ) and a.declareState= " + DeclareState.PROCESS_EXE
-				+ "order by a.beginDate";
-
-		System.out.println(hql);
-
-		System.out.println("==-=-=-=-=-=-");
-
 		return this
 				.find("select a from Contract a where a.company= ? and ( a.isCancel=? ) and a.declareState=? order by a.beginDate",
 						new Object[] { CommonUtils.getCompany(),

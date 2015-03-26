@@ -1483,8 +1483,6 @@ public class BcsImpExpRequestLogic {
 
 			TempBcsImpExpCommodityInfo temp = dataSource.get(i);
 
-			// ImpExpCommodityInfo newImpExp = temp.getImpExpCommodityInfo();
-
 			Integer credenceNo = null;
 
 			if (isProduct) {
@@ -1513,12 +1511,13 @@ public class BcsImpExpRequestLogic {
 				// 合并map中已经存在的对象
 				mergerExist(oldTemp, temp, unitConvert, isProduct);
 
-				oldTemp.getCommodityInfos().addAll(temp.getCommodityInfos());
-
 				oldTemp.getCommodityInfos().add(temp);
 
 			} else {
 
+				/*
+				 * 当map取值没找到相关的临时申请信息表体
+				 */
 				oldTemp = new TempBcsImpExpCommodityInfo();
 
 				// 合并map中不存在的对象
@@ -1526,6 +1525,10 @@ public class BcsImpExpRequestLogic {
 
 				map.put(key, oldTemp);
 
+				// 需要这里加入一个临时表体对象
+				oldTemp.getCommodityInfos().add(temp);
+
+				// 加入到结果集合里
 				returnList.add(oldTemp);
 			}
 
@@ -1535,75 +1538,118 @@ public class BcsImpExpRequestLogic {
 	}
 
 	/**
-	 * 合并存在的对象
+	 * 合并存在的对象 只是数值上的相加 临时存取表体资料并没有新增
 	 * 
 	 * @param oldTemp
-	 *            map中已保存的对象
+	 *            map中已保存的对象 即已存在并处理过的对象
 	 * @param newImpExp
-	 *            还未处理的对象
+	 *            源对象，迭代的对象，用于比对合并
 	 */
 	private void mergerExist(TempBcsImpExpCommodityInfo oldTemp,
 			TempBcsImpExpCommodityInfo newTemp, Double unitConvert,
 			Boolean isProduct) {
 		// /
 		ImpExpCommodityInfo newImpExp = newTemp.getImpExpCommodityInfo();
+
 		ImpExpCommodityInfo oldImpExp = oldTemp.getImpExpCommodityInfo();
+
+		/*
+		 * 毛重 ， 净重 ， 金额 ， 体积 ， 加工费总价 全部相加
+		 */
+
 		Double grossWeight = CaleUtil.add(oldImpExp.getGrossWeight(),
 				newImpExp.getGrossWeight());
+
 		Double netWeight = CaleUtil.add(oldImpExp.getNetWeight(),
 				newImpExp.getNetWeight());
+
 		Double cubage = CaleUtil
 				.add(oldImpExp.getBulks(), newImpExp.getBulks());
 
 		Integer piece = CommonUtils.getIntegerExceptNull(oldImpExp.getPiece())
 				+ CommonUtils.getIntegerExceptNull(newImpExp.getPiece());
+
 		Double workUsd = CaleUtil.add(oldImpExp.getWorkUsd(),
 				newImpExp.getWorkUsd());
+
 		Double money = CaleUtil.add(oldImpExp.getAmountPrice(),
 				newImpExp.getAmountPrice());
 
+		/*-----------------------------------------------*/
+
 		Unit unit = null;
+
 		if (isProduct) {
+
 			unit = newTemp.getContractExg().getUnit();
 		} else {
+
 			unit = newTemp.getContractImg().getUnit();
 		}
+
 		Double quantity = 0.0;
+
+		/*
+		 * 数量 相加
+		 */
 		if (unit != null && unit.getName().equals("千克")) {
+
 			quantity = netWeight;// 等于千克是去净重
+
 		} else {
+
 			quantity = CaleUtil.add(oldImpExp.getQuantity(),
 					CommonUtils.getDoubleExceptNull(newImpExp.getQuantity())
 							* unitConvert);
 		}
 
 		String boxNo = oldImpExp.getBoxNo();// 箱号
+
 		String newBoxNo = "";
+
 		if (boxNo != null && !"".equals(boxNo)) {
+
 			newBoxNo = getNotExistBoxNo(boxNo, newImpExp.getBoxNo());
+
 		} else {
+
 			newBoxNo = newImpExp.getBoxNo();
 		}
+
 		oldImpExp.setBoxNo(newBoxNo);// 箱号
+
 		oldImpExp.setWorkUsd(workUsd);// 加工费总价
+
 		oldImpExp.setPiece(piece);// 件数
+
 		oldImpExp.setGrossWeight(grossWeight);// 毛重
+
 		oldImpExp.setNetWeight(netWeight);// 净重
+
 		oldImpExp.setBulks(cubage);// 体积
+
 		oldImpExp.setAmountPrice(money);// 总金额
+
 		oldImpExp.setQuantity(quantity);// 数量
 
 		if (quantity != 0) {
+
 			oldImpExp.setInvgrossWeight(grossWeight / quantity);// 毛重
+
 			oldImpExp.setInvnetWeight(netWeight / quantity);// 单净重
+
 			oldImpExp.setUnitPrice(money / quantity);// 单价
 		}
 		// 申请单明细中出现包装方式不一致的合并 true:不一样的包装方式的归并】
 		// false：包装方式一致的归并 ,用于申请单明细有包装方式的插件。
+
 		if (oldImpExp.getWrapType() != null && newImpExp.getWrapType() != null
 				&& !oldImpExp.getWrapType().equals(newImpExp.getWrapType())) {
+
 			oldTemp.setIsDifferWrapToMerger(true);
+
 		} else {
+
 			oldTemp.setIsDifferWrapToMerger(false);
 		}
 	}
