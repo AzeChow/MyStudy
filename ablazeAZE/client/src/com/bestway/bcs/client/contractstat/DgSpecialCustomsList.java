@@ -411,6 +411,7 @@ public class DgSpecialCustomsList extends JInternalFrameBase {
 						
 						list.add(addColumn("客户/供应商名称",
 								"baseCustomsDeclaration.customer.name", 100));//20
+						list.add(addColumn("申报单位", "baseCustomsDeclaration.declarationCompany.name",100));
 						list.add(addColumn("法定数量", "firstAmount", 100));//21
 						list.add(addColumn("法定单位", "legalUnit.name", 100));//22
 						list.add(addColumn("报关单单价", "commUnitPrice", 100));//23

@@ -15,6 +15,8 @@ import java.awt.Font;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.AWTEventListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -63,7 +65,6 @@ import com.bestway.bcus.checkcancel.entity.CancelCustomsDeclara;
 import com.bestway.bcus.checkcancel.entity.CancelImgResult;
 import com.bestway.bcus.client.common.CommonDataSource;
 import com.bestway.bcus.client.common.CommonProgress;
-import com.bestway.bcus.client.common.CommonQuery;
 import com.bestway.bcus.client.common.CommonStepProgress;
 import com.bestway.bcus.client.common.CommonVars;
 import com.bestway.bcus.client.common.CustomFormattedTextFieldUtils;
@@ -266,6 +267,8 @@ public class DgCancelCus extends JDialogBase {
 	private JButton jButton12 = null;
 
 	private JButton jButton13 = null;
+
+	private JButton btnExcImport = null;
 	/**
 	 * 查询操作页面
 	 */
@@ -326,8 +329,8 @@ public class DgCancelCus extends JDialogBase {
 	private JTextField tfCheckStaffTime = null;
 
 	private JPanel jPanelSimulation = null;
-	
-	private JPanel jPanelCover =null;
+
+	private JPanel jPanelCover = null;
 
 	private JLabel jLabel51 = null;
 
@@ -380,12 +383,13 @@ public class DgCancelCus extends JDialogBase {
 	private JButton jButton14 = null;
 
 	private JButton btNext = null;
-	
+
 	int totalCount = 0; // 总行
 	int rowCount = 0; // 当前行
-	private Toolkit toolkit = Toolkit.getDefaultToolkit();  //  @jve:decl-index=0:
+	private Toolkit toolkit = Toolkit.getDefaultToolkit(); // @jve:decl-index=0:
 
 	private JFormattedTextField innerCancelFillTaxMoney;
+
 	/**
 	 * This is the default constructor
 	 */
@@ -450,7 +454,7 @@ public class DgCancelCus extends JDialogBase {
 		});
 		toolkit.addAWTEventListener(new CapListener(), AWTEvent.KEY_EVENT_MASK);
 	}
-	
+
 	/**
 	 * 初始化组件
 	 * 
@@ -472,8 +476,9 @@ public class DgCancelCus extends JDialogBase {
 		CustomFormattedTextFieldUtils.setFormatterFactory(this.jTextField10, 5);
 		CustomFormattedTextFieldUtils.setFormatterFactory(this.jTextField15, 5);
 
-		String isPrice = manualDeclearAction.getBpara(new Request(CommonVars
-				.getCurrUser()), BcusParameter.Ems_CancelCus_Price);
+		String isPrice = manualDeclearAction.getBpara(
+				new Request(CommonVars.getCurrUser()),
+				BcusParameter.Ems_CancelCus_Price);
 		if (isPrice != null && "0".equals(isPrice)) {
 			isEmsCancelAvgPrice = true;
 		} else if (isPrice != null && "1".equals(isPrice)) {
@@ -482,17 +487,18 @@ public class DgCancelCus extends JDialogBase {
 
 	}
 
+	/**
+	 * 初始化料件--
+	 */
 	private void initImg() {
-		List imgResultList = null;
-		imgResultList = checkCancelAction.findCancelImgResult(new Request(
+		List imgResultList = checkCancelAction.findCancelImgResult(new Request(
 				CommonVars.getCurrUser()), cancelHead, false);
 		if (imgResultList != null && !imgResultList.isEmpty())
 			initTableImgResult(imgResultList);
 		else
 			initTableImgResult(new Vector());
 
-		List imgBeforeList = null;
-		imgBeforeList = checkCancelAction.findCancelImgBefore(new Request(
+		List imgBeforeList = checkCancelAction.findCancelImgBefore(new Request(
 				CommonVars.getCurrUser()), cancelHead, false);
 		if (imgBeforeList != null && !imgBeforeList.isEmpty())
 			initTableImgBefore(imgBeforeList);
@@ -542,7 +548,7 @@ public class DgCancelCus extends JDialogBase {
 						list.add(addColumn("进出口日期", "inOutportDate", 80));
 						list.add(addColumn("贸易方式", "tradeMode.name", 100));
 						list.add(addColumn("备注", "note", 100));
-						
+
 						return list;
 					}
 				});
@@ -796,51 +802,55 @@ public class DgCancelCus extends JDialogBase {
 		jTextField7.setValue(cancelHead.getOutportCustomNum());
 		jTextField12.setValue(cancelHead.getDeclareImgNum());
 		jTextField3.setValue(cancelHead.getDeclareExgNum());
-		//获取本期进口总金额
+		// 获取本期进口总金额
 		jTextField8.setValue(cancelHead.getThisInportMoney());
-		//获取本期出口总金额
+		// 获取本期出口总金额
 		jTextField13.setValue(cancelHead.getThisOutportMoney());
-		//获取期初料件总金额
+		// 获取期初料件总金额
 		jFormattedTextField2.setValue(cancelHead.getBeginImgMoney());
-		//获取期末结余料件总金额(
+		// 获取期末结余料件总金额(
 		jTextField9.setValue(cancelHead.getEndBalanceImgMoney());
-		//获取内销金额
+		// 获取内销金额
 		tfInnerCancelMoney.setValue(cancelHead.getInnerCancelMoney());
-		//获取内销补税税额
+		// 获取内销补税税额
 		jTextField10.setValue(cancelHead.getInnerCancelFillTaxMoney());
-		//获取出口成品耗用料件金额
+		// 获取出口成品耗用料件金额
 		jFormattedTextField.setValue(cancelHead.getOutportExgUseImgNum());
-		//获取退运料件金额
+		// 获取退运料件金额
 		jTextField15.setValue(cancelHead.getExitImgMoney());
-		//获取余料结转出口
+		// 获取余料结转出口
 		tfOverImgExport.setValue(cancelHead.getRemainExportMoney());
-		
-		//获取本期进口总金额(模拟数据Jpanel)
+
+		// 获取本期进口总金额(模拟数据Jpanel)
 		jTextField81.setValue(cancelHead.getSimulateThisInportMoney());
-		//获取本期出口总金额(模拟数据Jpanel)
+		// 获取本期出口总金额(模拟数据Jpanel)
 		jTextField131.setValue(cancelHead.getSimulateThisOutportMoney());
-		//获取期初料件总金额(模拟数据Jpanel)
+		// 获取期初料件总金额(模拟数据Jpanel)
 		jFormattedTextField21.setValue(cancelHead.getSimulateBeginImgMoney());
-		//获取期末结余料件总金额(模拟数据Jpanel)
+		// 获取期末结余料件总金额(模拟数据Jpanel)
 		jTextField91.setValue(cancelHead.getSimulateEndBalanceImgMoney());
-		//获取内销金额(模拟数据Jpanel)
+		// 获取内销金额(模拟数据Jpanel)
 		tfInnerCancelMoney1.setValue(cancelHead.getSimulateInnerCancelMoney());
-		//获取出口成品耗用料件金额(模拟数据Jpanel)
-		jFormattedTextField1.setValue(cancelHead.getSimulateOutportExgUseImgNum());
-		//获取退运料件金额(模拟数据Jpanel)
+		// 获取出口成品耗用料件金额(模拟数据Jpanel)
+		jFormattedTextField1.setValue(cancelHead
+				.getSimulateOutportExgUseImgNum());
+		// 获取退运料件金额(模拟数据Jpanel)
 		jTextField151.setValue(cancelHead.getSimulateExitImgMoney());
-		//获取余料结转出口(模拟数据Jpanel)
+		// 获取余料结转出口(模拟数据Jpanel)
 		tfOverImgExport1.setValue(cancelHead.getSimulateRemainExportMoney());
 		jTextField5.setText(cancelHead.getNote());
 		jTextField16.setText(cancelHead.getInputUser()); // 录入员
 		jCalendarComboBox3.setDate(cancelHead.getInputDate()); // 录入日期
 		jCalendarComboBox2.setDate(cancelHead.getDeclareDate());// 申报日期
 		jTextField18.setText(cancelHead.getDeclareTime()); // 申报时间
-		tfCheckStaffName.setText(cancelHead.getCheckStaffName()); //财务审核人员
-		if(cancelHead.getCheckStaffTime()!=null&&!"".equals(cancelHead.getCheckStaffTime())){
-			tfCheckStaffTime.setText(CommonUtils.getDate(cancelHead.getCheckStaffTime(),"yyyy-MM-dd")); //财务审核时间
+		tfCheckStaffName.setText(cancelHead.getCheckStaffName()); // 财务审核人员
+		if (cancelHead.getCheckStaffTime() != null
+				&& !"".equals(cancelHead.getCheckStaffTime())) {
+			tfCheckStaffTime.setText(CommonUtils.getDate(
+					cancelHead.getCheckStaffTime(), "yyyy-MM-dd")); // 财务审核时间
 		}
-		tfScale.setText(CommonUtils.formatDoubleByDigit(cancelHead.getScale(), 5));
+		tfScale.setText(CommonUtils.formatDoubleByDigit(cancelHead.getScale(),
+				5));
 	}
 
 	public Double formatBig(Object amount) {
@@ -873,13 +883,13 @@ public class DgCancelCus extends JDialogBase {
 	 * 
 	 * @return javax.swing.JPanel
 	 */
-		
+
 	private javax.swing.JPanel getJContentPane() {
 		if (jContentPane == null) {
 			jContentPane = new javax.swing.JPanel();
 			jContentPane.setLayout(new java.awt.BorderLayout());
 			jContentPane.add(getJPanel(), java.awt.BorderLayout.NORTH);
-			jContentPane.add(getJTabbedPane(),  java.awt.BorderLayout.CENTER);
+			jContentPane.add(getJTabbedPane(), java.awt.BorderLayout.CENTER);
 		}
 		return jContentPane;
 	}
@@ -900,9 +910,8 @@ public class DgCancelCus extends JDialogBase {
 			jLabel.setText("核销计算表");
 			jLabel.setFont(new java.awt.Font("Dialog", java.awt.Font.BOLD, 18));
 			jLabel.setForeground(new java.awt.Color(0, 102, 51));
-			jPanel
-					.setBorder(javax.swing.BorderFactory
-							.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+			jPanel.setBorder(javax.swing.BorderFactory
+					.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 			jPanel.add(jLabel, null);
 		}
 		return jPanel;
@@ -980,7 +989,6 @@ public class DgCancelCus extends JDialogBase {
 
 			javax.swing.JLabel jLabel1 = new JLabel();
 
-			
 			jLabel1.setBounds(39, 26, 50, 19);
 			jLabel1.setText("帐册编号");
 			jLabel2.setBounds(39, 57, 53, 19);
@@ -1000,7 +1008,7 @@ public class DgCancelCus extends JDialogBase {
 			jLabel19.setBounds(500, 27, 58, 18);
 			jLabel19.setText("报核类型");
 			jLabel20.setBounds(500, 58, 76, 22);
-			jLabel20.setText("报核截止日期") ;
+			jLabel20.setText("报核截止日期");
 			jLabel21.setBounds(257, 115, 76, 21);
 			jLabel21.setText("报核料件项数");
 			jLabel27.setBounds(39, 146, 55, 20);
@@ -1049,7 +1057,7 @@ public class DgCancelCus extends JDialogBase {
 			jPanel2.add(getJPanelReal(), null);
 			jPanel2.add(getCoverPanel(), null);
 			jPanel2.add(getJPanelSimulation(), null);
-			jPanel2.add(getJButton14(), null);			
+			jPanel2.add(getJButton14(), null);
 		}
 		return jPanel2;
 	}
@@ -1282,13 +1290,13 @@ public class DgCancelCus extends JDialogBase {
 					// cal.get(Calendar.DAY_OF_WEEK);//获取本周的当前天数(比如：是本周的第几天)
 					// System.out.println("dayOfWeek="+dayOfWeek);
 					Calendar calFirstDayInThisWeek = (Calendar) cal.clone();
-					calFirstDayInThisWeek.add(Calendar.DATE, cal
-							.getActualMinimum(Calendar.DAY_OF_YEAR)
-							- dayOfYear);
+					calFirstDayInThisWeek.add(Calendar.DATE,
+							cal.getActualMinimum(Calendar.DAY_OF_YEAR)
+									- dayOfYear);
 					Calendar calLastDayInThisWeek = (Calendar) cal.clone();// clone():创建并返回此对象的一个副本。
-					calLastDayInThisWeek.add(Calendar.DATE, cal
-							.getActualMaximum(Calendar.DAY_OF_YEAR)
-							- dayOfYear);
+					calLastDayInThisWeek.add(Calendar.DATE,
+							cal.getActualMaximum(Calendar.DAY_OF_YEAR)
+									- dayOfYear);
 
 					Calendar nowDate = (Calendar) cal.clone();
 					nowDate.add(Calendar.DAY_OF_YEAR, +179);
@@ -1430,13 +1438,11 @@ public class DgCancelCus extends JDialogBase {
 			// cal.get(Calendar.DAY_OF_WEEK);//获取本周的当前天数(比如：是本周的第几天)
 			// System.out.println("dayOfWeek="+dayOfWeek);
 			Calendar calFirstDayInThisWeek = (Calendar) cal.clone();
-			calFirstDayInThisWeek.add(Calendar.DATE, cal
-					.getActualMinimum(Calendar.DAY_OF_YEAR)
-					- dayOfYear);
+			calFirstDayInThisWeek.add(Calendar.DATE,
+					cal.getActualMinimum(Calendar.DAY_OF_YEAR) - dayOfYear);
 			Calendar calLastDayInThisWeek = (Calendar) cal.clone();// clone():创建并返回此对象的一个副本。
-			calLastDayInThisWeek.add(Calendar.DATE, cal
-					.getActualMaximum(Calendar.DAY_OF_YEAR)
-					- dayOfYear);
+			calLastDayInThisWeek.add(Calendar.DATE,
+					cal.getActualMaximum(Calendar.DAY_OF_YEAR) - dayOfYear);
 
 			Calendar nowDate = (Calendar) cal.clone();
 			nowDate.add(Calendar.DAY_OF_YEAR, +179);
@@ -1592,8 +1598,9 @@ public class DgCancelCus extends JDialogBase {
 					cancelHead.setInputUser(jTextField16.getText());
 					cancelHead.setBeginDate(jCalendarComboBox.getDate());
 					cancelHead.setEndDate(jCalendarComboBox1.getDate());
-					cancelHead.setOutportExgUseImgNum(formatBig(jFormattedTextField
-							.getValue()));
+					cancelHead
+							.setOutportExgUseImgNum(formatBig(jFormattedTextField
+									.getValue()));
 					cancelHead.setNote(jTextField5.getText());
 					cancelHead.setInnerCancelMoney(formatBig(tfInnerCancelMoney
 							.getValue()));
@@ -1612,9 +1619,10 @@ public class DgCancelCus extends JDialogBase {
 					// 计算内销总金额
 					cancelHead.setInnerCancelMoney(formatBig(tfInnerCancelMoney
 							.getValue()));
-					//计算内销补税金额
-					cancelHead.setInnerCancelFillTaxMoney(formatBig(jTextField10
-							.getValue()));
+					// 计算内销补税金额
+					cancelHead
+							.setInnerCancelFillTaxMoney(formatBig(jTextField10
+									.getValue()));
 					// 计算退运料件金额
 					cancelHead.setExitImgMoney(formatBig(jTextField15
 							.getValue()));
@@ -1622,9 +1630,9 @@ public class DgCancelCus extends JDialogBase {
 					cancelHead.setRemainExportMoney((formatBig(tfOverImgExport
 							.getValue())));
 					// 比例
-//					cancelHead.setScale((formatBig(tfScale
-//							.getValue())));
-					// 比例 =（出口成品耗用总金额/本期出口总金额）*100					
+					// cancelHead.setScale((formatBig(tfScale
+					// .getValue())));
+					// 比例 =（出口成品耗用总金额/本期出口总金额）*100
 					if ((formatBig(jFormattedTextField.getValue())) != 0) {
 						double Proportion = 0;
 						Proportion = (formatBig(jFormattedTextField.getValue()))
@@ -1633,33 +1641,54 @@ public class DgCancelCus extends JDialogBase {
 					} else {
 						cancelHead.setScale(0.0);
 					}
-					tfScale.setText(CommonUtils.formatDoubleByDigit(cancelHead.getScale(), 5));
+					tfScale.setText(CommonUtils.formatDoubleByDigit(
+							cancelHead.getScale(), 5));
 					cancelHead = (CancelCusHead) checkCancelAction
-							.saveCancelHead(new Request(CommonVars
-									.getCurrUser()), cancelHead);
-					//财务审核人员
-					cancelHead.setCheckStaffName(tfCheckStaffName.getText()==null?"":tfCheckStaffName.getText());
-					//财务审核时间
+							.saveCancelHead(
+									new Request(CommonVars.getCurrUser()),
+									cancelHead);
+					// 财务审核人员
+					cancelHead
+							.setCheckStaffName(tfCheckStaffName.getText() == null ? ""
+									: tfCheckStaffName.getText());
+					// 财务审核时间
 					cancelHead.setCheckStaffTime(new Date());
-					//一下为模拟数据
-					//期初料件总金额
-					cancelHead.setSimulateBeginImgMoney(formatBig(jFormattedTextField21.getValue()));
-					//本期出口总金额
-					cancelHead.setSimulateThisOutportMoney(formatBig(jTextField131.getValue()));
-					//内销金额 
-					cancelHead.setSimulateInnerCancelMoney(formatBig(tfInnerCancelMoney1.getValue()));
-					//退运料件金额
-					cancelHead.setSimulateExitImgMoney(formatBig(jTextField151.getValue()));
-					//本期进口总金额
-					cancelHead.setSimulateThisInportMoney(formatBig(jTextField81.getValue()));
-					//期末结余料件总金额
-					cancelHead.setSimulateEndBalanceImgMoney(formatBig(jTextField91.getValue()));
-					//出口成品耗用总金额
-                    cancelHead.setSimulateOutportExgUseImgNum(formatBig(jFormattedTextField2.getValue()));
-					//余料结转出口
-				    //内销补税金额	
-					cancelHead.setInnerCancelFillTaxMoney(formatBig(jTextField10.getValue()));
-					cancelHead.setSimulateOutportExgUseImgNum(formatBig(jFormattedTextField1.getValue()));
+					// 一下为模拟数据
+					// 期初料件总金额
+					cancelHead
+							.setSimulateBeginImgMoney(formatBig(jFormattedTextField21
+									.getValue()));
+					// 本期出口总金额
+					cancelHead
+							.setSimulateThisOutportMoney(formatBig(jTextField131
+									.getValue()));
+					// 内销金额
+					cancelHead
+							.setSimulateInnerCancelMoney(formatBig(tfInnerCancelMoney1
+									.getValue()));
+					// 退运料件金额
+					cancelHead.setSimulateExitImgMoney(formatBig(jTextField151
+							.getValue()));
+					// 本期进口总金额
+					cancelHead
+							.setSimulateThisInportMoney(formatBig(jTextField81
+									.getValue()));
+					// 期末结余料件总金额
+					cancelHead
+							.setSimulateEndBalanceImgMoney(formatBig(jTextField91
+									.getValue()));
+					// 出口成品耗用总金额
+					cancelHead
+							.setSimulateOutportExgUseImgNum(formatBig(jFormattedTextField2
+									.getValue()));
+					// 余料结转出口
+					// 内销补税金额
+					cancelHead
+							.setInnerCancelFillTaxMoney(formatBig(jTextField10
+									.getValue()));
+					cancelHead
+							.setSimulateOutportExgUseImgNum(formatBig(jFormattedTextField1
+									.getValue()));
 					tableModel.updateRow(cancelHead);
 					dataState = DataState.BROWSE;
 					setState();
@@ -1708,37 +1737,35 @@ public class DgCancelCus extends JDialogBase {
 				CommonProgress.showProgressDialog(DgCancelCus.this);
 				CommonProgress.setMessage("系统正在核销计算，请稍后...");
 				cancelHead = (CancelCusHead) checkCancelAction
-						.fillCancelHeadData(new Request(CommonVars
-								.getCurrUser()), cancelHead, false);
+						.fillCancelHeadData(
+								new Request(CommonVars.getCurrUser()),
+								cancelHead, false);
 				CommonProgress.closeProgressDialog();
 			} catch (Exception e) {
 				CommonProgress.closeProgressDialog();
-				JOptionPane.showMessageDialog(DgCancelCus.this, "获取数据失败：！"
-						+ e.getMessage(), "提示", 2);
+				JOptionPane.showMessageDialog(DgCancelCus.this,
+						"获取数据失败：！" + e.getMessage(), "提示", 2);
 			} finally {
 				tableModel.updateRow(cancelHead);
 				fillWindow();
-				/*tfScale.setText(cancelHead.getScale().toString());
-				Double OutportExgUseImgNum = new Double(0);
-				Double OutportMoney = new Double(0);
-				Double scale =new Double(0);
-				if(cancelHead.getOutportExgUseImgNum()!=null){
-					OutportExgUseImgNum = cancelHead.getOutportExgUseImgNum();
-				}
-				if(cancelHead.getThisOutportMoney()!=null){
-					OutportMoney = cancelHead.getThisOutportMoney();	
-					}
-				if(!OutportExgUseImgNum.equals(0.0)||!OutportMoney.equals(0.0)){
-					MathContext mc = new MathContext(5, RoundingMode.HALF_DOWN);
-					//精度为5，舍入模式为大于0.5进1，否则舍弃。 
-					BigDecimal a = new BigDecimal(OutportMoney);
-					BigDecimal b = new BigDecimal(OutportMoney);
-					System.out.println(a.divide(b,mc));
-					scale= a.divide(b,mc).doubleValue();
-				}
-				tfScale.setText(scale.toString());//比例=出口成品耗用总金额/本期出口总金额）*100
-				// }
-*/			}
+				/*
+				 * tfScale.setText(cancelHead.getScale().toString()); Double
+				 * OutportExgUseImgNum = new Double(0); Double OutportMoney =
+				 * new Double(0); Double scale =new Double(0);
+				 * if(cancelHead.getOutportExgUseImgNum()!=null){
+				 * OutportExgUseImgNum = cancelHead.getOutportExgUseImgNum(); }
+				 * if(cancelHead.getThisOutportMoney()!=null){ OutportMoney =
+				 * cancelHead.getThisOutportMoney(); }
+				 * if(!OutportExgUseImgNum.equals
+				 * (0.0)||!OutportMoney.equals(0.0)){ MathContext mc = new
+				 * MathContext(5, RoundingMode.HALF_DOWN);
+				 * //精度为5，舍入模式为大于0.5进1，否则舍弃。 BigDecimal a = new
+				 * BigDecimal(OutportMoney); BigDecimal b = new
+				 * BigDecimal(OutportMoney); System.out.println(a.divide(b,mc));
+				 * scale= a.divide(b,mc).doubleValue(); }
+				 * tfScale.setText(scale.toString());//比例=出口成品耗用总金额/本期出口总金额）*100
+				 * // }
+				 */}
 		}
 	}
 
@@ -1912,11 +1939,12 @@ public class DgCancelCus extends JDialogBase {
 					checkCancelAuthorityAction
 							.dataCancelAddCustoms(new Request(CommonVars
 									.getCurrUser()));
-//					List list = (List) CommonQuery.getInstance()
-//							.getCustomsDeclara(false, cancelHead, false);
-					DgQueryCustomsDeclara dg = new DgQueryCustomsDeclara(false, cancelHead, false);
+					// List list = (List) CommonQuery.getInstance()
+					// .getCustomsDeclara(false, cancelHead, false);
+					DgQueryCustomsDeclara dg = new DgQueryCustomsDeclara(false,
+							cancelHead, false);
 					dg.setVisible(true);
-					List list =  dg.getSelectList();
+					List list = dg.getSelectList();
 					if (list == null || list.isEmpty())
 						return;
 					for (int i = 0; i < list.size(); i++) {
@@ -2023,8 +2051,9 @@ public class DgCancelCus extends JDialogBase {
 			try {
 				CommonProgress.showProgressDialog(DgCancelCus.this);
 				CommonProgress.setMessage("系统正获取数据，请稍后...");
-				checkCancelAction.getCustomsToCheckHead(new Request(CommonVars
-						.getCurrUser()), cancelHead, false);
+				checkCancelAction.getCustomsToCheckHead(
+						new Request(CommonVars.getCurrUser()), cancelHead,
+						false);
 				list = checkCancelAction.findCancelCustomsDeclara(new Request(
 						CommonVars.getCurrUser()), cancelHead, false);
 
@@ -2032,8 +2061,8 @@ public class DgCancelCus extends JDialogBase {
 				CommonProgress.closeProgressDialog();
 			} catch (Exception e) {
 				CommonProgress.closeProgressDialog();
-				JOptionPane.showMessageDialog(DgCancelCus.this, "获取数据失败：！"
-						+ e.getMessage(), "提示", 2);
+				JOptionPane.showMessageDialog(DgCancelCus.this,
+						"获取数据失败：！" + e.getMessage(), "提示", 2);
 			} finally {
 				initTableCustom(list);
 			}
@@ -2077,8 +2106,8 @@ public class DgCancelCus extends JDialogBase {
 						} else if (obj.getInOutportFlat() != null
 								&& obj.getInOutportFlat().equals("I")) {
 							/*
-							 * cancelHead.setInportCustomNum(cancelHead.getInportCustomNum
-							 * () - 1);
+							 * cancelHead.setInportCustomNum(cancelHead.
+							 * getInportCustomNum () - 1);
 							 * cancelHead.setOutportCustomNum(cancelHead
 							 * .getOutportCustomNum() + 1);
 							 */
@@ -2086,8 +2115,8 @@ public class DgCancelCus extends JDialogBase {
 						} else if (obj.getInOutportFlat() != null
 								&& obj.getInOutportFlat().equals("E")) {
 							/*
-							 * cancelHead.setInportCustomNum(cancelHead.getInportCustomNum
-							 * () + 1);
+							 * cancelHead.setInportCustomNum(cancelHead.
+							 * getInportCustomNum () + 1);
 							 * cancelHead.setOutportCustomNum(cancelHead
 							 * .getOutportCustomNum() - 1);
 							 */
@@ -2127,6 +2156,10 @@ public class DgCancelCus extends JDialogBase {
 	}
 
 	private void setState() {
+		btnExcImport.setEnabled(cancelHead.getDeclareType().equals(
+				RrportDelcareType.DELCARE)
+				&& (dataState != DataState.READONLY));
+
 		jButton2.setEnabled(cancelHead.getDeclareType().equals(
 				RrportDelcareType.DELCARE)
 				&& (dataState != DataState.READONLY));
@@ -2204,9 +2237,7 @@ public class DgCancelCus extends JDialogBase {
 				&& (dataState != DataState.READONLY));
 		tfOverImgExport.setEditable(dataState != DataState.BROWSE
 				&& (dataState != DataState.READONLY));
-		
-		
-		
+
 	}
 
 	/**
@@ -2343,8 +2374,9 @@ public class DgCancelCus extends JDialogBase {
 			try {
 				CommonProgress.showProgressDialog(DgCancelCus.this);
 				CommonProgress.setMessage("系统正获取数据，请稍后...");
-				checkCancelAction.deleteCancelExg(new Request(CommonVars
-						.getCurrUser()), cancelHead, false);
+				checkCancelAction.deleteCancelExg(
+						new Request(CommonVars.getCurrUser()), cancelHead,
+						false);
 				tableModelExgBefore.getList().clear();
 				checkCancelAction.getExg(new Request(CommonVars.getCurrUser()),
 						cancelHead, false); // 得到中间成品数据
@@ -2355,15 +2387,16 @@ public class DgCancelCus extends JDialogBase {
 								.getCurrUser()));
 				if (emsH2kList != null && emsH2kList.size() > 0) {
 					EmsHeadH2k emsH2k = (EmsHeadH2k) emsH2kList.get(0);
-					checkCancelAction.getCancelExg(new Request(CommonVars
-							.getCurrUser()), cancelHead, emsH2k, false);
+					checkCancelAction.getCancelExg(
+							new Request(CommonVars.getCurrUser()), cancelHead,
+							emsH2k, false);
 				}
 				initExg();
 				CommonProgress.closeProgressDialog();
 			} catch (Exception e) {
 				CommonProgress.closeProgressDialog();
-				JOptionPane.showMessageDialog(DgCancelCus.this, "获取数据失败：！"
-						+ e.getMessage(), "提示", 2);
+				JOptionPane.showMessageDialog(DgCancelCus.this,
+						"获取数据失败：！" + e.getMessage(), "提示", 2);
 			}
 			return null;
 		}
@@ -2450,8 +2483,39 @@ public class DgCancelCus extends JDialogBase {
 			jToolBar2.add(getJButton12());
 			jToolBar2.add(getJButton11());
 			jToolBar2.add(getCbUnitWear());
+			jToolBar2.add(getExcBtn());
+			
 		}
 		return jToolBar2;
+	}
+
+	/**
+	 * 获取 料件 导入单价
+	 * 
+	 * @return
+	 */
+	private JButton getExcBtn() {
+
+		if (btnExcImport == null) {
+
+			btnExcImport = new JButton("批量导入内购数");
+
+			btnExcImport.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+
+					DgCancelImgByInnerBuyImport byInnerBuyImport = new DgCancelImgByInnerBuyImport();
+					
+					byInnerBuyImport.setVisible(true);
+
+				}
+			});
+
+		}
+
+		return btnExcImport;
+
 	}
 
 	/**
@@ -2497,44 +2561,36 @@ public class DgCancelCus extends JDialogBase {
 			btOk.setToolTipText("重新计算核销表头金额");
 			btOk.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-					/*if (tableModelPrice.getCurrentRow() == null) {
-						return;
-					}
-					CancelImgResult cr = (CancelImgResult) tableModelPrice
-							.getCurrentRow();
-					// 手调单价
-					Double selfPrice = Double.valueOf(ftfPrice.getValue()
-							.toString());
-					cr.setSelfPrice(selfPrice);
-					tableModelPrice.updateRow(cr);
-
-					// 根据手调单价调整
-
-					// 应剩余金额,先减去原来的
-					cr.setLeaveSumPrice(CommonUtils.getDoubleExceptNull(cr
-							.getLeaveSumPrice())
-							- CommonUtils.getDoubleExceptNull(cr
-									.getUseSumPrice()));
-
-					// 消耗金额
-					cr.setUseSumPrice(CommonUtils.getDoubleExceptNull(cr
-							.getUseSumNum())
-							* selfPrice);
-					// 应剩余金额,加上新的
-					cr.setLeaveSumPrice(CommonUtils.getDoubleExceptNull(cr
-							.getLeaveSumPrice())
-							+ CommonUtils.getDoubleExceptNull(cr
-									.getUseSumPrice()));
-					// 结余金额=应剩余金额
-					cr.setResultSumPrice(CommonUtils.getDoubleExceptNull(cr
-							.getLeaveSumPrice()));
-
-					checkCancelAction.saveCancelImgResult(new Request(
-							CommonVars.getCurrUser()), cr);
-
-					tableModelPrice.updateRow(cr);
-					tableModelImgResult.updateRow(cr);
-*/
+					/*
+					 * if (tableModelPrice.getCurrentRow() == null) { return; }
+					 * CancelImgResult cr = (CancelImgResult) tableModelPrice
+					 * .getCurrentRow(); // 手调单价 Double selfPrice =
+					 * Double.valueOf(ftfPrice.getValue() .toString());
+					 * cr.setSelfPrice(selfPrice);
+					 * tableModelPrice.updateRow(cr);
+					 * 
+					 * // 根据手调单价调整
+					 * 
+					 * // 应剩余金额,先减去原来的
+					 * cr.setLeaveSumPrice(CommonUtils.getDoubleExceptNull(cr
+					 * .getLeaveSumPrice()) - CommonUtils.getDoubleExceptNull(cr
+					 * .getUseSumPrice()));
+					 * 
+					 * // 消耗金额
+					 * cr.setUseSumPrice(CommonUtils.getDoubleExceptNull(cr
+					 * .getUseSumNum()) selfPrice); // 应剩余金额,加上新的
+					 * cr.setLeaveSumPrice(CommonUtils.getDoubleExceptNull(cr
+					 * .getLeaveSumPrice()) + CommonUtils.getDoubleExceptNull(cr
+					 * .getUseSumPrice())); // 结余金额=应剩余金额
+					 * cr.setResultSumPrice(CommonUtils.getDoubleExceptNull(cr
+					 * .getLeaveSumPrice()));
+					 * 
+					 * checkCancelAction.saveCancelImgResult(new Request(
+					 * CommonVars.getCurrUser()), cr);
+					 * 
+					 * tableModelPrice.updateRow(cr);
+					 * tableModelImgResult.updateRow(cr);
+					 */
 					// 重新计算表头
 					new CalCancelHead().start();
 				}
@@ -2607,9 +2663,9 @@ public class DgCancelCus extends JDialogBase {
 			item4.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					listAvgPrice = checkCancelAction
-							.findCancelImgAvgPriceLeave(new Request(CommonVars
-									.getCurrUser()), cancelHead, false, null,
-									null);
+							.findCancelImgAvgPriceLeave(
+									new Request(CommonVars.getCurrUser()),
+									cancelHead, false, null, null);
 					if (listAvgPrice != null && listAvgPrice.size() > 0) {
 						checkCancelAuthorityAction.dataCancelGetLj(new Request(
 								CommonVars.getCurrUser()));
@@ -2733,10 +2789,9 @@ public class DgCancelCus extends JDialogBase {
 						JOptionPane.INFORMATION_MESSAGE);
 			} catch (Exception e) {
 				CommonStepProgress.closeStepProgressDialog();
-				JOptionPane
-						.showMessageDialog(DgCancelCus.this, "获取数据失败：！"
-								+ e.getMessage(), "提示",
-								JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(DgCancelCus.this,
+						"获取数据失败：！" + e.getMessage(), "提示",
+						JOptionPane.INFORMATION_MESSAGE);
 			}
 			return ls;
 		}
@@ -2752,11 +2807,13 @@ public class DgCancelCus extends JDialogBase {
 				CommonStepProgress.showStepProgressDialog(taskId);
 				CommonStepProgress.setStepMessage("系统正获取数据，请稍后...");
 				CommonStepProgress.setStepMessage(" -- 开始删除数据");
-				checkCancelAction.deleteCancelImg(new Request(CommonVars
-						.getCurrUser()), cancelHead, false);
+				checkCancelAction.deleteCancelImg(
+						new Request(CommonVars.getCurrUser()), cancelHead,
+						false);
 				// 删除单耗表
-				checkCancelAction.deleteCancelUnitWear(new Request(CommonVars
-						.getCurrUser()), cancelHead, false);
+				checkCancelAction.deleteCancelUnitWear(
+						new Request(CommonVars.getCurrUser()), cancelHead,
+						false);
 				CommonStepProgress.setStepMessage(" -- 删除完毕！");
 				tableModelImgBefore.getList().clear();
 				checkCancelAction.getImg(new Request(CommonVars.getCurrUser()),
@@ -2778,8 +2835,8 @@ public class DgCancelCus extends JDialogBase {
 				}
 			} catch (Exception e) {
 				CommonStepProgress.closeStepProgressDialog();
-				JOptionPane.showMessageDialog(DgCancelCus.this, "获取数据失败：！"
-						+ e.getMessage(), "提示", 2);
+				JOptionPane.showMessageDialog(DgCancelCus.this,
+						"获取数据失败：！" + e.getMessage(), "提示", 2);
 			}
 			return ls;
 		}
@@ -2822,10 +2879,12 @@ public class DgCancelCus extends JDialogBase {
 				CommonStepProgress.setStepMessage("系统正获取数据，请稍后...");
 				System.out.println(" -- 开始删除数据");
 				CommonStepProgress.setStepMessage("系统正在删除数据");
-				checkCancelAction.deleteCancelImg(new Request(CommonVars
-						.getCurrUser()), cancelHead, false);
-				checkCancelAction.deleteCancelUnitWear(new Request(CommonVars
-						.getCurrUser()), cancelHead, false);
+				checkCancelAction.deleteCancelImg(
+						new Request(CommonVars.getCurrUser()), cancelHead,
+						false);
+				checkCancelAction.deleteCancelUnitWear(
+						new Request(CommonVars.getCurrUser()), cancelHead,
+						false);
 				System.out.println(" -- 删除完毕！");
 				CommonStepProgress.setStepMessage("系统删除完毕");
 				tableModelImgBefore.getList().clear();
@@ -2840,16 +2899,16 @@ public class DgCancelCus extends JDialogBase {
 				if (emsH2kList != null && emsH2kList.size() > 0) {
 					CommonStepProgress.setStepMessage("系统正在计算核销料件数据");
 					EmsHeadH2k emsH2k = (EmsHeadH2k) emsH2kList.get(0);
-					checkCancelAction.getCancelImg(new Request(CommonVars
-							.getCurrUser()), cancelHead, emsH2k, false,
-							cbUnitWear.isSelected());
+					checkCancelAction.getCancelImg(
+							new Request(CommonVars.getCurrUser()), cancelHead,
+							emsH2k, false, cbUnitWear.isSelected());
 
 				}
 			} catch (Exception e) {
 				CommonStepProgress.closeStepProgressDialog();
-				JOptionPane.showMessageDialog(DgCancelCus.this, "获取数据失败：！"
-						+ e.getMessage(), "提示", 2);
-			}finally{
+				JOptionPane.showMessageDialog(DgCancelCus.this,
+						"获取数据失败：！" + e.getMessage(), "提示", 2);
+			} finally {
 				jButton11.setEnabled(true);
 			}
 			return ls;
@@ -3184,9 +3243,7 @@ public class DgCancelCus extends JDialogBase {
 						List list = new Vector();
 						list.add(addColumn("成品序号", "cpSeqNum", 60,
 								Integer.class));
-						list
-								.add(addColumn("版本号", "version", 60,
-										Integer.class));
+						list.add(addColumn("版本号", "version", 60, Integer.class));
 						list.add(addColumn("料件序号", "ljSeqNum", 60,
 								Integer.class));
 						list.add(addColumn("单耗", "unitWear", 100));
@@ -3210,9 +3267,7 @@ public class DgCancelCus extends JDialogBase {
 						list.add(addColumn("帐册序号", "emsSeqNum", 70,
 								Integer.class));
 						// 期初
-						list
-								.add(addColumn("数量", "beginNum", 70,
-										Integer.class));
+						list.add(addColumn("数量", "beginNum", 70, Integer.class));
 						list.add(addColumn("金额", "beginMoney", 70,
 								Integer.class));
 						// 本期
@@ -3386,9 +3441,9 @@ public class DgCancelCus extends JDialogBase {
 	 */
 	public List getDataSource(int index, int length, String property,
 			Object value, boolean isLike) {
-		return checkCancelAction.findCancelUnitWear(new Request(CommonVars
-				.getCurrUser()), cancelHead, false, index, length, property,
-				value, isLike);
+		return checkCancelAction.findCancelUnitWear(
+				new Request(CommonVars.getCurrUser()), cancelHead, false,
+				index, length, property, value, isLike);
 	}
 
 	/**
@@ -3480,55 +3535,62 @@ public class DgCancelCus extends JDialogBase {
 			ftfPrice.setBounds(104, 213, 91, 22);
 			ftfPrice.addKeyListener(new java.awt.event.KeyAdapter() {
 				public void keyPressed(java.awt.event.KeyEvent e) {
-					if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-							int row = tbDanJia.getSelectedRow();
-							if(row<0){
-								row = 0;
-								tableModelPrice.nextRow();
-							}
+					if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+						int row = tbDanJia.getSelectedRow();
+						if (row < 0) {
+							row = 0;
 							tableModelPrice.nextRow();
-							CancelImgResult cr =  (CancelCusImgResult)tableModelPrice.getDataByRow(row);
-							/**HWY2013-7-12修改如下
-							 * 【重新计算单价表】方法有误
-								在修改单价，按回车后，系统已经开始计算。
-								因计算料件表中，计算公式=核增金额-核减金额 +期初金额-（耗用数量）*平均单价
-								前面三个金额固定的，所以我们只需考虑耗用金额即可
-								1、	应剩余金额=应剩余金额 + 耗用总价值 【手调单价前耗用金额】
-								2、	手调单价后耗用金额=耗用数量 * 手调单价
-								3、	手调单价后应剩余金额=手调前应剩余金额 – 手调单价后耗用金额
-								4、	实际剩余金额 = 手调单价后剩余金额
-							 */
-							//手调单价
-							Double selfPrice = Double.valueOf(ftfPrice.getText()
-									.toString());
-							cr.setSelfPrice(selfPrice);
-							// 根据手调单价调整
-							// 应剩余金额,先加上原来的 应剩余金额=应剩余金额 + 耗用总价值 【手调单价前耗用金额】
-							cr.setLeaveSumPrice(CommonUtils.getDoubleExceptNull(cr
-									.getLeaveSumPrice())
-									+ CommonUtils.getDoubleExceptNull(cr
-											.getUseSumPrice()));
-
-							// 手调单价后耗用金额=耗用数量 * 手调单价
-							cr.setUseSumPrice(CommonUtils.getDoubleExceptNull(cr
-									.getUseSumNum())
-									* selfPrice);
-							// 应剩余金额,手调单价后应剩余金额=手调前应剩余金额 – 手调单价后耗用金额
-							cr.setLeaveSumPrice(CommonUtils.getDoubleExceptNull(cr
-									.getLeaveSumPrice())
-									- CommonUtils.getDoubleExceptNull(cr
-											.getUseSumPrice()));
-							cr.setResultSumPrice(CommonUtils.getDoubleExceptNull(cr
-									.getLeaveSumPrice()));//结余金额
-							cr.setFactLeaveSumPrice(CommonUtils.getDoubleExceptNull(cr
-									.getLeaveSumPrice()));//实际剩余金额
-							checkCancelAction.saveCancelImgResult(new Request(
-									CommonVars.getCurrUser()), cr);
-							ftfPrice.setValue(CommonUtils.getDoubleExceptNull(((CancelImgResult) tableModelPrice
-										.getCurrentRow()).getSelfPrice()));
-							ftfPrice.selectAll();
 						}
+						tableModelPrice.nextRow();
+						CancelImgResult cr = (CancelCusImgResult) tableModelPrice
+								.getDataByRow(row);
+						/**
+						 * HWY2013-7-12修改如下 【重新计算单价表】方法有误 在修改单价，按回车后，系统已经开始计算。
+						 * 因计算料件表中，计算公式=核增金额-核减金额 +期初金额-（耗用数量）*平均单价
+						 * 前面三个金额固定的，所以我们只需考虑耗用金额即可 1、 应剩余金额=应剩余金额 + 耗用总价值
+						 * 【手调单价前耗用金额】 2、 手调单价后耗用金额=耗用数量 * 手调单价 3、
+						 * 手调单价后应剩余金额=手调前应剩余金额 – 手调单价后耗用金额 4、 实际剩余金额 = 手调单价后剩余金额
+						 */
+						// 手调单价
+						Double selfPrice = Double.valueOf(ftfPrice.getText()
+								.toString());
+						cr.setSelfPrice(selfPrice);
+						// 根据手调单价调整
+						// 应剩余金额,先加上原来的 应剩余金额=应剩余金额 + 耗用总价值 【手调单价前耗用金额】
+						// 2015-3-30当应剩余金额小于0时，直接根据应剩余数量*平均单价
+						cr.setLeaveSumPrice((CommonUtils.getDoubleExceptNull(cr
+								.getLeaveSumPrice()) + CommonUtils
+								.getDoubleExceptNull(cr.getUseSumPrice())) < Double
+								.valueOf(0) ? cr.getLeaveNum() * selfPrice
+								: CommonUtils.getDoubleExceptNull(cr
+										.getLeaveSumPrice())
+										+ CommonUtils.getDoubleExceptNull(cr
+												.getUseSumPrice()));
+
+						// 手调单价后耗用金额=耗用数量 * 手调单价
+						cr.setUseSumPrice(CommonUtils.getDoubleExceptNull(cr
+								.getUseSumNum()) * selfPrice);
+						// 应剩余金额,手调单价后应剩余金额=手调前应剩余金额 – 手调单价后耗用金额
+						cr.setLeaveSumPrice((CommonUtils.getDoubleExceptNull(cr
+								.getLeaveSumPrice()) - CommonUtils
+								.getDoubleExceptNull(cr.getUseSumPrice())) < Double
+								.valueOf(0) ? cr.getLeaveNum() * selfPrice
+								: CommonUtils.getDoubleExceptNull(cr
+										.getLeaveSumPrice())
+										- CommonUtils.getDoubleExceptNull(cr
+												.getUseSumPrice()));
+						cr.setResultSumPrice(CommonUtils.getDoubleExceptNull(cr
+								.getLeaveSumPrice()));// 结余金额
+						cr.setFactLeaveSumPrice(CommonUtils
+								.getDoubleExceptNull(cr.getLeaveSumPrice()));// 实际剩余金额
+						checkCancelAction.saveCancelImgResult(new Request(
+								CommonVars.getCurrUser()), cr);
+						ftfPrice.setValue(CommonUtils
+								.getDoubleExceptNull(((CancelImgResult) tableModelPrice
+										.getCurrentRow()).getSelfPrice()));
+						ftfPrice.selectAll();
 					}
+				}
 			});
 			ftfPrice.setFocusTraversalKeysEnabled(false);
 		}
@@ -3587,9 +3649,9 @@ public class DgCancelCus extends JDialogBase {
 	}
 
 	/**
-	 * This method initializes jPanelReal	
-	 * 	
-	 * @return javax.swing.JPanel	
+	 * This method initializes jPanelReal
+	 * 
+	 * @return javax.swing.JPanel
 	 */
 	private JPanel getJPanelReal() {
 		if (jPanelReal == null) {
@@ -3632,7 +3694,11 @@ public class DgCancelCus extends JDialogBase {
 			jLabel14.setBounds(new Rectangle(617, 22, 50, 18));
 			jPanelReal.setLayout(null);
 			jPanelReal.setBounds(new Rectangle(23, 214, 689, 194));
-			jPanelReal.setBorder(BorderFactory.createTitledBorder(null, "\u7533\u62a5\u6d77\u5173\u7684\u6570\u636e", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, new Font("Dialog", Font.PLAIN, 12), Color.blue));
+			jPanelReal.setBorder(BorderFactory.createTitledBorder(null,
+					"\u7533\u62a5\u6d77\u5173\u7684\u6570\u636e",
+					TitledBorder.DEFAULT_JUSTIFICATION,
+					TitledBorder.DEFAULT_POSITION, new Font("Dialog",
+							Font.PLAIN, 12), Color.blue));
 			jPanelReal.add(jLabel5, null);
 			jPanelReal.add(jLabel6, null);
 			jPanelReal.add(getJFormattedTextField2(), null);
@@ -3702,9 +3768,9 @@ public class DgCancelCus extends JDialogBase {
 	}
 
 	/**
-	 * This method initializes tfOverImgExport	
-	 * 	
-	 * @return javax.swing.JTextField	
+	 * This method initializes tfOverImgExport
+	 * 
+	 * @return javax.swing.JTextField
 	 */
 	private JFormattedTextField getTfOverImgExport() {
 		if (tfOverImgExport == null) {
@@ -3715,9 +3781,9 @@ public class DgCancelCus extends JDialogBase {
 	}
 
 	/**
-	 * This method initializes tfScale	
-	 * 	
-	 * @return javax.swing.JTextField	
+	 * This method initializes tfScale
+	 * 
+	 * @return javax.swing.JTextField
 	 */
 	private JFormattedTextField getTfScale() {
 		if (tfScale == null) {
@@ -3729,9 +3795,9 @@ public class DgCancelCus extends JDialogBase {
 	}
 
 	/**
-	 * This method initializes tfCheckStaffName	
-	 * 	
-	 * @return javax.swing.JTextField	
+	 * This method initializes tfCheckStaffName
+	 * 
+	 * @return javax.swing.JTextField
 	 */
 	private JTextField getTfCheckStaffName() {
 		if (tfCheckStaffName == null) {
@@ -3743,9 +3809,9 @@ public class DgCancelCus extends JDialogBase {
 	}
 
 	/**
-	 * This method initializes tftfCheckStaffTime	
-	 * 	
-	 * @return javax.swing.JTextField	
+	 * This method initializes tftfCheckStaffTime
+	 * 
+	 * @return javax.swing.JTextField
 	 */
 	private JTextField getTfCheckStaffTime() {
 		if (tfCheckStaffTime == null) {
@@ -3757,9 +3823,9 @@ public class DgCancelCus extends JDialogBase {
 	}
 
 	/**
-	 * This method initializes jPanelSimulation	
-	 * 	
-	 * @return javax.swing.JPanel	
+	 * This method initializes jPanelSimulation
+	 * 
+	 * @return javax.swing.JPanel
 	 */
 	private JPanel getJPanelSimulation() {
 		if (jPanelSimulation == null) {
@@ -3783,7 +3849,8 @@ public class DgCancelCus extends JDialogBase {
 			jLabel251.setText("\u9000\u8fd0\u6599\u4ef6\u91d1\u989d");
 			jLabel171 = new JLabel();
 			jLabel171.setBounds(new Rectangle(339, 75, 113, 18));
-			jLabel171.setText("\u51fa\u53e3\u6210\u54c1\u8017\u7528\u603b\u91d1\u989d");
+			jLabel171
+					.setText("\u51fa\u53e3\u6210\u54c1\u8017\u7528\u603b\u91d1\u989d");
 			jLabel241 = new JLabel();
 			jLabel241.setBounds(new Rectangle(10, 75, 92, 21));
 			jLabel241.setText("\u5185\u9500\u91d1\u989d");
@@ -3792,7 +3859,8 @@ public class DgCancelCus extends JDialogBase {
 			jLabel161.setText("(\u7f8e\u5143)");
 			jLabel151 = new JLabel();
 			jLabel151.setBounds(new Rectangle(338, 46, 115, 18));
-			jLabel151.setText("\u671f\u672b\u7ed3\u4f59\u6599\u4ef6\u603b\u91d1\u989d");
+			jLabel151
+					.setText("\u671f\u672b\u7ed3\u4f59\u6599\u4ef6\u603b\u91d1\u989d");
 			jLabel221 = new JLabel();
 			jLabel221.setBounds(new Rectangle(10, 44, 92, 20));
 			jLabel221.setText("\u672c\u671f\u51fa\u53e3\u603b\u91d1\u989d");
@@ -3814,7 +3882,11 @@ public class DgCancelCus extends JDialogBase {
 			jPanelSimulation = new JPanel();
 			jPanelSimulation.setLayout(null);
 			jPanelSimulation.setBounds(new Rectangle(26, 410, 685, 135));
-			jPanelSimulation.setBorder(BorderFactory.createTitledBorder(null, "\u7cfb\u7edf\u6a21\u62df\u8ba1\u7b97\u7684\u6570\u636e", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, new Font("Dialog", Font.PLAIN, 12), Color.blue));
+			jPanelSimulation.setBorder(BorderFactory.createTitledBorder(null,
+					"\u7cfb\u7edf\u6a21\u62df\u8ba1\u7b97\u7684\u6570\u636e",
+					TitledBorder.DEFAULT_JUSTIFICATION,
+					TitledBorder.DEFAULT_POSITION, new Font("Dialog",
+							Font.PLAIN, 12), Color.blue));
 			jPanelSimulation.add(jLabel51, null);
 			jPanelSimulation.add(jLabel63, null);
 			jPanelSimulation.add(getJFormattedTextField21(), null);
@@ -3844,9 +3916,9 @@ public class DgCancelCus extends JDialogBase {
 	}
 
 	/**
-	 * This method initializes jFormattedTextField21	
-	 * 	
-	 * @return com.bestway.ui.winuicontrol.JCustomFormattedTextField	
+	 * This method initializes jFormattedTextField21
+	 * 
+	 * @return com.bestway.ui.winuicontrol.JCustomFormattedTextField
 	 */
 	private JCustomFormattedTextField getJFormattedTextField21() {
 		if (jFormattedTextField21 == null) {
@@ -3862,9 +3934,9 @@ public class DgCancelCus extends JDialogBase {
 	}
 
 	/**
-	 * This method initializes jTextField81	
-	 * 	
-	 * @return javax.swing.JFormattedTextField	
+	 * This method initializes jTextField81
+	 * 
+	 * @return javax.swing.JFormattedTextField
 	 */
 	private JFormattedTextField getJTextField81() {
 		if (jTextField81 == null) {
@@ -3880,9 +3952,9 @@ public class DgCancelCus extends JDialogBase {
 	}
 
 	/**
-	 * This method initializes jTextField131	
-	 * 	
-	 * @return javax.swing.JFormattedTextField	
+	 * This method initializes jTextField131
+	 * 
+	 * @return javax.swing.JFormattedTextField
 	 */
 	private JFormattedTextField getJTextField131() {
 		if (jTextField131 == null) {
@@ -3898,9 +3970,9 @@ public class DgCancelCus extends JDialogBase {
 	}
 
 	/**
-	 * This method initializes jTextField91	
-	 * 	
-	 * @return javax.swing.JFormattedTextField	
+	 * This method initializes jTextField91
+	 * 
+	 * @return javax.swing.JFormattedTextField
 	 */
 	private JFormattedTextField getJTextField91() {
 		if (jTextField91 == null) {
@@ -3916,9 +3988,9 @@ public class DgCancelCus extends JDialogBase {
 	}
 
 	/**
-	 * This method initializes tfInnerCancelMoney1	
-	 * 	
-	 * @return com.bestway.ui.winuicontrol.JCustomFormattedTextField	
+	 * This method initializes tfInnerCancelMoney1
+	 * 
+	 * @return com.bestway.ui.winuicontrol.JCustomFormattedTextField
 	 */
 	private JCustomFormattedTextField getTfInnerCancelMoney1() {
 		if (tfInnerCancelMoney1 == null) {
@@ -3934,9 +4006,9 @@ public class DgCancelCus extends JDialogBase {
 	}
 
 	/**
-	 * This method initializes jFormattedTextField1	
-	 * 	
-	 * @return com.bestway.ui.winuicontrol.JCustomFormattedTextField	
+	 * This method initializes jFormattedTextField1
+	 * 
+	 * @return com.bestway.ui.winuicontrol.JCustomFormattedTextField
 	 */
 	private JCustomFormattedTextField getJFormattedTextField1() {
 		if (jFormattedTextField1 == null) {
@@ -3952,9 +4024,9 @@ public class DgCancelCus extends JDialogBase {
 	}
 
 	/**
-	 * This method initializes jTextField151	
-	 * 	
-	 * @return javax.swing.JFormattedTextField	
+	 * This method initializes jTextField151
+	 * 
+	 * @return javax.swing.JFormattedTextField
 	 */
 	private JFormattedTextField getJTextField151() {
 		if (jTextField151 == null) {
@@ -3970,9 +4042,9 @@ public class DgCancelCus extends JDialogBase {
 	}
 
 	/**
-	 * This method initializes tfOverImgExport1	
-	 * 	
-	 * @return javax.swing.JTextField	
+	 * This method initializes tfOverImgExport1
+	 * 
+	 * @return javax.swing.JTextField
 	 */
 	private JFormattedTextField getTfOverImgExport1() {
 		if (tfOverImgExport1 == null) {
@@ -3988,9 +4060,9 @@ public class DgCancelCus extends JDialogBase {
 	}
 
 	/**
-	 * This method initializes jButton14	
-	 * 	
-	 * @return javax.swing.JButton	
+	 * This method initializes jButton14
+	 * 
+	 * @return javax.swing.JButton
 	 */
 	private JButton getJButton14() {
 		if (jButton14 == null) {
@@ -4001,35 +4073,38 @@ public class DgCancelCus extends JDialogBase {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					checkCancelAuthorityAction.financialAudit(new Request(
 							CommonVars.getCurrUser()));
-					if(JOptionPane.showConfirmDialog(DgCancelCus.this,
-							 "确定通过财务审核吗?",
-							  "提示信息", 0)==0){
+					if (JOptionPane.showConfirmDialog(DgCancelCus.this,
+							"确定通过财务审核吗?", "提示信息", 0) == 0) {
 						Date date = new Date();
-						tfCheckStaffName.setText(CommonVars.getCurrUser().getUserName());
-						tfCheckStaffTime.setText(CommonUtils.getDate(date, "yyyy-MM-dd"));
-						//财务审核人员
-						cancelHead.setCheckStaffName(tfCheckStaffName.getText()==null?"":tfCheckStaffName.getText());
-						//财务审核时间
+						tfCheckStaffName.setText(CommonVars.getCurrUser()
+								.getUserName());
+						tfCheckStaffTime.setText(CommonUtils.getDate(date,
+								"yyyy-MM-dd"));
+						// 财务审核人员
+						cancelHead
+								.setCheckStaffName(tfCheckStaffName.getText() == null ? ""
+										: tfCheckStaffName.getText());
+						// 财务审核时间
 						cancelHead.setCheckStaffTime(new Date());
 						cancelHead = (CancelCusHead) checkCancelAction
-						.saveCancelHead(new Request(CommonVars
-								.getCurrUser()), cancelHead);
+								.saveCancelHead(
+										new Request(CommonVars.getCurrUser()),
+										cancelHead);
 						tableModel.updateRow(cancelHead);
 						dataState = DataState.BROWSE;
 						setState();
 					}
 				}
 			});
-			
+
 		}
 		return jButton14;
 	}
 
-
 	/**
-	 * This method initializes btNext	
-	 * 	
-	 * @return javax.swing.JButton	
+	 * This method initializes btNext
+	 * 
+	 * @return javax.swing.JButton
 	 */
 	private JButton getBtNext() {
 		if (btNext == null) {
@@ -4038,13 +4113,14 @@ public class DgCancelCus extends JDialogBase {
 			btNext.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					int row = tbDanJia.getSelectedRow();
-					if(row<0){
+					if (row < 0) {
 						row = 0;
 						tableModelPrice.nextRow();
 					}
 					tableModelPrice.nextRow();
-					CancelImgResult cr =  (CancelCusImgResult)tableModelPrice.getDataByRow(row);
-					//手调单价
+					CancelImgResult cr = (CancelCusImgResult) tableModelPrice
+							.getDataByRow(row);
+					// 手调单价
 					Double selfPrice = Double.valueOf(ftfPrice.getText()
 							.toString());
 					cr.setSelfPrice(selfPrice);
@@ -4057,8 +4133,7 @@ public class DgCancelCus extends JDialogBase {
 
 					// 消耗金额
 					cr.setUseSumPrice(CommonUtils.getDoubleExceptNull(cr
-							.getUseSumNum())
-							* selfPrice);
+							.getUseSumNum()) * selfPrice);
 					// 应剩余金额,加上新的
 					cr.setLeaveSumPrice(CommonUtils.getDoubleExceptNull(cr
 							.getLeaveSumPrice())
@@ -4068,17 +4143,19 @@ public class DgCancelCus extends JDialogBase {
 							.getLeaveSumPrice()));
 					checkCancelAction.saveCancelImgResult(new Request(
 							CommonVars.getCurrUser()), cr);
-					ftfPrice.setValue(CommonUtils.getDoubleExceptNull(((CancelImgResult) tableModelPrice
-								.getCurrentRow()).getSelfPrice()));
+					ftfPrice.setValue(CommonUtils
+							.getDoubleExceptNull(((CancelImgResult) tableModelPrice
+									.getCurrentRow()).getSelfPrice()));
 				}
 			});
 		}
 		return btNext;
 	}
-	//把原来的模拟数据遮挡
-	public JPanel getCoverPanel(){
-		if(jPanelCover==null){
-			jPanelCover =new JPanel();
+
+	// 把原来的模拟数据遮挡
+	public JPanel getCoverPanel() {
+		if (jPanelCover == null) {
+			jPanelCover = new JPanel();
 			jPanelCover.setLayout(null);
 			jPanelCover.setBounds(new Rectangle(26, 410, 685, 135));
 			jPanelCover.setPreferredSize(new Dimension(685, 135));
@@ -4086,15 +4163,17 @@ public class DgCancelCus extends JDialogBase {
 			jta.setText("请企业认真核对申报海关的数据");
 			jta.setBounds(new Rectangle(0, 0, 685, 135));
 			jta.setPreferredSize(new Dimension(685, 135));
-			//jta.setFont(new Font("Dialog", Font.PLAIN, 18));
-			//jta.setForeground(Color.blue);
+			// jta.setFont(new Font("Dialog", Font.PLAIN, 18));
+			// jta.setForeground(Color.blue);
 			jta.setEditable(false);
 			jPanelCover.add(jta);
 		}
 		return jPanelCover;
 	}
+
 	/**
-	 *  为窗口注册一个快捷键Ctrl+H
+	 * 为窗口注册一个快捷键Ctrl+H
+	 * 
 	 * @author Administrator
 	 *
 	 */

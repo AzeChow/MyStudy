@@ -3,7 +3,6 @@ package com.bestway.bcus.message.logic;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,7 +18,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
 
-import javax.management.RuntimeErrorException;
 import javax.xml.namespace.QName;
 
 import org.apache.axis2.addressing.EndpointReference;
@@ -27,7 +25,6 @@ import org.apache.axis2.client.Options;
 import org.apache.axis2.rpc.client.RPCServiceClient;
 import org.apache.axis2.transport.http.HTTPConstants;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.log4j.Logger;
 import org.jdom.Document;
@@ -43,7 +40,6 @@ import com.bestway.bcus.message.entity.CustomSendMessage;
 import com.bestway.bcus.message.entity.DecSupplementList;
 import com.bestway.bcus.system.dao.TcsParametersDao;
 import com.bestway.bcus.system.entity.Company;
-import com.bestway.bcus.system.entity.CompanyOther;
 import com.bestway.bcus.system.entity.TcsLinkMan;
 import com.bestway.bcus.system.entity.TcsParameters;
 import com.bestway.common.CommonServerBig5GBConverter;
@@ -345,6 +341,11 @@ public class TCSMessageLogic {
 		declaration.setTcsTaskId((String) args.get("messageId"));
 		declaration.setTcsSendTime((Date) args.get("currentDate"));
 		declaration.setIsCheck(false);
+		
+		//如果没有填写 申报人员 那么这里将设置为登录的当前用户 
+		declaration.setDeclarant(
+				declaration.getDeclarant()==null?
+						CommonUtils.getRequest().getUser():declaration.getDeclarant());
 		// 改变发送状态
 		declaration.setIsSend(true);
 

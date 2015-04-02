@@ -275,6 +275,7 @@ public class BcsImpExpRequestDao extends BaseDao {
 		}
 		return this.findPageList(hsql, paramterList.toArray(), index, length);
 	}
+
 	/**
 	 * 根据物料类别查找物料与报关对应表中的报关常用物料-->进出口报关申请单(联盛)
 	 * 
@@ -425,7 +426,7 @@ public class BcsImpExpRequestDao extends BaseDao {
 
 	public void saveImpExpGoodsBillList(List list) {
 		for (int i = 0; i < list.size(); i++) {
-			
+
 			ImpExpGoodsBill m = (ImpExpGoodsBill) list.get(i);
 			m.setCompany(CommonUtils.getCompany());
 			this.saveOrUpdate(m);
@@ -458,65 +459,62 @@ public class BcsImpExpRequestDao extends BaseDao {
 	}
 
 	public List findImpExpGoodsBill(Boolean isLj) {
-		if (isLj){//进口
-			return this.find(
-					"select distinct a.customsNo,a.contractNo,a.krNo,a.catNo  from ImpExpGoodsBill a where a.company.id = ? and a.isLj = ?"
+		if (isLj) {// 进口
+			return this
+					.find("select distinct a.customsNo,a.contractNo,a.krNo,a.catNo  from ImpExpGoodsBill a where a.company.id = ? and a.isLj = ?"
 							+ " and a.isTcustoms = ?", new Object[] {
 							CommonUtils.getCompany().getId(), isLj,
 							new Boolean(false) });
-		} else {//出口
-			return this.find(
-					"select distinct a.catNo,a.contractNo,a.wrapType,a.countryOfLoadingOrUnloading,a.tradeMode," +
-					"a.memo1,a.memo2,a.customs,a.portLoad,a.authorizeFile,a.containerNum,a.conveyance,a.transferMode,a.domeConveyance," +
-					"a.declarationCustoms  " +
-					"from ImpExpGoodsBill a where a.company.id = ? and a.isLj = ?"
+		} else {// 出口
+			return this
+					.find("select distinct a.catNo,a.contractNo,a.wrapType,a.countryOfLoadingOrUnloading,a.tradeMode,"
+							+ "a.memo1,a.memo2,a.customs,a.portLoad,a.authorizeFile,a.containerNum,a.conveyance,a.transferMode,a.domeConveyance,"
+							+ "a.declarationCustoms  "
+							+ "from ImpExpGoodsBill a where a.company.id = ? and a.isLj = ?"
 							+ " and a.isTcustoms = ?", new Object[] {
 							CommonUtils.getCompany().getId(), isLj,
 							new Boolean(false) });
 		}
-		
+
 	}
-	
-	
+
 	public List findDistinctImpExpGoodsBill() {
 		return this
-				.find(
-						"select distinct a.krNo from ImpExpGoodsBill a where a.company.id = ?",
+				.find("select distinct a.krNo from ImpExpGoodsBill a where a.company.id = ?",
 						new Object[] { CommonUtils.getCompany().getId() });
 	}
 
 	public List findImpExpGoodsBillByCustomsNoForImg(String customsNo,
 			String contractNo, String kr, String catNo) {
 		return this
-				.find(
-						"select a from ImpExpGoodsBill a where a.company.id = ? and a.customsNo = ? and a.isLj = ? and a.isTcustoms = ? "
-								+ " and a.contractNo = ? and a.krNo = ? and a.catNo = ?",
+				.find("select a from ImpExpGoodsBill a where a.company.id = ? and a.customsNo = ? and a.isLj = ? and a.isTcustoms = ? "
+						+ " and a.contractNo = ? and a.krNo = ? and a.catNo = ?",
 						new Object[] { CommonUtils.getCompany().getId(),
-								customsNo, new Boolean(true), new Boolean(false),
-								contractNo, kr, catNo });
+								customsNo, new Boolean(true),
+								new Boolean(false), contractNo, kr, catNo });
 	}
 
-	
 	public List findImpExpGoodsBillByCustomsNoForExg(String catNo,
-			String contractNo, String countryOfLoadingOrUnloading,String wrapType,
-			String tradeMode,String memo1,String memo2,String customs,String portLoad,String authorizeFile,
-			String containerNum,String conveyance,String transferMode,String domeConveyance, String declarationCustoms) {
+			String contractNo, String countryOfLoadingOrUnloading,
+			String wrapType, String tradeMode, String memo1, String memo2,
+			String customs, String portLoad, String authorizeFile,
+			String containerNum, String conveyance, String transferMode,
+			String domeConveyance, String declarationCustoms) {
 		return this
-				.find(
-						"select a from ImpExpGoodsBill a where a.company.id = ? and a.catNo = ? and  a.isLj = ? and a.isTcustoms = ? "
-								+ " and a.contractNo = ? and a.countryOfLoadingOrUnloading = ? and a.wrapType = ? " +
-										" and a.tradeMode = ?  and a.memo1 = ? and a.memo2 = ? and a.customs = ? and " +
-										" a.portLoad = ? and a.authorizeFile = ? and a.containerNum = ? and a.conveyance = ? and a.transferMode = ? " +
-										" and a.domeConveyance = ? and a.declarationCustoms = ? ",
-						new Object[] { CommonUtils.getCompany().getId(),
-										catNo, new Boolean(false), new Boolean(false),
-								contractNo, countryOfLoadingOrUnloading, wrapType,tradeMode,
-								memo1,memo2,customs,portLoad,authorizeFile,containerNum,conveyance,transferMode,
-								domeConveyance,declarationCustoms});
+				.find("select a from ImpExpGoodsBill a where a.company.id = ? and a.catNo = ? and  a.isLj = ? and a.isTcustoms = ? "
+						+ " and a.contractNo = ? and a.countryOfLoadingOrUnloading = ? and a.wrapType = ? "
+						+ " and a.tradeMode = ?  and a.memo1 = ? and a.memo2 = ? and a.customs = ? and "
+						+ " a.portLoad = ? and a.authorizeFile = ? and a.containerNum = ? and a.conveyance = ? and a.transferMode = ? "
+						+ " and a.domeConveyance = ? and a.declarationCustoms = ? ",
+						new Object[] { CommonUtils.getCompany().getId(), catNo,
+								new Boolean(false), new Boolean(false),
+								contractNo, countryOfLoadingOrUnloading,
+								wrapType, tradeMode, memo1, memo2, customs,
+								portLoad, authorizeFile, containerNum,
+								conveyance, transferMode, domeConveyance,
+								declarationCustoms });
 	}
-	
-	
-	
+
 	public Country findCountryByName(String sname) {
 		List ls = this.find("select a from Country a where a.code = ?",
 				new Object[] { sname });
@@ -525,8 +523,6 @@ public class BcsImpExpRequestDao extends BaseDao {
 		}
 		return null;
 	}
-	
-	
 
 	public Country findCountryByName11(String sname) {
 		List ls = this.find("select a from Country a where a.name = ?",
@@ -536,9 +532,8 @@ public class BcsImpExpRequestDao extends BaseDao {
 		}
 		return null;
 	}
-	
-	
-	public Customs findCustomsByName(String name){
+
+	public Customs findCustomsByName(String name) {
 		List ls = this.find("select a from Customs a where a.name = ?",
 				new Object[] { name });
 		if (ls != null && ls.size() > 0) {
@@ -546,8 +541,8 @@ public class BcsImpExpRequestDao extends BaseDao {
 		}
 		return null;
 	}
-	
-	public Curr findCurrByCode(String code){
+
+	public Curr findCurrByCode(String code) {
 		List ls = this.find("select a from Curr a where a.code = ?",
 				new Object[] { code });
 		if (ls != null && ls.size() > 0) {
@@ -556,7 +551,7 @@ public class BcsImpExpRequestDao extends BaseDao {
 		return null;
 	}
 
-	public LevyKind findLevyKindByCode(String code){
+	public LevyKind findLevyKindByCode(String code) {
 		List ls = this.find("select a from LevyKind a where a.code = ?",
 				new Object[] { code });
 		if (ls != null && ls.size() > 0) {
@@ -564,8 +559,8 @@ public class BcsImpExpRequestDao extends BaseDao {
 		}
 		return null;
 	}
-	
-	public LevyMode findLevyModeByCode(String code){
+
+	public LevyMode findLevyModeByCode(String code) {
 		List ls = this.find("select a from LevyMode a where a.code = ?",
 				new Object[] { code });
 		if (ls != null && ls.size() > 0) {
@@ -573,8 +568,8 @@ public class BcsImpExpRequestDao extends BaseDao {
 		}
 		return null;
 	}
-	
-	public Transf findTransfByName(String name){
+
+	public Transf findTransfByName(String name) {
 		List ls = this.find("select a from Transf a where a.name = ?",
 				new Object[] { name });
 		if (ls != null && ls.size() > 0) {
@@ -582,8 +577,8 @@ public class BcsImpExpRequestDao extends BaseDao {
 		}
 		return null;
 	}
-	
-	public Trade findTradeByName(String name){
+
+	public Trade findTradeByName(String name) {
 		List ls = this.find("select a from Trade a where a.name = ?",
 				new Object[] { name });
 		if (ls != null && ls.size() > 0) {
@@ -591,8 +586,8 @@ public class BcsImpExpRequestDao extends BaseDao {
 		}
 		return null;
 	}
-	
-	public PortLin findPortLinyName(String name){
+
+	public PortLin findPortLinyName(String name) {
 		List ls = this.find("select a from PortLin a where a.name = ?",
 				new Object[] { name });
 		if (ls != null && ls.size() > 0) {
@@ -600,9 +595,8 @@ public class BcsImpExpRequestDao extends BaseDao {
 		}
 		return null;
 	}
-	
-	
-	public Wrap findWrapByName(String name){
+
+	public Wrap findWrapByName(String name) {
 		List ls = this.find("select a from Wrap a where a.name = ?",
 				new Object[] { name });
 		if (ls != null && ls.size() > 0) {
@@ -610,8 +604,8 @@ public class BcsImpExpRequestDao extends BaseDao {
 		}
 		return null;
 	}
-	
-	public Transf findTransf(String name){
+
+	public Transf findTransf(String name) {
 		List ls = this.find("select a from Transf a where a.name = ?",
 				new Object[] { name });
 		if (ls != null && ls.size() > 0) {
@@ -619,15 +613,14 @@ public class BcsImpExpRequestDao extends BaseDao {
 		}
 		return null;
 	}
-	
+
 	public Double findUnitRate(String unitName, String unitName1) {
 		if (unitName == null || "".equals(unitName) || unitName1 == null
 				|| "".equals(unitName1)) {
 			return null;
 		}
 		List list = this
-				.find(
-						"select a from UnitCollate a where a.unitName = ? and a.unitName1 = ? and a.company.id = ?",
+				.find("select a from UnitCollate a where a.unitName = ? and a.unitName1 = ? and a.company.id = ?",
 						new Object[] { unitName, unitName1,
 								CommonUtils.getCompany().getId() });
 		if (list != null && list.size() > 0) {
@@ -642,8 +635,7 @@ public class BcsImpExpRequestDao extends BaseDao {
 
 	public Contract findContractByEmsNo(String emsNo) {
 		List list = this
-				.find(
-						"select a from Contract a where a.company= ? and a.emsNo= ? and a.declareState=? ",
+				.find("select a from Contract a where a.company= ? and a.emsNo= ? and a.declareState=? ",
 						new Object[] { CommonUtils.getCompany(), emsNo,
 								DeclareState.PROCESS_EXE });
 		if (list != null && list.size() > 0) {
@@ -652,11 +644,9 @@ public class BcsImpExpRequestDao extends BaseDao {
 		return null;
 	}
 
-	
 	public Contract findContractByimpContractNo(String impContractNo) {
 		List list = this
-				.find(
-						"select a from Contract a where a.company= ? and a.impContractNo= ? and a.declareState=? ",
+				.find("select a from Contract a where a.company= ? and a.impContractNo= ? and a.declareState=? ",
 						new Object[] { CommonUtils.getCompany(), impContractNo,
 								DeclareState.PROCESS_EXE });
 		if (list != null && list.size() > 0) {
@@ -664,8 +654,7 @@ public class BcsImpExpRequestDao extends BaseDao {
 		}
 		return null;
 	}
-	
-	
+
 	public List findExeContrac() {
 		List list = this.find(
 				" select a  from Contract a  where a.company= ? and a.declareState=? "
@@ -704,120 +693,151 @@ public class BcsImpExpRequestDao extends BaseDao {
 		return this.find(hsql, new Object[] { CommonUtils.getCompany().getId(),
 				corrEmsNo, DeclareState.PROCESS_EXE });
 	}
-	
 
-	public ScmCoc findScmCocByCode(String code){
-		List ls = this.find("select a from ScmCoc a where a.code = ? and a.company.id = ?",
-				new Object[]{code,CommonUtils.getCompany().getId()});
+	public ScmCoc findScmCocByCode(String code) {
+		List ls = this.find(
+				"select a from ScmCoc a where a.code = ? and a.company.id = ?",
+				new Object[] { code, CommonUtils.getCompany().getId() });
 		if (ls != null && ls.size() > 0) {
 			return (ScmCoc) ls.get(0);
 		}
 		return null;
 	}
-	
+
 	/**
 	 * 
 	 * @param name
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public List<ScmCoc> findScmCocByName(String name){
-		List<ScmCoc> ls = this.find("select a from ScmCoc a where a.name = ? and a.company.id = ?",
-				new Object[]{name,CommonUtils.getCompany().getId()});
+	public List<ScmCoc> findScmCocByName(String name) {
+		List<ScmCoc> ls = this.find(
+				"select a from ScmCoc a where a.name = ? and a.company.id = ?",
+				new Object[] { name, CommonUtils.getCompany().getId() });
 		return ls;
 	}
-	
-	
+
 	/**
+	 * 查询客户/供应商
 	 * 
 	 * @param name
+	 *            客户供应商名称
+	 * @param isManufacturer
+	 *            是否供应商
+	 * @param isCustomer
+	 *            是否客户
+	 * @param isTransferFactoryOut
+	 *            是否结转出口
+	 * @param isTransferFactoryIn
+	 *            是否结转进口
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public List<ScmCoc> findScmCocByNameAndType(String name, boolean isManufacturer,boolean isCustomer){
+	public List<ScmCoc> findScmCocByNameAndType(String name,
+			boolean isManufacturer, boolean isCustomer,
+			boolean isTransferFactoryOut, boolean isTransferFactoryIn) {
 		List<Object> parameters = new ArrayList<Object>();
 		String hql = "select a from ScmCoc a left join a.brief where a.name = ? and a.company.id = ? ";
+		StringBuffer hql2 = new StringBuffer(hql);
 		parameters.add(name);
 		parameters.add(CommonUtils.getCompany().getId());
-		if(isManufacturer){
-			hql = hql + " AND a.isManufacturer = ? ";
-			parameters.add(true);
+		// 供应商
+		if (isManufacturer) {
+			hql2.append(" AND a.isManufacturer = ? ");
+			parameters.add(Boolean.TRUE);
 		}
-		if(isCustomer){
-			hql = hql + " AND a.isCustomer = ? ";
-			parameters.add(true);
+		// 客户
+		if (isCustomer) {
+			hql2.append(" AND a.isCustomer = ? ");
+			parameters.add(Boolean.TRUE);
 		}
-		List<ScmCoc> ls = this.find(hql,parameters.toArray());
+		// 结转出口
+		if (isTransferFactoryOut) {
+			hql2.append(" AND a.isTransferFactoryOut = ? ");
+			parameters.add(Boolean.TRUE);
+		}
+		// 结转进口
+		if (isTransferFactoryIn) {
+			hql2.append(" AND a.isTransferFactoryIn = ? ");
+			parameters.add(Boolean.TRUE);
+		}
+		System.out.println(hql2.toString());
+		List<ScmCoc> ls = this.find(hql2.toString(), parameters.toArray());
 		return ls;
 	}
-	
+
 	/**
 	 * 根据编码查询海关注册公司
+	 * 
 	 * @param code
 	 * @return
 	 */
-	public List findBriefByCode(String code){
+	public List findBriefByCode(String code) {
 		List<Object> parameters = new ArrayList<Object>();
 		String hql = "select a from Brief a where a.code = ? ";
-		parameters.add(code);		
-		return this.find(hql,parameters.toArray());
+		parameters.add(code);
+		return this.find(hql, parameters.toArray());
 	}
-	
+
 	/**
 	 * 根据名称查询海关注册公司
+	 * 
 	 * @param code
 	 * @return
 	 */
-	public List findBriefByName(String name){
+	public List findBriefByName(String name) {
 		List<Object> parameters = new ArrayList<Object>();
 		String hql = "select a from Brief a where a.name = ? ";
-		parameters.add(name);		
-		return this.find(hql,parameters.toArray());
+		parameters.add(name);
+		return this.find(hql, parameters.toArray());
 	}
-	
+
 	/**
 	 * 主管海关
+	 * 
 	 * @param name
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
 	public List<Customs> findCustomsList(String name) {
 		String hql = "SELECT c FROM Customs c WHERE c.name = ? ";
-		return this.find(hql,new Object[]{name});
+		return this.find(hql, new Object[] { name });
 	}
-	
+
 	/**
 	 * 转入地
+	 * 
 	 * @param name
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
 	public List<District> findDistrictList(String name) {
 		String hql = "SELECT c FROM District c WHERE c.name = ? ";
-		return this.find(hql,new Object[]{name});
+		return this.find(hql, new Object[] { name });
 	}
-	
+
 	/**
 	 * 查找客户
+	 * 
 	 * @param name
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
 	public List<Brief> findBriefsList(String name) {
 		String hql = "SELECT c FROM Brief c WHERE c.name = ? ";
-		return this.find(hql,new Object[]{name});
+		return this.find(hql, new Object[] { name });
 	}
-	
-	
-	/**取得物料与报关对应表中料件
-	 * @param isMaterial 是否料件
+
+	/**
+	 * 取得物料与报关对应表中料件
+	 * 
+	 * @param isMaterial
+	 *            是否料件
 	 * @return
 	 */
-	public List getTempMaterielByTypeBcs(
-			boolean isMaterial){
+	public List getTempMaterielByTypeBcs(boolean isMaterial) {
 		List<Object> parameters = new ArrayList<Object>();
-		String hsql = "select a from BcsInnerMerge a " +
-				"where a.company.id=?";
+		String hsql = "select a from BcsInnerMerge a " + "where a.company.id=?";
 		parameters.add(CommonUtils.getCompany().getId());
 		if (isMaterial) {
 			hsql += " and a.materielType in (?) ";

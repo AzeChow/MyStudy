@@ -81,7 +81,7 @@ import com.bestway.ui.winuicontrol.JCustomFormattedTextField;
 import com.bestway.ui.winuicontrol.JDialogBase;
 import com.bestway.ui.winuicontrol.calendar.JCalendarComboBox;
 
-@SuppressWarnings({"unchecked","serial"})
+@SuppressWarnings({ "unchecked", "serial" })
 public class DgMakeBillToCustoms extends JDialogBase {
 
 	private static final long serialVersionUID = 1L;
@@ -97,7 +97,7 @@ public class DgMakeBillToCustoms extends JDialogBase {
 
 	private int impExpFlag = ImpExpFlag.IMPORT;
 
-//	private ApplyToCustomsBillList billList = null;
+	// private ApplyToCustomsBillList billList = null;
 
 	private JToolBar jJToolBarBar = null;
 
@@ -108,7 +108,7 @@ public class DgMakeBillToCustoms extends JDialogBase {
 	private JPanel jPanel2 = null;
 
 	private JComboBox cbbTradeMode = null;
-	private ButtonGroup bg = null;  //  @jve:decl-index=0:
+	private ButtonGroup bg = null; // @jve:decl-index=0:
 	private JComboBox cbbTransportMode = null;
 
 	private JTextField tfEmsNo = null;
@@ -175,7 +175,7 @@ public class DgMakeBillToCustoms extends JDialogBase {
 
 	private SystemAction systemAction = null;
 
-	private CustomsDeclaration cm = null;  //  @jve:decl-index=0:
+	private CustomsDeclaration cm = null; // @jve:decl-index=0:
 
 	private JRadioButton jRadioButton = null;
 
@@ -185,7 +185,7 @@ public class DgMakeBillToCustoms extends JDialogBase {
 
 	private ButtonGroup buttonGroup = null; // @jve:decl-index=0:visual-constraint="1136,75"
 
-	protected MakeCusomsDeclarationParam para = null;  //  @jve:decl-index=0:
+	protected MakeCusomsDeclarationParam para = null; // @jve:decl-index=0:
 
 	public int appCount = 0;
 
@@ -230,7 +230,7 @@ public class DgMakeBillToCustoms extends JDialogBase {
 
 	private JRadioButton jRadioButton22 = null;
 
-	private List rlist1;  //  @jve:decl-index=0:
+	private List rlist1; // @jve:decl-index=0:
 
 	private JCheckBox cbArray = null;
 
@@ -370,8 +370,9 @@ public class DgMakeBillToCustoms extends JDialogBase {
 
 		CustomsDeclarationSet other = null;// 以下是系统参数设置
 		if (this.impExpFlag == ImpExpFlag.IMPORT) {
-			other = systemAction.findCustomsSet(new Request(CommonVars
-					.getCurrUser()), ImpExpType.DIRECT_IMPORT);
+			other = systemAction.findCustomsSet(
+					new Request(CommonVars.getCurrUser()),
+					ImpExpType.DIRECT_IMPORT);
 			if (other != null) {
 				cbbCustoms.setSelectedItem((Customs) other
 						.getDeclarationCustoms());
@@ -381,8 +382,9 @@ public class DgMakeBillToCustoms extends JDialogBase {
 				cbbTradeMode.setSelectedItem((Trade) other.getTradeMode());
 			}
 		} else {
-			other = systemAction.findCustomsSet(new Request(CommonVars
-					.getCurrUser()), ImpExpType.DIRECT_IMPORT);
+			other = systemAction.findCustomsSet(
+					new Request(CommonVars.getCurrUser()),
+					ImpExpType.DIRECT_IMPORT);
 			if (other != null) {
 				cbbCustoms.setSelectedItem((Customs) other
 						.getDeclarationCustoms());
@@ -444,17 +446,17 @@ public class DgMakeBillToCustoms extends JDialogBase {
 		this.impExpFlag = impExpFlag;
 	}
 
-//	/**
-//	 * 编辑列
-//	 */
-//
-//	public ApplyToCustomsBillList getBillList() {
-//		return billList;
-//	}
-//
-//	public void setBillList(ApplyToCustomsBillList billList) {
-//		this.billList = billList;
-//	}
+	// /**
+	// * 编辑列
+	// */
+	//
+	// public ApplyToCustomsBillList getBillList() {
+	// return billList;
+	// }
+	//
+	// public void setBillList(ApplyToCustomsBillList billList) {
+	// this.billList = billList;
+	// }
 
 	/**
 	 * This method initializes jJToolBarBar
@@ -549,14 +551,14 @@ public class DgMakeBillToCustoms extends JDialogBase {
 		}
 		if (para.getImpExpType() != ImpExpType.BACK_FACTORY_REWORK
 				&& para.getImpExpType() != ImpExpType.BACK_MATERIEL_EXPORT) {
-//			if (checkRerictCommodity(rlist)) {
-//				return false;
-//			}
+			// if (checkRerictCommodity(rlist)) {
+			// return false;
+			// }
 			if (checkRerictCommoditys(rlist)) {
 				return false;
 			}
 		}
-	
+
 		para.setEmsHeadH2k(this.emsHeadH2k);
 		para.setApplyToCustomsBillList((ApplyToCustomsBillList) rlist1.get(0));
 		para.setCustomsDeclaration(true);
@@ -572,9 +574,9 @@ public class DgMakeBillToCustoms extends JDialogBase {
 
 			List liist = encAction.findCustomsDeclarationCommInfo(new Request(
 					CommonVars.getCurrUser()), cm);
-//			List alist = encAction.findAtcMergeAfterComInfoByBillNo(
-//					new Request(CommonVars.getCurrUser()), this.billList
-//							.getListNo());
+			// List alist = encAction.findAtcMergeAfterComInfoByBillNo(
+			// new Request(CommonVars.getCurrUser()), this.billList
+			// .getListNo());
 			if (liist.size() + rlist.size() > 20) {
 				JOptionPane.showMessageDialog(DgMakeBillToCustoms.this, "清单数量:"
 						+ rlist.size() + "  报关单数量: " + liist.size()
@@ -616,10 +618,8 @@ public class DgMakeBillToCustoms extends JDialogBase {
 			para.setMemo(para.getMemo() == null ? app.getMemos() : para
 					.getMemo());// 备注
 			para.setCurr(dt.getCurrency());
-			para
-					.setDeclarationCustoms(para.getDeclarationCustoms() == null ? app
-							.getDeclareCIQ()
-							: para.getDeclarationCustoms());// 申报海关
+			para.setDeclarationCustoms(para.getDeclarationCustoms() == null ? app
+					.getDeclareCIQ() : para.getDeclarationCustoms());// 申报海关
 			para.setCustoms(para.getCustoms() == null ? app.getImpExpCIQ()
 					: para.getCustoms());// 进出口岸
 			// ------------------------------------如果没有填写，则会默认第一份清单
@@ -685,9 +685,9 @@ public class DgMakeBillToCustoms extends JDialogBase {
 			jLabel61.setText("\u8fd0\u8f93\u65b9\u5f0f");
 			jPanel2 = new JPanel();
 			jPanel2.setLayout(null);
-			jPanel2.setBorder(BorderFactory.createTitledBorder(BorderFactory
-					.createEtchedBorder(EtchedBorder.LOWERED), "报关单表头设置",
-					TitledBorder.DEFAULT_JUSTIFICATION,
+			jPanel2.setBorder(BorderFactory.createTitledBorder(
+					BorderFactory.createEtchedBorder(EtchedBorder.LOWERED),
+					"报关单表头设置", TitledBorder.DEFAULT_JUSTIFICATION,
 					TitledBorder.DEFAULT_POSITION, null, null));
 			jPanel2.add(getCbbTradeMode(), null);
 			jPanel2.add(getCbbTransportMode(), null);
@@ -975,9 +975,9 @@ public class DgMakeBillToCustoms extends JDialogBase {
 			jPanel.setLayout(null);
 			jPanel.add(getJRadioButton(), null);
 			jPanel.add(getJRadioButton1(), null);
-			jPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory
-					.createEtchedBorder(EtchedBorder.LOWERED), "生成报关单方式设置",
-					TitledBorder.DEFAULT_JUSTIFICATION,
+			jPanel.setBorder(BorderFactory.createTitledBorder(
+					BorderFactory.createEtchedBorder(EtchedBorder.LOWERED),
+					"生成报关单方式设置", TitledBorder.DEFAULT_JUSTIFICATION,
 					TitledBorder.DEFAULT_POSITION, null, null));
 			jPanel.add(jLabel9, null);
 			jPanel.add(getJTextField1(), null);
@@ -999,23 +999,25 @@ public class DgMakeBillToCustoms extends JDialogBase {
 		}
 		return buttonGroup;
 	}
-	
-	public void work(){
+
+	public void work() {
 		btnOk.setEnabled(false);
 		try {
 			CommonProgress.showProgressDialog(DgMakeBillToCustoms.this);
 			CommonProgress.setMessage("系统正在执行数据，请稍后...");
 			CustomsDeclaration cc = encAction
-					.makeBilllistsToCustomDeclaretions(new Request(
-							CommonVars.getCurrUser()), para
-							.getApplyToCustomsBillList(), para, cm, rlist,!cbArray.isSelected());
+					.makeBilllistsToCustomDeclaretions(
+							new Request(CommonVars.getCurrUser()),
+							para.getApplyToCustomsBillList(), para, cm, rlist,
+							!cbArray.isSelected());
 			if (cc == null) {
 				JOptionPane.showMessageDialog(DgMakeBillToCustoms.this,
 						"转报关单失败！\n 所选的商品已转报关单！", "提示！", 1);
 				return;
 			} else {
 				CommonProgress.closeProgressDialog();
-				JOptionPane.showMessageDialog(DgMakeBillToCustoms.this,
+				JOptionPane.showMessageDialog(
+						DgMakeBillToCustoms.this,
 						"转报关单成功！\n 报关单流水号为"
 								+ (cc.getSerialNumber() == null ? "空" : cc
 										.getSerialNumber()), "提示！", 1);
@@ -1024,8 +1026,8 @@ public class DgMakeBillToCustoms extends JDialogBase {
 		} catch (Exception e) {
 			CommonProgress.closeProgressDialog();
 			e.printStackTrace();
-			JOptionPane.showMessageDialog(DgMakeBillToCustoms.this,
-					"执行数据失败：！" + e.getMessage(), "提示", 2);
+			JOptionPane.showMessageDialog(DgMakeBillToCustoms.this, "执行数据失败：！"
+					+ e.getMessage(), "提示", 2);
 		} finally {
 			rlist.clear();
 		}
@@ -1057,6 +1059,55 @@ public class DgMakeBillToCustoms extends JDialogBase {
 		return jButton1;
 	}
 
+	/*
+	 * 保存设置的参数信息 by zcj 2015-4-1
+	 */
+	private void savePara() {
+		if (para == null) {
+			para = new MakeCusomsDeclarationParam();
+		}
+		// 包装种类
+		para.setWrapType((Wrap) jComboBox12.getSelectedItem());
+
+		// 起运国/运抵国
+		para.setCountryOfLoadingOrUnloading((Country) jComboBox2
+				.getSelectedItem());
+
+		// 申报海关
+		para.setDeclarationCustoms((Customs) cbbCustoms.getSelectedItem());
+
+		// 客户
+		para.setCustomer((ScmCoc) jComboBox121.getSelectedItem());
+
+		// 成交方式
+		para.setTransac((Transac) jComboBox11.getSelectedItem());
+
+		// 境内目的地
+		para.setDomesticDestinationOrSource((District) jComboBox1
+				.getSelectedItem());
+
+		// 运输方式
+		para.setTransf((Transf) cbbTransportMode.getSelectedItem());
+
+		// 征免方式
+		para.setLevyKind((LevyKind) jComboBox.getSelectedItem());
+
+		// 贸易方式
+		para.setTrade((Trade) cbbTradeMode.getSelectedItem());
+
+		// 许可证号
+		para.setLicense(jTextField.getText());
+
+		// 征免比例
+		para.setPerTax((Double) jCustomFormattedTextField.getValue());
+
+		// 进出口日期
+		para.setImpExpDate(jCalendarComboBox.getDate());
+
+		// 进出口岸
+		para.setCustoms((Customs) cbbImpExpPort.getSelectedItem());
+	}
+
 	private void addStep(int step) {
 		if (step == 0) {
 			if (getJRadioButton1().isSelected() && cm == null) {
@@ -1064,7 +1115,10 @@ public class DgMakeBillToCustoms extends JDialogBase {
 						"请选择报关单！", "提示！", JOptionPane.WARNING_MESSAGE);
 				return;
 			}
-			getJContentPane().remove(getJPanel1());
+			//保存所有需要用到的 参数数据 
+		    savePara();
+			
+		    getJContentPane().remove(getJPanel1());
 			getJContentPane().add(getJPanel3(), BorderLayout.CENTER);
 			jPanel3.add(getJPanel51(), BorderLayout.NORTH);
 			initTable();
@@ -1095,8 +1149,8 @@ public class DgMakeBillToCustoms extends JDialogBase {
 			getJButton1().setEnabled(false);
 			getBtnOk().setEnabled(true);
 			lbHeadText.setText("第三步：选择所要转的清单体");
-			System.out.println("temp="+temp.size());
-			if(!getJRadioButton1().isSelected()&&temp.size()==1)
+			System.out.println("temp=" + temp.size());
+			if (!getJRadioButton1().isSelected() && temp.size() == 1)
 				cbArray.setVisible(true);
 			else
 				cbArray.setVisible(false);
@@ -1112,12 +1166,13 @@ public class DgMakeBillToCustoms extends JDialogBase {
 		double Amount = 0;
 		double commodityamount = 0;
 		String seqNum = null;
-       
+
 		Collection cl = new Vector();
 		Collection commoditycl = new Vector();
 		Collection c2 = new Vector();
-//		List commodityList = this.encAction.findAtcMergeAfterComInfoByParents(
-//				new Request(CommonVars.getCurrUser()), arl);
+		// List commodityList =
+		// this.encAction.findAtcMergeAfterComInfoByParents(
+		// new Request(CommonVars.getCurrUser()), arl);
 
 		for (int i = 0; i < commodityList.size(); i++) {
 			AtcMergeAfterComInfo tt = (AtcMergeAfterComInfo) commodityList
@@ -1127,21 +1182,21 @@ public class DgMakeBillToCustoms extends JDialogBase {
 			Boolean isMaterial = EncCommon.isMaterial(tt.getBillList()
 					.getImpExpType());
 
-			
-			
 			if (seqNum != null && !seqNum.equals("")) {
 
 				// 得到报关单中的数量
 				DeclarationCommInfo = materialManageAction
-						.findCustomsDeclarationCommInfo(new Request(CommonVars
-								.getCurrUser()), isMaterial, seqNum,null);
+						.findCustomsDeclarationCommInfo(
+								new Request(CommonVars.getCurrUser()),
+								isMaterial, seqNum, null);
 
 				Amount = DeclarationCommInfo
 						+ Double.valueOf(tt.getDeclaredAmount().toString());
 
 				RestirictCommodity commodity = manualDeclearAction
-						.findRerictCommodity(new Request(CommonVars
-								.getCurrUser()), isMaterial, seqNum);
+						.findRerictCommodity(
+								new Request(CommonVars.getCurrUser()),
+								isMaterial, seqNum);
 
 				if (commodity != null) {
 					if (commodity.getAmount() != null
@@ -1158,42 +1213,43 @@ public class DgMakeBillToCustoms extends JDialogBase {
 			}
 		}
 		if (commoditycl.size() > 0 && cl.size() > 0) {
-			if (JOptionPane.showConfirmDialog(this, "备案号："
-					+ cl+ "已进(出)数量[" + commoditycl
-					+ "] 超出了限制类商品中备的数量[" + c2 + "]!\n", "提示", -1) == 0) {
+			if (JOptionPane.showConfirmDialog(this, "备案号：" + cl + "已进(出)数量["
+					+ commoditycl + "] 超出了限制类商品中备的数量[" + c2 + "]!\n", "提示", -1) == 0) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
+
 	// 检查是不是限制类商品并且是否超出了限制类商品中定义的数量
 	public boolean checkRerictCommoditys(List commodityList) {
 		double declarationCommInfo = 0;
 		double Amount = 0;
 		double commodityamount = 0;
 		String seqNum = null;
-       
+
 		Collection cl = new Vector();
 		Collection commoditycl = new Vector();
 		Collection c2 = new Vector();
-//		List commodityList = this.encAction.findAtcMergeAfterComInfoByParents(
-//				new Request(CommonVars.getCurrUser()), arl);
+		// List commodityList =
+		// this.encAction.findAtcMergeAfterComInfoByParents(
+		// new Request(CommonVars.getCurrUser()), arl);
 
-		//缓存成品数量
-		Map<Integer,Double> mapExgAmount = new HashMap<Integer, Double>();
-		
-		//缓存料件数量
-		Map<Integer,Double> mapImgAmount = new HashMap<Integer, Double>();
-		
-		//限制类商品成品
-		Map<Integer,RestirictCommodity> mapCommodityImg = new HashMap<Integer, RestirictCommodity>();
-		
-		//限制类商品料件
-		Map<Integer,RestirictCommodity> mapCommodityExg = new HashMap<Integer, RestirictCommodity>();
-		
-		initData(commodityList,mapExgAmount,mapImgAmount,mapCommodityImg,mapCommodityExg);
-		
+		// 缓存成品数量
+		Map<Integer, Double> mapExgAmount = new HashMap<Integer, Double>();
+
+		// 缓存料件数量
+		Map<Integer, Double> mapImgAmount = new HashMap<Integer, Double>();
+
+		// 限制类商品成品
+		Map<Integer, RestirictCommodity> mapCommodityImg = new HashMap<Integer, RestirictCommodity>();
+
+		// 限制类商品料件
+		Map<Integer, RestirictCommodity> mapCommodityExg = new HashMap<Integer, RestirictCommodity>();
+
+		initData(commodityList, mapExgAmount, mapImgAmount, mapCommodityImg,
+				mapCommodityExg);
+
 		for (int i = 0; i < commodityList.size(); i++) {
 			AtcMergeAfterComInfo tt = (AtcMergeAfterComInfo) commodityList
 					.get(i);
@@ -1202,30 +1258,32 @@ public class DgMakeBillToCustoms extends JDialogBase {
 			Boolean isMaterial = EncCommon.isMaterial(tt.getBillList()
 					.getImpExpType());
 
-			if (tt.getEmsSerialNo()!=null) {
-				if(isMaterial){
+			if (tt.getEmsSerialNo() != null) {
+				if (isMaterial) {
 					// 得到报关单中的数量
-					declarationCommInfo = mapImgAmount.get(tt.getEmsSerialNo())==null?0:mapImgAmount.get(tt.getEmsSerialNo());
-				}else{
-					declarationCommInfo = mapExgAmount.get(tt.getEmsSerialNo())==null?0:mapExgAmount.get(tt.getEmsSerialNo());
+					declarationCommInfo = mapImgAmount.get(tt.getEmsSerialNo()) == null ? 0
+							: mapImgAmount.get(tt.getEmsSerialNo());
+				} else {
+					declarationCommInfo = mapExgAmount.get(tt.getEmsSerialNo()) == null ? 0
+							: mapExgAmount.get(tt.getEmsSerialNo());
 				}
-				
+
 				// 得到报关单中的数量
-//				DeclarationCommInfo = materialManageAction
-//						.findCustomsDeclarationCommInfo(new Request(CommonVars
-//								.getCurrUser()), isMaterial, seqNum,null);
+				// DeclarationCommInfo = materialManageAction
+				// .findCustomsDeclarationCommInfo(new Request(CommonVars
+				// .getCurrUser()), isMaterial, seqNum,null);
 
 				Amount = declarationCommInfo
 						+ Double.valueOf(tt.getDeclaredAmount().toString());
-				
+
 				RestirictCommodity commodity = null;
-//				RestirictCommodity commodity = manualDeclearAction
-//						.findRerictCommodity(new Request(CommonVars
-//								.getCurrUser()), isMaterial, seqNum);
-				
-				if(isMaterial){
+				// RestirictCommodity commodity = manualDeclearAction
+				// .findRerictCommodity(new Request(CommonVars
+				// .getCurrUser()), isMaterial, seqNum);
+
+				if (isMaterial) {
 					commodity = mapCommodityImg.get(tt.getEmsSerialNo());
-				}else{
+				} else {
 					commodity = mapCommodityExg.get(tt.getEmsSerialNo());
 				}
 
@@ -1244,96 +1302,111 @@ public class DgMakeBillToCustoms extends JDialogBase {
 			}
 		}
 		if (commoditycl.size() > 0 && cl.size() > 0) {
-			if (JOptionPane.showConfirmDialog(this, "备案号："
-					+ cl+ "已进(出)数量[" + commoditycl
-					+ "] 超出了限制类商品中备的数量[" + c2 + "]!\n", "提示", -1) == 0) {
+			if (JOptionPane.showConfirmDialog(this, "备案号：" + cl + "已进(出)数量["
+					+ commoditycl + "] 超出了限制类商品中备的数量[" + c2 + "]!\n", "提示", -1) == 0) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
+
 	/**
 	 * 初始化 缓存数据
-	 * @param list 报关清单归并后商品信息
-	 * @param mapExgAmount 成品数量
-	 * @param mapImgAmount 料件数量
-	 * @param mapCommodityImg 限制类商品料件
-	 * @param mapCommodityExg 限制类商品成品
+	 * 
+	 * @param list
+	 *            报关清单归并后商品信息
+	 * @param mapExgAmount
+	 *            成品数量
+	 * @param mapImgAmount
+	 *            料件数量
+	 * @param mapCommodityImg
+	 *            限制类商品料件
+	 * @param mapCommodityExg
+	 *            限制类商品成品
 	 */
-	private void initData(List list,Map<Integer,Double> mapExgAmount,Map<Integer,Double> mapImgAmount
-			,Map<Integer,RestirictCommodity> mapCommodityImg,Map<Integer,RestirictCommodity> mapCommodityExg){
-		
+	private void initData(List list, Map<Integer, Double> mapExgAmount,
+			Map<Integer, Double> mapImgAmount,
+			Map<Integer, RestirictCommodity> mapCommodityImg,
+			Map<Integer, RestirictCommodity> mapCommodityExg) {
+
 		List<Integer> listImg = new ArrayList<Integer>();
 		List<Integer> listExg = new ArrayList<Integer>();
-		
-		Map<Integer,Integer> mapImgSerialNo = new HashMap<Integer, Integer>();//去料件重复
-		Map<Integer,Integer> mapExgSerialNo = new HashMap<Integer, Integer>();//去成品重复
-		
+
+		Map<Integer, Integer> mapImgSerialNo = new HashMap<Integer, Integer>();// 去料件重复
+		Map<Integer, Integer> mapExgSerialNo = new HashMap<Integer, Integer>();// 去成品重复
+
 		for (int i = 0; i < list.size(); i++) {
-			AtcMergeAfterComInfo tt = (AtcMergeAfterComInfo) list
-					.get(i);
+			AtcMergeAfterComInfo tt = (AtcMergeAfterComInfo) list.get(i);
 			Boolean isMaterial = EncCommon.isMaterial(tt.getBillList()
 					.getImpExpType());
-			if(tt.getEmsSerialNo()==null){
+			if (tt.getEmsSerialNo() == null) {
 				continue;
 			}
-			
-			//是否是料件
-			if(isMaterial){
-				//去料件重复
-				if(mapImgSerialNo.get(tt.getEmsSerialNo())==null){
+
+			// 是否是料件
+			if (isMaterial) {
+				// 去料件重复
+				if (mapImgSerialNo.get(tt.getEmsSerialNo()) == null) {
 					listImg.add(tt.getEmsSerialNo());
-					mapImgSerialNo.put(tt.getEmsSerialNo(), tt.getEmsSerialNo());
+					mapImgSerialNo
+							.put(tt.getEmsSerialNo(), tt.getEmsSerialNo());
 				}
-			}else{
-				//去成品重复
-				if(mapExgSerialNo.get(tt.getEmsSerialNo())==null){
+			} else {
+				// 去成品重复
+				if (mapExgSerialNo.get(tt.getEmsSerialNo()) == null) {
 					listExg.add(tt.getEmsSerialNo());
-					mapExgSerialNo.put(tt.getEmsSerialNo(), tt.getEmsSerialNo());
+					mapExgSerialNo
+							.put(tt.getEmsSerialNo(), tt.getEmsSerialNo());
 				}
 			}
 		}
-		
-		List listImgAmount = materialManageAction.findCustomsDeclarationCommInfos(new Request(CommonVars
-				.getCurrUser()), true, listImg,null);
-		List listExgAmount = materialManageAction.findCustomsDeclarationCommInfos(new Request(CommonVars
-				.getCurrUser()), false, listExg,null);
-		
-		listToMap(listImgAmount,mapImgAmount);
-		listToMap(listExgAmount,mapExgAmount);
-		
-		
-		List<RestirictCommodity> commodityImg = manualDeclearAction.findRerictCommoditys(new Request(CommonVars
-						.getCurrUser()), true, listImg);
-		
-		List<RestirictCommodity> commodityExg = manualDeclearAction.findRerictCommoditys(new Request(CommonVars
-						.getCurrUser()), false, listExg);
-		
-		initRestirictCommoditys(commodityImg,mapCommodityImg);
-		initRestirictCommoditys(commodityExg,mapCommodityExg);
-		
+
+		List listImgAmount = materialManageAction
+				.findCustomsDeclarationCommInfos(
+						new Request(CommonVars.getCurrUser()), true, listImg,
+						null);
+		List listExgAmount = materialManageAction
+				.findCustomsDeclarationCommInfos(
+						new Request(CommonVars.getCurrUser()), false, listExg,
+						null);
+
+		listToMap(listImgAmount, mapImgAmount);
+		listToMap(listExgAmount, mapExgAmount);
+
+		List<RestirictCommodity> commodityImg = manualDeclearAction
+				.findRerictCommoditys(new Request(CommonVars.getCurrUser()),
+						true, listImg);
+
+		List<RestirictCommodity> commodityExg = manualDeclearAction
+				.findRerictCommoditys(new Request(CommonVars.getCurrUser()),
+						false, listExg);
+
+		initRestirictCommoditys(commodityImg, mapCommodityImg);
+		initRestirictCommoditys(commodityExg, mapCommodityExg);
+
 	}
-	
-	private void listToMap(List list,Map map){
+
+	private void listToMap(List list, Map map) {
 		for (int i = 0; i < list.size(); i++) {
-			Object[] obj = (Object[])list.get(i);
-			if(obj[1]==null){
+			Object[] obj = (Object[]) list.get(i);
+			if (obj[1] == null) {
 				continue;
 			}
-			map.put(Integer.parseInt(obj[0].toString()), Double.parseDouble(obj[1].toString()));
+			map.put(Integer.parseInt(obj[0].toString()),
+					Double.parseDouble(obj[1].toString()));
 		}
 	}
 
-	private void initRestirictCommoditys(List<RestirictCommodity> list,Map<Integer,RestirictCommodity> map){
+	private void initRestirictCommoditys(List<RestirictCommodity> list,
+			Map<Integer, RestirictCommodity> map) {
 		for (int i = 0; i < list.size(); i++) {
 			RestirictCommodity commodity = list.get(i);
-			if(commodity.getSeqNum()!=null){
+			if (commodity.getSeqNum() != null) {
 				map.put(Integer.parseInt(commodity.getSeqNum()), commodity);
 			}
 		}
 	}
-	
+
 	private void mupStep(int step) {
 		if (step == 1) {
 			getJContentPane().remove(getJPanel3());
@@ -1343,9 +1416,7 @@ public class DgMakeBillToCustoms extends JDialogBase {
 			getJButton2().setEnabled(false);
 			lbHeadText.setText("第一步：选择生成报关单生成方式 ");
 			this.repaint();
-			// parent.clear();
 
-			// initTable();
 		} else if (step == 2) {
 			getJContentPane().remove(getJPanel4());
 			getJContentPane().add(getJPanel3(), BorderLayout.CENTER);
@@ -1355,7 +1426,7 @@ public class DgMakeBillToCustoms extends JDialogBase {
 			lbHeadText.setText("第二步：选择所要转的清单");
 			initTable();
 			this.repaint();
-			// this.detailList.clear();
+
 		}
 	}
 
@@ -1375,11 +1446,8 @@ public class DgMakeBillToCustoms extends JDialogBase {
 			lbHeadText.setText("第一步：选择生成报关单生成方式 ");
 			lbHeadText.setForeground(new Color(255, 153, 0));
 			jLabel17 = new JLabel();
-			jLabel17
-					.setIcon(new ImageIcon(
-							getClass()
-									.getResource(
-											"/com/bestway/bcus/client/resources/images/titlepoint.jpg")));
+			jLabel17.setIcon(new ImageIcon(getClass().getResource(
+					"/com/bestway/bcus/client/resources/images/titlepoint.jpg")));
 			jLabel17.setText("");
 			jPanel11 = new JPanel();
 			jPanel11.setLayout(new BorderLayout());
@@ -1446,7 +1514,6 @@ public class DgMakeBillToCustoms extends JDialogBase {
 				list.add(addColumn("进出口岸", "impExpCIQ.name", 80));
 				list.add(addColumn("申报地海关", "declareCIQ.name", 80));
 				list.add(addColumn("料件/成品标志", "materielProductFlag", 80));
-
 				return list;
 			}
 		};
@@ -1454,12 +1521,12 @@ public class DgMakeBillToCustoms extends JDialogBase {
 		tableModel = new JTableListModel(getJTable(), list,
 				jTableListModelAdapter);
 		jTableListModelAdapter.setEditableColumn(1);
-		getJTable().getColumnModel().getColumn(1).setCellRenderer(
-				new TableCheckBoxRender());
-		getJTable().getColumnModel().getColumn(1).setCellEditor(
-				new CheckBoxEditor(new JCheckBox()));
-		getJTable().getColumnModel().getColumn(2).setCellRenderer(
-				new DefaultTableCellRenderer() {
+		getJTable().getColumnModel().getColumn(1)
+				.setCellRenderer(new TableCheckBoxRender());
+		getJTable().getColumnModel().getColumn(1)
+				.setCellEditor(new CheckBoxEditor(new JCheckBox()));
+		getJTable().getColumnModel().getColumn(2)
+				.setCellRenderer(new DefaultTableCellRenderer() {
 					public Component getTableCellRendererComponent(
 							JTable table, Object value, boolean isSelected,
 							boolean hasFocus, int row, int column) {
@@ -1507,8 +1574,8 @@ public class DgMakeBillToCustoms extends JDialogBase {
 						return this;
 					}
 				});
-		getJTable().getColumnModel().getColumn(3).setCellRenderer(
-				new DefaultTableCellRenderer() {
+		getJTable().getColumnModel().getColumn(3)
+				.setCellRenderer(new DefaultTableCellRenderer() {
 					public Component getTableCellRendererComponent(
 							JTable table, Object value, boolean isSelected,
 							boolean hasFocus, int row, int column) {
@@ -1532,8 +1599,8 @@ public class DgMakeBillToCustoms extends JDialogBase {
 						return this;
 					}
 				});
-		getJTable().getColumnModel().getColumn(12).setCellRenderer(
-				new DefaultTableCellRenderer() {
+		getJTable().getColumnModel().getColumn(12)
+				.setCellRenderer(new DefaultTableCellRenderer() {
 					public Component getTableCellRendererComponent(
 							JTable table, Object value, boolean isSelected,
 							boolean hasFocus, int row, int column) {
@@ -1559,11 +1626,13 @@ public class DgMakeBillToCustoms extends JDialogBase {
 	private void initTable1(List arl) {
 		List detailList = this.encAction.findAtcMergeAfterComInfoByParents(
 				new Request(CommonVars.getCurrUser()), arl);
-		//只显示清单中还没被转的商品
+		// 只显示清单中还没被转的商品
 		List newDetailList = new ArrayList();
+
 		for (int i = 0; i < detailList.size(); i++) {
-			AtcMergeAfterComInfo info =(AtcMergeAfterComInfo) detailList.get(i);
-			if(!info.getIsTransferCustomsBill()){
+			AtcMergeAfterComInfo info = (AtcMergeAfterComInfo) detailList
+					.get(i);
+			if (!info.getIsTransferCustomsBill()) {
 				newDetailList.add(info);
 			}
 		}
@@ -1589,9 +1658,7 @@ public class DgMakeBillToCustoms extends JDialogBase {
 				list.add(addColumn("净重", "netWeight", 60));
 				list.add(addColumn("件数", "piece", 60));
 				list.add(addColumn("原产国", "country.name", 100));
-				//list.add(addColumn("是否已转报关单", "isTransferCustomsBill", 60));
 				list.add(addColumn("备注", "memos", 100));
-
 				return list;
 			}
 		};
@@ -1599,11 +1666,11 @@ public class DgMakeBillToCustoms extends JDialogBase {
 		tableModel1 = new JTableListModel(getJTable1(), detailList,
 				jTableListModelAdapter);
 		jTableListModelAdapter.setEditableColumn(1);
-		getJTable1().getColumnModel().getColumn(1).setCellRenderer(
-				new TableCheckBoxRender());
-		getJTable1().getColumnModel().getColumn(1).setCellEditor(
-				new CheckBoxEditor(new JCheckBox()));
-		//setColor();
+		getJTable1().getColumnModel().getColumn(1)
+				.setCellRenderer(new TableCheckBoxRender());
+		getJTable1().getColumnModel().getColumn(1)
+				.setCellEditor(new CheckBoxEditor(new JCheckBox()));
+
 	}
 
 	/**
@@ -1725,9 +1792,7 @@ public class DgMakeBillToCustoms extends JDialogBase {
 				value = new Boolean(false);
 			}
 			if (Boolean.valueOf(value.toString()) instanceof Boolean) {
-				cb
-						.setSelected(Boolean.valueOf(value.toString())
-								.booleanValue());
+				cb.setSelected(Boolean.valueOf(value.toString()).booleanValue());
 			}
 			cb.setHorizontalAlignment(JLabel.CENTER);
 			cb.addActionListener(this);
@@ -1755,6 +1820,7 @@ public class DgMakeBillToCustoms extends JDialogBase {
 			fireEditingStopped();
 		}
 	}
+
 	/**
 	 * This method initializes jTextField1
 	 * 
@@ -1784,8 +1850,8 @@ public class DgMakeBillToCustoms extends JDialogBase {
 					Object obj = findCustomsDeclaration();
 					if (obj != null) {
 						cm = (CustomsDeclaration) obj;
-						jTextField1.setText((cm.getSerialNumber() == null ? " " : cm
-								.getSerialNumber().toString())
+						jTextField1.setText((cm.getSerialNumber() == null ? " "
+								: cm.getSerialNumber().toString())
 								+ " / "
 								+ cm.getCustomsDeclarationCode());
 					}
@@ -1823,10 +1889,10 @@ public class DgMakeBillToCustoms extends JDialogBase {
 
 			@Override
 			public void doSomethingBeforeVisable(JTable table) {
-				table.getColumnModel().getColumn(4).setCellRenderer(
-						new TableCheckBoxRender());
-				table.getColumnModel().getColumn(5).setCellRenderer(
-						new TableCheckBoxRender());
+				table.getColumnModel().getColumn(4)
+						.setCellRenderer(new TableCheckBoxRender());
+				table.getColumnModel().getColumn(5)
+						.setCellRenderer(new TableCheckBoxRender());
 			}
 		};
 		dgCommonQuery.setTitle("请选择报关单！");
@@ -1936,9 +2002,9 @@ public class DgMakeBillToCustoms extends JDialogBase {
 	}
 
 	/**
-	 * This method initializes cbArray	
-	 * 	
-	 * @return javax.swing.JCheckBox	
+	 * This method initializes cbArray
+	 * 
+	 * @return javax.swing.JCheckBox
 	 */
 	private JCheckBox getCbArray() {
 		if (cbArray == null) {
@@ -1963,5 +2029,5 @@ public class DgMakeBillToCustoms extends JDialogBase {
 	public void setStep(int step) {
 		this.step = step;
 	}
-	
+
 } // @jve:decl-index=0:visual-constraint="129,16"

@@ -9,10 +9,8 @@ package com.bestway.bcs.client.contract;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -48,16 +46,16 @@ import com.bestway.bcus.system.entity.ParameterSet;
 import com.bestway.common.Request;
 import com.bestway.common.authority.entity.AclUser;
 import com.bestway.common.constant.ParameterType;
-import com.bestway.cspcard.entity.ICCardInfo;
 import com.bestway.ui.winuicontrol.JCustomFormattedTextField;
 import com.bestway.ui.winuicontrol.JInternalFrameBase;
-import java.awt.FlowLayout;
 
 /**
  * @author Administrator // change the template for this generated type comment
  *         go to Window - Preferences - Java - Code Style - Code Templates
  */
 public class FmBcsParameterSet extends JInternalFrameBase {
+
+	private JCheckBox cbxFromQPImortCalulateSubjectCost = null;
 
 	private javax.swing.JPanel jContentPane = null;
 
@@ -71,7 +69,7 @@ public class FmBcsParameterSet extends JInternalFrameBase {
 
 	private int dataState = DataState.BROWSE;
 
-	private ButtonGroup group = new ButtonGroup();  //  @jve:decl-index=0:
+	private ButtonGroup group = new ButtonGroup(); // @jve:decl-index=0:
 
 	private ButtonGroup group1 = new ButtonGroup(); // @jve:decl-index=0:
 
@@ -189,7 +187,7 @@ public class FmBcsParameterSet extends JInternalFrameBase {
 
 	private JTextField tfPwd = null;
 
-	private JPanel jPanel61 = null;  //  @jve:decl-index=0:visual-constraint="58,638"
+	private JPanel jPanel61 = null; // @jve:decl-index=0:visual-constraint="58,638"
 
 	private JTextField tfIdCard = null;
 
@@ -245,7 +243,7 @@ public class FmBcsParameterSet extends JInternalFrameBase {
 
 	private JRadioButton jRadioButton1 = null;
 
-	private ButtonGroup bg = null;  //  @jve:decl-index=0:
+	private ButtonGroup bg = null; // @jve:decl-index=0:
 
 	private ButtonGroup bgbus = null; // @jve:decl-index=0:
 
@@ -275,7 +273,7 @@ public class FmBcsParameterSet extends JInternalFrameBase {
 
 	private JPanel jPanel12 = null;
 
-	private JRadioButton jRadioButton2 = null;
+	private JCheckBox cbxBtn2 = null;
 
 	private JTextField tfRemoteHostICPwd = null;
 
@@ -307,8 +305,8 @@ public class FmBcsParameterSet extends JInternalFrameBase {
 				.getBean("contractAction");
 		bcsMessageAction = (BcsMessageAction) CommonVars
 				.getApplicationContext().getBean("bcsMessageAction");
-		bcsMessageAction.checkSystemParameterAuthority(new Request(
-				CommonVars.getCurrUser()));
+		bcsMessageAction.checkSystemParameterAuthority(new Request(CommonVars
+				.getCurrUser()));
 		initialize();
 	}
 
@@ -326,7 +324,7 @@ public class FmBcsParameterSet extends JInternalFrameBase {
 		setState();
 		getButtonGroup();
 		getButtonGroup1();
-//		group.add(this.rbFromCard);
+		// group.add(this.rbFromCard);
 		group.add(this.rbFromManual);
 
 		group1.add(rbCustomsCommodity);
@@ -344,16 +342,17 @@ public class FmBcsParameterSet extends JInternalFrameBase {
 				this.tfReportDecimalLength, 0);
 		CustomFormattedTextFieldUtils.setFormatterFactory(
 				this.tfReportDecimalLengthUnitWaste, 0);
-		
-		CustomFormattedTextFieldUtils.setFormatterFactory(
-				this.tfWasteAmount, 0);
-		CustomFormattedTextFieldUtils.setFormatterFactory(
-				this.tfTotalAmount, 0);
+
+		CustomFormattedTextFieldUtils
+				.setFormatterFactory(this.tfWasteAmount, 0);
+		CustomFormattedTextFieldUtils
+				.setFormatterFactory(this.tfTotalAmount, 0);
 		List list = null;
 		ParameterSet para = null;
 
-		list = contractSystemAction.findnameValues(new Request(CommonVars
-				.getCurrUser()), ParameterType.contractFrom);
+		list = contractSystemAction.findnameValues(
+				new Request(CommonVars.getCurrUser()),
+				ParameterType.contractFrom);
 		if (list != null && list.size() > 0) {
 			para = (ParameterSet) list.get(0);
 			if (para.getNameValues().equals("0")) {
@@ -430,9 +429,9 @@ public class FmBcsParameterSet extends JInternalFrameBase {
 		if (parameterSet != null
 				&& parameterSet.getCheckIsComputeReturn() != null
 				&& parameterSet.getCheckIsComputeReturn()) {
-			this.jRadioButton2.setSelected(true);
+			this.cbxBtn2.setSelected(true);
 		} else {
-			this.jRadioButton2.setSelected(false);
+			this.cbxBtn2.setSelected(false);
 		}
 
 		if (parameterSet != null && parameterSet.getIsControlLength() != null
@@ -448,6 +447,15 @@ public class FmBcsParameterSet extends JInternalFrameBase {
 			this.tfControlLength.setValue(50);
 		}
 
+		// 从QP文件导入手册资料时计算 原料费用
+		if (parameterSet != null
+				&& parameterSet.getIsCalulateSubjectCost() != null) {
+			cbxFromQPImortCalulateSubjectCost.setSelected(parameterSet
+					.getIsCalulateSubjectCost());
+		} else {
+			cbxFromQPImortCalulateSubjectCost.setSelected(false);
+		}
+
 		// if (parameterSet != null
 		// && parameterSet.getReportDecimalLength() != null) {
 		// this.tfReportDecimalLength.setValue(parameterSet
@@ -456,8 +464,9 @@ public class FmBcsParameterSet extends JInternalFrameBase {
 		// this.tfReportDecimalLength.setValue(2);
 		// }
 
-		list = contractSystemAction.findnameValues(new Request(CommonVars
-				.getCurrUser()), ParameterType.isVailCustomsOther);
+		list = contractSystemAction.findnameValues(
+				new Request(CommonVars.getCurrUser()),
+				ParameterType.isVailCustomsOther);
 		if (list != null && !list.isEmpty()) {
 			para = ((ParameterSet) list.get(0));
 			if (para.getNameValues() != null
@@ -474,8 +483,9 @@ public class FmBcsParameterSet extends JInternalFrameBase {
 		}
 
 		// 保存纸质手册的报关单中的单价是否可以修改
-		list = contractSystemAction.findnameValues(new Request(CommonVars
-				.getCurrUser()), ParameterType.isCanModifyUnitPrice);
+		list = contractSystemAction.findnameValues(
+				new Request(CommonVars.getCurrUser()),
+				ParameterType.isCanModifyUnitPrice);
 		if (list != null && !list.isEmpty()) {
 			para = ((ParameterSet) list.get(0));
 			if (para.getNameValues() != null
@@ -500,26 +510,26 @@ public class FmBcsParameterSet extends JInternalFrameBase {
 				&& parameterSet.getIsContractEms()) {
 			this.rbContractEms.setSelected(true);
 		} else {
-			//this.rbCommonContract.setSelected(true);
+			// this.rbCommonContract.setSelected(true);
 		}
-//		if (parameterSet.getReadFromCard() != null
-//				&& parameterSet.getReadFromCard()) {
-//			this.rbFromCard.setSelected(true);
-//		} else {
-//			this.rbFromManual.setSelected(true);
-//		}
-//		this.cbRemoteSignData
-//				.setSelected(parameterSet.getRemoteSignData() != null
-//						&& parameterSet.getRemoteSignData());
-//		if (parameterSet.getRemoteDxpMail() != null
-//				&& parameterSet.getRemoteDxpMail()) {
-//			this.rbEnhance.setSelected(true);
-//		} else {
-//			this.rbNormal.setSelected(true);
-//		}
-//		this.cbPort9097Open
-//				.setSelected(parameterSet.getPort9097IsOpen() != null
-//						&& parameterSet.getPort9097IsOpen());
+		// if (parameterSet.getReadFromCard() != null
+		// && parameterSet.getReadFromCard()) {
+		// this.rbFromCard.setSelected(true);
+		// } else {
+		// this.rbFromManual.setSelected(true);
+		// }
+		// this.cbRemoteSignData
+		// .setSelected(parameterSet.getRemoteSignData() != null
+		// && parameterSet.getRemoteSignData());
+		// if (parameterSet.getRemoteDxpMail() != null
+		// && parameterSet.getRemoteDxpMail()) {
+		// this.rbEnhance.setSelected(true);
+		// } else {
+		// this.rbNormal.setSelected(true);
+		// }
+		// this.cbPort9097Open
+		// .setSelected(parameterSet.getPort9097IsOpen() != null
+		// && parameterSet.getPort9097IsOpen());
 		this.tfRemoteHostAddress.setText(parameterSet.getRemoteHostAddress());
 		this.tfRemoteHostPort.setText(parameterSet.getRemoteHostPort());
 		this.tfRemoteHostICPwd.setText(parameterSet.getRemoteHostICPwd());
@@ -535,8 +545,8 @@ public class FmBcsParameterSet extends JInternalFrameBase {
 			getJRadioButton1().setSelected(true);
 		}
 
-//		this.tfSeqNo.setText(parameterSet.getSeqNo());
-//		this.tfPwd.setText(parameterSet.getPwd());
+		// this.tfSeqNo.setText(parameterSet.getSeqNo());
+		// this.tfPwd.setText(parameterSet.getPwd());
 		this.tfIdCard.setText(parameterSet.getIdCard());
 		this.tfPrice.setValue(parameterSet.getPriceBit() == null ? 5
 				: parameterSet.getPriceBit());
@@ -550,13 +560,14 @@ public class FmBcsParameterSet extends JInternalFrameBase {
 		this.tfReportDecimalLengthUnitWaste.setValue(parameterSet
 				.getReportDecimalLengthUnitWaste() == null ? 8 : parameterSet
 				.getReportDecimalLengthUnitWaste());
-		this.tfWasteAmount.setValue(parameterSet.getWasteAmount()
-				== null ? tfReportDecimalLengthUnitWaste.getValue() : parameterSet
-						.getWasteAmount());
-		this.tfTotalAmount.setValue(parameterSet.getTotalAmount()
-				== null ? tfReportDecimalLengthUnitWaste.getValue() : parameterSet
-						.getTotalAmount());
-		if(parameterSet!=null&&parameterSet.getIsTotalMoney()!=null&&parameterSet.getIsTotalMoney()){
+		this.tfWasteAmount
+				.setValue(parameterSet.getWasteAmount() == null ? tfReportDecimalLengthUnitWaste
+						.getValue() : parameterSet.getWasteAmount());
+		this.tfTotalAmount
+				.setValue(parameterSet.getTotalAmount() == null ? tfReportDecimalLengthUnitWaste
+						.getValue() : parameterSet.getTotalAmount());
+		if (parameterSet != null && parameterSet.getIsTotalMoney() != null
+				&& parameterSet.getIsTotalMoney()) {
 			this.ccbIsTotalMoney.setSelected(true);
 		}
 	}
@@ -608,8 +619,8 @@ public class FmBcsParameterSet extends JInternalFrameBase {
 							: (rbBcsTenInnerMerge.isSelected() ? "1" : "2"));
 					para.setNameValues(values);
 					CommonVars.setContractFrom(values);
-					contractSystemAction.saveValues(new Request(CommonVars
-							.getCurrUser()), para);
+					contractSystemAction.saveValues(
+							new Request(CommonVars.getCurrUser()), para);
 					list = contractSystemAction.findnameValues(new Request(
 							CommonVars.getCurrUser()),
 							ParameterType.isVailCustomsOther);
@@ -622,8 +633,8 @@ public class FmBcsParameterSet extends JInternalFrameBase {
 						para.setNameValues("0");
 						CommonVars.setIsVailCustomsOther(false);
 					}
-					contractSystemAction.saveValues(new Request(CommonVars
-							.getCurrUser()), para);
+					contractSystemAction.saveValues(
+							new Request(CommonVars.getCurrUser()), para);
 
 					list = contractSystemAction.findnameValues(new Request(
 							CommonVars.getCurrUser()),
@@ -632,8 +643,8 @@ public class FmBcsParameterSet extends JInternalFrameBase {
 						ParameterSet pa = new ParameterSet();
 						pa.setType(ParameterType.isCanModifyUnitPrice);
 						pa.setNameValues("0");
-						contractSystemAction.saveValues(new Request(CommonVars
-								.getCurrUser()), pa);
+						contractSystemAction.saveValues(
+								new Request(CommonVars.getCurrUser()), pa);
 					}
 					list = contractSystemAction.findnameValues(new Request(
 							CommonVars.getCurrUser()),
@@ -647,15 +658,16 @@ public class FmBcsParameterSet extends JInternalFrameBase {
 						para.setNameValues("0");
 						CommonVars.setIsCanModifyUnitPrice(false);
 					}
-					contractSystemAction.saveValues(new Request(CommonVars
-							.getCurrUser()), para);
+					contractSystemAction.saveValues(
+							new Request(CommonVars.getCurrUser()), para);
 					list = contractSystemAction
-							.findnameValues(new Request(CommonVars
-									.getCurrUser()), ParameterType.isPrintAll);
+							.findnameValues(
+									new Request(CommonVars.getCurrUser()),
+									ParameterType.isPrintAll);
 					para = (ParameterSet) list.get(0);
 					para.setNameValues(values);
-					contractSystemAction.saveValues(new Request(CommonVars
-							.getCurrUser()), para);
+					contractSystemAction.saveValues(
+							new Request(CommonVars.getCurrUser()), para);
 
 					BcsParameterSet parameterSet = contractAction
 							.findBcsParameterSet(new Request(CommonVars
@@ -672,14 +684,14 @@ public class FmBcsParameterSet extends JInternalFrameBase {
 					/**
 					 * 2013-1-23 现发送报文不再需求加签和不需要配置唯一号，所以注释并调整
 					 */
-//					parameterSet.setSeqNo(tfSeqNo.getText().trim());
-//					parameterSet.setPwd(tfPwd.getText().trim());
-//					parameterSet.setReadFromCard(rbFromCard.isSelected());
+					// parameterSet.setSeqNo(tfSeqNo.getText().trim());
+					// parameterSet.setPwd(tfPwd.getText().trim());
+					// parameterSet.setReadFromCard(rbFromCard.isSelected());
 					parameterSet.setIdCard(tfIdCard.getText().trim());
-//					parameterSet.setRemoteSignData(cbRemoteSignData
-//							.isSelected());
-//					parameterSet.setRemoteDxpMail(rbEnhance.isSelected());
-//					parameterSet.setPort9097IsOpen(cbPort9097Open.isSelected());
+					// parameterSet.setRemoteSignData(cbRemoteSignData
+					// .isSelected());
+					// parameterSet.setRemoteDxpMail(rbEnhance.isSelected());
+					// parameterSet.setPort9097IsOpen(cbPort9097Open.isSelected());
 					parameterSet.setRemoteHostAddress(tfRemoteHostAddress
 							.getText());
 					parameterSet.setRemoteHostPort(tfRemoteHostPort.getText());
@@ -695,8 +707,7 @@ public class FmBcsParameterSet extends JInternalFrameBase {
 					parameterSet
 							.setUpdateContractExgWriteBackBomImg(cbWriteBackBomImg
 									.isSelected());
-					parameterSet.setCheckIsComputeReturn(jRadioButton2
-							.isSelected());
+					parameterSet.setCheckIsComputeReturn(cbxBtn2.isSelected());
 					parameterSet
 							.setUpdateContractImgWriteBackBomExg(cbWriteBackBomExg
 									.isSelected());
@@ -724,21 +735,23 @@ public class FmBcsParameterSet extends JInternalFrameBase {
 							.valueOf(
 									tfReportDecimalLengthUnitWaste.getValue()
 											.toString()).intValue());
-					parameterSet.setWasteAmount(Double
-							.valueOf(
-									tfWasteAmount.getValue()
-									.toString()).intValue());
-					parameterSet.setTotalAmount(Double
-							.valueOf(
-									tfTotalAmount.getValue()
-									.toString()).intValue());
+					parameterSet.setWasteAmount(Double.valueOf(
+							tfWasteAmount.getValue().toString()).intValue());
+					parameterSet.setTotalAmount(Double.valueOf(
+							tfTotalAmount.getValue().toString()).intValue());
 					parameterSet
 							.setManageType(getJRadioButton().isSelected() ? "1"
 									: "0");
-					//柯鹏程
+					// 柯鹏程
 					parameterSet.setIsTotalMoney(ccbIsTotalMoney.isSelected());
-					contractAction.saveBcsParameterSet(new Request(CommonVars
-							.getCurrUser(), true), parameterSet);
+
+					parameterSet
+							.setIsCalulateSubjectCost(cbxFromQPImortCalulateSubjectCost
+									.isSelected());
+
+					contractAction.saveBcsParameterSet(
+							new Request(CommonVars.getCurrUser(), true),
+							parameterSet);
 
 					dataState = DataState.BROWSE;
 					setState();
@@ -829,8 +842,7 @@ public class FmBcsParameterSet extends JInternalFrameBase {
 		}
 		if (!"".equals(tfWasteAmount.getText().trim())) {
 			try {
-				Integer.parseInt(tfWasteAmount.getText()
-						.trim());
+				Integer.parseInt(tfWasteAmount.getText().trim());
 			} catch (Exception ex) {
 				JOptionPane.showMessageDialog(this, "您输入的报表损耗量小数位不是数值形式！",
 						"提示！", 0);
@@ -839,8 +851,7 @@ public class FmBcsParameterSet extends JInternalFrameBase {
 		}
 		if (!"".equals(tfTotalAmount.getText().trim())) {
 			try {
-				Integer.parseInt(tfTotalAmount.getText()
-						.trim());
+				Integer.parseInt(tfTotalAmount.getText().trim());
 			} catch (Exception ex) {
 				JOptionPane.showMessageDialog(this, "您输入的报表总用量小数位不是数值形式！",
 						"提示！", 0);
@@ -863,14 +874,13 @@ public class FmBcsParameterSet extends JInternalFrameBase {
 					"请检查确认已输入IP地址/端口和操作员号", "提示", JOptionPane.ERROR_MESSAGE);
 			return true;
 		}
-		
-		
-//		if (this.cbRemoteSignData.isSelected()
-//				&& this.tfRemoteHostPort.getText().trim().equals("")) {
-//			JOptionPane.showMessageDialog(FmBcsParameterSet.this,
-//					"请输入远程加签服务器端口", "提示", JOptionPane.ERROR_MESSAGE);
-//			return true;
-//		}
+
+		// if (this.cbRemoteSignData.isSelected()
+		// && this.tfRemoteHostPort.getText().trim().equals("")) {
+		// JOptionPane.showMessageDialog(FmBcsParameterSet.this,
+		// "请输入远程加签服务器端口", "提示", JOptionPane.ERROR_MESSAGE);
+		// return true;
+		// }
 
 		if (cbControlLength.isSelected()) {
 			if (tfControlLength.getValue() == null
@@ -907,8 +917,8 @@ public class FmBcsParameterSet extends JInternalFrameBase {
 	// }
 
 	private void saveValues(int parameterType, String values, String flat) {
-		List list = contractSystemAction.findnameValues(new Request(CommonVars
-				.getCurrUser()), parameterType);
+		List list = contractSystemAction.findnameValues(
+				new Request(CommonVars.getCurrUser()), parameterType);
 		ParameterSet para = (ParameterSet) list.get(0);
 		para.setNameValues(values);
 		if (flat.equals("0")) {
@@ -1060,13 +1070,13 @@ public class FmBcsParameterSet extends JInternalFrameBase {
 		this.cbWriteBackImg.setEnabled(dataState != DataState.BROWSE);
 		this.cbWriteBackBomExg.setEnabled(dataState != DataState.BROWSE);
 		this.cbWriteBackBomImg.setEnabled(dataState != DataState.BROWSE);
-		this.jRadioButton2.setEnabled(dataState != DataState.BROWSE);
+		this.cbxBtn2.setEnabled(dataState != DataState.BROWSE);
 		this.cbModifyUnitPrice.setEnabled(dataState != DataState.BROWSE);
 		jCheckBox.setEnabled(dataState != DataState.BROWSE);
-		//this.rbCommonContract.setEnabled(dataState != DataState.BROWSE);
+		// this.rbCommonContract.setEnabled(dataState != DataState.BROWSE);
 		this.rbContractEms.setEnabled(dataState != DataState.BROWSE);
-//		this.rbFromCard.setEnabled(dataState != DataState.BROWSE);
-//		this.rbFromManual.setEnabled(dataState != DataState.BROWSE);
+		// this.rbFromCard.setEnabled(dataState != DataState.BROWSE);
+		// this.rbFromManual.setEnabled(dataState != DataState.BROWSE);
 
 		this.tfFinallyDir.setEditable(dataState != DataState.BROWSE);
 		this.tfLoadXmlDir.setEditable(dataState != DataState.BROWSE);
@@ -1075,8 +1085,8 @@ public class FmBcsParameterSet extends JInternalFrameBase {
 		this.tfSendDir.setEditable(dataState != DataState.BROWSE);
 
 		this.tfIdCard.setEditable(dataState != DataState.BROWSE);
-//		this.tfPwd.setEditable(dataState != DataState.BROWSE);
-//		this.tfSeqNo.setEditable(dataState != DataState.BROWSE);
+		// this.tfPwd.setEditable(dataState != DataState.BROWSE);
+		// this.tfSeqNo.setEditable(dataState != DataState.BROWSE);
 
 		this.btnFinallyDir.setEnabled(dataState != DataState.BROWSE);
 		this.btnLoadXmlDir.setEnabled(dataState != DataState.BROWSE);
@@ -1100,18 +1110,21 @@ public class FmBcsParameterSet extends JInternalFrameBase {
 		getJRadioButton1().setEnabled(dataState != DataState.BROWSE);
 		// cbbBcsTenInnerMerger.setEnabled(dataState != DataState.BROWSE);
 		// cbbBcsComplex.setEnabled(dataState != DataState.BROWSE);
-//		this.cbRemoteSignData.setEnabled(dataState != DataState.BROWSE);
+		// this.cbRemoteSignData.setEnabled(dataState != DataState.BROWSE);
 		this.tfRemoteHostAddress.setEditable(dataState != DataState.BROWSE);
 		this.tfRemoteHostPort.setEditable(dataState != DataState.BROWSE);
 		this.tfRemoteHostICPwd.setEditable(dataState != DataState.BROWSE);
 		this.ccbIsTotalMoney.setEnabled(dataState != DataState.BROWSE);
-//		this.rbNormal.setEnabled(this.cbRemoteSignData.isSelected()
-//				&& dataState != DataState.BROWSE);
-//		this.rbEnhance.setEnabled(this.cbRemoteSignData.isSelected()
-//				&& dataState != DataState.BROWSE);
-//		this.cbPort9097Open.setEnabled(this.rbEnhance.isSelected()
-//				&& dataState != DataState.BROWSE);
-//		this.btnReadCard.setEnabled(dataState == DataState.BROWSE);
+
+		cbxFromQPImortCalulateSubjectCost
+				.setEnabled(dataState != DataState.BROWSE);
+		// this.rbNormal.setEnabled(this.cbRemoteSignData.isSelected()
+		// && dataState != DataState.BROWSE);
+		// this.rbEnhance.setEnabled(this.cbRemoteSignData.isSelected()
+		// && dataState != DataState.BROWSE);
+		// this.cbPort9097Open.setEnabled(this.rbEnhance.isSelected()
+		// && dataState != DataState.BROWSE);
+		// this.btnReadCard.setEnabled(dataState == DataState.BROWSE);
 	}
 
 	/**
@@ -1552,8 +1565,8 @@ public class FmBcsParameterSet extends JInternalFrameBase {
 					TitledBorder.DEFAULT_POSITION, new Font("Dialog",
 							Font.BOLD, 12), Color.blue));
 			jPanel71.setBounds(new Rectangle(52, 33, 641, 44));
-			//lyh 2013-03-04 根据需求现在海关模式已早就不存在【纸质手册】，古去掉此选项
-			//jPanel71.add(getRbCommonContract(), null);
+			// lyh 2013-03-04 根据需求现在海关模式已早就不存在【纸质手册】，古去掉此选项
+			// jPanel71.add(getRbCommonContract(), null);
 			jPanel71.add(getRbContractEms(), null);
 		}
 		return jPanel71;
@@ -1659,7 +1672,7 @@ public class FmBcsParameterSet extends JInternalFrameBase {
 			jPanel4.setLayout(null);
 			jPanel4.add(getJPanel7(), null);
 			jPanel4.add(getJPanel2(), null);
-//			jPanel4.add(getJPanel31(), null);
+			// jPanel4.add(getJPanel31(), null);
 			jPanel4.add(jLabel7, null);
 			jPanel4.add(getJPanel11(), null);
 		}
@@ -1676,22 +1689,18 @@ public class FmBcsParameterSet extends JInternalFrameBase {
 			jPanel5 = new JPanel();
 			jPanel5.setLayout(null);
 			jPanel5.setBounds(new Rectangle(52, 80, 641, 81));
-			jPanel5
-					.setBorder(BorderFactory
-							.createTitledBorder(
-									null,
-									"备案资料库来源设定",
-									TitledBorder.DEFAULT_JUSTIFICATION,
-									TitledBorder.DEFAULT_POSITION, new Font(
-											"Dialog", Font.BOLD, 12),
-									Color.blue));
+			jPanel5.setBorder(BorderFactory.createTitledBorder(null,
+					"备案资料库来源设定", TitledBorder.DEFAULT_JUSTIFICATION,
+					TitledBorder.DEFAULT_POSITION, new Font("Dialog",
+							Font.BOLD, 12), Color.blue));
 			jPanel5.add(getRbCustomsCommodity(), null);
 			jPanel5.add(getRbBcsTenInnerMerge(), null);
 			jPanel5.add(getRbComplex(), null);
 			/**
 			 * 使用核查分析手册模块时，来源需选择"报关商品资料"
 			 */
-			JLabel lbNote = new JLabel("(\u4F7F\u7528\u6838\u67E5\u5206\u6790\uFF08\u624B\u518C\uFF09\u6A21\u5757\u65F6,\u6765\u6E90\u9700\u9009\u62E9\"\u62A5\u5173\u5546\u54C1\u8D44\u6599\")");
+			JLabel lbNote = new JLabel(
+					"(\u4F7F\u7528\u6838\u67E5\u5206\u6790\uFF08\u624B\u518C\uFF09\u6A21\u5757\u65F6,\u6765\u6E90\u9700\u9009\u62E9\"\u62A5\u5173\u5546\u54C1\u8D44\u6599\")");
 			lbNote.setBounds(10, 56, 333, 15);
 			lbNote.setForeground(Color.blue);
 			jPanel5.add(lbNote);
@@ -1723,15 +1732,13 @@ public class FmBcsParameterSet extends JInternalFrameBase {
 			jLabel.setDisplayedMnemonic(KeyEvent.VK_UNDEFINED);
 			jLabel.setText("通关手册修改单耗时回写成品及料件设定：");
 			jPanel6.setLayout(null);
-			jPanel6
-					.setBorder(BorderFactory
-							.createTitledBorder(
-									null,
-									"\u901a\u5173\u624b\u518c\u8d44\u6599\u56de\u5199\u8bbe\u5b9a",
-									TitledBorder.DEFAULT_JUSTIFICATION,
-									TitledBorder.DEFAULT_POSITION, new Font(
-											"Dialog", Font.BOLD, 12),
-									Color.blue));
+			jPanel6.setBorder(BorderFactory
+					.createTitledBorder(
+							null,
+							"\u901a\u5173\u624b\u518c\u8d44\u6599\u56de\u5199\u8bbe\u5b9a",
+							TitledBorder.DEFAULT_JUSTIFICATION,
+							TitledBorder.DEFAULT_POSITION, new Font("Dialog",
+									Font.BOLD, 12), Color.blue));
 			jPanel6.setBounds(new Rectangle(52, 159, 641, 183));
 			jPanel6.add(jLabel, null);
 			jPanel6.add(getCbWriteBackExg(), null);
@@ -1815,7 +1822,7 @@ public class FmBcsParameterSet extends JInternalFrameBase {
 	private ButtonGroup getButtonGroup() {
 		if (buttonGroup == null) {
 			buttonGroup = new ButtonGroup();
-			//buttonGroup.add(this.getRbCommonContract());
+			// buttonGroup.add(this.getRbCommonContract());
 			buttonGroup.add(this.getRbContractEms());
 		}
 		return buttonGroup;
@@ -1826,159 +1833,159 @@ public class FmBcsParameterSet extends JInternalFrameBase {
 	 * 
 	 * @return javax.swing.JPanel
 	 */
-//	private JPanel getJPanel31() {
-//		if (jPanel31 == null) {
-//			jPanel31 = new JPanel();
-//			jPanel31.setLayout(null);
-//			jPanel31.setBounds(new Rectangle(52, 323, 597, 209));
-//			jPanel31
-//					.setBorder(BorderFactory
-//							.createTitledBorder(
-//									null,
-//									"\u751f\u6210\u62a5\u6587\u7b7e\u540d\u4fe1\u606f\u7684\u57fa\u672c\u914d\u7f6e",
-//									TitledBorder.DEFAULT_JUSTIFICATION,
-//									TitledBorder.DEFAULT_POSITION, new Font(
-//											"Dialog", Font.BOLD, 12),
-//									Color.blue));
-//			jPanel31.add(getRbFromCard(), null);
-//			jPanel31.add(getJTabbedPane1(), null);
-//		}
-//		return jPanel31;
-//	}
+	// private JPanel getJPanel31() {
+	// if (jPanel31 == null) {
+	// jPanel31 = new JPanel();
+	// jPanel31.setLayout(null);
+	// jPanel31.setBounds(new Rectangle(52, 323, 597, 209));
+	// jPanel31
+	// .setBorder(BorderFactory
+	// .createTitledBorder(
+	// null,
+	// "\u751f\u6210\u62a5\u6587\u7b7e\u540d\u4fe1\u606f\u7684\u57fa\u672c\u914d\u7f6e",
+	// TitledBorder.DEFAULT_JUSTIFICATION,
+	// TitledBorder.DEFAULT_POSITION, new Font(
+	// "Dialog", Font.BOLD, 12),
+	// Color.blue));
+	// jPanel31.add(getRbFromCard(), null);
+	// jPanel31.add(getJTabbedPane1(), null);
+	// }
+	// return jPanel31;
+	// }
 
 	/**
 	 * This method initializes rbFromCard
 	 * 
 	 * @return javax.swing.JRadioButton
 	 */
-//	private JRadioButton getRbFromCard() {
-//		if (rbFromCard == null) {
-//			rbFromCard = new JRadioButton();
-//			rbFromCard.setBounds(new Rectangle(61, 25, 207, 26));
-//			rbFromCard.setText("从IC卡里读取签名用基本信息");
-//			rbFromCard.addItemListener(new java.awt.event.ItemListener() {
-//				public void itemStateChanged(java.awt.event.ItemEvent e) {
-//					if (e.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
-//						jTabbedPane1
-//								.setSelectedIndex(rbFromCard.isSelected() ? 0
-//										: 1);
-//					}
-//				}
-//			});
-//		}
-//		return rbFromCard;
-//	}
+	// private JRadioButton getRbFromCard() {
+	// if (rbFromCard == null) {
+	// rbFromCard = new JRadioButton();
+	// rbFromCard.setBounds(new Rectangle(61, 25, 207, 26));
+	// rbFromCard.setText("从IC卡里读取签名用基本信息");
+	// rbFromCard.addItemListener(new java.awt.event.ItemListener() {
+	// public void itemStateChanged(java.awt.event.ItemEvent e) {
+	// if (e.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
+	// jTabbedPane1
+	// .setSelectedIndex(rbFromCard.isSelected() ? 0
+	// : 1);
+	// }
+	// }
+	// });
+	// }
+	// return rbFromCard;
+	// }
 
 	/**
 	 * This method initializes rbFromManual
 	 * 
 	 * @return javax.swing.JRadioButton
 	 */
-//	private JRadioButton getRbFromManual() {
-//		if (rbFromManual == null) {
-//			rbFromManual = new JRadioButton();
-//			rbFromManual.setBounds(new Rectangle(274, 25, 173, 26));
-//			rbFromManual
-//					.setText("\u624b\u5de5\u914d\u7f6e\u7b7e\u540d\u7528\u57fa\u672c\u4fe1\u606f");
-//			rbFromManual.addItemListener(new java.awt.event.ItemListener() {
-//				public void itemStateChanged(java.awt.event.ItemEvent e) {
-//					if (e.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
-//						jTabbedPane1
-//								.setSelectedIndex(rbFromManual.isSelected(true));
-//					}
-//				}
-//			});
-//		}
-//		return rbFromManual;
-//	}
+	// private JRadioButton getRbFromManual() {
+	// if (rbFromManual == null) {
+	// rbFromManual = new JRadioButton();
+	// rbFromManual.setBounds(new Rectangle(274, 25, 173, 26));
+	// rbFromManual
+	// .setText("\u624b\u5de5\u914d\u7f6e\u7b7e\u540d\u7528\u57fa\u672c\u4fe1\u606f");
+	// rbFromManual.addItemListener(new java.awt.event.ItemListener() {
+	// public void itemStateChanged(java.awt.event.ItemEvent e) {
+	// if (e.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
+	// jTabbedPane1
+	// .setSelectedIndex(rbFromManual.isSelected(true));
+	// }
+	// }
+	// });
+	// }
+	// return rbFromManual;
+	// }
 
 	/**
 	 * This method initializes jTabbedPane1
 	 * 
 	 * @return javax.swing.JTabbedPane
 	 */
-//	private JTabbedPane getJTabbedPane1() {
-//		if (jTabbedPane1 == null) {
-//			jTabbedPane1 = new JTabbedPane();
-//			jTabbedPane1.setBounds(new Rectangle(61, 55, 414, 143));
-//			jTabbedPane1.setEnabled(false);
-//			jTabbedPane1.addTab("从IC卡里读取签名用基本信息设置", null, getJPanel51(), null);
-//			jTabbedPane1
-//					.addTab(
-//							"\u624b\u5de5\u914d\u7f6e\u7b7e\u540d\u7528\u57fa\u672c\u4fe1\u606f\u8bbe\u7f6e",
-//							null, getJPanel61(), null);
-//		}
-//		return jTabbedPane1;
-//	}
+	// private JTabbedPane getJTabbedPane1() {
+	// if (jTabbedPane1 == null) {
+	// jTabbedPane1 = new JTabbedPane();
+	// jTabbedPane1.setBounds(new Rectangle(61, 55, 414, 143));
+	// jTabbedPane1.setEnabled(false);
+	// jTabbedPane1.addTab("从IC卡里读取签名用基本信息设置", null, getJPanel51(), null);
+	// jTabbedPane1
+	// .addTab(
+	// "\u624b\u5de5\u914d\u7f6e\u7b7e\u540d\u7528\u57fa\u672c\u4fe1\u606f\u8bbe\u7f6e",
+	// null, getJPanel61(), null);
+	// }
+	// return jTabbedPane1;
+	// }
 
 	/**
 	 * This method initializes jPanel51
 	 * 
 	 * @return javax.swing.JPanel
 	 */
-//	private JPanel getJPanel51() {
-//		if (jPanel51 == null) {
-//			jLabel6 = new JLabel();
-//			jLabel6.setBounds(new Rectangle(13, 33, 66, 22));
-//			jLabel6.setText("\u8bfb\u5361\u5bc6\u7801");
-//			jLabel51 = new JLabel();
-//			jLabel51.setBounds(new Rectangle(13, 7, 66, 22));
-//			jLabel51.setText("\u8bfb\u5361\u552f\u4e00\u53f7");
-//			jPanel51 = new JPanel();
-//			jPanel51.setLayout(null);
-//			jPanel51.add(jLabel51, null);
-//			jPanel51.add(jLabel6, null);
-//			jPanel51.add(getTfSeqNo(), null);
-//			jPanel51.add(getTfPwd(), null);
-//			jPanel51.add(getCbRemoteSignData(), null);
-//			jPanel51.add(getBtnReadCard(), null);
-//			jPanel51.add(getJPanel1(), null);
-//			jPanel51.add(getCbPort9097Open(), null);
-//		}
-//		return jPanel51;
-//	}
+	// private JPanel getJPanel51() {
+	// if (jPanel51 == null) {
+	// jLabel6 = new JLabel();
+	// jLabel6.setBounds(new Rectangle(13, 33, 66, 22));
+	// jLabel6.setText("\u8bfb\u5361\u5bc6\u7801");
+	// jLabel51 = new JLabel();
+	// jLabel51.setBounds(new Rectangle(13, 7, 66, 22));
+	// jLabel51.setText("\u8bfb\u5361\u552f\u4e00\u53f7");
+	// jPanel51 = new JPanel();
+	// jPanel51.setLayout(null);
+	// jPanel51.add(jLabel51, null);
+	// jPanel51.add(jLabel6, null);
+	// jPanel51.add(getTfSeqNo(), null);
+	// jPanel51.add(getTfPwd(), null);
+	// jPanel51.add(getCbRemoteSignData(), null);
+	// jPanel51.add(getBtnReadCard(), null);
+	// jPanel51.add(getJPanel1(), null);
+	// jPanel51.add(getCbPort9097Open(), null);
+	// }
+	// return jPanel51;
+	// }
 
 	/**
 	 * This method initializes tfSeqNo
 	 * 
 	 * @return javax.swing.JTextField
 	 */
-//	private JTextField getTfSeqNo() {
-//		if (tfSeqNo == null) {
-//			tfSeqNo = new JTextField();
-//			tfSeqNo.setBounds(new Rectangle(79, 6, 312, 24));
-//		}
-//		return tfSeqNo;
-//	}
+	// private JTextField getTfSeqNo() {
+	// if (tfSeqNo == null) {
+	// tfSeqNo = new JTextField();
+	// tfSeqNo.setBounds(new Rectangle(79, 6, 312, 24));
+	// }
+	// return tfSeqNo;
+	// }
 
 	/**
 	 * This method initializes tfPwd
 	 * 
 	 * @return javax.swing.JTextField
 	 */
-//	private JTextField getTfPwd() {
-//		if (tfPwd == null) {
-//			tfPwd = new JTextField();
-//			tfPwd.setBounds(new Rectangle(79, 33, 312, 24));
-//		}
-//		return tfPwd;
-//	}
+	// private JTextField getTfPwd() {
+	// if (tfPwd == null) {
+	// tfPwd = new JTextField();
+	// tfPwd.setBounds(new Rectangle(79, 33, 312, 24));
+	// }
+	// return tfPwd;
+	// }
 
 	/**
 	 * This method initializes jPanel61
 	 * 
 	 * @return javax.swing.JPanel
 	 */
-//	private JPanel getJPanel61() {
-//		if (jPanel61 == null) {
-//			jLabel411 = new JLabel();
-//			jLabel411.setText("操作员卡号");
-//			jLabel411.setBounds(new Rectangle(20, 58, 66, 22));
-//			jPanel61 = new JPanel();
-//			jPanel61.setLayout(null);
-//		}
-//		return jPanel61;
-//	}
+	// private JPanel getJPanel61() {
+	// if (jPanel61 == null) {
+	// jLabel411 = new JLabel();
+	// jLabel411.setText("操作员卡号");
+	// jLabel411.setBounds(new Rectangle(20, 58, 66, 22));
+	// jPanel61 = new JPanel();
+	// jPanel61.setLayout(null);
+	// }
+	// return jPanel61;
+	// }
 
 	/**
 	 * This method initializes tfIdCard
@@ -2029,10 +2036,30 @@ public class FmBcsParameterSet extends JInternalFrameBase {
 			jTabbedPane2.add(getJPanel10(), null);
 			jTabbedPane2.add(getJPanel91(), null);
 			jTabbedPane2.add(getJPanel8(), null);
-			jTabbedPane2.add(getJRadioButton2(), null);
+			jTabbedPane2.add(getCbxBtn2(), null);
 			jTabbedPane2.add(getCcbIsTotalMoney());
+			jTabbedPane2.add(getCbxFromQPImortCalulateSubjectCost());
 		}
 		return jTabbedPane2;
+	}
+
+	/**
+	 * 从Qp导入文件计算导出手册资料原料费用
+	 * 
+	 * @return JCheckBox
+	 */
+	private JCheckBox getCbxFromQPImortCalulateSubjectCost() {
+
+		if (cbxFromQPImortCalulateSubjectCost == null) {
+
+			cbxFromQPImortCalulateSubjectCost = new JCheckBox(
+					"从QP导出文件导入手册资料同时计算手册原料费用");
+
+			cbxFromQPImortCalulateSubjectCost.setBounds(70, 445, 295, 23);
+
+		}
+
+		return cbxFromQPImortCalulateSubjectCost;
 	}
 
 	/**
@@ -2321,126 +2348,126 @@ public class FmBcsParameterSet extends JInternalFrameBase {
 	 * 
 	 * @return javax.swing.JCheckBox
 	 */
-//	private JCheckBox getCbRemoteSignData() {
-//		if (cbRemoteSignData == null) {
-//			cbRemoteSignData = new JCheckBox();
-//			cbRemoteSignData.setBounds(new Rectangle(75, 60, 79, 22));
-//			cbRemoteSignData.setText("远程加签");
-//			cbRemoteSignData.addItemListener(new java.awt.event.ItemListener() {
-//				public void itemStateChanged(java.awt.event.ItemEvent e) {
-//					setState();
-//				}
-//			});
-//		}
-//		return cbRemoteSignData;
-//	}
+	// private JCheckBox getCbRemoteSignData() {
+	// if (cbRemoteSignData == null) {
+	// cbRemoteSignData = new JCheckBox();
+	// cbRemoteSignData.setBounds(new Rectangle(75, 60, 79, 22));
+	// cbRemoteSignData.setText("远程加签");
+	// cbRemoteSignData.addItemListener(new java.awt.event.ItemListener() {
+	// public void itemStateChanged(java.awt.event.ItemEvent e) {
+	// setState();
+	// }
+	// });
+	// }
+	// return cbRemoteSignData;
+	// }
 
 	/**
 	 * This method initializes jButton
 	 * 
 	 * @return javax.swing.JButton
 	 */
-//	private JButton getBtnReadCard() {
-//		if (btnReadCard == null) {
-//			btnReadCard = new JButton();
-//			btnReadCard.setBounds(new Rectangle(302, 62, 87, 22));
-//			btnReadCard.setText("读卡测试");
-//			btnReadCard.addActionListener(new java.awt.event.ActionListener() {
-//				public void actionPerformed(java.awt.event.ActionEvent e) {
-//					ICCardInfo cardInfo = bcsMessageAction.getICCardInfo(
-//							new Request(CommonVars.getCurrUser()), tfSeqNo
-//									.getText().trim(), tfPwd.getText().trim());
-//					if (cardInfo != null) {
-//						StringBuffer sb = new StringBuffer();
-//						// sb.append("------------------"+i);
-//						sb.append("卡号-------------" + cardInfo.getIcCode()
-//								+ "\n");
-//						sb.append("证书-------------" + cardInfo.getCertSeqNo()
-//								+ "\n");
-//						sb.append("申请者名称--------" + cardInfo.getApplier()
-//								+ "\n");
-//						sb.append("单位名称----------" + cardInfo.getTradeName()
-//								+ "\n");
-//						sb.append("单位类型代码-------" + cardInfo.getTradeType()
-//								+ "\n");
-//						sb.append("单位代码-----------" + cardInfo.getTradeCode()
-//								+ "\n");
-//						sb.append("数字签名-----------"
-//								+ cardInfo.getSignData().substring(0, 10)
-//								+ "\n");
-//						// System.out.println(sb.toString());
-//						JOptionPane.showMessageDialog(FmBcsParameterSet.this,
-//								sb.toString(), "提示",
-//								JOptionPane.INFORMATION_MESSAGE);
-//					} else {
-//						JOptionPane.showMessageDialog(FmBcsParameterSet.this,
-//								"没有读到卡信息", "提示",
-//								JOptionPane.INFORMATION_MESSAGE);
-//					}
-//				}
-//			});
-//		}
-//		return btnReadCard;
-//	}
+	// private JButton getBtnReadCard() {
+	// if (btnReadCard == null) {
+	// btnReadCard = new JButton();
+	// btnReadCard.setBounds(new Rectangle(302, 62, 87, 22));
+	// btnReadCard.setText("读卡测试");
+	// btnReadCard.addActionListener(new java.awt.event.ActionListener() {
+	// public void actionPerformed(java.awt.event.ActionEvent e) {
+	// ICCardInfo cardInfo = bcsMessageAction.getICCardInfo(
+	// new Request(CommonVars.getCurrUser()), tfSeqNo
+	// .getText().trim(), tfPwd.getText().trim());
+	// if (cardInfo != null) {
+	// StringBuffer sb = new StringBuffer();
+	// // sb.append("------------------"+i);
+	// sb.append("卡号-------------" + cardInfo.getIcCode()
+	// + "\n");
+	// sb.append("证书-------------" + cardInfo.getCertSeqNo()
+	// + "\n");
+	// sb.append("申请者名称--------" + cardInfo.getApplier()
+	// + "\n");
+	// sb.append("单位名称----------" + cardInfo.getTradeName()
+	// + "\n");
+	// sb.append("单位类型代码-------" + cardInfo.getTradeType()
+	// + "\n");
+	// sb.append("单位代码-----------" + cardInfo.getTradeCode()
+	// + "\n");
+	// sb.append("数字签名-----------"
+	// + cardInfo.getSignData().substring(0, 10)
+	// + "\n");
+	// // System.out.println(sb.toString());
+	// JOptionPane.showMessageDialog(FmBcsParameterSet.this,
+	// sb.toString(), "提示",
+	// JOptionPane.INFORMATION_MESSAGE);
+	// } else {
+	// JOptionPane.showMessageDialog(FmBcsParameterSet.this,
+	// "没有读到卡信息", "提示",
+	// JOptionPane.INFORMATION_MESSAGE);
+	// }
+	// }
+	// });
+	// }
+	// return btnReadCard;
+	// }
 
 	/**
 	 * This method initializes jPanel1
 	 * 
 	 * @return javax.swing.JPanel
 	 */
-//	private JPanel getJPanel1() {
-//		if (jPanel1 == null) {
-//			jPanel1 = new JPanel();
-//			jPanel1.setLayout(null);
-//			jPanel1.setBounds(new Rectangle(155, 58, 142, 30));
-//			jPanel1.setBorder(BorderFactory.createTitledBorder(null, "",
-//					TitledBorder.DEFAULT_JUSTIFICATION,
-//					TitledBorder.DEFAULT_POSITION, new Font("Dialog",
-//							Font.BOLD, 12), new Color(51, 51, 51)));
-//			jPanel1.add(getRbNormal(), null);
-//			jPanel1.add(getRbEnhance(), null);
-//		}
-//		return jPanel1;
-//	}
+	// private JPanel getJPanel1() {
+	// if (jPanel1 == null) {
+	// jPanel1 = new JPanel();
+	// jPanel1.setLayout(null);
+	// jPanel1.setBounds(new Rectangle(155, 58, 142, 30));
+	// jPanel1.setBorder(BorderFactory.createTitledBorder(null, "",
+	// TitledBorder.DEFAULT_JUSTIFICATION,
+	// TitledBorder.DEFAULT_POSITION, new Font("Dialog",
+	// Font.BOLD, 12), new Color(51, 51, 51)));
+	// jPanel1.add(getRbNormal(), null);
+	// jPanel1.add(getRbEnhance(), null);
+	// }
+	// return jPanel1;
+	// }
 
 	/**
 	 * This method initializes jRadioButton2
 	 * 
 	 * @return javax.swing.JRadioButton
 	 */
-//	private JRadioButton getRbNormal() {
-//		if (rbNormal == null) {
-//			rbNormal = new JRadioButton();
-//			rbNormal.setBounds(new Rectangle(3, 5, 68, 20));
-//			rbNormal.setText("普通版");
-//			rbNormal.addItemListener(new java.awt.event.ItemListener() {
-//				public void itemStateChanged(java.awt.event.ItemEvent e) {
-//					cbPort9097Open.setSelected(false);
-//					setState();
-//				}
-//			});
-//		}
-//		return rbNormal;
-//	}
+	// private JRadioButton getRbNormal() {
+	// if (rbNormal == null) {
+	// rbNormal = new JRadioButton();
+	// rbNormal.setBounds(new Rectangle(3, 5, 68, 20));
+	// rbNormal.setText("普通版");
+	// rbNormal.addItemListener(new java.awt.event.ItemListener() {
+	// public void itemStateChanged(java.awt.event.ItemEvent e) {
+	// cbPort9097Open.setSelected(false);
+	// setState();
+	// }
+	// });
+	// }
+	// return rbNormal;
+	// }
 
 	/**
 	 * This method initializes jRadioButton3
 	 * 
 	 * @return javax.swing.JRadioButton
 	 */
-//	private JRadioButton getRbEnhance() {
-//		if (rbEnhance == null) {
-//			rbEnhance = new JRadioButton();
-//			rbEnhance.setBounds(new Rectangle(70, 4, 65, 21));
-//			rbEnhance.setText("加强版");
-//			rbEnhance.addItemListener(new java.awt.event.ItemListener() {
-//				public void itemStateChanged(java.awt.event.ItemEvent e) {
-//					setState();
-//				}
-//			});
-//		}
-//		return rbEnhance;
-//	}
+	// private JRadioButton getRbEnhance() {
+	// if (rbEnhance == null) {
+	// rbEnhance = new JRadioButton();
+	// rbEnhance.setBounds(new Rectangle(70, 4, 65, 21));
+	// rbEnhance.setText("加强版");
+	// rbEnhance.addItemListener(new java.awt.event.ItemListener() {
+	// public void itemStateChanged(java.awt.event.ItemEvent e) {
+	// setState();
+	// }
+	// });
+	// }
+	// return rbEnhance;
+	// }
 
 	/**
 	 * This method initializes buttonGroup1
@@ -2450,8 +2477,8 @@ public class FmBcsParameterSet extends JInternalFrameBase {
 	private ButtonGroup getButtonGroup1() {
 		if (buttonGroup1 == null) {
 			buttonGroup1 = new ButtonGroup();
-//			buttonGroup1.add(this.getRbNormal());
-//			buttonGroup1.add(this.getRbEnhance());
+			// buttonGroup1.add(this.getRbNormal());
+			// buttonGroup1.add(this.getRbEnhance());
 		}
 		return buttonGroup1;
 	}
@@ -2461,14 +2488,14 @@ public class FmBcsParameterSet extends JInternalFrameBase {
 	 * 
 	 * @return javax.swing.JCheckBox
 	 */
-//	private JCheckBox getCbPort9097Open() {
-//		if (cbPort9097Open == null) {
-//			cbPort9097Open = new JCheckBox();
-//			cbPort9097Open.setBounds(new Rectangle(155, 90, 142, 22));
-//			cbPort9097Open.setText("9097端口已开通");
-//		}
-//		return cbPort9097Open;
-//	}
+	// private JCheckBox getCbPort9097Open() {
+	// if (cbPort9097Open == null) {
+	// cbPort9097Open = new JCheckBox();
+	// cbPort9097Open.setBounds(new Rectangle(155, 90, 142, 22));
+	// cbPort9097Open.setText("9097端口已开通");
+	// }
+	// return cbPort9097Open;
+	// }
 
 	/**
 	 * This method initializes jPanel11
@@ -2503,7 +2530,7 @@ public class FmBcsParameterSet extends JInternalFrameBase {
 			jPanel11.add(getTfRemoteHostPort(), null);
 			jPanel11.add(getTfRemoteHostICPwd(), null);
 			jPanel11.add(jLabel19, null);
-//			jPanel11.add(jLabel411, null);
+			// jPanel11.add(jLabel411, null);
 			jPanel11.add(getTfIdCard(), null);
 			jPanel11.add(jLabel61, null);
 		}
@@ -2557,7 +2584,7 @@ public class FmBcsParameterSet extends JInternalFrameBase {
 			jPanel12 = new JPanel();
 			jPanel12.setLayout(null);
 			jPanel12.setBounds(new Rectangle(54, 417, 638, 64));
-			//jPanel12.add(getJRadioButton2(), null);
+			// jPanel12.add(getJRadioButton2(), null);
 		}
 		return jPanel12;
 	}
@@ -2567,13 +2594,13 @@ public class FmBcsParameterSet extends JInternalFrameBase {
 	 * 
 	 * @return javax.swing.JRadioButton
 	 */
-	private JRadioButton getJRadioButton2() {
-		if (jRadioButton2 == null) {
-			jRadioButton2 = new JRadioButton();
-			jRadioButton2.setText("核销表总进口金额扣减退料出口【复出】金额");
-			jRadioButton2.setBounds(new Rectangle(70, 373, 347, 32));
+	private JCheckBox getCbxBtn2() {
+		if (cbxBtn2 == null) {
+			cbxBtn2 = new JCheckBox();
+			cbxBtn2.setText("核销表总进口金额扣减退料出口【复出】金额");
+			cbxBtn2.setBounds(new Rectangle(70, 373, 347, 32));
 		}
-		return jRadioButton2;
+		return cbxBtn2;
 	}
 
 	/**
@@ -2597,10 +2624,12 @@ public class FmBcsParameterSet extends JInternalFrameBase {
 	private JFormattedTextField getTfReportDecimalLengthUnitWaste() {
 		if (tfReportDecimalLengthUnitWaste == null) {
 			tfReportDecimalLengthUnitWaste = new JFormattedTextField();
-			tfReportDecimalLengthUnitWaste.setBounds(new Rectangle(230, 21, 49, 23));
+			tfReportDecimalLengthUnitWaste.setBounds(new Rectangle(230, 21, 49,
+					23));
 		}
 		return tfReportDecimalLengthUnitWaste;
 	}
+
 	private JLabel getLabel() {
 		if (label == null) {
 			label = new JLabel();
@@ -2610,6 +2639,7 @@ public class FmBcsParameterSet extends JInternalFrameBase {
 		}
 		return label;
 	}
+
 	private JFormattedTextField getTfWasteAmount() {
 		if (tfWasteAmount == null) {
 			tfWasteAmount = new JFormattedTextField();
@@ -2619,6 +2649,7 @@ public class FmBcsParameterSet extends JInternalFrameBase {
 		}
 		return tfWasteAmount;
 	}
+
 	private JLabel getLabel_1() {
 		if (label_1 == null) {
 			label_1 = new JLabel();
@@ -2628,6 +2659,7 @@ public class FmBcsParameterSet extends JInternalFrameBase {
 		}
 		return label_1;
 	}
+
 	private JLabel getLabel_2() {
 		if (label_2 == null) {
 			label_2 = new JLabel();
@@ -2637,6 +2669,7 @@ public class FmBcsParameterSet extends JInternalFrameBase {
 		}
 		return label_2;
 	}
+
 	private JFormattedTextField getTfTotalAmount() {
 		if (tfTotalAmount == null) {
 			tfTotalAmount = new JFormattedTextField();
@@ -2646,6 +2679,7 @@ public class FmBcsParameterSet extends JInternalFrameBase {
 		}
 		return tfTotalAmount;
 	}
+
 	private JLabel getLabel_3() {
 		if (label_3 == null) {
 			label_3 = new JLabel();
@@ -2655,10 +2689,11 @@ public class FmBcsParameterSet extends JInternalFrameBase {
 		}
 		return label_3;
 	}
+
 	private JCheckBox getCcbIsTotalMoney() {
 		if (ccbIsTotalMoney == null) {
 			ccbIsTotalMoney = new JCheckBox("手册表头进口总值是否统计备案料件内购金额");
-			ccbIsTotalMoney.setBounds(70, 418, 309, 23);
+			ccbIsTotalMoney.setBounds(70, 413, 309, 23);
 		}
 		return ccbIsTotalMoney;
 	}

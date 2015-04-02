@@ -2422,4 +2422,15 @@ public class ContractActionImpl extends BaseActionImpl implements
 		return this.contractDao.findExportPackinglistOrInvoice();
 	}
 
+	/**
+	 * 查询 合同 料件 总金额
+	 */
+	public Double findSumContractImgOrExgTotalPrices(Request request,
+			String contractId, String clzName) {
+
+		return contractLogic.findSumContractImgOrExgTotalPrices(contractId,
+				clzName);
+
+	}
+
 }

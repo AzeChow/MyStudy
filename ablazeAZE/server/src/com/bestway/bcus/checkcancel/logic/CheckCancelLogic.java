@@ -1238,13 +1238,14 @@ public class CheckCancelLogic {
 			 */
 			Double avePrice = null;
 			if (beginNum < Double.valueOf(0) || beginMoney < Double.valueOf(0)) {// 负数
-				if (num > 0) {
+				if (num > 0 || money >Double.valueOf(0)) {
 					// 本期平均单价 = 本期进口金额 / 本期进口数量
 					avePrice = money / num;
 				}
 			} else {
 				// 本期平均单价 = (上期核销结余金额+本期实际进出口金额) / (上期核销结余数量+本期实际进出口数量)
-				avePrice = (beginNum + num == 0.0 ? 0.0
+				//当进口金额+期初金额小于0时，单价取0
+				avePrice = ((beginNum + num  == 0.0 || beginMoney + money < 0.0 )? 0.0
 						: ((beginMoney + money) / (beginNum + num)));
 			}
 			avePriceHs.put(seqNum, avePrice);
@@ -2159,17 +2160,18 @@ public class CheckCancelLogic {
 			TempDD x = (TempDD) hs.get(String.valueOf(seqNum));
 
 			// 2013-5-22讨论确定后，料件表平均单价计算取单价表计算方法。平均单价=系统单价（期初+进口）金额 /（期初+进口）数量
+			//当进口金额+期初金额小于0时，单价取0
 			Double InMoney = beginMoney + totalMoneyHz - totalMoneyHj;
 			Double InNum = beginNum + totalNumHz - totalNumHj;
 			Double price = 0.0;
-			if (beginMoney < Double.valueOf(0) || beginNum < Double.valueOf(0)) {
-				if ((totalNumHz - totalNumHj) > Double.valueOf(0)) {
+			if (beginMoney > Double.valueOf(0) || beginNum > Double.valueOf(0)) {
+				if ((totalNumHz - totalNumHj) > Double.valueOf(0) && InMoney > Double.valueOf(0)) {
 					price = (totalMoneyHz - totalMoneyHj)
 							/ (totalNumHz - totalNumHj);
 				}
 			} else {
 				if (InNum != 0) {
-					price = InMoney / InNum;
+					price = InMoney < Double.valueOf(0) ? 0.0 : InMoney / InNum;
 				} else {
 					price = 0.0;
 				}
@@ -2236,9 +2238,14 @@ public class CheckCancelLogic {
 
 			// hwy2013-4-26因台达要求，核增核减金额应取报关单核增-核减金额
 			// 应剩余价值 =报关单核增金额-核减金额 + 期初金额 -（ 耗用数量) * 平均单价
-			result.setLeaveSumPrice(formatBig(totalMoneyHz - totalMoneyHj
+			//原因：以前程序计算问题导致，有出现应剩余数量为正数，但应剩余金额为负数的情况，当应剩余金额为负数时，直接取应剩余数量*平均单价
+			result.setLeaveSumPrice((formatBig(totalMoneyHz - totalMoneyHj
 					+ fd(result.getBeginMoney()))
-					- fd(result.getUseSumNum()) * price);
+					- fd(result.getUseSumNum()) * price) < Double.valueOf(0) ? formatBig(totalNumHz - totalNumHj
+							+ fd(result.getBeginNum()) - fd(result.getUseSumNum())) * price :
+								formatBig(totalMoneyHz - totalMoneyHj
+										+ fd(result.getBeginMoney()))
+										- fd(result.getUseSumNum()) * price	);
 
 			if (unitName != null && unitName.equals("千克")) { // 应剩余重量
 				result.setLeaveSumWeight(fd(result.getLeaveNum()));

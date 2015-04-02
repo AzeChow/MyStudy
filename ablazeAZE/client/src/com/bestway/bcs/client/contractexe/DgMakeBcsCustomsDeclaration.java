@@ -371,13 +371,13 @@ public class DgMakeBcsCustomsDeclaration extends JDialogBase {
 
 						}
 
-					} else if (step == 1) {// 第一步:选择申请单表头
+					} else if (step == 1) {// 第2步:选择申请单表头
 
 						if (!getPnMakeBcsCustomsDeclaration2().vaildateData()) {
 							return;
 						}
 
-					} else if (step == 2) {// 第二步：选择申请单表体
+					} else if (step == 2) {// 第3步：选择申请单表体
 
 						PnMakeBcsCustomsDeclaration3 p3 = getPnMakeBcsCustomsDeclaration3();
 

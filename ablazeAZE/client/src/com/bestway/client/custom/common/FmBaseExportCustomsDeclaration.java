@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,21 +18,15 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -39,7 +35,6 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JToolBar;
-import javax.swing.SwingWorker;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -75,9 +70,6 @@ import com.bestway.ui.winuicontrol.JInternalFrameBase;
 import com.bestway.ui.winuicontrol.calendar.JCalendarComboBox;
 import com.bsw.core.client.eport.DgQPImport;
 import com.google.gson.Gson;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 /**
  * 出口报关单的父类窗体（2008年10月28日） 贺巍添加部分注释
@@ -170,7 +162,7 @@ public abstract class FmBaseExportCustomsDeclaration extends JInternalFrameBase 
 	private JMenuItem miInputFromFile = null;
 
 	private JMenuItem miInputDirect = null;
-	
+
 	private JMenuItem miInputFromQp = null;
 
 	private JButton btnBrowse = null;
@@ -189,7 +181,6 @@ public abstract class FmBaseExportCustomsDeclaration extends JInternalFrameBase 
 
 	private JMenuItem miCustomsBrokerProcess = null; // @jve:decl-index=0:visual-constraint="899,172"
 	private JButton btnPrint;
-
 
 	/**
 	 * 构造方法，初始化一些组件
@@ -307,8 +298,8 @@ public abstract class FmBaseExportCustomsDeclaration extends JInternalFrameBase 
 			jToolBar.add(getBtnShowMoney());
 			// zyy 2012.3.15
 			jToolBar.add(getBtnTcs());
-//			jToolBar.add(getBtnCustomsBrokerDeclare());
-//			jToolBar.add(getBtnImportQP());
+			// jToolBar.add(getBtnCustomsBrokerDeclare());
+			// jToolBar.add(getBtnImportQP());
 			jToolBar.add(getBtnLoadBGD());
 			jToolBar.add(getBtnExportBGD());
 			jToolBar.add(getBtnShowAll());
@@ -868,6 +859,9 @@ public abstract class FmBaseExportCustomsDeclaration extends JInternalFrameBase 
 								Integer.class));
 						list.add(addColumn("报关单号", "customsDeclarationCode",
 								140));
+						list.add(addColumn("申报单位", "declarationCompany.name",
+								100));
+						list.add(addColumn("申报人员", "declarant.username",60));
 						list.add(addColumn("申报日期", "declarationDate", 80));
 						list.add(addColumn("是否检查", "isCheck", 60));
 						list.add(addColumn("是否生效", "effective", 60));
@@ -901,8 +895,6 @@ public abstract class FmBaseExportCustomsDeclaration extends JInternalFrameBase 
 						list.add(addColumn("集装箱号", "containerNum", 100));
 						list.add(addColumn("用途", "uses.name", 100));
 						list.add(addColumn("经营单位", "tradeName", 100));
-						list.add(addColumn("申报单位", "declarationCompany.name",
-								100));
 						list.add(addColumn("客户名称", "customer.name", 100));
 						list.add(addColumn("清单号码", "billListId", 200));
 						list.add(addColumn("预录入号", "preCustomsDeclarationCode",
@@ -928,17 +920,17 @@ public abstract class FmBaseExportCustomsDeclaration extends JInternalFrameBase 
 
 		);
 
-		jTable.getColumnModel().getColumn(4)
-				.setCellRenderer(new checkBoxRenderer());
-		jTable.getColumnModel().getColumn(5)
-				.setCellRenderer(new checkBoxRenderer());
 		jTable.getColumnModel().getColumn(6)
+				.setCellRenderer(new checkBoxRenderer());
+		jTable.getColumnModel().getColumn(7)
+				.setCellRenderer(new checkBoxRenderer());
+		jTable.getColumnModel().getColumn(8)
 				.setCellRenderer(new checkBoxRenderer());
 
 		if (projectType == ProjectType.BCUS) {
-			jTable.getColumnModel().getColumn(7)
+			jTable.getColumnModel().getColumn(9)
 					.setCellRenderer(new checkBoxRenderer());
-			jTable.getColumnModel().getColumn(11)
+			jTable.getColumnModel().getColumn(13)
 					.setCellRenderer(new DefaultTableCellRenderer() {
 						public Component getTableCellRendererComponent(
 								JTable table, Object value, boolean isSelected,
@@ -956,7 +948,7 @@ public abstract class FmBaseExportCustomsDeclaration extends JInternalFrameBase 
 					});
 
 		} else {
-			jTable.getColumnModel().getColumn(10)
+			jTable.getColumnModel().getColumn(12)
 					.setCellRenderer(new DefaultTableCellRenderer() {
 						public Component getTableCellRendererComponent(
 								JTable table, Object value, boolean isSelected,
@@ -1029,10 +1021,10 @@ public abstract class FmBaseExportCustomsDeclaration extends JInternalFrameBase 
 		boolean isCancel = getBoolean(customsDeclaration.getCancel());
 		boolean isSend = getBoolean(customsDeclaration.getIsSend());
 		boolean isCheck = getBoolean(customsDeclaration.getIsCheck());
-		
+
 		this.btnEdit.setEnabled((!isEffective) && (!isCancel));
 		this.btnCancel.setEnabled((!isEffective) && (!isCancel));
-		this.jMenuItem1.setEnabled(isSend||isCheck);
+		this.jMenuItem1.setEnabled(isSend || isCheck);
 		// this.btnDeclare.setEnabled((isEffective) && (!isCancel));
 		/*
 		 * AclUser user = CommonVars.getCurrUser(); String isManager =
@@ -1426,7 +1418,7 @@ public abstract class FmBaseExportCustomsDeclaration extends JInternalFrameBase 
 			showerr.setError("集装箱号不能为空");
 			saveErrList.add(showerr);
 		}
-		
+
 		if (customsDeclaration.getDeclarationCustoms() == null) {
 			showerr = new EntityShowCustomerError();
 			showerr.setCustomsDeclarationCode(customsDeclaration
@@ -1531,7 +1523,7 @@ public abstract class FmBaseExportCustomsDeclaration extends JInternalFrameBase 
 					for (int i = 0; i < choiceList.size(); i++) {
 						BaseCustomsDeclaration customsDeclaration = (BaseCustomsDeclaration) choiceList
 								.get(i);
-						
+
 						List templist = baseEncAction
 								.findCustomsDeclarationCommInfo(new Request(
 										CommonVars.getCurrUser()),
@@ -1860,90 +1852,96 @@ public abstract class FmBaseExportCustomsDeclaration extends JInternalFrameBase 
 			miInputDirect
 					.addActionListener(new java.awt.event.ActionListener() {
 						public void actionPerformed(java.awt.event.ActionEvent e) {
-							 inputExportBGDFromQP();
+							inputExportBGDFromQP();
 							// inputExportBGDFromPY();
 						}
 					});
 		}
 		return miInputDirect;
 	}
-	private JMenuItem getMiInputFromQp(){
-		if(miInputFromQp == null){
+
+	private JMenuItem getMiInputFromQp() {
+		if (miInputFromQp == null) {
 			miInputFromQp = new JMenuItem();
 			miInputFromQp.setText("从qp直接导入");
-			miInputFromQp.addActionListener(new java.awt.event.ActionListener(){
-				public void actionPerformed(java.awt.event.ActionEvent e){
-					DgQPImport dg = new DgQPImport(ImpExpFlag.EXPORT,projectType);
-					dg.setVisible(true);
-					initTable(getDataSource());
-					setState();
-//					importCustoms();
-//					DgChooseInquireDate cid = new DgChooseInquireDate();
-//					cid.setVisible(true);
-//					SimpleDateFormat sdf = new SimpleDateFormat(
-//							"yyyy-MM-dd");
-//					Date beginDate = cid.getBeginDate();
-//					Date endDate = cid.getEndDate();
-//					if(beginDate == null)
-//						return;
-//					if(endDate == null)
-//						return;
-//					String strBeginDate = sdf.format(beginDate);
-//					String strEndDate = sdf.format(endDate);
-//					try {
-//						chooseDay(strBeginDate,strEndDate);
-//					} catch (ParseException e1) {
-//						// TODO Auto-generated catch block
-//						e1.printStackTrace();
-//					}
-////					Date date = cid.getBeginDate();
-////					String strDate = sdf.format(date);
-////					try {
-////						getExportDeclaration(strDate);
-////					} catch (ParseException e1) {
-////						// TODO Auto-generated catch block
-////						e1.printStackTrace();
-////					}
-				}
-			});
+			miInputFromQp
+					.addActionListener(new java.awt.event.ActionListener() {
+						public void actionPerformed(java.awt.event.ActionEvent e) {
+							DgQPImport dg = new DgQPImport(ImpExpFlag.EXPORT,
+									projectType);
+							dg.setVisible(true);
+							initTable(getDataSource());
+							setState();
+							// importCustoms();
+							// DgChooseInquireDate cid = new
+							// DgChooseInquireDate();
+							// cid.setVisible(true);
+							// SimpleDateFormat sdf = new SimpleDateFormat(
+							// "yyyy-MM-dd");
+							// Date beginDate = cid.getBeginDate();
+							// Date endDate = cid.getEndDate();
+							// if(beginDate == null)
+							// return;
+							// if(endDate == null)
+							// return;
+							// String strBeginDate = sdf.format(beginDate);
+							// String strEndDate = sdf.format(endDate);
+							// try {
+							// chooseDay(strBeginDate,strEndDate);
+							// } catch (ParseException e1) {
+							// // TODO Auto-generated catch block
+							// e1.printStackTrace();
+							// }
+							// // Date date = cid.getBeginDate();
+							// // String strDate = sdf.format(date);
+							// // try {
+							// // getExportDeclaration(strDate);
+							// // } catch (ParseException e1) {
+							// // // TODO Auto-generated catch block
+							// // e1.printStackTrace();
+							// // }
+						}
+					});
 		}
 		return miInputFromQp;
 	}
-//	 private void chooseDay(String strBeginDate,String strEndDate) throws ParseException{
-//		  SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//		  Date beginDate = sdf.parse(strBeginDate);
-//		  Date endDate = sdf.parse(strEndDate);
-//		  SimpleDateFormat sdf1 = new SimpleDateFormat(
-//					"yyyyMMdd");
-//		  String strBeginDate1 = sdf1.format(beginDate);
-//		  String strEndDate1 = sdf1.format(endDate);
-//		  SimpleDateFormat format=new SimpleDateFormat("yyyyMMdd");
-//	      Calendar start = Calendar.getInstance();
-//	      Calendar end = Calendar.getInstance();
-//	      try {
-//	          start.setTime(format.parse(strBeginDate1));
-//	          end.setTime(format.parse(strEndDate1));
-//	      } catch (ParseException e) {
-//	          // TODO Auto-generated catch block
-//	          e.printStackTrace();
-//	      }
-//	      SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
-//	      String strStart2 = sdf2.format(start.getTime());
-//	      getExportDeclaration(strStart2);
-//	      while(start.before(end))
-//	      {
-////	          System.out.println(format.format(start.getTime()));
-//	    	  start.add(Calendar.DATE ,1);
-//	          SimpleDateFormat sdf0 = new SimpleDateFormat("yyyy-MM-dd");
-//	          String strStart0 = sdf0.format(start.getTime());
-//	          try {
-//	        	  getExportDeclaration(strStart0);
-//			} catch (ParseException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//	      }
-//	  }
+
+	// private void chooseDay(String strBeginDate,String strEndDate) throws
+	// ParseException{
+	// SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	// Date beginDate = sdf.parse(strBeginDate);
+	// Date endDate = sdf.parse(strEndDate);
+	// SimpleDateFormat sdf1 = new SimpleDateFormat(
+	// "yyyyMMdd");
+	// String strBeginDate1 = sdf1.format(beginDate);
+	// String strEndDate1 = sdf1.format(endDate);
+	// SimpleDateFormat format=new SimpleDateFormat("yyyyMMdd");
+	// Calendar start = Calendar.getInstance();
+	// Calendar end = Calendar.getInstance();
+	// try {
+	// start.setTime(format.parse(strBeginDate1));
+	// end.setTime(format.parse(strEndDate1));
+	// } catch (ParseException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// }
+	// SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+	// String strStart2 = sdf2.format(start.getTime());
+	// getExportDeclaration(strStart2);
+	// while(start.before(end))
+	// {
+	// // System.out.println(format.format(start.getTime()));
+	// start.add(Calendar.DATE ,1);
+	// SimpleDateFormat sdf0 = new SimpleDateFormat("yyyy-MM-dd");
+	// String strStart0 = sdf0.format(start.getTime());
+	// try {
+	// getExportDeclaration(strStart0);
+	// } catch (ParseException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// }
+	// }
+	// }
 	// private void inputExportBGDFromPY(){
 	//
 	// // 1.创建py文件
@@ -2043,160 +2041,170 @@ public abstract class FmBaseExportCustomsDeclaration extends JInternalFrameBase 
 	//
 	// }
 
-//	private void getExportDeclaration(String strDate) throws ParseException {
-//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//		Date date = sdf.parse(strDate);
-//		List declaration = baseEncAction.findCustomsDeclaration(
-//				CommonVars.getRequst(), projectType,date,ImpExpFlag.EXPORT);
-//	   Set<String> setDeclaration = new HashSet<String>();
-//	   setDeclaration.addAll(declaration);
-//	   SimpleDateFormat sdf1 = new SimpleDateFormat(
-//				"yyyyMMdd");
-//	    String strDeclarationDate = sdf1.format(date);
-//		String execExportResult = getExecResult("出口单据查询.py", "出口单据查询",
-//				"ReplaceDateOrCustomsDeclarationCode", strDeclarationDate);
-//		List list = (List)gsonToJavaType(execExportResult, List.class);
-//		if(list==null){
-//			JOptionPane.showMessageDialog(FmBaseExportCustomsDeclaration.this, "未能从QP中获取到数据,请确认QP已经打开且有数据");
-//			return;
-//		}
-//		for (int i = 0; i < list.size(); i++) {
-//			String declarationNo = list.get(i).toString();
-//			if (!setDeclaration.contains(declarationNo)) {
-//				String execExportDeclaratonResult = getExecResult("出口报关单查询.py", "出口报关单查询",
-//						"ReplaceDateOrCustomsDeclarationCode", declarationNo);
-//				Map map = (Map) baseEncAction.transferExportDeclaration(
-//						CommonVars.getRequst(), execExportDeclaratonResult,ImpExpFlag.EXPORT,ProjectType.BCS);
-//			}
-//		}
-//	}
+	// private void getExportDeclaration(String strDate) throws ParseException {
+	// SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	// Date date = sdf.parse(strDate);
+	// List declaration = baseEncAction.findCustomsDeclaration(
+	// CommonVars.getRequst(), projectType,date,ImpExpFlag.EXPORT);
+	// Set<String> setDeclaration = new HashSet<String>();
+	// setDeclaration.addAll(declaration);
+	// SimpleDateFormat sdf1 = new SimpleDateFormat(
+	// "yyyyMMdd");
+	// String strDeclarationDate = sdf1.format(date);
+	// String execExportResult = getExecResult("出口单据查询.py", "出口单据查询",
+	// "ReplaceDateOrCustomsDeclarationCode", strDeclarationDate);
+	// List list = (List)gsonToJavaType(execExportResult, List.class);
+	// if(list==null){
+	// JOptionPane.showMessageDialog(FmBaseExportCustomsDeclaration.this,
+	// "未能从QP中获取到数据,请确认QP已经打开且有数据");
+	// return;
+	// }
+	// for (int i = 0; i < list.size(); i++) {
+	// String declarationNo = list.get(i).toString();
+	// if (!setDeclaration.contains(declarationNo)) {
+	// String execExportDeclaratonResult = getExecResult("出口报关单查询.py",
+	// "出口报关单查询",
+	// "ReplaceDateOrCustomsDeclarationCode", declarationNo);
+	// Map map = (Map) baseEncAction.transferExportDeclaration(
+	// CommonVars.getRequst(),
+	// execExportDeclaratonResult,ImpExpFlag.EXPORT,ProjectType.BCS);
+	// }
+	// }
+	// }
 
-//	/**
-//	 * 导入报关单
-//	 */
-//	private void importCustoms(){
-//		
-//		JTraceFileChooser fileChooser = new JTraceFileChooser("importCustomOut");
-//		fileChooser.setDialogTitle("请选择文件的存放路径!");
-//		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-//		int state = fileChooser.showDialog(FmBaseExportCustomsDeclaration.this,"确定");
-//		File file = null;//选择的路径
-//		File importFailureOut = null;//导入失败的路径
-//		File importSuccessOut = null;//导入成功的路径
-//		
-//		if (state == JFileChooser.APPROVE_OPTION) {
-//			file = fileChooser.getSelectedFile();
-//			
-//			importFailureOut = new File(file.getParent()+File.separator+"出口导入失败文件");
-//			if(!importFailureOut.exists()){
-//				//当导入失败的目录不存在时,生成导入失败的目录
-//				importFailureOut.mkdir();
-//			}
-//			
-//			importSuccessOut = new File(file.getParent()+File.separator+"出口导入成功文件");
-//			if(!importSuccessOut.exists()){
-//				//当导入成功的目录不存在时,生成导入成功的目录
-//				importSuccessOut.mkdir();
-//			}
-//		} else {
-//			return;
-//		}
-//		System.out.println(file.getPath());
-//		
-//		//查询
-//		List declaration = baseEncAction.findAllCustomsDeclaration(CommonVars.getRequst(), projectType, ImpExpFlag.EXPORT);
-//		Set<String> setDeclaration = new HashSet<String>();
-//		setDeclaration.addAll(declaration);
-//		
-//		//开始导入
-//		ExecuteImport executeImport = new ExecuteImport(file,importFailureOut,importSuccessOut,setDeclaration);
-//		executeImport.execute();
-//	}
-	
-//	public class ExecuteImport extends SwingWorker {
-//
-//		private File file = null;
-//		private File importFailureOut = null;
-//		private File importSuccessOut = null;
-//		private Set setDeclaration = null;
-//		
-//		/**
-//		 * 执行导入
-//		 * @param file 文件源路径
-//		 * @param importFailureIn 进口失败路径
-//		 * @param importSuccessIn 进口成功路径
-//		 * @param setDeclaration 已经存在的报关单号
-//		 */
-//		public ExecuteImport(File file,File importFailureOut,File importSuccessOut,Set setDeclaration){
-//			this.file = file;
-//			this.importFailureOut = importFailureOut;
-//			this.importSuccessOut = importSuccessOut;
-//			this.setDeclaration = setDeclaration;
-//		}
-//		
-//		@Override
-//		protected Object doInBackground() throws Exception {
-//			CommonProgress.showProgressDialog(FmBaseExportCustomsDeclaration.this);
-//			CommonProgress.setMessage("系统正在导入数据，请稍后...");
-//			btnLoadBGD.setEnabled(false);
-//		
-//			if(file==null||importFailureOut==null||importSuccessOut==null){
-//				System.out.println("路径为空");
-//				return null;
-//			}
-//			
-//			File[] files = file.listFiles();
-//			for (File f : files) {
-//				if(!f.isDirectory()){
-//					System.out.println(f.getPath());
-//					String stu  = gerFromBASE64(f);
-//					System.out.println(stu);
-//					Gson gson = new Gson();
-//					Map map = null;
-//					try {
-//						map = (Map) gson.fromJson(stu, Map.class);
-//					} catch (Exception e) {
-//						CommonProgress.closeProgressDialog();
-//						JOptionPane.showMessageDialog(FmBaseExportCustomsDeclaration.this,"文件格式无法解析！");
-//						return null;
-//					}
-//					Map<String, String> bgdhead = (Map<String, String>) map.get("报关单表头");
-//					String customsDeclarationCode = bgdhead.get("海关编号");
-//					if(customsDeclarationCode==null){
-//						System.out.println("报关单号为空");
-//						copyFile(f, new File(importFailureOut.getPath()+File.separator+f.getName()));
-//						
-//					}else if(!setDeclaration.contains(customsDeclarationCode)){
-//						CommonProgress.setMessage("系统正在导入报关单号为："+customsDeclarationCode+"的报关单,请稍后...");
-//						try {
-//							baseEncAction.transferExportDeclaration(CommonVars.getRequst(),
-//									stu, ImpExpFlag.EXPORT,projectType);
-//							System.out.println("导入成功报关单号："+customsDeclarationCode);
-//							copyFile(f, new File(importSuccessOut.getPath()+File.separator+f.getName()));
-//						} catch (Exception e) {
-//							CommonProgress.closeProgressDialog();
-//							JOptionPane.showMessageDialog(FmBaseExportCustomsDeclaration.this,"导入出错！");
-//						}
-//					}else{
-//						System.out.println("已经存在报关单号："+customsDeclarationCode);
-//						copyFile(f, new File(importFailureOut.getPath()+File.separator+f.getName()));
-//					}
-//					//删除数据文件
-//					f.delete();
-//				}
-//			}
-//			return null;
-//		}
-//		
-//		@Override
-//		protected void done() {
-//			initTable(getDataSource());
-//			btnLoadBGD.setEnabled(true);
-//			CommonProgress.closeProgressDialog();
-//		}
-//	}
-	
-	
+	// /**
+	// * 导入报关单
+	// */
+	// private void importCustoms(){
+	//
+	// JTraceFileChooser fileChooser = new JTraceFileChooser("importCustomOut");
+	// fileChooser.setDialogTitle("请选择文件的存放路径!");
+	// fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+	// int state =
+	// fileChooser.showDialog(FmBaseExportCustomsDeclaration.this,"确定");
+	// File file = null;//选择的路径
+	// File importFailureOut = null;//导入失败的路径
+	// File importSuccessOut = null;//导入成功的路径
+	//
+	// if (state == JFileChooser.APPROVE_OPTION) {
+	// file = fileChooser.getSelectedFile();
+	//
+	// importFailureOut = new File(file.getParent()+File.separator+"出口导入失败文件");
+	// if(!importFailureOut.exists()){
+	// //当导入失败的目录不存在时,生成导入失败的目录
+	// importFailureOut.mkdir();
+	// }
+	//
+	// importSuccessOut = new File(file.getParent()+File.separator+"出口导入成功文件");
+	// if(!importSuccessOut.exists()){
+	// //当导入成功的目录不存在时,生成导入成功的目录
+	// importSuccessOut.mkdir();
+	// }
+	// } else {
+	// return;
+	// }
+	// System.out.println(file.getPath());
+	//
+	// //查询
+	// List declaration =
+	// baseEncAction.findAllCustomsDeclaration(CommonVars.getRequst(),
+	// projectType, ImpExpFlag.EXPORT);
+	// Set<String> setDeclaration = new HashSet<String>();
+	// setDeclaration.addAll(declaration);
+	//
+	// //开始导入
+	// ExecuteImport executeImport = new
+	// ExecuteImport(file,importFailureOut,importSuccessOut,setDeclaration);
+	// executeImport.execute();
+	// }
+
+	// public class ExecuteImport extends SwingWorker {
+	//
+	// private File file = null;
+	// private File importFailureOut = null;
+	// private File importSuccessOut = null;
+	// private Set setDeclaration = null;
+	//
+	// /**
+	// * 执行导入
+	// * @param file 文件源路径
+	// * @param importFailureIn 进口失败路径
+	// * @param importSuccessIn 进口成功路径
+	// * @param setDeclaration 已经存在的报关单号
+	// */
+	// public ExecuteImport(File file,File importFailureOut,File
+	// importSuccessOut,Set setDeclaration){
+	// this.file = file;
+	// this.importFailureOut = importFailureOut;
+	// this.importSuccessOut = importSuccessOut;
+	// this.setDeclaration = setDeclaration;
+	// }
+	//
+	// @Override
+	// protected Object doInBackground() throws Exception {
+	// CommonProgress.showProgressDialog(FmBaseExportCustomsDeclaration.this);
+	// CommonProgress.setMessage("系统正在导入数据，请稍后...");
+	// btnLoadBGD.setEnabled(false);
+	//
+	// if(file==null||importFailureOut==null||importSuccessOut==null){
+	// System.out.println("路径为空");
+	// return null;
+	// }
+	//
+	// File[] files = file.listFiles();
+	// for (File f : files) {
+	// if(!f.isDirectory()){
+	// System.out.println(f.getPath());
+	// String stu = gerFromBASE64(f);
+	// System.out.println(stu);
+	// Gson gson = new Gson();
+	// Map map = null;
+	// try {
+	// map = (Map) gson.fromJson(stu, Map.class);
+	// } catch (Exception e) {
+	// CommonProgress.closeProgressDialog();
+	// JOptionPane.showMessageDialog(FmBaseExportCustomsDeclaration.this,"文件格式无法解析！");
+	// return null;
+	// }
+	// Map<String, String> bgdhead = (Map<String, String>) map.get("报关单表头");
+	// String customsDeclarationCode = bgdhead.get("海关编号");
+	// if(customsDeclarationCode==null){
+	// System.out.println("报关单号为空");
+	// copyFile(f, new
+	// File(importFailureOut.getPath()+File.separator+f.getName()));
+	//
+	// }else if(!setDeclaration.contains(customsDeclarationCode)){
+	// CommonProgress.setMessage("系统正在导入报关单号为："+customsDeclarationCode+"的报关单,请稍后...");
+	// try {
+	// baseEncAction.transferExportDeclaration(CommonVars.getRequst(),
+	// stu, ImpExpFlag.EXPORT,projectType);
+	// System.out.println("导入成功报关单号："+customsDeclarationCode);
+	// copyFile(f, new
+	// File(importSuccessOut.getPath()+File.separator+f.getName()));
+	// } catch (Exception e) {
+	// CommonProgress.closeProgressDialog();
+	// JOptionPane.showMessageDialog(FmBaseExportCustomsDeclaration.this,"导入出错！");
+	// }
+	// }else{
+	// System.out.println("已经存在报关单号："+customsDeclarationCode);
+	// copyFile(f, new
+	// File(importFailureOut.getPath()+File.separator+f.getName()));
+	// }
+	// //删除数据文件
+	// f.delete();
+	// }
+	// }
+	// return null;
+	// }
+	//
+	// @Override
+	// protected void done() {
+	// initTable(getDataSource());
+	// btnLoadBGD.setEnabled(true);
+	// CommonProgress.closeProgressDialog();
+	// }
+	// }
+
 	public boolean copyFile(File srcFile, File destFile) {
 		boolean result = false;
 		try {
@@ -2236,26 +2244,27 @@ public abstract class FmBaseExportCustomsDeclaration extends JInternalFrameBase 
 			return false;
 		}
 	}
-	
+
 	/**
 	 * 64解码
+	 * 
 	 * @param file
 	 * @return
 	 */
-	public String gerFromBASE64(File file){
-		
+	public String gerFromBASE64(File file) {
+
 		InputStream in = null;
 		BASE64Decoder decoder = new BASE64Decoder();
 		byte[] by = null;
 		try {
 			in = new FileInputStream(file);
 			by = decoder.decodeBuffer(in);
-			return new String(by,"GBK").trim();
+			return new String(by, "GBK").trim();
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
-		}finally{
-			if(in!=null){
+		} finally {
+			if (in != null) {
 				try {
 					in.close();
 				} catch (IOException e) {
@@ -2264,12 +2273,12 @@ public abstract class FmBaseExportCustomsDeclaration extends JInternalFrameBase 
 			}
 		}
 	}
-	
+
 	public Object gsonToJavaType(String execExportResult, Class clazz) {
 		Gson gson = new Gson();
-	    return gson.fromJson(execExportResult, clazz);
-     }
-	
+		return gson.fromJson(execExportResult, clazz);
+	}
+
 	public String getExecResult(String path, String fileName, String oldStr,
 			String newStr) {
 		// 1.创建py文件
@@ -3123,8 +3132,10 @@ public abstract class FmBaseExportCustomsDeclaration extends JInternalFrameBase 
 			btnPrint = new JButton("批量打印");
 			btnPrint.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					BaseEmsHead emsHead = (BaseEmsHead) cbbEmshead.getSelectedItem();
-					DgBatchPrint dg = new DgBatchPrint(ImpExpFlag.EXPORT, projectType,emsHead.getEmsNo());
+					BaseEmsHead emsHead = (BaseEmsHead) cbbEmshead
+							.getSelectedItem();
+					DgBatchPrint dg = new DgBatchPrint(ImpExpFlag.EXPORT,
+							projectType, emsHead.getEmsNo());
 					dg.setVisible(true);
 				}
 			});

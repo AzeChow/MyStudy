@@ -6,10 +6,12 @@ import java.io.File;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -56,6 +58,7 @@ public class DgEmsHeadH2kImport1 extends JDialogBase {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private boolean isRepeat = false;
 	private JPanel jContentPane = null;
 	private JSplitPane jSplitPane = null;
 	private JPanel jPanel1 = null;
@@ -382,6 +385,9 @@ public class DgEmsHeadH2kImport1 extends JDialogBase {
 		List<String> lsIndex = InputTableColumnSetUtils
 				.getColumnFieldIndex(InputTableColumnSet.EMSH2K_BOM_INPUT);
 
+		// 检查 是否出现重复的 成品序号+版本号+料件序号Map
+		Set<String> checkRepeat = new HashSet<String>();
+
 		int zcount = lsIndex.size();// 5; // 字段数目
 
 		for (int i = 0; i < lines.size(); i++) {
@@ -408,6 +414,8 @@ public class DgEmsHeadH2kImport1 extends JDialogBase {
 
 			String err = "";
 
+			isRepeat = false;
+
 			for (int j = 0; j < zcount; j++) {
 
 				String value = getFileColumnValue(strs, j);
@@ -417,7 +425,6 @@ public class DgEmsHeadH2kImport1 extends JDialogBase {
 				if ("seqNum".equals(columnField)) {
 
 					try {
-
 						obj.setSeqNum(Integer.valueOf(value.trim()));
 						if (!exgNoExists(Integer.valueOf(value.trim()))) {
 							err = err + "[" + value + "] 成品序号不存在！";
@@ -466,6 +473,24 @@ public class DgEmsHeadH2kImport1 extends JDialogBase {
 				}
 			}
 
+			// 非合并的情况 需要进行判断重复 的成品序号+版本号+料件序号
+			if (!isMerge) {
+
+				String exgSeqVerImgSeq = obj.getSeqNum() + "/"
+						+ obj.getVersion() + "/" + bom.getSeqNum();
+
+				if (!checkRepeat.contains(exgSeqVerImgSeq)) {
+
+					checkRepeat.add(exgSeqVerImgSeq);
+				} else {
+					err = "出现重复的成品序号+版本号+料件序号";
+
+					if (!isRepeat) {
+						isRepeat = true;
+					}
+				}
+			}
+
 			obj.setErrinfo(err);
 
 			obj.setBom(bom);
@@ -482,7 +507,7 @@ public class DgEmsHeadH2kImport1 extends JDialogBase {
 			CommonProgress.setMessage("系统正在检验文件资料，一共有：" + size
 					+ "笔bom资料，请稍后...");
 
-			// 1.1 验证emsbom数据
+			// 1.1 验证emsbom数据 -------- Map<成品序号,Map<版本号,Map<料件序号,单耗>>>
 			Map<Integer, Map<Integer, Map<Integer, EmsHeadH2kBom>>> emsBomMap = new HashMap<Integer, Map<Integer, Map<Integer, EmsHeadH2kBom>>>();
 
 			EmsEdiHeadH2kBomFrom obj = null;
@@ -794,6 +819,17 @@ public class DgEmsHeadH2kImport1 extends JDialogBase {
 					}
 
 					boolean isYesNo = false;
+
+					// 这里判断 是否 出现重复 成品序号+版本号+料件序号
+					if (isRepeat) {
+
+						JOptionPane.showMessageDialog(DgEmsHeadH2kImport1.this,
+								"成品序号存在多个对应相同的料件序号和版本号,请检查单耗导入信息!", "提示",
+								JOptionPane.WARNING_MESSAGE);
+
+						return;
+
+					}
 
 					for (int i = 0; i < afterList.size(); i++) {
 

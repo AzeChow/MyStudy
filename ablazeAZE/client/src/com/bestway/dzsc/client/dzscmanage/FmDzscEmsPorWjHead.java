@@ -138,14 +138,7 @@ public class FmDzscEmsPorWjHead extends JInternalFrameBase {
 		} else {
 			initTableWj(new Vector());
 		}
-		// List dataSourceHg = null;
-		// dataSourceHg = dzscAction.findDzscEmsPorHead(new Request(CommonVars
-		// .getCurrUser()));
-		// if (dataSourceHg != null && dataSourceHg.size() > 0) {
-		// initTableHg(dataSourceHg);
-		// } else {
-		// initTableHg(new Vector());
-		// }
+
 	}
 
 	private void initTableWj(final List list) { // 外经管理
@@ -288,15 +281,6 @@ public class FmDzscEmsPorWjHead extends JInternalFrameBase {
 		return jToolBar;
 	}
 
-	// private void fillHead(DzscInnerMergeHead head) {
-	// head.setSeqNum(Integer.valueOf(dzscAction.getNum(new Request(CommonVars
-	// .getCurrUser()), "DzscInnerMergeHead", "seqNum")));
-	// head.setType(DzscState.Application);
-	// head.setCreateDate(CommonVars.nowToStandDate());
-	// // head.setHistoryState(new Boolean(false));
-	// head.setCompany(CommonVars.getCurrUser().getCompany());
-	// }
-
 	private JButton getBtnAdd() {
 		if (btnAdd == null) {
 			btnAdd = new JButton();
@@ -315,15 +299,6 @@ public class FmDzscEmsPorWjHead extends JInternalFrameBase {
 		return btnAdd;
 	}
 
-	/**
-	 * 
-	 * This method initializes jButton1
-	 * 
-	 * 
-	 * 
-	 * @return javax.swing.JButton
-	 * 
-	 */
 	private JButton getBtnEdit() {
 		if (btnEdit == null) {
 			btnEdit = new JButton();
@@ -348,15 +323,6 @@ public class FmDzscEmsPorWjHead extends JInternalFrameBase {
 		return btnEdit;
 	}
 
-	/**
-	 * 
-	 * This method initializes jButton2
-	 * 
-	 * 
-	 * 
-	 * @return javax.swing.JButton
-	 * 
-	 */
 	private JButton getBtnDelete() {
 		if (btnDelete == null) {
 			btnDelete = new JButton();
@@ -388,15 +354,6 @@ public class FmDzscEmsPorWjHead extends JInternalFrameBase {
 		return btnDelete;
 	}
 
-	/**
-	 * 
-	 * This method initializes jButton3
-	 * 
-	 * 
-	 * 
-	 * @return javax.swing.JButton
-	 * 
-	 */
 	private JButton getBtnShow() {
 		if (btnShow == null) {
 			btnShow = new JButton();
@@ -420,15 +377,6 @@ public class FmDzscEmsPorWjHead extends JInternalFrameBase {
 		return btnShow;
 	}
 
-	/**
-	 * 
-	 * This method initializes jButton4
-	 * 
-	 * 
-	 * 
-	 * @return javax.swing.JButton
-	 * 
-	 */
 	private JButton getBtnDeclare() {
 		if (btnDeclare == null) {
 			btnDeclare = new JButton();
@@ -488,33 +436,6 @@ public class FmDzscEmsPorWjHead extends JInternalFrameBase {
 		return btnDeclare;
 	}
 
-	// private void setState() {
-	// jButton8.setEnabled(getValue().equals(DzscState.Change)); // 修改清单
-	// jButton9.setEnabled(!getValue().equals(DzscState.Execute)); // 删除
-	// jButton10.setEnabled(!getValue().equals(DzscState.Application)); // 显示
-	// btnPutOnRecord.setEnabled(!getValue().equals(DzscState.Execute)); // 备案
-	// jButton12.setEnabled(getValue().equals(DzscState.Execute)); // 变更
-	// jButton13.setEnabled(!getValue().equals(DzscState.Change)); // 转抄
-	// jButton14.setEnabled(!getValue().equals(DzscState.Execute)); // 修改合同
-	// }
-
-	// private String getValue() {
-	// if (tableModelHg.getCurrentRow() != null) {
-	// return ((DzscEmsPorHead) tableModelHg.getCurrentRow())
-	// .getDeclareState();
-	// }
-	// return "";
-	// }
-
-	/**
-	 * 
-	 * This method initializes btnPrint
-	 * 
-	 * 
-	 * 
-	 * @return javax.swing.JButton
-	 * 
-	 */
 	private JButton getBtnCopy() {
 		if (btnCopy == null) {
 			btnCopy = new JButton();
@@ -615,21 +536,6 @@ public class FmDzscEmsPorWjHead extends JInternalFrameBase {
 	public void setChange(boolean isChange) {
 		this.isChange = isChange;
 	}
-
-	// /**
-	// * @return Returns the head.
-	// */
-	// public DzscInnerMergeHead getHead() {
-	// return head;
-	// }
-	//
-	// /**
-	// * @param head
-	// * The head to set.
-	// */
-	// public void setHead(DzscInnerMergeHead head) {
-	// this.head = head;
-	// }
 
 	/**
 	 * This method initializes jButton5
@@ -744,23 +650,6 @@ public class FmDzscEmsPorWjHead extends JInternalFrameBase {
 		}
 		return jPanel3;
 	}
-
-	// /**
-	// * 编辑海关合同
-	// * isEditBill 是编辑清单
-	// */
-	// private void editHg(boolean isEditBill) {
-	// if (tableModelHg.getCurrentRow() == null) {
-	// JOptionPane.showMessageDialog(FmDzscEmsPorWjHead.this, "请选中要修改的合同！",
-	// "提示", 2);
-	// return;
-	// }
-	// DgDzscEmsPor dg = new DgDzscEmsPor();
-	// dg.setDataState(DataState.EDIT);
-	// dg.setEditBill(isEditBill);
-	// dg.setTableModelHead(tableModelHg);
-	// dg.setVisible(true);
-	// }
 
 	private void setState() {
 		btnEdit.setEnabled(getValueWj().equals(DzscState.ORIGINAL)

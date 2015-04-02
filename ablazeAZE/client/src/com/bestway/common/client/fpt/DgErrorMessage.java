@@ -1,19 +1,18 @@
 package com.bestway.common.client.fpt;
 
+import java.awt.BorderLayout;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
 
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+
 import com.bestway.client.util.JTableListColumn;
 import com.bestway.client.util.JTableListModel;
 import com.bestway.client.util.JTableListModelAdapter;
 import com.bestway.ui.winuicontrol.JDialogBase;
-
-import java.awt.BorderLayout;
-
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 
 public class DgErrorMessage extends JDialogBase {
 	private JScrollPane scrollPane;
@@ -24,7 +23,7 @@ public class DgErrorMessage extends JDialogBase {
 	
 	public DgErrorMessage() {
 		this.setTitle("错误信息");
-		this.setBounds(100, 100, 574, 400);
+		this.setBounds(100, 100, 833, 398);
 		initialize();
 	}
 	private void initialize() {
@@ -59,7 +58,7 @@ public class DgErrorMessage extends JDialogBase {
 			public List<JTableListColumn> InitColumns() {
 				List<JTableListColumn> list = new Vector<JTableListColumn>();
 				list.add(addColumn("栏位","setCoulmn",130));
-				list.add(addColumn("错误信息","errorMessage",360));
+				list.add(addColumn("错误信息","errorMessage",600));
 				return list;
 			}
 		};

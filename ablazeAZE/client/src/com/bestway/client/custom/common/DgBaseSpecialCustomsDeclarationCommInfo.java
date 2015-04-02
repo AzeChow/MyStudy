@@ -1093,24 +1093,28 @@ public abstract class DgBaseSpecialCustomsDeclarationCommInfo extends
 	}
 
 	protected void initParam() {
+		if (customsDeclarationCommInfo != null) {
+			// 原产国
+			Country country = customsDeclarationCommInfo.getCountry();
 
-		// 原产国
-		Country country = customsDeclarationCommInfo.getCountry();
+			// 用途
+			Uses uses = customsDeclarationCommInfo.getUses();
 
-		// 用途
-		Uses uses = customsDeclarationCommInfo.getUses();
-
-		// 征免方式
-		LevyMode levyMode = customsDeclarationCommInfo.getLevyMode();
-
-		// 原产国--取报关单参数设置
-		cbbProduceCountry.setSelectedItem(country == null ? other1.getCountry()
-				: country);
-		// 默认用途--取报关单参数设置
-		cbbUses.setSelectedItem(uses == null ? other1.getUses() : uses);
-		// 减免方式--取报关单参数设置
-		cbbLevyMode.setSelectedItem(levyMode == null ? other1.getLevyMode()
-				: levyMode);
+			// 征免方式
+			LevyMode levyMode = customsDeclarationCommInfo.getLevyMode();
+			cbbProduceCountry.setSelectedItem(country == null ? other1
+					.getCountry() : country);
+			cbbUses.setSelectedItem(uses == null ? other1.getUses() : uses);
+			cbbLevyMode.setSelectedItem(levyMode == null ? other1.getLevyMode()
+					: levyMode);
+		} else {
+			// 原产国--取报关单参数设置
+			cbbProduceCountry.setSelectedItem(other1.getCountry());
+			// 默认用途--取报关单参数设置
+			cbbUses.setSelectedItem(other1.getUses());
+			// 减免方式--取报关单参数设置
+			cbbLevyMode.setSelectedItem(other1.getLevyMode());
+		}
 	}
 
 	/**
@@ -1261,6 +1265,7 @@ public abstract class DgBaseSpecialCustomsDeclarationCommInfo extends
 						tfCommTotalPrice.setValue(getTotalPrice());
 					}
 				});
+
 	}
 
 	protected void showData() {
@@ -1349,9 +1354,8 @@ public abstract class DgBaseSpecialCustomsDeclarationCommInfo extends
 			// 规范申报规格
 			tfDeclareSpec.setText(customsDeclarationCommInfo.getDeclareSpec());
 
-			tfTax.setText(customsDeclarationCommInfo.getTax() == null ? ""
-					: customsDeclarationCommInfo.getTax().toString().equals("") ? ""
-							: customsDeclarationCommInfo.getTax().toString());
+			tfTax.setText(cutZeroInEnd(customsDeclarationCommInfo.getTax()
+					.toString()));
 
 			showPrintData();
 		}
@@ -1482,8 +1486,11 @@ public abstract class DgBaseSpecialCustomsDeclarationCommInfo extends
 		customsDeclarationCommInfo.setDeclareSpec(tfDeclareSpec.getText());
 
 		// 税金
-		customsDeclarationCommInfo.setTax(tfTax.getText().equals("") ? null
-				: Double.valueOf(tfTax.getText()));
+		if (StringUtils.isNotBlank(tfTax.getText())) {
+			customsDeclarationCommInfo.setTax(Double.valueOf(tfTax.getText()));
+		} else {
+			customsDeclarationCommInfo.setTax(null);
+		}
 
 	}
 
@@ -1568,15 +1575,6 @@ public abstract class DgBaseSpecialCustomsDeclarationCommInfo extends
 			JOptionPane.showMessageDialog(null, "原产国不能为空!", "提示!!",
 					JOptionPane.INFORMATION_MESSAGE);
 			return true;
-		}
-
-		if (!StringUtils.isNumeric(tfTax.getText())) {
-
-			JOptionPane.showMessageDialog(null, "税金包含非数字!", "提示!!",
-					JOptionPane.INFORMATION_MESSAGE);
-
-			return true;
-
 		}
 
 		return false;
@@ -1910,5 +1908,36 @@ public abstract class DgBaseSpecialCustomsDeclarationCommInfo extends
 			tfDeclareSpec.setColumns(10);
 		}
 		return tfDeclareSpec;
+	}
+
+	/*
+	 * 切割 以 .0 为结尾的 字符 应显示为 xxxx 非 xxxx.0
+	 */
+	private String cutZeroInEnd(String number) {
+
+		int indexForDot = number.indexOf(".");
+
+		try {
+
+			if (number.substring(indexForDot + 1, indexForDot + 2).equals("0")) {
+
+				if (!number.substring(indexForDot + 2, indexForDot + 3).equals(
+						"0")) {
+
+					return number;
+
+				} else {
+
+					return number.substring(0, indexForDot);
+				}
+
+			}
+
+		} catch (StringIndexOutOfBoundsException e) {
+
+			return number.substring(0, indexForDot);
+
+		}
+		return number.substring(0, indexForDot);
 	}
 } // @jve:decl-index=0:visual-constraint="10,10"

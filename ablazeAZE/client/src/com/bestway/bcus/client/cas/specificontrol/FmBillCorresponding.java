@@ -2130,10 +2130,7 @@ public class FmBillCorresponding extends JFrameBase {
 				long beginTime = System.currentTimeMillis();
 				ProgressTask progressTask = new ProgressTask() {
 					protected void setClientTipMessage() {
-						// String tipMessage = casAction
-						// .getClientTipMessageByBalanceInfo(new Request(
-						// CommonVars.getCurrUser(), true));
-						// CommonProgress.setMessage(flag, tipMessage);
+
 					}
 				};
 				CommonProgress.showProgressDialog(flag,
@@ -2192,9 +2189,9 @@ public class FmBillCorresponding extends JFrameBase {
 		if (isWarnEnvelopNo) {
 			for (int i = 0; i < listBill.size(); i++) {
 				BillDetail bill = listBill.get(i);
-				String billEnvelopNo = bill.getBillMaster().getEnvelopNo() == null ? ""
-						: bill.getBillMaster().getEnvelopNo();
+
 				String commEnvelopNo = "";
+
 				for (int j = 0; j < listC.size(); j++) {
 					commEnvelopNo = listC.get(j).getEnvelopNo() == null ? ""
 							: listC.get(j).getEnvelopNo();
@@ -2213,14 +2210,21 @@ public class FmBillCorresponding extends JFrameBase {
 
 		// 单据参数设置
 		if (b.getIsBillCorrespondingAffirm()) {// 如果单据对应须确认
+
 			String customsDeclarationCode = "";
+
 			for (int i = 0; i < listC.size(); i++) {
+
 				CustomsDeclarationCommInfoBillCorresponding c = listC.get(i);
+
 				// key为：报关单编号 + 报关商品编号
 				String key = c.getCustomsDeclarationId()
 						+ c.getCustomsDeclarationCommInfoId();
+
 				mapC.put(key, c);
+
 				int oldSplit = customsDeclarationCode.length() % 350;
+
 				if (i == listC.size() - 1) {
 					customsDeclarationCode += c.getCustomsDeclarationCode();
 				} else {
@@ -2272,6 +2276,7 @@ public class FmBillCorresponding extends JFrameBase {
 				List<CustomsDeclarationCommInfoBillCorresponding> listC,
 				Map<String, CustomsDeclarationCommInfoBillCorresponding> mapC,
 				List<BillDetail> listBill) {
+
 			this.listC = listC;
 			this.mapC = mapC;
 			this.listBill = listBill;
@@ -2290,10 +2295,7 @@ public class FmBillCorresponding extends JFrameBase {
 				long beginTime = System.currentTimeMillis();
 				ProgressTask progressTask = new ProgressTask() {
 					protected void setClientTipMessage() {
-						// String tipMessage = casAction
-						// .getClientTipMessageByBalanceInfo(new Request(
-						// CommonVars.getCurrUser(), true));
-						// CommonProgress.setMessage(flag, tipMessage);
+
 					}
 				};
 				CommonProgress.showProgressDialog(flag,
@@ -2321,7 +2323,9 @@ public class FmBillCorresponding extends JFrameBase {
 
 					Double alreadyCorrespondingAmount = getDigi(
 							tempC.getAlreadyCorrespondingAmount(), 8);
+
 					Double commAmount = getDigi(tempC.getCommAmount(), 8);
+
 					System.out
 							.println("tempC.getAlreadyCorrespondingAmount() == "
 									+ alreadyCorrespondingAmount);

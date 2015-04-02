@@ -77,7 +77,6 @@ import com.bestway.common.CommonUtils;
 import com.bestway.common.MaterielType;
 import com.bestway.common.ProcExeProgress;
 import com.bestway.common.ProgressInfo;
-import com.bestway.common.Request;
 import com.bestway.common.constant.AppClass;
 import com.bestway.common.constant.DeclareFileInfo;
 import com.bestway.common.constant.DeclareState;
@@ -774,9 +773,9 @@ public class FptManageLogic {
 		head.setAclUser(CommonUtils.getAclUser());
 		head.setProjectType(parameterSet.getProjectType());
 		List listNum = fptManageDao.findFptBillHeadSerialNumber(fptInOutFlag);
-		if(listNum.size()>0&&listNum.get(0)!=null){
-			head.setSerialNumber(Integer.parseInt(listNum.get(0).toString())+1);
-		}else{
+		if (listNum.size() > 0 && listNum.get(0) != null) {
+			head.setSerialNumber(Integer.parseInt(listNum.get(0).toString()) + 1);
+		} else {
 			head.setSerialNumber(1);
 		}
 		return this.fptManageDao.saveFptBillHead(head);
@@ -963,12 +962,13 @@ public class FptManageLogic {
 
 	/**
 	 * 查询结转单据流水号
+	 * 
 	 * @return
 	 */
-	public List findFptBillHeadSerialNumber(String fptInOutFlag){
+	public List findFptBillHeadSerialNumber(String fptInOutFlag) {
 		return this.fptManageDao.findFptBillHeadSerialNumber(fptInOutFlag);
 	}
-	
+
 	/**
 	 * 转抄数据
 	 * 
@@ -984,14 +984,15 @@ public class FptManageLogic {
 				String fptbillheadId = c.getId();
 				String CopBillNo = "";
 				if (isExg == 0) {// 成品0
-					if (inorOut == 0) {//成品发货单			
+					if (inorOut == 0) {// 成品发货单
 						CopBillNo = this.fptMessageLogic.getNewCopEntNoFptBill(
 								"FptBillHead", "issueCopBillNo", "F",
 								FptBusinessType.FPT_BILL,
 								String.valueOf(FptInOutFlag.OUT));
 						c.setIssueCopBillNo(CopBillNo);
 						c.setIssueIsDeclaDate(null);
-//						c.setReceiveCopBillNo(c.getReceiveCopBillNo()); // 发货企业内部编号
+						// c.setReceiveCopBillNo(c.getReceiveCopBillNo()); //
+						// 发货企业内部编号
 						c.setReceiveCopBillNo(null); // 发货企业内部编号
 						c.setReceiveIsDeclaDate(null);// 发货申报时间
 						c.setReceiveAgentCode(c.getReceiveAgentCode());// 发货申报企业9位组织机构代码
@@ -999,8 +1000,8 @@ public class FptManageLogic {
 						c.setReceiveNote(null); // 备注
 						c.setReceiveDate(null); // 发货期
 						c.setReceiveIsDeclaEm(null); // 发货人
-					} else {//成品退货单
-						
+					} else {// 成品退货单
+
 						CopBillNo = this.fptMessageLogic.getNewCopEntNoFptBill(
 								"FptBillHead", "issueCopBillNo", "F",
 								FptBusinessType.FPT_BILL_BACK,
@@ -1010,39 +1011,40 @@ public class FptManageLogic {
 						// 去掉转出的资料
 						c.setIssueCopBillNo(CopBillNo); // 发货企业内部编号
 						c.setIssueIsDeclaDate(null);// 发货申报时间
-//						c.setIssueAgentCode(null);// 发货申报企业9位组织机构代码
-//						c.setIssueAgentName(null);// 发货申报企业组织机构名称
+						// c.setIssueAgentCode(null);// 发货申报企业9位组织机构代码
+						// c.setIssueAgentName(null);// 发货申报企业组织机构名称
 						c.setReceiveAgentCode(c.getReceiveAgentCode());// 发货申报企业9位组织机构代码
 						c.setReceiveAgentName(c.getReceiveAgentName());// 发货申报企业组织机构名称
 						c.setIssueNote(null); // 备注
-//						c.setIssueDate(null); // 发货期
-//						c.setIssueIsDeclaEm(null); // 发货人
+						// c.setIssueDate(null); // 发货期
+						// c.setIssueIsDeclaEm(null); // 发货人
 						c.setReceiveDate(null); // 发货期
 						c.setReceiveIsDeclaEm(null); // 发货人
 					}
-				} else {//料件1
-					if (inorOut == 0) {//料件收货单
-						CopBillNo = this.fptMessageLogic.getNewCopEntNoFptBill("FptBillHead",
-								"receiveCopBillNo", "F",FptBusinessType.FPT_BILL, FptInOutFlag.IN);
-						
+				} else {// 料件1
+					if (inorOut == 0) {// 料件收货单
+						CopBillNo = this.fptMessageLogic.getNewCopEntNoFptBill(
+								"FptBillHead", "receiveCopBillNo", "F",
+								FptBusinessType.FPT_BILL, FptInOutFlag.IN);
+
 						c.setIssueIsDeclaDate(null);
 						c.setIssueCopBillNo(null);
 						// 去掉转入的资料
-//						c.setReceiveCopBillNo(c.getReceiveAgentCode()); // 发货企业内部编号
+						// c.setReceiveCopBillNo(c.getReceiveAgentCode()); //
+						// 发货企业内部编号
 						c.setReceiveCopBillNo(CopBillNo); // 发货企业内部编号
 						c.setReceiveIsDeclaDate(null);// 发货申报时间
 						c.setReceiveAgentCode(c.getReceiveAgentCode());// 发货申报企业9位组织机构代码
 						c.setReceiveAgentName(c.getReceiveAgentName());// 发货申报企业组织机构名称
 						c.setReceiveNote(null); // 备注
-//						c.setReceiveDate(null); // 发货期
-//						c.setReceiveIsDeclaEm(null); // 发货人
+						// c.setReceiveDate(null); // 发货期
+						// c.setReceiveIsDeclaEm(null); // 发货人
 						c.setIssueDate(null); // 发货期
 						c.setIssueIsDeclaEm(null); // 发货人
-					} else {//料件退货单
-						CopBillNo = this.fptMessageLogic
-								.getNewCopEntNoFptBill("FptBillHead",
-										"receiveCopBillNo", "F",
-										FptBusinessType.FPT_BILL_BACK, FptInOutFlag.IN);
+					} else {// 料件退货单
+						CopBillNo = this.fptMessageLogic.getNewCopEntNoFptBill(
+								"FptBillHead", "receiveCopBillNo", "F",
+								FptBusinessType.FPT_BILL_BACK, FptInOutFlag.IN);
 						c.setReceiveIsDeclaDate(null);
 						c.setReceiveCopBillNo(CopBillNo);
 						// 去掉转出的资料
@@ -1102,9 +1104,7 @@ public class FptManageLogic {
 		}
 		return lsResult;
 	}
-	
 
-	
 	/**
 	 * 保存转厂初始化单据
 	 */
@@ -2884,59 +2884,64 @@ public class FptManageLogic {
 		}
 		return lsEmsHead;
 	}
-	
+
 	/**
 	 * 根据申请单编号获取申请单
+	 * 
 	 * @param request
 	 * @param isImportGoods
 	 * @param list
 	 * @return
 	 */
-	public List findFptAppHead(String isImportGoods,List<String> list){
-		return this.fptManageDao.findFptAppHead(isImportGoods,list);
+	public List findFptAppHead(String isImportGoods, List<String> list) {
+		return this.fptManageDao.findFptAppHead(isImportGoods, list);
 	}
-	
+
 	/**
 	 * 保存转厂进出货单表头和表体
+	 * 
 	 * @param list
 	 */
-	public void saveFptBillHeadsAndFptBillItems(List list,String fptBusinessType){
-		
-		if(list.size()>0&&(list.get(0) instanceof List)){
-			List ls = (List)list.get(0);
+	public void saveFptBillHeadsAndFptBillItems(List list,
+			String fptBusinessType) {
+
+		if (list.size() > 0 && (list.get(0) instanceof List)) {
+			List ls = (List) list.get(0);
 			for (int j = 0; j < ls.size(); j++) {
-				FptBillHead head = (FptBillHead)ls.get(j);
-				FptParameterSet parameterSet = this.fptManageDao.findFptParameterSet();
-				if(parameterSet.getProjectType()==null){
+				FptBillHead head = (FptBillHead) ls.get(j);
+				FptParameterSet parameterSet = this.fptManageDao
+						.findFptParameterSet();
+				if (parameterSet.getProjectType() == null) {
 					throw new RuntimeException("请到转厂管理参数设置中,先设置项目类型!");
 				}
 				head.setProjectType(parameterSet.getProjectType());
-				
-				if(FptBusinessType.FPT_BILL_BACK.equals(fptBusinessType)){
+
+				if (FptBusinessType.FPT_BILL_BACK.equals(fptBusinessType)) {
 					head.setReceiveCopBillNo(this.fptMessageLogic
 							.getNewCopEntNoFptBill("FptBillHead",
 									"receiveCopBillNo", "F",
-									FptBusinessType.FPT_BILL_BACK, FptInOutFlag.IN));
-				}else{
+									FptBusinessType.FPT_BILL_BACK,
+									FptInOutFlag.IN));
+				} else {
 					head.setIssueCopBillNo(this.fptMessageLogic
-							.getNewCopEntNoFptBill("FptBillHead", "issueCopBillNo",
-									"F", FptBusinessType.FPT_BILL, FptInOutFlag.OUT));
+							.getNewCopEntNoFptBill("FptBillHead",
+									"issueCopBillNo", "F",
+									FptBusinessType.FPT_BILL, FptInOutFlag.OUT));
 				}
 			}
 			this.baseCodeDao.batchSaveOrUpdate(ls);
-		}	
-		if(list.size()>1&&(list.get(1) instanceof List)){
-			List ls = (List)list.get(1);
+		}
+		if (list.size() > 1 && (list.get(1) instanceof List)) {
+			List ls = (List) list.get(1);
 			for (int j = 0; j < ls.size(); j++) {
-				FptBillItem item = (FptBillItem)ls.get(j);
-				item.setListNo(fptManageDao.getMaxFptBillItemListNo(item.getFptBillHead()) + j
-						+ 1);
-				
+				FptBillItem item = (FptBillItem) ls.get(j);
+				item.setListNo(fptManageDao.getMaxFptBillItemListNo(item
+						.getFptBillHead()) + j + 1);
+
 			}
 			this.baseCodeDao.batchSaveOrUpdate(ls);
 		}
 	}
-	
 
 	/**
 	 * 根据系统类型，账册号或手册号，物料和成品分类抓取转厂的物料信息
@@ -4234,7 +4239,7 @@ public class FptManageLogic {
 				Date endDate = dateFormat.parse(note.trim());
 				if (endDate != null) {
 					fptAppHead.setEndDate(endDate);
-					fptAppHead.setDeclareState(DeclareState.PROCESS_EXE);//备注：申请表收到有效日期之后，再将状态进行改变。
+					fptAppHead.setDeclareState(DeclareState.PROCESS_EXE);// 备注：申请表收到有效日期之后，再将状态进行改变。
 					fptAppHead.setModifyMarkState(ModifyMarkState.UNCHANGE);
 				}
 			} catch (ParseException ex) {
@@ -4292,10 +4297,11 @@ public class FptManageLogic {
 					.getFptBillHead().getSysType())) {
 				info.setFptBillAmount(fptbillIssueAmount);
 				info.setFptbillRemain(fptReceiveAmount);
-				//当前可发退货数量
+				// 当前可发退货数量
 				double isbillcurrentremain = 0.0;
 				isbillcurrentremain = fptbillIssueAmount - fptReceiveAmount;
-				info.setFptbillcurrentRemain(Double.valueOf(CommonUtils.formatDoubleByDigit(isbillcurrentremain, 5)));
+				info.setFptbillcurrentRemain(Double.valueOf(CommonUtils
+						.formatDoubleByDigit(isbillcurrentremain, 5)));
 			}
 		} else {
 			// 判断转入企业
@@ -4319,10 +4325,11 @@ public class FptManageLogic {
 					.getFptBillHead().getSysType())) {
 				info.setFptBillAmount(fptbillReceiveAmount);
 				info.setFptbillRemain(fptIssueAmount);
-				//当前可发退货数量
+				// 当前可发退货数量
 				double isbillcurrentremain = 0.0;
 				isbillcurrentremain = fptbillReceiveAmount - fptIssueAmount;
-				info.setFptbillcurrentRemain(Double.valueOf(CommonUtils.formatDoubleByDigit(isbillcurrentremain, 5)));
+				info.setFptbillcurrentRemain(Double.valueOf(CommonUtils
+						.formatDoubleByDigit(isbillcurrentremain, 5)));
 			}
 		}
 		return info;
@@ -4610,7 +4617,9 @@ public class FptManageLogic {
 								.equals(chkMark)) {
 							writeFptAppHeadSeqNo(fptAppHead, receiptResult);
 						} else if (FptProcessResult.CHECK_PASS_ALL
-								.equals(chkMark) && checkReceiptNoteIsDate(receiptResult.getNote())) {
+								.equals(chkMark)
+								&& checkReceiptNoteIsDate(receiptResult
+										.getNote())) {
 							effectiveFptAppHead(fptAppHead, existFptAppHead,
 									receiptResult);
 						} else if (FptProcessResult.IMP_CENTDB_FAIL
@@ -4642,26 +4651,26 @@ public class FptManageLogic {
 		this.fptManageDao.saveFptAppHead(fptAppHead);
 	}
 
-    /**
-     * 判断回执中的备注是否是日期类型
-     *
-     * @param note
-     * @return
-     */
-    private boolean checkReceiptNoteIsDate(String note) {
-        if (note != null && note.trim().length() == 8) {
-            DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
-            try {
-                Date endDate = dateFormat.parse(note.trim());
-                if (endDate != null) {
-                    return true;
-                }
-            } catch (ParseException ex) {
-                ex.printStackTrace();
-            }
-        }
-        return false;
-    }
+	/**
+	 * 判断回执中的备注是否是日期类型
+	 *
+	 * @param note
+	 * @return
+	 */
+	private boolean checkReceiptNoteIsDate(String note) {
+		if (note != null && note.trim().length() == 8) {
+			DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+			try {
+				Date endDate = dateFormat.parse(note.trim());
+				if (endDate != null) {
+					return true;
+				}
+			} catch (ParseException ex) {
+				ex.printStackTrace();
+			}
+		}
+		return false;
+	}
 
 	/** 新增转厂申请单明细 来自 bcs 合同成品 */
 	public List<FptAppItem> newFptAppItemByContractExg(FptAppHead head,
@@ -5379,43 +5388,46 @@ public class FptManageLogic {
 
 			String outTradeCode = mapAppHeadData.get("OUT_TRADE_CODE");
 			String outTradeName = mapAppHeadData.get("OUT_TRADE_NAME");
-			
-			Brief brief=null;
-			List briefList=this.bcsImpExpRequestDao.findBriefByCode(outTradeCode);
-			if(!briefList.isEmpty()){
-				brief=(Brief)briefList.get(0);				
-				if(!brief.getName().equals(outTradeName)){//如果海关注册公司编码一致，名称不一致，则修改名称。
+
+			Brief brief = null;
+			List briefList = this.bcsImpExpRequestDao
+					.findBriefByCode(outTradeCode);
+			if (!briefList.isEmpty()) {
+				brief = (Brief) briefList.get(0);
+				if (!brief.getName().equals(outTradeName)) {// 如果海关注册公司编码一致，名称不一致，则修改名称。
 					brief.setName(outTradeName);
 					this.bcsImpExpRequestDao.saveOrUpdate(brief);
 				}
-			}else{
-				briefList=this.bcsImpExpRequestDao.findBriefByName(outTradeName);
-				if(!briefList.isEmpty()){//如果名称一致，编码不一致，则此海关注册公司进行作废。
-					brief=(Brief)briefList.get(0);
-					brief.setName(brief.getName()+"(已作废)");
+			} else {
+				briefList = this.bcsImpExpRequestDao
+						.findBriefByName(outTradeName);
+				if (!briefList.isEmpty()) {// 如果名称一致，编码不一致，则此海关注册公司进行作废。
+					brief = (Brief) briefList.get(0);
+					brief.setName(brief.getName() + "(已作废)");
 					this.bcsImpExpRequestDao.saveOrUpdate(brief);
-					brief=null;
+					brief = null;
 				}
 			}
 			/**
 			 * 如果海关注册公司不存在，则生成一个。
 			 */
-			if(brief==null){
-				brief=new Brief();
+			if (brief == null) {
+				brief = new Brief();
 				brief.setCode(outTradeCode);
 				brief.setName(outTradeName);
 				this.bcsImpExpRequestDao.saveOrUpdate(brief);
 			}
-			
+
 			// HH2013.10.22 供应商
 			List<ScmCoc> listCocsOUT = bcsImpExpRequestDao
 					.findScmCocByNameAndType(
-							mapAppHeadData.get("OUT_TRADE_NAME"), true, false);
+							mapAppHeadData.get("OUT_TRADE_NAME"), true, false,
+							false, false);
 			ScmCoc outScmCoc = listCocsOUT.isEmpty() ? null : listCocsOUT
 					.get(0);
-			if(outScmCoc==null){
-				throw new RuntimeException("没有找到名称是："+outTradeName+"的供应商。");
-			}else{
+			if (outScmCoc == null) {
+				throw new RuntimeException("没有找到名称是：" + outTradeName + "的供应商。");
+			} else {
 				outScmCoc.setBrief(brief);
 				this.bcsImpExpRequestDao.saveOrUpdate(outScmCoc);
 			}
@@ -5649,13 +5661,13 @@ public class FptManageLogic {
 								FptBusinessType.FPT_BILL, FptInOutFlag.IN));
 				fptBillHead.setReceiveCopBillNo(inCopAppNo);
 				fptBillHead.setAppState("1");
-				
-				Company company=(Company)CommonUtils.getCompany();
+
+				Company company = (Company) CommonUtils.getCompany();
 				fptBillHead.setReceiveAgentCode(company.getCode());
-                fptBillHead.setReceiveTradeName(company.getName());
-                fptBillHead.setReceiveAgentCode(company.getInAgentCode());
-                fptBillHead.setReceiveAgentName(company.getInAgentName());
-				
+				fptBillHead.setReceiveTradeName(company.getName());
+				fptBillHead.setReceiveAgentCode(company.getInAgentCode());
+				fptBillHead.setReceiveAgentName(company.getInAgentName());
+
 			}
 			// 申请表编号
 			String appNo = mapBillHeadData.get("APP_NO");
@@ -5706,11 +5718,12 @@ public class FptManageLogic {
 			// 备注
 			String note = mapBillHeadData.get("OUT_NOTE");
 			fptBillHead.setReceiveNote(note);
-			//运输工具类别
-			String  transportToolTypenew = mapBillHeadData.get("CONVEY_TYPE");
-			Transf transportToolType = this.fptManageDao.findTransfByCode(transportToolTypenew);
+			// 运输工具类别
+			String transportToolTypenew = mapBillHeadData.get("CONVEY_TYPE");
+			Transf transportToolType = this.fptManageDao
+					.findTransfByCode(transportToolTypenew);
 			fptBillHead.setTransportToolTypenew(transportToolType);
-			
+
 			System.out.println("-----------save fptbillhead" + fptBillHead);
 			// 保存表头
 			this.fptManageDao.saveFptBillHead(fptBillHead);
@@ -5946,17 +5959,19 @@ public class FptManageLogic {
 				fptBillHead.setProjectType(parameterSet.getProjectType());
 				fptBillHead.setBillSort(FptInOutFlag.OUT);
 				fptBillHead.setSysType(FptBusinessType.FPT_BILL_BACK);
-				
-				Company company=(Company)CommonUtils.getCompany();
+
+				Company company = (Company) CommonUtils.getCompany();
 				fptBillHead.setIssueAgentCode(company.getCode());
-                fptBillHead.setIssueTradeName(company.getName());
-                fptBillHead.setIssueAgentCode(company.getInAgentCode());
-                fptBillHead.setIssueAgentName(company.getInAgentName());
-                //柯鹏程
-                String receiveCopBillNo = this.fptMessageLogic.getNewCopEntNoFptBill("FptBillHead", "issueCopBillNo",
-								"F", FptBusinessType.FPT_BILL_BACK,FptInOutFlag.OUT);
-                fptBillHead.setIssueCopBillNo(receiveCopBillNo);
-				
+				fptBillHead.setIssueTradeName(company.getName());
+				fptBillHead.setIssueAgentCode(company.getInAgentCode());
+				fptBillHead.setIssueAgentName(company.getInAgentName());
+				// 柯鹏程
+				String receiveCopBillNo = this.fptMessageLogic
+						.getNewCopEntNoFptBill("FptBillHead", "issueCopBillNo",
+								"F", FptBusinessType.FPT_BILL_BACK,
+								FptInOutFlag.OUT);
+				fptBillHead.setIssueCopBillNo(receiveCopBillNo);
+
 			}
 			// 申请表编号
 			// String appNo = mapBillHeadData.get("BILL_NO");
@@ -5994,11 +6009,12 @@ public class FptManageLogic {
 			// 备注
 			String note = mapBillHeadData.get("IN_NOTE");
 			fptBillHead.setReceiveNote(note);
-			//运输工具类别
-			String  transportToolTypenew = mapBillHeadData.get("CONVEY_TYPE");
-			Transf transportToolType = this.fptManageDao.findTransfByCode(transportToolTypenew);
+			// 运输工具类别
+			String transportToolTypenew = mapBillHeadData.get("CONVEY_TYPE");
+			Transf transportToolType = this.fptManageDao
+					.findTransfByCode(transportToolTypenew);
 			fptBillHead.setTransportToolTypenew(transportToolType);
-			
+
 			this.fptManageDao.saveFptBillHead(fptBillHead);
 			List listFptBillItem = this.fptManageDao
 					.findFptBillItemCommodityInfo(fptBillHead.getId(),
@@ -6018,7 +6034,7 @@ public class FptManageLogic {
 			if (listItem != null && !listItem.isEmpty()) {
 				for (Map<String, String> mapItem : listItem) {
 					// 序号
-					String listNo = mapItem.get("IN_NO");//LIST_NO
+					String listNo = mapItem.get("IN_NO");// LIST_NO
 					System.out.println("-----------IN_NO:" + listNo);
 					FptBillItem fptBillItem = mapFptBillItem.get(listNo.trim());
 					if (fptBillItem == null) {
@@ -6340,10 +6356,6 @@ public class FptManageLogic {
 		return map;
 	}
 
-
-
-
-	
 	/**
 	 * 1.合同定量(DZSC or BCS )
 	 * 
@@ -6526,15 +6538,9 @@ public class FptManageLogic {
 	//
 	// /////////////////////////////////////////////////////////////////////////////////////
 
-	
-	
-	
-	
-	
-	
 	// /////////////////////////////////////////////////////////////////////////////////////
 	// hyq
-	// begin 深加工结转申请表收发货余量分析 
+	// begin 深加工结转申请表收发货余量分析
 	// key=(申请表编号+申请表序号)
 	// /////////////////////////////////////////////////////////////////////////////////////
 	/**
@@ -6547,7 +6553,7 @@ public class FptManageLogic {
 			return resultList;
 		}
 		int projectType = param.getProjectType().intValue();
-		
+
 		List list = this.fptManageDao.findFptAppItemsApplyQty(param);
 		for (int i = 0; i < list.size(); i++) {
 			TempFptApplySurplus t = new TempFptApplySurplus();
@@ -6555,63 +6561,68 @@ public class FptManageLogic {
 			//
 			// 申请表定量
 			//
-			
+
 			Object[] objs = (Object[]) list.get(i);
 			String emsNo = objs[0] == null ? "" : (String) objs[0];
 			t.setEmsNo(emsNo);
-			
+
 			String appNo = objs[1] == null ? "" : (String) objs[1];
 			t.setAppNo(appNo);
-			
-			Boolean isCollated = objs[2] == null ? false : (Boolean)objs[2];
+
+			Boolean isCollated = objs[2] == null ? false : (Boolean) objs[2];
 			t.setIsCollated(isCollated);
-			
+
 			Date endDate = objs[3] == null ? null : (Date) objs[3];
 			t.setEndDate(endDate);
-			
+
 			String tradeName = objs[4] == null ? "" : (String) objs[4];
 			t.setTradeName(tradeName);
-			
-			int listNo = objs[5] == null ? 0 : (Integer)objs[5];
+
+			int listNo = objs[5] == null ? 0 : (Integer) objs[5];
 			t.setListNo(listNo);
-			
-			int trNo = objs[6] == null ? 0 : (Integer)objs[6];
+
+			int trNo = objs[6] == null ? 0 : (Integer) objs[6];
 			t.setTrNo(trNo);
-			
-			String complex = objs[7]==null ? "" : (String) objs[7];
+
+			String complex = objs[7] == null ? "" : (String) objs[7];
 			t.setComplex(complex);
-			
-			String name = objs[8]==null ? "" : (String) objs[8];
+
+			String name = objs[8] == null ? "" : (String) objs[8];
 			t.setName(name);
-			
-			String spec = objs[9]==null ? "" : (String) objs[9];
+
+			String spec = objs[9] == null ? "" : (String) objs[9];
 			t.setSpec(spec);
-			
-			String unitName = objs[10]==null ? "" : (String) objs[10];
+
+			String unitName = objs[10] == null ? "" : (String) objs[10];
 			t.setUnitName(unitName);
-			
+
 			Double fptHeadAty = objs[11] == null ? 0.0 : (Double) objs[11];
 			t.setFptHeadQty(fptHeadAty);
-			
+
 			resultList.add(t);
 		}
-		
-		//统计收送货单(收送货)数量
-		Map<String, Double> fptBillItemsSendReceiveQtyMap = this.getFptBillItemsSendReceiveQty(param, FptBusinessType.FPT_BILL);
 
-		//统计收送货单(退货)数量
-		Map<String, Double> fptBillItemsBackQtyMap = this.getFptBillItemsBackQtyMap(param,FptBusinessType.FPT_BILL_BACK);
-		
+		// 统计收送货单(收送货)数量
+		Map<String, Double> fptBillItemsSendReceiveQtyMap = this
+				.getFptBillItemsSendReceiveQty(param, FptBusinessType.FPT_BILL);
+
+		// 统计收送货单(退货)数量
+		Map<String, Double> fptBillItemsBackQtyMap = this
+				.getFptBillItemsBackQtyMap(param, FptBusinessType.FPT_BILL_BACK);
+
 		// 填充其它栏位
 		for (TempFptApplySurplus t : resultList) {
 			String key = t.getAppNo() + "@" + t.getListNo();
-			t.setSendReceiveQty(fptBillItemsSendReceiveQtyMap.get(key) == null ? 0.0 : fptBillItemsSendReceiveQtyMap.get(key));
-			t.setReturnQty(fptBillItemsBackQtyMap.get(key) == null ? 0.0 : fptBillItemsBackQtyMap.get(key));
-			t.setRemainQty(t.getFptHeadQty() - t.getSendReceiveQty() + t.getReturnQty());
+			t.setSendReceiveQty(fptBillItemsSendReceiveQtyMap.get(key) == null ? 0.0
+					: fptBillItemsSendReceiveQtyMap.get(key));
+			t.setReturnQty(fptBillItemsBackQtyMap.get(key) == null ? 0.0
+					: fptBillItemsBackQtyMap.get(key));
+			t.setRemainQty(t.getFptHeadQty() - t.getSendReceiveQty()
+					+ t.getReturnQty());
 		}
 		return resultList;
 	}
-	
+
 	/**
 	 * 转厂申请表收发货余量分析 hyq
 	 */
@@ -6622,7 +6633,7 @@ public class FptManageLogic {
 			return resultList;
 		}
 		int projectType = param.getProjectType().intValue();
-		
+
 		List list = this.fptManageDao.findFptAppItemsApplyQty0(param);
 		for (int i = 0; i < list.size(); i++) {
 			TempFptApplySurplus t = new TempFptApplySurplus();
@@ -6630,74 +6641,81 @@ public class FptManageLogic {
 			//
 			// 申请表定量
 			//
-			
+
 			Object[] objs = (Object[]) list.get(i);
 			String emsNo = objs[0] == null ? "" : (String) objs[0];
 			t.setEmsNo(emsNo);
-			
+
 			String appNo = objs[1] == null ? "" : (String) objs[1];
 			t.setAppNo(appNo);
-			
-			Boolean isCollated = objs[2] == null ? false : (Boolean)objs[2];
+
+			Boolean isCollated = objs[2] == null ? false : (Boolean) objs[2];
 			t.setIsCollated(isCollated);
-			
+
 			Date endDate = objs[3] == null ? null : (Date) objs[3];
 			t.setEndDate(endDate);
-			
+
 			String tradeName = objs[4] == null ? "" : (String) objs[4];
 			t.setTradeName(tradeName);
-			
-			int listNo = objs[5] == null ? 0 : (Integer)objs[5];
+
+			int listNo = objs[5] == null ? 0 : (Integer) objs[5];
 			t.setListNo(listNo);
-			
-			int trNo = objs[6] == null ? 0 : (Integer)objs[6];
+
+			int trNo = objs[6] == null ? 0 : (Integer) objs[6];
 			t.setTrNo(trNo);
-			
-			String complex = objs[7]==null ? "" : (String) objs[7];
+
+			String complex = objs[7] == null ? "" : (String) objs[7];
 			t.setComplex(complex);
-			
-			String name = objs[8]==null ? "" : (String) objs[8];
+
+			String name = objs[8] == null ? "" : (String) objs[8];
 			t.setName(name);
-			
-			String spec = objs[9]==null ? "" : (String) objs[9];
+
+			String spec = objs[9] == null ? "" : (String) objs[9];
 			t.setSpec(spec);
-			
-			String unitName = objs[10]==null ? "" : (String) objs[10];
+
+			String unitName = objs[10] == null ? "" : (String) objs[10];
 			t.setUnitName(unitName);
-			
+
 			Double fptHeadAty = objs[11] == null ? 0.0 : (Double) objs[11];
 			t.setFptHeadQty(fptHeadAty);
-			
+
 			resultList.add(t);
 		}
-		
-		//统计收送货单(收送货)数量
-		Map<String, Double> fptBillItemsSendReceiveQtyMap = this.getFptBillItemsSendReceiveQty(param, FptBusinessType.FPT_BILL);
 
-		//统计收送货单(退货)数量
-		Map<String, Double> fptBillItemsBackQtyMap = this.getFptBillItemsBackQtyMap(param,FptBusinessType.FPT_BILL_BACK);
-		
+		// 统计收送货单(收送货)数量
+		Map<String, Double> fptBillItemsSendReceiveQtyMap = this
+				.getFptBillItemsSendReceiveQty(param, FptBusinessType.FPT_BILL);
+
+		// 统计收送货单(退货)数量
+		Map<String, Double> fptBillItemsBackQtyMap = this
+				.getFptBillItemsBackQtyMap(param, FptBusinessType.FPT_BILL_BACK);
+
 		// 填充其它栏位
 		for (TempFptApplySurplus t : resultList) {
 			String key = t.getAppNo() + "@" + t.getListNo();
-			t.setSendReceiveQty(fptBillItemsSendReceiveQtyMap.get(key) == null ? 0.0 : fptBillItemsSendReceiveQtyMap.get(key));
-			t.setReturnQty(fptBillItemsBackQtyMap.get(key) == null ? 0.0 : fptBillItemsBackQtyMap.get(key));
-			t.setRemainQty(t.getFptHeadQty() - t.getSendReceiveQty() + t.getReturnQty());
+			t.setSendReceiveQty(fptBillItemsSendReceiveQtyMap.get(key) == null ? 0.0
+					: fptBillItemsSendReceiveQtyMap.get(key));
+			t.setReturnQty(fptBillItemsBackQtyMap.get(key) == null ? 0.0
+					: fptBillItemsBackQtyMap.get(key));
+			t.setRemainQty(t.getFptHeadQty() - t.getSendReceiveQty()
+					+ t.getReturnQty());
 		}
 		return resultList;
 	}
 
 	/**
-	 * 统计收送货单(收送货)数量
-	 * HYQ
+	 * 统计收送货单(收送货)数量 HYQ
+	 * 
 	 * @return key = 申请表编号+申请表序号(appNo+appGno)
 	 */
-	private Map<String, Double> getFptBillItemsSendReceiveQty(TempFptAppParam param,String fptBusinessType) {
+	private Map<String, Double> getFptBillItemsSendReceiveQty(
+			TempFptAppParam param, String fptBusinessType) {
 		Map<String, Double> map = new HashMap<String, Double>();
 		//
 		// select a.codeTs.code,a.name,a.spec,a.unit.name,SUM(a.qty)
 		//
-		List list = this.fptManageDao.findFptBillItemsSendReceiveQty(param,fptBusinessType);
+		List list = this.fptManageDao.findFptBillItemsSendReceiveQty(param,
+				fptBusinessType);
 		for (int i = 0; i < list.size(); i++) {
 			//
 			// 填充分组后的值
@@ -6714,32 +6732,27 @@ public class FptManageLogic {
 		}
 		return map;
 	}
-	
+
 	/**
-	 * 统计收送货单(收退货)数量
-	 * HYQ
+	 * 统计收送货单(收退货)数量 HYQ
+	 * 
 	 * @return key = 申请表编号+申请表序号(appNo+appGno)
 	 */
-	private Map<String, Double> getFptBillItemsBackQtyMap(TempFptAppParam param,String fptBusinessType) {
+	private Map<String, Double> getFptBillItemsBackQtyMap(
+			TempFptAppParam param, String fptBusinessType) {
 		Map<String, Double> map = new HashMap<String, Double>();
-		return getFptBillItemsSendReceiveQty(param,fptBusinessType);
+		return getFptBillItemsSendReceiveQty(param, fptBusinessType);
 	}
-	
+
 	// ///////////////////////////////////////////////////////////////////////////////////
 	//
 	// end 深加工结转申请表收发货余量分析HYQ
 	//
 	// /////////////////////////////////////////////////////////////////////////////////////
 
-	
-	
-	
-	
-	
-
 	// /////////////////////////////////////////////////////////////////////////////////////
 	// HYQ
-	// begin 深加工结转手册余量分析 
+	// begin 深加工结转手册余量分析
 	// key=(手册号+手册商品序号)(key=emsNo+trGno)
 	//
 	// /////////////////////////////////////////////////////////////////////////////////////
@@ -6750,7 +6763,7 @@ public class FptManageLogic {
 			return resultList;
 		}
 		int projectType = param.getProjectType().intValue();
-		
+
 		List list = this.fptManageDao.findFptAppItemsApplyQtyByEmsNoTrNo(param);
 		for (int i = 0; i < list.size(); i++) {
 			TempFptApplySurplus t = new TempFptApplySurplus();
@@ -6758,79 +6771,98 @@ public class FptManageLogic {
 			//
 			// 申请表定量b.emsNo,a.trNo,SUM(a.qty)
 			//
-			
+
 			Object[] objs = (Object[]) list.get(i);
 			String emsNo = objs[0] == null ? "" : (String) objs[0];
 			t.setEmsNo(emsNo);
-			
-			int trNo = objs[1] == null ? 0 : (Integer)objs[1];
+
+			int trNo = objs[1] == null ? 0 : (Integer) objs[1];
 			t.setTrNo(trNo);
-			
+
 			Double fptHeadAty = objs[2] == null ? 0.0 : (Double) objs[2];
 			t.setFptHeadQty(fptHeadAty);
-			
+
 			resultList.add(t);
 		}
-		
-		//统计收送货单(收送货)数量
-		Map<String,Double> fptBillItemsSendReceiveQtyMapByEmsNoTrNo = this.getFptBillItemsSendReceiveQtyByEmsNoTrNo(param, FptBusinessType.FPT_BILL);
 
-		//统计收送货单(退货)数量
-		Map<String,Double> fptBillItemsBackQtyMapByEmsNoTrNo = this.getFptBillItemsBackQtyMapByEmsNoTrNo(param,FptBusinessType.FPT_BILL_BACK);
+		// 统计收送货单(收送货)数量
+		Map<String, Double> fptBillItemsSendReceiveQtyMapByEmsNoTrNo = this
+				.getFptBillItemsSendReceiveQtyByEmsNoTrNo(param,
+						FptBusinessType.FPT_BILL);
 
-		//合同定量
-		Map<String,TempFptApplySurplus> ontractByEmsNoSeqNum = this.getContractByEmsNoSeqNum(param);
-		
-		//结转报关单数量
-		Map<String,Double> declarationTransferFactoryByEmsNoSeqNum = this.getDeclarationTransferFactoryByEmsNoSeqNum(param);
-		
+		// 统计收送货单(退货)数量
+		Map<String, Double> fptBillItemsBackQtyMapByEmsNoTrNo = this
+				.getFptBillItemsBackQtyMapByEmsNoTrNo(param,
+						FptBusinessType.FPT_BILL_BACK);
+
+		// 合同定量
+		Map<String, TempFptApplySurplus> ontractByEmsNoSeqNum = this
+				.getContractByEmsNoSeqNum(param);
+
+		// 结转报关单数量
+		Map<String, Double> declarationTransferFactoryByEmsNoSeqNum = this
+				.getDeclarationTransferFactoryByEmsNoSeqNum(param);
+
 		//
 		// 填充其它栏位
 		//
 		List<TempFptApplySurplus> resultList2 = new ArrayList<TempFptApplySurplus>();
 		for (TempFptApplySurplus t : resultList) {
 			String key = t.getEmsNo() + "@" + t.getTrNo();
-			if(ontractByEmsNoSeqNum.get(key)!=null){
+			if (ontractByEmsNoSeqNum.get(key) != null) {
 				resultList2.add(t);
 			}
-			
-			t.setSendReceiveQty(fptBillItemsSendReceiveQtyMapByEmsNoTrNo.get(key) == null ? 0.0 : fptBillItemsSendReceiveQtyMapByEmsNoTrNo.get(key));
-			t.setReturnQty(fptBillItemsBackQtyMapByEmsNoTrNo.get(key) == null ? 0.0 : fptBillItemsBackQtyMapByEmsNoTrNo.get(key));
-			t.setRemainQty(t.getFptHeadQty() - t.getSendReceiveQty() + t.getReturnQty());
-			
-			//合同
-			t.setCredenceNo(ontractByEmsNoSeqNum.get(key) == null ? 0 : ontractByEmsNoSeqNum.get(key).getCredenceNo());
-			t.setContractEndDate(ontractByEmsNoSeqNum.get(key) == null ? null : ontractByEmsNoSeqNum.get(key).getContractEndDate());
-			t.setComplex(ontractByEmsNoSeqNum.get(key) == null ? "" : ontractByEmsNoSeqNum.get(key).getComplex());
-			t.setName(ontractByEmsNoSeqNum.get(key) == null ? "" : ontractByEmsNoSeqNum.get(key).getName());
-			t.setSpec(ontractByEmsNoSeqNum.get(key) == null ? "" : ontractByEmsNoSeqNum.get(key).getSpec());
-			t.setUnitName(ontractByEmsNoSeqNum.get(key) == null ? "" : ontractByEmsNoSeqNum.get(key).getUnitName());
-			t.setContractQty(ontractByEmsNoSeqNum.get(key) == null ? 0.0 : ontractByEmsNoSeqNum.get(key).getContractQty());
-			
-			//报关单
-			t.setDeclarationTransferFactoryQty(declarationTransferFactoryByEmsNoSeqNum.get(key) == null ? 0.0 : declarationTransferFactoryByEmsNoSeqNum.get(key));
-			
-			//差额表
-			t.setFptDifferenceQty(t.getSendReceiveQty() -  t.getReturnQty() - t.getDeclarationTransferFactoryQty());
+
+			t.setSendReceiveQty(fptBillItemsSendReceiveQtyMapByEmsNoTrNo
+					.get(key) == null ? 0.0
+					: fptBillItemsSendReceiveQtyMapByEmsNoTrNo.get(key));
+			t.setReturnQty(fptBillItemsBackQtyMapByEmsNoTrNo.get(key) == null ? 0.0
+					: fptBillItemsBackQtyMapByEmsNoTrNo.get(key));
+			t.setRemainQty(t.getFptHeadQty() - t.getSendReceiveQty()
+					+ t.getReturnQty());
+
+			// 合同
+			t.setCredenceNo(ontractByEmsNoSeqNum.get(key) == null ? 0
+					: ontractByEmsNoSeqNum.get(key).getCredenceNo());
+			t.setContractEndDate(ontractByEmsNoSeqNum.get(key) == null ? null
+					: ontractByEmsNoSeqNum.get(key).getContractEndDate());
+			t.setComplex(ontractByEmsNoSeqNum.get(key) == null ? ""
+					: ontractByEmsNoSeqNum.get(key).getComplex());
+			t.setName(ontractByEmsNoSeqNum.get(key) == null ? ""
+					: ontractByEmsNoSeqNum.get(key).getName());
+			t.setSpec(ontractByEmsNoSeqNum.get(key) == null ? ""
+					: ontractByEmsNoSeqNum.get(key).getSpec());
+			t.setUnitName(ontractByEmsNoSeqNum.get(key) == null ? ""
+					: ontractByEmsNoSeqNum.get(key).getUnitName());
+			t.setContractQty(ontractByEmsNoSeqNum.get(key) == null ? 0.0
+					: ontractByEmsNoSeqNum.get(key).getContractQty());
+
+			// 报关单
+			t.setDeclarationTransferFactoryQty(declarationTransferFactoryByEmsNoSeqNum
+					.get(key) == null ? 0.0
+					: declarationTransferFactoryByEmsNoSeqNum.get(key));
+
+			// 差额表
+			t.setFptDifferenceQty(t.getSendReceiveQty() - t.getReturnQty()
+					- t.getDeclarationTransferFactoryQty());
 
 		}
-		
-		
-		
+
 		return resultList2;
 	}
 
 	/**
-	 * HYQ
-	 * 统计收送货单(收送货)数量
-	 * key = 手册序号+手册流水号(emsNo+trGno)
+	 * HYQ 统计收送货单(收送货)数量 key = 手册序号+手册流水号(emsNo+trGno)
 	 */
-	private Map<String, Double> getFptBillItemsSendReceiveQtyByEmsNoTrNo(TempFptAppParam param,String fptBusinessType) {
+	private Map<String, Double> getFptBillItemsSendReceiveQtyByEmsNoTrNo(
+			TempFptAppParam param, String fptBusinessType) {
 		Map<String, Double> map = new HashMap<String, Double>();
 		//
 		// select a.codeTs.code,a.name,a.spec,a.unit.name,SUM(a.qty)
 		//
-		List list = this.fptManageDao.findFptBillItemsSendReceiveQtyByEmsNoTrNo(param,fptBusinessType);
+		List list = this.fptManageDao
+				.findFptBillItemsSendReceiveQtyByEmsNoTrNo(param,
+						fptBusinessType);
 		for (int i = 0; i < list.size(); i++) {
 			//
 			// 填充分组后的值
@@ -6838,7 +6870,8 @@ public class FptManageLogic {
 			Object[] objs = (Object[]) list.get(i);
 			String emsNo = objs[0] == null ? "" : (String) objs[0];
 			Integer trGno = objs[1] == null ? 0 : (Integer) objs[1];
-			Double declarationTransferFactoryQty = objs[2] == null ? 0.0 : (Double) objs[2];
+			Double declarationTransferFactoryQty = objs[2] == null ? 0.0
+					: (Double) objs[2];
 			//
 			// 手册号+手册序号
 			//
@@ -6847,25 +6880,24 @@ public class FptManageLogic {
 		}
 		return map;
 	}
-	
+
 	/**
-	 * HYQ
-	 * 统计收送货单(收退货)数量
-	 * key = 手册序号+手册流水号(emsNo+trGno)
+	 * HYQ 统计收送货单(收退货)数量 key = 手册序号+手册流水号(emsNo+trGno)
 	 */
-	private Map<String, Double> getFptBillItemsBackQtyMapByEmsNoTrNo(TempFptAppParam param,String fptBusinessType) {
+	private Map<String, Double> getFptBillItemsBackQtyMapByEmsNoTrNo(
+			TempFptAppParam param, String fptBusinessType) {
 		Map<String, Double> map = new HashMap<String, Double>();
-		return getFptBillItemsSendReceiveQtyByEmsNoTrNo(param,fptBusinessType);
+		return getFptBillItemsSendReceiveQtyByEmsNoTrNo(param, fptBusinessType);
 	}
 
-
 	/**
-	 * 合同定量(DZSC or BCS )
-	 * HYQ
+	 * 合同定量(DZSC or BCS ) HYQ
+	 * 
 	 * @return key = 手册+帐册编号
 	 */
-	private Map<String,TempFptApplySurplus> getContractByEmsNoSeqNum(TempFptAppParam param) {
-		Map<String,TempFptApplySurplus> map = new HashMap<String,TempFptApplySurplus>();
+	private Map<String, TempFptApplySurplus> getContractByEmsNoSeqNum(
+			TempFptAppParam param) {
+		Map<String, TempFptApplySurplus> map = new HashMap<String, TempFptApplySurplus>();
 		List list = new ArrayList();
 		int projectType = param.getProjectType().intValue();
 		//
@@ -6882,48 +6914,46 @@ public class FptManageLogic {
 			//
 			// 填充分组后的值
 			//
-			
+
 			Object[] objs = (Object[]) list.get(i);
 			String emsNo = objs[0] == null ? "" : (String) objs[0];
 			t.setEmsNo(emsNo);
-			
+
 			Integer seqNum = objs[1] == null ? 0 : (Integer) objs[1];
 			t.setTrNo(seqNum);
-			
+
 			Integer credenceNo = objs[2] == null ? 0 : (Integer) objs[2];
 			t.setCredenceNo(credenceNo);
-			
+
 			Date contractEndDate = objs[3] == null ? null : (Date) objs[3];
 			t.setContractEndDate(contractEndDate);
-			
+
 			String complex = objs[4] == null ? "" : (String) objs[4];
 			t.setComplex(complex);
-			
+
 			String name = objs[5] == null ? "" : (String) objs[5];
 			t.setName(name);
-			
+
 			String spec = objs[6] == null ? "" : (String) objs[6];
 			t.setSpec(spec);
-			
+
 			String unitName = objs[7] == null ? "" : (String) objs[7];
 			t.setUnitName(unitName);
 
 			Double contractQty = objs[8] == null ? 0.0 : (Double) objs[8];
 			t.setContractQty(contractQty);
 
-			String key = emsNo + "@" + seqNum ;
+			String key = emsNo + "@" + seqNum;
 			map.put(key, t);
 		}
 		return map;
 	}
-	
-	
+
 	/**
-	 * HYQ
-	 * 报关单 (转厂已报关的数量)
-	 * key=(手册号+序号)
+	 * HYQ 报关单 (转厂已报关的数量) key=(手册号+序号)
 	 */
-	private Map<String, Double> getDeclarationTransferFactoryByEmsNoSeqNum(TempFptAppParam param) {
+	private Map<String, Double> getDeclarationTransferFactoryByEmsNoSeqNum(
+			TempFptAppParam param) {
 		Map<String, Double> map = new HashMap<String, Double>();
 		List list = new ArrayList();
 		list = this.fptManageDao
@@ -6932,7 +6962,8 @@ public class FptManageLogic {
 			Object[] objs = (Object[]) list.get(i);
 			String emsNo = objs[0] == null ? "" : (String) objs[0];
 			Integer seqNum = objs[1] == null ? 0 : (Integer) objs[1];
-			Double declarationTransferFactoryQty = objs[2] == null ? 0.0 : (Double) objs[2];
+			Double declarationTransferFactoryQty = objs[2] == null ? 0.0
+					: (Double) objs[2];
 			String key = emsNo + "@" + seqNum;
 			map.put(key, declarationTransferFactoryQty);
 		}
@@ -6945,10 +6976,6 @@ public class FptManageLogic {
 	//
 	// /////////////////////////////////////////////////////////////////////////////////////
 
-	
-	
-	
-	
 	// ///////////////////////////////////////////////////////////////////////////////////
 	//
 	// begin 申请表余量分析报表(明细)
@@ -7776,10 +7803,10 @@ public class FptManageLogic {
 			}
 			BcsContractExeInfo bcsInfo = this.contractExeLogic
 					.findBcsContractExeInfo2(isMateriel, emsNo, seqNum);
-			//成品：合同余量 = 合同定量 -正在执行的关封数量- （已生效的成品出口+返工复出 -退厂返工【非转出出口数】）
+			// 成品：合同余量 = 合同定量 -正在执行的关封数量- （已生效的成品出口+返工复出 -退厂返工【非转出出口数】）
 			info.setContractRemain(info.getContractRemain()
 					- bcsInfo.getContractRemain());
-			//当前余量 = 合同定量 - 正在执行和已结案关封数量 -（已生效和未生效的成品出口+返工复出 -退厂返工【非转出出口数】）
+			// 当前余量 = 合同定量 - 正在执行和已结案关封数量 -（已生效和未生效的成品出口+返工复出 -退厂返工【非转出出口数】）
 			info.setCurrentRemain(info.getCurrentRemain()
 					- bcsInfo.getCurrentRemain());
 			info.setApplyRemain(info.getContractAmount()
@@ -7796,36 +7823,40 @@ public class FptManageLogic {
 			info.setCurrentRemain(info.getCurrentRemain()
 					- dzscInfo.getCurrentRemain());
 		}
-		
+
 		//
-		//hyq
-		//减去收货或送货,加上收退货或退数
+		// hyq
+		// 减去收货或送货,加上收退货或退数
 		//
 		TempFptAppParam param = new TempFptAppParam();
 		param.setProjectType(projectType);
 		param.setInOutFlag(inOutFlag);
 		param.setEmsNo(emsNo);
 		param.setTrGno(seqNum);
-		
+
 		Double fptBillItemsSendReceive = 0.0;
 		Double fptBillItemsSendReceiveQty = 0.0;
-		
-		//收货或送货
-		List list = this.fptManageDao.findFptBillItemsSendReceiveQtyByEmsNoTrNo(param,FptBusinessType.FPT_BILL);
-		if(list!=null && list.size()==1){
+
+		// 收货或送货
+		List list = this.fptManageDao
+				.findFptBillItemsSendReceiveQtyByEmsNoTrNo(param,
+						FptBusinessType.FPT_BILL);
+		if (list != null && list.size() == 1) {
 			Object[] objs = (Object[]) list.get(0);
 			fptBillItemsSendReceive = objs[2] == null ? 0.0 : (Double) objs[2];
 		}
-		//收退货或退数
-		List list2 = this.fptManageDao.findFptBillItemsSendReceiveQtyByEmsNoTrNo(param,FptBusinessType.FPT_BILL_BACK);
-		if(list!=null && list2.size()==1){
+		// 收退货或退数
+		List list2 = this.fptManageDao
+				.findFptBillItemsSendReceiveQtyByEmsNoTrNo(param,
+						FptBusinessType.FPT_BILL_BACK);
+		if (list != null && list2.size() == 1) {
 			Object[] objs = (Object[]) list2.get(0);
-			fptBillItemsSendReceiveQty = objs[2] == null ? 0.0 : (Double) objs[2];
+			fptBillItemsSendReceiveQty = objs[2] == null ? 0.0
+					: (Double) objs[2];
 		}
-		
-		info.setApplyRemain(info.getApplyRemain()-fptBillItemsSendReceive + fptBillItemsSendReceiveQty);
-		
-		
+
+		info.setApplyRemain(info.getApplyRemain() - fptBillItemsSendReceive
+				+ fptBillItemsSendReceiveQty);
 
 		info.setContractAmount(CommonUtils.getDoubleByDigit(
 				info.getContractAmount(), 2));
@@ -7833,14 +7864,11 @@ public class FptManageLogic {
 				info.getContractRemain(), 2));
 		info.setCurrentRemain(CommonUtils.getDoubleByDigit(
 				info.getCurrentRemain(), 2));
-		info.setApplyRemain(CommonUtils.getDoubleByDigit(
-				info.getApplyRemain(), 2));
+		info.setApplyRemain(CommonUtils.getDoubleByDigit(info.getApplyRemain(),
+				2));
 
 		return info;
-		
-		
-		
-		
+
 	}
 
 	/**
@@ -8447,7 +8475,7 @@ public class FptManageLogic {
 	 * @param excelFileContent
 	 */
 	public List<Object[]> importFptApp(byte[] excelFileContent, String taskId,
-			String ioFlag, List<FptAppHead> listExists ,Date endDate) {
+			String ioFlag, List<FptAppHead> listExists, Date endDate) {
 		// 获得最大逻辑行号，设置进度info
 		StringBuilder err = new StringBuilder();
 		List<Object[]> errList = new ArrayList<Object[]>();
@@ -8595,20 +8623,22 @@ public class FptManageLogic {
 				scmCocStrIN = (String) getExcelCellValue(sheet, 7, 4);
 				checkisNull(errList, scmCocStrIN, "转入企业");
 				List<ScmCoc> listCocsIN = bcsImpExpRequestDao
-						.findScmCocByNameAndType(scmCocStrIN, false, true);
+						.findScmCocByNameAndType(scmCocStrIN, false, true,
+								true, false);
 				inScmCoc = listCocsIN.isEmpty() ? null : listCocsIN.get(0);
 
 				// 判断客户存在
 				if (inScmCoc == null) {
 					errList.add(new String[] { "转入企业",
-							scmCocStrIN + "，在物流基础资料--工厂通用代码---客户供应商不存在，请核对。" });
+							scmCocStrIN + "，在物流基础资料--工厂通用代码---客户供应商不存在或客户类别是否为结转出口，请核对。" });
 				} else {
+
 					inBrief = inScmCoc.getBrief();
 					if (inBrief == null) {
 						errList.add(new String[] {
 								"转入企业",
 								scmCocStrIN
-										+ "，在物流基础资料--工厂通用代码---客户供应商不存在，请核对。" });
+										+ "，在物流基础资料--工厂通用代码--客户供应商--客户类别是否为结转出口，请核对。" });
 					} else {
 						// 转入企业
 						refSetValue(head, "setInTradeName", inBrief.getName());
@@ -8622,7 +8652,8 @@ public class FptManageLogic {
 				scmCocStrOUT = (String) getExcelCellValue(sheet, 1, 4);
 				checkisNull(errList, scmCocStrOUT, "转出企业");
 				List<ScmCoc> listCocsOUT = bcsImpExpRequestDao
-						.findScmCocByNameAndType(scmCocStrOUT, true, false);
+						.findScmCocByNameAndType(scmCocStrOUT, true, false,
+								false, true);
 				outScmCoc = listCocsOUT.isEmpty() ? null : listCocsOUT.get(0);
 
 				// 判断供应商存在
@@ -8630,14 +8661,14 @@ public class FptManageLogic {
 					errList.add(new String[] {
 							"转出企业",
 							"转出企业：" + scmCocStrOUT
-									+ "，在物流基础资料--工厂通用代码---客户供应商不存在，请核对。" });
+									+ "，在物流基础资料--工厂通用代码---客户供应商不存在或是否设置为结转进口，请核对。" });
 				} else {
 					outBrief = outScmCoc.getBrief();
 					if (outBrief == null) {
 						errList.add(new String[] {
 								"转出企业",
 								"转出企业：" + scmCocStrOUT
-										+ "，在物流基础资料--工厂通用代码---客户供应商不存在，请核对。" });
+										+ "，在物流基础资料--工厂通用代码---客户供应商是否设置为结转进口，请核对。" });
 					} else {
 						// 转出企业
 						refSetValue(head, "setOutTradeName", outBrief.getName());
@@ -8730,13 +8761,12 @@ public class FptManageLogic {
 				// 转出申报企业组织机构名称
 				refSetValue(head, "setOutAgentName",
 						(String) getExcelCellValue(sheet, 3, 6));
-				
-				
-				//转出申报企业9位组织机构代码
-				if(FptInOutFlag.OUT.equals(ioFlag)){
+
+				// 转出申报企业9位组织机构代码
+				if (FptInOutFlag.OUT.equals(ioFlag)) {
 					head.setOutAgentCode(com.getInAgentCode());
 				}
-				
+
 				/**
 				 * 暂时不用 if(FptInOutFlag.OUT.equals(ioFlag)){ //转出申报企业9位组织机构代码
 				 * head.setOutAgentCode(com.getInAgentCode()); //转出申报企业组织机构名称
@@ -8832,12 +8862,12 @@ public class FptManageLogic {
 				// 申报企业组织机构名称
 				refSetValue(head, "setInAgentName",
 						(String) getExcelCellValue(sheet, 9, 6));
-				
-				//申报企业9位组织机构代码
-				if(FptInOutFlag.IN.equals(ioFlag)){
+
+				// 申报企业9位组织机构代码
+				if (FptInOutFlag.IN.equals(ioFlag)) {
 					head.setInAgentCode(com.getInAgentCode());
 				}
-				
+
 				/**
 				 * 暂时先不用 if(FptInOutFlag.IN.equals(ioFlag)){ //申报企业9位组织机构代码
 				 * head.setInAgentCode(com.getInAgentCode()); //申报企业组织机构名称
@@ -9073,8 +9103,8 @@ public class FptManageLogic {
 					item.setModifyMarkState(ModifyMarkState.UNCHANGE);
 					saveList.add(item);
 				}
-				
-				//有效日，从导入的窗口传入hyq
+
+				// 有效日，从导入的窗口传入hyq
 				head.setEndDate(endDate);
 
 				// 保存
@@ -9108,7 +9138,7 @@ public class FptManageLogic {
 				e.printStackTrace();
 			}
 		}
-		// return Collections.EMPTY_LIST; //测试的时候用
+
 		return errList;
 	}
 
@@ -9139,7 +9169,7 @@ public class FptManageLogic {
 	 * @param taskId
 	 */
 	public void importFptApp(byte[] excelFileContent, String taskId) {
-		// TODO Auto-generated method stub
+	
 		try {
 			// 获得最大逻辑行号，设置进度info
 			ProgressInfo info = ProcExeProgress.getInstance().getProgressInfo(
@@ -9492,19 +9522,22 @@ public class FptManageLogic {
 		} finally {
 		}
 	}
-	
-	
+
 	/**
-     * 查询是否存在
-     * @param seqNo 电子口岸统一编号
-     * @param AppNo 申请表编号
-     * @param fptInOutFlag
-     * @return
-     */
-    public boolean findExistsSeqNoOrAppNo(String seqNo, String appNo, String fptInOutFlag){
-    	List<Object[]> list = fptManageDao.findExistsSeqNoOrAppNo(seqNo, appNo, fptInOutFlag);
-    	return (list.isEmpty()) ? true : false;
-    }
-    
+	 * 查询是否存在
+	 * 
+	 * @param seqNo
+	 *            电子口岸统一编号
+	 * @param AppNo
+	 *            申请表编号
+	 * @param fptInOutFlag
+	 * @return
+	 */
+	public boolean findExistsSeqNoOrAppNo(String seqNo, String appNo,
+			String fptInOutFlag) {
+		List<Object[]> list = fptManageDao.findExistsSeqNoOrAppNo(seqNo, appNo,
+				fptInOutFlag);
+		return (list.isEmpty()) ? true : false;
+	}
 
 }

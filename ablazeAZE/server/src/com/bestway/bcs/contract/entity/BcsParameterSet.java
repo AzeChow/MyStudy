@@ -1,7 +1,5 @@
 package com.bestway.bcs.contract.entity;
 
-import java.util.Date;
-
 import com.bestway.common.CommonUtils;
 import com.bestway.common.message.entity.CspParameterSet;
 
@@ -85,22 +83,22 @@ public class BcsParameterSet extends CspParameterSet {
 	 * 报表单耗小数位控制，默认为2位
 	 */
 	private Integer reportDecimalLengthUnitWaste = null;
-	
+
 	/**
 	 * 报表损耗量小数位控制
 	 */
 	private Integer wasteAmount = null;
-	
+
 	/**
 	 * 报表总用量小数位控制
 	 */
 	private Integer totalAmount = null;
-	
+
 	/**
 	 * 核销表进口总金额扣减退料出口金额
 	 */
 	private Boolean checkIsComputeReturn = false;
-	//==========出口加工发票栏位
+	// ==========出口加工发票栏位
 	/**
 	 * 出口发票字体保存
 	 */
@@ -108,25 +106,31 @@ public class BcsParameterSet extends CspParameterSet {
 	/**
 	 * 出口发票左边距
 	 */
-    private Integer pageLeft;
-    /**
+	private Integer pageLeft;
+	/**
 	 * 出口发票右边距
 	 */
-    private Integer pageRight;
-    /**
+	private Integer pageRight;
+	/**
 	 * 出口发票上边距
 	 */
-    private Integer pageTop;
-    /**
+	private Integer pageTop;
+	/**
 	 * 出口发票下边距
 	 */
-    private Integer pageBottom;
-    
-    /**
-     * 手册表头进口总值是否统计备案料件内购金额
-     */
-    private Boolean isTotalMoney = false;
-    
+	private Integer pageBottom;
+
+	/**
+	 * 手册表头进口总值是否统计备案料件内购金额
+	 */
+	private Boolean isTotalMoney = false;
+
+	/**
+	 * 是否 从Qp导入文件计算导出手册资料原料费用
+	 * 
+	 */
+	private Boolean isCalulateSubjectCost;
+
 	public Integer getPageLeft() {
 		return pageLeft;
 	}
@@ -316,7 +320,8 @@ public class BcsParameterSet extends CspParameterSet {
 		return reportDecimalLengthUnitWaste;
 	}
 
-	public void setReportDecimalLengthUnitWaste(Integer reportDecimalLengthUnitWaste) {
+	public void setReportDecimalLengthUnitWaste(
+			Integer reportDecimalLengthUnitWaste) {
 		this.reportDecimalLengthUnitWaste = reportDecimalLengthUnitWaste;
 	}
 
@@ -344,4 +349,11 @@ public class BcsParameterSet extends CspParameterSet {
 		this.isTotalMoney = isTotalMoney;
 	}
 
+	public Boolean getIsCalulateSubjectCost() {
+		return isCalulateSubjectCost;
+	}
+
+	public void setIsCalulateSubjectCost(Boolean isCalulateSubjectCost) {
+		this.isCalulateSubjectCost = isCalulateSubjectCost;
+	}
 }

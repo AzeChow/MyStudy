@@ -52,7 +52,6 @@ import com.bestway.bcus.custombase.entity.hscode.CheckupComplex;
 import com.bestway.bcus.custombase.entity.hscode.Complex;
 import com.bestway.bcus.custombase.entity.parametercode.Curr;
 import com.bestway.bcus.custombase.entity.parametercode.LevyMode;
-import com.bestway.bcus.custombase.entity.parametercode.Trade;
 import com.bestway.bcus.custombase.entity.parametercode.Unit;
 import com.bestway.bcus.custombase.entity.parametercode.Uses;
 import com.bestway.bcus.enc.dao.EncDao;
@@ -130,7 +129,7 @@ import com.bestway.customs.common.logic.BaseEncLogic;
  * @author Administrator
  * 
  */
-@SuppressWarnings( { "unchecked", "rawtypes" })
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public class EncLogic extends BaseEncLogic {
 	private SysCodeDao sysCodeDao = null;
 
@@ -360,8 +359,8 @@ public class EncLogic extends BaseEncLogic {
 	 * if (atcMergeBeforeComInfo.getIsAutoCreate() != null) { // if
 	 * (atcMergeBeforeComInfo.getIsAutoCreate().booleanValue() == // true) { //
 	 * transferFactoryManageLogic //
-	 * .writeBackTransferFactoryBillToApplyToCustomsBillId(atcMergeBeforeComInfo //
-	 * .getId()); // } // } // // 回写进出口申请单 //
+	 * .writeBackTransferFactoryBillToApplyToCustomsBillId(atcMergeBeforeComInfo
+	 * // .getId()); // } // } // // 回写进出口申请单 //
 	 * this.writeBackImpExpRequestBillByApplyToCustomsBillId(
 	 * atcMergeBeforeComInfo.getId(), listNo); ((EncDao) this.getBaseEncDao())
 	 * .deleteAtcMergeBeforeComInfo(atcMergeBeforeComInfo); } list = ((EncDao)
@@ -627,10 +626,11 @@ public class EncLogic extends BaseEncLogic {
 	 */
 	public void saveAtcMergeBeforeComInfo(AtcMergeBeforeComInfo beforeComInfo) {
 		System.out.println("test");
-		
+
 		AtcMergeAfterComInfo atcMergeAfterComInfo = beforeComInfo
 				.getAfterComInfo();
-		atcMergeAfterComInfo=(AtcMergeAfterComInfo)this.encDao.get(AtcMergeAfterComInfo.class, atcMergeAfterComInfo.getId());
+		atcMergeAfterComInfo = (AtcMergeAfterComInfo) this.encDao.get(
+				AtcMergeAfterComInfo.class, atcMergeAfterComInfo.getId());
 		if (atcMergeAfterComInfo != null) {
 			atcMergeAfterComInfo
 					.setVersion(beforeComInfo.getVersion() == null ? "0"
@@ -645,7 +645,7 @@ public class EncLogic extends BaseEncLogic {
 					.saveAtcMergeAfterComInfo(atcMergeAfterComInfo);
 		}
 		((EncDao) this.getBaseEncDao())
-		.saveAtcMergeBeforeComInfo(beforeComInfo);
+				.saveAtcMergeBeforeComInfo(beforeComInfo);
 		// ----------------------------------------------
 		statMergeAfterCommInfo(atcMergeAfterComInfo);
 
@@ -677,7 +677,8 @@ public class EncLogic extends BaseEncLogic {
 	 */
 	private void statMergeAfterCommInfo(
 			AtcMergeAfterComInfo atcMergeAfterComInfo) {
-		atcMergeAfterComInfo=(AtcMergeAfterComInfo)this.encDao.get(AtcMergeAfterComInfo.class, atcMergeAfterComInfo.getId());
+		atcMergeAfterComInfo = (AtcMergeAfterComInfo) this.encDao.get(
+				AtcMergeAfterComInfo.class, atcMergeAfterComInfo.getId());
 		System.out.println("1111111111111111111111111111111111");
 		Hashtable ht = getMergeBeforeAmountByMergeAfter(atcMergeAfterComInfo);
 		atcMergeAfterComInfo.setDeclaredAmount(Double.valueOf(ht.get(
@@ -711,7 +712,7 @@ public class EncLogic extends BaseEncLogic {
 	private Hashtable getMergeBeforeAmountByMergeAfter(
 			AtcMergeAfterComInfo atcMergeAfterComInfo) {
 		Hashtable ht = new Hashtable();
-//		AtcMergeBeforeComInfo atcMergeBeforeComInfo = null;
+		// AtcMergeBeforeComInfo atcMergeBeforeComInfo = null;
 		List list = ((EncDao) this.getBaseEncDao())
 				.findAtcMergeBeforeComInfoByAfterID(atcMergeAfterComInfo);
 		double declaredAmount = 0;// 申报数量
@@ -724,7 +725,8 @@ public class EncLogic extends BaseEncLogic {
 		String boxNoString = "";// 箱号
 		Double workUsd = 0.0; // 加工费总价
 		for (int i = 0; i < list.size(); i++) {
-			AtcMergeBeforeComInfo	atcMergeBeforeComInfo = (AtcMergeBeforeComInfo) list.get(i);
+			AtcMergeBeforeComInfo atcMergeBeforeComInfo = (AtcMergeBeforeComInfo) list
+					.get(i);
 			if (atcMergeBeforeComInfo.getDeclaredAmount() != null) {
 				declaredAmount += atcMergeBeforeComInfo.getDeclaredAmount()
 						.doubleValue();
@@ -1066,7 +1068,7 @@ public class EncLogic extends BaseEncLogic {
 	public void saveImpExpRequestBillItemCount(
 			ImpExpRequestBill impExpRequestBill) {
 
-		if (impExpRequestBill.getId() == null) {//首次新增
+		if (impExpRequestBill.getId() == null) {// 首次新增
 			encDao.saveImpExpRequestBill(impExpRequestBill);
 		} else {
 			Integer itemCount = encDao
@@ -1186,7 +1188,8 @@ public class EncLogic extends BaseEncLogic {
 		double legalUnit2Gene = 0.0;
 		List impExpReCommodityInfoList = sortSangJianImpExpCommodityInfo(
 				impExpCommodityInfoList, isMaterial, impExpFlag);
-		System.out.println("impExpReCommodityInfoList" + impExpReCommodityInfoList.size());
+		System.out.println("impExpReCommodityInfoList"
+				+ impExpReCommodityInfoList.size());
 		for (int i = 0; i < impExpReCommodityInfoList.size(); i++) {// distinct
 			ImpExpCommodityInfo t = (ImpExpCommodityInfo) impExpReCommodityInfoList
 					.get(i);
@@ -1553,11 +1556,12 @@ public class EncLogic extends BaseEncLogic {
 			}
 			String key = t.getImpExpCommodityInfo().getMateriel().getPtNo()
 					+ "/"
-					+ (t.getImpExpCommodityInfo().getCountry() == null ? "" : t
-							.getImpExpCommodityInfo().getCountry().getName()// 原产国
-					+ "/" 
-					+(t.getImpExpCommodityInfo().getVersion() == null ? "" : t
-							.getImpExpCommodityInfo().getVersion().toString()));// 版本号
+					+ (t.getImpExpCommodityInfo().getCountry() == null ? ""
+							: t.getImpExpCommodityInfo().getCountry().getName()// 原产国
+									+ "/"
+									+ (t.getImpExpCommodityInfo().getVersion() == null ? ""
+											: t.getImpExpCommodityInfo()
+													.getVersion().toString()));// 版本号
 			Object obj = hs.get(key);
 			if (obj != null) {
 				ImpExpCommodityInfo data = (ImpExpCommodityInfo) obj;
@@ -1666,12 +1670,19 @@ public class EncLogic extends BaseEncLogic {
 
 	/**
 	 * 生成报关清单关归后商品信息(物料)
-	 * @param atcMergeAfterComInfo 清单归并后商品
-	 * @param img 电子账册物料
-	 * @param beforeinfo 清单归并前商品
-	 * @param sAamount 数量小数位控制
-	 * @param sPrice 单价小数位控制
-	 * @param sTotalPrice 总价小数位控制
+	 * 
+	 * @param atcMergeAfterComInfo
+	 *            清单归并后商品
+	 * @param img
+	 *            电子账册物料
+	 * @param beforeinfo
+	 *            清单归并前商品
+	 * @param sAamount
+	 *            数量小数位控制
+	 * @param sPrice
+	 *            单价小数位控制
+	 * @param sTotalPrice
+	 *            总价小数位控制
 	 * @param legalUnitGene
 	 * @param legalUnit2Gene
 	 * @return
@@ -1696,12 +1707,12 @@ public class EncLogic extends BaseEncLogic {
 			// ---------------------------------------------------------------------
 			Double declaraamount = beforeinfo.getDeclaredAmount() == null ? 0.0
 					: beforeinfo.getDeclaredAmount();
-			afterinfo.setDeclaredAmount(CommonUtils.getDoubleByDigit(beforeinfo
-					.getDeclaredAmount(), sAamount));// 数量
-			afterinfo.setTotalPrice(CommonUtils.getDoubleByDigit(beforeinfo
-					.getTotalPrice(), sTotalPrice));// 总价
-			afterinfo.setWorkUsd(CommonUtils.getDoubleByDigit(beforeinfo
-					.getWorkUsd(), sTotalPrice));// 加工费总价
+			afterinfo.setDeclaredAmount(CommonUtils.getDoubleByDigit(
+					beforeinfo.getDeclaredAmount(), sAamount));// 数量
+			afterinfo.setTotalPrice(CommonUtils.getDoubleByDigit(
+					beforeinfo.getTotalPrice(), sTotalPrice));// 总价
+			afterinfo.setWorkUsd(CommonUtils.getDoubleByDigit(
+					beforeinfo.getWorkUsd(), sTotalPrice));// 加工费总价
 			if (afterinfo.getDeclaredAmount() != 0) {
 				afterinfo.setPrice(afterinfo.getTotalPrice()
 						/ afterinfo.getDeclaredAmount());//
@@ -1710,9 +1721,9 @@ public class EncLogic extends BaseEncLogic {
 								sPrice));// 4舍5入，保留四位
 			}// 单价
 			if (CommonUtils.isCompany("胜美达")) {
-				afterinfo.setTotalPrice(CommonUtils.getDoubleByDigit(afterinfo
-						.getPrice()
-						* afterinfo.getDeclaredAmount(), sPrice));
+				afterinfo.setTotalPrice(CommonUtils.getDoubleByDigit(
+						afterinfo.getPrice() * afterinfo.getDeclaredAmount(),
+						sPrice));
 				beforeinfo.setTotalPrice(CommonUtils.getDoubleByDigit(
 						beforeinfo.getDeclaredPrice()
 								* beforeinfo.getDeclaredAmount(), sPrice));
@@ -1726,7 +1737,7 @@ public class EncLogic extends BaseEncLogic {
 			afterinfo.setLevyMode(beforeinfo.getLevyMode());
 			afterinfo.setUsesCode(beforeinfo.getUsesCode());
 			afterinfo.setProjectDept(beforeinfo.getProjectDept());
-			afterinfo.setCurrency(beforeinfo.getCurrency());//币制
+			afterinfo.setCurrency(beforeinfo.getCurrency());// 币制
 			// 取得第一、第二的法定数量
 			Unit secunit = afterinfo.getSecondLegalUnit();
 			Unit firunit = afterinfo.getLegalUnit();
@@ -1736,22 +1747,19 @@ public class EncLogic extends BaseEncLogic {
 					secunit, unitName, afterinfo.getEmsSerialNo(),
 					legalUnitGene, legalUnit2Gene, afterinfo, declaraamount,
 					sAamount);
-			//afterinfo = (AtcMergeAfterComInfo) encDao
-			//		.saveAndReturnObject(afterinfo);
+			// afterinfo = (AtcMergeAfterComInfo) encDao
+			// .saveAndReturnObject(afterinfo);
 			beforeinfo.setAfterComInfo(afterinfo);// 设置对应的归并后商品信息
 			// encDao.saveOrUpdate(beforeinfo);
 			return afterinfo;
 		} else {
 			// ---------------------------------------------------------------------
 			atcMergeAfterComInfo.setGrossWeight(atcMergeAfterComInfo
-					.getGrossWeight()
-					+ beforeinfo.getGrossWeight());// 毛重
+					.getGrossWeight() + beforeinfo.getGrossWeight());// 毛重
 			atcMergeAfterComInfo.setNetWeight(atcMergeAfterComInfo
-					.getNetWeight()
-					+ beforeinfo.getNetWeight());// 净重
+					.getNetWeight() + beforeinfo.getNetWeight());// 净重
 			atcMergeAfterComInfo.setTotalNetWeight(atcMergeAfterComInfo
-					.getTotalNetWeight()
-					+ beforeinfo.getTotalnetweight());// 总净重
+					.getTotalNetWeight() + beforeinfo.getTotalnetweight());// 总净重
 
 			Double declaraamount = atcMergeAfterComInfo.getDeclaredAmount()
 					+ beforeinfo.getDeclaredAmount();
@@ -1763,9 +1771,10 @@ public class EncLogic extends BaseEncLogic {
 			atcMergeAfterComInfo.setTotalPrice(CommonUtils.getDoubleByDigit(
 					atcMergeAfterComInfo.getTotalPrice()
 							+ beforeinfo.getTotalPrice(), sTotalPrice));// 总金额
-			atcMergeAfterComInfo.setWorkUsd(CommonUtils
-					.getDoubleByDigit(atcMergeAfterComInfo.getWorkUsd()
-							+ beforeinfo.getWorkUsd(), sTotalPrice));// 加工费总金额
+			atcMergeAfterComInfo
+					.setWorkUsd(CommonUtils.getDoubleByDigit(
+							atcMergeAfterComInfo.getWorkUsd()
+									+ beforeinfo.getWorkUsd(), sTotalPrice));// 加工费总金额
 			if (atcMergeAfterComInfo.getDeclaredAmount() != 0) {
 				atcMergeAfterComInfo.setPrice(atcMergeAfterComInfo
 						.getTotalPrice()
@@ -1790,12 +1799,13 @@ public class EncLogic extends BaseEncLogic {
 			String unitName = atcMergeAfterComInfo.getUnit() == null ? ""
 					: atcMergeAfterComInfo.getUnit().getName();
 			atcMergeAfterComInfo = getAfterCommInFirstAmountOrSencdAmount(
-					firunit, secunit, unitName, atcMergeAfterComInfo
-							.getEmsSerialNo(), legalUnitGene, legalUnit2Gene,
-					atcMergeAfterComInfo, declaraamount, sAamount);
+					firunit, secunit, unitName,
+					atcMergeAfterComInfo.getEmsSerialNo(), legalUnitGene,
+					legalUnit2Gene, atcMergeAfterComInfo, declaraamount,
+					sAamount);
 			// 法定单位是千克的，法定数量可直接抓取净重
-			//atcMergeAfterComInfo = (AtcMergeAfterComInfo) encDao
-			//		.saveAndReturnObject(atcMergeAfterComInfo);
+			// atcMergeAfterComInfo = (AtcMergeAfterComInfo) encDao
+			// .saveAndReturnObject(atcMergeAfterComInfo);
 			beforeinfo.setAfterComInfo(atcMergeAfterComInfo);// 设置对应的归并后商品信息
 			// encDao.saveOrUpdate(beforeinfo);
 			return atcMergeAfterComInfo;
@@ -1827,24 +1837,24 @@ public class EncLogic extends BaseEncLogic {
 			afterinfo.setTotalNetWeight(beforeinfo.getTotalnetweight());// 总净重
 			Double declaraamount = beforeinfo.getDeclaredAmount() == null ? 0.0
 					: beforeinfo.getDeclaredAmount();
-			afterinfo.setDeclaredAmount(CommonUtils.getDoubleByDigit(beforeinfo
-					.getDeclaredAmount(), sAamount));// 数量
-			afterinfo.setTotalPrice(CommonUtils.getDoubleByDigit(beforeinfo
-					.getTotalPrice(), sTotalPrice));// 总价
-			afterinfo.setCurrency(beforeinfo.getCurrency());//币制
-			afterinfo.setWorkUsd(CommonUtils.getDoubleByDigit(beforeinfo
-					.getWorkUsd(), sTotalPrice));// 加工费总价
+			afterinfo.setDeclaredAmount(CommonUtils.getDoubleByDigit(
+					beforeinfo.getDeclaredAmount(), sAamount));// 数量
+			afterinfo.setTotalPrice(CommonUtils.getDoubleByDigit(
+					beforeinfo.getTotalPrice(), sTotalPrice));// 总价
+			afterinfo.setCurrency(beforeinfo.getCurrency());// 币制
+			afterinfo.setWorkUsd(CommonUtils.getDoubleByDigit(
+					beforeinfo.getWorkUsd(), sTotalPrice));// 加工费总价
 			if (afterinfo.getDeclaredAmount() != 0) {
 				afterinfo.setPrice(afterinfo.getTotalPrice()
 						/ afterinfo.getDeclaredAmount());
-				afterinfo.setPrice(CommonUtils.getDoubleByDigit(afterinfo
-						.getPrice(), sPrice));// 保留小数位
+				afterinfo.setPrice(CommonUtils.getDoubleByDigit(
+						afterinfo.getPrice(), sPrice));// 保留小数位
 			}// 单价
-			
+
 			if (CommonUtils.isCompany("胜美达")) {
-				afterinfo.setTotalPrice(CommonUtils.getDoubleByDigit(afterinfo
-						.getPrice()
-						* afterinfo.getDeclaredAmount(), sPrice));
+				afterinfo.setTotalPrice(CommonUtils.getDoubleByDigit(
+						afterinfo.getPrice() * afterinfo.getDeclaredAmount(),
+						sPrice));
 				beforeinfo.setTotalPrice(CommonUtils.getDoubleByDigit(
 						beforeinfo.getDeclaredPrice()
 								* beforeinfo.getDeclaredAmount(), sPrice));
@@ -1886,14 +1896,11 @@ public class EncLogic extends BaseEncLogic {
 		} else {
 			// ----------------------------------------------------------------------------
 			atcMergeAfterComInfo.setGrossWeight(atcMergeAfterComInfo
-					.getGrossWeight()
-					+ beforeinfo.getGrossWeight());// 毛重
+					.getGrossWeight() + beforeinfo.getGrossWeight());// 毛重
 			atcMergeAfterComInfo.setNetWeight(atcMergeAfterComInfo
-					.getNetWeight()
-					+ beforeinfo.getNetWeight());// 净重
+					.getNetWeight() + beforeinfo.getNetWeight());// 净重
 			atcMergeAfterComInfo.setTotalNetWeight(atcMergeAfterComInfo
-					.getTotalNetWeight()
-					+ beforeinfo.getTotalnetweight());// 总净重
+					.getTotalNetWeight() + beforeinfo.getTotalnetweight());// 总净重
 
 			Double declaraamount = atcMergeAfterComInfo.getDeclaredAmount()
 					+ beforeinfo.getDeclaredAmount();
@@ -1917,25 +1924,27 @@ public class EncLogic extends BaseEncLogic {
 				atcMergeAfterComInfo.setPrice(CommonUtils.getDoubleByDigit(
 						atcMergeAfterComInfo.getPrice(), sPrice));// 保留小数位
 			}// 单价
-			
+
 			if (CommonUtils.isCompany("胜美达")) {
-				atcMergeAfterComInfo.setTotalPrice(CommonUtils.getDoubleByDigit(atcMergeAfterComInfo
-						.getPrice()
-						* atcMergeAfterComInfo.getDeclaredAmount(), sPrice));
+				atcMergeAfterComInfo.setTotalPrice(CommonUtils
+						.getDoubleByDigit(atcMergeAfterComInfo.getPrice()
+								* atcMergeAfterComInfo.getDeclaredAmount(),
+								sPrice));
 				beforeinfo.setTotalPrice(CommonUtils.getDoubleByDigit(
 						beforeinfo.getDeclaredPrice()
 								* beforeinfo.getDeclaredAmount(), sPrice));
 			}
-			
+
 			// 取得第一、第二的法定数量
 			Unit secunit = atcMergeAfterComInfo.getSecondLegalUnit();
 			Unit firunit = atcMergeAfterComInfo.getLegalUnit();
 			String unitName = atcMergeAfterComInfo.getUnit() == null ? ""
 					: atcMergeAfterComInfo.getUnit().getName();
 			atcMergeAfterComInfo = getAfterCommInFirstAmountOrSencdAmount(
-					firunit, secunit, unitName, atcMergeAfterComInfo
-							.getEmsSerialNo(), legalUnitGene, legalUnit2Gene,
-					atcMergeAfterComInfo, declaraamount, sAamount);
+					firunit, secunit, unitName,
+					atcMergeAfterComInfo.getEmsSerialNo(), legalUnitGene,
+					legalUnit2Gene, atcMergeAfterComInfo, declaraamount,
+					sAamount);
 
 			atcMergeAfterComInfo.setPiece(atcMergeAfterComInfo.getPiece()
 					+ beforeinfo.getPiece());
@@ -1985,9 +1994,7 @@ public class EncLogic extends BaseEncLogic {
 
 		// ========初始化内部归并的第一法定单位与第二法定单位
 		data.setHsAfterLegalUnit(data.getHsAfterComplex().getFirstUnit());
-		data
-				.setHsAfterSecondLegalUnit(data.getHsAfterComplex()
-						.getSecondUnit());
+		data.setHsAfterSecondLegalUnit(data.getHsAfterComplex().getSecondUnit());
 		Double unitScale = Double.valueOf(0.0);
 		if (useConvert) {// 如果使用单位折算，才使用，否则设为0
 			unitScale = impExpCommodityInfo.getMateriel().getUnitConvert() == null ? 0.0
@@ -2116,14 +2123,16 @@ public class EncLogic extends BaseEncLogic {
 				Double unitRate = Double.parseDouble(getUnitRateMap().get(
 						unitName + "+" + firstUnitName).toString());
 				actMergeAfterComInfo.setLegalAmount(CommonUtils
-						.getDoubleByDigit(declaraamount
-								* CommonUtils.getDoubleExceptNull(unitRate),
+						.getDoubleByDigit(
+								declaraamount
+										* CommonUtils
+												.getDoubleExceptNull(unitRate),
 								sAamount));
 
 			} else {// 条件4
 				actMergeAfterComInfo.setLegalAmount(CommonUtils
-						.getDoubleByDigit(CommonUtils
-								.getDoubleExceptNull(declaraamount
+						.getDoubleByDigit(
+								CommonUtils.getDoubleExceptNull(declaraamount
 										* legalUnitGene), sAamount));
 			}
 		}
@@ -2143,13 +2152,15 @@ public class EncLogic extends BaseEncLogic {
 				Double unitRate = Double.parseDouble(getUnitRateMap().get(
 						unitName + "+" + secondUnitName).toString());
 				actMergeAfterComInfo.setSecondLegalAmount(CommonUtils
-						.getDoubleByDigit(declaraamount
-								* CommonUtils.getDoubleExceptNull(unitRate),
+						.getDoubleByDigit(
+								declaraamount
+										* CommonUtils
+												.getDoubleExceptNull(unitRate),
 								sAamount));
 			} else {
 				actMergeAfterComInfo.setSecondLegalAmount(CommonUtils
-						.getDoubleByDigit(CommonUtils
-								.getDoubleExceptNull(declaraamount
+						.getDoubleByDigit(
+								CommonUtils.getDoubleExceptNull(declaraamount
 										* legalUnit2Gene), sAamount));
 			}
 		}
@@ -2203,14 +2214,16 @@ public class EncLogic extends BaseEncLogic {
 				Double unitRate = Double.parseDouble(getUnitRateMap().get(
 						unitName + "+" + firstUnitName).toString());
 				actMergeBeforreComInfo.setLegalAmount(CommonUtils
-						.getDoubleByDigit(declaraamount
-								* CommonUtils.getDoubleExceptNull(unitRate),
+						.getDoubleByDigit(
+								declaraamount
+										* CommonUtils
+												.getDoubleExceptNull(unitRate),
 								sAamount));
 
 			} else {// 条件4
 				actMergeBeforreComInfo.setLegalAmount(CommonUtils
-						.getDoubleByDigit(CommonUtils
-								.getDoubleExceptNull(declaraamount
+						.getDoubleByDigit(
+								CommonUtils.getDoubleExceptNull(declaraamount
 										* legalUnitGene), sAamount));
 			}
 		}
@@ -2232,13 +2245,15 @@ public class EncLogic extends BaseEncLogic {
 				Double unitRate = Double.parseDouble(getUnitRateMap().get(
 						unitName + "+" + secondUnitName).toString());
 				actMergeBeforreComInfo.setSecondLegalAmount(CommonUtils
-						.getDoubleByDigit(declaraamount
-								* CommonUtils.getDoubleExceptNull(unitRate),
+						.getDoubleByDigit(
+								declaraamount
+										* CommonUtils
+												.getDoubleExceptNull(unitRate),
 								sAamount));
 			} else {
 				actMergeBeforreComInfo.setSecondLegalAmount(CommonUtils
-						.getDoubleByDigit(CommonUtils
-								.getDoubleExceptNull(declaraamount
+						.getDoubleByDigit(
+								CommonUtils.getDoubleExceptNull(declaraamount
 										* legalUnit2Gene), sAamount));
 			}
 		}
@@ -2553,7 +2568,7 @@ public class EncLogic extends BaseEncLogic {
 			if (other1.getDistrict() != null) {
 				customs.setDomesticDestinationOrSource(other1.getDistrict());
 			}
-			if(other1.getCurr()!=null&&customs.getCurrency()==null){
+			if (other1.getCurr() != null && customs.getCurrency() == null) {
 				customs.setCurrency(other1.getCurr());
 			}
 
@@ -2632,9 +2647,9 @@ public class EncLogic extends BaseEncLogic {
 	 *            报关单表头
 	 * @return
 	 */
-	public synchronized List makeCusomsDeclarationFromBillList(List impexpbills,
-			List afterinfoLists, MakeCusomsDeclarationParam param,
-			CustomsDeclaration customs) {
+	public synchronized List makeCusomsDeclarationFromBillList(
+			List impexpbills, List afterinfoLists,
+			MakeCusomsDeclarationParam param, CustomsDeclaration customs) {
 		// 存放生成的清单
 		List returnBilllist = new ArrayList();
 		// 存放生成的报关单
@@ -2650,9 +2665,9 @@ public class EncLogic extends BaseEncLogic {
 		for (int y = 0; y < afterinfoLists.size(); y++) {
 			TempCustomsList tempcustoms = (TempCustomsList) afterinfoLists
 					.get(y);
-			if(tempcustoms.getAfterinfo()!=null){
+			if (tempcustoms.getAfterinfo() != null) {
 				AtcMergeAfterComInfo info = tempcustoms.getAfterinfo();
-				info.setBoxNo(subStringBoxNo(info.getBoxNo()));//截取箱号
+				info.setBoxNo(subStringBoxNo(info.getBoxNo()));// 截取箱号
 			}
 			hsList.add(tempcustoms);
 		}
@@ -2698,8 +2713,8 @@ public class EncLogic extends BaseEncLogic {
 			AtcMergeAfterComInfo afterinfo = tempcustoms.getAfterinfo();
 			afterinfo.setBillList(billList);
 
-//			System.out.println(afterinfo.getEmsSerialNo() + ":"
-//					+ afterinfo.getCountry().getCode());
+			// System.out.println(afterinfo.getEmsSerialNo() + ":"
+			// + afterinfo.getCountry().getCode());
 			((EncDao) this.getBaseEncDao()).saveAtcMergeAfterComInfo(afterinfo);
 			// /////////
 
@@ -2721,7 +2736,7 @@ public class EncLogic extends BaseEncLogic {
 				beforeinfo.setAfterComInfo(afterinfo);// 归并前 set 归并后
 				beforeinfo.setSerialNo(serNo);
 				serNo++;
-				beforeinfo.setBoxNo(subStringBoxNo(beforeinfo.getBoxNo()));//截取箱号
+				beforeinfo.setBoxNo(subStringBoxNo(beforeinfo.getBoxNo()));// 截取箱号
 				/**
 				 * 明门特殊处理
 				 */
@@ -2761,7 +2776,7 @@ public class EncLogic extends BaseEncLogic {
 
 				if (beforeHs.get(ptpart) != null) {
 					ImpExpCommodityInfo iecomm = tt.getImpExpCommodityInfo();
-					iecomm.setBoxNo(subStringBoxNo(iecomm.getBoxNo()));//截取箱号
+					iecomm.setBoxNo(subStringBoxNo(iecomm.getBoxNo()));// 截取箱号
 					iecomm.setIsTransferCustomsBill(new Boolean(true)); // 已转报关清单
 					((EncDao) this.getBaseEncDao())
 							.savaimpExpCommodityInfo(iecomm);
@@ -2779,14 +2794,17 @@ public class EncLogic extends BaseEncLogic {
 					int count = impExpRequestBill.getToCustomCount() == null ? 0
 							: impExpRequestBill.getToCustomCount();
 					System.out.println("@@@@@@@@@@1");
-					if(impExpRequestBill.getItemCount()==null||impExpRequestBill.getItemCount()==0){
-						int itemCount =  ((EncDao) this.getBaseEncDao())
-								.getApplyToCustomsBillListSumNo(impExpRequestBill.getId());
+					if (impExpRequestBill.getItemCount() == null
+							|| impExpRequestBill.getItemCount() == 0) {
+						int itemCount = ((EncDao) this.getBaseEncDao())
+								.getApplyToCustomsBillListSumNo(impExpRequestBill
+										.getId());
 						impExpRequestBill.setItemCount(itemCount);
-						((EncDao) this.getBaseEncDao()).saveOrUpdate(impExpRequestBill);
+						((EncDao) this.getBaseEncDao())
+								.saveOrUpdate(impExpRequestBill);
 					}
 					impExpRequestBill.setToCustomCount((count + 1));
-					
+
 					// 回写申请单中的 转 报关清单号
 					if (impExpRequestBill.getAllBillNo() == null) {
 						impExpRequestBill.setAllBillNo(m
@@ -2802,7 +2820,7 @@ public class EncLogic extends BaseEncLogic {
 										.getAfterComInfo().getBillList()
 										.getListNo());
 					}
-					
+
 					// 回写申请单 是否已转报关清单
 					if (impExpRequestBill.getToCustomCount().equals(
 							impExpRequestBill.getItemCount())) {
@@ -2843,17 +2861,18 @@ public class EncLogic extends BaseEncLogic {
 
 	/**
 	 * 截取箱号
+	 * 
 	 * @param stu
 	 * @return
 	 */
-	private String subStringBoxNo(String stu){
-		if(stu == null){
+	private String subStringBoxNo(String stu) {
+		if (stu == null) {
 			return "";
 		}
 		for (int i = 0; i < stu.length(); i++) {
-			String s = stu.substring(0, stu.length()-i);
+			String s = stu.substring(0, stu.length() - i);
 			try {
-				if(s.getBytes("UTF-8").length<255){
+				if (s.getBytes("UTF-8").length < 255) {
 					return s;
 				}
 			} catch (UnsupportedEncodingException e) {
@@ -2862,7 +2881,7 @@ public class EncLogic extends BaseEncLogic {
 		}
 		return "";
 	}
-	
+
 	/**
 	 * 清单转---报关单
 	 * 
@@ -2895,13 +2914,17 @@ public class EncLogic extends BaseEncLogic {
 		for (int i = 0; i < flist.size(); i++) {
 			AtcMergeAfterComInfo afterinfo = (AtcMergeAfterComInfo) flist
 					.get(i);
-			if (afterinfo.getIsTransferCustomsBill()
-					|| afterinfo.getEmsSerialNo() == null) {
+			//出现 Null 指针问题 处理一下
+			boolean isTransferCustomsBill = afterinfo
+					.getIsTransferCustomsBill() == null ? Boolean.FALSE
+					: afterinfo.getIsTransferCustomsBill();
+			if (isTransferCustomsBill || afterinfo.getEmsSerialNo() == null) {
 				continue;// 如果已经转报关单，则不再转
 			}
 			// 修改清单报关单流水号,状态，商品项
-			modifyApplyToCustomsBillList(afterinfo.getBillList(), String
-					.valueOf(customs.getSerialNumber()), Integer.valueOf(1));//
+			modifyApplyToCustomsBillList(afterinfo.getBillList(),
+					String.valueOf(customs.getSerialNumber()),
+					Integer.valueOf(1));//
 			// 保存清单报关单号
 			// -------------------------------------------------------------------------------
 			BaseCustomsDeclarationCommInfo existcommInfo = null;
@@ -2919,9 +2942,9 @@ public class EncLogic extends BaseEncLogic {
 			if (billList.getMaterielProductFlag().equals(
 					Integer.valueOf(MaterielType.MATERIEL))) {
 				existcommInfo = ((EncDao) this.getBaseEncDao())
-						.findBaseCustomsDeclarationCommInfoBySequm(Integer
-								.valueOf(afterinfo.getEmsSerialNo()), customs,
-								null, afterinfo.getCountry());
+						.findBaseCustomsDeclarationCommInfoBySequm(
+								Integer.valueOf(afterinfo.getEmsSerialNo()),
+								customs, null, afterinfo.getCountry());
 				img = ((EncDao) this.getBaseEncDao()).getEmsHeadImg(Integer
 						.valueOf(afterinfo.getEmsSerialNo()));
 				if (img == null) {
@@ -2932,9 +2955,8 @@ public class EncLogic extends BaseEncLogic {
 							.getImpExpType());
 					commInfo = new CustomsDeclarationCommInfo();
 					commInfo.setBaseCustomsDeclaration(customs);
-					commInfo
-							.setSerialNumber(this
-									.getCustomsDeclarationCommInfoSerialNumber(customs));
+					commInfo.setSerialNumber(this
+							.getCustomsDeclarationCommInfoSerialNumber(customs));
 					if (billList.getMemos() != null) {
 						commInfo.getBaseCustomsDeclaration().setMemos(
 								billList.getMemos());
@@ -2954,20 +2976,17 @@ public class EncLogic extends BaseEncLogic {
 					commInfo.setProjectDept(afterinfo.getProjectDept());
 
 					// -----------------------------------------------------------------------
-					commInfo
-							.setNetWeight(formatD((afterinfo.getNetWeight() == null ? 0.0
-									: afterinfo.getNetWeight())));// 净重
-					commInfo
-							.setGrossWeight(formatD((afterinfo.getGrossWeight() == null ? 0.0
-									: afterinfo.getGrossWeight())));// 毛重
+					commInfo.setNetWeight(formatD((afterinfo.getNetWeight() == null ? 0.0
+							: afterinfo.getNetWeight())));// 净重
+					commInfo.setGrossWeight(formatD((afterinfo.getGrossWeight() == null ? 0.0
+							: afterinfo.getGrossWeight())));// 毛重
 					// 件数 == 件数
 					commInfo.setPieces(afterinfo.getPiece() == null ? 0
 							: afterinfo.getPiece().intValue());
 
 					commInfo.setBoxNo(afterinfo.getBoxNo());// 箱号
-					commInfo
-							.setCommAmount(afterinfo.getDeclaredAmount() == null ? 0.0
-									: afterinfo.getDeclaredAmount());// 数量
+					commInfo.setCommAmount(afterinfo.getDeclaredAmount() == null ? 0.0
+							: afterinfo.getDeclaredAmount());// 数量
 
 					commInfo.setWorkUsd(afterinfo.getWorkUsd() == null ? 0.0
 							: afterinfo.getWorkUsd());// 加工费总价
@@ -2982,34 +3001,28 @@ public class EncLogic extends BaseEncLogic {
 							commInfo.setCommUnitPrice(0.0);// 单价
 						}
 					} else if (param.getPriceType().equals("对应帐册申报单价")) {
-						commInfo
-								.setCommUnitPrice(img.getDeclarePrice() == null ? 0.0
-										: img.getDeclarePrice());
+						commInfo.setCommUnitPrice(img.getDeclarePrice() == null ? 0.0
+								: img.getDeclarePrice());
 						commInfo.setCommTotalPrice(commInfo.getCommAmount()
 								* (commInfo.getCommUnitPrice() == null ? 0.0
 										: commInfo.getCommUnitPrice()));
 					} else if (param.getPriceType().equals("对应帐册工厂单价")) {
-						commInfo
-								.setCommUnitPrice(img.getFactoryPrice() == null ? 0.0
-										: img.getFactoryPrice());
+						commInfo.setCommUnitPrice(img.getFactoryPrice() == null ? 0.0
+								: img.getFactoryPrice());
 						commInfo.setCommTotalPrice(commInfo.getCommAmount()
 								* (commInfo.getCommUnitPrice() == null ? 0.0
 										: commInfo.getCommUnitPrice()));
 					}
-					commInfo
-							.setFirstAmount(afterinfo.getLegalAmount() == null ? 0.0
-									: afterinfo.getLegalAmount());// 第一法定数量
-					commInfo
-							.setSecondAmount(afterinfo.getSecondLegalAmount() == null ? 0.0
-									: afterinfo.getSecondLegalAmount());// 第二法定数量
+					commInfo.setFirstAmount(afterinfo.getLegalAmount() == null ? 0.0
+							: afterinfo.getLegalAmount());// 第一法定数量
+					commInfo.setSecondAmount(afterinfo.getSecondLegalAmount() == null ? 0.0
+							: afterinfo.getSecondLegalAmount());// 第二法定数量
 					// -----------------------------------------------------------------------
 					if (other != null) {
 						commInfo.setUses(commInfo.getUses() == null ? other
 								.getUses() : commInfo.getUses());
-						commInfo
-								.setLevyMode(commInfo.getLevyMode() == null ? other
-										.getLevyMode()
-										: commInfo.getLevyMode());
+						commInfo.setLevyMode(commInfo.getLevyMode() == null ? other
+								.getLevyMode() : commInfo.getLevyMode());
 
 					}
 
@@ -3017,8 +3030,8 @@ public class EncLogic extends BaseEncLogic {
 					commInfo.setAddType(AddType.APPLY);
 					commInfo.setGrossWeight(CommonUtils.getDoubleByDigit(
 							commInfo.getGrossWeight(), weightFraction));
-					commInfo.setNetWeight(CommonUtils.getDoubleByDigit(commInfo
-							.getNetWeight(), weightFraction));
+					commInfo.setNetWeight(CommonUtils.getDoubleByDigit(
+							commInfo.getNetWeight(), weightFraction));
 					commInfo.setCommAmount(CommonUtils.getDoubleByDigit(
 							CommonUtils.getDoubleExceptNull(commInfo
 									.getCommAmount()), amountNum));
@@ -3036,8 +3049,8 @@ public class EncLogic extends BaseEncLogic {
 					// 第一法定数量
 					if (commInfo.getUnit() != null
 							&& commInfo.getLegalUnit() != null
-							&& commInfo.getUnit().getName().equals(
-									commInfo.getLegalUnit().getName())) {
+							&& commInfo.getUnit().getName()
+									.equals(commInfo.getLegalUnit().getName())) {
 						commInfo.setFirstAmount(commInfo.getCommAmount());
 					} else if (commInfo.getLegalUnit() != null
 							&& commInfo.getLegalUnit().getName().equals("千克")) {
@@ -3046,12 +3059,15 @@ public class EncLogic extends BaseEncLogic {
 					// 第二法定数量
 					if (commInfo.getUnit() != null
 							&& commInfo.getSecondLegalUnit() != null
-							&& commInfo.getUnit().getName().equals(
-									commInfo.getSecondLegalUnit().getName())) {
+							&& commInfo
+									.getUnit()
+									.getName()
+									.equals(commInfo.getSecondLegalUnit()
+											.getName())) {
 						commInfo.setSecondAmount(commInfo.getCommAmount());
 					} else if (commInfo.getSecondLegalUnit() != null
-							&& commInfo.getSecondLegalUnit().getName().equals(
-									"千克")) {
+							&& commInfo.getSecondLegalUnit().getName()
+									.equals("千克")) {
 						commInfo.setSecondAmount(commInfo.getNetWeight());
 					}
 					((EncDao) this.getBaseEncDao())
@@ -3141,13 +3157,16 @@ public class EncLogic extends BaseEncLogic {
 					// 第一法定数量
 					if (existcommInfo.getUnit() != null
 							&& existcommInfo.getLegalUnit() != null
-							&& existcommInfo.getUnit().getName().equals(
-									existcommInfo.getLegalUnit().getName())) {
+							&& existcommInfo
+									.getUnit()
+									.getName()
+									.equals(existcommInfo.getLegalUnit()
+											.getName())) {
 						existcommInfo.setFirstAmount(existcommInfo
 								.getCommAmount());
 					} else if (existcommInfo.getLegalUnit() != null
-							&& existcommInfo.getLegalUnit().getName().equals(
-									"千克")) {
+							&& existcommInfo.getLegalUnit().getName()
+									.equals("千克")) {
 						existcommInfo.setFirstAmount(existcommInfo
 								.getNetWeight());
 					}
@@ -3155,8 +3174,10 @@ public class EncLogic extends BaseEncLogic {
 					// 第二法定数量
 					if (existcommInfo.getUnit() != null
 							&& existcommInfo.getSecondLegalUnit() != null
-							&& existcommInfo.getUnit().getName().equals(
-									existcommInfo.getSecondLegalUnit()
+							&& existcommInfo
+									.getUnit()
+									.getName()
+									.equals(existcommInfo.getSecondLegalUnit()
 											.getName())) {
 						existcommInfo.setSecondAmount(existcommInfo
 								.getCommAmount());
@@ -3172,15 +3193,17 @@ public class EncLogic extends BaseEncLogic {
 				}
 			} else {// 成品（出口报关单）
 				existcommInfo = ((EncDao) this.getBaseEncDao())
-						.findBaseCustomsDeclarationCommInfoBySequm(Integer
-								.valueOf(afterinfo.getEmsSerialNo()), customs,
-								afterinfo.getVersion(), afterinfo.getCountry());
+						.findBaseCustomsDeclarationCommInfoBySequm(
+								Integer.valueOf(afterinfo.getEmsSerialNo()),
+								customs, afterinfo.getVersion(),
+								afterinfo.getCountry());
 				Integer version = (afterinfo.getVersion() == null || ""
 						.equals(afterinfo.getVersion())) ? 0 : Integer
 						.valueOf(afterinfo.getVersion());
 				EmsHeadH2kVersion versionObj = ((EncDao) this.getBaseEncDao())
-						.findEmsHeadH2kVersion(Integer.valueOf(afterinfo
-								.getEmsSerialNo()), version);
+						.findEmsHeadH2kVersion(
+								Integer.valueOf(afterinfo.getEmsSerialNo()),
+								version);
 				if (versionObj == null) {
 
 					throw new RuntimeException("该备案号["
@@ -3198,9 +3221,8 @@ public class EncLogic extends BaseEncLogic {
 						commInfo.getBaseCustomsDeclaration().setMemos(
 								billList.getMemos());
 					}
-					commInfo
-							.setSerialNumber(this
-									.getCustomsDeclarationCommInfoSerialNumber(customs));
+					commInfo.setSerialNumber(this
+							.getCustomsDeclarationCommInfoSerialNumber(customs));
 					commInfo.setCommSerialNo(afterinfo.getEmsSerialNo());
 					commInfo.setComplex(exg.getComplex());
 					commInfo.setCommName(exg.getName());
@@ -3219,31 +3241,25 @@ public class EncLogic extends BaseEncLogic {
 					if (other1 != null) {
 						commInfo.setUses(commInfo.getUses() == null ? other1
 								.getUses() : commInfo.getUses());
-						commInfo
-								.setLevyMode(commInfo.getLevyMode() == null ? other1
-										.getLevyMode()
-										: commInfo.getLevyMode());
+						commInfo.setLevyMode(commInfo.getLevyMode() == null ? other1
+								.getLevyMode() : commInfo.getLevyMode());
 					}
 					// --------------------------------------------------------------
 					// 件数 == 件数
 					commInfo.setPieces(afterinfo.getPiece() == null ? 0
 							: afterinfo.getPiece().intValue());
-					commInfo
-							.setNetWeight(formatD(afterinfo.getNetWeight() == null ? 0.0
-									: afterinfo.getNetWeight())); // 
-					commInfo
-							.setGrossWeight(formatD(afterinfo.getGrossWeight() == null ? 0.0
-									: afterinfo.getGrossWeight()));
+					commInfo.setNetWeight(formatD(afterinfo.getNetWeight() == null ? 0.0
+							: afterinfo.getNetWeight())); //
+					commInfo.setGrossWeight(formatD(afterinfo.getGrossWeight() == null ? 0.0
+							: afterinfo.getGrossWeight()));
 
 					commInfo.setFirstAmount(forInterNum(afterinfo
 							.getLegalAmount() == null ? 0.0 : afterinfo
 							.getLegalAmount())); // 第一法定数量
-					commInfo
-							.setSecondAmount(afterinfo.getSecondLegalAmount() == null ? 0.0
-									: afterinfo.getSecondLegalAmount());// 第二法定数量
-					commInfo
-							.setCommAmount(afterinfo.getDeclaredAmount() == null ? 0.0
-									: afterinfo.getDeclaredAmount());
+					commInfo.setSecondAmount(afterinfo.getSecondLegalAmount() == null ? 0.0
+							: afterinfo.getSecondLegalAmount());// 第二法定数量
+					commInfo.setCommAmount(afterinfo.getDeclaredAmount() == null ? 0.0
+							: afterinfo.getDeclaredAmount());
 					commInfo.setWorkUsd(afterinfo.getWorkUsd() == null ? 0.0
 							: afterinfo.getWorkUsd());// 加工费总价
 
@@ -3257,16 +3273,14 @@ public class EncLogic extends BaseEncLogic {
 							commInfo.setCommUnitPrice(0.0);// 单价
 						}
 					} else if (param.getPriceType().equals("对应帐册申报单价")) {
-						commInfo
-								.setCommUnitPrice(exg.getDeclarePrice() == null ? 0.0
-										: exg.getDeclarePrice());
+						commInfo.setCommUnitPrice(exg.getDeclarePrice() == null ? 0.0
+								: exg.getDeclarePrice());
 						commInfo.setCommTotalPrice(commInfo.getCommAmount()
 								* (commInfo.getCommUnitPrice() == null ? 0.0
 										: commInfo.getCommUnitPrice()));
 					} else if (param.getPriceType().equals("对应帐册工厂单价")) {
-						commInfo
-								.setCommUnitPrice(exg.getFactoryPrice() == null ? 0.0
-										: exg.getFactoryPrice());
+						commInfo.setCommUnitPrice(exg.getFactoryPrice() == null ? 0.0
+								: exg.getFactoryPrice());
 						commInfo.setCommTotalPrice(commInfo.getCommAmount()
 								* (commInfo.getCommUnitPrice() == null ? 0.0
 										: commInfo.getCommUnitPrice()));
@@ -3274,8 +3288,8 @@ public class EncLogic extends BaseEncLogic {
 					// --------------------------------------------------------------
 					commInfo.setGrossWeight(CommonUtils.getDoubleByDigit(
 							commInfo.getGrossWeight(), weightFraction));
-					commInfo.setNetWeight(CommonUtils.getDoubleByDigit(commInfo
-							.getNetWeight(), weightFraction));
+					commInfo.setNetWeight(CommonUtils.getDoubleByDigit(
+							commInfo.getNetWeight(), weightFraction));
 					// 小数位控制
 					commInfo.setCommAmount(CommonUtils.getDoubleByDigit(
 							CommonUtils.getDoubleExceptNull(commInfo
@@ -3298,8 +3312,8 @@ public class EncLogic extends BaseEncLogic {
 					// 第一法定数量
 					if (commInfo.getUnit() != null
 							&& commInfo.getLegalUnit() != null
-							&& commInfo.getUnit().getName().equals(
-									commInfo.getLegalUnit().getName())) {
+							&& commInfo.getUnit().getName()
+									.equals(commInfo.getLegalUnit().getName())) {
 						commInfo.setFirstAmount(commInfo.getCommAmount());
 					} else if (commInfo.getLegalUnit() != null
 							&& commInfo.getLegalUnit().getName().equals("千克")) {
@@ -3308,12 +3322,15 @@ public class EncLogic extends BaseEncLogic {
 					// 第二法定数量
 					if (commInfo.getUnit() != null
 							&& commInfo.getSecondLegalUnit() != null
-							&& commInfo.getUnit().getName().equals(
-									commInfo.getSecondLegalUnit().getName())) {
+							&& commInfo
+									.getUnit()
+									.getName()
+									.equals(commInfo.getSecondLegalUnit()
+											.getName())) {
 						commInfo.setSecondAmount(commInfo.getCommAmount());
 					} else if (commInfo.getSecondLegalUnit() != null
-							&& commInfo.getSecondLegalUnit().getName().equals(
-									"千克")) {
+							&& commInfo.getSecondLegalUnit().getName()
+									.equals("千克")) {
 						commInfo.setSecondAmount(commInfo.getNetWeight());
 					}
 
@@ -3416,21 +3433,26 @@ public class EncLogic extends BaseEncLogic {
 					// 第一法定数量
 					if (existcommInfo.getUnit() != null
 							&& existcommInfo.getLegalUnit() != null
-							&& existcommInfo.getUnit().getName().equals(
-									existcommInfo.getLegalUnit().getName())) {
+							&& existcommInfo
+									.getUnit()
+									.getName()
+									.equals(existcommInfo.getLegalUnit()
+											.getName())) {
 						existcommInfo.setFirstAmount(existcommInfo
 								.getCommAmount());
 					} else if (existcommInfo.getLegalUnit() != null
-							&& existcommInfo.getLegalUnit().getName().equals(
-									"千克")) {
+							&& existcommInfo.getLegalUnit().getName()
+									.equals("千克")) {
 						existcommInfo.setFirstAmount(existcommInfo
 								.getNetWeight());
 					}
 					// 第二法定数量
 					if (existcommInfo.getUnit() != null
 							&& existcommInfo.getSecondLegalUnit() != null
-							&& existcommInfo.getUnit().getName().equals(
-									existcommInfo.getSecondLegalUnit()
+							&& existcommInfo
+									.getUnit()
+									.getName()
+									.equals(existcommInfo.getSecondLegalUnit()
 											.getName())) {
 						existcommInfo.setSecondAmount(existcommInfo
 								.getCommAmount());
@@ -3492,8 +3514,8 @@ public class EncLogic extends BaseEncLogic {
 		}
 
 		// -----------------------------------设置报关单汇率
-		Double dou = this.getCurrRateByCurr(customs.getCurrency(), customs
-				.getDeclarationDate(), customs.getEmsHeadH2k());
+		Double dou = this.getCurrRateByCurr(customs.getCurrency(),
+				customs.getDeclarationDate(), customs.getEmsHeadH2k());
 		if (dou != null) {
 			customs.setExchangeRate(dou);
 		}// 设置报关单汇率
@@ -3593,9 +3615,8 @@ public class EncLogic extends BaseEncLogic {
 					.get(i);
 			commInfo = new CustomsDeclarationCommInfo();
 			commInfo.setBaseCustomsDeclaration(customsDeclaration);
-			commInfo
-					.setSerialNumber(this
-							.getCustomsDeclarationCommInfoSerialNumber(customsDeclaration));
+			commInfo.setSerialNumber(this
+					.getCustomsDeclarationCommInfoSerialNumber(customsDeclaration));
 			commInfo.setCommSerialNo(Integer.valueOf(tempCommInfo
 					.getEmsSerialNo()));
 			commInfo.setComplex(tempCommInfo.getComplex());
@@ -3608,12 +3629,12 @@ public class EncLogic extends BaseEncLogic {
 			commInfo.setLegalUnit(tempCommInfo.getLegalUnit());
 			commInfo.setSecondLegalUnit(tempCommInfo.getLegalUnit2());
 			commInfo.setCommSpec(tempCommInfo.getSpec());
-			
+
 			// 规范申报规格
 			if (CommonUtils.isEmpty(commInfo.getDeclareSpec())) {
 				commInfo.setDeclareSpec(commInfo.getCommSpec());
 			}
-			
+
 			if (tempCommInfo.getVersion() != null
 					&& !tempCommInfo.getVersion().equals("")) {
 				commInfo.setVersion(String.valueOf(tempCommInfo.getVersion()));
@@ -3625,13 +3646,11 @@ public class EncLogic extends BaseEncLogic {
 			// 详细型号规格
 			commInfo.setDetailNote(tempCommInfo.getDetailNote());
 			// 第一法定比例因子
-			commInfo
-					.setLegalUnitGene(tempCommInfo.getLegalAmount() == null ? 0.0
-							: tempCommInfo.getLegalAmount());
+			commInfo.setLegalUnitGene(tempCommInfo.getLegalAmount() == null ? 0.0
+					: tempCommInfo.getLegalAmount());
 			// 第二法定比例因子
-			commInfo
-					.setLegalUnit2Gene(tempCommInfo.getSecondAmount() == null ? 0.0
-							: tempCommInfo.getSecondAmount());
+			commInfo.setLegalUnit2Gene(tempCommInfo.getSecondAmount() == null ? 0.0
+					: tempCommInfo.getSecondAmount());
 			((EncDao) this.getBaseEncDao())
 					.saveCustomsDeclarationCommInfo(commInfo);
 		}
@@ -3775,8 +3794,10 @@ public class EncLogic extends BaseEncLogic {
 						commInfo.setLevyMode(other.getLevyMode());
 					}
 					EmsHeadH2kVersion versionObj = ((EncDao) this
-							.getBaseEncDao()).findEmsHeadH2kVersion(Integer
-							.valueOf(commInfo.getEmsSerialNo()), version);
+							.getBaseEncDao())
+							.findEmsHeadH2kVersion(
+									Integer.valueOf(commInfo.getEmsSerialNo()),
+									version);
 					Double declaraprice = CommonUtils
 							.getEmsExgPrice(versionObj);
 					if (!Double.valueOf(0).equals(declaraprice)) {
@@ -4011,8 +4032,10 @@ public class EncLogic extends BaseEncLogic {
 						commInfo.setLevyMode(other.getLevyMode());
 					}
 					EmsHeadH2kVersion versionObj = ((EncDao) this
-							.getBaseEncDao()).findEmsHeadH2kVersion(Integer
-							.valueOf(commInfo.getEmsSerialNo()), version);
+							.getBaseEncDao())
+							.findEmsHeadH2kVersion(
+									Integer.valueOf(commInfo.getEmsSerialNo()),
+									version);
 					Double declaraprice = CommonUtils
 							.getEmsExgPrice(versionObj);
 					if (!Double.valueOf(0).equals(declaraprice)) {
@@ -4881,11 +4904,9 @@ public class EncLogic extends BaseEncLogic {
 				rm.setMaterialSpec(bom.getSpec());
 				rm.setUnit(bom.getUnit().getName());
 				rm.setTotalWasteAmount(new Double(calTotalWaste(bom)
-						.doubleValue()
-						* commAmount));
+						.doubleValue() * commAmount));
 				rm.setRemainMaterialTotalAmount(new Double(calUnitWaste(bom)
-						.doubleValue()
-						* commAmount));
+						.doubleValue() * commAmount));
 				int index = rmList.indexOf(rm);
 				if (index > -1) {
 					TempRemainMaterialStat tempRm = (TempRemainMaterialStat) rmList
@@ -5062,19 +5083,18 @@ public class EncLogic extends BaseEncLogic {
 					- (temp.getBillSum11() == null ? 0.0 : temp.getBillSum11());
 			temp.setBillSum16(s16);
 			// ---------------------------------
-			temp.setBillSum17(bjlUse); // 
-			temp.setBillSum18(zjckUse); // 
-			temp.setBillSum19(zcUse);// 
-			temp.setBillSum20(fgfcUse);// 
-			temp.setBillSum21(tcfcUse); // 
+			temp.setBillSum17(bjlUse); //
+			temp.setBillSum18(zjckUse); //
+			temp.setBillSum19(zcUse);//
+			temp.setBillSum20(fgfcUse);//
+			temp.setBillSum21(tcfcUse); //
 			// --------------------------------------------------------------------------
 
 			arrayList.add(temp);
 		}
 		return arrayList;
 	}
-	
-	
+
 	/**
 	 * 料件进出平衡状况汇总表--------------------进出口日期
 	 * 
@@ -5086,40 +5106,44 @@ public class EncLogic extends BaseEncLogic {
 	 *            是否生效
 	 * @return 有效期内料件进出状况汇总
 	 */
-	public List<BillTemp> calculateImgBalanceTotal(Date beginDate, Date endDate,
-			int isEffect, boolean isDeclaration, boolean isJisuan) {// isDeclaration
-																	// : 申报日期
+	public List<BillTemp> calculateImgBalanceTotal(Date beginDate,
+			Date endDate, int isEffect, boolean isDeclaration, boolean isJisuan) {// isDeclaration
+																					// :
+																					// 申报日期
 		List<BillTemp> arrayList = new ArrayList<BillTemp>();
-		
+
 		// 正在执行的电子帐册料件
-		List<EmsHeadH2kImg> list = ((EncDao) this.getBaseEncDao()).findEmsEdiImg(null);
-		
+		List<EmsHeadH2kImg> list = ((EncDao) this.getBaseEncDao())
+				.findEmsEdiImg(null);
+
 		List<EmsHeadH2k> emslist = emsEdiTrDao.findEmsHeadH2kInExecuting();
-		
+
 		// 当前正在执行的电子帐册表头
 		EmsHeadH2k head = null;
-		if(emslist.size()==0){
+		if (emslist.size() == 0) {
 			head = new EmsHeadH2k();
-		}else{
+		} else {
 			head = emslist.get(0);
 		}
-		
+
 		// 计算料件耗用
-		calculateMaterialUseNum(timehs, head, beginDate, endDate, isEffect, isDeclaration,
-				false, null, null);
+		calculateMaterialUseNum(timehs, head, beginDate, endDate, isEffect,
+				isDeclaration, false, null, null);
 
 		// 查找核销表头id
 		String cancelHeadId = findCancelCusHeaddByDate(beginDate, endDate);
-		
+
 		// 查找结余数量
 		Map map = commonCodeDao.findCancelImgByHeadId(cancelHeadId);
-		
+
 		// 获得期初金额
-		Map mapBeginMoney = commonCodeDao.findCancelImgByHeadIdMoney(cancelHeadId);
-		
+		Map mapBeginMoney = commonCodeDao
+				.findCancelImgByHeadIdMoney(cancelHeadId);
+
 		// 获得期初数量
-		Map mapBeginCmmAmount = commonCodeDao.findCancelImgByHeadIdCmmAmount(cancelHeadId);
-		
+		Map mapBeginCmmAmount = commonCodeDao
+				.findCancelImgByHeadIdCmmAmount(cancelHeadId);
+
 		// 料件进出口平均单价
 		Map<Integer, Double> priceMap = new HashMap<Integer, Double>();
 		// 料件进出口总价
@@ -5128,8 +5152,10 @@ public class EncLogic extends BaseEncLogic {
 		Map<String, Double> amountMap = new HashMap<String, Double>();
 		// 仓库数量
 		Map<Integer, Double> ckAmountMap = new HashMap<Integer, Double>();
-		
-		countMaterialImport(priceMap, moneyMap, amountMap, ckAmountMap, beginDate, endDate, isEffect, isDeclaration, false, null,mapBeginMoney,mapBeginCmmAmount);
+
+		countMaterialImport(priceMap, moneyMap, amountMap, ckAmountMap,
+				beginDate, endDate, isEffect, isDeclaration, false, null,
+				mapBeginMoney, mapBeginCmmAmount);
 
 		EmsHeadH2kImg img = null;
 		Integer seqNum = null; // 料件备案序号
@@ -5137,42 +5163,47 @@ public class EncLogic extends BaseEncLogic {
 		Double usaAvgPrice = null;
 		Double price = null;
 		String namespec = null;
-		
+
 		for (int i = 0; i < list.size(); i++) {
 			img = list.get(i);
 			seqNum = img.getSeqNum(); // 料件备案序号
 			temp = new BillTemp();
-					
-			
+
 			temp.setBill1(String.valueOf(seqNum));// 备案序号
 			temp.setBill2(img.getComplex() == null ? null : img.getComplex()
 					.getCode());// 商品编码
-			
+
 			namespec = img.getName() + "/" + img.getSpec();
 			temp.setBill3(namespec);// 商品名称规格
-			
+
 			temp.setBill4(img.getUnit() == null ? null : img.getUnit()
 					.getName());// 单位
-			
+
 			temp.setBill5("");// 事业部名称
-			
-			usaAvgPrice = CommonUtils.getDoubleExceptNull(priceMap.get(seqNum)); // 平均美元 单价
+
+			usaAvgPrice = CommonUtils.getDoubleExceptNull(priceMap.get(seqNum)); // 平均美元
+																					// 单价
 
 			temp.setBillSum1(usaAvgPrice);
-			
+
 			price = CommonUtils.getEmsImgPrice(img);
 			temp.setBillSum2(price);// 报关申报平均单价
-			
+
 			// 料件进口
-			Double lj = CommonUtils.getDoubleExceptNull(amountMap.get(seqNum + "/" + ImpExpType.DIRECT_IMPORT));
+			Double lj = CommonUtils.getDoubleExceptNull(amountMap.get(seqNum
+					+ "/" + ImpExpType.DIRECT_IMPORT));
 			// 转厂进口
-			Double zj = CommonUtils.getDoubleExceptNull(amountMap.get(seqNum + "/" + ImpExpType.TRANSFER_FACTORY_IMPORT));
+			Double zj = CommonUtils.getDoubleExceptNull(amountMap.get(seqNum
+					+ "/" + ImpExpType.TRANSFER_FACTORY_IMPORT));
 			// 退料出口
-			Double tj = CommonUtils.getDoubleExceptNull(amountMap.get(seqNum + "/" + ImpExpType.BACK_MATERIEL_EXPORT));
+			Double tj = CommonUtils.getDoubleExceptNull(amountMap.get(seqNum
+					+ "/" + ImpExpType.BACK_MATERIEL_EXPORT));
 			// 余料结转
-			Double yljk = CommonUtils.getDoubleExceptNull(amountMap.get(seqNum + "/" + ImpExpType.REMAIN_FORWARD_IMPORT));
+			Double yljk = CommonUtils.getDoubleExceptNull(amountMap.get(seqNum
+					+ "/" + ImpExpType.REMAIN_FORWARD_IMPORT));
 			// 余料转出
-			Double ylck = CommonUtils.getDoubleExceptNull(amountMap.get(seqNum + "/" + ImpExpType.REMAIN_FORWARD_EXPORT));
+			Double ylck = CommonUtils.getDoubleExceptNull(amountMap.get(seqNum
+					+ "/" + ImpExpType.REMAIN_FORWARD_EXPORT));
 			Double z = lj + zj + yljk - tj - ylck;// 本期进口量(数量) =
 			// 料件进口+转厂进口+余料结转（进口）-退料出口－余料转出
 			temp.setBillSum3(z); // 本期进口量(数量)
@@ -5181,18 +5212,24 @@ public class EncLogic extends BaseEncLogic {
 			temp.setBillSum6(yljk);// 余料结转进口
 			temp.setBillSum7(ylck);// 余料结转出口
 			temp.setBillSum8(tj);// 退料出口
-			Double sljnx = CommonUtils.getDoubleExceptNull(amountMap.get(seqNum + "/" + ImpExpType.MATERIAL_DOMESTIC_SALES));
-			
+			Double sljnx = CommonUtils.getDoubleExceptNull(amountMap.get(seqNum
+					+ "/" + ImpExpType.MATERIAL_DOMESTIC_SALES));
+
 			temp.setBillSum9(sljnx);// 本期料件内销
-			
-			Double ljM = CommonUtils.getDoubleExceptNull(moneyMap.get(seqNum + "/" + ImpExpType.DIRECT_IMPORT));// 料件进口
-			Double zjM = CommonUtils.getDoubleExceptNull(moneyMap.get(seqNum + "/" + ImpExpType.TRANSFER_FACTORY_IMPORT));
-			Double tjM = CommonUtils.getDoubleExceptNull(moneyMap.get(seqNum + "/" + ImpExpType.BACK_MATERIEL_EXPORT));
-			Double yljkM = CommonUtils.getDoubleExceptNull(moneyMap.get(seqNum + "/" + ImpExpType.REMAIN_FORWARD_IMPORT));
-			Double ylckM = CommonUtils.getDoubleExceptNull(moneyMap.get(seqNum + "/" + ImpExpType.REMAIN_FORWARD_EXPORT));
+
+			Double ljM = CommonUtils.getDoubleExceptNull(moneyMap.get(seqNum
+					+ "/" + ImpExpType.DIRECT_IMPORT));// 料件进口
+			Double zjM = CommonUtils.getDoubleExceptNull(moneyMap.get(seqNum
+					+ "/" + ImpExpType.TRANSFER_FACTORY_IMPORT));
+			Double tjM = CommonUtils.getDoubleExceptNull(moneyMap.get(seqNum
+					+ "/" + ImpExpType.BACK_MATERIEL_EXPORT));
+			Double yljkM = CommonUtils.getDoubleExceptNull(moneyMap.get(seqNum
+					+ "/" + ImpExpType.REMAIN_FORWARD_IMPORT));
+			Double ylckM = CommonUtils.getDoubleExceptNull(moneyMap.get(seqNum
+					+ "/" + ImpExpType.REMAIN_FORWARD_EXPORT));
 			Double zM = ljM + zjM + yljkM - tjM - ylckM;// 本期进口总金额
 			temp.setBillSum10(zM);// 总进口量美元金额
-			
+
 			TempDD x = timehs.get(String.valueOf(seqNum));
 			Double ljUse = Double.valueOf(0);
 			Double bjlUse = Double.valueOf(0);
@@ -5209,16 +5246,15 @@ public class EncLogic extends BaseEncLogic {
 				tcfcUse = x.getTcfghy();
 			}
 			temp.setBillSum11(ljUse);
-			
+
 			Double s12 = (temp.getBillSum11() == null ? 0.0 : temp
-					.getBillSum11())
-					* usaAvgPrice;
+					.getBillSum11()) * usaAvgPrice;
 			temp.setBillSum12(s12);
-			
-			double cmmAmount = map.get(seqNum) == null ? 0.0 : (Double) map.get(seqNum);
+
+			double cmmAmount = map.get(seqNum) == null ? 0.0 : (Double) map
+					.get(seqNum);
 			temp.setBillSum22(cmmAmount); // 期初库存量
 
-			
 			if (isJisuan) {
 				Double s13 = (temp.getBillSum3() == null ? 0.0 : temp
 						.getBillSum3())
@@ -5240,32 +5276,34 @@ public class EncLogic extends BaseEncLogic {
 			}
 			Double ckAmount = ckAmountMap.get(seqNum);
 			temp.setBillSum14(ckAmount);// 仓库数
-			
+
 			Double s15 = (temp.getBillSum13() == null ? 0.0 : temp
 					.getBillSum13())
 					- (temp.getBillSum14() == null ? 0.0 : temp.getBillSum14());
 			temp.setBillSum15(s15);
-			
+
 			Double s16 = (temp.getBillSum3() == null ? 0.0 : temp.getBillSum3())
 					- (temp.getBillSum11() == null ? 0.0 : temp.getBillSum11());
 			temp.setBillSum16(s16);
-			
-			temp.setBillSum17(bjlUse); // 
-			temp.setBillSum18(zjckUse); // 
-			temp.setBillSum19(zcUse);// 
-			temp.setBillSum20(fgfcUse);// 
-			temp.setBillSum21(tcfcUse); // 
-			temp.setBillSum23(usaAvgPrice*sljnx);//内销金额 = 平均美元单价*本期料件内销
-			temp.setBillSum24(usaAvgPrice*cmmAmount);//期初金额  = 平均美元 单价*期初库存量
-			temp.setBillSum25(usaAvgPrice*cmmAmount+zM-s12-usaAvgPrice*sljnx);//结余金额  = 期初金额+总进口金额-耗用金额-内销金额
+
+			temp.setBillSum17(bjlUse); //
+			temp.setBillSum18(zjckUse); //
+			temp.setBillSum19(zcUse);//
+			temp.setBillSum20(fgfcUse);//
+			temp.setBillSum21(tcfcUse); //
+			temp.setBillSum23(usaAvgPrice * sljnx);// 内销金额 = 平均美元单价*本期料件内销
+			temp.setBillSum24(usaAvgPrice * cmmAmount);// 期初金额 = 平均美元 单价*期初库存量
+			temp.setBillSum25(usaAvgPrice * cmmAmount + zM - s12 - usaAvgPrice
+					* sljnx);// 结余金额 = 期初金额+总进口金额-耗用金额-内销金额
 			arrayList.add(temp);
 		}
-		
+
 		return arrayList;
 	}
-	
+
 	/**
 	 * 查询料件的进出口金额，平均单价，总价，仓库数量
+	 * 
 	 * @param priceMap
 	 * @param moneyMap
 	 * @param amountMap
@@ -5277,11 +5315,15 @@ public class EncLogic extends BaseEncLogic {
 	 * @param isDept
 	 * @param deptCode
 	 */
-	private void countMaterialImport(Map<Integer, Double> priceMap, Map<String, Double> moneyMap, 
-			Map<String, Double> amountMap, Map<Integer, Double> ckAmountMap, Date beginDate, Date endDate,
-			int isEffect, boolean isDeclaration, boolean isDept, String deptCode,Map<Integer, Double> mapBeginMoney,Map<Integer, Double> mapBeginCmmAmount) {
-		
-		List<Object[]> list = encDao.countSeqNumImport(beginDate, endDate, isEffect, isDeclaration, isDept, deptCode, false);
+	private void countMaterialImport(Map<Integer, Double> priceMap,
+			Map<String, Double> moneyMap, Map<String, Double> amountMap,
+			Map<Integer, Double> ckAmountMap, Date beginDate, Date endDate,
+			int isEffect, boolean isDeclaration, boolean isDept,
+			String deptCode, Map<Integer, Double> mapBeginMoney,
+			Map<Integer, Double> mapBeginCmmAmount) {
+
+		List<Object[]> list = encDao.countSeqNumImport(beginDate, endDate,
+				isEffect, isDeclaration, isDept, deptCode, false);
 		Object[] record = null;
 		String key = "";
 		for (int i = 0; i < list.size(); i++) {
@@ -5292,39 +5334,41 @@ public class EncLogic extends BaseEncLogic {
 			// 金额
 			moneyMap.put(key, (Double) record[3]);
 		}
-		
-		list = encDao.countSeqNumImport(beginDate, endDate, isEffect, isDeclaration, isDept, deptCode, true);
-		/////////////
-		//获取数量  总价
-		List<Object[]> listPriceAmount = encDao.findPriceAndAmount(beginDate, endDate, isEffect, isDeclaration, isDept, deptCode);
-		
-		//获取平均单价    总价/数量    
+
+		list = encDao.countSeqNumImport(beginDate, endDate, isEffect,
+				isDeclaration, isDept, deptCode, true);
+		// ///////////
+		// 获取数量 总价
+		List<Object[]> listPriceAmount = encDao.findPriceAndAmount(beginDate,
+				endDate, isEffect, isDeclaration, isDept, deptCode);
+
+		// 获取平均单价 总价/数量
 		for (int i = 0; i < listPriceAmount.size(); i++) {
 			Object[] object = listPriceAmount.get(i);
-			//商品序号
-			int commSerialNo= Integer.parseInt(object[0].toString());
+			// 商品序号
+			int commSerialNo = Integer.parseInt(object[0].toString());
 			double price = Double.parseDouble(object[1].toString());
 			double amount = Double.parseDouble(object[2].toString());
-			if(!(mapBeginCmmAmount.get(commSerialNo)==null)){
-				//加上期初数量
-				amount+=mapBeginCmmAmount.get(commSerialNo);
+			if (!(mapBeginCmmAmount.get(commSerialNo) == null)) {
+				// 加上期初数量
+				amount += mapBeginCmmAmount.get(commSerialNo);
 			}
-			if(!(mapBeginMoney.get(commSerialNo)==null)){
-				//加上期初金额
-				price+=mapBeginMoney.get(commSerialNo);
+			if (!(mapBeginMoney.get(commSerialNo) == null)) {
+				// 加上期初金额
+				price += mapBeginMoney.get(commSerialNo);
 			}
-			//保存料件进出口平均单价
-			priceMap.put(commSerialNo,price/amount);
+			// 保存料件进出口平均单价
+			priceMap.put(commSerialNo, price / amount);
 		}
-		/////////////////
-		
+		// ///////////////
+
 		record = null;
-//		for (int i = 0; i < list.size(); i++) {
-//			record = list.get(i);
-//			// 单价
-//			priceMap.put((Integer) record[0], (Double) record[1]);
-//		}
-		
+		// for (int i = 0; i < list.size(); i++) {
+		// record = list.get(i);
+		// // 单价
+		// priceMap.put((Integer) record[0], (Double) record[1]);
+		// }
+
 		list = encDao.findSumAmount();
 		record = null;
 		for (int i = 0; i < list.size(); i++) {
@@ -5332,9 +5376,8 @@ public class EncLogic extends BaseEncLogic {
 			// 仓库数量
 			ckAmountMap.put((Integer) record[0], (Double) record[1]);
 		}
-		
+
 	}
-	
 
 	// 分事业部统计
 	public List jisuanImgBalanceTotalForDept(Date beginDate, Date endDate,
@@ -5506,11 +5549,11 @@ public class EncLogic extends BaseEncLogic {
 								.getBillSum11());
 				temp.setBillSum16(s16);
 				// ---------------------------------
-				temp.setBillSum17(bjlUse); // 
-				temp.setBillSum18(zjckUse); // 
-				temp.setBillSum19(zcUse);// 
-				temp.setBillSum20(fgfcUse);// 
-				temp.setBillSum21(tcfcUse); // 
+				temp.setBillSum17(bjlUse); //
+				temp.setBillSum18(zjckUse); //
+				temp.setBillSum19(zcUse);//
+				temp.setBillSum20(fgfcUse);//
+				temp.setBillSum21(tcfcUse); //
 				// --------------------------------------------------------------------------
 				temp.setBillSum22(map.get(no) == null ? 0.0 : (Double) map
 						.get(no)); // 期初库存量
@@ -5579,26 +5622,26 @@ public class EncLogic extends BaseEncLogic {
 				temp.setBillSum3(grossWeight);// 合同签定毛重
 				if (unitWeight != null) {
 					Double weightRate = (Double.valueOf(0)).equals(unitWeight) ? Double
-							.valueOf(0)
-							: (grossWeight / unitWeight);
+							.valueOf(0) : (grossWeight / unitWeight);
 					temp.setBillSum4(weightRate);// 合同签定比例
 				}
 			}
 			// 总出口 = 成出 + 转长 +返工副出 - 退厂返工
-			if (info.getBaseCustomsDeclaration().getImpExpType().equals(
-					ImpExpType.DIRECT_EXPORT)
-					|| info.getBaseCustomsDeclaration().getImpExpType().equals(
-							ImpExpType.TRANSFER_FACTORY_EXPORT)
-					|| info.getBaseCustomsDeclaration().getImpExpType().equals(
-							ImpExpType.REWORK_EXPORT)) { // 成出 + 转长 +返工副出
+			if (info.getBaseCustomsDeclaration().getImpExpType()
+					.equals(ImpExpType.DIRECT_EXPORT)
+					|| info.getBaseCustomsDeclaration().getImpExpType()
+							.equals(ImpExpType.TRANSFER_FACTORY_EXPORT)
+					|| info.getBaseCustomsDeclaration().getImpExpType()
+							.equals(ImpExpType.REWORK_EXPORT)) { // 成出 + 转长
+																	// +返工副出
 				temp.setBillSum5(fd(temp.getBillSum5())
 						+ fd(info.getCommAmount()));
 				temp.setBillSum8(fd(temp.getBillSum8())
 						+ fd(info.getNetWeight()));// 实际报关出口净重(根据类型计算)
 				temp.setBillSum11(fd(temp.getBillSum11())
 						+ fd(info.getGrossWeight())); // 实际也要根据类型
-			} else if (info.getBaseCustomsDeclaration().getImpExpType().equals(
-					ImpExpType.BACK_FACTORY_REWORK)) {// 退厂返工
+			} else if (info.getBaseCustomsDeclaration().getImpExpType()
+					.equals(ImpExpType.BACK_FACTORY_REWORK)) {// 退厂返工
 				temp.setBillSum5(fd(temp.getBillSum5())
 						- fd(info.getCommAmount()));
 				temp.setBillSum8(fd(temp.getBillSum8())
@@ -5619,13 +5662,10 @@ public class EncLogic extends BaseEncLogic {
 			}
 			Integer piece = info.getPieces() == null ? 0 : info.getPieces();
 			Integer piece0 = Integer.valueOf(temp.getBill7() == null ? "0"
-					: temp.getBill7())
-					+ piece;
+					: temp.getBill7()) + piece;
 			temp.setBill7(String.valueOf(piece0));// 帐册累计已出口件数
 			temp.setBillSum9(fd(temp.getBillSum7()) - fd(temp.getBillSum8())); // 帐册净重-实际出口净重差异
-			temp
-					.setBillSum12(fd(temp.getBillSum10())
-							- fd(temp.getBillSum11()));
+			temp.setBillSum12(fd(temp.getBillSum10()) - fd(temp.getBillSum11()));
 		}
 		// ----排序-------------------------------------
 		ArrayList returnList = new ArrayList();
@@ -5690,8 +5730,8 @@ public class EncLogic extends BaseEncLogic {
 				ht.put(keys, temp);
 
 				EmsHeadH2kVersion versionObj = ((EncDao) this.getBaseEncDao())
-						.findEmsHeadH2kVersion(Integer.valueOf(no), Integer
-								.valueOf(version));
+						.findEmsHeadH2kVersion(Integer.valueOf(no),
+								Integer.valueOf(version));
 				if (versionObj == null) {
 					continue;
 				}
@@ -5705,26 +5745,26 @@ public class EncLogic extends BaseEncLogic {
 				temp.setBillSum3(grossWeight);// 合同签定毛重
 				if (unitWeight != null) {
 					Double weightRate = (Double.valueOf(0)).equals(unitWeight) ? Double
-							.valueOf(0)
-							: (grossWeight / unitWeight);
+							.valueOf(0) : (grossWeight / unitWeight);
 					temp.setBillSum4(weightRate);// 合同签定比例
 				}
 			}
 			// 总出口 = 成出 + 转长 +返工副出 - 退厂返工
-			if (info.getBaseCustomsDeclaration().getImpExpType().equals(
-					ImpExpType.DIRECT_EXPORT)
-					|| info.getBaseCustomsDeclaration().getImpExpType().equals(
-							ImpExpType.TRANSFER_FACTORY_EXPORT)
-					|| info.getBaseCustomsDeclaration().getImpExpType().equals(
-							ImpExpType.REWORK_EXPORT)) { // 成出 + 转长 +返工副出
+			if (info.getBaseCustomsDeclaration().getImpExpType()
+					.equals(ImpExpType.DIRECT_EXPORT)
+					|| info.getBaseCustomsDeclaration().getImpExpType()
+							.equals(ImpExpType.TRANSFER_FACTORY_EXPORT)
+					|| info.getBaseCustomsDeclaration().getImpExpType()
+							.equals(ImpExpType.REWORK_EXPORT)) { // 成出 + 转长
+																	// +返工副出
 				temp.setBillSum5(fd(temp.getBillSum5())
 						+ fd(info.getCommAmount()));
 				temp.setBillSum8(fd(temp.getBillSum8())
 						+ fd(info.getNetWeight()));// 实际报关出口净重(根据类型计算)
 				temp.setBillSum11(fd(temp.getBillSum11())
 						+ fd(info.getGrossWeight())); // 实际也要根据类型
-			} else if (info.getBaseCustomsDeclaration().getImpExpType().equals(
-					ImpExpType.BACK_FACTORY_REWORK)) {// 退厂返工
+			} else if (info.getBaseCustomsDeclaration().getImpExpType()
+					.equals(ImpExpType.BACK_FACTORY_REWORK)) {// 退厂返工
 				temp.setBillSum5(fd(temp.getBillSum5())
 						- fd(info.getCommAmount()));
 				temp.setBillSum8(fd(temp.getBillSum8())
@@ -5745,13 +5785,10 @@ public class EncLogic extends BaseEncLogic {
 			}
 			Integer piece = info.getPieces() == null ? 0 : info.getPieces();
 			Integer piece0 = Integer.valueOf(temp.getBill7() == null ? "0"
-					: temp.getBill7())
-					+ piece;
+					: temp.getBill7()) + piece;
 			temp.setBill7(String.valueOf(piece0));// 帐册累计已出口件数
 			temp.setBillSum9(fd(temp.getBillSum7()) - fd(temp.getBillSum8())); // 帐册净重-实际出口净重差异
-			temp
-					.setBillSum12(fd(temp.getBillSum10())
-							- fd(temp.getBillSum11()));
+			temp.setBillSum12(fd(temp.getBillSum10()) - fd(temp.getBillSum11()));
 		}
 		/*
 		 * // ----排序------------------------------------- ArrayList returnList =
@@ -5835,15 +5872,15 @@ public class EncLogic extends BaseEncLogic {
 			prices = prices
 					+ CalcCIF("1", String.valueOf(customsDeclaration
 							.getFreightageType()), customsDeclaration
-							.getTransac().getName(), customsDeclaration
-							.getFreightage(), customsDeclaration
-							.getGrossWeight(), prices);
+							.getTransac().getName(),
+							customsDeclaration.getFreightage(),
+							customsDeclaration.getGrossWeight(), prices);
 			prices = prices
 					+ CalcCIF("3", String.valueOf(customsDeclaration
 							.getInsuranceType()), customsDeclaration
-							.getTransac().getName(), customsDeclaration
-							.getInsurance(), customsDeclaration
-							.getGrossWeight(), prices);
+							.getTransac().getName(),
+							customsDeclaration.getInsurance(),
+							customsDeclaration.getGrossWeight(), prices);
 			Double rate = customsDeclaration.getExchangeRate();
 			if (rate != null && rate > 0.0) {
 				totalprice = totalprice + (prices * rate);
@@ -6514,8 +6551,8 @@ public class EncLogic extends BaseEncLogic {
 				temp.setBillSum16(cpUseNum);
 				temp.setBillSum17(tranUseNum);
 				temp.setBill5(projectDeptName);// 事业部
-				temp.setBillSum20(fgfchy);//返工复出
-				temp.setBillSum21(tcfghy);//退厂返工
+				temp.setBillSum20(fgfchy);// 返工复出
+				temp.setBillSum21(tcfghy);// 退厂返工
 
 				Double lj = ((EncDao) this.getBaseEncDao()).getSumCommAmount(
 						ImpExpType.DIRECT_IMPORT, beginDate, endDate, isEffect,// 直接进口
@@ -6557,8 +6594,7 @@ public class EncLogic extends BaseEncLogic {
 
 				Double billsum10 = (fd(temp.getBillSum4())
 						+ fd(temp.getBillSum5()) - fd(temp.getBillSum6()) - fd(temp
-						.getBillSum7()))
-						* averprice;
+							.getBillSum7())) * averprice;
 				temp.setBillSum10(billsum10);
 
 				List listAmount = ((EncDao) this.getBaseEncDao())
@@ -6681,11 +6717,11 @@ public class EncLogic extends BaseEncLogic {
 				temp.setBillSum14(bjlNum);// 本期边角料
 				temp.setBillSum16(cpUseNum);
 				temp.setBillSum17(tranUseNum);
-				temp.setBillSum20(fgfchy);//返工复出
-				temp.setBillSum21(tcfghy);//退厂返工
+				temp.setBillSum20(fgfchy);// 返工复出
+				temp.setBillSum21(tcfghy);// 退厂返工
 			}
-			if (info.getBaseCustomsDeclaration().getImpExpType().equals(
-					ImpExpType.DIRECT_IMPORT)) { // 直接进口-
+			if (info.getBaseCustomsDeclaration().getImpExpType()
+					.equals(ImpExpType.DIRECT_IMPORT)) { // 直接进口-
 				temp.setBillSum4(fd(temp.getBillSum4())
 						+ fd(info.getCommAmount()));
 				temp.setBillSum3(fd(temp.getBillSum3())
@@ -6696,8 +6732,8 @@ public class EncLogic extends BaseEncLogic {
 				temp.setBillSum9(fd(temp.getBillSum9())
 						+ fd(info.getCommAmount()));
 
-			} else if (info.getBaseCustomsDeclaration().getImpExpType().equals(
-					ImpExpType.TRANSFER_FACTORY_IMPORT)) { // 料件转厂
+			} else if (info.getBaseCustomsDeclaration().getImpExpType()
+					.equals(ImpExpType.TRANSFER_FACTORY_IMPORT)) { // 料件转厂
 				temp.setBillSum5(fd(temp.getBillSum5())
 						+ fd(info.getCommAmount()));
 				temp.setBillSum3(fd(temp.getBillSum3())
@@ -6706,8 +6742,8 @@ public class EncLogic extends BaseEncLogic {
 						+ fd(info.getCommAmount()));
 				temp.setBillSum9(fd(temp.getBillSum9())
 						+ fd(info.getCommAmount()));
-			} else if (info.getBaseCustomsDeclaration().getImpExpType().equals(
-					ImpExpType.BACK_MATERIEL_EXPORT)) {// 退料出口
+			} else if (info.getBaseCustomsDeclaration().getImpExpType()
+					.equals(ImpExpType.BACK_MATERIEL_EXPORT)) {// 退料出口
 				temp.setBillSum6(fd(temp.getBillSum6())
 						+ fd(info.getCommAmount()));
 				temp.setBillSum2(fd(temp.getBillSum2())
@@ -6715,8 +6751,8 @@ public class EncLogic extends BaseEncLogic {
 				temp.setBillSum9(fd(temp.getBillSum9())
 						- fd(info.getCommAmount()));
 
-			} else if (info.getBaseCustomsDeclaration().getImpExpType().equals(
-					ImpExpType.REMAIN_FORWARD_IMPORT)) {
+			} else if (info.getBaseCustomsDeclaration().getImpExpType()
+					.equals(ImpExpType.REMAIN_FORWARD_IMPORT)) {
 				temp.setBillSum2(fd(temp.getBillSum2())
 						+ fd(info.getCommAmount()));
 				temp.setBillSum9(fd(temp.getBillSum9())
@@ -6724,14 +6760,14 @@ public class EncLogic extends BaseEncLogic {
 
 				temp.setBillSum1(fd(temp.getBillSum1())
 						+ fd(info.getCommAmount()));
-			} else if (info.getBaseCustomsDeclaration().getImpExpType().equals(
-					ImpExpType.MATERIAL_DOMESTIC_SALES)) {
+			} else if (info.getBaseCustomsDeclaration().getImpExpType()
+					.equals(ImpExpType.MATERIAL_DOMESTIC_SALES)) {
 				temp.setBillSum18(fd(temp.getBillSum18())
 						+ fd(info.getCommAmount()));
 				temp.setBillSum9(fd(temp.getBillSum9())
 						- fd(info.getCommAmount()));
-			} else if (info.getBaseCustomsDeclaration().getImpExpType().equals(
-					ImpExpType.REMAIN_FORWARD_EXPORT)) {
+			} else if (info.getBaseCustomsDeclaration().getImpExpType()
+					.equals(ImpExpType.REMAIN_FORWARD_EXPORT)) {
 				temp.setBillSum2(fd(temp.getBillSum2())
 						- fd(info.getCommAmount()));
 				temp.setBillSum9(fd(temp.getBillSum9())
@@ -6795,7 +6831,7 @@ public class EncLogic extends BaseEncLogic {
 				Double tranUseNum = Double.valueOf(0);
 				Double tcfghy = Double.valueOf(0);
 				Double fgfchy = Double.valueOf(0);
-				
+
 				TempDD x = (TempDD) hs.get(String.valueOf(img.getSeqNum()));
 				TempDD y = (TempDD) timehs.get(String.valueOf(img.getSeqNum()));
 				TempDD z = (TempDD) tranThs
@@ -6821,9 +6857,8 @@ public class EncLogic extends BaseEncLogic {
 				temp.setBillSum14(bjlNum);// 本期边角料
 				temp.setBillSum16(cpUseNum);
 				temp.setBillSum17(tranUseNum);
-				temp.setBillSum20(fgfchy);//返工复出
-				temp.setBillSum21(tcfghy);//退厂返工
-				
+				temp.setBillSum20(fgfchy);// 返工复出
+				temp.setBillSum21(tcfghy);// 退厂返工
 
 				temp.setBillSum9(fd(temp.getBillSum2()) - useNum
 						- fd(temp.getBillSum18()));
@@ -6927,8 +6962,8 @@ public class EncLogic extends BaseEncLogic {
 			Double money = fd(info.getCommAmount())
 					* fd(info.getCommUnitPrice());
 			temp.setBillSum2(fd(temp.getBillSum2()) + money);
-			if (info.getBaseCustomsDeclaration().getImpExpType().equals(
-					ImpExpType.DIRECT_EXPORT)) {
+			if (info.getBaseCustomsDeclaration().getImpExpType()
+					.equals(ImpExpType.DIRECT_EXPORT)) {
 				temp.setBillSum5(fd(temp.getBillSum5())
 						+ fd(info.getCommAmount()));
 				temp.setBillSum4(fd(temp.getBillSum4())
@@ -6945,8 +6980,8 @@ public class EncLogic extends BaseEncLogic {
 					temp.setBillSum1(priace);
 				}
 
-			} else if (info.getBaseCustomsDeclaration().getImpExpType().equals(
-					ImpExpType.TRANSFER_FACTORY_EXPORT)) {
+			} else if (info.getBaseCustomsDeclaration().getImpExpType()
+					.equals(ImpExpType.TRANSFER_FACTORY_EXPORT)) {
 				temp.setBillSum6(fd(temp.getBillSum6())
 						+ fd(info.getCommAmount()));
 				temp.setBillSum4(fd(temp.getBillSum4())
@@ -6962,8 +6997,8 @@ public class EncLogic extends BaseEncLogic {
 					priace = CommonUtils.getDoubleByDigit(priace, 3);
 					temp.setBillSum1(priace);
 				}
-			} else if (info.getBaseCustomsDeclaration().getImpExpType().equals(
-					ImpExpType.BACK_FACTORY_REWORK)) {
+			} else if (info.getBaseCustomsDeclaration().getImpExpType()
+					.equals(ImpExpType.BACK_FACTORY_REWORK)) {
 				temp.setBillSum7(fd(temp.getBillSum7())
 						+ fd(info.getCommAmount()));
 				temp.setBillSum3(fd(temp.getBillSum3())
@@ -6977,8 +7012,8 @@ public class EncLogic extends BaseEncLogic {
 					priace = CommonUtils.getDoubleByDigit(priace, 3);
 					temp.setBillSum1(priace);
 				}
-			} else if (info.getBaseCustomsDeclaration().getImpExpType().equals(
-					ImpExpType.REWORK_EXPORT)) {
+			} else if (info.getBaseCustomsDeclaration().getImpExpType()
+					.equals(ImpExpType.REWORK_EXPORT)) {
 				temp.setBillSum8(fd(temp.getBillSum8())
 						+ fd(info.getCommAmount()));
 				temp.setBillSum3(fd(temp.getBillSum3())
@@ -7052,8 +7087,8 @@ public class EncLogic extends BaseEncLogic {
 			Double money = fd(info.getCommAmount())
 					* fd(info.getCommUnitPrice());
 			temp.setBillSum2(fd(temp.getBillSum2()) + money);
-			if (info.getBaseCustomsDeclaration().getImpExpType().equals(
-					ImpExpType.DIRECT_EXPORT)) {
+			if (info.getBaseCustomsDeclaration().getImpExpType()
+					.equals(ImpExpType.DIRECT_EXPORT)) {
 				temp.setBillSum5(fd(temp.getBillSum5())
 						+ fd(info.getCommAmount()));
 				temp.setBillSum4(fd(temp.getBillSum4())
@@ -7069,8 +7104,8 @@ public class EncLogic extends BaseEncLogic {
 					priace = CommonUtils.getDoubleByDigit(priace, 3);
 					temp.setBillSum1(priace);
 				}
-			} else if (info.getBaseCustomsDeclaration().getImpExpType().equals(
-					ImpExpType.TRANSFER_FACTORY_EXPORT)) {
+			} else if (info.getBaseCustomsDeclaration().getImpExpType()
+					.equals(ImpExpType.TRANSFER_FACTORY_EXPORT)) {
 				temp.setBillSum6(fd(temp.getBillSum6())
 						+ fd(info.getCommAmount()));
 				temp.setBillSum4(fd(temp.getBillSum4())
@@ -7086,8 +7121,8 @@ public class EncLogic extends BaseEncLogic {
 					priace = CommonUtils.getDoubleByDigit(priace, 3);
 					temp.setBillSum1(priace);
 				}
-			} else if (info.getBaseCustomsDeclaration().getImpExpType().equals(
-					ImpExpType.BACK_FACTORY_REWORK)) {
+			} else if (info.getBaseCustomsDeclaration().getImpExpType()
+					.equals(ImpExpType.BACK_FACTORY_REWORK)) {
 				temp.setBillSum7(fd(temp.getBillSum7())
 						+ fd(info.getCommAmount()));
 				temp.setBillSum3(fd(temp.getBillSum3())
@@ -7101,8 +7136,8 @@ public class EncLogic extends BaseEncLogic {
 					priace = CommonUtils.getDoubleByDigit(priace, 3);
 					temp.setBillSum1(priace);
 				}
-			} else if (info.getBaseCustomsDeclaration().getImpExpType().equals(
-					ImpExpType.REWORK_EXPORT)) {
+			} else if (info.getBaseCustomsDeclaration().getImpExpType()
+					.equals(ImpExpType.REWORK_EXPORT)) {
 				temp.setBillSum8(fd(temp.getBillSum8())
 						+ fd(info.getCommAmount()));
 				temp.setBillSum3(fd(temp.getBillSum3())
@@ -7219,49 +7254,51 @@ public class EncLogic extends BaseEncLogic {
 	 *            是否生效
 	 * @return 在有效期内与指定的类型匹配生效的进出口商品明细
 	 */
-//	public List findImpExpComminfoDj(Integer type, Trade tradeMode,
-//			Integer commName, Date beginDate, Date endDate, boolean iseffective,Map paraMap) {
-//		List list = ((EncDao) this.getBaseEncDao()).findImpExpComminfoDj(type,
-//				tradeMode, commName, beginDate, endDate, iseffective,paraMap);
-//		Map<String, CustomsDeclarationCommInfo> map = new HashMap<String, CustomsDeclarationCommInfo>();
-//		List arrayList = new ArrayList();
-//		if (list != null && list.size() != 0) {
-//			for (int i = 0; i < list.size(); i++) {
-//				CustomsDeclarationCommInfo commInfo = (CustomsDeclarationCommInfo) list
-//						.get(i);
-//				String s = commInfo.getBaseCustomsDeclaration()
-//						.getCustomsDeclarationCode()
-//						+ commInfo.getCommName() + commInfo.getCommSpec();
-//				map.put(s, commInfo);
-//			}
-//		}
-//		if (map.size() != 0) {
-//			Object[] ary = map.keySet().toArray();
-//			for (int i = 0; i < ary.length; i++) {
-//				arrayList.add(map.get(ary[i].toString()));
-//			}
-//		}
-//		if (list.size() >= 0) {
-//			for (int i = 0; i < list.size(); i++) {
-//				CustomsDeclarationCommInfo comminfo = (CustomsDeclarationCommInfo) list
-//						.get(i);
-//				String customsdeclarationcodeNew = null;
-//				String customsdeclarationcodeOld = comminfo
-//						.getBaseCustomsDeclaration()
-//						.getCustomsDeclarationCode() == null ? "" : comminfo
-//						.getBaseCustomsDeclaration()
-//						.getCustomsDeclarationCode();
-//				String serialNumber = String.format("%03d", (comminfo
-//						.getSerialNumber() == null ? "" : comminfo
-//						.getSerialNumber()));
-//				customsdeclarationcodeNew = customsdeclarationcodeOld
-//						+ serialNumber;
-//				comminfo.getBaseCustomsDeclaration().setCustomsDeclarationCode(
-//						customsdeclarationcodeNew);
-//			}
-//		}
-//		return list;
-//	}
+	// public List findImpExpComminfoDj(Integer type, Trade tradeMode,
+	// Integer commName, Date beginDate, Date endDate, boolean iseffective,Map
+	// paraMap) {
+	// List list = ((EncDao) this.getBaseEncDao()).findImpExpComminfoDj(type,
+	// tradeMode, commName, beginDate, endDate, iseffective,paraMap);
+	// Map<String, CustomsDeclarationCommInfo> map = new HashMap<String,
+	// CustomsDeclarationCommInfo>();
+	// List arrayList = new ArrayList();
+	// if (list != null && list.size() != 0) {
+	// for (int i = 0; i < list.size(); i++) {
+	// CustomsDeclarationCommInfo commInfo = (CustomsDeclarationCommInfo) list
+	// .get(i);
+	// String s = commInfo.getBaseCustomsDeclaration()
+	// .getCustomsDeclarationCode()
+	// + commInfo.getCommName() + commInfo.getCommSpec();
+	// map.put(s, commInfo);
+	// }
+	// }
+	// if (map.size() != 0) {
+	// Object[] ary = map.keySet().toArray();
+	// for (int i = 0; i < ary.length; i++) {
+	// arrayList.add(map.get(ary[i].toString()));
+	// }
+	// }
+	// if (list.size() >= 0) {
+	// for (int i = 0; i < list.size(); i++) {
+	// CustomsDeclarationCommInfo comminfo = (CustomsDeclarationCommInfo) list
+	// .get(i);
+	// String customsdeclarationcodeNew = null;
+	// String customsdeclarationcodeOld = comminfo
+	// .getBaseCustomsDeclaration()
+	// .getCustomsDeclarationCode() == null ? "" : comminfo
+	// .getBaseCustomsDeclaration()
+	// .getCustomsDeclarationCode();
+	// String serialNumber = String.format("%03d", (comminfo
+	// .getSerialNumber() == null ? "" : comminfo
+	// .getSerialNumber()));
+	// customsdeclarationcodeNew = customsdeclarationcodeOld
+	// + serialNumber;
+	// comminfo.getBaseCustomsDeclaration().setCustomsDeclarationCode(
+	// customsdeclarationcodeNew);
+	// }
+	// }
+	// return list;
+	// }
 
 	static Double dj(Double d) {
 		if (d == null) {
@@ -7285,12 +7322,14 @@ public class EncLogic extends BaseEncLogic {
 	 *            开始日期
 	 * @param endDate
 	 *            截止日期
-	 * @param version 版本
+	 * @param version
+	 *            版本
 	 * @return 有效期内符合条件的进出口报关商品信息
 	 */
 	public List findImpExpCommInfoList(boolean isImport, Integer seqNum,
-			String customer, String ImpExpType, Date beginDate, Date endDate,String version,
-			boolean isDeclaration, boolean isdept, List deptCode, int isEffect) {
+			String customer, String ImpExpType, Date beginDate, Date endDate,
+			String version, boolean isDeclaration, boolean isdept,
+			List deptCode, int isEffect) {
 		if (isdept && deptCode == null) {
 			isdept = false;
 		}
@@ -7358,12 +7397,12 @@ public class EncLogic extends BaseEncLogic {
 							: tempCommInfo.getCommTotalPrice());
 				}
 			}
-			Double addupAmount1 = Double.valueOf(formatBig(String
-					.valueOf(addupAmount), 4));
-			Double sumPrice1 = Double.valueOf(formatBig(String
-					.valueOf(sumPrice), 4));
-			Double sumPriceFg1 = Double.valueOf(formatBig(String
-					.valueOf(sumPriceFg), 4));
+			Double addupAmount1 = Double.valueOf(formatBig(
+					String.valueOf(addupAmount), 4));
+			Double sumPrice1 = Double.valueOf(formatBig(
+					String.valueOf(sumPrice), 4));
+			Double sumPriceFg1 = Double.valueOf(formatBig(
+					String.valueOf(sumPriceFg), 4));
 			tempCommInfo.setCommAddUpAmount(addupAmount1);// 总数量
 			tempCommInfo.setSumPrice(sumPrice1);// 美圆金额
 			tempCommInfo.setSumPriceFg(sumPriceFg1);// 总价值
@@ -7411,12 +7450,12 @@ public class EncLogic extends BaseEncLogic {
 			double sumPriceFg = (tempCommInfo.getCommTotalPrice() == null ? 0.0
 					: tempCommInfo.getCommTotalPrice());
 
-			Double addupAmount1 = Double.valueOf(formatBig(String
-					.valueOf(addupAmount), 4));
-			Double sumPrice1 = Double.valueOf(formatBig(String
-					.valueOf(sumPrice), 4));
-			Double sumPriceFg1 = Double.valueOf(formatBig(String
-					.valueOf(sumPriceFg), 4));
+			Double addupAmount1 = Double.valueOf(formatBig(
+					String.valueOf(addupAmount), 4));
+			Double sumPrice1 = Double.valueOf(formatBig(
+					String.valueOf(sumPrice), 4));
+			Double sumPriceFg1 = Double.valueOf(formatBig(
+					String.valueOf(sumPriceFg), 4));
 			String tmpType = com.bestway.common.constant.ImpExpType
 					.getImpExpTypeDesc(Integer.valueOf((commInfo
 							.getBaseCustomsDeclaration().getImpExpFlag())));
@@ -7499,8 +7538,8 @@ public class EncLogic extends BaseEncLogic {
 	 * Integer CpseqNum = bom.getEmsHeadH2kVersion().getEmsHeadH2kExg()
 	 * .getSeqNum();// 成品号 Integer version =
 	 * bom.getEmsHeadH2kVersion().getVersion();// 版本号 Double unitwear =
-	 * bom.getUnitWear(); Double wear = bom.getWear(); Double cdm = fd(unitwear) /
-	 * (1 - (fd(wear) 0.01)); Double dm = fd(wear) 0.01; Double bgNum1 =
+	 * bom.getUnitWear(); Double wear = bom.getWear(); Double cdm = fd(unitwear)
+	 * / (1 - (fd(wear) 0.01)); Double dm = fd(wear) 0.01; Double bgNum1 =
 	 * ((EncDao) this.getBaseEncDao()).findCommAmount( CpseqNum,
 	 * String.valueOf(version), beginDate, endDate, isEffect);// 成品出口，转厂出口，返工复出
 	 * Double bgNum2 = ((EncDao) this.getBaseEncDao()).findCommAmount2(
@@ -7650,17 +7689,16 @@ public class EncLogic extends BaseEncLogic {
 		if (exgbill != null) {// 出口
 			BaseCustomsDeclarationCommInfo existcommInfo = ((EncDao) this
 					.getBaseEncDao())
-					.findBaseCustomsDeclarationCommInfoBySequm(exgbill
-							.getSeqNum(), customsDeclaration, commInfo
-							.getVersion(), commInfo.getCountry());
+					.findBaseCustomsDeclarationCommInfoBySequm(
+							exgbill.getSeqNum(), customsDeclaration,
+							commInfo.getVersion(), commInfo.getCountry());
 			if (existcommInfo != null) {
 				existcommInfo.setCommAmount(fd(existcommInfo.getCommAmount())
 						- fd(commInfo.getCommAmount()));
 				existcommInfo.setFirstAmount(fd(existcommInfo.getFirstAmount())
 						- fd(commInfo.getFirstAmount()));
 				existcommInfo.setSecondAmount(fd(existcommInfo
-						.getSecondAmount())
-						- fd(commInfo.getSecondAmount()));
+						.getSecondAmount()) - fd(commInfo.getSecondAmount()));
 				existcommInfo.setNetWeight(fd(existcommInfo.getNetWeight())
 						- fd(commInfo.getNetWeight()));
 				existcommInfo.setGrossWeight(fd(existcommInfo.getGrossWeight())
@@ -7682,17 +7720,16 @@ public class EncLogic extends BaseEncLogic {
 		} else {// 进口
 			BaseCustomsDeclarationCommInfo existcommInfo = ((EncDao) this
 					.getBaseEncDao())
-					.findBaseCustomsDeclarationCommInfoBySequm(imgbill
-							.getSeqNum(), customsDeclaration, null, commInfo
-							.getCountry());
+					.findBaseCustomsDeclarationCommInfoBySequm(
+							imgbill.getSeqNum(), customsDeclaration, null,
+							commInfo.getCountry());
 			if (existcommInfo != null) {
 				existcommInfo.setCommAmount(fd(existcommInfo.getCommAmount())
 						- fd(commInfo.getCommAmount()));
 				existcommInfo.setFirstAmount(fd(existcommInfo.getFirstAmount())
 						- fd(commInfo.getFirstAmount()));
 				existcommInfo.setSecondAmount(fd(existcommInfo
-						.getSecondAmount())
-						- fd(commInfo.getSecondAmount()));
+						.getSecondAmount()) - fd(commInfo.getSecondAmount()));
 				existcommInfo.setNetWeight(fd(existcommInfo.getNetWeight())
 						- fd(commInfo.getNetWeight()));
 				existcommInfo.setGrossWeight(fd(existcommInfo.getGrossWeight())
@@ -7738,19 +7775,19 @@ public class EncLogic extends BaseEncLogic {
 		if (exgbill != null) {// 出口，注意版本号
 			BaseCustomsDeclarationCommInfo existcommInfo = ((EncDao) this
 					.getBaseEncDao())
-					.findBaseCustomsDeclarationCommInfoBySequm(exgbill
-							.getSeqNum(), customsDeclaration, (exgbill
-							.getVersion() == null ? null : String
-							.valueOf(exgbill.getVersion())), commInfo
-							.getCountry());
+					.findBaseCustomsDeclarationCommInfoBySequm(
+							exgbill.getSeqNum(),
+							customsDeclaration,
+							(exgbill.getVersion() == null ? null : String
+									.valueOf(exgbill.getVersion())), commInfo
+									.getCountry());
 			if (existcommInfo == null) {
 				EmsHeadH2kVersion versionObj = ((EncDao) this.getBaseEncDao())
-						.findEmsHeadH2kVersion(exgbill.getSeqNum(), exgbill
-								.getVersion());
+						.findEmsHeadH2kVersion(exgbill.getSeqNum(),
+								exgbill.getVersion());
 				commInfo.setBaseCustomsDeclaration(customsDeclaration);
-				commInfo
-						.setSerialNumber(this
-								.getCustomsDeclarationCommInfoSerialNumber(customsDeclaration));
+				commInfo.setSerialNumber(this
+						.getCustomsDeclarationCommInfoSerialNumber(customsDeclaration));
 				commInfo.setCompany(CommonUtils.getCompany());
 				commInfo.setCommName(exgbill.getName());
 				commInfo.setCommSpec(exgbill.getSpec());
@@ -7785,17 +7822,16 @@ public class EncLogic extends BaseEncLogic {
 				return commInfo;
 			} else {
 				existcommInfo.setCommAmount(formatD(existcommInfo
-						.getCommAmount())
-						+ formatD(commInfo.getCommAmount()));
+						.getCommAmount()) + formatD(commInfo.getCommAmount()));
 				existcommInfo
 						.setNetWeight(formatD(existcommInfo.getNetWeight())
 								+ formatD(commInfo.getNetWeight()));
-				existcommInfo.setGrossWeight(formatD(existcommInfo
-						.getGrossWeight())
-						+ formatD(commInfo.getGrossWeight()));
-				existcommInfo.setFirstAmount(formatD(existcommInfo
-						.getFirstAmount())
-						+ formatD(commInfo.getFirstAmount()));
+				existcommInfo
+						.setGrossWeight(formatD(existcommInfo.getGrossWeight())
+								+ formatD(commInfo.getGrossWeight()));
+				existcommInfo
+						.setFirstAmount(formatD(existcommInfo.getFirstAmount())
+								+ formatD(commInfo.getFirstAmount()));
 				existcommInfo.setSecondAmount(formatD(existcommInfo
 						.getSecondAmount())
 						+ formatD(commInfo.getSecondAmount()));
@@ -7817,14 +7853,13 @@ public class EncLogic extends BaseEncLogic {
 		} else { // 进口
 			BaseCustomsDeclarationCommInfo existcommInfo = ((EncDao) this
 					.getBaseEncDao())
-					.findBaseCustomsDeclarationCommInfoBySequm(imgbill
-							.getSeqNum(), customsDeclaration, null, commInfo
-							.getCountry());
+					.findBaseCustomsDeclarationCommInfoBySequm(
+							imgbill.getSeqNum(), customsDeclaration, null,
+							commInfo.getCountry());
 			if (existcommInfo == null) {
 				commInfo.setBaseCustomsDeclaration(customsDeclaration);
-				commInfo
-						.setSerialNumber(this
-								.getCustomsDeclarationCommInfoSerialNumber(customsDeclaration));
+				commInfo.setSerialNumber(this
+						.getCustomsDeclarationCommInfoSerialNumber(customsDeclaration));
 				commInfo.setCompany(CommonUtils.getCompany());
 
 				commInfo.setCommName(imgbill.getName());
@@ -7859,17 +7894,16 @@ public class EncLogic extends BaseEncLogic {
 				return commInfo;
 			} else {
 				existcommInfo.setCommAmount(formatD(existcommInfo
-						.getCommAmount())
-						+ formatD(commInfo.getCommAmount()));
+						.getCommAmount()) + formatD(commInfo.getCommAmount()));
 				existcommInfo
 						.setNetWeight(formatD(existcommInfo.getNetWeight())
 								+ formatD(commInfo.getNetWeight()));
-				existcommInfo.setGrossWeight(formatD(existcommInfo
-						.getGrossWeight())
-						+ formatD(commInfo.getGrossWeight()));
-				existcommInfo.setFirstAmount(formatD(existcommInfo
-						.getFirstAmount())
-						+ formatD(commInfo.getFirstAmount()));
+				existcommInfo
+						.setGrossWeight(formatD(existcommInfo.getGrossWeight())
+								+ formatD(commInfo.getGrossWeight()));
+				existcommInfo
+						.setFirstAmount(formatD(existcommInfo.getFirstAmount())
+								+ formatD(commInfo.getFirstAmount()));
 				existcommInfo.setSecondAmount(formatD(existcommInfo
 						.getSecondAmount())
 						+ formatD(commInfo.getSecondAmount()));
@@ -8076,8 +8110,8 @@ public class EncLogic extends BaseEncLogic {
 					continue;
 				}
 				CustomsDeclarationCommInfo info = ((EncDao) this
-						.getBaseEncDao()).getCustomsDeclarationCommInfoByBefo(b
-						.getAfterComInfo(), beginDate, endDate);
+						.getBaseEncDao()).getCustomsDeclarationCommInfoByBefo(
+						b.getAfterComInfo(), beginDate, endDate);
 				if (info == null) {
 					continue;
 				}
@@ -8256,8 +8290,8 @@ public class EncLogic extends BaseEncLogic {
 		Double secondamount = Double.valueOf(0);// 第二法定数量
 		Double grossWeight = Double.valueOf(0); // 毛重
 		Double netWeight = Double.valueOf(0); // 净重
-		if (after.getBillList().getImpExpFlag().equals(
-				Integer.valueOf(ImpExpFlag.IMPORT))) {// 进口报关单
+		if (after.getBillList().getImpExpFlag()
+				.equals(Integer.valueOf(ImpExpFlag.IMPORT))) {// 进口报关单
 			grossWeight = before.getGrossWeight();
 			netWeight = before.getNetWeight();
 			if (after.getUnit() != null
@@ -8300,8 +8334,8 @@ public class EncLogic extends BaseEncLogic {
 
 			Integer version = before.getVersion();
 			EmsHeadH2kVersion versionObj = ((EncDao) this.getBaseEncDao())
-					.findEmsHeadH2kVersion(Integer.valueOf(after
-							.getEmsSerialNo()), version);
+					.findEmsHeadH2kVersion(
+							Integer.valueOf(after.getEmsSerialNo()), version);
 
 			if (after.getUnit() != null
 					&& (after.getUnit().getName().equals("千克") || after
@@ -8322,8 +8356,7 @@ public class EncLogic extends BaseEncLogic {
 				}
 
 				netWeight = (before.getNetWeight() == null ? 0.0 : before
-						.getNetWeight())
-						* netWeightParameter;
+						.getNetWeight()) * netWeightParameter;
 				// 申报单位净重 = 申报数量 * ERP净重 * 重量比例
 				// 申报单位毛重 = 申报单位净重 * 合同比例(合同单位毛重/合同单位净重)
 				grossWeight = netWeight * contractRate;
@@ -8412,18 +8445,18 @@ public class EncLogic extends BaseEncLogic {
 		Double netWeight = (before.getNetWeight() == null ? 0.0 : before
 				.getNetWeight());
 		if (after.getComplex().getFirstUnit() != null
-				&& (after.getComplex().getFirstUnit().getName().trim().equals(
-						"千克") || after.getComplex().getFirstUnit().getName()
-						.trim().equals("公斤"))) {
+				&& (after.getComplex().getFirstUnit().getName().trim()
+						.equals("千克") || after.getComplex().getFirstUnit()
+						.getName().trim().equals("公斤"))) {
 			firstamount = netWeight;
 		} else {
 			firstamount = before.getLegalAmount() == null ? 0.0 : before
 					.getLegalAmount();
 		}
 		if (after.getComplex().getSecondUnit() != null
-				&& (after.getComplex().getSecondUnit().getName().trim().equals(
-						"千克") || after.getComplex().getSecondUnit().getName()
-						.trim().equals("公斤"))) {
+				&& (after.getComplex().getSecondUnit().getName().trim()
+						.equals("千克") || after.getComplex().getSecondUnit()
+						.getName().trim().equals("公斤"))) {
 			secondamount = netWeight;
 		} else {
 			secondamount = before.getSecondLegalAmount() == null ? 0.0 : before
@@ -8491,7 +8524,7 @@ public class EncLogic extends BaseEncLogic {
 				Double unitWear = fd((Double) objBom[3]);
 				Double wear = fd((Double) objBom[4]);
 				Double unitUse = unitWear / (1 - (wear * 0.01));// 单位用量
-				//                
+				//
 				Double useNum = fd(fgfc + zcck + zjck - tcfg);
 				Double ljUseNum = useNum * unitUse;// 成品耗用量
 				Double zchy = zcck * unitUse;// 转厂耗用量
@@ -8522,10 +8555,10 @@ public class EncLogic extends BaseEncLogic {
 			}
 		}
 	}
-	
-	
+
 	/**
 	 * 计算成品耗用的料件数
+	 * 
 	 * @param hs
 	 * @param head
 	 * @param beginDate
@@ -8536,13 +8569,14 @@ public class EncLogic extends BaseEncLogic {
 	 * @param deptCode
 	 * @param imgSeqNum
 	 */
-	public void calculateMaterialUseNum(Map<String, TempDD> hs, EmsHeadH2k head, Date beginDate,
-			Date endDate, int isEffect, boolean isDeclaration, boolean isdept,
-			String deptCode, Integer imgSeqNum) {
+	public void calculateMaterialUseNum(Map<String, TempDD> hs,
+			EmsHeadH2k head, Date beginDate, Date endDate, int isEffect,
+			boolean isDeclaration, boolean isdept, String deptCode,
+			Integer imgSeqNum) {
 		Map<String, List<Object[]>> bomMap = new HashMap<String, List<Object[]>>();
 		hs.clear();
-		List<Object[]> bomList = encDao
-				.findEmsHeadH2kBomUnitWear(head, imgSeqNum);
+		List<Object[]> bomList = encDao.findEmsHeadH2kBomUnitWear(head,
+				imgSeqNum);
 		Object[] objs = null;
 		String seqNum = null;
 		String version = null;
@@ -8560,30 +8594,28 @@ public class EncLogic extends BaseEncLogic {
 			}
 			boms.add(objs);
 		}
-		
-		List listAmount = encDao
-				.findCustomsDeclarationCommInfoAmount(head, beginDate, endDate,
-						isEffect, isDeclaration, isdept, deptCode);
-		
+
+		List listAmount = encDao.findCustomsDeclarationCommInfoAmount(head,
+				beginDate, endDate, isEffect, isDeclaration, isdept, deptCode);
+
 		Double amount = null;
 		Integer impExpType = null;
 		for (int i = 0; i < listAmount.size(); i++) {
 			objs = (Object[]) listAmount.get(i);
-			impExpType = (objs[0] == null ? null : Integer
-					.valueOf(objs[0].toString()));
-			seqNum = (objs[1] == null ? "" : objs[1].toString());
-			version = (objs[2] == null ? "" : objs[2].toString()
-					.trim());
-			
-			key = seqNum + "/" + version;
-			amount = (objs[3] == null ? 0.0 : Double.valueOf(objs[3]
+			impExpType = (objs[0] == null ? null : Integer.valueOf(objs[0]
 					.toString()));
-			
+			seqNum = (objs[1] == null ? "" : objs[1].toString());
+			version = (objs[2] == null ? "" : objs[2].toString().trim());
+
+			key = seqNum + "/" + version;
+			amount = (objs[3] == null ? 0.0 : Double
+					.valueOf(objs[3].toString()));
+
 			List<Object[]> listBom = bomMap.get(key);
 			if (listBom == null || listBom.size() <= 0) {
 				continue;
 			}
-			
+
 			Double fgfc = 0.0;// 近工复出
 			Double zcck = 0.0;// 转厂出口
 			Double zjck = 0.0;// 直接出口
@@ -8603,7 +8635,7 @@ public class EncLogic extends BaseEncLogic {
 				Double unitWear = fd((Double) objBom[3]);
 				Double wear = fd((Double) objBom[4]);
 				Double unitUse = unitWear / (1 - (wear * 0.01));// 单位用量
-				//                
+				//
 				Double useNum = fd(fgfc + zcck + zjck - tcfg);
 				Double ljUseNum = useNum * unitUse;// 成品耗用量
 				Double zchy = zcck * unitUse;// 转厂耗用量
@@ -8993,8 +9025,7 @@ public class EncLogic extends BaseEncLogic {
 								List klist = new ArrayList();
 								klist.add(inf);
 								deleteImpExpCommodityInfo(klist);
-								oldBill
-										.setItemCount(oldBill.getItemCount() - 1);
+								oldBill.setItemCount(oldBill.getItemCount() - 1);
 							}
 							mlist.add(key);
 						}
@@ -9140,9 +9171,9 @@ public class EncLogic extends BaseEncLogic {
 
 			// if (projectType == ProjectType.BCUS) {
 			// // InnerMergeData innerMergeData = (InnerMergeData) list.get(i);
-			//				
-			//			
-			//				
+			//
+			//
+			//
 			// } else if (projectType == ProjectType.BCS) {
 			// BcsInnerMerge bcsInnerMerge = (BcsInnerMerge) list.get(i);
 			// // tempInnerMergeDate.setBcsTenInnerMerge(innerMergeData
@@ -9271,7 +9302,6 @@ public class EncLogic extends BaseEncLogic {
 		return this.commonCodeDao.findCancelCusHeaddByDate(beginDate, endDate);
 	}
 
-
 	public EncDao getEncDao() {
 		return encDao;
 	}
@@ -9329,8 +9359,8 @@ public class EncLogic extends BaseEncLogic {
 			 */
 			double effectiveRemainForwardImport = this.encDao
 					.findCommInfoTotalAmount(seqNum, ImpExpFlag.IMPORT,
-							ImpExpType.REMAIN_FORWARD_IMPORT, null, emsHeadH2k
-									.getEmsNo(), null, null);
+							ImpExpType.REMAIN_FORWARD_IMPORT, null,
+							emsHeadH2k.getEmsNo(), null, null);
 			/**
 			 * 全部(已生效+未生效)余料结转出口数
 			 */
@@ -9373,15 +9403,15 @@ public class EncLogic extends BaseEncLogic {
 			 */
 			double allRemainForwardImport = this.encDao
 					.findCommInfoTotalAmount(seqNum, ImpExpFlag.IMPORT,
-							ImpExpType.REMAIN_FORWARD_IMPORT, null, emsHeadH2k
-									.getEmsNo(), null, null, -1);
+							ImpExpType.REMAIN_FORWARD_IMPORT, null,
+							emsHeadH2k.getEmsNo(), null, null, -1);
 			/**
 			 * 全部(已生效+未生效)余料结转出口数
 			 */
 			double allRemainForwardExport = this.encDao
 					.findCommInfoTotalAmount(seqNum, ImpExpFlag.EXPORT,
-							ImpExpType.REMAIN_FORWARD_EXPORT, null, emsHeadH2k
-									.getEmsNo(), null, null, -1);
+							ImpExpType.REMAIN_FORWARD_EXPORT, null,
+							emsHeadH2k.getEmsNo(), null, null, -1);
 			/**
 			 * 全部(已生效+未生效)转厂进口数量
 			 */
@@ -9436,11 +9466,10 @@ public class EncLogic extends BaseEncLogic {
 						- this.getProductUsedAmount(img));
 
 			} else {// 可直接进口/可转厂进口数量/可余料结转转入数量
-				info
-						.setContractRemain(info.getContractAmount()
-								- (effectiveDirectImport
-										+ effectiveTransferFactoryImport
-										+ effectiveRemainForwardImport - effectiveExchangeExport));
+				info.setContractRemain(info.getContractAmount()
+						- (effectiveDirectImport
+								+ effectiveTransferFactoryImport
+								+ effectiveRemainForwardImport - effectiveExchangeExport));
 				// -effectiveRemainForwardExport
 				info.setCurrentRemain(info.getContractAmount()
 						- (allDirectImport + allTransferFactoryImport
@@ -9475,8 +9504,8 @@ public class EncLogic extends BaseEncLogic {
 			 */
 			double effectiveBackFactoryRework = this.encDao
 					.findCommInfoTotalAmount(seqNum, ImpExpFlag.IMPORT,
-							ImpExpType.BACK_FACTORY_REWORK, null, emsHeadH2k
-									.getEmsNo(), null, null);
+							ImpExpType.BACK_FACTORY_REWORK, null,
+							emsHeadH2k.getEmsNo(), null, null);
 
 			/**
 			 * 已生效成品返工复出数量
@@ -9487,15 +9516,13 @@ public class EncLogic extends BaseEncLogic {
 
 			CompanyOther other = CommonUtils.getOther();
 			if (other == null || !other.getIsCludeReturn()) {
-				info
-						.setContractRemain(info.getContractAmount()
-								- (effectiveDirectExport + effectiveTransferFactoryExport));
+				info.setContractRemain(info.getContractAmount()
+						- (effectiveDirectExport + effectiveTransferFactoryExport));
 			} else {
-				info
-						.setContractRemain(info.getContractAmount()
-								- (effectiveDirectExport
-										+ effectiveTransferFactoryExport
-										- effectiveBackFactoryRework + effectiveReworkExport));
+				info.setContractRemain(info.getContractAmount()
+						- (effectiveDirectExport
+								+ effectiveTransferFactoryExport
+								- effectiveBackFactoryRework + effectiveReworkExport));
 			}
 
 			/**
@@ -9552,12 +9579,12 @@ public class EncLogic extends BaseEncLogic {
 				}
 			}
 		}
-		info.setContractAmount(CommonUtils.getDoubleByDigit(info
-				.getContractAmount(), 5));
-		info.setContractRemain(CommonUtils.getDoubleByDigit(info
-				.getContractRemain(), 5));
-		info.setCurrentRemain(CommonUtils.getDoubleByDigit(info
-				.getCurrentRemain(), 5));
+		info.setContractAmount(CommonUtils.getDoubleByDigit(
+				info.getContractAmount(), 5));
+		info.setContractRemain(CommonUtils.getDoubleByDigit(
+				info.getContractRemain(), 5));
+		info.setCurrentRemain(CommonUtils.getDoubleByDigit(
+				info.getCurrentRemain(), 5));
 		return info;
 	}
 
@@ -9587,8 +9614,8 @@ public class EncLogic extends BaseEncLogic {
 			 */
 			double allTransferFactoryExport = this.encDao
 					.findCommInfoTotalAmount(seqNum, ImpExpFlag.EXPORT,
-							ImpExpType.TRANSFER_FACTORY_EXPORT, null, contract
-									.getEmsNo(), null, null, -1);
+							ImpExpType.TRANSFER_FACTORY_EXPORT, null,
+							contract.getEmsNo(), null, null, -1);
 			/**
 			 * 全部(已生效+未生效)成品退厂返工数量
 			 */
@@ -9752,8 +9779,7 @@ public class EncLogic extends BaseEncLogic {
 		}
 		return returnList;
 	}
-	
-	
+
 	/**
 	 * 生成报关清单(广达订制)
 	 * 
@@ -9819,7 +9845,7 @@ public class EncLogic extends BaseEncLogic {
 		double legalUnit2Gene = 0.0;
 		List impExpReCommodityInfoList = sortSangJianImpExpCommodityInfo(
 				impExpCommodityInfoList, isMaterial, impExpFlag);
-		
+
 		for (int i = 0; i < impExpReCommodityInfoList.size(); i++) {// distinct
 			ImpExpCommodityInfo t = (ImpExpCommodityInfo) impExpReCommodityInfoList
 					.get(i);
@@ -9855,7 +9881,8 @@ public class EncLogic extends BaseEncLogic {
 						sAamount, sPrice, sTotalPrice);// 新增清单归并前
 				// ------------------------------------------
 				// 合并的可key值
-				String key = String.valueOf(tenSeqNum) + "/" + countryName + "/" + unitPrice;
+				String key = String.valueOf(tenSeqNum) + "/" + countryName
+						+ "/" + unitPrice;
 				EmsHeadH2kImg emsImg = null;
 				AtcMergeAfterComInfo afterinfo = null;
 				if (hsimg.get(key) != null) {
@@ -9996,7 +10023,8 @@ public class EncLogic extends BaseEncLogic {
 					}
 					Double unitPrice = t.getUnitPrice();
 					String key = String.valueOf(tenSeqNum) + "/"
-							+ emsVersion.getVersion() + "/" + countryName + "/" + unitPrice;
+							+ emsVersion.getVersion() + "/" + countryName + "/"
+							+ unitPrice;
 					EmsHeadH2kExg emsExg = null;
 					AtcMergeAfterComInfo afterinfo = null;
 					if (hsexg.get(key) != null) {
@@ -10059,7 +10087,7 @@ public class EncLogic extends BaseEncLogic {
 			return returnList;
 		}
 	}
-	
+
 	/**
 	 * 把所有相同的ptNo数量等其它项整合成一条
 	 * 
@@ -10079,11 +10107,12 @@ public class EncLogic extends BaseEncLogic {
 			}
 			String key = t.getImpExpCommodityInfo().getMateriel().getPtNo()
 					+ "/"
-					+ (t.getImpExpCommodityInfo().getCountry() == null ? "" : t
-							.getImpExpCommodityInfo().getCountry().getName()// 原产国
-					+ "/" 
-					+(t.getImpExpCommodityInfo().getVersion() == null ? "" : t
-							.getImpExpCommodityInfo().getVersion().toString()))
+					+ (t.getImpExpCommodityInfo().getCountry() == null ? ""
+							: t.getImpExpCommodityInfo().getCountry().getName()// 原产国
+									+ "/"
+									+ (t.getImpExpCommodityInfo().getVersion() == null ? ""
+											: t.getImpExpCommodityInfo()
+													.getVersion().toString()))
 					+ "/" + t.getImpExpCommodityInfo().getUnitPrice();// 版本号
 			System.out.println("key:" + key);
 			Object obj = hs.get(key);
@@ -10175,7 +10204,7 @@ public class EncLogic extends BaseEncLogic {
 		impExpCommodityList.addAll(hs.values());
 		return impExpCommodityList;
 	}
-	
+
 	/**
 	 * 申清单---清单--生成报关单 生成清单
 	 * 
@@ -10248,8 +10277,8 @@ public class EncLogic extends BaseEncLogic {
 			TempCustomsList tempcustoms = (TempCustomsList) hsList.get(i);
 			AtcMergeAfterComInfo afterinfo = tempcustoms.getAfterinfo();
 			afterinfo.setBillList(billList);
-//			System.out.println(afterinfo.getEmsSerialNo() + ":"
-//					+ afterinfo.getCountry().getCode());
+			// System.out.println(afterinfo.getEmsSerialNo() + ":"
+			// + afterinfo.getCountry().getCode());
 			((EncDao) this.getBaseEncDao()).saveAtcMergeAfterComInfo(afterinfo);
 			// /////////
 			if (!param.isOtherBilllist()) {
@@ -10326,14 +10355,17 @@ public class EncLogic extends BaseEncLogic {
 					int count = impExpRequestBill.getToCustomCount() == null ? 0
 							: impExpRequestBill.getToCustomCount();
 					System.out.println("@@@@@@@@@@1");
-					if(impExpRequestBill.getItemCount()==null||impExpRequestBill.getItemCount()==0){
-						int itemCount =  ((EncDao) this.getBaseEncDao())
-								.getApplyToCustomsBillListSumNo(impExpRequestBill.getId());
+					if (impExpRequestBill.getItemCount() == null
+							|| impExpRequestBill.getItemCount() == 0) {
+						int itemCount = ((EncDao) this.getBaseEncDao())
+								.getApplyToCustomsBillListSumNo(impExpRequestBill
+										.getId());
 						impExpRequestBill.setItemCount(itemCount);
-						((EncDao) this.getBaseEncDao()).saveOrUpdate(impExpRequestBill);
+						((EncDao) this.getBaseEncDao())
+								.saveOrUpdate(impExpRequestBill);
 					}
 					impExpRequestBill.setToCustomCount((count + 1));
-					
+
 					// 回写申请单中的 转 报关清单号
 					if (impExpRequestBill.getAllBillNo() == null) {
 						impExpRequestBill.setAllBillNo(m
@@ -10349,7 +10381,7 @@ public class EncLogic extends BaseEncLogic {
 										.getAfterComInfo().getBillList()
 										.getListNo());
 					}
-					
+
 					// 回写申请单 是否已转报关清单
 					if (impExpRequestBill.getToCustomCount().equals(
 							impExpRequestBill.getItemCount())) {
@@ -10387,7 +10419,7 @@ public class EncLogic extends BaseEncLogic {
 		}
 		return returnList;
 	}
-	
+
 	/**
 	 * 清单转---报关单
 	 * 
@@ -10425,8 +10457,9 @@ public class EncLogic extends BaseEncLogic {
 				continue;// 如果已经转报关单，则不再转
 			}
 			// 修改清单报关单流水号,状态，商品项
-			modifyApplyToCustomsBillList(afterinfo.getBillList(), String
-					.valueOf(customs.getSerialNumber()), Integer.valueOf(1));//
+			modifyApplyToCustomsBillList(afterinfo.getBillList(),
+					String.valueOf(customs.getSerialNumber()),
+					Integer.valueOf(1));//
 			// 保存清单报关单号
 			// -------------------------------------------------------------------------------
 			BaseCustomsDeclarationCommInfo existcommInfo = null;
@@ -10444,9 +10477,9 @@ public class EncLogic extends BaseEncLogic {
 			if (billList.getMaterielProductFlag().equals(
 					Integer.valueOf(MaterielType.MATERIEL))) {
 				existcommInfo = ((EncDao) this.getBaseEncDao())
-						.findBaseCustomsDeclarationCommInfoBySequm(Integer
-								.valueOf(afterinfo.getEmsSerialNo()), customs,
-								null, afterinfo.getCountry());
+						.findBaseCustomsDeclarationCommInfoBySequm(
+								Integer.valueOf(afterinfo.getEmsSerialNo()),
+								customs, null, afterinfo.getCountry());
 
 				if (existcommInfo == null
 						|| existcommInfo.getCommUnitPrice() == null
@@ -10454,7 +10487,7 @@ public class EncLogic extends BaseEncLogic {
 								afterinfo.getPrice())) {
 					existcommInfo = null;
 				}
-				
+
 				img = ((EncDao) this.getBaseEncDao()).getEmsHeadImg(Integer
 						.valueOf(afterinfo.getEmsSerialNo()));
 				if (img == null) {
@@ -10465,9 +10498,8 @@ public class EncLogic extends BaseEncLogic {
 							.getImpExpType());
 					commInfo = new CustomsDeclarationCommInfo();
 					commInfo.setBaseCustomsDeclaration(customs);
-					commInfo
-							.setSerialNumber(this
-									.getCustomsDeclarationCommInfoSerialNumber(customs));
+					commInfo.setSerialNumber(this
+							.getCustomsDeclarationCommInfoSerialNumber(customs));
 					if (billList.getMemos() != null) {
 						commInfo.getBaseCustomsDeclaration().setMemos(
 								billList.getMemos());
@@ -10487,20 +10519,17 @@ public class EncLogic extends BaseEncLogic {
 					commInfo.setProjectDept(afterinfo.getProjectDept());
 
 					// -----------------------------------------------------------------------
-					commInfo
-							.setNetWeight(formatD((afterinfo.getNetWeight() == null ? 0.0
-									: afterinfo.getNetWeight())));// 净重
-					commInfo
-							.setGrossWeight(formatD((afterinfo.getGrossWeight() == null ? 0.0
-									: afterinfo.getGrossWeight())));// 毛重
+					commInfo.setNetWeight(formatD((afterinfo.getNetWeight() == null ? 0.0
+							: afterinfo.getNetWeight())));// 净重
+					commInfo.setGrossWeight(formatD((afterinfo.getGrossWeight() == null ? 0.0
+							: afterinfo.getGrossWeight())));// 毛重
 					// 件数 == 件数
 					commInfo.setPieces(afterinfo.getPiece() == null ? 0
 							: afterinfo.getPiece().intValue());
 
 					commInfo.setBoxNo(afterinfo.getBoxNo());// 箱号
-					commInfo
-							.setCommAmount(afterinfo.getDeclaredAmount() == null ? 0.0
-									: afterinfo.getDeclaredAmount());// 数量
+					commInfo.setCommAmount(afterinfo.getDeclaredAmount() == null ? 0.0
+							: afterinfo.getDeclaredAmount());// 数量
 
 					commInfo.setWorkUsd(afterinfo.getWorkUsd() == null ? 0.0
 							: afterinfo.getWorkUsd());// 加工费总价
@@ -10515,34 +10544,28 @@ public class EncLogic extends BaseEncLogic {
 							commInfo.setCommUnitPrice(0.0);// 单价
 						}
 					} else if (param.getPriceType().equals("对应帐册申报单价")) {
-						commInfo
-								.setCommUnitPrice(img.getDeclarePrice() == null ? 0.0
-										: img.getDeclarePrice());
+						commInfo.setCommUnitPrice(img.getDeclarePrice() == null ? 0.0
+								: img.getDeclarePrice());
 						commInfo.setCommTotalPrice(commInfo.getCommAmount()
 								* (commInfo.getCommUnitPrice() == null ? 0.0
 										: commInfo.getCommUnitPrice()));
 					} else if (param.getPriceType().equals("对应帐册工厂单价")) {
-						commInfo
-								.setCommUnitPrice(img.getFactoryPrice() == null ? 0.0
-										: img.getFactoryPrice());
+						commInfo.setCommUnitPrice(img.getFactoryPrice() == null ? 0.0
+								: img.getFactoryPrice());
 						commInfo.setCommTotalPrice(commInfo.getCommAmount()
 								* (commInfo.getCommUnitPrice() == null ? 0.0
 										: commInfo.getCommUnitPrice()));
 					}
-					commInfo
-							.setFirstAmount(afterinfo.getLegalAmount() == null ? 0.0
-									: afterinfo.getLegalAmount());// 第一法定数量
-					commInfo
-							.setSecondAmount(afterinfo.getSecondLegalAmount() == null ? 0.0
-									: afterinfo.getSecondLegalAmount());// 第二法定数量
+					commInfo.setFirstAmount(afterinfo.getLegalAmount() == null ? 0.0
+							: afterinfo.getLegalAmount());// 第一法定数量
+					commInfo.setSecondAmount(afterinfo.getSecondLegalAmount() == null ? 0.0
+							: afterinfo.getSecondLegalAmount());// 第二法定数量
 					// -----------------------------------------------------------------------
 					if (other != null) {
 						commInfo.setUses(commInfo.getUses() == null ? other
 								.getUses() : commInfo.getUses());
-						commInfo
-								.setLevyMode(commInfo.getLevyMode() == null ? other
-										.getLevyMode()
-										: commInfo.getLevyMode());
+						commInfo.setLevyMode(commInfo.getLevyMode() == null ? other
+								.getLevyMode() : commInfo.getLevyMode());
 
 					}
 
@@ -10550,8 +10573,8 @@ public class EncLogic extends BaseEncLogic {
 					commInfo.setAddType(AddType.APPLY);
 					commInfo.setGrossWeight(CommonUtils.getDoubleByDigit(
 							commInfo.getGrossWeight(), weightFraction));
-					commInfo.setNetWeight(CommonUtils.getDoubleByDigit(commInfo
-							.getNetWeight(), weightFraction));
+					commInfo.setNetWeight(CommonUtils.getDoubleByDigit(
+							commInfo.getNetWeight(), weightFraction));
 					commInfo.setCommAmount(CommonUtils.getDoubleByDigit(
 							CommonUtils.getDoubleExceptNull(commInfo
 									.getCommAmount()), amountNum));
@@ -10569,8 +10592,8 @@ public class EncLogic extends BaseEncLogic {
 					// 第一法定数量
 					if (commInfo.getUnit() != null
 							&& commInfo.getLegalUnit() != null
-							&& commInfo.getUnit().getName().equals(
-									commInfo.getLegalUnit().getName())) {
+							&& commInfo.getUnit().getName()
+									.equals(commInfo.getLegalUnit().getName())) {
 						commInfo.setFirstAmount(commInfo.getCommAmount());
 					} else if (commInfo.getLegalUnit() != null
 							&& commInfo.getLegalUnit().getName().equals("千克")) {
@@ -10579,12 +10602,15 @@ public class EncLogic extends BaseEncLogic {
 					// 第二法定数量
 					if (commInfo.getUnit() != null
 							&& commInfo.getSecondLegalUnit() != null
-							&& commInfo.getUnit().getName().equals(
-									commInfo.getSecondLegalUnit().getName())) {
+							&& commInfo
+									.getUnit()
+									.getName()
+									.equals(commInfo.getSecondLegalUnit()
+											.getName())) {
 						commInfo.setSecondAmount(commInfo.getCommAmount());
 					} else if (commInfo.getSecondLegalUnit() != null
-							&& commInfo.getSecondLegalUnit().getName().equals(
-									"千克")) {
+							&& commInfo.getSecondLegalUnit().getName()
+									.equals("千克")) {
 						commInfo.setSecondAmount(commInfo.getNetWeight());
 					}
 					((EncDao) this.getBaseEncDao())
@@ -10674,13 +10700,16 @@ public class EncLogic extends BaseEncLogic {
 					// 第一法定数量
 					if (existcommInfo.getUnit() != null
 							&& existcommInfo.getLegalUnit() != null
-							&& existcommInfo.getUnit().getName().equals(
-									existcommInfo.getLegalUnit().getName())) {
+							&& existcommInfo
+									.getUnit()
+									.getName()
+									.equals(existcommInfo.getLegalUnit()
+											.getName())) {
 						existcommInfo.setFirstAmount(existcommInfo
 								.getCommAmount());
 					} else if (existcommInfo.getLegalUnit() != null
-							&& existcommInfo.getLegalUnit().getName().equals(
-									"千克")) {
+							&& existcommInfo.getLegalUnit().getName()
+									.equals("千克")) {
 						existcommInfo.setFirstAmount(existcommInfo
 								.getNetWeight());
 					}
@@ -10688,8 +10717,10 @@ public class EncLogic extends BaseEncLogic {
 					// 第二法定数量
 					if (existcommInfo.getUnit() != null
 							&& existcommInfo.getSecondLegalUnit() != null
-							&& existcommInfo.getUnit().getName().equals(
-									existcommInfo.getSecondLegalUnit()
+							&& existcommInfo
+									.getUnit()
+									.getName()
+									.equals(existcommInfo.getSecondLegalUnit()
 											.getName())) {
 						existcommInfo.setSecondAmount(existcommInfo
 								.getCommAmount());
@@ -10705,9 +10736,10 @@ public class EncLogic extends BaseEncLogic {
 				}
 			} else {// 成品（出口报关单）
 				existcommInfo = ((EncDao) this.getBaseEncDao())
-						.findBaseCustomsDeclarationCommInfoBySequm(Integer
-								.valueOf(afterinfo.getEmsSerialNo()), customs,
-								afterinfo.getVersion(), afterinfo.getCountry());
+						.findBaseCustomsDeclarationCommInfoBySequm(
+								Integer.valueOf(afterinfo.getEmsSerialNo()),
+								customs, afterinfo.getVersion(),
+								afterinfo.getCountry());
 				if (existcommInfo == null
 						|| existcommInfo.getCommUnitPrice() == null
 						|| !existcommInfo.getCommUnitPrice().equals(
@@ -10718,8 +10750,9 @@ public class EncLogic extends BaseEncLogic {
 						.equals(afterinfo.getVersion())) ? 0 : Integer
 						.valueOf(afterinfo.getVersion());
 				EmsHeadH2kVersion versionObj = ((EncDao) this.getBaseEncDao())
-						.findEmsHeadH2kVersion(Integer.valueOf(afterinfo
-								.getEmsSerialNo()), version);
+						.findEmsHeadH2kVersion(
+								Integer.valueOf(afterinfo.getEmsSerialNo()),
+								version);
 				if (versionObj == null) {
 
 					throw new RuntimeException("该备案号["
@@ -10737,9 +10770,8 @@ public class EncLogic extends BaseEncLogic {
 						commInfo.getBaseCustomsDeclaration().setMemos(
 								billList.getMemos());
 					}
-					commInfo
-							.setSerialNumber(this
-									.getCustomsDeclarationCommInfoSerialNumber(customs));
+					commInfo.setSerialNumber(this
+							.getCustomsDeclarationCommInfoSerialNumber(customs));
 					commInfo.setCommSerialNo(afterinfo.getEmsSerialNo());
 					commInfo.setComplex(exg.getComplex());
 					commInfo.setCommName(exg.getName());
@@ -10758,31 +10790,25 @@ public class EncLogic extends BaseEncLogic {
 					if (other1 != null) {
 						commInfo.setUses(commInfo.getUses() == null ? other1
 								.getUses() : commInfo.getUses());
-						commInfo
-								.setLevyMode(commInfo.getLevyMode() == null ? other1
-										.getLevyMode()
-										: commInfo.getLevyMode());
+						commInfo.setLevyMode(commInfo.getLevyMode() == null ? other1
+								.getLevyMode() : commInfo.getLevyMode());
 					}
 					// --------------------------------------------------------------
 					// 件数 == 件数
 					commInfo.setPieces(afterinfo.getPiece() == null ? 0
 							: afterinfo.getPiece().intValue());
-					commInfo
-							.setNetWeight(formatD(afterinfo.getNetWeight() == null ? 0.0
-									: afterinfo.getNetWeight())); // 
-					commInfo
-							.setGrossWeight(formatD(afterinfo.getGrossWeight() == null ? 0.0
-									: afterinfo.getGrossWeight()));
+					commInfo.setNetWeight(formatD(afterinfo.getNetWeight() == null ? 0.0
+							: afterinfo.getNetWeight())); //
+					commInfo.setGrossWeight(formatD(afterinfo.getGrossWeight() == null ? 0.0
+							: afterinfo.getGrossWeight()));
 
 					commInfo.setFirstAmount(forInterNum(afterinfo
 							.getLegalAmount() == null ? 0.0 : afterinfo
 							.getLegalAmount())); // 第一法定数量
-					commInfo
-							.setSecondAmount(afterinfo.getSecondLegalAmount() == null ? 0.0
-									: afterinfo.getSecondLegalAmount());// 第二法定数量
-					commInfo
-							.setCommAmount(afterinfo.getDeclaredAmount() == null ? 0.0
-									: afterinfo.getDeclaredAmount());
+					commInfo.setSecondAmount(afterinfo.getSecondLegalAmount() == null ? 0.0
+							: afterinfo.getSecondLegalAmount());// 第二法定数量
+					commInfo.setCommAmount(afterinfo.getDeclaredAmount() == null ? 0.0
+							: afterinfo.getDeclaredAmount());
 					commInfo.setWorkUsd(afterinfo.getWorkUsd() == null ? 0.0
 							: afterinfo.getWorkUsd());// 加工费总价
 
@@ -10796,16 +10822,14 @@ public class EncLogic extends BaseEncLogic {
 							commInfo.setCommUnitPrice(0.0);// 单价
 						}
 					} else if (param.getPriceType().equals("对应帐册申报单价")) {
-						commInfo
-								.setCommUnitPrice(exg.getDeclarePrice() == null ? 0.0
-										: exg.getDeclarePrice());
+						commInfo.setCommUnitPrice(exg.getDeclarePrice() == null ? 0.0
+								: exg.getDeclarePrice());
 						commInfo.setCommTotalPrice(commInfo.getCommAmount()
 								* (commInfo.getCommUnitPrice() == null ? 0.0
 										: commInfo.getCommUnitPrice()));
 					} else if (param.getPriceType().equals("对应帐册工厂单价")) {
-						commInfo
-								.setCommUnitPrice(exg.getFactoryPrice() == null ? 0.0
-										: exg.getFactoryPrice());
+						commInfo.setCommUnitPrice(exg.getFactoryPrice() == null ? 0.0
+								: exg.getFactoryPrice());
 						commInfo.setCommTotalPrice(commInfo.getCommAmount()
 								* (commInfo.getCommUnitPrice() == null ? 0.0
 										: commInfo.getCommUnitPrice()));
@@ -10813,8 +10837,8 @@ public class EncLogic extends BaseEncLogic {
 					// --------------------------------------------------------------
 					commInfo.setGrossWeight(CommonUtils.getDoubleByDigit(
 							commInfo.getGrossWeight(), weightFraction));
-					commInfo.setNetWeight(CommonUtils.getDoubleByDigit(commInfo
-							.getNetWeight(), weightFraction));
+					commInfo.setNetWeight(CommonUtils.getDoubleByDigit(
+							commInfo.getNetWeight(), weightFraction));
 					// 小数位控制
 					commInfo.setCommAmount(CommonUtils.getDoubleByDigit(
 							CommonUtils.getDoubleExceptNull(commInfo
@@ -10837,8 +10861,8 @@ public class EncLogic extends BaseEncLogic {
 					// 第一法定数量
 					if (commInfo.getUnit() != null
 							&& commInfo.getLegalUnit() != null
-							&& commInfo.getUnit().getName().equals(
-									commInfo.getLegalUnit().getName())) {
+							&& commInfo.getUnit().getName()
+									.equals(commInfo.getLegalUnit().getName())) {
 						commInfo.setFirstAmount(commInfo.getCommAmount());
 					} else if (commInfo.getLegalUnit() != null
 							&& commInfo.getLegalUnit().getName().equals("千克")) {
@@ -10847,12 +10871,15 @@ public class EncLogic extends BaseEncLogic {
 					// 第二法定数量
 					if (commInfo.getUnit() != null
 							&& commInfo.getSecondLegalUnit() != null
-							&& commInfo.getUnit().getName().equals(
-									commInfo.getSecondLegalUnit().getName())) {
+							&& commInfo
+									.getUnit()
+									.getName()
+									.equals(commInfo.getSecondLegalUnit()
+											.getName())) {
 						commInfo.setSecondAmount(commInfo.getCommAmount());
 					} else if (commInfo.getSecondLegalUnit() != null
-							&& commInfo.getSecondLegalUnit().getName().equals(
-									"千克")) {
+							&& commInfo.getSecondLegalUnit().getName()
+									.equals("千克")) {
 						commInfo.setSecondAmount(commInfo.getNetWeight());
 					}
 
@@ -10955,21 +10982,26 @@ public class EncLogic extends BaseEncLogic {
 					// 第一法定数量
 					if (existcommInfo.getUnit() != null
 							&& existcommInfo.getLegalUnit() != null
-							&& existcommInfo.getUnit().getName().equals(
-									existcommInfo.getLegalUnit().getName())) {
+							&& existcommInfo
+									.getUnit()
+									.getName()
+									.equals(existcommInfo.getLegalUnit()
+											.getName())) {
 						existcommInfo.setFirstAmount(existcommInfo
 								.getCommAmount());
 					} else if (existcommInfo.getLegalUnit() != null
-							&& existcommInfo.getLegalUnit().getName().equals(
-									"千克")) {
+							&& existcommInfo.getLegalUnit().getName()
+									.equals("千克")) {
 						existcommInfo.setFirstAmount(existcommInfo
 								.getNetWeight());
 					}
 					// 第二法定数量
 					if (existcommInfo.getUnit() != null
 							&& existcommInfo.getSecondLegalUnit() != null
-							&& existcommInfo.getUnit().getName().equals(
-									existcommInfo.getSecondLegalUnit()
+							&& existcommInfo
+									.getUnit()
+									.getName()
+									.equals(existcommInfo.getSecondLegalUnit()
 											.getName())) {
 						existcommInfo.setSecondAmount(existcommInfo
 								.getCommAmount());
@@ -11031,13 +11063,13 @@ public class EncLogic extends BaseEncLogic {
 		}
 
 		// -----------------------------------设置报关单汇率
-		Double dou = this.getCurrRateByCurr(customs.getCurrency(), customs
-				.getDeclarationDate(), customs.getEmsHeadH2k());
+		Double dou = this.getCurrRateByCurr(customs.getCurrency(),
+				customs.getDeclarationDate(), customs.getEmsHeadH2k());
 		if (dou != null) {
 			customs.setExchangeRate(dou);
 		}// 设置报关单汇率
 		this.baseCodeDao.saveOrUpdate(customs);
-		
+
 		return customs;
 	}
 }

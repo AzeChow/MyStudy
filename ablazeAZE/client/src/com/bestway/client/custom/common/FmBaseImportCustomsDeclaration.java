@@ -270,7 +270,7 @@ public abstract class FmBaseImportCustomsDeclaration extends JInternalFrameBase 
 	protected void initialize() {
 		this.setTitle("进口报关单");
 		this.setContentPane(getJContentPane());
-		this.setSize(880, 397);
+		this.setSize(923, 436);
 		this.jCalendarComboBox.setDate(CommonVars.getBeginDate());
 		this.jCalendarComboBox1.setDate(CommonVars.getEndDate(new Date()));
 		this.addInternalFrameListener(new javax.swing.event.InternalFrameAdapter() {
@@ -863,23 +863,23 @@ public abstract class FmBaseImportCustomsDeclaration extends JInternalFrameBase 
 
 						list.add(addColumn("报关单号", "customsDeclarationCode",
 								140));
+						list.add(addColumn("申报单位", "declarationCompany.name",
+								100));
+						list.add(addColumn("申报人员", "declarant",60));
 						list.add(addColumn("申报日期", "declarationDate", 80));
-						list.add(addColumn("是否检查", "isCheck", 60));
-						list.add(addColumn("是否生效", "effective", 60));
-						// list.add(addColumn("是否作废", "cancel", 80));
-						// list.add(addColumn("转关确认", "confirmTransferCIQ",
-						// 80));
-						list.add(addColumn("是否申报", "isSend", 60));
+						list.add(addColumn("是否检查", "isCheck", 60));//5 
+						list.add(addColumn("是否生效", "effective", 60));//6
+
+						list.add(addColumn("是否申报", "isSend", 60));//7
 						if (projectType != ProjectType.BCS
 								&& projectType != ProjectType.DZSC) {
-							list.add(addColumn("是否已核销", "isEmsCav", 60));
+							list.add(addColumn("是否已核销", "isEmsCav", 60));//8 如果 是 bcus情况
 						}
-						list.add(addColumn("回执信息", "tcsResultMessage", 100));
-						// list.add(addColumn("帐册流水号", "", 50));
-						// list.add(addColumn("帐册协议号", "", 50));
-						list.add(addColumn("金额", "totalMoney", 80));
-						list.add(addColumn("备注", "memos", 100));
-						list.add(addColumn("进口类型", "impExpType", 90));
+						list.add(addColumn("回执信息", "tcsResultMessage", 100));//8 or 9
+
+						list.add(addColumn("金额", "totalMoney", 80)); // 9 or 10
+						list.add(addColumn("备注", "memos", 100));// 10 or 11
+						list.add(addColumn("进口类型", "impExpType", 90)); // 11 or 12
 						list.add(addColumn("件数", "commodityNum", 80,
 								Integer.class));
 						list.add(addColumn("毛重", "grossWeight", 80));
@@ -901,8 +901,6 @@ public abstract class FmBaseImportCustomsDeclaration extends JInternalFrameBase 
 						list.add(addColumn("集装箱号", "containerNum", 200));
 						list.add(addColumn("用途", "uses.name", 100));
 						list.add(addColumn("经营单位", "tradeName", 100));
-						list.add(addColumn("申报单位", "declarationCompany.name",
-								100));
 						list.add(addColumn("客户名称", "customer.name", 100));
 						list.add(addColumn("清单号码", "billListId", 100));
 						list.add(addColumn("预录入号", "preCustomsDeclarationCode",
@@ -924,25 +922,17 @@ public abstract class FmBaseImportCustomsDeclaration extends JInternalFrameBase 
 					}
 				});
 
-		// jTable.getColumnModel().removeColumn(
-		// jTable.getColumnModel().getColumn(0));
-		// if (projectType == ProjectType.BCS || projectType ==
-		// ProjectType.DZSC) {
-		// jTable.getColumnModel().removeColumn(
-		// jTable.getColumnModel().getColumn(7));
-		// // tableModel.getColumns().remove(6);
-		// }
-		jTable.getColumnModel().getColumn(4)
-				.setCellRenderer(new checkBoxRenderer());
-		// System.out.println(jTable.getColumnModel().getColumn(4).getCellRenderer());
-		jTable.getColumnModel().getColumn(5)
-				.setCellRenderer(new checkBoxRenderer());
 		jTable.getColumnModel().getColumn(6)
 				.setCellRenderer(new checkBoxRenderer());
+		
+		jTable.getColumnModel().getColumn(7)
+				.setCellRenderer(new checkBoxRenderer());
+		jTable.getColumnModel().getColumn(8)
+				.setCellRenderer(new checkBoxRenderer());
 		if (projectType == ProjectType.BCUS) {
-			jTable.getColumnModel().getColumn(7)
+			jTable.getColumnModel().getColumn(9)
 					.setCellRenderer(new checkBoxRenderer());
-			jTable.getColumnModel().getColumn(11)
+			jTable.getColumnModel().getColumn(13)
 					.setCellRenderer(new DefaultTableCellRenderer() {
 						public Component getTableCellRendererComponent(
 								JTable table, Object value, boolean isSelected,
@@ -960,7 +950,7 @@ public abstract class FmBaseImportCustomsDeclaration extends JInternalFrameBase 
 					});
 
 		} else {
-			jTable.getColumnModel().getColumn(10)
+			jTable.getColumnModel().getColumn(12)
 					.setCellRenderer(new DefaultTableCellRenderer() {
 						public Component getTableCellRendererComponent(
 								JTable table, Object value, boolean isSelected,
@@ -1758,22 +1748,17 @@ public abstract class FmBaseImportCustomsDeclaration extends JInternalFrameBase 
 	 * @return javax.swing.JMenuItem
 	 */
 	private JMenuItem getMiInputDirect() {
-
 		if (miInputDirect == null) {
-
 			miInputDirect = new JMenuItem();
-
 			miInputDirect.setText("直接导入");
-
 			miInputDirect
 					.addActionListener(new java.awt.event.ActionListener() {
 						public void actionPerformed(java.awt.event.ActionEvent e) {
-
 							inputImportBGDFromQP();
+							// inputImportBGDFromPY();
 
 						}
 					});
-
 		}
 
 		return miInputDirect;
@@ -1786,16 +1771,11 @@ public abstract class FmBaseImportCustomsDeclaration extends JInternalFrameBase 
 			miInputFromQp
 					.addActionListener(new java.awt.event.ActionListener() {
 						public void actionPerformed(java.awt.event.ActionEvent e) {
-
 							DgQPImport dg = new DgQPImport(ImpExpFlag.IMPORT,
 									projectType);
-
 							dg.setVisible(true);
-
 							initTable(getDataSource());
-
 							setState();
-
 							// importCustoms();
 							// DgChooseInquireDate cid = new
 							// DgChooseInquireDate();
@@ -1824,9 +1804,7 @@ public abstract class FmBaseImportCustomsDeclaration extends JInternalFrameBase 
 							// // }
 						}
 					});
-
 		}
-
 		return miInputFromQp;
 	}
 
@@ -2424,7 +2402,7 @@ public abstract class FmBaseImportCustomsDeclaration extends JInternalFrameBase 
 	}
 
 	/**
-	 * 导入进口报关单 直接导入
+	 * 导入进口报关单
 	 * 
 	 * @param importFromFile
 	 */
@@ -2434,49 +2412,32 @@ public abstract class FmBaseImportCustomsDeclaration extends JInternalFrameBase 
 			return;
 		}
 		try {
-
 			ImportBGDCondition condition = null;
-
 			DgInputBGDFromQP dg = new DgInputBGDFromQP();
-
 			dg.setBaseEncAction(baseEncAction);
-
 			dg.setProjectType(projectType);
-
 			dg.setImportBGD(true);
-
 			dg.setSpecialDeclaration(false);
-
 			dg.setVisible(true);
 
 			if (dg.isOK()) {
-
 				condition = dg.getCondition();
 			} else {
 				return;
 			}
-
 			Map mapBGD = baseEncAction.loadBGDFromQPDirect(new Request(
 					CommonVars.getCurrUser()), condition);
-
 			initTable(getDataSource());
-
 			setState();
-
 			List lsSuccess = (List) mapBGD.get(0);
-
 			List lsError = (List) mapBGD.get(-1);
-
 			if ((lsSuccess == null || lsSuccess.size() <= 0)
 					&& (lsError == null || lsError.size() <= 0)) {
-
 				JOptionPane.showMessageDialog(
 						FmBaseImportCustomsDeclaration.this, "没有导入任何报关单！",
 						"提示", JOptionPane.INFORMATION_MESSAGE);
 				return;
-
 			} else {
-
 				DgImportedBGDInfo dgImportedBGDInfo = new DgImportedBGDInfo();
 				dgImportedBGDInfo.setLsSuccess(lsSuccess);
 				dgImportedBGDInfo.setLsError(lsError);

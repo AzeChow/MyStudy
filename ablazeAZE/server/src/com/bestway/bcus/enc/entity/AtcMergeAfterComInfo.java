@@ -536,6 +536,9 @@ public class AtcMergeAfterComInfo extends BaseScmEntity implements Comparable {/
 	 * @return 是否已转报关单
 	 */
 	public Boolean getIsTransferCustomsBill() {
+		if(isTransferCustomsBill==null)
+			return Boolean.FALSE;
+		
 		return isTransferCustomsBill;
 	}
 

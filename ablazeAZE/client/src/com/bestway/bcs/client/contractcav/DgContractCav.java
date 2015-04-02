@@ -61,13 +61,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.NumberFormatter;
 
-
-
-
-
-
-
-
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -108,7 +101,6 @@ import com.bestway.common.constant.ContractKind;
 import com.bestway.common.constant.DeclareFileInfo;
 import com.bestway.common.constant.DeclareState;
 import com.bestway.common.constant.DzscBusinessType;
-import com.bestway.common.constant.EquipMode;
 import com.bestway.common.constant.ImpExpFlag;
 import com.bestway.common.constant.ModifyMarkState;
 import com.bestway.common.materialbase.entity.CurrRate;
@@ -122,7 +114,7 @@ import com.bestway.ui.winuicontrol.JDialogBase;
  * @author ? // change the template for this generated type comment go to Window
  *         - Preferences - Java - Code Style - Code Templates
  */
-@SuppressWarnings({"unchecked", "serial"})
+@SuppressWarnings({ "unchecked", "serial" })
 public class DgContractCav extends JDialogBase {
 	private javax.swing.JPanel pn = null;
 	private JTabbedPane tpn = null;
@@ -235,8 +227,8 @@ public class DgContractCav extends JDialogBase {
 	private JPanel pnCustomsDeclaration = null;
 	protected BaseEncAction baseEncAction = null;
 	private JScrollPane spn3 = null;
-	private ButtonGroup btnGroup = null;  //  @jve:decl-index=0:
-	
+	private ButtonGroup btnGroup = null; // @jve:decl-index=0:
+
 	private JTable tbCD = null;
 	/** 合同核销 */
 	private ContractCavAction contractCavAction = null;
@@ -356,6 +348,10 @@ public class DgContractCav extends JDialogBase {
 	private ContractAction contractAction = null;
 	private BcsParameterSet parameterSet = null;
 	private String emsNo;
+
+	private Double sumContractImgTotalPrice;
+
+	private Double sumContractExgTotalPrice;
 
 	public String getEmsNo() {
 		return emsNo;
@@ -513,8 +509,7 @@ public class DgContractCav extends JDialogBase {
 	 * @return void
 	 */
 	private void initialize() {
-		this
-				.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+		this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		this.setSize(new Dimension(792, 560));
 		this.setTitle("核销申请表计算");
 		this.setSize(792, 538);
@@ -898,8 +893,8 @@ public class DgContractCav extends JDialogBase {
 			gridBagConstraints58.insets = new Insets(1, 1, 5, 0);
 			pnBom = new JPanel();
 			GridBagLayout gbl_pnBom = new GridBagLayout();
-			gbl_pnBom.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0};
-			gbl_pnBom.rowHeights = new int[]{0, 0, 12, 11, 0};
+			gbl_pnBom.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 1.0 };
+			gbl_pnBom.rowHeights = new int[] { 0, 0, 12, 11, 0 };
 			pnBom.setLayout(gbl_pnBom);
 			pnBom.add(getSpn2(), gridBagConstraints58);
 			pnBom.add(getRbTotal(), gridBagConstraints59);
@@ -1034,11 +1029,9 @@ public class DgContractCav extends JDialogBase {
 						case 0:
 							showData(contractCavCustoms);
 							System.out.println(contractCavCustoms
-									.getImpCDCount()
-									+ " ---IMPMM");
+									.getImpCDCount() + " ---IMPMM");
 							System.out.println(contractCavCustoms
-									.getExpCDCount()
-									+ " ---EXPMM");
+									.getExpCDCount() + " ---EXPMM");
 							break;
 						case 1:
 							showCustomsDeclaration(rbCustoms.isSelected());
@@ -1313,7 +1306,6 @@ public class DgContractCav extends JDialogBase {
 		}
 	}
 
-	
 	/**
 	 * 0打印非套打核销表
 	 */
@@ -1400,34 +1392,35 @@ public class DgContractCav extends JDialogBase {
 		if (contractCav == null) {
 			return;
 		}
-		
+
 		Boolean isPrintZeroAsNull = false;
 		Object[] message = new Object[1];
 		message[0] = getCbIsPrintZeroAsNull();
 		JOptionPane.showOptionDialog(DgContractCav.this, message,
 				"请选择！",
 				JOptionPane.CLOSED_OPTION, // option type
-				JOptionPane.INFORMATION_MESSAGE, null,
-				new Object[] { "确定" }, "确定");
+				JOptionPane.INFORMATION_MESSAGE, null, new Object[] { "确定" },
+				"确定");
 		if (getCbIsPrintZeroAsNull().isSelected()) {
 			isPrintZeroAsNull = true;
 		}
-		
+
 		InputStream reportStream = null;
 		List<Object> list = new ArrayList<Object>();
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		CustomReportDataSource ds = new CustomReportDataSource(list);
-		list = contractCavAction.findContractImgCav(new Request(CommonVars
-				.getCurrUser()), contractCav, this.cb1.isSelected());
+		list = contractCavAction.findContractImgCav(
+				new Request(CommonVars.getCurrUser()), contractCav,
+				this.cb1.isSelected());
 		ds = new CustomReportDataSource(list);
 		reportStream = DgContractCav.class
 				.getResourceAsStream("report/ContractImgCav.jasper");
-		
-		parameters.put("contractNo",contractCav.getContractNo());
-		parameters.put("emsNo",contractCav.getEmsNo());
+
+		parameters.put("contractNo", contractCav.getContractNo());
+		parameters.put("emsNo", contractCav.getEmsNo());
 		parameters.put("overprint", new Boolean(false));
 		parameters.put("isPrintZeroAsNull", isPrintZeroAsNull);
-		
+
 		try {
 			JasperPrint jasperPrint = JasperFillManager.fillReport(
 					reportStream, parameters, ds);
@@ -1451,30 +1444,31 @@ public class DgContractCav extends JDialogBase {
 		if (contractCav == null) {
 			return;
 		}
-		
+
 		Boolean isPrintZeroAsNull = false;
 		Object[] message = new Object[1];
 		message[0] = getCbIsPrintZeroAsNull();
 		JOptionPane.showOptionDialog(DgContractCav.this, message,
 				"请选择！",
 				JOptionPane.CLOSED_OPTION, // option type
-				JOptionPane.INFORMATION_MESSAGE, null,
-				new Object[] { "确定" }, "确定");
+				JOptionPane.INFORMATION_MESSAGE, null, new Object[] { "确定" },
+				"确定");
 		if (getCbIsPrintZeroAsNull().isSelected()) {
 			isPrintZeroAsNull = true;
 		}
-		
+
 		InputStream reportStream = null;
 		List<Object> list = new ArrayList<Object>();
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		CustomReportDataSource ds = new CustomReportDataSource(list);
-		list = contractCavAction.findContractImgCav(new Request(CommonVars
-				.getCurrUser()), contractCav, this.cb1.isSelected());
+		list = contractCavAction.findContractImgCav(
+				new Request(CommonVars.getCurrUser()), contractCav,
+				this.cb1.isSelected());
 		ds = new CustomReportDataSource(list);
 		reportStream = DgContractCav.class
 				.getResourceAsStream("report/ContractImgCav.jasper");
-		parameters.put("contractNo",contractCav.getContractNo());
-		parameters.put("emsNo",contractCav.getEmsNo());
+		parameters.put("contractNo", contractCav.getContractNo());
+		parameters.put("emsNo", contractCav.getEmsNo());
 		parameters.put("overprint", new Boolean(true));
 		parameters.put("isPrintZeroAsNull", isPrintZeroAsNull);
 		try {
@@ -1500,25 +1494,26 @@ public class DgContractCav extends JDialogBase {
 		if (contractCav == null) {
 			return;
 		}
-		
+
 		Boolean isPrintZeroAsNull = false;
 		Object[] message = new Object[1];
 		message[0] = getCbIsPrintZeroAsNull();
 		JOptionPane.showOptionDialog(DgContractCav.this, message,
 				"请选择！",
 				JOptionPane.CLOSED_OPTION, // option type
-				JOptionPane.INFORMATION_MESSAGE, null,
-				new Object[] { "确定" }, "确定");
+				JOptionPane.INFORMATION_MESSAGE, null, new Object[] { "确定" },
+				"确定");
 		if (getCbIsPrintZeroAsNull().isSelected()) {
 			isPrintZeroAsNull = true;
 		}
-		
+
 		InputStream reportStream = null;
 		List<Object> list = new ArrayList<Object>();
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		CustomReportDataSource ds = new CustomReportDataSource(list);
-		list = contractCavAction.findContractExgCav(new Request(CommonVars
-				.getCurrUser()), contractCav, this.cb1.isSelected());
+		list = contractCavAction.findContractExgCav(
+				new Request(CommonVars.getCurrUser()), contractCav,
+				this.cb1.isSelected());
 		ds = new CustomReportDataSource(list);
 		reportStream = DgContractCav.class
 				.getResourceAsStream("report/ContractExgCav.jasper");
@@ -1549,30 +1544,31 @@ public class DgContractCav extends JDialogBase {
 		if (contractCav == null) {
 			return;
 		}
-		
+
 		Boolean isPrintZeroAsNull = false;
 		Object[] message = new Object[1];
 		message[0] = getCbIsPrintZeroAsNull();
 		JOptionPane.showOptionDialog(DgContractCav.this, message,
 				"请选择！",
 				JOptionPane.CLOSED_OPTION, // option type
-				JOptionPane.INFORMATION_MESSAGE, null,
-				new Object[] { "确定" }, "确定");
+				JOptionPane.INFORMATION_MESSAGE, null, new Object[] { "确定" },
+				"确定");
 		if (getCbIsPrintZeroAsNull().isSelected()) {
 			isPrintZeroAsNull = true;
 		}
-		
+
 		InputStream reportStream = null;
 		List<Object> list = new ArrayList<Object>();
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		CustomReportDataSource ds = new CustomReportDataSource(list);
-		list = contractCavAction.findContractExgCav(new Request(CommonVars
-				.getCurrUser()), contractCav, this.cb1.isSelected());
+		list = contractCavAction.findContractExgCav(
+				new Request(CommonVars.getCurrUser()), contractCav,
+				this.cb1.isSelected());
 		ds = new CustomReportDataSource(list);
 		reportStream = DgContractCav.class
 				.getResourceAsStream("report/ContractExgCav.jasper");
-		parameters.put("contractNo",contractCav.getContractNo());
-		parameters.put("emsNo",contractCav.getEmsNo());
+		parameters.put("contractNo", contractCav.getContractNo());
+		parameters.put("emsNo", contractCav.getEmsNo());
 		parameters.put("overprint", new Boolean(true));
 		parameters.put("isPrintZeroAsNull", isPrintZeroAsNull);
 		try {
@@ -1655,8 +1651,8 @@ public class DgContractCav extends JDialogBase {
 			parameters.put("isOverprint", new Boolean(false));
 			parameters.put("count", count);
 			parameters.put("isPrintZero", isPrintZero);
-			parameters.put("contractNo",contractCav.getContractNo());
-			parameters.put("emsNo",contractCav.getEmsNo());
+			parameters.put("contractNo", contractCav.getContractNo());
+			parameters.put("emsNo", contractCav.getEmsNo());
 			JasperPrint jasperPrint = JasperFillManager.fillReport(
 					masterReportStream, parameters, ds1);
 			DgReportViewer viewer = new DgReportViewer(jasperPrint);
@@ -1729,8 +1725,8 @@ public class DgContractCav extends JDialogBase {
 			parameters.put("isOverprint", new Boolean(true));
 			parameters.put("count", count);
 			parameters.put("isPrintZero", isPrintZero);
-			parameters.put("contractNo",contractCav.getContractNo());
-			parameters.put("emsNo",contractCav.getEmsNo());
+			parameters.put("contractNo", contractCav.getContractNo());
+			parameters.put("emsNo", contractCav.getEmsNo());
 			JasperPrint jasperPrint = JasperFillManager.fillReport(
 					masterReportStream, parameters, ds1);
 			DgReportViewer viewer = new DgReportViewer(jasperPrint);
@@ -1756,7 +1752,7 @@ public class DgContractCav extends JDialogBase {
 		InputStream reportStream = null;
 		List<Object> list = new ArrayList<Object>();
 		Map<String, Object> parameters = new HashMap<String, Object>();
-		CustomReportDataSource ds = new CustomReportDataSource(list);
+		CustomReportDataSource ds = null;
 		Company company = (Company) contractCav.getCompany();
 		list.add(contractCav);
 		ds = new CustomReportDataSource(list);
@@ -1774,6 +1770,13 @@ public class DgContractCav extends JDialogBase {
 		parameters.put("companyTel", company.getTel());
 		parameters.put("companyCoLevel", company.getCoLevel());
 		parameters.put("overprint", new Boolean(false));
+
+		// 料件总金额和
+		parameters.put("sumImgTotalPrice", sumContractImgTotalPrice.toString());
+
+		// 成品总金额和
+		parameters.put("sumExgTotalPrice", sumContractExgTotalPrice.toString());
+
 		try {
 			JasperPrint jasperPrint = JasperFillManager.fillReport(
 					reportStream, parameters, ds);
@@ -1817,7 +1820,7 @@ public class DgContractCav extends JDialogBase {
 					JOptionPane.CLOSED_OPTION, // option type
 					JOptionPane.INFORMATION_MESSAGE, null,
 					new Object[] { "确定" }, "确定");
-			if(ms>=0){
+			if (ms >= 0) {
 				if (!getCb3().isSelected()) {
 					isPrintZero = false;
 				}
@@ -1839,8 +1842,8 @@ public class DgContractCav extends JDialogBase {
 				if (contractCav != null) {
 					String parentId = contractCav.getId();
 					resultList = contractCavAction.findContractUnitWasteCav(
-							new Request(CommonVars.getCurrUser()), parentId, -1,
-							-1, isPrintZero, isNoPrintProductZero);
+							new Request(CommonVars.getCurrUser()), parentId,
+							-1, -1, isPrintZero, isNoPrintProductZero);
 					exgCavList = resultList.get(0);
 					unitWasteList = resultList.get(1);
 					count = exgCavList.size();
@@ -1848,31 +1851,31 @@ public class DgContractCav extends JDialogBase {
 				ContractcavReportVars.setContractExgCavList(exgCavList);
 				if (getCb6().isSelected()) {
 					ContractUnitWasteCav cuwc = null;
-					for(int i = 0; i < unitWasteList.size(); i++){
+					for (int i = 0; i < unitWasteList.size(); i++) {
 						cuwc = unitWasteList.get(i);
-						if(cuwc!=null){
-							cuwc.setIsPrintUnitNet1(false);//打印净耗
-							cuwc.setIsPrintUnitNet2(false);//打印净耗
-							cuwc.setIsPrintUnitNet3(false);//打印净耗
-							cuwc.setIsPrintUnitNet4(false);//打印净耗
+						if (cuwc != null) {
+							cuwc.setIsPrintUnitNet1(false);// 打印净耗
+							cuwc.setIsPrintUnitNet2(false);// 打印净耗
+							cuwc.setIsPrintUnitNet3(false);// 打印净耗
+							cuwc.setIsPrintUnitNet4(false);// 打印净耗
 						}
 						unitWasteListNew.add(cuwc);
 					}
 				}
 				if (getCb7().isSelected()) {
 					ContractUnitWasteCav cuwc = null;
-					for(int i = 0; i < unitWasteList.size(); i++){
+					for (int i = 0; i < unitWasteList.size(); i++) {
 						cuwc = unitWasteList.get(i);
-						if(cuwc!=null){
-								cuwc.setIsPrintUnitNet1(true);//打印单耗
-								cuwc.setIsPrintUnitNet2(true);//打印单耗
-								cuwc.setIsPrintUnitNet3(true);//打印单耗
-								cuwc.setIsPrintUnitNet4(true);//打印单耗
-								}			
+						if (cuwc != null) {
+							cuwc.setIsPrintUnitNet1(true);// 打印单耗
+							cuwc.setIsPrintUnitNet2(true);// 打印单耗
+							cuwc.setIsPrintUnitNet3(true);// 打印单耗
+							cuwc.setIsPrintUnitNet4(true);// 打印单耗
+						}
 						unitWasteListNew.add(cuwc);
 					}
 				}
-				if(getCb8().isSelected()){
+				if (getCb8().isSelected()) {
 					ContractUnitWasteCav cuwc = null;
 					for (int i = 0; i < unitWasteList.size(); i++) {
 						cuwc = unitWasteList.get(i);
@@ -1899,7 +1902,7 @@ public class DgContractCav extends JDialogBase {
 									|| cuwc.getWasteAmount4() == 0) {
 								cuwc.setIsPrintUnitNet4(true);// 打印单耗
 							} else {
-								cuwc.setIsPrintUnitNet4(false);//打印净耗
+								cuwc.setIsPrintUnitNet4(false);// 打印净耗
 							}
 						}
 						unitWasteListNew.add(cuwc);
@@ -1912,14 +1915,14 @@ public class DgContractCav extends JDialogBase {
 				parameters.put("isOverprint", new Boolean(false));
 				parameters.put("count", count);
 				parameters.put("isPrintZero", isPrintZero);
-				parameters.put("contractNo",contractCav.getContractNo());
-				parameters.put("emsNo",contractCav.getEmsNo());
+				parameters.put("contractNo", contractCav.getContractNo());
+				parameters.put("emsNo", contractCav.getEmsNo());
 				JasperPrint jasperPrint = JasperFillManager.fillReport(
 						masterReportStream, parameters, ds1);
 				DgReportViewer viewer = new DgReportViewer(jasperPrint);
 				viewer.setVisible(true);
 			}
-		
+
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -1988,8 +1991,10 @@ public class DgContractCav extends JDialogBase {
 			parameters.put("impContractNo", impContractNo);
 			parameters.put("expContractNo", expContractNo);
 			parameters.put("processTotalPrice", processTotalPrice);
-			parameters.put("impAmount", CommonUtils.formatDoubleByDigit(impAmount, 4));
-			parameters.put("expAmount", CommonUtils.formatDoubleByDigit(expAmount, 4));
+			parameters.put("impAmount",
+					CommonUtils.formatDoubleByDigit(impAmount, 4));
+			parameters.put("expAmount",
+					CommonUtils.formatDoubleByDigit(expAmount, 4));
 			parameters.put("isOverprint", new Boolean(false));
 			parameters.put("count", count);
 			parameters.put("isSZQY", isSZQY);
@@ -2632,54 +2637,52 @@ public class DgContractCav extends JDialogBase {
 	 * 
 	 * @return javax.swing.JButton
 	 */
-	//hwy2012-11-12
+	// hwy2012-11-12
 	private JButton getBtnCheck() {
-	if (btnCheck == null) {
-		btnCheck = new JButton();
-		btnCheck.setText("检查");
-		btnCheck.setBounds(new Rectangle(276, 395, 60, 23));
-		btnCheck.setVisible(true);
-		btnCheck.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				StringBuffer logImg = new StringBuffer("");
-				logImg = contractCavAction.checkContractCavData(new Request(
-						CommonVars.getCurrUser()), contractCavCustoms);
-				if (logImg.length() <= 0) {
-					JOptionPane.showMessageDialog(DgContractCav.this,
-							"检查完毕，没有错误！", "提示",
-							JOptionPane.INFORMATION_MESSAGE);
-				}else{
-					JOptionPane.showMessageDialog(DgContractCav.this,
-							logImg, "提示",
-							JOptionPane.INFORMATION_MESSAGE);
+		if (btnCheck == null) {
+			btnCheck = new JButton();
+			btnCheck.setText("检查");
+			btnCheck.setBounds(new Rectangle(276, 395, 60, 23));
+			btnCheck.setVisible(true);
+			btnCheck.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					StringBuffer logImg = new StringBuffer("");
+					logImg = contractCavAction.checkContractCavData(
+							new Request(CommonVars.getCurrUser()),
+							contractCavCustoms);
+					if (logImg.length() <= 0) {
+						JOptionPane.showMessageDialog(DgContractCav.this,
+								"检查完毕，没有错误！", "提示",
+								JOptionPane.INFORMATION_MESSAGE);
+					} else {
+						JOptionPane.showMessageDialog(DgContractCav.this,
+								logImg, "提示", JOptionPane.INFORMATION_MESSAGE);
+					}
 				}
-			}
-		});
+			});
+		}
+		return btnCheck;
 	}
-	return btnCheck;
-}
-	
-//	private JButton getBtnCheck() {
-//		if (btnCheck == null) {
-//			btnCheck = new JButton();
-//			btnCheck.setText("检查");
-//			btnCheck.setBounds(new Rectangle(276, 395, 60, 23));
-//			btnCheck.setVisible(true);
-//			btnCheck.addActionListener(new java.awt.event.ActionListener() {
-//				public void actionPerformed(java.awt.event.ActionEvent e) {
-//					if (contractCavAction.checkContractCavData(new Request(
-//							CommonVars.getCurrUser()), contractCavCustoms)) {
-//						JOptionPane.showMessageDialog(DgContractCav.this,
-//								"检查完毕，没有错误", "提示",
-//								JOptionPane.INFORMATION_MESSAGE);
-//					}
-//				}
-//			});
-//		}
-//		return btnCheck;
-//	}
-	
 
+	// private JButton getBtnCheck() {
+	// if (btnCheck == null) {
+	// btnCheck = new JButton();
+	// btnCheck.setText("检查");
+	// btnCheck.setBounds(new Rectangle(276, 395, 60, 23));
+	// btnCheck.setVisible(true);
+	// btnCheck.addActionListener(new java.awt.event.ActionListener() {
+	// public void actionPerformed(java.awt.event.ActionEvent e) {
+	// if (contractCavAction.checkContractCavData(new Request(
+	// CommonVars.getCurrUser()), contractCavCustoms)) {
+	// JOptionPane.showMessageDialog(DgContractCav.this,
+	// "检查完毕，没有错误", "提示",
+	// JOptionPane.INFORMATION_MESSAGE);
+	// }
+	// }
+	// });
+	// }
+	// return btnCheck;
+	// }
 
 	/**
 	 * This method initializes tfTotalPages
@@ -2861,29 +2864,27 @@ public class DgContractCav extends JDialogBase {
 		return btnLeftoverMaterial;
 	}
 
-class doSwingWorker<T, V> extends SwingWorker<T, V>{
+	class doSwingWorker<T, V> extends SwingWorker<T, V> {
 
-	@Override
-	protected T doInBackground() throws Exception {
-		String taskId = CommonProgress.getExeTaskId();
-		CommonStepProgress.showStepProgressDialog(taskId);
-		CommonStepProgress.setStepMessage("系统计算边角料，请稍后...");
-		contractCavAction.recalRemainMaterialAmount(
-				new Request(CommonVars.getCurrUser()),
-				contractCavCustoms);
-		return null;
+		@Override
+		protected T doInBackground() throws Exception {
+			String taskId = CommonProgress.getExeTaskId();
+			CommonStepProgress.showStepProgressDialog(taskId);
+			CommonStepProgress.setStepMessage("系统计算边角料，请稍后...");
+			contractCavAction.recalRemainMaterialAmount(
+					new Request(CommonVars.getCurrUser()), contractCavCustoms);
+			return null;
+		}
+
+		@Override
+		protected void done() {
+			CommonStepProgress.closeStepProgressDialog();
+			showExgData(true);
+			showImgData(true);
+		}
+
 	}
-	
-	@Override
-	protected void done() {
-		CommonStepProgress.closeStepProgressDialog();
-		showExgData(true);
-		showImgData(true);
-	}
-	
-}
-	
-	
+
 	/**
 	 * This method initializes cbImg
 	 * 
@@ -3237,11 +3238,13 @@ class doSwingWorker<T, V> extends SwingWorker<T, V>{
 						return;
 					}
 					ContractCavTotalValue totalValue = contractCavAction
-							.findCavTotalValue(new Request(CommonVars
-									.getCurrUser()), contractCav,contract);
-					contractCav=(ContractCav)contractCavAction.load(new Request(CommonVars
-							.getCurrUser()),ContractCav.class, contractCav.getId());
-					fillContractCavTotalValue(totalValue,contractCav);
+							.findCavTotalValue(
+									new Request(CommonVars.getCurrUser()),
+									contractCav, contract);
+					contractCav = (ContractCav) contractCavAction.load(
+							new Request(CommonVars.getCurrUser()),
+							ContractCav.class, contractCav.getId());
+					fillContractCavTotalValue(totalValue, contractCav);
 				}
 			});
 		}
@@ -3250,9 +3253,11 @@ class doSwingWorker<T, V> extends SwingWorker<T, V>{
 
 	/**
 	 * 填充其它
+	 * 
 	 * @param totalValue
 	 */
-	private void fillContractCavTotalValue(ContractCavTotalValue totalValue,ContractCav contractCav) {
+	private void fillContractCavTotalValue(ContractCavTotalValue totalValue,
+			ContractCav contractCav) {
 		int reportDecimalLength = parameterSet.getReportDecimalLength() == null ? 8
 				: parameterSet.getReportDecimalLength();
 		tfImpTotalValue.setText(totalValue.getImpAmount() == null ? ""
@@ -3261,19 +3266,20 @@ class doSwingWorker<T, V> extends SwingWorker<T, V>{
 		tfExpTotalValue.setText(totalValue.getExpAmount() == null ? ""
 				: CommonVars.formatDoubleToString(totalValue.getExpAmount(),
 						999, reportDecimalLength));
-		tfExpManufactureMoney.setText(formatDoubleToString(totalValue
-				.getProcessTotalPrice(), reportDecimalLength));
-		tfExpTotalItems.setText(formatDoubleToString(totalValue
-				.getExpTotalPieces(), reportDecimalLength));
-		tfImpTotalGrossWeight.setText(formatDoubleToString(totalValue
-				.getImpTotalGrossWeight(), reportDecimalLength));
-		tfExpTotalGrossWeight.setText(formatDoubleToString(totalValue
-				.getExpTotalGrossWeight(), reportDecimalLength));
-		tfImpNetWeight.setText(formatDoubleToString(totalValue
-				.getImpTotalNetWeight(), reportDecimalLength));
-		tfExpNetWeight.setText(formatDoubleToString(totalValue
-				.getExpTotalNetWeight(), reportDecimalLength));
-		tfValueAddedRate.setText(String.valueOf(contractCav.getValueAddedRate()));
+		tfExpManufactureMoney.setText(formatDoubleToString(
+				totalValue.getProcessTotalPrice(), reportDecimalLength));
+		tfExpTotalItems.setText(formatDoubleToString(
+				totalValue.getExpTotalPieces(), reportDecimalLength));
+		tfImpTotalGrossWeight.setText(formatDoubleToString(
+				totalValue.getImpTotalGrossWeight(), reportDecimalLength));
+		tfExpTotalGrossWeight.setText(formatDoubleToString(
+				totalValue.getExpTotalGrossWeight(), reportDecimalLength));
+		tfImpNetWeight.setText(formatDoubleToString(
+				totalValue.getImpTotalNetWeight(), reportDecimalLength));
+		tfExpNetWeight.setText(formatDoubleToString(
+				totalValue.getExpTotalNetWeight(), reportDecimalLength));
+		tfValueAddedRate
+				.setText(String.valueOf(contractCav.getValueAddedRate()));
 		double resultWeight = contractCavAction.cavContractNetWeightLossRate(
 				new Request(CommonVars.getCurrUser()), contract.getEmsNo());
 		tfNetWeightLossRate.setText(String.valueOf(resultWeight));
@@ -3295,11 +3301,12 @@ class doSwingWorker<T, V> extends SwingWorker<T, V>{
 		}
 		Double REMAIN_FORWARD = 0.0;
 		List<BcsCustomsDeclaration> list = contractCavAction
-				.findBcsCustomsDeclarationCav(new Request(CommonVars
-						.getCurrUser()), contractCav);
+				.findBcsCustomsDeclarationCav(
+						new Request(CommonVars.getCurrUser()), contractCav);
 		Map<String, Double> map = contractCavAction
-				.findCustomsDeclarationMoney(new Request(CommonVars
-						.getCurrUser()), ImpExpFlag.IMPORT);
+				.findCustomsDeclarationMoney(
+						new Request(CommonVars.getCurrUser()),
+						ImpExpFlag.IMPORT);
 		for (BcsCustomsDeclaration b : list) {
 			// System.out.println("map.get(b.getId())="
 			// + map.get(b.getId()));
@@ -3442,23 +3449,20 @@ class doSwingWorker<T, V> extends SwingWorker<T, V>{
 		}
 		contractCav
 				.setInternalSale(this.tfInternalSale.getValue() == null ? new Double(
-						0)
-						: Double.valueOf(this.tfInternalSale.getValue()
-								.toString()));
+						0) : Double.valueOf(this.tfInternalSale.getValue()
+						.toString()));
 		contractCav
 				.setInternalSaleTax(this.tfInternalSaleTax.getValue() == null ? new Double(
-						0)
-						: Double.valueOf(this.tfInternalSaleTax.getValue()
-								.toString()));
+						0) : Double.valueOf(this.tfInternalSaleTax.getValue()
+						.toString()));
 		contractCav
 				.setInternalSaleWarrant(this.tfInternalSaleWarrant.getText());
 		contractCav
 				.setInternalSaleTaxBill(this.tfInternalSaleTaxBill.getText());
 		contractCav
 				.setTotalPages(this.tfTotalPages.getValue() == null ? new Integer(
-						0)
-						: Integer.valueOf(this.tfTotalPages.getValue()
-								.toString()));
+						0) : Integer.valueOf(this.tfTotalPages.getValue()
+						.toString()));
 		contractCav.setImpAmount(this.tfImpTotalMoney.getValue() == null ? 0.0
 				: Double.valueOf(this.tfImpTotalMoney.getValue().toString()));
 		contractCav.setExpAmount(this.tfExpTotalMoney.getValue() == null ? 0.0
@@ -3705,8 +3709,8 @@ class doSwingWorker<T, V> extends SwingWorker<T, V>{
 		// decimalLength = parameterSet.getReportDecimalLength();
 		// tableModelCD.setAllColumnsFractionCount(decimalLength);
 
-		tbCD.getColumnModel().getColumn(1).setCellRenderer(
-				new DefaultTableCellRenderer() {
+		tbCD.getColumnModel().getColumn(1)
+				.setCellRenderer(new DefaultTableCellRenderer() {
 					public Component getTableCellRendererComponent(
 							JTable table, Object value, boolean isSelected,
 							boolean hasFocus, int row, int column) {
@@ -3721,8 +3725,8 @@ class doSwingWorker<T, V> extends SwingWorker<T, V>{
 								.toString());
 					}
 				});
-		tbCD.getColumnModel().getColumn(4).setCellRenderer(
-				new DefaultTableCellRenderer() {
+		tbCD.getColumnModel().getColumn(4)
+				.setCellRenderer(new DefaultTableCellRenderer() {
 					public Component getTableCellRendererComponent(
 							JTable table, Object value, boolean isSelected,
 							boolean hasFocus, int row, int column) {
@@ -3776,9 +3780,7 @@ class doSwingWorker<T, V> extends SwingWorker<T, V>{
 					public List InitColumns() {
 						List<JTableListColumn> list = new Vector<JTableListColumn>();
 						list.add(addColumn("修改标志", "modifyMark", 60));
-						list
-								.add(addColumn("备案序号", "seqNum", 60,
-										Integer.class));
+						list.add(addColumn("备案序号", "seqNum", 60, Integer.class));
 						list.add(addColumn("商品编码", "complex.code", 100));
 						list.add(addColumn("商品名称", "name", 100));
 						list.add(addColumn("规格型号", "spec", 100));
@@ -3799,8 +3801,8 @@ class doSwingWorker<T, V> extends SwingWorker<T, V>{
 		// decimalLength = parameterSet.getReportDecimalLength();
 		// tableModelExg.setAllColumnsFractionCount(decimalLength);
 
-		tbExg.getColumnModel().getColumn(1).setCellRenderer(
-				new DefaultTableCellRenderer() {
+		tbExg.getColumnModel().getColumn(1)
+				.setCellRenderer(new DefaultTableCellRenderer() {
 					public Component getTableCellRendererComponent(
 							JTable table, Object value, boolean isSelected,
 							boolean hasFocus, int row, int column) {
@@ -3843,18 +3845,14 @@ class doSwingWorker<T, V> extends SwingWorker<T, V>{
 					public List InitColumns() {
 						List<JTableListColumn> list = new Vector<JTableListColumn>();
 						list.add(addColumn("修改标志", "modifyMark", 60));
-						list
-								.add(addColumn("备案序号", "seqNum", 60,
-										Integer.class));
+						list.add(addColumn("备案序号", "seqNum", 60, Integer.class));
 						list.add(addColumn("商品编码", "complex.code", 100));
 						list.add(addColumn("商品名称", "name", 150));
 						list.add(addColumn("规格型号", "spec", 100));
 						list.add(addColumn("计量单位", "unit.name", 60));
 						list.add(addColumn("进口总数", "impTotal", 100));
 						list.add(addColumn("料件直接进口", "directImport", 100));
-						list
-								.add(addColumn("料件转厂", "transferFactoryImport",
-										100));
+						list.add(addColumn("料件转厂", "transferFactoryImport", 100));
 						list.add(addColumn("余料结转进口", "remainImport", 100));
 						list.add(addColumn("余料结转出口", "remainExport", 100));
 						list.add(addColumn("成品耗用", "productWaste", 100));
@@ -3876,8 +3874,8 @@ class doSwingWorker<T, V> extends SwingWorker<T, V>{
 		// decimalLength = parameterSet.getReportDecimalLength();
 		// tableModelImg.setAllColumnsFractionCount(decimalLength);
 
-		tbImg.getColumnModel().getColumn(1).setCellRenderer(
-				new DefaultTableCellRenderer() {
+		tbImg.getColumnModel().getColumn(1)
+				.setCellRenderer(new DefaultTableCellRenderer() {
 					public Component getTableCellRendererComponent(
 							JTable table, Object value, boolean isSelected,
 							boolean hasFocus, int row, int column) {
@@ -3944,34 +3942,35 @@ class doSwingWorker<T, V> extends SwingWorker<T, V>{
 
 		List<JTableListColumn> cm = tableModelBom.getColumns();
 		cm.get(9).setFractionCount(5);
-		tbBom.getColumnModel().getColumn(1).setCellRenderer(
-				new DefaultTableCellRenderer() {
+		tbBom.getColumnModel().getColumn(1)
+				.setCellRenderer(new DefaultTableCellRenderer() {
 					public Component getTableCellRendererComponent(
 							JTable table, Object value, boolean isSelected,
 							boolean hasFocus, int row, int column) {
-//						List list = contractAction.findEquipModeState(new Request(
-//								CommonVars.getCurrUser()),emsNo);
-//		                if(list.size()>0&&list.get(0) != null){
-//							String strEquipModeState =(String)list.get(0);
-//							
-//							if(strEquipModeState.equals(EquipMode.PUT_ON_RECORD)){
-//								value = ModifyMarkState.MODIFIED;
-//							}
-//						}
+						// List list = contractAction.findEquipModeState(new
+						// Request(
+						// CommonVars.getCurrUser()),emsNo);
+						// if(list.size()>0&&list.get(0) != null){
+						// String strEquipModeState =(String)list.get(0);
+						//
+						// if(strEquipModeState.equals(EquipMode.PUT_ON_RECORD)){
+						// value = ModifyMarkState.MODIFIED;
+						// }
+						// }
 						super.getTableCellRendererComponent(table, value,
 								isSelected, hasFocus, row, column);
 						super.setText((value == null) ? "" : castValue(value));
-						
+
 						return this;
 					}
-                 
+
 					private String castValue(Object value) {
 						return ModifyMarkState.getModifyMarkSpec(value
 								.toString());
 					}
 				});
-		this.tbBom.getColumnModel().getColumn(8).setCellRenderer(
-				new DefaultTableCellRenderer() {
+		this.tbBom.getColumnModel().getColumn(8)
+				.setCellRenderer(new DefaultTableCellRenderer() {
 					public Component getTableCellRendererComponent(
 							JTable table, Object value, boolean isSelected,
 							boolean hasFocus, int row, int column) {
@@ -4128,12 +4127,13 @@ class doSwingWorker<T, V> extends SwingWorker<T, V>{
 							dg.setDataState(DataState.EDIT);
 							dg.setModifyUnitWasteNotWriteBack(cbBom1
 									.isSelected());
-							dg.setModifyTotalAmountNotWriteBack(cbBom2 
+							dg.setModifyTotalAmountNotWriteBack(cbBom2
 									.isSelected());
 							dg.setModifyWasteAmountNotWriteBack(cbBom3
 									.isSelected());
-							dg.setModifyWasteAmount(rbWaste.isSelected(),cbBom4.isSelected());
-							
+							dg.setModifyWasteAmount(rbWaste.isSelected(),
+									cbBom4.isSelected());
+
 							dg.setVisible(true);
 						}
 					});
@@ -4267,12 +4267,12 @@ class doSwingWorker<T, V> extends SwingWorker<T, V>{
 				request.setTaskId(taskId);
 				try {
 					DeclareFileInfo fileInfo = contractCavAction
-							.applyContractCav(new Request(CommonVars
-									.getCurrUser()), contractCavCustoms,
-									isAppBom);
+							.applyContractCav(
+									new Request(CommonVars.getCurrUser()),
+									contractCavCustoms, isAppBom);
 					CommonStepProgress.closeStepProgressDialog();
-					JOptionPane.showMessageDialog(DgContractCav.this, fileInfo
-							.getFileInfoSpec(), "提示",
+					JOptionPane.showMessageDialog(DgContractCav.this,
+							fileInfo.getFileInfoSpec(), "提示",
 							JOptionPane.INFORMATION_MESSAGE);
 				} catch (Exception ex) {
 					CommonStepProgress.closeStepProgressDialog();
@@ -4325,9 +4325,9 @@ class doSwingWorker<T, V> extends SwingWorker<T, V>{
 								"处理回执成功\n" + result, "提示",
 								JOptionPane.INFORMATION_MESSAGE);
 						contractCavCustoms = contractCavAction
-								.findContractCavById(new Request(CommonVars
-										.getCurrUser()), contractCavCustoms
-										.getId());
+								.findContractCavById(
+										new Request(CommonVars.getCurrUser()),
+										contractCavCustoms.getId());
 						setState();
 					} catch (Exception ex) {
 						JOptionPane.showMessageDialog(DgContractCav.this,
@@ -4483,8 +4483,7 @@ class doSwingWorker<T, V> extends SwingWorker<T, V>{
 		}
 		return cbIsPrintZeroAsNull;
 	}
-	
-	
+
 	/**
 	 * This method initializes cb4
 	 * 
@@ -4910,7 +4909,7 @@ class doSwingWorker<T, V> extends SwingWorker<T, V>{
 	// }
 	// return miNonCoverPrintAppliedNew;
 	// }
-	//	
+	//
 	/**
 	 * 打印非套打核销表(新)
 	 * 
@@ -5063,7 +5062,6 @@ class doSwingWorker<T, V> extends SwingWorker<T, V>{
 		return miProcessingTradeVerificationBillImportImg;
 	}
 
-
 	/**
 	 * 打印非套打合同核销表 This method initializes btnPrintMiConverContract
 	 * 
@@ -5084,7 +5082,7 @@ class doSwingWorker<T, V> extends SwingWorker<T, V>{
 	}
 
 	/**
-	 *打印非套打合同核销表
+	 * 打印非套打合同核销表
 	 * 
 	 * @return
 	 */
@@ -5302,9 +5300,7 @@ class doSwingWorker<T, V> extends SwingWorker<T, V>{
 			// pn7.add(getTfImpBackGoods(), null);
 			// pn7.add(jLabel6, null);
 			// pn7.add(getTfExpBackGoods(), null);
-			pn7
-					.setBorder(javax.swing.BorderFactory
-							.createTitledBorder("净重损失率"));
+			pn7.setBorder(javax.swing.BorderFactory.createTitledBorder("净重损失率"));
 		}
 		return pn7;
 	}
@@ -5608,15 +5604,13 @@ class doSwingWorker<T, V> extends SwingWorker<T, V>{
 			jPanel1 = new JPanel();
 			jPanel1.setLayout(null);
 			jPanel1.setBounds(new Rectangle(16, 266, 401, 50));
-			jPanel1
-					.setBorder(BorderFactory
-							.createTitledBorder(
-									null,
-									"\u53e3\u5cb8\u57fa\u7840\u8bbe\u65bd\u5efa\u8bbe\u57fa\u91d1",
-									TitledBorder.DEFAULT_JUSTIFICATION,
-									TitledBorder.DEFAULT_POSITION, new Font(
-											"Dialog", Font.PLAIN, 12),
-									new Color(51, 51, 51)));
+			jPanel1.setBorder(BorderFactory
+					.createTitledBorder(
+							null,
+							"\u53e3\u5cb8\u57fa\u7840\u8bbe\u65bd\u5efa\u8bbe\u57fa\u91d1",
+							TitledBorder.DEFAULT_JUSTIFICATION,
+							TitledBorder.DEFAULT_POSITION, new Font("Dialog",
+									Font.PLAIN, 12), new Color(51, 51, 51)));
 			jPanel1.add(getTfFund(), null);
 			jPanel1.add(jLabel21, null);
 		}
@@ -5653,9 +5647,9 @@ class doSwingWorker<T, V> extends SwingWorker<T, V>{
 	}
 
 	/**
-	 * This method initializes cb6	
-	 * 	
-	 * @return javax.swing.JCheckBox	
+	 * This method initializes cb6
+	 * 
+	 * @return javax.swing.JCheckBox
 	 */
 	private JCheckBox getCb6() {
 		if (cb6 == null) {
@@ -5665,6 +5659,7 @@ class doSwingWorker<T, V> extends SwingWorker<T, V>{
 		}
 		return cb6;
 	}
+
 	private JCheckBox getCb7() {
 		if (cb7 == null) {
 			cb7 = new JCheckBox();
@@ -5673,6 +5668,7 @@ class doSwingWorker<T, V> extends SwingWorker<T, V>{
 		}
 		return cb7;
 	}
+
 	private JCheckBox getCb8() {
 		if (cb8 == null) {
 			cb8 = new JCheckBox();
@@ -5683,7 +5679,7 @@ class doSwingWorker<T, V> extends SwingWorker<T, V>{
 	}
 
 	public ButtonGroup getBtnGroup() {
-		if(btnGroup==null){
+		if (btnGroup == null) {
 			btnGroup = new ButtonGroup();
 		}
 		btnGroup.add(getCb6());
@@ -5695,7 +5691,7 @@ class doSwingWorker<T, V> extends SwingWorker<T, V>{
 	public void setBtnGroup(ButtonGroup btnGroup) {
 		this.btnGroup = btnGroup;
 	}
-	
+
 	private JCheckBox getCbBom4() {
 		if (cbBom4 == null) {
 			cbBom4 = new JCheckBox("修改损耗量不反算总用量，损耗，成品耗用量和料件余量");
@@ -5704,4 +5700,21 @@ class doSwingWorker<T, V> extends SwingWorker<T, V>{
 		}
 		return cbBom4;
 	}
+
+	public Double getSumContractImgTotalPrice() {
+		return sumContractImgTotalPrice;
+	}
+
+	public void setSumContractImgTotalPrice(Double sumContractImgTotalPrice) {
+		this.sumContractImgTotalPrice = sumContractImgTotalPrice;
+	}
+
+	public Double getSumContractExgTotalPrice() {
+		return sumContractExgTotalPrice;
+	}
+
+	public void setSumContractExgTotalPrice(Double sumContractExgTotalPrice) {
+		this.sumContractExgTotalPrice = sumContractExgTotalPrice;
+	}
+
 } // @jve:decl-index=0:visual-constraint="10,446"

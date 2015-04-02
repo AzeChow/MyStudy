@@ -142,7 +142,7 @@ public class FmApplyToCustomsBillList extends JInternalFrameBase {
 	private JMenuItem menuSingleApplicationInto = null; // @jve:decl-index=0:visual-constraint="699,341"
 
 	private JMenuItem menuImport = null; // @jve:decl-index=0:visual-constraint="814,337"
-	
+
 	private JMenuItem menuImportXML = null;
 
 	private JButton btnToCustoms = null;
@@ -216,15 +216,14 @@ public class FmApplyToCustomsBillList extends JInternalFrameBase {
 		this.setTitle("报关清单");
 		this.setContentPane(getJContentPane());
 		this.setSize(816, 296);
-		this
-				.addInternalFrameListener(new javax.swing.event.InternalFrameAdapter() {
-					public void internalFrameOpened(
-							javax.swing.event.InternalFrameEvent e) {
-						List list = getDataSource();
-						initTable(list);
-						setState();
-					}
-				});
+		this.addInternalFrameListener(new javax.swing.event.InternalFrameAdapter() {
+			public void internalFrameOpened(
+					javax.swing.event.InternalFrameEvent e) {
+				List list = getDataSource();
+				initTable(list);
+				setState();
+			}
+		});
 		initComponents();
 	}
 
@@ -257,7 +256,7 @@ public class FmApplyToCustomsBillList extends JInternalFrameBase {
 	 */
 	private JToolBar getJToolBar() {
 		if (jToolBar == null) {
-			FlowLayout f=new FlowLayout();
+			FlowLayout f = new FlowLayout();
 			f.setAlignment(FlowLayout.LEFT);
 			f.setVgap(1);
 			f.setHgap(1);
@@ -322,7 +321,7 @@ public class FmApplyToCustomsBillList extends JInternalFrameBase {
 						setState();
 					}
 					if (e.getClickCount() == 2) {
-						// EmsHeadH2k emsHeadH2k = getEmsHeadH2k();
+
 						if (emsHeadH2k == null) {
 							return;
 						}
@@ -332,12 +331,15 @@ public class FmApplyToCustomsBillList extends JInternalFrameBase {
 						DgApplyToCustomsBillList dgApplyToCustomsBillList = new DgApplyToCustomsBillList();
 						billHead = (ApplyToCustomsBillList) tableModel
 								.getCurrentRow();
-						if (billHead.getListState().intValue() == ApplyToCustomsBillList.PASSED)
+
+						if (billHead.getListState().intValue() == ApplyToCustomsBillList.PASSED) {
 							dgApplyToCustomsBillList
 									.setDataState(DataState.BROWSE);
-						else
+						} else {
 							dgApplyToCustomsBillList
 									.setDataState(DataState.EDIT);
+						}
+
 						dgApplyToCustomsBillList.setImpExpFlag(jTabbedPane
 								.getSelectedIndex());
 						dgApplyToCustomsBillList
@@ -363,8 +365,7 @@ public class FmApplyToCustomsBillList extends JInternalFrameBase {
 							obj.setListState(ApplyToCustomsBillList.Effect);
 						} else if (obj.getListState().equals(
 								ApplyToCustomsBillList.Effect)) {
-							obj
-									.setListState(ApplyToCustomsBillList.ALREADY_SEND);
+							obj.setListState(ApplyToCustomsBillList.ALREADY_SEND);
 						} else if (obj.getListState().equals(
 								ApplyToCustomsBillList.ALREADY_SEND)) {
 							obj.setListState(ApplyToCustomsBillList.PASSED);
@@ -448,8 +449,7 @@ public class FmApplyToCustomsBillList extends JInternalFrameBase {
 							obj.setListState(ApplyToCustomsBillList.Effect);
 						} else if (obj.getListState().equals(
 								ApplyToCustomsBillList.Effect)) {
-							obj
-									.setListState(ApplyToCustomsBillList.ALREADY_SEND);
+							obj.setListState(ApplyToCustomsBillList.ALREADY_SEND);
 						} else if (obj.getListState().equals(
 								ApplyToCustomsBillList.ALREADY_SEND)) {
 							// obj
@@ -635,7 +635,7 @@ public class FmApplyToCustomsBillList extends JInternalFrameBase {
 								initTable(list);
 								setState();
 							}
-							
+
 							btnRefresh.doClick();
 						}
 					});
@@ -724,30 +724,22 @@ public class FmApplyToCustomsBillList extends JInternalFrameBase {
 						list.add(addColumn("报关单流水号", "customsDeclarationCode",
 								120));
 						list.add(addColumn("录入日期", "createdDate", 80));
-						list
-								.add(addColumn("录入员名称", "createdUser.userName",
-										80));
+						list.add(addColumn("录入员名称", "createdUser.userName", 80));
 						list.add(addColumn("进出口岸", "impExpCIQ.name", 80));
 						list.add(addColumn("申报地海关", "declareCIQ.name", 80));
-						list
-								.add(addColumn("料件/成品标志",
-										"materielProductFlag", 80));
+						list.add(addColumn("料件/成品标志", "materielProductFlag", 80));
 						list.add(addColumn("运输方式", "transportMode.name", 80));
 						list.add(addColumn("监管方式", "tradeMode.name", 80));
-						list
-								.add(addColumn("录入单位代号", "createdCompany.code",
-										80));
-						list
-								.add(addColumn("录入单位名称", "createdCompany.name",
-										80));
+						list.add(addColumn("录入单位代号", "createdCompany.code", 80));
+						list.add(addColumn("录入单位名称", "createdCompany.name", 80));
 						list.add(addColumn("备注", "memos", 50));
 
 						return list;
 					}
 				});
 
-		getCurrentTable().getColumnModel().getColumn(1).setCellRenderer(
-				new DefaultTableCellRenderer() {
+		getCurrentTable().getColumnModel().getColumn(1)
+				.setCellRenderer(new DefaultTableCellRenderer() {
 					public Component getTableCellRendererComponent(
 							JTable table, Object value, boolean isSelected,
 							boolean hasFocus, int row, int column) {
@@ -762,8 +754,8 @@ public class FmApplyToCustomsBillList extends JInternalFrameBase {
 						return this;
 					}
 				});
-		getCurrentTable().getColumnModel().getColumn(2).setCellRenderer(
-				new DefaultTableCellRenderer() {
+		getCurrentTable().getColumnModel().getColumn(2)
+				.setCellRenderer(new DefaultTableCellRenderer() {
 					public Component getTableCellRendererComponent(
 							JTable table, Object value, boolean isSelected,
 							boolean hasFocus, int row, int column) {
@@ -795,8 +787,8 @@ public class FmApplyToCustomsBillList extends JInternalFrameBase {
 					}
 				});
 
-		getCurrentTable().getColumnModel().getColumn(19).setCellRenderer(
-				new DefaultTableCellRenderer() {
+		getCurrentTable().getColumnModel().getColumn(19)
+				.setCellRenderer(new DefaultTableCellRenderer() {
 					public Component getTableCellRendererComponent(
 							JTable table, Object value, boolean isSelected,
 							boolean hasFocus, int row, int column) {
@@ -816,8 +808,8 @@ public class FmApplyToCustomsBillList extends JInternalFrameBase {
 						return this;
 					}
 				});
-		getCurrentTable().getColumnModel().getColumn(4).setCellRenderer(
-				new MultiRenderer());
+		getCurrentTable().getColumnModel().getColumn(4)
+				.setCellRenderer(new MultiRenderer());
 	}
 
 	/**
@@ -975,11 +967,13 @@ public class FmApplyToCustomsBillList extends JInternalFrameBase {
 				CommonProgress.showProgressDialog();
 				CommonProgress.setMessage("系统正在更新数据，请稍后...");
 				if (jTabbedPane.getSelectedIndex() == ApplyToCustomsBillList.IMPORT) {
-					encAction.changeApplyBillState(new Request(CommonVars
-							.getCurrUser()), ApplyToCustomsBillList.IMPORT);
+					encAction.changeApplyBillState(
+							new Request(CommonVars.getCurrUser()),
+							ApplyToCustomsBillList.IMPORT);
 				} else {
-					encAction.changeApplyBillState(new Request(CommonVars
-							.getCurrUser()), ApplyToCustomsBillList.EXPORT);
+					encAction.changeApplyBillState(
+							new Request(CommonVars.getCurrUser()),
+							ApplyToCustomsBillList.EXPORT);
 				}
 				CommonProgress.closeProgressDialog();
 				JOptionPane.showMessageDialog(FmApplyToCustomsBillList.this,
@@ -1025,7 +1019,8 @@ public class FmApplyToCustomsBillList extends JInternalFrameBase {
 			btnCustomDeclare
 					.addActionListener(new java.awt.event.ActionListener() {
 						public void actionPerformed(java.awt.event.ActionEvent e) {
-							encAction.customDeclare(new Request(CommonVars.getCurrUser()));
+							encAction.customDeclare(new Request(CommonVars
+									.getCurrUser()));
 							billHead = (ApplyToCustomsBillList) tableModel
 									.getCurrentRow();
 							if (tableModel.getCurrentRow() == null) {
@@ -1064,8 +1059,8 @@ public class FmApplyToCustomsBillList extends JInternalFrameBase {
 				CommonProgress.showProgressDialog();
 				billHead = (ApplyToCustomsBillList) tableModel.getCurrentRow();
 				CommonProgress.setMessage("系统正在进行检查数据，请稍后...");
-				List errlist = encAction.checkIsNull(new Request(CommonVars
-						.getCurrUser()), billHead);
+				List errlist = encAction.checkIsNull(
+						new Request(CommonVars.getCurrUser()), billHead);
 				if (errlist != null && errlist.size() > 0) {
 					CommonProgress.closeProgressDialog();
 					String str = "";
@@ -1113,10 +1108,11 @@ public class FmApplyToCustomsBillList extends JInternalFrameBase {
 
 				messageName = messageAction.exportMessage(new Request(
 						CommonVars.getCurrUser()), billHead, 1, list)[0];
-				messageAction.saveMessageQuery(new Request(CommonVars
-						.getCurrUser()), MessageQuery.SENDTYPE,
-						EdiType.CUSTOMS_BILL, DelcareType.APPLICATION,
-						messageName, emsHeadH2k.getCopEmsNo(), "EMS217", 0);
+				messageAction.saveMessageQuery(
+						new Request(CommonVars.getCurrUser()),
+						MessageQuery.SENDTYPE, EdiType.CUSTOMS_BILL,
+						DelcareType.APPLICATION, messageName,
+						emsHeadH2k.getCopEmsNo(), "EMS217", 0);
 
 				billHead.setListState(ApplyToCustomsBillList.ALREADY_SEND); // 已经申报
 				billHead = encAction.saveApplyToCustomsBillList(new Request(
@@ -1409,6 +1405,7 @@ public class FmApplyToCustomsBillList extends JInternalFrameBase {
 		}
 		return menuImport;
 	}
+
 	/**
 	 * This method initializes menuImport
 	 * 
@@ -1419,21 +1416,23 @@ public class FmApplyToCustomsBillList extends JInternalFrameBase {
 			menuImportXML = new JMenuItem();
 			menuImportXML.setSize(new Dimension(69, 28));
 			menuImportXML.setText("清单导入(XML)");
-			menuImportXML.addActionListener(new java.awt.event.ActionListener() {
-				public void actionPerformed(java.awt.event.ActionEvent e) {
-					DgImportedApplyToCustomsBillXML dgImportedApplyToCustomsBillXML = new DgImportedApplyToCustomsBillXML();
-					if(jTabbedPane.getSelectedIndex()==0)
-						dgImportedApplyToCustomsBillXML.setIn(true);
-					else
-						dgImportedApplyToCustomsBillXML.setIn(false);
-					dgImportedApplyToCustomsBillXML.setVisible(true);
-					List list = getDataSource();
-					initTable(list);
-				}
-			});
+			menuImportXML
+					.addActionListener(new java.awt.event.ActionListener() {
+						public void actionPerformed(java.awt.event.ActionEvent e) {
+							DgImportedApplyToCustomsBillXML dgImportedApplyToCustomsBillXML = new DgImportedApplyToCustomsBillXML();
+							if (jTabbedPane.getSelectedIndex() == 0)
+								dgImportedApplyToCustomsBillXML.setIn(true);
+							else
+								dgImportedApplyToCustomsBillXML.setIn(false);
+							dgImportedApplyToCustomsBillXML.setVisible(true);
+							List list = getDataSource();
+							initTable(list);
+						}
+					});
 		}
 		return menuImportXML;
 	}
+
 	/**
 	 * This method initializes btnToCustoms
 	 * 
@@ -1452,29 +1451,31 @@ public class FmApplyToCustomsBillList extends JInternalFrameBase {
 								"系统没有建立正在执行的电子帐册", "提示", 0);
 						return;
 					}
-//					if (tableModel.getCurrentRow() == null) {
-//						JOptionPane.showMessageDialog(
-//								FmApplyToCustomsBillList.this, "请先选择清单！",
-//								"提示", 0);
-//						return;
-//					}
-//					billHead = (ApplyToCustomsBillList) tableModel.getCurrentRow();
-					
-//					if (getCurrentTable().getRowCount() == 0) {
-//						JOptionPane.showMessageDialog(
-//										FmApplyToCustomsBillList.this, "没有清单！",
-//										"提示", 0);
-//						return;
-//					}
-//					ApplyToCustomsBillList billList = (ApplyToCustomsBillList)
-//							((JTableListModel)getCurrentTable().getModel()).getCurrentRow();
+					// if (tableModel.getCurrentRow() == null) {
+					// JOptionPane.showMessageDialog(
+					// FmApplyToCustomsBillList.this, "请先选择清单！",
+					// "提示", 0);
+					// return;
+					// }
+					// billHead = (ApplyToCustomsBillList)
+					// tableModel.getCurrentRow();
+
+					// if (getCurrentTable().getRowCount() == 0) {
+					// JOptionPane.showMessageDialog(
+					// FmApplyToCustomsBillList.this, "没有清单！",
+					// "提示", 0);
+					// return;
+					// }
+					// ApplyToCustomsBillList billList =
+					// (ApplyToCustomsBillList)
+					// ((JTableListModel)getCurrentTable().getModel()).getCurrentRow();
 					DgMakeBillToCustoms dm = new DgMakeBillToCustoms();
 					if (getJTabbedPane().getSelectedIndex() == 0) {
 						dm.setImpExpFlag(ImpExpFlag.IMPORT);
 					} else {
 						dm.setImpExpFlag(ImpExpFlag.EXPORT);
 					}
-//					dm.setBillList(billHead);
+					// dm.setBillList(billHead);
 					dm.setVisible(true);
 					List list = getDataSource();
 					initTable(list);
@@ -1507,9 +1508,8 @@ public class FmApplyToCustomsBillList extends JInternalFrameBase {
 										"请选择清单！", "提示", 0);
 								return;
 							}
-							List arrayList = encAction
-									.applyToCustomsCheckup(new Request(
-											CommonVars.getCurrUser()), list);
+							List arrayList = encAction.applyToCustomsCheckup(
+									new Request(CommonVars.getCurrUser()), list);
 							DgShowApplyCheckup dgShowApplyCheckup = new DgShowApplyCheckup();
 							dgShowApplyCheckup.setList(arrayList);
 							dgShowApplyCheckup.setVisible(true);
@@ -1561,9 +1561,9 @@ public class FmApplyToCustomsBillList extends JInternalFrameBase {
 	}
 
 	/**
-	 * This method initializes jPanel1	
-	 * 	
-	 * @return javax.swing.JPanel	
+	 * This method initializes jPanel1
+	 * 
+	 * @return javax.swing.JPanel
 	 */
 	private JPanel getJPanel1() {
 		if (jPanel1 == null) {
@@ -1594,5 +1594,5 @@ public class FmApplyToCustomsBillList extends JInternalFrameBase {
 	public void setEmsHeadH2k(EmsHeadH2k emsHeadH2k) {
 		this.emsHeadH2k = emsHeadH2k;
 	}
-	
+
 }

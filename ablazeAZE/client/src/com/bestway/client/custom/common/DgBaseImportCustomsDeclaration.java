@@ -2986,21 +2986,16 @@ public abstract class DgBaseImportCustomsDeclaration extends JDialogBase {
 					.findContainerByCustomsDeclaration(
 							new Request(CommonVars.getCurrUser()),
 							this.customsDeclaration);
-
 		}
 
 		// 集装箱号
 		if (StringUtils.isNotBlank(customsDeclaration.getContainerNum())) {
 
-			this.tfContainerNum.setText(this.customsDeclaration
+			this.tfContainerNum.setText(containers!=null?Container
+					.getAllConvertToContainerCode(containers):this.customsDeclaration
 					.getContainerNum());
+		} 
 
-		} else {
-
-			tfContainerNum.setText(Container
-					.getAllConvertToContainerCode(containers));
-
-		}
 		if (this.customsDeclaration.getContract() != null) {
 			this.tfContract.setText(this.customsDeclaration.getContract());
 		} else {

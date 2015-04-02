@@ -36,6 +36,12 @@
 		<defaultValueExpression ><![CDATA[new Boolean(false)]]></defaultValueExpression>
 	</parameter>
 	<parameter name="companyCoLevel" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="sumImgTotalPrice" isForPrompting="false" class="java.lang.String">
+		<parameterDescription><![CDATA[进口金额]]></parameterDescription>
+	</parameter>
+	<parameter name="sumExgTotalPrice" isForPrompting="false" class="java.lang.String">
+		<parameterDescription><![CDATA[出口金额]]></parameterDescription>
+	</parameter>
 
 	<field name="contractNo" class="java.lang.String">
 		<fieldDescription><![CDATA[contractNo]]></fieldDescription>
@@ -1083,6 +1089,32 @@
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["("+$F{curr}+")"]]></textFieldExpression>
 				</textField>
+				<staticText>
+					<reportElement
+						x="451"
+						y="236"
+						width="66"
+						height="18"
+						key="staticText-45"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<text><![CDATA[进口金额:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="451"
+						y="253"
+						width="68"
+						height="16"
+						key="staticText-46"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding ="UniGB-UCS2-H"/>
+					</textElement>
+				<text><![CDATA[出口金额:]]></text>
+				</staticText>
 			</band>
 		</background>
 		<title>
@@ -1436,6 +1468,32 @@
 						<font fontName="宋体"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$F{impDeviceGross}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="500"
+						y="236"
+						width="91"
+						height="18"
+						key="textField-33"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{sumImgTotalPrice}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="501"
+						y="253"
+						width="90"
+						height="16"
+						key="textField-34"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{sumExgTotalPrice}]]></textFieldExpression>
 				</textField>
 			</band>
 		</pageHeader>

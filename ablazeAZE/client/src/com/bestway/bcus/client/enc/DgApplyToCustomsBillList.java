@@ -102,13 +102,10 @@ import com.bestway.ui.winuicontrol.calendar.JCalendarComboBox;
 @SuppressWarnings("unchecked")
 public class DgApplyToCustomsBillList extends JDialogBase {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	private ManualDeclareAction manualDeclareAction = null;
-	
+
 	private MaterialManageAction materialManageAction = null;
 
 	private JPanel jContentPane = null;
@@ -306,7 +303,7 @@ public class DgApplyToCustomsBillList extends JDialogBase {
 		materialManageAction = (MaterialManageAction) CommonVars
 				.getApplicationContext().getBean("materialManageAction");
 		manualDeclareAction = (ManualDeclareAction) CommonVars
-		.getApplicationContext().getBean("manualdeclearAction");
+				.getApplicationContext().getBean("manualdeclearAction");
 		customBaseAction = (CustomBaseAction) CommonVars
 				.getApplicationContext().getBean("customBaseAction");
 		systemAction = (SystemAction) CommonVars.getApplicationContext()
@@ -321,8 +318,7 @@ public class DgApplyToCustomsBillList extends JDialogBase {
 	 */
 	private void initialize() {
 		this.setTitle("报关清单编辑");
-		this
-				.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+		this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		this.setContentPane(getJContentPane());
 		this.setSize(785, 541);
 		jCheckBox.setSelected(true);
@@ -363,11 +359,11 @@ public class DgApplyToCustomsBillList extends JDialogBase {
 		applyToCustomsBillList = billHead;
 		this.setDataState(DataState.BROWSE);
 		this.setImpExpFlag(impExpFlag);
-		//encAction.gete
+		// encAction.gete
 		this.setEmsHeadH2k(emsHeadH2k);
 		this.setVisible(true);
 	}
-	
+
 	/**
 	 * 显示电子帐册表头
 	 * 
@@ -423,9 +419,9 @@ public class DgApplyToCustomsBillList extends JDialogBase {
 					.setDeclarationCompany(CommonVars.getOther() == null ? null
 							: CommonVars.getOther().getDeclarationCompany());
 		} else if (dataState == DataState.EDIT || dataState == DataState.BROWSE) {
-			if(applyToCustomsBillList == null) {
+			if (applyToCustomsBillList == null) {
 				applyToCustomsBillList = (ApplyToCustomsBillList) billListTableModel
-				.getCurrentRow();
+						.getCurrentRow();
 			}
 			if ( // applyToCustomsBillList.getListState().intValue() ==
 			// ApplyToCustomsBillList.GENERATED_CUSTOMS_DECLARATION ||
@@ -807,9 +803,9 @@ public class DgApplyToCustomsBillList extends JDialogBase {
 						return;
 					}
 					ApplyToCustomsBillList billList = encAction
-							.deleteAtcMergeBeforeComInfo(new Request(CommonVars
-									.getCurrUser()), beforeCommInfoTableModel
-									.getCurrentRows());
+							.deleteAtcMergeBeforeComInfo(
+									new Request(CommonVars.getCurrUser()),
+									beforeCommInfoTableModel.getCurrentRows());
 					billListTableModel.updateRow(billList);// 修改表头
 					if (afterCommInfoTableModel != null
 							&& afterCommInfoTableModel.getCurrentRow() != null) {
@@ -972,11 +968,10 @@ public class DgApplyToCustomsBillList extends JDialogBase {
 													cbbMaterielProductFlag));
 							break;
 						case ImpExpType.BACK_FACTORY_REWORK:
-							cbbMaterielProductFlag
-									.setSelectedIndex(ItemProperty
-											.getIndexByCode(
-													MaterielType.FINISHED_PRODUCT,
-													cbbMaterielProductFlag));
+							cbbMaterielProductFlag.setSelectedIndex(ItemProperty
+									.getIndexByCode(
+											MaterielType.FINISHED_PRODUCT,
+											cbbMaterielProductFlag));
 							break;
 						case ImpExpType.GENERAL_TRADE_IMPORT:
 							cbbMaterielProductFlag
@@ -986,18 +981,16 @@ public class DgApplyToCustomsBillList extends JDialogBase {
 													cbbMaterielProductFlag));
 							break;
 						case ImpExpType.DIRECT_EXPORT:
-							cbbMaterielProductFlag
-									.setSelectedIndex(ItemProperty
-											.getIndexByCode(
-													MaterielType.FINISHED_PRODUCT,
-													cbbMaterielProductFlag));
+							cbbMaterielProductFlag.setSelectedIndex(ItemProperty
+									.getIndexByCode(
+											MaterielType.FINISHED_PRODUCT,
+											cbbMaterielProductFlag));
 							break;
 						case ImpExpType.TRANSFER_FACTORY_EXPORT:
-							cbbMaterielProductFlag
-									.setSelectedIndex(ItemProperty
-											.getIndexByCode(
-													MaterielType.FINISHED_PRODUCT,
-													cbbMaterielProductFlag));
+							cbbMaterielProductFlag.setSelectedIndex(ItemProperty
+									.getIndexByCode(
+											MaterielType.FINISHED_PRODUCT,
+											cbbMaterielProductFlag));
 							break;
 						case ImpExpType.BACK_MATERIEL_EXPORT:
 							cbbMaterielProductFlag
@@ -1007,11 +1000,10 @@ public class DgApplyToCustomsBillList extends JDialogBase {
 													cbbMaterielProductFlag));
 							break;
 						case ImpExpType.REWORK_EXPORT:
-							cbbMaterielProductFlag
-									.setSelectedIndex(ItemProperty
-											.getIndexByCode(
-													MaterielType.FINISHED_PRODUCT,
-													cbbMaterielProductFlag));
+							cbbMaterielProductFlag.setSelectedIndex(ItemProperty
+									.getIndexByCode(
+											MaterielType.FINISHED_PRODUCT,
+											cbbMaterielProductFlag));
 							break;
 						case ImpExpType.REMIAN_MATERIAL_BACK_PORT:
 							cbbMaterielProductFlag
@@ -1021,18 +1013,16 @@ public class DgApplyToCustomsBillList extends JDialogBase {
 													cbbMaterielProductFlag));
 							break;
 						case ImpExpType.GENERAL_TRADE_EXPORT:
-							cbbMaterielProductFlag
-									.setSelectedIndex(ItemProperty
-											.getIndexByCode(
-													MaterielType.FINISHED_PRODUCT,
-													cbbMaterielProductFlag));
+							cbbMaterielProductFlag.setSelectedIndex(ItemProperty
+									.getIndexByCode(
+											MaterielType.FINISHED_PRODUCT,
+											cbbMaterielProductFlag));
 							break;
 						case 25: // 进料成品退换
-							cbbMaterielProductFlag
-									.setSelectedIndex(ItemProperty
-											.getIndexByCode(
-													MaterielType.FINISHED_PRODUCT,
-													cbbMaterielProductFlag));
+							cbbMaterielProductFlag.setSelectedIndex(ItemProperty
+									.getIndexByCode(
+											MaterielType.FINISHED_PRODUCT,
+											cbbMaterielProductFlag));
 							break;
 						case 9: // 边角料内销
 							cbbMaterielProductFlag
@@ -1666,17 +1656,15 @@ public class DgApplyToCustomsBillList extends JDialogBase {
 				.getSelectedIndex() == 0)));
 
 		this.btnEdit.setEnabled((dataState == DataState.BROWSE)
-				&& (applyToCustomsBillList != null)
-				&& (!isTransferAtc) && (!isAvailability()));
+				&& (applyToCustomsBillList != null) && (!isTransferAtc)
+				&& (!isAvailability()));
 		jButton1.setEnabled((dataState == DataState.BROWSE) && (!isTransferAtc)
 				&& (!isAvailability()));
 
 		this.btnDelete.setEnabled((dataState == DataState.BROWSE)
 				&& (!isTransferAtc) && (!isAvailability()));
-		jButton2
-				.setEnabled((dataState == DataState.BROWSE) && (!isTransferAtc));
-		jButton3
-				.setEnabled((dataState == DataState.BROWSE) && (!isTransferAtc));
+		jButton2.setEnabled((dataState == DataState.BROWSE) && (!isTransferAtc));
+		jButton3.setEnabled((dataState == DataState.BROWSE) && (!isTransferAtc));
 		jButton.setEnabled((dataState == DataState.BROWSE) && (!isTransferAtc)
 				&& (!isAvailability()));
 		this.btnSave.setEnabled(!(dataState == DataState.BROWSE)
@@ -1821,8 +1809,9 @@ public class DgApplyToCustomsBillList extends JDialogBase {
 								CommonVars.getCurrUser()), atcAfter);
 			} else {
 				beforeTableDataSource = encAction
-						.findAllAtcMergerBeforeComInfo(new Request(CommonVars
-								.getCurrUser()), applyToCustomsBillList);
+						.findAllAtcMergerBeforeComInfo(
+								new Request(CommonVars.getCurrUser()),
+								applyToCustomsBillList);
 			}
 			if (beforeTableDataSource == null
 					|| beforeTableDataSource.size() < 0) {
@@ -1841,17 +1830,11 @@ public class DgApplyToCustomsBillList extends JDialogBase {
 						list.add(addColumn("对应报关单商品号", "customsNo", 120));
 						list.add(addColumn("商品编码", "afterComInfo.complex.code",
 								80));
-						list
-								.add(addColumn("商品名称", "materiel.factoryName",
-										120));
-						list
-								.add(addColumn("型号规格", "materiel.factorySpec",
-										120));
+						list.add(addColumn("商品名称", "materiel.factoryName", 120));
+						list.add(addColumn("型号规格", "materiel.factorySpec", 120));
 						list.add(addColumn("企业申报单价", "declaredPrice", 100));
 						list.add(addColumn("申报数量", "declaredAmount", 70));
-						list
-								.add(addColumn("备案单位",
-										"afterComInfo.unit.name", 50));
+						list.add(addColumn("备案单位", "afterComInfo.unit.name", 50));
 						list.add(addColumn("总金额", "totalPrice", 70));
 						list.add(addColumn("加工费总价", "workUsd", 70));
 						list.add(addColumn("法定数量", "legalAmount", 70));
@@ -1930,7 +1913,7 @@ public class DgApplyToCustomsBillList extends JDialogBase {
 						list.add(addColumn("总价", "totalPrice", 70));
 						list.add(addColumn("加工费总价", "workUsd", 70));
 						list.add(addColumn("版本", "version", 50));
-						list.add(addColumn("原产国",   "country.name", 100));
+						list.add(addColumn("原产国", "country.name", 100));
 						return list;
 					}
 				});
@@ -1938,8 +1921,8 @@ public class DgApplyToCustomsBillList extends JDialogBase {
 		for (int i = 0; i < columns.size(); i++) {
 			columns.get(i).setFractionCount(4);
 		}
-		tbMergeAfterCommInfo.getColumnModel().getColumn(1).setCellRenderer(
-				new MultiRenderer());
+		tbMergeAfterCommInfo.getColumnModel().getColumn(1)
+				.setCellRenderer(new MultiRenderer());
 		afterCommInfoTableModel.clearFooterTypeInfo();
 		afterCommInfoTableModel.addFooterTypeInfo(new TableFooterType(0,
 				TableFooterType.CONSTANT, "合计"));
@@ -2143,8 +2126,8 @@ public class DgApplyToCustomsBillList extends JDialogBase {
 								"该清单已转报关单，请先删除报关单!", "提示", 0);
 						return;
 					}
-					encAction.deleteAtcMergeAfterComInfo(new Request(CommonVars
-							.getCurrUser()), afterInfo);
+					encAction.deleteAtcMergeAfterComInfo(
+							new Request(CommonVars.getCurrUser()), afterInfo);
 					ApplyToCustomsBillList bills = afterInfo.getBillList();
 					bills.setMaterialNum(bills.getMaterialNum() == null ? 0
 							: bills.getMaterialNum() - 1);
@@ -2224,8 +2207,7 @@ public class DgApplyToCustomsBillList extends JDialogBase {
 							EmsHeadH2kExg exg = dg.getBcusexgbill();
 							dgbill.setBcusimgbill(img);
 							dgbill.setBcusexgbill(exg);
-							dgbill
-									.setApplyToCustomsBillList(applyToCustomsBillList);
+							dgbill.setApplyToCustomsBillList(applyToCustomsBillList);
 							dgbill.setVisible(true);
 							if (dgbill.isOk()) {
 								list = dgbill.getAllList();
@@ -2434,8 +2416,9 @@ public class DgApplyToCustomsBillList extends JDialogBase {
 								"你的清单状态是[已转报关单]，不能生效", "提示", 2);
 						return;
 					}
-					List errlist = encAction.checkIsNull(new Request(CommonVars
-							.getCurrUser()), applyToCustomsBillList);
+					List errlist = encAction.checkIsNull(
+							new Request(CommonVars.getCurrUser()),
+							applyToCustomsBillList);
 					if (errlist != null && errlist.size() > 0) {
 						CommonProgress.closeProgressDialog();
 						String str = "";
@@ -2561,7 +2544,7 @@ public class DgApplyToCustomsBillList extends JDialogBase {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					Component comp = (Component) e.getSource();
 					getJPopupMenu().show(comp, 0, comp.getHeight());
-//					printReport();
+					// printReport();
 				}
 			});
 		}
@@ -2776,10 +2759,10 @@ public class DgApplyToCustomsBillList extends JDialogBase {
 		if (listDeclareDate == null) {
 			parameters.put("listDeclareDate", null);
 		} else {
-			parameters.put("listDeclareDate", dateFormat
-					.format(listDeclareDate));
+			parameters.put("listDeclareDate",
+					dateFormat.format(listDeclareDate));
 		}
-		
+
 		parameters.put("listNo", applyToCustomsBillList.getListQpBillNo());
 		parameters.put("listUniteNo", applyToCustomsBillList.getListUniteNo());
 		// Integer type = dzscCustomsBillList.getListType();

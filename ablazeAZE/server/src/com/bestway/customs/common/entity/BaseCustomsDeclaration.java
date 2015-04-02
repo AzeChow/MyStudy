@@ -363,6 +363,11 @@ public class BaseCustomsDeclaration extends BaseScmEntity {
 	 */
 	private AclUser creater;
 
+	/**
+	 * 申报人员
+	 */
+	private AclUser declarant;
+
 	// /**
 	// * 录入时间
 	// */
@@ -2468,6 +2473,14 @@ public class BaseCustomsDeclaration extends BaseScmEntity {
 
 	public void setEspTaskId(String espTaskId) {
 		this.espTaskId = espTaskId;
+	}
+
+	public AclUser getDeclarant() {
+		return declarant;
+	}
+
+	public void setDeclarant(AclUser declarant) {
+		this.declarant = declarant;
 	}
 
 	public BaseCustomsDeclaration(String id, Integer impExpFlag,

@@ -890,16 +890,15 @@ public class CheckCancelDao extends BaseDao {
 		String hsql = "";
 		List list = null;
 		if (isOwner) {
-			hsql = "select a from CancelOwnerImgResult a where a.company.id= ? and a.cancelHead.id= ? ";// order
-			// by
-			// a.emsSeqNum
+			hsql = "select a from CancelOwnerImgResult a where a.company.id= ? and a.cancelHead.id= ? ";
+			
 			list = this.find(hsql, new Object[] {
 					CommonUtils.getCompany().getId(), cancelHead.getId() });
 			Collections.sort(list, new Comparator<CancelOwnerImgResult>() {
 
 				public int compare(CancelOwnerImgResult o1,
 						CancelOwnerImgResult o2) {
-					// TODO Auto-generated method stub
+				
 					if (o1.getEmsSeqNum() > o2.getEmsSeqNum()) {
 						return 1;
 					}
@@ -911,15 +910,14 @@ public class CheckCancelDao extends BaseDao {
 
 			});
 		} else {
-			hsql = "select a from CancelCusImgResult a where a.company.id= ? and a.cancelHead.id= ? ";// order
-			// by
-			// a.emsSeqNum
+			hsql = "select a from CancelCusImgResult a where a.company.id= ? and a.cancelHead.id= ? ";
+			
 			list = this.find(hsql, new Object[] {
 					CommonUtils.getCompany().getId(), cancelHead.getId() });
 			Collections.sort(list, new Comparator<CancelCusImgResult>() {
 
 				public int compare(CancelCusImgResult o1, CancelCusImgResult o2) {
-					// TODO Auto-generated method stub
+				
 					if (o1.getEmsSeqNum() > o2.getEmsSeqNum()) {
 						return 1;
 					}

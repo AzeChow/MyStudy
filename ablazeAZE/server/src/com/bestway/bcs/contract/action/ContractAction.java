@@ -1738,4 +1738,15 @@ public interface ContractAction {
 	 */
 	List findExportPackinglistOrInvoice(Request request);
 
+	/**
+	 * 查询所有料件 或者 成品 的总金额和
+	 * 
+	 * @param request
+	 * @param contractId
+	 * @param clzName
+	 * @return
+	 */
+	public Double findSumContractImgOrExgTotalPrices(Request request,
+			String contractId, String clzName);
+
 }

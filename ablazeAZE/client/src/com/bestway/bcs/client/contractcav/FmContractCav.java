@@ -28,6 +28,8 @@ import javax.swing.table.DefaultTableCellRenderer;
 import com.bestway.bcs.client.contract.DgContract;
 import com.bestway.bcs.contract.action.ContractAction;
 import com.bestway.bcs.contract.entity.Contract;
+import com.bestway.bcs.contract.entity.ContractExg;
+import com.bestway.bcs.contract.entity.ContractImg;
 import com.bestway.bcs.contractcav.action.ContractCavAction;
 import com.bestway.bcs.contractcav.entity.ContractCav;
 import com.bestway.bcus.client.common.CommonStepProgress;
@@ -211,39 +213,24 @@ public class FmContractCav extends JInternalFrameBase {
 
 			Contract contract = (Contract) tableModel.getCurrentRow();
 
+			Request request = new Request(CommonVars.getCurrUser());
+
+			request.setTaskId(taskId);
+
+			// 核算 <自用与海关用>
+			contractCavAction.cavContract(request, contract.getEmsNo());
+
+			// 查询 自用 核销表
 			ContractCav contractCavSelf = contractCavAction.findContractCav(
-					new Request(CommonVars.getCurrUser()), contract.getEmsNo(),
-					false);
+					request, contract.getEmsNo(), false);
 
 			if (contractCavSelf == null) {
-
-				Request request = new Request(CommonVars.getCurrUser());
-
-				request.setTaskId(taskId);
-
-				contractCavAction.cavContract(request, contract.getEmsNo());
-
-				contractCavSelf = contractCavAction.findContractCav(
-						new Request(CommonVars.getCurrUser()),
-						contract.getEmsNo(), false);
-
-				if (contractCavSelf == null) {
-					CommonStepProgress.closeStepProgressDialog();
-					JOptionPane.showMessageDialog(FmContractCav.this, "核销计算失败",
-							"提示", 0);
-					return null;
-				}
-				// else {
-				// // 现计算增值率
-				// double valueAddRate = contractCavAction
-				// .cavContractValueAddRate(new Request(CommonVars
-				// .getCurrUser()), contract.getEmsNo(), 0, 0,
-				// 0);
-				// contractCavSelf.setValueAddedRate(valueAddRate);
-				// contractCavAction.saveContractCav(new Request(CommonVars
-				// .getCurrUser()), contractCavSelf);
-				// }
+				CommonStepProgress.closeStepProgressDialog();
+				JOptionPane.showMessageDialog(FmContractCav.this, "核销计算失败",
+						"提示", 0);
+				return null;
 			}
+
 			return contractCavSelf;
 		}
 
@@ -270,15 +257,31 @@ public class FmContractCav extends JInternalFrameBase {
 			String emsNo = (String) tableModel.getValueAt(
 					tableModel.getCurrentRow(), 7);
 
+			Request request = new Request(CommonVars.getCurrUser());
+
+			// 进口金额
+			Double sumExgTotalPrice = contractAction
+					.findSumContractImgOrExgTotalPrices(request,
+							contract.getId(), ContractExg.class.getName());
+
+			// 出口金额
+			Double sumImgTotalPrice = contractAction
+					.findSumContractImgOrExgTotalPrices(request,
+							contract.getId(), ContractImg.class.getName());
+
 			DgContractCav dgContractCav = new DgContractCav();
+
+			dgContractCav.setSumContractExgTotalPrice(sumExgTotalPrice);
+
+			dgContractCav.setSumContractImgTotalPrice(sumImgTotalPrice);
 
 			dgContractCav.setContractCavSelf(contractCavSelf);
 
 			dgContractCav.setEmsNo(emsNo);
 
+			// 查询 海关用 核销表
 			ContractCav contractCavCustoms = contractCavAction.findContractCav(
-					new Request(CommonVars.getCurrUser()), contract.getEmsNo(),
-					true);
+					request, contract.getEmsNo(), true);
 
 			if (contractCavCustoms == null) {
 
@@ -295,7 +298,6 @@ public class FmContractCav extends JInternalFrameBase {
 			initTable();
 			tableModel.updateRow(contract);
 		}
-
 	}
 
 	/**

@@ -43,8 +43,8 @@ import com.bestway.common.materialbase.entity.ScmCoc;
 import com.bestway.customs.common.entity.BaseCustomsDeclarationCommInfo;
 
 /**
- * 海关帐特殊控制logic方法类
- * 2009年9月7日 贺巍检查，补加注释
+ * 海关帐特殊控制logic方法类 2009年9月7日 贺巍检查，补加注释
+ * 
  * @author ?
  *
  */
@@ -144,115 +144,118 @@ public class CasSpecificontrolLogic {
 	 *            名称
 	 * @param spec
 	 *            规格
-	 *@param isNameSpec 判断是选择名称(true)还是名称+规格(false)查询
-	 *            
+	 * @param isNameSpec
+	 *            判断是选择名称(true)还是名称+规格(false)查询
+	 * 
 	 * @return 临时单据明细
 	 */
 	public List<BillDetail> findBillDetail(Integer impExpType, ScmCoc scmCoc,
-			Date beginData, Date endData, String nameSpec,Boolean isNameSpec) {
-		String materielType = BillUtil.getMaterielTypeByImpExpType(impExpType);//物料类型
-		BillCorrespondingControl b = CommonUtils.getBillCorrespondingControl();//单据对应控制
-		//工厂和实际客户对应表 资料（料号、报关名称 、报关规格）
-		List<Object[]> lists = casSpecificontrolDao.findMaterielptNoTwo(materielType, nameSpec,
-				null, null);
-		Map<String,String> map = new HashMap<String,String>();
+			Date beginData, Date endData, String nameSpec, Boolean isNameSpec) {
+		String materielType = BillUtil.getMaterielTypeByImpExpType(impExpType);// 物料类型
+		BillCorrespondingControl b = CommonUtils.getBillCorrespondingControl();// 单据对应控制
+		// 工厂和实际客户对应表 资料（料号、报关名称 、报关规格）
+		List<Object[]> lists = casSpecificontrolDao.findMaterielptNoTwo(
+				materielType, nameSpec, null, null);
+		Map<String, String> map = new HashMap<String, String>();
 		List<String> ptNoList = new ArrayList<String>();
-		//报关名称 、报关规格为非必要条件
-		if(!"".equals(nameSpec)&&nameSpec!=null){
-			for(Object[] item : lists){
-				String matchStr ="";
-				if(isNameSpec){
-					 matchStr = (item[1]==null?"":item[1].toString());
-				}else{
-					 matchStr = (item[1]==null?"":item[1].toString()) + "/" + (item[2]==null?"":item[2].toString());
+		// 报关名称 、报关规格为非必要条件
+		if (!"".equals(nameSpec) && nameSpec != null) {
+			for (Object[] item : lists) {
+				String matchStr = "";
+				if (isNameSpec) {
+					matchStr = (item[1] == null ? "" : item[1].toString());
+				} else {
+					matchStr = (item[1] == null ? "" : item[1].toString())
+							+ "/" + (item[2] == null ? "" : item[2].toString());
 				}
-				if(matchStr.equals(nameSpec)||matchStr.equals(nameSpec+"/")||matchStr.equals(nameSpec+"//")){
-					String ptNo = item[0]==null?"":item[0].toString();
-					map.put(ptNo, ptNo);//有查询条件相符的   报关名称规格   的料号
+				if (matchStr.equals(nameSpec)
+						|| matchStr.equals(nameSpec + "/")
+						|| matchStr.equals(nameSpec + "//")) {
+					String ptNo = item[0] == null ? "" : item[0].toString();
+					map.put(ptNo, ptNo);// 有查询条件相符的 报关名称规格 的料号
 				}
 			}
-		}else{
-			for(Object[] item : lists){
-				String ptNo = item[0]==null?"":item[0].toString();
-				map.put(ptNo, ptNo);//有查询条件相符的料号
+		} else {
+			for (Object[] item : lists) {
+				String ptNo = item[0] == null ? "" : item[0].toString();
+				map.put(ptNo, ptNo);// 有查询条件相符的料号
 			}
 		}
-		ptNoList.addAll(map.values());//与查询条件相符的料号
-			
-		System.out.println("=========查询出来的料号list size = "+map);
+		ptNoList.addAll(map.values());// 与查询条件相符的料号
 
-		// 结转退货是否参与对应   &&  料件出口，转厂出口
+		System.out.println("=========查询出来的料号list size = " + map);
+
+		// 结转退货是否参与对应 && 料件出口，转厂出口
 		if (b.getIsTransferBack() != null
 				&& b.getIsTransferBack().booleanValue() == true
-				&& (ImpExpType.TRANSFER_FACTORY_IMPORT == impExpType.intValue() 
-						|| ImpExpType.TRANSFER_FACTORY_EXPORT == impExpType.intValue())) {
+				&& (ImpExpType.TRANSFER_FACTORY_IMPORT == impExpType.intValue() || ImpExpType.TRANSFER_FACTORY_EXPORT == impExpType
+						.intValue())) {
 
 			// 料件 进口
 			List<BillDetail> list = new ArrayList<BillDetail>();
-			
-			//获取单据体
-			list = this.casSpecificontrolDao
-				.findBillDetailByBillCorresponding(true,impExpType,
-					ptNoList, scmCoc,beginData,endData);
-			
-//			if (ImpExpType.TRANSFER_FACTORY_IMPORT == impExpType.intValue()) {
-				// if (b.getIsSystemControl() == true) {
-				// list = this.casSpecificontrolDao
-				// .findBillDetailByCarryForwardMateriel(impExpType,
-				// scmCoc, beginData, endData, name, spec,
-				// false);
-//				list = this.casSpecificontrolDao
-//						.findBillDetailByCarryForwardMaterielA(impExpType,
-//								ptNoList, scmCoc,beginData,endData);
-				// } else if (b.getIsSpecialControl() == true) { // 特殊控制
-				// list = this.casSpecificontrolDao
-				// .findBillDetailByCarryForwardMateriel(impExpType,
-				// scmCoc, beginData, endData, name, spec,
-				// true);
-				// }
-//			} else if (ImpExpType.TRANSFER_FACTORY_EXPORT == impExpType
-//					.intValue()) { // 成品 出口
+
+			// 获取单据体
+			list = this.casSpecificontrolDao.findBillDetailByBillCorresponding(
+					true, impExpType, ptNoList, scmCoc, beginData, endData);
+
+			// if (ImpExpType.TRANSFER_FACTORY_IMPORT == impExpType.intValue())
+			// {
+			// if (b.getIsSystemControl() == true) {
+			// list = this.casSpecificontrolDao
+			// .findBillDetailByCarryForwardMateriel(impExpType,
+			// scmCoc, beginData, endData, name, spec,
+			// false);
+			// list = this.casSpecificontrolDao
+			// .findBillDetailByCarryForwardMaterielA(impExpType,
+			// ptNoList, scmCoc,beginData,endData);
+			// } else if (b.getIsSpecialControl() == true) { // 特殊控制
+			// list = this.casSpecificontrolDao
+			// .findBillDetailByCarryForwardMateriel(impExpType,
+			// scmCoc, beginData, endData, name, spec,
+			// true);
+			// }
+			// } else if (ImpExpType.TRANSFER_FACTORY_EXPORT == impExpType
+			// .intValue()) { // 成品 出口
 			// if (b.getIsSystemControl() == true) {
 			// list = this.casSpecificontrolDao
 			// .findBillDetailByCarryForwardProduct(impExpType,
 			// scmCoc, beginData, endData, name, spec,
 			// false);
-//				list = this.casSpecificontrolDao
-//						.findBillDetailByCarryForwardProductA(impExpType,
-//								ptNoList, scmCoc,beginData,endData);
-				// } else if (b.getIsSpecialControl(M) == true) { // 特殊控制
-				// list = this.casSpecificontrolDao
-				// .findBillDetailByCarryForwardProduct(impExpType,
-				// scmCoc, beginData, endData, name, spec,
-				// true);
-				// }
-//			}
+			// list = this.casSpecificontrolDao
+			// .findBillDetailByCarryForwardProductA(impExpType,
+			// ptNoList, scmCoc,beginData,endData);
+			// } else if (b.getIsSpecialControl(M) == true) { // 特殊控制
+			// list = this.casSpecificontrolDao
+			// .findBillDetailByCarryForwardProduct(impExpType,
+			// scmCoc, beginData, endData, name, spec,
+			// true);
+			// }
+			// }
 			//
 			// 设置结转退货为负数
 			//
-//			return setTransferBackAmount(list);
-//			String test = null;
-//			Double.parseDouble(test);
+			// return setTransferBackAmount(list);
+			// String test = null;
+			// Double.parseDouble(test);
 			return list;
 
 		} else {
 			// System.out.println("====== 正常");
-//			if (b.getIsSystemControl() == true) {
+			// if (b.getIsSystemControl() == true) {
 			// return this.casSpecificontrolDao.findBillDetail(impExpType,
-			// scmCoc, beginData, endData, name, spec);			
-			//获取单据体
-			List list =  this.casSpecificontrolDao
-				.findBillDetailByBillCorresponding(false,impExpType,
-				ptNoList, scmCoc,beginData,endData);
-			return this.casSpecificontrolDao
-			.findBillDetailByBillCorresponding(false,impExpType,
-			ptNoList, scmCoc,beginData,endData);
-//			} else if (b.getIsSpecialControl() == true) { // 特殊控制
-//				return this.casSpecificontrolDao.findBillDetailByLike(
-//						impExpType, scmCoc, beginData, endData, name, spec);
-//			}
+			// scmCoc, beginData, endData, name, spec);
+			// 获取单据体
+			List list = this.casSpecificontrolDao
+					.findBillDetailByBillCorresponding(false, impExpType,
+							ptNoList, scmCoc, beginData, endData);
+			return this.casSpecificontrolDao.findBillDetailByBillCorresponding(
+					false, impExpType, ptNoList, scmCoc, beginData, endData);
+			// } else if (b.getIsSpecialControl() == true) { // 特殊控制
+			// return this.casSpecificontrolDao.findBillDetailByLike(
+			// impExpType, scmCoc, beginData, endData, name, spec);
+			// }
 		}
-//		return new ArrayList<BillDetail>();
+		// return new ArrayList<BillDetail>();
 
 	}
 
@@ -277,10 +280,10 @@ public class CasSpecificontrolLogic {
 				billDetail.setHsAmount(hsAmount == 0.0 ? 0.0 : -hsAmount);
 			}
 			returnList.add(billDetail);
-		}		
+		}
 		return returnList;
 	}
-	
+
 	/**
 	 * 获取已对应的单据
 	 * 
@@ -290,11 +293,13 @@ public class CasSpecificontrolLogic {
 	 * @param endData
 	 * @param name
 	 * @param spec
-	 * @param isNameSpec 判断是选择名称(true)还是名称+规格(false)查询
+	 * @param isNameSpec
+	 *            判断是选择名称(true)还是名称+规格(false)查询
 	 * @return
 	 */
 	public List findMakeBillCorrespondingInfo(Integer impExpType,
-			ScmCoc scmCoc, Date beginData, Date endData, String nameSpec,Boolean isNameSpec) {
+			ScmCoc scmCoc, Date beginData, Date endData, String nameSpec,
+			Boolean isNameSpec) {
 		List<MakeBillCorrespondingInfoBase> list = this.casSpecificontrolDao
 				.findMakeBillCorrespondingInfo(impExpType, scmCoc, beginData,
 						endData, nameSpec);
@@ -302,13 +307,13 @@ public class CasSpecificontrolLogic {
 		if (!"".equals(nameSpec) && nameSpec != null) {
 			for (int i = 0; i < list.size(); i++) {
 				MakeBillCorrespondingInfoBase m = list.get(i);
-				String matchStr ="";
-				if(isNameSpec){
+				String matchStr = "";
+				if (isNameSpec) {
 					matchStr = m.getCommName() + "/" + "";
-				}else{
+				} else {
 					matchStr = m.getCommName() + "/" + m.getCommSpec();
 				}
-				
+
 				if (matchStr.equals(nameSpec)
 						|| matchStr.equals(nameSpec + "/")
 						|| matchStr.equals(nameSpec + "//")) {
@@ -336,51 +341,53 @@ public class CasSpecificontrolLogic {
 	 *            名称
 	 * @param spec
 	 *            规格
-	 *@param isNameSpec 判断是选择名称(true)还是名称+规格(false)查询
+	 * @param isNameSpec
+	 *            判断是选择名称(true)还是名称+规格(false)查询
 	 * @return 已经对应的报关单商品信息和海关帐单据
 	 */
 	public List findCustomsDeclarationCommInfoBillCorresponding(
 			Integer impExpType, ScmCoc scmCoc, Date beginData, Date endData,
-			String name,String spec,Boolean isNameSpec) {
-		List<CustomsDeclarationCommInfoBillCorresponding> lsResult = 
-							new ArrayList<CustomsDeclarationCommInfoBillCorresponding>();
-		
+			String name, String spec, Boolean isNameSpec) {
+		List<CustomsDeclarationCommInfoBillCorresponding> lsResult = new ArrayList<CustomsDeclarationCommInfoBillCorresponding>();
+
 		// 已经对应的报关单数据
 		List<CustomsDeclarationCommInfoBillCorresponding> alreadyCorrespondingList = new ArrayList();
 		BillCorrespondingControl b = CommonUtils.getBillCorrespondingControl();
 		if (b.getIsSystemControl() == true) {// 系统自动控制
-			//查询相应条件的    报关单商品信息与海关帐单据的对应
+			// 查询相应条件的 报关单商品信息与海关帐单据的对应
 			alreadyCorrespondingList = this.casSpecificontrolDao
 					.findCustomsDeclarationCommInfoBillCorresponding(
-											impExpType, scmCoc, beginData, endData);
-			for(int i = alreadyCorrespondingList.size()-1;i>=0;i--){
-				CustomsDeclarationCommInfoBillCorresponding c = alreadyCorrespondingList.get(i);
-				String commName ;
-				String commSpec ;	
-				if(isNameSpec){
-					 commName = c.getCommName()==null?"":c.getCommName();
-					 commSpec = "";	
-				}else{
-					 commName = c.getCommName()==null?"":c.getCommName();
-					 commSpec = c.getCommSpec()==null?"":c.getCommSpec();	
+							impExpType, scmCoc, beginData, endData);
+			for (int i = alreadyCorrespondingList.size() - 1; i >= 0; i--) {
+				CustomsDeclarationCommInfoBillCorresponding c = alreadyCorrespondingList
+						.get(i);
+				String commName;
+				String commSpec;
+				if (isNameSpec) {
+					commName = c.getCommName() == null ? "" : c.getCommName();
+					commSpec = "";
+				} else {
+					commName = c.getCommName() == null ? "" : c.getCommName();
+					commSpec = c.getCommSpec() == null ? "" : c.getCommSpec();
 				}
-							
-				String nameSpec = (name==null?"":name) + "/" + (spec==null?"":spec);				
+
+				String nameSpec = (name == null ? "" : name) + "/"
+						+ (spec == null ? "" : spec);
 				String matchStr = commName + "/" + commSpec;
-				if(matchStr.equals(nameSpec)
-						||matchStr.equals(nameSpec+"/")
-						||matchStr.equals(nameSpec+"//")){
-					continue;				
+				if (matchStr.equals(nameSpec)
+						|| matchStr.equals(nameSpec + "/")
+						|| matchStr.equals(nameSpec + "//")) {
+					continue;
 				}
-				alreadyCorrespondingList.remove(i);//排除不符合    报关名称规格     查询条件的
+				alreadyCorrespondingList.remove(i);// 排除不符合 报关名称规格 查询条件的
 			}
-		}else if (b.getIsSpecialControl() == true) {// 系统特殊控制			
+		} else if (b.getIsSpecialControl() == true) {// 系统特殊控制
 			alreadyCorrespondingList = this.casSpecificontrolDao
 					.findCustomsDeclarationCommInfoBillCorrespondingByLike(
-							impExpType, scmCoc, beginData, endData,name,spec);
+							impExpType, scmCoc, beginData, endData, name, spec);
 		}
-		
-		//排除  未转报关单数小于0的
+
+		// 排除 未转报关单数小于0的
 		for (int i = 0; i < alreadyCorrespondingList.size(); i++) {
 			CustomsDeclarationCommInfoBillCorresponding c = (CustomsDeclarationCommInfoBillCorresponding) alreadyCorrespondingList
 					.get(i);
@@ -388,10 +395,11 @@ public class CasSpecificontrolLogic {
 				lsResult.add(c);
 			}
 		}
-		System.out.println("alreadyCorrespondingList.size()="+alreadyCorrespondingList.size());
+		System.out.println("alreadyCorrespondingList.size()="
+				+ alreadyCorrespondingList.size());
 		// 没有对应的数据
 		lsResult.addAll(this.findNoCorresponding(alreadyCorrespondingList,
-				impExpType, scmCoc, beginData, endData, name,spec,isNameSpec));
+				impExpType, scmCoc, beginData, endData, name, spec, isNameSpec));
 		return lsResult;
 	}
 
@@ -410,93 +418,90 @@ public class CasSpecificontrolLogic {
 	 *            名称
 	 * @param spec
 	 *            规格
-	 *@param isNameSpec 判断是选择名称(true)还是名称+规格(false)查询
+	 * @param isNameSpec
+	 *            判断是选择名称(true)还是名称+规格(false)查询
 	 * @return 报关单中没有与海关帐单据的记录
 	 */
 	private List findNoCorresponding(List removeList, Integer impExpType,
-			ScmCoc scmCoc, Date beginData, Date endData, String name,String spec,Boolean isNameSpec) {
-		List<CustomsDeclarationCommInfoBillCorresponding> returnList = 
-									new ArrayList<CustomsDeclarationCommInfoBillCorresponding>();
+			ScmCoc scmCoc, Date beginData, Date endData, String name,
+			String spec, Boolean isNameSpec) {
+		List<CustomsDeclarationCommInfoBillCorresponding> returnList = new ArrayList<CustomsDeclarationCommInfoBillCorresponding>();
 		List<BaseCustomsDeclarationCommInfo> list = new ArrayList();
 		BillCorrespondingControl b = CommonUtils.getBillCorrespondingControl();
 
-		//系统控制
+		// 系统控制
 		if (b.getIsSystemControl() == true) {
-			
-			//报关单物料信息
+
+			// 报关单物料信息
 			list.addAll(this.casSpecificontrolDao
-							.findCustomsDeclarationCommInfo(false,
-									ProjectType.BCUS, impExpType, scmCoc,
-									beginData, endData, null, null));
-			 System.out.println("cas list ="+list.size());
+					.findCustomsDeclarationCommInfo(false, ProjectType.BCUS,
+							impExpType, scmCoc, beginData, endData, null, null));
+			System.out.println("cas list =" + list.size());
 			list.addAll(this.casSpecificontrolDao
-							.findCustomsDeclarationCommInfo(false,
-									ProjectType.BCS, impExpType, scmCoc,
-									beginData, endData, null, null));
-			 System.out.println("cas list ="+list.size());
+					.findCustomsDeclarationCommInfo(false, ProjectType.BCS,
+							impExpType, scmCoc, beginData, endData, null, null));
+			System.out.println("cas list =" + list.size());
 			list.addAll(this.casSpecificontrolDao
-							.findCustomsDeclarationCommInfo(false,
-									ProjectType.DZSC, impExpType, scmCoc,
-									beginData, endData, null, null));
-			 System.out.println("cas list ="+list.size());
-			 
-			 List rList=new ArrayList();
-			
-			for(int i = 0; i <list.size() ; i++){//将不为查找的剔除
+					.findCustomsDeclarationCommInfo(false, ProjectType.DZSC,
+							impExpType, scmCoc, beginData, endData, null, null));
+			System.out.println("cas list =" + list.size());
+
+			List rList = new ArrayList();
+
+			for (int i = 0; i < list.size(); i++) {// 将不为查找的剔除
 				BaseCustomsDeclarationCommInfo temp = list.get(i);
-				
-//				BaseCustomsDeclarationCommInfo temp = (BaseCustomsDeclarationCommInfo) objs[0];
-				String commName ;
-				String commSpec ;
-				if(isNameSpec){
-					 commName = temp.getCommName()==null?"":temp.getCommName();
-					 commSpec = "";
-				}else{
-					 commName = temp.getCommName()==null?"":temp.getCommName();
-					 commSpec = temp.getCommSpec()==null?"":temp.getCommSpec();
+
+				// BaseCustomsDeclarationCommInfo temp =
+				// (BaseCustomsDeclarationCommInfo) objs[0];
+				String commName;
+				String commSpec;
+				if (isNameSpec) {
+					commName = temp.getCommName() == null ? "" : temp
+							.getCommName();
+					commSpec = "";
+				} else {
+					commName = temp.getCommName() == null ? "" : temp
+							.getCommName();
+					commSpec = temp.getCommSpec() == null ? "" : temp
+							.getCommSpec();
 				}
-				
+
 				String matchStr = commName.trim() + "/" + commSpec.trim();
-				
+
 				String nameSpec = "";
-				nameSpec = (name==null?"":name.trim())+"/"+ (spec==null?"":spec.trim());
-//				System.out.println("temp.流水号="+temp.getBaseCustomsDeclaration().getSerialNumber());
-//				System.out.println("matchStr="+matchStr);
-//				System.out.println("nameSpec="+nameSpec);
-				if(matchStr.equals(nameSpec)||
-						matchStr.equals(nameSpec+"/")
-						||matchStr.equals(nameSpec+"//")){
+				nameSpec = (name == null ? "" : name.trim()) + "/"
+						+ (spec == null ? "" : spec.trim());
+				// System.out.println("temp.流水号="+temp.getBaseCustomsDeclaration().getSerialNumber());
+				// System.out.println("matchStr="+matchStr);
+				// System.out.println("nameSpec="+nameSpec);
+				if (matchStr.equals(nameSpec)
+						|| matchStr.equals(nameSpec + "/")
+						|| matchStr.equals(nameSpec + "//")) {
 					System.out.println("iiiiiiiiiiiiii=");
 					continue;
-				}				
-//				System.out.println("commName = " + commName);
-//				System.out.println("commSpec = " + commSpec);
-//				
-//				if(commName.equals(name) && commSpec.equals(spec)){
-//					continue;
-//				}
+				}
+				// System.out.println("commName = " + commName);
+				// System.out.println("commSpec = " + commSpec);
+				//
+				// if(commName.equals(name) && commSpec.equals(spec)){
+				// continue;
+				// }
 				rList.add(temp);
 			}
 			list.removeAll(rList);
-			
-		} 
-		//特殊控制
-		else if (b.getIsSpecialControl() == true) {			
-			list
-					.addAll(this.casSpecificontrolDao
-							.findCustomsDeclarationCommInfo(true,
-									ProjectType.BCUS, impExpType, scmCoc,
-									beginData, endData, name, spec));
-			list
-					.addAll(this.casSpecificontrolDao
-							.findCustomsDeclarationCommInfo(true,
-									ProjectType.BCS, impExpType, scmCoc,
-									beginData, endData, name, spec));
-			list
-					.addAll(this.casSpecificontrolDao
-							.findCustomsDeclarationCommInfo(true,
-									ProjectType.DZSC, impExpType, scmCoc,
-									beginData, endData, name, spec));
+
+		}
+		// 特殊控制
+		else if (b.getIsSpecialControl() == true) {
+			list.addAll(this.casSpecificontrolDao
+					.findCustomsDeclarationCommInfo(true, ProjectType.BCUS,
+							impExpType, scmCoc, beginData, endData, name, spec));
+			list.addAll(this.casSpecificontrolDao
+					.findCustomsDeclarationCommInfo(true, ProjectType.BCS,
+							impExpType, scmCoc, beginData, endData, name, spec));
+			list.addAll(this.casSpecificontrolDao
+					.findCustomsDeclarationCommInfo(true, ProjectType.DZSC,
+							impExpType, scmCoc, beginData, endData, name, spec));
 		}
 
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -506,17 +511,17 @@ public class CasSpecificontrolLogic {
 			map.put(c.getCustomsDeclarationId()
 					+ c.getCustomsDeclarationCommInfoId(), c);
 		}
-		System.out.println("last cas list ="+list.size());
+		System.out.println("last cas list =" + list.size());
 		for (int i = 0; i < list.size(); i++) {
 			BaseCustomsDeclarationCommInfo temp = list.get(i);
-			
-			//过滤已经存在的
-			if (map.get(temp.getBaseCustomsDeclaration().getId()
-							+ temp.getId()) != null) {
+
+			// 过滤已经存在的
+			if (map.get(temp.getBaseCustomsDeclaration().getId() + temp.getId()) != null) {
 				continue;
 			}
 			CustomsDeclarationCommInfoBillCorresponding c = new CustomsDeclarationCommInfoBillCorresponding();
-			makeCustomdeclarationCommInfoBillCorresponding(temp, c, 1.0);//将temp包装成 c
+			makeCustomdeclarationCommInfoBillCorresponding(temp, c, 1.0);// 将temp包装成
+																			// c
 			c.setImpExpType(impExpType);
 
 			// 如果报关商品数量 > 已对应的报关数量 才显示
@@ -564,10 +569,11 @@ public class CasSpecificontrolLogic {
 		c.setUnit(temp.getUnit());
 		c.setVersion(temp.getVersion());
 		c.setComplex(temp.getComplex());
-		
-		//wss2010.09.20新添 关封号
-		c.setEnvelopNo(temp.getBaseCustomsDeclaration().getCustomsEnvelopBillNo());
-		
+
+		// wss2010.09.20新添 关封号
+		c.setEnvelopNo(temp.getBaseCustomsDeclaration()
+				.getCustomsEnvelopBillNo());
+
 		// c.setImpExpType(temp.getBaseCustomsDeclaration().getImpExpType());
 	}
 
@@ -604,7 +610,7 @@ public class CasSpecificontrolLogic {
 	 *            临时单据明细
 	 * @return 单据对应 报关单商品信息与海关帐单据的对应
 	 * 
-	 * （wss:2010.06.11整修）
+	 *         （wss:2010.06.11整修）
 	 */
 	public TempResult billCorresponding(
 			List<CustomsDeclarationCommInfoBillCorresponding> listC,
@@ -615,128 +621,143 @@ public class CasSpecificontrolLogic {
 		// 结转单据对应,包括结转退货单
 		if (b.getIsTransferBack() != null
 				&& b.getIsTransferBack().booleanValue() == true
-				&& (ImpExpType.TRANSFER_FACTORY_IMPORT == impExpType.intValue() 
-						|| ImpExpType.TRANSFER_FACTORY_EXPORT == impExpType.intValue())) {
-			list = billDetailBySortHsAmount(list);//将退货的放在前边
-			for(int i=0;i<list.size();i++){
-				System.out.println("wss" + ((BillDetail)list.get(i)).getHsAmount());
+				&& (ImpExpType.TRANSFER_FACTORY_IMPORT == impExpType.intValue() || ImpExpType.TRANSFER_FACTORY_EXPORT == impExpType
+						.intValue())) {
+			list = billDetailBySortHsAmount(list);// 将退货的放在前边
+			for (int i = 0; i < list.size(); i++) {
+				System.out.println("wss"
+						+ ((BillDetail) list.get(i)).getHsAmount());
 			}
 		}
 
 		TempResult lsResult = new TempResult();
 
-		//遍历单据体
+		// 遍历单据体
 		for (int i = 0; i < list.size(); i++) {
 			BillDetail billDetail = list.get(i);
 			String typeCode = billDetail.getBillMaster().getBillType()
 					.getCode().trim();
-//			//1106结转料件退货单    2009结转成品退货单
-//			if (typeCode.equals("1106") || typeCode.equals("2009")) {
-//				double hsAmount = (billDetail.getHsAmount() == null ? 0.0
-//						: billDetail.getHsAmount());
-//				billDetail.setHsAmount(hsAmount == 0.0 ? 0.0 : -hsAmount);//wss问：干吗这里又改回正数？？？
-//			}
-			
-			//未对应报关数量   等于 0  不统计
+			// //1106结转料件退货单 2009结转成品退货单
+			// if (typeCode.equals("1106") || typeCode.equals("2009")) {
+			// double hsAmount = (billDetail.getHsAmount() == null ? 0.0
+			// : billDetail.getHsAmount());
+			// billDetail.setHsAmount(hsAmount == 0.0 ? 0.0 :
+			// -hsAmount);//wss问：干吗这里又改回正数？？？
+			// }
+
+			// 未对应报关数量 等于 0 不统计
 			if (billDetail.getNoCustomNum() == 0) {
 				continue;
 			}
-			
-			//遍历报关单
+
+			// 遍历报关单
 			for (int k = 0; k < listC.size(); k++) {
-				
-				//单据中     未和报关单对应的数量
+
+				// 单据中 未和报关单对应的数量
 				double noCustomNum = billDetail.getNoCustomNum();
-				
-				//如果单据商品未对应 == 0,继续下一条    
+
+				// 如果单据商品未对应 == 0,继续下一条
 				if (noCustomNum == 0) {
 					break;
 				}
-				
-				//报关单这边的资料
+
+				// 报关单这边的资料
 				CustomsDeclarationCommInfoBillCorresponding c = listC.get(k);
-				
-				//未对应的报关单的商品数量
+
+				// 未对应的报关单的商品数量
 				double noCorrespondingAmount = c.getNoCorrespondingAmount();
-				
+
 				// 如果报关商品末对应的数据小于0,进行下次循环
 				if (noCorrespondingAmount <= 0) {
 					continue;
 				}
-				
+
 				double tranferAmount;
-				
-				//同号取小，异号取负
-				if (noCorrespondingAmount >= noCustomNum) { 
-					logger.info("[报关单号 == " + c.getCustomsDeclarationCode() 
-							+ " 的报关单末对应的数量 == " 
-							+ noCorrespondingAmount + " ]" +
-							"  >= " +" [单据号 == " + billDetail.getBillNo() +" 的单据末对应的数量 == "+ noCustomNum +" ]" );
+
+				// 同号取小，异号取负
+				if (noCorrespondingAmount >= noCustomNum) {
+					logger.info("[报关单号 == " + c.getCustomsDeclarationCode()
+							+ " 的报关单末对应的数量 == " + noCorrespondingAmount + " ]"
+							+ "  >= " + " [单据号 == " + billDetail.getBillNo()
+							+ " 的单据末对应的数量 == " + noCustomNum + " ]");
 					tranferAmount = noCustomNum;
 				} else {
-					logger.info("[报关单号 == " + c.getCustomsDeclarationCode() 
-							+ " 的报关单末对应的数量 == " 
-							+ noCorrespondingAmount + " ]" +
-							"  < " +" [单据号 == " + billDetail.getBillNo() +" 的单据末对应的数量 == "+ noCustomNum +" ]" );
+					logger.info("[报关单号 == " + c.getCustomsDeclarationCode()
+							+ " 的报关单末对应的数量 == " + noCorrespondingAmount + " ]"
+							+ "  < " + " [单据号 == " + billDetail.getBillNo()
+							+ " 的单据末对应的数量 == " + noCustomNum + " ]");
 					tranferAmount = noCorrespondingAmount;
 				}
-				
+
 				// 修改单据信息
 				double oldCustomNum = billDetail.getCustomNum() == null ? 0.0
-														: billDetail.getCustomNum();
-				
+						: billDetail.getCustomNum();
+
 				if (typeCode.equals("1106") || typeCode.equals("2009")) {
 					billDetail.setCustomNum(oldCustomNum - tranferAmount);
-				}else{
+				} else {
 					billDetail.setCustomNum(oldCustomNum + tranferAmount);
 				}
-				
-				
+
 				String newCustomNo = c.getCustomsDeclarationCode() + "("
 						+ c.getEmsHeadH2k() + ")";
 				String oldCustomNo = billDetail.getCustomNo() == null ? ""
 						: billDetail.getCustomNo().trim();
-				
+
 				billDetail.setCustomNo(("".equals(oldCustomNo) ? ""
-						: oldCustomNo + ",")
-						+ newCustomNo);
-				
-				byte[] blen=billDetail.getCustomNo().getBytes();
-				System.out.println("blen.length="+blen.length);
-				if(blen.length>255){
+						: oldCustomNo + ",") + newCustomNo);
+
+				byte[] blen = billDetail.getCustomNo().getBytes();
+				System.out.println("blen.length=" + blen.length);
+				if (blen.length > 255) {
 					billDetail.setCustomNo(oldCustomNo);
-					}
+				}
 				System.out.println("========");
-				System.out.println("billDail.getCustomNo="+billDetail.getCustomNo());
-				//1106结转料件退货单    2009结转成品退货单
+				System.out.println("billDail.getCustomNo="
+						+ billDetail.getCustomNo());
+
+				// 1106结转料件退货单 2009结转成品退货单
 				if (typeCode.equals("1106") || typeCode.equals("2009")) {
+
+					/*
+					 * 这里为了更新 对应正确的 数据 因此必须将数据更改为正数
+					 */
+					// 工厂数量
+					double ptAmount = billDetail.getPtAmount() == null ? 0.0
+							: billDetail.getPtAmount();
+
+					billDetail.setPtAmount(ptAmount == 0.0 ? 0.0 : -ptAmount);
+
+					// 折算数量
 					double hsAmount = (billDetail.getHsAmount() == null ? 0.0
 							: billDetail.getHsAmount());
-					billDetail.setHsAmount(hsAmount == 0.0 ? 0.0 : -hsAmount);//又要改成正数 为了更新
+
+					billDetail.setHsAmount(hsAmount == 0.0 ? 0.0 : -hsAmount);
 				}
-				
+
 				this.casSpecificontrolDao.saveOrUpdate(billDetail);
-				
+
 				// 修改报关单对应数量
-				double oldAlreadyCorrespondingAmount = c.getAlreadyCorrespondingAmount() == null ? 0.0 : 
-																c.getAlreadyCorrespondingAmount();
-				
-//				// 是否包函转厂退货数据				
-//				if (typeCode.equals("1106") || typeCode.equals("2009")) {
-//					c.setAlreadyCorrespondingAmount(oldAlreadyCorrespondingAmount
-//									- tranferAmount);
-//				} else {
-//					c.setAlreadyCorrespondingAmount(oldAlreadyCorrespondingAmount
-//									+ tranferAmount);
-//				}
-				
-					
-				c.setAlreadyCorrespondingAmount(oldAlreadyCorrespondingAmount + tranferAmount);
+				double oldAlreadyCorrespondingAmount = c
+						.getAlreadyCorrespondingAmount() == null ? 0.0 : c
+						.getAlreadyCorrespondingAmount();
+
+				// // 是否包函转厂退货数据
+				// if (typeCode.equals("1106") || typeCode.equals("2009")) {
+				// c.setAlreadyCorrespondingAmount(oldAlreadyCorrespondingAmount
+				// - tranferAmount);
+				// } else {
+				// c.setAlreadyCorrespondingAmount(oldAlreadyCorrespondingAmount
+				// + tranferAmount);
+				// }
+
+				c.setAlreadyCorrespondingAmount(oldAlreadyCorrespondingAmount
+						+ tranferAmount);
 
 				this.casSpecificontrolDao
 						.saveCustomsDeclarationCommInfoBillCorresponding(c);
-				
-				// 产生中间信息             
+
+				// 产生中间信息
 				this.makeMakeBillCorrspondingInfo(c, billDetail, tranferAmount);
 			}
 
@@ -791,9 +812,7 @@ public class CasSpecificontrolLogic {
 		temp.setValidDate(billDetail.getBillMaster().getValidDate());
 		temp.setScmCoc(c.getScmCoc());
 		temp.setAmount(tranferAmount);
-		temp
-				.setBillTypeName(billDetail.getBillMaster().getBillType()
-						.getName());
+		temp.setBillTypeName(billDetail.getBillMaster().getBillType().getName());
 		this.casSpecificontrolDao.getHibernateTemplate().saveOrUpdate(temp);
 		return temp;
 	}
@@ -803,8 +822,8 @@ public class CasSpecificontrolLogic {
 	 * 
 	 * @param list
 	 *            生产单据对应的临时中间信息
-	 *            
-	 * （wss:2010.06.11整修）
+	 * 
+	 *            （wss:2010.06.11整修）
 	 */
 	public void cancelCorresponding(List<MakeBillCorrespondingInfoBase> list) {
 		//
@@ -824,47 +843,47 @@ public class CasSpecificontrolLogic {
 			if (billDetail == null) {
 				logger.info(" 删除中间表信息是获取 billDetail is null ");
 				throw new RuntimeException("单据号为[" + m.getBillNo()
-						+ "的单据可能不存在！请检查！"); 
-//				continue;
+						+ "的单据可能不存在！请检查！");
+				// continue;
 			}
 			//
 			// 获得真正的报关信息对象
-			//			
+			//
 			CustomsDeclarationCommInfoBillCorresponding c = this.casSpecificontrolDao
 					.findCustomsDeclarationCommInfoBillCorresponding(
-													m.getCustomsDeclarationId(), 
-													m.getCustomsDeclarationCommInfoId());
+							m.getCustomsDeclarationId(),
+							m.getCustomsDeclarationCommInfoId());
 			if (c == null) {
-				logger
-						.info(" 删除中间表信息是获取 CustomsDeclarationCommInfoBillCorresponding is null ");
+				logger.info(" 删除中间表信息是获取 CustomsDeclarationCommInfoBillCorresponding is null ");
 				continue;
 			}
 
-			//对应数量
+			// 对应数量
 			double deleteAlreadyCorrespondingAmount = m.getAmount() == null ? 0.0
 					: m.getAmount();
 
 			// 修改单据信息
 			double customNum = billDetail.getCustomNum() == null ? 0.0
 					: billDetail.getCustomNum();
-			
-			//单据类型
+
+			// 单据类型
 			String typeCode = billDetail.getBillMaster().getBillType()
 					.getCode().trim();
-			
+
 			if ((typeCode.equals("1106") || typeCode.equals("2009"))) {
-				billDetail.setCustomNum(customNum + deleteAlreadyCorrespondingAmount);
-			}else{
-				billDetail.setCustomNum(customNum - deleteAlreadyCorrespondingAmount);
+				billDetail.setCustomNum(customNum
+						+ deleteAlreadyCorrespondingAmount);
+			} else {
+				billDetail.setCustomNum(customNum
+						- deleteAlreadyCorrespondingAmount);
 			}
-			
-			
+
 			// 为了去掉对应表中的单据的对应关系
 			String oldCustomNo = billDetail.getCustomNo() == null ? ""
-													: billDetail.getCustomNo().trim();
+					: billDetail.getCustomNo().trim();
 			String newCustomNo = "";
 			String deleteCustomNo = c.getCustomsDeclarationCode() + "("
-									+ c.getEmsHeadH2k() + ")";
+					+ c.getEmsHeadH2k() + ")";
 
 			String[] strArray = oldCustomNo.split(",");
 			for (int j = 0; j < strArray.length; j++) {
@@ -887,16 +906,16 @@ public class CasSpecificontrolLogic {
 			double alreadyCorrespondingAmount = c
 					.getAlreadyCorrespondingAmount() == null ? 0.0 : c
 					.getAlreadyCorrespondingAmount();
-			
-//			// 是否包函转厂退货数据
-//			if ((typeCode.equals("1106") || typeCode.equals("2009"))) {
-//				c.setAlreadyCorrespondingAmount(alreadyCorrespondingAmount
-//						+ deleteAlreadyCorrespondingAmount);
-//			} else {
-//				c.setAlreadyCorrespondingAmount(alreadyCorrespondingAmount
-//						- deleteAlreadyCorrespondingAmount);
-//			}
-			
+
+			// // 是否包函转厂退货数据
+			// if ((typeCode.equals("1106") || typeCode.equals("2009"))) {
+			// c.setAlreadyCorrespondingAmount(alreadyCorrespondingAmount
+			// + deleteAlreadyCorrespondingAmount);
+			// } else {
+			// c.setAlreadyCorrespondingAmount(alreadyCorrespondingAmount
+			// - deleteAlreadyCorrespondingAmount);
+			// }
+
 			c.setAlreadyCorrespondingAmount(alreadyCorrespondingAmount
 					- deleteAlreadyCorrespondingAmount);
 
@@ -1024,8 +1043,8 @@ public class CasSpecificontrolLogic {
 	 *            生成单据的折算报关数量(未折算报关数量的单据)
 	 */
 	public void makeBillHsAmount(TempMaterielTypeSetup setupParameters) {
-		this.makeBillHsAmount(setupParameters, (Company) CommonUtils
-				.getCompany());
+		this.makeBillHsAmount(setupParameters,
+				(Company) CommonUtils.getCompany());
 	}
 
 	/**
@@ -1043,43 +1062,48 @@ public class CasSpecificontrolLogic {
 		if (setupParameters.getIsProuduct() == true) {
 			this.makeBillHsAmount(company, MaterielType.FINISHED_PRODUCT,
 					isMakeCustomsInfo, setupParameters, "成品");
-			this.makeBillHsAmountFromRelation(company, MaterielType.FINISHED_PRODUCT,
-					isMakeCustomsInfo, setupParameters, "成品");			
+			this.makeBillHsAmountFromRelation(company,
+					MaterielType.FINISHED_PRODUCT, isMakeCustomsInfo,
+					setupParameters, "成品");
 		}
 		// 料件
 		if (setupParameters.getIsMateriel() == true) {
-//			this.makeBillHsAmount(company, MaterielType.MATERIEL,
-//					isMakeCustomsInfo, setupParameters, "料件");
+			// this.makeBillHsAmount(company, MaterielType.MATERIEL,
+			// isMakeCustomsInfo, setupParameters, "料件");
 			this.makeBillHsAmountFromRelation(company, MaterielType.MATERIEL,
 					isMakeCustomsInfo, setupParameters, "成品");
 		}
 		// 半成品
 		if (setupParameters.getIsSemiProduct() == true) {
-//			this.makeBillHsAmount(company, MaterielType.SEMI_FINISHED_PRODUCT,
-//					isMakeCustomsInfo, setupParameters, "半成品");
-			this.makeBillHsAmountFromRelation(company, MaterielType.SEMI_FINISHED_PRODUCT,
-					isMakeCustomsInfo, setupParameters, "成品");
+			// this.makeBillHsAmount(company,
+			// MaterielType.SEMI_FINISHED_PRODUCT,
+			// isMakeCustomsInfo, setupParameters, "半成品");
+			this.makeBillHsAmountFromRelation(company,
+					MaterielType.SEMI_FINISHED_PRODUCT, isMakeCustomsInfo,
+					setupParameters, "成品");
 		}
 		// 设备
 		if (setupParameters.getIsMachine() == true) {
-//			this.makeBillHsAmount(company, MaterielType.MACHINE,
-//					isMakeCustomsInfo, setupParameters, "设备");
+			// this.makeBillHsAmount(company, MaterielType.MACHINE,
+			// isMakeCustomsInfo, setupParameters, "设备");
 			this.makeBillHsAmountFromRelation(company, MaterielType.MACHINE,
 					isMakeCustomsInfo, setupParameters, "成品");
 		}
 		// 残次品
 		if (setupParameters.getIsBadProduct() == true) {
-//			this.makeBillHsAmount(company, MaterielType.BAD_PRODUCT,
-//					isMakeCustomsInfo, setupParameters, "残次品");
-			this.makeBillHsAmountFromRelation(company, MaterielType.BAD_PRODUCT,
-					isMakeCustomsInfo, setupParameters, "成品");
+			// this.makeBillHsAmount(company, MaterielType.BAD_PRODUCT,
+			// isMakeCustomsInfo, setupParameters, "残次品");
+			this.makeBillHsAmountFromRelation(company,
+					MaterielType.BAD_PRODUCT, isMakeCustomsInfo,
+					setupParameters, "成品");
 		}
 		// 边角料
 		if (setupParameters.getIsRemainMateriel() == true) {
-//			this.makeBillHsAmount(company, MaterielType.REMAIN_MATERIEL,
-//					isMakeCustomsInfo, setupParameters, "边角料");
-			this.makeBillHsAmountFromRelation(company, MaterielType.REMAIN_MATERIEL,
-					isMakeCustomsInfo, setupParameters, "成品");
+			// this.makeBillHsAmount(company, MaterielType.REMAIN_MATERIEL,
+			// isMakeCustomsInfo, setupParameters, "边角料");
+			this.makeBillHsAmountFromRelation(company,
+					MaterielType.REMAIN_MATERIEL, isMakeCustomsInfo,
+					setupParameters, "成品");
 		}
 	}
 
@@ -1100,10 +1124,10 @@ public class CasSpecificontrolLogic {
 					.findBillDetailCount(MaterielType.FINISHED_PRODUCT);
 			makeBillHsAmountTipMessage = "成品 共 " + count + " 条记录,正在成批计算 ";
 			System.out.println(makeBillHsAmountTipMessage);
-//			this.makeBillHsAmountBatch(MaterielType.FINISHED_PRODUCT,
-//					setupParameters);
-			this.makeBillHsAmountBatchFromRelation(MaterielType.FINISHED_PRODUCT,
-					setupParameters);			
+			// this.makeBillHsAmountBatch(MaterielType.FINISHED_PRODUCT,
+			// setupParameters);
+			this.makeBillHsAmountBatchFromRelation(
+					MaterielType.FINISHED_PRODUCT, setupParameters);
 			sumCount += count;
 		}
 		// 料件
@@ -1112,7 +1136,8 @@ public class CasSpecificontrolLogic {
 					.findBillDetailCount(MaterielType.MATERIEL);
 			makeBillHsAmountTipMessage = "料件 共 " + count + " 条记录,正在成批计算 ";
 			System.out.println(makeBillHsAmountTipMessage);
-//			this.makeBillHsAmountBatch(MaterielType.MATERIEL, setupParameters);
+			// this.makeBillHsAmountBatch(MaterielType.MATERIEL,
+			// setupParameters);
 			this.makeBillHsAmountBatchFromRelation(MaterielType.MATERIEL,
 					setupParameters);
 			sumCount += count;
@@ -1123,10 +1148,10 @@ public class CasSpecificontrolLogic {
 					.findBillDetailCount(MaterielType.SEMI_FINISHED_PRODUCT);
 			makeBillHsAmountTipMessage = "半成品 共" + count + " 条记录,正在成批计算 ";
 			System.out.println(makeBillHsAmountTipMessage);
-//			this.makeBillHsAmountBatch(MaterielType.SEMI_FINISHED_PRODUCT,
-//					setupParameters);
-			this.makeBillHsAmountBatchFromRelation(MaterielType.SEMI_FINISHED_PRODUCT,
-					setupParameters);			
+			// this.makeBillHsAmountBatch(MaterielType.SEMI_FINISHED_PRODUCT,
+			// setupParameters);
+			this.makeBillHsAmountBatchFromRelation(
+					MaterielType.SEMI_FINISHED_PRODUCT, setupParameters);
 			sumCount += count;
 		}
 		// 设备
@@ -1135,7 +1160,8 @@ public class CasSpecificontrolLogic {
 					.findBillDetailCount(MaterielType.MACHINE);
 			makeBillHsAmountTipMessage = "设备 共" + count + " 条记录,正在成批计算 ";
 			System.out.println(makeBillHsAmountTipMessage);
-//			this.makeBillHsAmountBatch(MaterielType.MACHINE, setupParameters);
+			// this.makeBillHsAmountBatch(MaterielType.MACHINE,
+			// setupParameters);
 			this.makeBillHsAmountBatchFromRelation(MaterielType.MACHINE,
 					setupParameters);
 			sumCount += count;
@@ -1146,8 +1172,8 @@ public class CasSpecificontrolLogic {
 					.findBillDetailCount(MaterielType.BAD_PRODUCT);
 			makeBillHsAmountTipMessage = "残次品 共" + count + " 条记录,正在成批计算 ";
 			System.out.println(makeBillHsAmountTipMessage);
-//			this.makeBillHsAmountBatch(MaterielType.BAD_PRODUCT,
-//					setupParameters);
+			// this.makeBillHsAmountBatch(MaterielType.BAD_PRODUCT,
+			// setupParameters);
 			this.makeBillHsAmountBatchFromRelation(MaterielType.BAD_PRODUCT,
 					setupParameters);
 			sumCount += count;
@@ -1158,10 +1184,10 @@ public class CasSpecificontrolLogic {
 					.findBillDetailCount(MaterielType.REMAIN_MATERIEL);
 			makeBillHsAmountTipMessage = "边角料 共" + count + " 条记录,正在成批计算 ";
 			System.out.println(makeBillHsAmountTipMessage);
-//			this.makeBillHsAmountBatch(MaterielType.REMAIN_MATERIEL,
-//					setupParameters);
-			this.makeBillHsAmountBatchFromRelation(MaterielType.REMAIN_MATERIEL,
-					setupParameters);
+			// this.makeBillHsAmountBatch(MaterielType.REMAIN_MATERIEL,
+			// setupParameters);
+			this.makeBillHsAmountBatchFromRelation(
+					MaterielType.REMAIN_MATERIEL, setupParameters);
 			sumCount += count;
 		}
 		return "共计算 " + sumCount + " 条记录,修改了 " + sumCount + " 条记录";
@@ -1180,8 +1206,8 @@ public class CasSpecificontrolLogic {
 			TempMaterielTypeSetup setupParameters) {
 		long beginTime = System.currentTimeMillis();
 		List listUnitConvert = this.casSpecificontrolDao
-				.findStatCusNameRelationMt(materielType, (Company) CommonUtils
-						.getCompany());
+				.findStatCusNameRelationMt(materielType,
+						(Company) CommonUtils.getCompany());
 		//
 		// 查询提示的总数量
 		//
@@ -1204,7 +1230,7 @@ public class CasSpecificontrolLogic {
 		}
 
 	}
-	
+
 	/**
 	 * 生成单据的折算报关数量(未折算报关数量的单据)
 	 * 
@@ -1217,8 +1243,8 @@ public class CasSpecificontrolLogic {
 			TempMaterielTypeSetup setupParameters) {
 		long beginTime = System.currentTimeMillis();
 		List listUnitConvert = this.casSpecificontrolDao
-				.findMaterielFromRalation(materielType, (Company) CommonUtils
-						.getCompany());
+				.findMaterielFromRalation(materielType,
+						(Company) CommonUtils.getCompany());
 		boolean isUpdateHsAmount = setupParameters.getIsUpdateHsAmount() == null ? false
 				: setupParameters.getIsUpdateHsAmount();
 		List<FactoryAndFactualCustomsRalation> temp = new ArrayList<FactoryAndFactualCustomsRalation>();
@@ -1227,15 +1253,15 @@ public class CasSpecificontrolLogic {
 					.get(i);
 			temp.add(statM);
 			if (i % 50 == 0 || i == n - 1) {
-				this.casBillDao.makeHsAmountByBatchFromRelation(materielType, temp,
-						isUpdateHsAmount);
+				this.casBillDao.makeHsAmountByBatchFromRelation(materielType,
+						temp, isUpdateHsAmount);
 				temp.clear();
 				System.out.println(i + " "
 						+ (System.currentTimeMillis() - beginTime));
 			}
 		}
 
-	}	
+	}
 
 	/**
 	 * 生成单据报关数量提示信息
@@ -1244,6 +1270,7 @@ public class CasSpecificontrolLogic {
 
 	/**
 	 * 获取生成的单据报关数量提示信息
+	 * 
 	 * @return
 	 */
 	public String getMakeBillHsAmountTipMessage() {
@@ -1384,7 +1411,7 @@ public class CasSpecificontrolLogic {
 			}
 		}
 	}
-	
+
 	/**
 	 * 生成单据的折算报关数量(未折算报关数量的单据)--不是批量
 	 * 
@@ -1399,9 +1426,9 @@ public class CasSpecificontrolLogic {
 	 * @param info
 	 *            提示信息
 	 */
-	private void makeBillHsAmountFromRelation(Company company, String materielType,
-			Boolean isMakeCustomsInfo, TempMaterielTypeSetup setupParameters,
-			String info) {
+	private void makeBillHsAmountFromRelation(Company company,
+			String materielType, Boolean isMakeCustomsInfo,
+			TempMaterielTypeSetup setupParameters, String info) {
 		long beginTime = System.currentTimeMillis();
 		List listUnitConvert = this.casSpecificontrolDao
 				.findPtNoAndUnitConvertFromRelation(materielType, company);
@@ -1464,12 +1491,12 @@ public class CasSpecificontrolLogic {
 				// logger.info("Jbcus 料号 == " + i);
 
 				BillDetail billDetail = (BillDetail) tempBillDetails.get(i);
-				if(billDetail.getPtPart()==null){
+				if (billDetail.getPtPart() == null) {
 					StatCusNameRelationHsn stat = mapStatCusNameRelation
 							.get(billDetail.getPtPart());
-	
+
 					boolean isSave = false;
-	
+
 					Double unitConvert = map.get(billDetail.getPtPart());
 					if (unitConvert == null || unitConvert <= 0.0) {
 						// logger.info("Jbcus 料号 == " + billDetail.getPtPart()
@@ -1501,7 +1528,7 @@ public class CasSpecificontrolLogic {
 					if (isSave == true) {
 						updateList.add(billDetail);
 					}
-	
+
 					if (updateList.size() % 100 == 0 || i == n - 1) {
 						this.casBillDao.batchSaveOrUpdate(updateList);
 						// System.out.println("updateList.size() ==
@@ -1509,7 +1536,6 @@ public class CasSpecificontrolLogic {
 					}
 				}
 			}
-				
 
 			index += length;
 			if (tempBillDetails.size() <= 0 || tempBillDetails.size() < length) {
@@ -1521,7 +1547,7 @@ public class CasSpecificontrolLogic {
 						+ (System.currentTimeMillis() - beginTime) + " 毫秒 ");
 			}
 		}
-	}	
+	}
 
 	/**
 	 * 由半成品转成料件(委外加工进库单据--->委外加工返回料件单据) 1103 == 委外加工返回料件单据 4003 == 委外加工进库单据
@@ -1710,7 +1736,7 @@ public class CasSpecificontrolLogic {
 
 		//
 		// 组合新的料件对象(1103 单据明细)
-		// 
+		//
 		Map<String, BillDetailMateriel> billDetailMap = new HashMap<String, BillDetailMateriel>();
 		//
 		// for

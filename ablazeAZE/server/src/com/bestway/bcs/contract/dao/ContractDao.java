@@ -557,14 +557,8 @@ public class ContractDao extends BaseDao {
 	 */
 	public List<ContractBom> findContractBomByExgId(String exgId) {
 
-		String hql = "select a from ContractBom a left join a.contractExg"
-				+ " where a.contractExg.id = '" + exgId
-				+ "'  and a.company.id='" + CommonUtils.getCompany().getId()
-				+ "' " + "  order by a.contractImgSeqNum, a.createDate ";
-
 		return this.find("select a from ContractBom a left join a.contractExg"
-				+ " where a.contractExg.id = ?  and a.company.id=? "
-				+ "  order by a.contractImgSeqNum, a.createDate ",
+				+ " where a.contractExg.id = ?  and a.company.id=? ",
 				new Object[] { exgId, CommonUtils.getCompany().getId() });
 	}
 

@@ -16,7 +16,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import com.bestway.bcs.contract.entity.Contract;
 import com.bestway.bcus.client.common.CommonFileFilter;
 import com.bestway.bcus.client.common.CommonProgress;
 import com.bestway.bcus.client.common.CommonStepProgress;
@@ -279,7 +278,7 @@ public class DgImportFptApp extends JDialogBase {
 				if(!isExists.isEmpty() && isExists.size() >= 1){
 					if(JOptionPane.YES_OPTION == JOptionPane.showOptionDialog(null, "已经存在相应的数据"+isExists.size()+"条，是否覆盖?","提示",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null,new Object[]{"是(Y)","否(N)"},"否(N)")){
 						
-						// CommonStepProgress.showStepProgressDialog(taskId);
+					
 						String taskId = CommonProgress.getExeTaskId();
 						CommonStepProgress.showStepProgressDialog(taskId);
 						request.setTaskId(taskId);
@@ -304,7 +303,7 @@ public class DgImportFptApp extends JDialogBase {
 						return;
 					}
 				}else {
-					// CommonStepProgress.showStepProgressDialog(taskId);
+				
 					String taskId = CommonProgress.getExeTaskId();
 					CommonStepProgress.showStepProgressDialog(taskId);
 					request.setTaskId(taskId);

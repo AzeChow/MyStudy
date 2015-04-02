@@ -152,6 +152,13 @@ public class InputTableColumnSet extends BaseScmEntity {
 	 */
 	public static String TRANSFERFACTORY_IEBILL="TRANSFERFACTORY_IEBILL";
 	
+	/**
+	 * 电子帐册 -- 滚动核销  -- 内购金额导入
+	 * @author zcj 
+	 * 2015-4-2
+	 */
+	public static String _CancelCus = "";
+	
 	private String tableFlag;
 
 	private String columnField;

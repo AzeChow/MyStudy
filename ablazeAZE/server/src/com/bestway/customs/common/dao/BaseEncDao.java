@@ -2395,6 +2395,11 @@ public class BaseEncDao extends BaseDao {
 		if (condition.equals("") == false) {
 			hsql += " and (" + condition + " )";
 		}
+		System.out
+				.println("select b from ImpExpCommodityInfo b left outer join fetch b.materiel "
+						+ "where ( b.isTransferCustomsBill = ? or b.isTransferCustomsBill is null ) and (b.impExpRequestBill.id = '"
+						+ ((TempImpExpRequestBill) parentList.get(0))
+								.getImpExpRequestBill().getId() + "') ");
 		return this.find(hsql, objs.toArray());
 	}
 
@@ -5613,6 +5618,11 @@ public class BaseEncDao extends BaseDao {
 			String[] ids) {
 		StringBuffer hql = new StringBuffer(
 				"Select a from DecSupplementList a where a.isSend != 1 and a.baseCustomsDeclarationCommInfo in (");
+
+		if (ids.length == 0) {
+			System.out.println("报关单表体信息没获取成功 -----");
+			return new ArrayList();
+		}
 		for (int i = 0; i < ids.length; i++) {
 			if (i != 0) {
 				hql.append(",");

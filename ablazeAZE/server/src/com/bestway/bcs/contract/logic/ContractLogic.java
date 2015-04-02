@@ -7,6 +7,7 @@
 package com.bestway.bcs.contract.logic;
 
 import java.lang.reflect.InvocationTargetException;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -5561,15 +5562,32 @@ public class ContractLogic {
 
 		dataMap = (Map) map.get(ContractBom.class.getName());
 
+		Map exgMap = (Map) map.get(ContractExg.class.getName());
+
 		if (dataMap != null) {
 
+			// 查询 电子化手册 设置参数
+			BcsParameterSet bcsParameterSet = contractDao.findBcsParameterSet();
+
 			Iterator bomIterator = dataMap.values().iterator();
+
+			// 判断 是否 计算 原料费用
+			boolean isCalulate = bcsParameterSet.getIsCalulateSubjectCost() != null ? bcsParameterSet
+					.getIsCalulateSubjectCost() : false;
+
+			ContractExg exg = null;
+
+			/**
+			 * 判断一次 系统中是否设置了 QP导入文件 计算原料费用
+			 */
+			// 缓存 所有需要计算 原料费用 成品
+			Map<String, ContractExg> contractExgMap = null;
 
 			while (bomIterator.hasNext()) {
 
 				ContractBom bom = (ContractBom) bomIterator.next();
 
-				ContractExg exg = bom.getContractExg();
+				exg = bom.getContractExg();
 
 				bom.setUnitDosage(CommonUtils.getDoubleByDigit(
 						(CommonUtils.getDoubleExceptNull(bom.getUnitWaste()) / (1 - CommonUtils
@@ -5597,7 +5615,22 @@ public class ContractLogic {
 				if (bom.getNonMnlRatio() == null) {
 					bom.setNonMnlRatio(0.0);
 				}
-				this.contractDao.saveContractBom(bom);
+
+				contractDao.saveContractBom(bom);
+
+				if (isCalulate) {
+					contractExgMap = contractExgMap == null ? new HashMap<String, ContractExg>()
+							: contractExgMap;
+
+					calulateMaterialFees(bom, contractExgMap);
+
+				}
+			}
+
+			// 保存 已经 计算好 的 成品
+			if (isCalulate) {
+				contractDao.saveContractExg(new ArrayList(contractExgMap
+						.values()));
 			}
 		}
 		dataMap = (Map) map.get(Contract.class.getName());
@@ -5608,6 +5641,48 @@ public class ContractLogic {
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * 计算 原料费用
+	 * 
+	 * @param bom
+	 *            合同单耗
+	 */
+	private void calulateMaterialFees(ContractBom bom,
+			Map<String, ContractExg> contractExgMap) {
+
+		// 单项原料费用 = 单价*单项用量
+		BigDecimal oneSubjectCost = new BigDecimal(
+				CommonUtils.getDoubleExceptNull(bom.getDeclarePrice()))
+				.multiply(new BigDecimal(CommonUtils.getDoubleExceptNull(bom
+						.getUnitDosage())));
+
+		// 成品 ID
+		String exgId = bom.getContractExg().getId();
+
+		// 不存在 这个 成品 的情况 做一次缓存
+		if (contractExgMap.get(exgId) == null) {
+
+			ContractExg contractExg = bom.getContractExg();
+
+			// 处理 null情况
+			contractExg.setMaterialFee(CommonUtils
+					.getDoubleExceptNull(contractExg.getMaterialFee()));
+
+			contractExgMap.put(exgId, contractExg);
+
+			// 存在这个成品的情况 取出 原料费用 ，累加
+		} else {
+
+			ContractExg contractExg = contractExgMap.get(exgId);
+
+			// 每次的 原料费用 累加
+			BigDecimal materialFee = new BigDecimal(
+					contractExg.getMaterialFee()).add(oneSubjectCost);
+
+			contractExg.setMaterialFee(materialFee.doubleValue());
+		}
 	}
 
 	/**
@@ -6405,4 +6480,27 @@ public class ContractLogic {
 		}
 		return false;
 	}
+
+	/**
+	 * 所有合同料件总金额和
+	 * 
+	 * @param contractId
+	 * @return
+	 */
+	public Double findSumContractImgOrExgTotalPrices(String contractId,
+			String clzName) {
+
+		String hql = "select sum(a.totalPrice) from " + clzName
+				+ " a where a.contract.id = ? ";
+
+		List sumList = contractDao.find(hql, new Object[] { contractId });
+
+		if (!sumList.isEmpty()) {
+
+			return (Double) sumList.get(0);
+
+		}
+		return 0.0;
+	}
+
 }
