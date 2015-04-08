@@ -6,14 +6,37 @@ import org.apache.commons.lang.StringUtils;
 
 import com.bestway.bcus.client.common.CustomBaseList;
 import com.bestway.bcus.custombase.entity.parametercode.LicenseDocu;
+import com.bestway.bcus.custombase.entity.parametercode.Unit;
 
 /**
  * 可根据实际需求添加新的枚举类型 或者 添加新的逻辑方法
  * 
- * @author zcj
- *
+ * @author zcj 2015-3-15
  */
 public enum QueryBaseList {
+
+	UNITS(CustomBaseList.getInstance().getUnits()) {
+
+		/**
+		 * 查找匹配的单位
+		 */
+		@Override
+		public Object findMatchName(String codition, Class<?> clz) {
+
+			List<Unit> units = getList();
+
+			for (Unit unit : units) {
+
+				if (unit.getName().equals(codition)) {
+
+					return unit;
+				}
+			}
+
+			return null;
+		}
+
+	},
 
 	// 随附单证List
 	LICENSE_DOCU(CustomBaseList.getInstance().getLicensedocus()) {
@@ -76,6 +99,6 @@ public enum QueryBaseList {
 	}
 
 	// 根据实际业务 自行编写适当的 业务方法
-	public abstract String findMatchName(String codition, Class<?> clz);
+	public abstract Object findMatchName(String codition, Class<?> clz);
 
 }

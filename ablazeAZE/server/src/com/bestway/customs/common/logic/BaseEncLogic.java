@@ -3757,6 +3757,11 @@ public abstract class BaseEncLogic {
 			}
 			bgdhead.setEmsHeadH2k(BGDHead.get("MANUAL_NO"));// 帐/手册号
 
+			System.out.println("这里获取手册号: >>>>>>>>>  ");
+
+			System.out.println(bgdhead.getEmsHeadH2k()
+					+ "    ==================");
+
 			/**
 			 * 合同表头
 			 */
@@ -4384,11 +4389,7 @@ public abstract class BaseEncLogic {
 			// 获取规格型号 对应的 Map
 			Map<Integer, String> map = getCommSpec(projectType, bgdhead);
 
-			System.out.println("对应规格 --- Map 这里 测试 所有的 规格数据 ------");
-
-			System.out.println(map);
-
-			System.out.println("----------------------------");
+			System.out.println("规格MAP size:  >> " + map.size() + " <<");
 
 			/**
 			 * 新增报关单表体
@@ -4401,15 +4402,6 @@ public abstract class BaseEncLogic {
 				 * 合同对应序号
 				 */
 				String strcontract_item = detailmap.get("CONTR_ITEM");
-
-				System.out.println("   合同序号 >>>>>>>>>>>>>>>>>>>>>>>");
-
-				System.out.println(" >>>>>>>  " + strcontract_item
-						+ "    <<<<<");
-
-				System.out.println(strcontract_item.length());
-
-				System.out.println(" ======= > 字符长度 检测 < ==========");
 
 				/**
 				 * 原产国
@@ -4445,11 +4437,6 @@ public abstract class BaseEncLogic {
 					bgddetailinfo.setCommSerialNo(Integer
 							.valueOf(strcontract_item));
 				}
-
-				System.out.println(" 合同对应 序号   >>>>>>  "
-						+ bgddetailinfo.getCommSerialNo());
-
-				System.out.println("+++++++++++++++++++++++++++++++++++=");
 
 				/**
 				 * 项号
@@ -4513,9 +4500,6 @@ public abstract class BaseEncLogic {
 					bgddetailinfo.setCommSpec(map.get(bgddetailinfo
 							.getCommSerialNo()));
 				}
-
-				System.out.println("bgddetailinfo.getCommSerialNo()====="
-						+ bgddetailinfo.getCommSerialNo());
 
 				/**
 				 * 规范申报规格
@@ -4781,15 +4765,14 @@ public abstract class BaseEncLogic {
 						value = emsExg.getSpec();
 					}
 				}
-				System.out.println("key=======" + key + "     value====="
-						+ value);
-				System.out.println();
 
 				if (map.get(key) == null) {
 					map.put(key, value);
 				}
 			}
 		}
+
+		System.out.println(" 规格Size For Map : " + map.size());
 
 		return map;
 	}
@@ -5067,18 +5050,6 @@ public abstract class BaseEncLogic {
 			if (info.indexOf("网络异常") >= 0) {
 				throw new RuntimeException("远程服务发生错误，错误信息如下：\n" + info);
 			}
-		}
-
-		for (int i = 0; i < lsContents.size(); i++) {
-
-			System.out
-					.println("------------------- 这里 显示 remote 导入的 xml 内容 ------------");
-
-			System.out.println(lsContents.get(i));
-
-			System.out
-					.println("================================================");
-
 		}
 
 		/*

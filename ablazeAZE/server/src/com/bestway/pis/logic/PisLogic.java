@@ -59,6 +59,7 @@ import com.bestway.customs.common.entity.BaseCustomsDeclarationContainer;
 import com.bestway.customs.common.entity.BaseEmsHead;
 import com.bestway.dzsc.contractexe.entity.DzscCustomsDeclarationCommInfo;
 import com.bestway.dzsc.contractexe.entity.DzscCustomsDeclarationContainer;
+import com.bestway.pis.constant.EspDeclareStatus;
 import com.bestway.pis.constant.PisSyncState;
 import com.bestway.pis.dao.PisDao;
 import com.bestway.pis.entity.BrokerCorp;
@@ -1349,6 +1350,7 @@ public class PisLogic {
 		decHead.setRelativeManualNo((String) mapHead.get("关联备案"));
 		decHead.setBondedWarehouse((String) mapHead.get("监管仓号"));
 		// decHead.setFreightCode((String) mapHead.get("货场代码"));
+		decHead.setEspDeclareStatus(EspDeclareStatus.IS_FINISHED);
 		if (decHead.getCustomsDeclarationCode() != null
 				&& !"".equals(decHead.getCustomsDeclarationCode().trim())) {
 			decHead.setEffective(true);

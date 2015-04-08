@@ -211,9 +211,6 @@ public class ContractExeDao extends BaseEncDao {
 
 		List<Object> paramters = new ArrayList<Object>();
 
-		System.out.println("bcsCustomsDeclaration.serialNumber()="
-				+ bcsCustomsDeclaration.getSerialNumber());
-
 		paramters.add(bcsCustomsDeclaration.getSerialNumber());
 
 		paramters.add(bcsCustomsDeclaration.getEmsHeadH2k());
@@ -221,8 +218,6 @@ public class ContractExeDao extends BaseEncDao {
 		paramters.add(bcsCustomsDeclaration.getImpExpFlag());
 
 		List list = this.find(hsql, paramters.toArray());
-
-		System.out.println("hsql=" + hsql);
 
 		return list;
 	}

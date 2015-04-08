@@ -54,6 +54,7 @@ import com.bestway.pis.common.DgChooseBrokerCorp;
 import com.bestway.pis.common.DgConsoleInfo;
 import com.bestway.pis.common.HttpClientInvoker;
 import com.bestway.pis.common.NetUtil;
+import com.bestway.pis.constant.EspDeclareStatus;
 import com.bestway.pis.constant.EspMainBusinessType;
 import com.bestway.pis.entity.BrokerCorp;
 import com.bestway.ui.winuicontrol.JInternalFrameBase;
@@ -151,6 +152,7 @@ public class FmPisExpDecHead extends JInternalFrameBase {
 				list.add(new JTableListColumn("代理报关公司", "brokerCorp.orgaName",
 						120));
 				list.add(new JTableListColumn("出口日期", "impExpDate", 80));
+				list.add(new JTableListColumn("云关通平台状态", "espDeclareStatus", 100));
 				list.add(new JTableListColumn("件数", "commodityNum", 50));
 				list.add(new JTableListColumn("包装类型", "wrapType.name", 80));
 				list.add(new JTableListColumn("申报日期", "declarationDate", 100));
@@ -196,8 +198,24 @@ public class FmPisExpDecHead extends JInternalFrameBase {
 				.setCellEditor(new CheckBoxEditor(new JCheckBox()));
 		table.getColumnModel().getColumn(1)
 				.setHeaderRenderer(new CheckBoxHeader());
+		table.getColumnModel().getColumn(5).setCellRenderer(new DefaultTableCellRenderer() {
+			public Component getTableCellRendererComponent(
+					JTable table, Object value, boolean isSelected,
+					boolean hasFocus, int row, int column) {
+				super.getTableCellRendererComponent(table, value,
+						isSelected, hasFocus, row, column);
+				String str = "";
+				if (value != null) {
+					str = EspDeclareStatus.getEspDeclareStatusDesc((String) value);
+				}
+				this.setText(str);
+				return this;
+			}
+		});
 	}
 
+	
+	
 	/**
 	 * 编辑列 （用于表格JCheckBox的编辑）
 	 */
@@ -460,6 +478,18 @@ public class FmPisExpDecHead extends JInternalFrameBase {
 							for (int i = 0; i < list.size(); i++) {
 								BaseCustomsDeclaration decHead = (BaseCustomsDeclaration) list
 										.get(i);
+								if (decHead.getBrokerCorp() != null && !decHead.getBrokerCorp().equals(brokerCorp)) {
+					                try {
+					                    deleteDecHead(decHead);
+					                    dgConsoleInfo.addInfo("报关单任务号：" + decHead.getEspTaskId() + "从报关行平台删除成功");
+					                } catch (Exception ex) {
+					                    dgConsoleInfo.addInfo(ex.getMessage());
+					                    continue;
+					                }
+					                decHead.setEspTaskId("");
+					                decHead.setBrokerCorp(null);
+					                decHead = pisAction.saveOrUpdate(request, decHead);
+					            }
 								String resultInfo = uploadToEsp(decHead,
 										brokerCorp, processParams);
 								dgConsoleInfo.addInfo(resultInfo);
@@ -472,6 +502,31 @@ public class FmPisExpDecHead extends JInternalFrameBase {
 		}
 		return btnUpload;
 	}
+	
+	 /**
+     * 从报关行平台上删除报关单
+     *
+     * @param decHead
+     */
+    private void deleteDecHead(BaseCustomsDeclaration decHead) {
+        BrokerCorp brokerCorp = decHead.getBrokerCorp();
+        HttpClientInvoker clientInvoker = new HttpClientInvoker();
+        String urlAddress = "http://" + brokerCorp.getPisEspServer().getServerAddress() + ":" + brokerCorp.getPisEspServer().getPortNumber() + "/esp-war/UploadDecServLet";//   
+        Map<String, String> params = new HashMap();
+        params.put("methodname", "deleteDecData");
+        params.put("esptaskid", decHead.getEspTaskId());
+        String resultData = clientInvoker.executeMethod(urlAddress, params, null);
+        if (resultData != null && !"".equals(resultData.trim())) {
+            Map<String, String> resultMap = jsonToMap(resultData);
+            String resultcode = resultMap.get("resultcode");
+            String msg = resultMap.get("msg");
+            if (!"1".equals(resultcode)) {
+                throw new RuntimeException("报关单任务号：" + decHead.getEspTaskId() + "从报关行平台删除失败，失败原因如下：" + msg);
+            }
+        } else {
+            throw new RuntimeException("报关单任务号：" + decHead.getEspTaskId() + "从报关行平台删除失败，失败原因如下：产生的回执为空！");
+        }
+    }
 
 	public boolean checkData(List<BaseCustomsDeclaration> list){
 		for(BaseCustomsDeclaration base : list){
@@ -646,6 +701,7 @@ public class FmPisExpDecHead extends JInternalFrameBase {
 				pisAction.getCompanyCode(new Request(CommonVars.getCurrUser())));
 		params.put("processparams", gson.toJson(processParams));
 		params.put("useremail", aclUser.getEmail());
+		params.put("datafrom", "3");
 		// HttpProxyParam proxyParam=new
 		// HttpProxyParam("113.105.139.6",8087,"","");
 		String resultData = clientInvoker.executeMethod(urlAddress, params,
@@ -685,39 +741,39 @@ public class FmPisExpDecHead extends JInternalFrameBase {
 				+ "/esp-war/UploadDecServLet";//
 		Map<String, String> params = new HashMap();
 		params.put("methodname", "getNewDecEspTaskId");
-		params.put("brokercorporgacode", brokerCorp.getOrgaCode());
-		params.put("companycode", companyCode);
-		params.put("datafrom", "3");
-		// params.put("impexpflag", decHead.getImpExpFlag());
-
-		if (decHead.getImpExpFlag().intValue() == 0) {
-			params.put("impexpflag", "I");
-		} else if (decHead.getImpExpFlag().intValue() == 1) {
-			params.put("impexpflag", "E");
-		} else if (decHead.getImpExpFlag().intValue() == 2) {
-			switch (decHead.getImpExpType()) {
-			case ImpExpType.GENERAL_TRADE_IMPORT:
-			case ImpExpType.REMIAN_MATERIAL_DOMESTIC_SALES:
-			case ImpExpType.EQUIPMENT_IMPORT:
-			case ImpExpType.BACK_PORT_REPAIR:
-			case ImpExpType.IMPORT_STORAGE:
-			case ImpExpType.MATERIAL_DOMESTIC_SALES:
-			case ImpExpType.MATERIAL_EXCHANGE:
-			case ImpExpType.REMAIN_FORWARD_IMPORT:
-				params.put("impexpflag", "I");
-				break;
-			case ImpExpType.REMIAN_MATERIAL_BACK_PORT:
-			case ImpExpType.GENERAL_TRADE_EXPORT:
-			case ImpExpType.EQUIPMENT_BACK_PORT:
-			case ImpExpType.REMAIN_FORWARD_EXPORT:
-			case ImpExpType.EXPORT_STORAGE:
-			case ImpExpType.MATERIAL_REOUT:
-				params.put("impexpflag", "E");
-				break;
-			default:
-				break;
-			}
-		}
+//		params.put("brokercorporgacode", brokerCorp.getOrgaCode());
+//		params.put("companycode", companyCode);
+//		params.put("datafrom", "3");
+//		// params.put("impexpflag", decHead.getImpExpFlag());
+//
+//		if (decHead.getImpExpFlag().intValue() == 0) {
+//			params.put("impexpflag", "I");
+//		} else if (decHead.getImpExpFlag().intValue() == 1) {
+//			params.put("impexpflag", "E");
+//		} else if (decHead.getImpExpFlag().intValue() == 2) {
+//			switch (decHead.getImpExpType()) {
+//			case ImpExpType.GENERAL_TRADE_IMPORT:
+//			case ImpExpType.REMIAN_MATERIAL_DOMESTIC_SALES:
+//			case ImpExpType.EQUIPMENT_IMPORT:
+//			case ImpExpType.BACK_PORT_REPAIR:
+//			case ImpExpType.IMPORT_STORAGE:
+//			case ImpExpType.MATERIAL_DOMESTIC_SALES:
+//			case ImpExpType.MATERIAL_EXCHANGE:
+//			case ImpExpType.REMAIN_FORWARD_IMPORT:
+//				params.put("impexpflag", "I");
+//				break;
+//			case ImpExpType.REMIAN_MATERIAL_BACK_PORT:
+//			case ImpExpType.GENERAL_TRADE_EXPORT:
+//			case ImpExpType.EQUIPMENT_BACK_PORT:
+//			case ImpExpType.REMAIN_FORWARD_EXPORT:
+//			case ImpExpType.EXPORT_STORAGE:
+//			case ImpExpType.MATERIAL_REOUT:
+//				params.put("impexpflag", "E");
+//				break;
+//			default:
+//				break;
+//			}
+//		}
 
 		String resultData = clientInvoker.executeMethod(urlAddress, params,
 				null);
@@ -836,14 +892,19 @@ public class FmPisExpDecHead extends JInternalFrameBase {
             if ("1".equals(resultcode)) {
                 String decStatus = (String) resultMap.get("decstatus");
                 if (decStatus != null && !"".equals(decStatus)) {
-                    //5:资料检查不通过；8:海关申报退单。
-                    if ("5".equals(decStatus) || "8".equals(decStatus)) {
-                        String noPassInfo = "5".equals(decStatus) ? "资料检查不通过" : "海关申报退单";
-                        decHead.setEffective(false);
-                        decHead.setIsSend(false);
-                        decHead.setIsCheck(false);
+                	// 5:资料检查不通过；8:海关申报退单。
+                    if (EspDeclareStatus.AGT_BACK.equals(decStatus) || EspDeclareStatus.QP_BACK.equals(decStatus)
+                            || EspDeclareStatus.APPLY_BACK.equals(decStatus)) {
+                        String statusInfo = EspDeclareStatus.getEspDeclareStatusDesc(decStatus);
+						decHead.setEffective(false);
+						decHead.setIsSend(false);
+						decHead.setIsCheck(false);
+						decHead.setEspDeclareStatus(decStatus);
+						pisAction.saveOrUpdate(request, decHead);
+						return "出口报关单" + decHead.getSerialNumber() + statusInfo;
+					} else {
+                        decHead.setEspDeclareStatus(decStatus);
                         pisAction.saveOrUpdate(request, decHead);
-                        return "出口报关单" + decHead.getSerialNumber() + noPassInfo ;
                     }
                 }
             } else {
@@ -933,7 +994,7 @@ public class FmPisExpDecHead extends JInternalFrameBase {
 	private JButton getBtnCancel() {
 		if (btnCancel == null) {
 
-			btnCancel = new JButton("撤销");
+			btnCancel = new JButton("申请撤销");
 
 			btnCancel.setEnabled(false);
 
@@ -959,25 +1020,19 @@ public class FmPisExpDecHead extends JInternalFrameBase {
 
 					}
 
-					// 消息提示框 将返回的消息打印到提示框里
-					DgConsoleInfo dgConsoleInfo = new DgConsoleInfo();
-
-					dgConsoleInfo.setModal(false);
-
-					dgConsoleInfo.setVisible(true);
-
-					for (int i = 0; i < list.size(); i++) {
-
-						BaseCustomsDeclaration decHead = (BaseCustomsDeclaration) list
-								.get(i);
-
-						String resultInfo = cancelBillDecHeadEdi(decHead);
-
-						dgConsoleInfo.addInfo(resultInfo);
-
-					}
-
-					queryData();
+					DgDecReqCancellation dg = new DgDecReqCancellation();
+			        dg.setVisible(true);
+			        if (dg.isOk()) {
+			            DgConsoleInfo dgConsoleInfo = new DgConsoleInfo();
+			            dgConsoleInfo.setModal(false);
+			            dgConsoleInfo.setVisible(true);
+			            for (int i = 0; i < list.size(); i++) {
+			            	BaseCustomsDeclaration decHead = (BaseCustomsDeclaration) list.get(i);
+			                String resultInfo = cancelBillDecHeadEdi(decHead, dg.getNote());
+			                dgConsoleInfo.addInfo(resultInfo);
+			            }
+			            queryData();
+			        }
 
 				}
 			});
@@ -991,7 +1046,7 @@ public class FmPisExpDecHead extends JInternalFrameBase {
 	 * @param decHead
 	 * @return
 	 */
-	private String cancelBillDecHeadEdi(BaseCustomsDeclaration decHead) {
+	private String cancelBillDecHeadEdi(BaseCustomsDeclaration decHead, String cancelReason) {
 
 		// 结果信息 用于返回打印
 		String resultInfo = "";
@@ -1057,7 +1112,7 @@ public class FmPisExpDecHead extends JInternalFrameBase {
 		params.put("companycode", companyCode);
 
 		params.put("useremail", aclUser.getEmail());
-
+		params.put("cancelreason", cancelReason);
 		String resultData = clientInvoker.executeMethod(urlAddress, params,
 				null);
 
@@ -1070,31 +1125,21 @@ public class FmPisExpDecHead extends JInternalFrameBase {
 			String msg = (String) resultMap.get("msg");
 
 			if ("1".equals(resultcode)) {
-
-				decHead.setIsSend(false);
-
-				decHead.setEffective(false);
-
-				decHead.setEspTaskId(null);
-
-				decHead.setBrokerCorp(null);
-
-				decHead.setDeclaraCustomsBroker(null);
-
+				decHead.setEspDeclareStatus(EspDeclareStatus.APPLY_BACK_APPLY);
 				pisAction.saveOrUpdate(new Request(CommonVars.getCurrUser()),
 						decHead);
 
-				resultInfo = "撤销出口报关单" + decHead.getSerialNumber() + "成功";
+				resultInfo = "申请撤销出口报关单" + decHead.getSerialNumber() + "成功";
 
 			} else {
 
-				return resultInfo = "撤销出口报关单" + decHead.getSerialNumber()
+				return resultInfo = "申请撤销出口报关单" + decHead.getSerialNumber()
 						+ "失败，失败原因如下：" + msg;
 
 			}
 		} else {
 
-			resultInfo = "撤销出口报关单" + decHead.getSerialNumber()
+			resultInfo = "申请撤销出口报关单" + decHead.getSerialNumber()
 					+ "失败，没有读到此报关单的信息。";
 
 		}

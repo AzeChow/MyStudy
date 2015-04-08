@@ -368,15 +368,12 @@ public class DgMakeBcsCustomsDeclaration extends JDialogBase {
 						if (!p0.vaildateData()) {
 
 							return;
-
 						}
-
 					} else if (step == 1) {// 第2步:选择申请单表头
 
 						if (!getPnMakeBcsCustomsDeclaration2().vaildateData()) {
 							return;
 						}
-
 					} else if (step == 2) {// 第3步：选择申请单表体
 
 						PnMakeBcsCustomsDeclaration3 p3 = getPnMakeBcsCustomsDeclaration3();
@@ -389,7 +386,6 @@ public class DgMakeBcsCustomsDeclaration extends JDialogBase {
 									JOptionPane.INFORMATION_MESSAGE);
 							return;
 						}
-
 						String unitConvertStr = "";
 
 						for (int i = 0; i < p3.getCommodityList().size(); i++) {
@@ -397,6 +393,7 @@ public class DgMakeBcsCustomsDeclaration extends JDialogBase {
 							TempBcsImpExpCommodityInfo temp = (TempBcsImpExpCommodityInfo) p3
 									.getCommodityList().get(i);
 
+							//折算数量
 							Double unitConvert = temp.getImpExpCommodityInfo()
 									.getMateriel().getUnitConvert();
 
@@ -415,9 +412,7 @@ public class DgMakeBcsCustomsDeclaration extends JDialogBase {
 										+ "折算系数："
 										+ (unitConvert == null ? 0.0
 												: unitConvert) + "\n";
-
 							}
-
 							if (netWeight == null
 									|| netWeight.doubleValue() == Double
 											.valueOf(0)) {
@@ -429,7 +424,6 @@ public class DgMakeBcsCustomsDeclaration extends JDialogBase {
 										+ "\n";
 							}
 						}
-
 						if (!"".equals(unitConvertStr)) {
 
 							if (JOptionPane.showConfirmDialog(
@@ -511,7 +505,6 @@ public class DgMakeBcsCustomsDeclaration extends JDialogBase {
 		CommonProgress.setMessage("系统正在生成报关单，请稍候...");
 
 		try {
-
 			// 把系统参数设置－其他参数设置资料放进去HYQ
 			CustomsDeclarationSet parameter = systemAction.findCustomsSet(
 					new Request(CommonVars.getCurrUser()), this.impExpType);
@@ -592,7 +585,6 @@ public class DgMakeBcsCustomsDeclaration extends JDialogBase {
 				CommonProgress.closeProgressDialog();
 				return;
 			}
-
 			if (!isSameCurr()) {
 
 				CommonProgress.closeProgressDialog();
@@ -633,7 +625,6 @@ public class DgMakeBcsCustomsDeclaration extends JDialogBase {
 			} else {
 				list0 = (List) mylist.get(1);
 				list1 = (List) mylist.get(0);
-
 			}
 			if (list1 != null && list1.size() > 0) {
 
@@ -645,15 +636,11 @@ public class DgMakeBcsCustomsDeclaration extends JDialogBase {
 							.get(k);
 
 					s += "报关单流水号：" + c.getSerialNumber() + "\n";
-
 				}
-
 			} else {
 
 				s += "报关单生成失败!\n";
-
 			}
-
 			if (this.isInRequestBill) {
 				// for (int k = 0; k < list0.size(); k++) {
 				// ImpExpRequestBill c = (ImpExpRequestBill) list0.get(k);
@@ -749,7 +736,7 @@ public class DgMakeBcsCustomsDeclaration extends JDialogBase {
 			BcsCustomsDeclaration b = pnMakeBcsCustomsDeclaration
 					.getBcsCustomsDeclaration();
 			Curr c = b.getCurrency();
-			System.out.println("curr=" + c.getName());
+			
 			for (int i = 0; i < commodityList.size(); i++) {
 				if (!c.getName().equals(
 						((TempBcsImpExpCommodityInfo) commodityList.get(i))
@@ -757,7 +744,6 @@ public class DgMakeBcsCustomsDeclaration extends JDialogBase {
 								.getName()))
 					return false;
 			}
-
 		}
 		// 当币制相同表头设置币制
 		bcsCustomsDeclaration

@@ -656,11 +656,11 @@ public class PnMakeBcsCustomsDeclaration4 extends JPanelBase {
 			CommonProgress.setMessage("系统正在生成报关单商品资料，请稍候...");
 
 			try {
-
 				boolean isEms = getContract().getIsContractEms();// 是否是电子化手册
 
 				if (isEms) {
 
+					//检查临时的进出口申请单表体资料
 					List list = contractExeAction
 							.checkTempBcsImpExpCommodityInfo(new Request(
 									CommonVars.getCurrUser()), getContract(),

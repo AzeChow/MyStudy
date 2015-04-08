@@ -138,25 +138,25 @@ public class ApplicationLauncher {
 		ApplicationLauncher applicationLauncher = new ApplicationLauncher();
 
 		try {
+//
+//			String protocol = readProtocol();
+//
+//			// 默认启动rmi协议
+//			if (protocol == null || "".equals(protocol)) {
+//				applicationLauncher.launch("startup-context.xml", new String[] {
+//						"rmiClientContext.xml", "application-context.xml" });
+//			} else {
 
-			String protocol = readProtocol();
-
-			// 默认启动rmi协议
-			if (protocol == null || "".equals(protocol)) {
-				applicationLauncher.launch("startup-context.xml", new String[] {
-						"rmiClientContext.xml", "application-context.xml" });
-			} else {
-
-				if (protocol.toString().toLowerCase().equals("rmi")) {
-					applicationLauncher.launch("startup-context.xml",
-							new String[] { "rmiClientContext.xml",
-									"application-context.xml" });
-				} else if (protocol.toString().toLowerCase().equals("http")) {
+//				if (protocol.toString().toLowerCase().equals("rmi")) {
+//					applicationLauncher.launch("startup-context.xml",
+//							new String[] { "rmiClientContext.xml",
+//									"application-context.xml" });
+//				} else if (protocol.toString().toLowerCase().equals("http")) {
 					applicationLauncher.launch("startup-context.xml",
 							new String[] { "httpClientContext.xml",
 									"application-context.xml" });
-				}
-			}
+//				}
+//			}
 			// 设置时区
 			setTimeZone();
 		} catch (Exception ex) {

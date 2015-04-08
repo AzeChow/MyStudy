@@ -2484,7 +2484,7 @@ public class DgCancelCus extends JDialogBase {
 			jToolBar2.add(getJButton11());
 			jToolBar2.add(getCbUnitWear());
 			jToolBar2.add(getExcBtn());
-			
+
 		}
 		return jToolBar2;
 	}
@@ -2506,14 +2506,14 @@ public class DgCancelCus extends JDialogBase {
 				public void actionPerformed(ActionEvent e) {
 
 					DgCancelImgByInnerBuyImport byInnerBuyImport = new DgCancelImgByInnerBuyImport();
-					
-					byInnerBuyImport.setVisible(true);
 
+					byInnerBuyImport.setImgCancelResults(tableModelImgResult
+							.getList());
+
+					byInnerBuyImport.setVisible(true);
 				}
 			});
-
 		}
-
 		return btnExcImport;
 
 	}

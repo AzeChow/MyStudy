@@ -3059,7 +3059,7 @@ public class ContractDao extends BaseDao {
 					+ " and a.materiel.id in ('"
 					+ StringUtils.join(materielIds.subList(i, maxIndex)
 							.toArray(), "','") + "') order by a.materiel.id";
-			System.out.println("================" + stu);
+			
 			returnList.addAll(this.find(stu, parameters.toArray()));
 		}
 		return returnList;

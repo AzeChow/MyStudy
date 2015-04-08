@@ -388,7 +388,7 @@ public class FmCancelCusHead extends JInternalFrameBase {
 		DgCancelCus dgCancel = new DgCancelCus();
 		dgCancel.setTableModel(tableModel);
 		cancelHead = (CancelCusHead) tableModel.getCurrentRow();
-		// System.out.println("date="+cancelHead.getEndDate());
+	
 		if (cancelHead.getDeclareType().equals(RrportDelcareType.BEGINDELCARE))
 			dgCancel.setShow(false);
 		else if (cancelHead.getDeclareType().equals(RrportDelcareType.DELCARE))

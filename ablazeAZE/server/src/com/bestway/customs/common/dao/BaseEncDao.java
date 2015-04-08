@@ -5886,7 +5886,7 @@ public class BaseEncDao extends BaseDao {
 		}
 
 		hql.append(" order by a.serialNumber asc ");
-		System.out.println(hql.toString());
+
 
 		return this.find(hql.toString(), params.toArray());
 	}
@@ -5950,13 +5950,14 @@ public class BaseEncDao extends BaseDao {
 	public List findContractHead(Integer projectType,
 			BaseCustomsDeclaration bgdhead) {
 		if (projectType == null || bgdhead == null) {
+		
 			return new ArrayList();
 		}
 		String hql = "";
 		List params = new ArrayList();
 		if (projectType == ProjectType.BCS) {
 
-			hql = "select a from Contr act a where a.company.id = ? and a.declareState = ? and a.emsNo = ?";
+			hql = "select a from Contract act a where a.company.id = ? and a.declareState = ? and a.emsNo = ?";
 			params.add(CommonUtils.getCompany().getId());
 			params.add(DeclareState.PROCESS_EXE);
 			params.add(bgdhead.getEmsHeadH2k());
@@ -5965,7 +5966,7 @@ public class BaseEncDao extends BaseDao {
 
 			hql = "select a from DzscEmsPorHead a where a.company.id = ? and a.declareState = ? and a.emsNo = ?";
 			params.add(CommonUtils.getCompany().getId());
-			params.add(DeclareState.PROCESS_EXE);
+			params.add(DeclareState.WAIT_EAA);
 			params.add(bgdhead.getEmsHeadH2k());
 
 		} else if (projectType == ProjectType.BCUS) {
@@ -5975,7 +5976,6 @@ public class BaseEncDao extends BaseDao {
 			params.add(new Boolean(false));
 			params.add(bgdhead.getEmsHeadH2k());
 		}
-
 		return this.find(hql, params.toArray());
 	}
 

@@ -19,22 +19,22 @@ public class CancelImgResult extends BaseScmEntity implements Cloneable {
 	/**
 	 * 期初数量
 	 */
-	private Double beginNum; // 
+	private Double beginNum; //
 
 	/**
 	 * 期初金额
 	 */
-	private Double beginMoney; // 
+	private Double beginMoney; //
 
 	/**
 	 * 核增数量--单价表，进口总数量
 	 */
-	private Double cancelAddNum; // 
+	private Double cancelAddNum; //
 
 	/**
 	 * 核减数量--单价表，进口总数量
 	 */
-	private Double cancelMinNum; // 
+	private Double cancelMinNum; //
 	/**
 	 * 单价表--本期进口总数量
 	 */
@@ -47,12 +47,12 @@ public class CancelImgResult extends BaseScmEntity implements Cloneable {
 	/**
 	 * 应剩余--总价值
 	 */
-	private Double leaveSumPrice; // 
+	private Double leaveSumPrice; //
 
 	/**
 	 * 应剩余--总重量
 	 */
-	private Double leaveSumWeight; // 
+	private Double leaveSumWeight; //
 
 	/**
 	 * 核销表头
@@ -164,8 +164,8 @@ public class CancelImgResult extends BaseScmEntity implements Cloneable {
 	/**
 	 * 平均单价
 	 */
-	private Double averagePrice;	
-	
+	private Double averagePrice;
+
 	/**
 	 * 核增总金额--单价表--进口总金额
 	 */
@@ -178,12 +178,12 @@ public class CancelImgResult extends BaseScmEntity implements Cloneable {
 	 * 国内购买金额
 	 */
 	private Double inChinaBuyMoney;
-	
+
 	/**
 	 * 系统单价--单价表
 	 */
 	private Double sysPrice;
-	
+
 	/**
 	 * 手调单价--单价表
 	 */
@@ -209,10 +209,14 @@ public class CancelImgResult extends BaseScmEntity implements Cloneable {
 	}
 
 	public Double getOtherSourcePrice() {
+		if (otherSourcePrice == null) {
+			return 0.0;
+		}
 		return otherSourcePrice;
 	}
 
 	public void setOtherSourcePrice(Double otherSourcePrice) {
+
 		this.otherSourcePrice = otherSourcePrice;
 	}
 
@@ -317,6 +321,7 @@ public class CancelImgResult extends BaseScmEntity implements Cloneable {
 	 * @return innerUseSumPrice 内销--总价值
 	 */
 	public Double getInnerUseSumPrice() {
+
 		return innerUseSumPrice;
 	}
 
@@ -681,6 +686,9 @@ public class CancelImgResult extends BaseScmEntity implements Cloneable {
 	}
 
 	public Double getOtherSourceNum() {
+		if(otherSourceNum==null){
+			return 0.0;
+		}
 		return otherSourceNum;
 	}
 
@@ -735,34 +743,41 @@ public class CancelImgResult extends BaseScmEntity implements Cloneable {
 	public void setInChinaBuyMoney(Double inChinaBuyMoney) {
 		this.inChinaBuyMoney = inChinaBuyMoney;
 	}
+
 	/**
 	 * 单价表--进口总数量
+	 * 
 	 * @return
 	 */
 	public Double getCancelNum() {
 		return cancelNum;
 	}
+
 	/**
 	 * 单价表--进口总数量
+	 * 
 	 * @return
 	 */
 	public void setCancelNum(Double cancelNum) {
 		this.cancelNum = cancelNum;
 	}
+
 	/**
 	 * 核增总金额--单价表--进口总金额
+	 * 
 	 * @return
 	 */
 	public Double getCancelMoney() {
 		return cancelMoney;
 	}
+
 	/**
 	 * 核增总金额--单价表--进口总金额
+	 * 
 	 * @return
 	 */
 	public void setCancelMoney(Double cancelMoney) {
 		this.cancelMoney = cancelMoney;
 	}
-	
-	
+
 }

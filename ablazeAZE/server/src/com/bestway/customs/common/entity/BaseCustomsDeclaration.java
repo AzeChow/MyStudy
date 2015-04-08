@@ -658,6 +658,11 @@ public class BaseCustomsDeclaration extends BaseScmEntity {
 	public void setBrokerCorp(BrokerCorp brokerCorp) {
 		this.brokerCorp = brokerCorp;
 	}
+	
+    /**
+     * 云关通平台状态
+     */
+    private String espDeclareStatus;
 
 	/**
 	 * @return the declaraCustomsBroker
@@ -2501,6 +2506,14 @@ public class BaseCustomsDeclaration extends BaseScmEntity {
 		this.customsDeclarationCode = customsDeclarationCode;
 		this.impExpDate = impExpDate;
 		this.declarationDate = declarationDate;
+	}
+
+	public String getEspDeclareStatus() {
+		return espDeclareStatus;
+	}
+
+	public void setEspDeclareStatus(String espDeclareStatus) {
+		this.espDeclareStatus = espDeclareStatus;
 	}
 
 }

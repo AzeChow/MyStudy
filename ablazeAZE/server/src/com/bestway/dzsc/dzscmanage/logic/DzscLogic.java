@@ -5593,7 +5593,7 @@ public class DzscLogic {
 		for (int i = 0; i < list.size(); i++) {
 			Object obj = list.get(i);
 			try {
-				String oldModifyMark = (String) methodGet.invoke(obj, null);
+				String oldModifyMark = (String) methodGet.invoke(obj);
 				// if (ModifyMarkState.ADDED.equals(oldModifyMark)) {
 				// continue;
 				// }

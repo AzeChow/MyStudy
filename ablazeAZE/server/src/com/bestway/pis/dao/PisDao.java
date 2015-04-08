@@ -54,12 +54,13 @@ public class PisDao extends BaseDao {
 	 * @return
 	 */
 	public List findBrokerCorpByMainBusiness(String mainBusiness) {
-		return this
-				.find(" select distinct a.espAuthorityBrokerCorp.brokerCorp "
-						+ " from EspAuthorityBrokerCorpItem a "
-						+ " where a.espAuthorityBrokerCorp.brokerCorp.company.id = ? "
-						+ " and a.mainBusiness=?  ", new Object[] {
-						CommonUtils.getCompany().getId(), mainBusiness });
+//		return this
+//				.find(" select distinct a.espAuthorityBrokerCorp.brokerCorp "
+//						+ " from EspAuthorityBrokerCorpItem a "
+//						+ " where a.espAuthorityBrokerCorp.brokerCorp.company.id = ? "
+//						+ " and a.mainBusiness=?  ", new Object[] {
+//						CommonUtils.getCompany().getId(), mainBusiness });
+		return this.find("select a from BrokerCorp a where a.company = ? ", new Object[]{CommonUtils.getCompany()});
 	}
 
 	// ///////////////////////////////////////PisDecDao//////////////////////////////////////////////

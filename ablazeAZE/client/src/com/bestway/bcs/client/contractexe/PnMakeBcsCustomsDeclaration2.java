@@ -397,9 +397,7 @@ public class PnMakeBcsCustomsDeclaration2 extends JPanelBase {
 		if (this.tableModel == null) {
 
 			return null;
-
 		}
-
 		List list = tableModel.getList();
 
 		List newList = new ArrayList();
@@ -422,17 +420,13 @@ public class PnMakeBcsCustomsDeclaration2 extends JPanelBase {
 								210));
 
 					}
-
 				}
-
 				if (t.getIsSelected().booleanValue() == true) {
 
 					newList.add(t);
-
 				}
 			}
 		}
-
 		return newList;
 	}
 

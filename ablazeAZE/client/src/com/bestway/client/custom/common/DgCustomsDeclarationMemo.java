@@ -360,16 +360,19 @@ public class DgCustomsDeclarationMemo extends JDialogBase {
 				// 如果包含 中文 字符 , 那么就开始处理掉中文
 				if (count != 0) {
 
-					String codition = str.substring(0, str.indexOf(":"));
+					if (str.indexOf(":") != -1) {
 
-					// 取得左段替换成 随附单据代码 而不是使用 中文:12346这种形式
-					String code = licenseDocus.findMatchName(codition,
-							LicenseDocu.class);
+						String codition = str.substring(0, str.indexOf(":"));
 
-					if (StringUtils.isNotBlank(code)) {
+						// 取得左段替换成 随附单据代码 而不是使用 中文:12346这种形式
+						String code = (String) licenseDocus.findMatchName(
+								codition, LicenseDocu.class);
 
-						str = str.replaceFirst(codition, code);
+						if (StringUtils.isNotBlank(code)) {
 
+							str = str.replaceFirst(codition, code);
+
+						}
 					}
 
 				}

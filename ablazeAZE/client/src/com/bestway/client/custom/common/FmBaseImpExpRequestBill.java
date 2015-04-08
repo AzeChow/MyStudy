@@ -2020,9 +2020,9 @@ public class FmBaseImpExpRequestBill extends JInternalFrameBase {
 			btnRefresh.setText("刷新");
 			btnRefresh.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-					List list = getDataSource();
-					initTable(list);
-					// miBackPort.setEnabled(getBtnBackPortStateByCode(type));
+					
+					initTable(getDataSource());
+					
 					setState();
 				}
 			});

@@ -669,6 +669,8 @@ public class EncImportLogic {
 			info.setCommSerialNo(Integer.parseInt(bgditem.get("备案序号")
 					.toString()));
 		}
+		
+		System.out.println(" 备案序号 ： 》》》》》》》   " + info.getCommSerialNo());
 
 		// 申报规格型号
 		if (bgditem.get("规格型号") != null
@@ -685,9 +687,13 @@ public class EncImportLogic {
 
 				info.setCommSpec(mapSpec.get(info.getCommSerialNo()));
 
+				System.out.println("  非特殊报关单 规格: ==== " + info.getCommSpec() );
+				
 			} else {
 
 				info.setCommSpec(info.getDeclareSpec());
+				
+				System.out.println("  这里是特殊报关单============");
 			}
 
 		}
@@ -1661,6 +1667,10 @@ public class EncImportLogic {
 				if (map.get(key) == null) {
 					map.put(key, value);
 				}
+				
+				System.out.println(" 序号key =====  " + key);
+				
+				System.out.println(" 规格value ===== " + value);
 			}
 		}
 

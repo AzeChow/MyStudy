@@ -5419,6 +5419,7 @@ public class FptManageLogic {
 			}
 
 			// HH2013.10.22 供应商
+//123			
 			List<ScmCoc> listCocsOUT = bcsImpExpRequestDao
 					.findScmCocByNameAndType(
 							mapAppHeadData.get("OUT_TRADE_NAME"), true, false,

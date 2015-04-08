@@ -157,7 +157,7 @@ public class InputTableColumnSet extends BaseScmEntity {
 	 * @author zcj 
 	 * 2015-4-2
 	 */
-	public static String _CancelCus = "";
+	public static String CANCELCHECK_CANCELCUS_INNERBUYIMPORT = "CANCELCHECK_CANCELCUS_INNERBUYIMPORT";
 	
 	private String tableFlag;
 

@@ -374,8 +374,6 @@ public class BcsImpExpRequestLogic {
 
 			if (d != null) {
 
-				ScmCoc k = d.getScmCoc();
-
 				if (bcsCustomsDeclaration.getSerialNumber() == null) {
 					//
 					// 找出最大的序号
@@ -384,8 +382,9 @@ public class BcsImpExpRequestLogic {
 							.getCustomsDeclarationSerialNumber(
 									bcsCustomsDeclaration.getImpExpFlag(),
 									bcsCustomsDeclaration.getEmsHeadH2k()));
-
 				}
+				// 获取客户供应商
+				ScmCoc k = d.getScmCoc();
 
 				if (k != null) {
 
@@ -395,16 +394,13 @@ public class BcsImpExpRequestLogic {
 								.getCountry());
 
 					}
-
 					if (k.getPortLin() != null && !"".equals(k.getPortLin())) {
 
 						bcsCustomsDeclaration.setPortOfLoadingOrUnloading(k
 								.getPortLin());
 					}
-
 					bcsCustomsDeclaration.setCustomer(k);// 客户
 				}
-
 				bcsCustomsDeclaration.setCompany(CommonUtils.getCompany());
 
 				bcsCustomsDeclaration
@@ -480,7 +476,6 @@ public class BcsImpExpRequestLogic {
 			if (i != 0 && i % 20 == 0) {
 
 				try {
-
 					bcsCustomsDeclaration = (BcsCustomsDeclaration) BeanUtils
 							.cloneBean(bcsCustomsDeclaration);
 
@@ -513,9 +508,7 @@ public class BcsImpExpRequestLogic {
 			serNo++;
 
 			this.bcsEncDao.saveCustomsDeclarationCommInfo(commInfo);
-
 		}
-
 		List<TempBcsImpExpCommodityInfo> mergeBeforeInfos = getMergeBeforeInfo(impExpCommodityInfoList);
 
 		/**
@@ -555,18 +548,14 @@ public class BcsImpExpRequestLogic {
 						.getName());
 
 				imp.setSeqNum(img.getSeqNum());
-
 			}
-
 			oldImpExpCommodityInfoList.add(imp);
 
 			System.out.println("回写进出口申请单据商品信息(设置转报关清单为true)==="
 					+ imp.getQuantity());
 
 		}
-
 		this.bcsEncDao.saveImpExpCommodityInfo(oldImpExpCommodityInfoList);
-
 		//
 		// 回写报关单表头
 		//
@@ -584,9 +573,7 @@ public class BcsImpExpRequestLogic {
 
 			setImpExpRequestBill.add(t.getImpExpCommodityInfo()
 					.getImpExpRequestBill());
-
 		}
-
 		for (int j = 0; j < returnBilllist.size(); j++) {
 
 			BcsCustomsDeclaration customsDeclaration = (BcsCustomsDeclaration) returnBilllist
@@ -602,11 +589,11 @@ public class BcsImpExpRequestLogic {
 				if (other.getIsAutoWeight() != null && other.getIsAutoWeight()) {
 
 					bcsEncDao.getPiceAndWeight(customsDeclaration);
-
 				}
 				// 保存报关单头的隋附单据
 				if (other.getIsCustomAutoAttachedBill() != null
 						&& other.getIsCustomAutoAttachedBill()) {
+
 					getAttachedBill(customsDeclaration);
 				}
 			}
@@ -724,11 +711,8 @@ public class BcsImpExpRequestLogic {
 				newTemp.setContractImg(oldTemp.getContractImg());
 
 				mergeBeforeInfo.add(newTemp);
-
 			}
-
 		}
-
 		return mergeBeforeInfo;
 	}
 
@@ -3035,20 +3019,16 @@ public class BcsImpExpRequestLogic {
 					if (isProduct) {
 
 						newTemp.setContractExg((ContractExg) obj[2]);// 合同成品
-
 					} else {
 
 						newTemp.setContractImg((ContractImg) obj[2]);// 合同料件
-
 					}
-
 					newTemp.setIsSelected(false);
 
 					listTemp.add(newTemp);
 				}
 			}
 		}
-
 		returnList.add(materielPtNo);
 
 		returnList.add(listTemp);

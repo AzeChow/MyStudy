@@ -1113,7 +1113,9 @@ public class FmPisSync extends JInternalFrameBase {
 			btnExecuteSyncUser.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					pisVerificationAuthority.checkExecuteSyncUser(request);
-					executeSyncUser();
+					if(!executeSyncUser()){
+						return;
+					}
 					findPisSyncAclUser();
 					
 					//
@@ -1287,7 +1289,7 @@ public class FmPisSync extends JInternalFrameBase {
 	/**
 	 * 执行同步用户
 	 */
-	private void executeSyncUser() {
+	private boolean executeSyncUser() {
 
 		// 被选择的同步用户esp
 		List<PisSyncAclUser> pUserlist = getPisSyncAcUsersIsSelected();
@@ -1304,12 +1306,12 @@ public class FmPisSync extends JInternalFrameBase {
 
 			JOptionPane.showMessageDialog(FmPisSync.this, "请勾选需要同步的帐号");
 
-			return;
+			return false;
 		}
 
 		if (!checkAclUserEmail(pUserlist)) {
 
-			return;
+			return false;
 		}
 
 		Gson gson = new Gson();
@@ -1392,7 +1394,7 @@ public class FmPisSync extends JInternalFrameBase {
 
 		pisAction.updatePisSyncAclUser(new Request(CommonVars.getCurrUser()),
 				pUserlist, infoMap, userErrMap);
-
+		return true;
 	}
 
 	private List getAclUserTemps(List<AclUser> userList) {
@@ -1552,8 +1554,8 @@ public class FmPisSync extends JInternalFrameBase {
 							new Request(CommonVars.getCurrUser()), serverMap,
 							agtCompanyList);
 
-//					JOptionPane.showMessageDialog(FmPisSync.this, msg, "执行成功！",
-//							JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(FmPisSync.this, msg, "执行成功！",
+							JOptionPane.INFORMATION_MESSAGE);
 
 				}
 			}
